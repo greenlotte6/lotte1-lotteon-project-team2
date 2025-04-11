@@ -21,10 +21,8 @@
         }
 
         #wrapper{
-            
             width: 100%;
             border: 1px solid black;
-
         }
 
         .header_top{
@@ -40,39 +38,62 @@
             border: 1px solid black;
         }
 
+
         .user_menu{
             float: right;
-            width: 200px;
+            width: 280px;
             border: 1px solid black;
+            text-align: center;
         }
+
+        .separator {
+            margin: 0 10px;
+            cursor: default;
+        }
+
+
 
         .logo_search{
             display: flex;
+            justify-content: center;
             align-items: center;
+            position: relative;
             width: 100%;
-            margin: 0 auto;
+            height: 50px;
             border: 1px solid black;
         }
 
-        .logo_search div{
-            display: inline-block;
-            position: relative;
-        }
 
         .logo{
-            float: left;
+            position: absolute;
+            left: 10px;
             width: 150px;
             height: 40px;
             border: 1px solid black;
         }
 
         .search{
+            border-radius: 30px;
             position: absolute;
-            width: 350px;
+            width: 500px;
             height: 45px;
             border: 1px solid black;
             margin: 0 auto;
+        
         }
+
+        .search > input{
+            margin-left: 20px;
+            width: 430px;
+            height: 45px;
+            font-size: 17px;
+            border: none;
+        }
+
+        .search > a {
+            font-size: 15px;
+        }
+        
 
         .menu{
             display: flex;
@@ -83,10 +104,12 @@
         }
 
         .menu a{
+            border-radius: 7px;
             padding: 5px;
             padding-inline: 20px;
             margin-left: 10px;
             border: 1px solid black;
+            font-weight: 600;
 
         }
         
@@ -97,10 +120,12 @@
             border: 1px solid black;
         }
 
+
         .footer{
-            margin: 0 auto;
-            text-align: center;
+            display: grid;
             justify-content: center;
+            align-items: center;
+            margin: 0 auto;
             height: 30px;
             width: 1200px;
             border: 1px solid black;
@@ -116,13 +141,19 @@
             <div class="header_bottom">
                 <div class="user_menu">
                     <a href="#">로그인</a>
+                    <span class="separator">|</span>
                     <a href="#">회원가입</a>
+                    <span class="separator">|</span>
                     <a href="#">마이페이지</a>
+                    <span class="separator">|</span>
                     <a href="#">장바구니</a>
                 </div>
                 <div class="logo_search">
                     <div class="logo">로고</div>
-                    <div class="search">검색창</div>
+                    <div class="search">
+                        <input type="text">
+                        <a href="#">검색</a>
+                    </div>
                 </div>
                 <div class="menu">
                     <a href="#">히트상품</a>
@@ -134,7 +165,9 @@
             </div>
         </header>
         <main>
-            <div class="main">main</div>
+            <div class="main">
+                
+            </div>
         </main>
         <footer>
             <div class="footer">
