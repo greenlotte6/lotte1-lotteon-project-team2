@@ -21,58 +21,89 @@
         }
 
         #wrapper{
-            
             width: 100%;
             border: 1px solid black;
-
         }
 
+        table{
+            border-collapse: collapse;
+        }
+
+        .header_bottom > table th,td {
+            border-right: 1px solid black;
+        }
+
+        .header_bottom > table > tr th:nth-last-child{
+            border-right: none;
+        }
+
+
         .header_top{
-            width: 1200px;
-            height: 80px;
             margin: 0 auto;
+            width: 1200px;
             border: 1px solid black;
         }
 
         .header_bottom{
             margin: 0 auto;
+            background-color: #f2f2f2;
             width: 1200px;
+            height: 100px;
             border: 1px solid black;
         }
+
 
         .user_menu{
             float: right;
-            width: 200px;
+            width: 280px;
             border: 1px solid black;
+            text-align: center;
         }
+
+        .separator {
+            margin: 0 10px;
+            cursor: default;
+        }
+
+
 
         .logo_search{
             display: flex;
+            justify-content: center;
             align-items: center;
+            position: relative;
             width: 100%;
-            margin: 0 auto;
+            height: 50px;
             border: 1px solid black;
         }
 
-        .logo_search div{
-            display: inline-block;
-            position: relative;
-        }
 
         .logo{
-            float: left;
+            position: absolute;
+            left: 10px;
             width: 150px;
             height: 40px;
             border: 1px solid black;
         }
 
-        .search{
-            position: absolute;
-            width: 350px;
-            height: 45px;
-            border: 1px solid black;
-            margin: 0 auto;
+        .header_bottom{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
+
+        .header_bottom > div{
+            margin-left: 20px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .header_bottom > table{
+            width: 300px;
+            text-align: center;
+            height: 60px;
+        }
+
 
         .menu{
             display: flex;
@@ -83,10 +114,12 @@
         }
 
         .menu a{
+            border-radius: 7px;
             padding: 5px;
             padding-inline: 20px;
             margin-left: 10px;
             border: 1px solid black;
+            font-weight: 600;
 
         }
         
@@ -97,10 +130,12 @@
             border: 1px solid black;
         }
 
+
         .footer{
-            margin: 0 auto;
-            text-align: center;
+            display: grid;
             justify-content: center;
+            align-items: center;
+            margin: 0 auto;
             height: 30px;
             width: 1200px;
             border: 1px solid black;
@@ -112,29 +147,42 @@
 <body>
     <div id="wrapper">
         <header>
-            <div class="header_top">광고</div>
-            <div class="header_bottom">
+            <div class="header_top">
                 <div class="user_menu">
                     <a href="#">로그인</a>
+                    <span class="separator">|</span>
                     <a href="#">회원가입</a>
+                    <span class="separator">|</span>
                     <a href="#">마이페이지</a>
+                    <span class="separator">|</span>
                     <a href="#">장바구니</a>
                 </div>
                 <div class="logo_search">
                     <div class="logo">로고</div>
-                    <div class="search">검색창</div>
                 </div>
-                <div class="menu">
-                    <a href="#">히트상품</a>
-                    <a href="#">추천상품</a>
-                    <a href="#">최신상품</a>
-                    <a href="#">인기상품</a>
-                    <a href="#">할인상품</a>
-                </div>
+            </div>
+            <div class="header_bottom">
+                <div>나의 쇼핑정보</div>
+                <table>
+                    <tr>
+                        <th>주문</th>
+                        <th>쿠폰</th>
+                        <th>포인트</th>
+                        <th>문의</th>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>1,000</td>
+                        <td>1</td>
+                    </tr>
+                </table>
             </div>
         </header>
         <main>
-            <div class="main">main</div>
+            <div class="main">
+                
+            </div>
         </main>
         <footer>
             <div class="footer">
