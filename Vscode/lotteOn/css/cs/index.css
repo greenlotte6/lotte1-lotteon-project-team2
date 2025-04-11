@@ -1,5 +1,3 @@
-
-/*수정 예정*/
 * {
     margin: 0;
     padding: 0;
@@ -16,10 +14,8 @@ a {
 }
 
 #wrapper{
-    
     width: 100%;
     border: 1px solid black;
-
 }
 
 .header_top{
@@ -37,36 +33,54 @@ a {
 
 .user_menu{
     float: right;
-    width: 200px;
+    width: 300px;
     border: 1px solid black;
+    text-align: center;
+}
+
+.separator {
+    margin: 0 10px;
+    cursor: default;
 }
 
 .logo_search{
     display: flex;
+    justify-content: center;
     align-items: center;
+    position: relative;
     width: 100%;
-    margin: 0 auto;
+    height: 50px;
     border: 1px solid black;
 }
 
-.logo_search div{
-    display: inline-block;
-    position: relative;
-}
-
 .logo{
-    float: left;
+    position: absolute;
+    left: 10px;
     width: 150px;
     height: 40px;
     border: 1px solid black;
 }
 
 .search{
+    border-radius: 30px;
     position: absolute;
-    width: 350px;
+    width: 500px;
     height: 45px;
     border: 1px solid black;
     margin: 0 auto;
+
+}
+
+.search > input{
+    margin-left: 20px;
+    width: 430px;
+    height: 45px;
+    font-size: 17px;
+    border: none;
+}
+
+.search > a {
+    font-size: 15px;
 }
 
 .menu{
@@ -78,14 +92,15 @@ a {
 }
 
 .menu a{
+    border-radius: 7px;
     padding: 5px;
     padding-inline: 20px;
     margin-left: 10px;
     border: 1px solid black;
-
+    font-weight: 600;
 }
 
-.main {
+.main-container {
     margin: 0 auto;
     width: 1200px;
     height: auto;
