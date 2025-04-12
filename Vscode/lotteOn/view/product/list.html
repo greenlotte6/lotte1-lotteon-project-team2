@@ -21,6 +21,13 @@
         border: 1px solid black;
     }
 
+    .container {
+        width: 100%;
+        height: auto;
+        margin: 50px 0;
+        background-color: lightyellow;
+    }
+
     .nav {
         margin: 20px 0;
         border: 1px solid black;
@@ -34,13 +41,6 @@
         border: 1px solid #b2b2b2;
         border-radius: 5px;
         background-color: white;
-    }
-
-    .container {
-        width: 100%;
-        height: auto;
-        margin: 50px 0;
-        background-color: lightyellow;
     }
 
     .page_name {
@@ -223,7 +223,8 @@
     }
 
     .brand {
-        font-weight: 700;
+        font-size: 20px;
+        font-weight: bold;
     }
 
     table img {
@@ -262,7 +263,8 @@
         margin-top: 5px;
     }
 
-    table span {
+    table span,
+    #gridView span {
         font-size: 18px;
         display: inline-block;
         margin-bottom: 3px;
@@ -331,23 +333,6 @@
       margin-right: 10px;
     }
 
-    .price_original {
-      text-decoration: line-through;
-      color: #999;
-    }
-
-    .sale {
-      color: red;
-    }
-
-    .free_deliver {
-      margin-top: 5px;
-      background-color: lightblue;
-      padding: 3px 8px;
-      border-radius: 5px;
-      display: inline-block;
-    }
-
     .grid-container {
       display: flex;
       flex-wrap: wrap;
@@ -356,20 +341,16 @@
     }
 
     .product-card {
-      width: calc(50% - 100px);
-      padding: 15px;
-      box-sizing: border-box;
-      margin-left: 60px;
+        width: calc(50% - 100px);
+        padding: 15px;
+        box-sizing: border-box;
+        margin-left: 60px;
     }
 
     .product-card img {
-      width: 100%;
-      height: 300px;
-      margin-bottom: 10px;
-    }
-
-    .product-card .brand {
-      font-weight: bold;
+        width: 100%;
+        height: 300px;
+        margin-bottom: 10px;
     }
 
 </style>
@@ -827,7 +808,7 @@
                             <p>오드퍼퓸 플레르드뽀 75ml</p>
                             <p class="price_current">27,000원</p>
                             <span class="price_original">3,000원</span>
-                            <span class="sale">10%↓</span>
+                            <span class="sale">10%↓</span><br>
                             <div class="free_deliver">무료배송</div>
                           </div>
                           <div class="product-card">
@@ -836,7 +817,7 @@
                             <p>어나더13 75ml</p>
                             <p class="price_current">27,000원</p>
                             <span class="price_original">3,000원</span>
-                            <span class="sale">10%↓</span>
+                            <span class="sale">10%↓</span><br>
                             <span class="deliver">배송비 2,500</span>
                           </div>
                           <div class="product-card">
@@ -845,7 +826,7 @@
                             <p>아이레 수틸레사 오 드 뚜알렛 50ml</p>
                             <p class="price_current">27,000원</p>
                             <span class="price_original">3,000원</span>
-                            <span class="sale">10%↓</span>
+                            <span class="sale">10%↓</span><br>
                             <span class="deliver">배송비 2,500</span>
                           </div>
                           <div class="product-card">
@@ -854,7 +835,7 @@
                             <p>오드퍼퓸 플레르드뽀 75ml</p>
                             <p class="price_current">27,000원</p>
                             <span class="price_original">3,000원</span>
-                            <span class="sale">10%↓</span>
+                            <span class="sale">10%↓</span><br>
                             <div class="free_deliver">무료배송</div>
                           </div>
                           <div class="product-card">
@@ -863,7 +844,7 @@
                             <p>어나더13 75ml</p>
                             <p class="price_current">27,000원</p>
                             <span class="price_original">3,000원</span>
-                            <span class="sale">10%↓</span>
+                            <span class="sale">10%↓</span><br>
                             <span class="deliver">배송비 2,500</span>
                           </div>
                           <div class="product-card">
@@ -872,7 +853,7 @@
                             <p>아이레 수틸레사 오 드 뚜알렛 50ml</p>
                             <p class="price_current">27,000원</p>
                             <span class="price_original">3,000원</span>
-                            <span class="sale">10%↓</span>
+                            <span class="sale">10%↓</span><br>
                             <span class="deliver">배송비 2,500</span>
                           </div>
                           <div class="product-card">
@@ -881,7 +862,7 @@
                             <p>오드퍼퓸 플레르드뽀 75ml</p>
                             <p class="price_current">27,000원</p>
                             <span class="price_original">3,000원</span>
-                            <span class="sale">10%↓</span>
+                            <span class="sale">10%↓</span><br>
                             <div class="free_deliver">무료배송</div>
                           </div>
                           <div class="product-card">
@@ -890,7 +871,7 @@
                             <p>어나더13 75ml</p>
                             <p class="price_current">27,000원</p>
                             <span class="price_original">3,000원</span>
-                            <span class="sale">10%↓</span>
+                            <span class="sale">10%↓</span><br>
                             <span class="deliver">배송비 2,500</span>
                           </div>
                           <div class="product-card">
@@ -899,7 +880,7 @@
                             <p>아이레 수틸레사 오 드 뚜알렛 50ml</p>
                             <p class="price_current">27,000원</p>
                             <span class="price_original">3,000원</span>
-                            <span class="sale">10%↓</span>
+                            <span class="sale">10%↓</span><br>
                             <span class="deliver">배송비 2,500</span>
                           </div>
                           <div class="product-card">
@@ -908,7 +889,7 @@
                             <p>오드퍼퓸 플레르드뽀 75ml</p>
                             <p class="price_current">27,000원</p>
                             <span class="price_original">3,000원</span>
-                            <span class="sale">10%↓</span>
+                            <span class="sale">10%↓</span><br>
                             <div class="free_deliver">무료배송</div>
                           </div>
                         </div>
