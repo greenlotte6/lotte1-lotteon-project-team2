@@ -1,0 +1,62 @@
+.location-container {
+    position: relative;
+}
+.location-container ul {
+    display: flex;
+    align-items: center;
+    height: 42px;
+    padding: 0;
+    margin: 0;
+}
+.location-container ul li a {
+    font-size: 14px;
+    font-weight: 350;
+    color: #333;
+    margin-left: 10px;
+}
+.location-container ul li:last-child a {
+    font-weight: bold;
+}
+
+.main-container {
+    margin: 0 auto;
+    width: 1200px;
+    height: auto;
+    border: 1px solid black;
+}
+
+.main-content {
+    display: flex;
+    gap: 30px;
+    box-sizing: border-box;
+}
+
+.sidebar {
+    width: 150px;
+    height: 100vh;
+    border-left: 1px solid #C0C0C0;
+    border-right: 2px solid #C0C0C0;
+}
+
+.sidebar-menu li {
+    border-bottom: 1px solid #ddd;
+}
+
+.sidebar-menu li a {
+    display: block;
+    padding: 10px 15px; 
+    color: #333;
+    font-weight: 400;
+    transition: background-color 0.2s;
+}
+.sidebar-menu li a:hover {
+    background-color: #d6d6d6;
+}
+.submenu {
+    display: none;
+    background-color: #f3f3f3;
+}
+.submenu li a {
+    padding: 10px 30px;
+    font-size: 14px;
+}
