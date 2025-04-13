@@ -25,6 +25,7 @@ input, textarea{
     box-sizing: border-box;
 }
 
+
 /* 헤더 부분 */
 header{
     width: 100%;
@@ -102,6 +103,9 @@ header{
     border: none;
     float: right;
 }
+
+
+/* 푸터 */
 
 footer{
     margin: 0 auto;
@@ -205,3 +209,83 @@ footer > .footer_version{
     text-align: center;
 }
 
+/* 메인 */
+#container {
+    width: 100%;
+    height: auto;
+    margin: 50px 0;
+    border: 1px solid yellowgreen;
+}
+
+main {
+    width: 1200px;
+    height: auto;
+    margin: 0 auto;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.main_content{
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    padding: 40px 100px 40px 100px;
+    float: left; 
+}
+
+.main_content_side{
+    width: 1000px;
+    height: auto;
+    box-sizing: border-box;
+    padding: 40px 40px 40px 40px;
+    float: left; 
+}
+
+
+/* 사이드 바 */
+
+.sidebar {
+    box-sizing: border-box;
+    width: 200px;
+    border-left: 1px solid #C0C0C0;
+    border-right: 2px solid #C0C0C0;
+    float: left;
+}
+
+.sidebar-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    color: #333;
+}
+
+.sidebar-menu li {
+    border-bottom: 1px solid #ddd;
+}
+
+.sidebar-menu li a {
+    display: block;
+    padding: 10px 40px; 
+    color: #333;
+    font-weight: 400;
+    transition: background-color 0.2s;
+}
+
+.sidebar-menu li a:hover {
+    background-color: #d6d6d6;
+}
+
+.main_info{
+    width: 100%;
+    height: 60px;
+    border-bottom: 1px solid #757575;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.main_info p{
+    font-weight: bold;
+    font-size: 20px;
+}
