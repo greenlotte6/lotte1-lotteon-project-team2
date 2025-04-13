@@ -1,0 +1,38 @@
+.main_head_title{
+    font-weight: bold;
+    font-size: 24px;
+    float: left;
+}
+
+.main_head{
+    overflow: hidden;
+    border-bottom: 1px solid black;
+    margin-bottom: 15px;
+}
+
+.main_head span{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.gray_txt{
+    color: gray;
+}
+
+/*사이드 바 */
+.submenu {
+    display: none;
+    padding-left: 20px; /* 보기 좋게 들여쓰기 */
+}
+
+.menu-toggle.active + .submenu {
+    display: block;
+}
+
+/*메인 내용*/
+.title{
+    font-weight: bold;
+    font-size: 18px;
+    color: black;
+    margin-bottom: 10px;
+}
