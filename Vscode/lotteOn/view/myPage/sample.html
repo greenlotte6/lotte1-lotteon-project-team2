@@ -4,19 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/lotteOn/css/cs/notice/list.css">
     <link rel="stylesheet" href="/lotteOn/css/layout/layout.css">
+
     <style>
+        .shop_header{
+            width: 100%;
+            height: 60px;
+            background-color: #F2F2F2;
+            padding: 0px 40px 0px 40px;
+        }
+
+        .shop_header_txt{
+            font-size: 18px;
+            font-weight: bold;
+            padding-top: 20px;
+        }
+
+        .header_table{
+            border-collapse: collapse;
+        }
+
+        .header_table tr td{
+            width: 50px;
+            height: 25px;
+            border-right: 1.5px solid #C0C0C0;
+            text-align: center;
+        }
+
+        .header_table tr td:nth-last-child(1){
+            width: 50px;
+            height: 25px;
+            border-right: none;
+        }
+
         .title{
             font-weight: bold;
-            font-size: 24px;
+            font-size: 18px;
             margin-bottom: 10px;
         }
 
-        .gray_txt{
-            color: gray;
+        .ad{
+            width: 100%; 
+            height: 86px; 
+            background-color: #F2F2F2; 
+            margin-bottom: 15px;
         }
+
+
     </style>
+
 </head>
 <body>
     <div id="wrapper">
@@ -46,47 +82,71 @@
             </div>
         </header>
         <!-- 헤더 끝 -->
+        <!-- 메인 시작 -->
         <main>
-            <div class="main_info">
-                <p>홈 > 공지사항</p>
+            <div class="shop_header">
+                <div style="float: left;">
+                    <p class="shop_header_txt">나의쇼핑정보</p>
+                </div>
+                <div style="float: right; padding-top: 5px; width: 250px;">
+                    <table class="header_table">
+                        <tr>
+                            <td>주문</td>
+                            <td>쿠폰</td>
+                            <td>포인트</td>
+                            <td>문의</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>1,000</td>
+                            <td>1</td>
+                        </tr>
+                    </table>
+                </div>
+                
             </div>
             <section class="content">
                 <!-- 왼쪽 사이드바 -->
                 <aside class="sidebar">
                     <div>
-                        <h3 class="sidebar-title">공지사항</h3>
                         <ul class="sidebar-menu">
                             <li>
-                              <a href="#" class="menu-toggle">전체</a>
+                              <a href="#" class="menu-toggle">전체주문내역</a>
                             </li>
                             <li>
-                              <a href="#" class="menu-toggle">고객서비스</a>
+                              <a href="#" class="menu-toggle">포인트내역</a>
                             </li>
                             <li>
-                              <a href="#" class="menu-toggle">안전거래</a>
+                              <a href="#" class="menu-toggle">쿠폰</a>
                             </li>
                             <li>
-                              <a href="#" class="menu-toggle">위해상품</a>
+                              <a href="#" class="menu-toggle">나의리뷰</a>
                             </li>
                             <li>
-                              <a href="#" class="menu-toggle">이벤트당첨</a>
+                              <a href="#" class="menu-toggle">문의하기</a>
                             </li>
-                            
+                            <li>
+                              <a href="#" class="menu-toggle">나의설정</a>
+                            </li>
                         </ul>
                     </div>
                 </aside>
                 <!-- 사이드바 끝-->
                 <!-- 오른쪽 글 -->
                 <article class="main_content_side">
+                    <div class="ad">
+                        <!-- 광고 -->
+                    </div>
+
                     <!-- 여기부터 글 작성 -->
-                    <p class="title">전체</p>
-                    <p class="gray_txt">
-                        공지사항 전체 내용입니다.
-                    </p>
+                    <p class="title">전체주문내역</p>
+                    
      
                 </article>
             </section>
         </main>
+        <!-- 메인 끝 -->
 
         <!-- 푸터 시작 -->
         <footer>
@@ -155,6 +215,9 @@
             </div>
         </footer>
         <!-- 푸터 끝 -->
+
+
+        
     </div>
 </body>
 </html>
