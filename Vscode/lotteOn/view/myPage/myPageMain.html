@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/myPage/header.css"/>
+    <link rel="stylesheet" href="/css/myPage/footer.css"/>
+    <link rel="stylesheet" href="/css/myPage/myPageMain.css">
+    <style>
+
+        .main-article{
+            flex-grow: 1;
+
+        }
+
+        .ad-banner{
+            width: 100%;
+            height: 86px;
+            margin: 0 auto;
+            margin-top: 10px;
+            margin-bottom: 30px;
+            border: 1px solid black;
+        }
+
+        .title-area{
+            width: 1000px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .title-area > h1{
+            font-size: 20px;
+        }
+
+        .title-area > a{
+            font-size: 15px;
+        }
+
+        .order-details table{
+            width: 100%;
+        }
+
+        .img-container{
+            display: flex;
+            height: 150px;
+            justify-content: center;
+            align-items: center;
+
+            
+        }
+
+        .img {
+            width: 120px;
+            height: 120px;
+            margin-right: 100px;
+            border: 1px solid black;
+        }
+
+        .order-details th{
+            height: 50px;
+            font-size: 15px;
+            background-color: #a6a6a6;
+            color: white;
+            text-align: center;
+        }
+
+        .order-details tr{
+            border-bottom: 1px solid #e9e9e9;
+            text-align: center;
+        }
+
+        .order-details td{
+            border-right: none;
+        }
+
+        .orderdetails-btn{
+            display: block;
+            width: 100px;
+            height: 30px;
+            margin: 0 auto;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+
+        .orderdetails-btn:nth-child(1){
+            background-color: #558ed5;
+            color: #ffffff;
+            border: none;
+            margin-top: 10px;
+        }
+
+        .orderdetails-btn:nth-child(2){
+            background-color: #558ed5;
+            color: #ffffff;
+            border: none;
+        }
+
+        .orderdetails-btn:nth-child(3){
+            border: 1px solid #808080;
+
+        }
+        
+        .orderdetails-btn:nth-child(4){
+            border: 1px solid #808080;
+
+            margin-bottom: 10px;
+        }
+        
+
+        .product-info{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+        }
+
+        .text-area{
+            display: block;
+
+        }
+
+
+
+
+    </style>
+
+</head>
+<body>
+    <div id="wrapper">
+        <header>
+            <div class="header_top">
+                <div class="user_menu">
+                    <a href="#">로그인</a>
+                    <span class="separator">|</span>
+                    <a href="#">회원가입</a>
+                    <span class="separator">|</span>
+                    <a href="#">마이페이지</a>
+                    <span class="separator">|</span>
+                    <a href="#">장바구니</a>
+                </div>
+                <div class="logo_search">
+                    <div class="logo">로고</div>
+                </div>
+            </div>
+            <div class="header_bottom">
+                <div>나의 쇼핑정보</div>
+                <table class="info">
+                    <tr>
+                        <th>주문</th>
+                        <th>쿠폰</th>
+                        <th>포인트</th>
+                        <th>문의</th>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>1,000</td>
+                        <td>1</td>
+                    </tr>
+                </table>
+            </div>
+        </header>
+        <main>
+            <div class="main-container">
+                <div class="main-content">
+                    <div class="sidebar">
+                        <ul class="sidebar-menu">
+                            <li>
+                              <a href="#" class="menu-toggle">전체주문내역</a>
+                            </li>
+                            <li>
+                              <a href="#" class="menu-toggle">포인트내역</a>
+                            </li>
+                            <li>
+                              <a href="#" class="menu-toggle">쿠폰</a>
+                            </li>
+                            <li>
+                              <a href="#" class="menu-toggle">나의리뷰</a>
+                            </li>
+                            <li>
+                              <a href="#" class="menu-toggle">문의하기</a>
+                            </li>
+                            <li>
+                              <a href="#" class="menu-toggle">나의설정</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="main-article">
+                        <div class="ad-banner">
+                            광고 배너
+                        </div>
+                        <div class="title-area">
+                            <h1>최근주문내역</h1>
+                            <a href="#">더보기 ></a>
+                        </div>
+                        <div class="order-details">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th>날짜</th>
+                                        <th>상품정보</th>
+                                        <th>상태</th>
+                                        <th>확인/신청</th>
+                                    </tr>
+                                </tbody>
+                                <tbody>
+                                    <tr>
+                                        <td>2022-12-13</td>
+                                        <td class="product-info">
+                                            <div class="img-container">
+                                                <div class="img">
+                                                    이미지
+                                                </div>
+                                            </div>
+                                            <div class="text-area">
+                                                <p>주문번호 : 1012211341</p>
+                                                <p>(주) 상호명</p>
+                                                <p>상품명</p>
+                                                <p>수량 : 1개</p>
+                                                <p>34,000원</p>
+                                            </div>
+                                        </td>
+                                        <td>배송완료</td>
+                                        <td>
+                                            <input type="submit" class="orderdetails-btn" value="구매확정">
+                                            <input type="submit" class="orderdetails-btn" value="상품평쓰기">
+                                            <input type="submit" class="orderdetails-btn" value="반품신청">
+                                            <input type="submit" class="orderdetails-btn" value="교환신청">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2022-12-13</td>
+                                        <td class="product-info">
+                                            <div class="img-container">
+                                                <div class="img">
+                                                    이미지
+                                                </div>
+                                            </div>
+                                            <div class="text-area">
+                                                <p>주문번호 : 1012211341</p>
+                                                <p>(주) 상호명</p>
+                                                <p>상품명</p>
+                                                <p>수량 : 1개</p>
+                                                <p>34,000원</p>
+                                            </div>
+                                        </td>
+                                        <td>배송완료</td>
+                                        <td>
+                                            <input type="submit" class="orderdetails-btn" value="구매확정">
+                                            <input type="submit" class="orderdetails-btn" value="상품평쓰기">
+                                            <input type="submit" class="orderdetails-btn" value="반품신청">
+                                            <input type="submit" class="orderdetails-btn" value="교환신청">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2022-12-13</td>
+                                        <td class="product-info">
+                                            <div class="img-container">
+                                                <div class="img">
+                                                    이미지
+                                                </div>
+                                            </div>
+                                            <div class="text-area">
+                                                <p>주문번호 : 1012211341</p>
+                                                <p>(주) 상호명</p>
+                                                <p>상품명</p>
+                                                <p>수량 : 1개</p>
+                                                <p>34,000원</p>
+                                            </div>
+                                        </td>
+                                        <td>배송완료</td>
+                                        <td>
+                                            <input type="submit" class="orderdetails-btn" value="구매확정">
+                                            <input type="submit" class="orderdetails-btn" value="상품평쓰기">
+                                            <input type="submit" class="orderdetails-btn" value="반품신청">
+                                            <input type="submit" class="orderdetails-btn" value="교환신청">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <div class="footer">
+                Copyright 2025 2조 Allrights reserved.
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
