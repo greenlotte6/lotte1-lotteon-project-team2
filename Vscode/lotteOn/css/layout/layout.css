@@ -34,6 +34,7 @@ header{
     overflow: hidden;
     padding-bottom: 20px;
     border-bottom: 2px solid red ;
+    margin-bottom: 40px;
 }
 
 
@@ -247,9 +248,9 @@ main {
 .sidebar {
     box-sizing: border-box;
     width: 200px;
-    border-left: 1px solid #C0C0C0;
-    border-right: 2px solid #C0C0C0;
+    border: 1px solid #C0C0C0;
     float: left;
+    border-collapse: collapse;
 }
 
 .sidebar-title {
@@ -259,10 +260,12 @@ main {
     padding: 10px;
     border-bottom: 1px solid #ccc;
     color: #333;
+    border-collapse: collapse;
 }
 
 .sidebar-menu li {
     border-bottom: 1px solid #ddd;
+    border-collapse: collapse;
 }
 
 .sidebar-menu li a {
