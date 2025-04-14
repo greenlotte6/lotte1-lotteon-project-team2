@@ -5,6 +5,7 @@
 .location-container ul {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     height: 42px;
     padding: 0;
     margin: 0;
@@ -14,6 +15,7 @@
     font-weight: 350;
     color: #333;
     margin-left: 10px;
+
 }
 .location-container ul li:last-child a {
     font-weight: bold;
@@ -27,4 +29,141 @@
     padding: 10px 30px;
     font-size: 14px;
 }
+/*루트*/
+.cs_main_info{
+    width: 100%;
+    height: 60px;
+    border-bottom: 1px solid #757575;
+    padding: 15px;
+    box-sizing: border-box;
+}
 
+.cs_main_info p{
+    font-weight: bold;
+    font-size: 20px;
+    text-align: right;
+}
+
+
+/*사이드*/
+.content{
+    display: flex;
+ } 
+
+.cs-sidebar {
+    width: 200px;
+    border: 1px solid #ddd;
+    padding: 20px;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .cs-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #111;
+  }
+  
+  .cs-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px 0;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .cs-menu li {
+    border-bottom: 1px solid #eee;
+  }
+  
+  .cs-menu li a {
+    display: block;
+    padding: 12px 10px;
+    font-size: 15px;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .cs-menu li.active a {
+    font-weight: bold;
+    color: #d22;
+  }
+  .cs-menu li:not(.active):hover a {
+    color: #d22;
+    font-weight: bold;
+    background-color: #f9f9f9;
+  }
+
+/*사이드 끝*/ 
+
+ .notice-container {
+    max-width: 1000px;
+    margin: 15px;
+  }
+  
+  .notice-container h2 {
+    font-size: 26px;
+    font-weight: 700;
+    border-bottom: 2px solid #222;
+    padding-bottom: 20px;
+  }
+  
+  .notice-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .notice-list li:first-child {
+    border-top: 1px solid #e0e0e0;
+  }
+
+  .notice-list li {
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .notice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  
+  .notice-header .title {
+    flex: 1;
+    font-size: 18px;
+  }
+  
+  .notice-header .date {
+    margin-left: 20px;
+    color: #888;
+    white-space: nowrap;
+  }
+
+/* 페이지 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    gap: 6px;
+    font-size: 14px;
+}
+
+.pagination a,
+.pagination span {
+    padding: 6px 12px;
+    border-radius: 4px;
+    color: #333;
+    text-decoration: none;
+    border: 1px solid #ccc;
+}
+
+.pagination a.active {
+    background-color: #222;
+    color: white;
+    font-weight: bold;
+    border-color: #222;
+}

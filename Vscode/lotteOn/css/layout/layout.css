@@ -238,12 +238,12 @@ main {
     width: 1000px;
     height: auto;
     box-sizing: border-box;
-    padding: 40px 40px 40px 40px;
+    padding: 0px 40px 40px 40px;
     float: left; 
 }
 
 
-/* 사이드 바 */
+/* 사이드 바*/
 
 .sidebar {
     box-sizing: border-box;
@@ -279,6 +279,7 @@ main {
 .sidebar-menu li a:hover {
     background-color: #d6d6d6;
 }
+
 
 .main_info{
     width: 100%;
