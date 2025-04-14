@@ -124,7 +124,6 @@
     margin-bottom: 10px;
 }
 
-
 .product-info{
     display: flex;
     justify-content: center;
@@ -135,3 +134,49 @@
 .text-area{
     display: block;
 }
+
+
+.mySetting-background{
+    width: 100%;
+    height: 150px;
+    background-color: #dce6f2;
+    border: 1px solid #bfbfbf;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.mySetting-margin{
+    display: flex;
+    
+}
+
+.mySetting-margin div{
+    width: 30%;
+    padding-inline: 40px;
+    border-right: 3px solid #bfbfbf;
+
+}
+
+.mySetting-margin div:nth-child(3){
+    border-right: none;
+}
+
+.mySetting-margin h1{
+    font-size: 20px;
+}
+
+.mySetting-margin a{
+    margin-left: 30px;
+    font-size: 20px;
+    text-decoration: underline;
+    color: #0170C0;
+}
+
+.mySetting-margin h2{
+    margin-top: 10px;
+    font-size: 20px;
+    color: #bfbfbf;
+}
+

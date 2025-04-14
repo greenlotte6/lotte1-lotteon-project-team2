@@ -13,6 +13,8 @@
 table{
     width: 100%;
     border-collapse: collapse;
+    margin-bottom: 50px;
+
 }
 
 
@@ -45,6 +47,8 @@ table tr{
 }
 
 table td{
+    font-size: 14px;
+    height: 50px;
     border-right: none;
 }
 
@@ -57,5 +61,4 @@ table td{
 
 .text-area{
     display: block;
-
 }
