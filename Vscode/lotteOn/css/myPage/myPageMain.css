@@ -2,7 +2,7 @@
     width: 100%;
     height: 60px;
     background-color: #F2F2F2;
-    padding: 0px 40px 0px 40px;
+    padding-inline: 20px;
 }
 
 .shop_header_txt{
@@ -13,18 +13,23 @@
 
 .header_table{
     border-collapse: collapse;
+    margin-bottom: 0;
+    width: 85%;
+}
+
+.header_table tr{
+    border-bottom: 0px;
 }
 
 .header_table tr td{
-    width: 50px;
+    width: 90px;
     height: 25px;
     border-right: 1.5px solid #C0C0C0;
     text-align: center;
 }
 
 .header_table tr td:nth-last-child(1){
-    width: 50px;
-    height: 25px;
+
     border-right: none;
 }
 
@@ -70,7 +75,7 @@
 .img {
     width: 120px;
     height: 120px;
-    margin-right: 100px;
+    margin-right: 5px;
     border: 1px solid black;
 }
 
@@ -133,6 +138,7 @@
 
 .text-area{
     display: block;
+    text-align: left;
 }
 
 
