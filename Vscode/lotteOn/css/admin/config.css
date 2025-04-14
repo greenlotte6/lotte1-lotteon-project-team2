@@ -318,6 +318,7 @@
     background-color: #36B04B;
     border: none;
     font-size: 16px;
+    display: block;
 }
 
 /* 환경 설정 */
@@ -403,3 +404,49 @@
     margin-top: 10px; 
     overflow: hidden;
 }
+
+.modal_version{
+    border-collapse: collapse;
+}
+
+.modal_version tr td{
+    border: 1px solid #C7C7C7;
+    font-size: 16px;
+}
+
+.modal_version tr td:nth-child(1){
+    background-color: #F2F2F2;
+    width: 200px;
+    text-align: center;
+}
+
+.modal_version tr td:nth-child(2){
+    width: 800px;
+    text-align: left;
+    line-height: 25px;
+    padding-left: 20px;
+}
+
+.modal_version tr:nth-child(1) td{
+    height: 60px;
+}
+
+.modal_version tr:nth-child(2) td{
+    height: 300px;
+}
+
+.modal_version tr td input{
+    height: 50%;
+    width: 50%;
+    border: 1px solid #CFCFCF;
+    padding-left: 10px;
+}
+
+.modal_version textarea{
+    height: 90%;
+    width: 90%;
+    border: 1px solid #CFCFCF;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
