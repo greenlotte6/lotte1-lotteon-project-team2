@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 : 롯데On</title>
+    <title>관리자 환경설정 : 롯데On</title>
     <link rel="stylesheet" href="/lotteOn/css/admin/admin.css">
-    <link rel="stylesheet" href="/lotteOn/css/admin/main.css">
+    <link rel="stylesheet" href="/lotteOn/css/admin/config.css">
     <link rel="stylesheet" href="/lotteOn/css/layout/layout.css">
     
     <!-- 사이드바-->
@@ -40,52 +40,7 @@
         });
     </script>
 
-    <!-- 차트 -->
-    <!-- 차트 스크립트 하나로 통합 -->
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-  google.charts.load('current', {'packages':['bar', 'corechart']});
-  google.charts.setOnLoadCallback(drawAllCharts);
-
-  function drawAllCharts() {
-    drawBarChart();
-    drawPieChart();
-  }
-
-  function drawBarChart() {
-    var data = google.visualization.arrayToDataTable([
-      ['day', '주문', '결제', '취소'],
-      ['10-10', 1000, 400, 200],
-      ['10-11', 1170, 460, 250],
-      ['10-12', 660, 1120, 300],
-      ['10-13', 1030, 540, 350],
-      ['10-14', 1030, 540, 350]
-    ]);
-
-    var options = { chart: {} };
-
-    var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
-    chart.draw(data, google.charts.Bar.convertOptions(options));
-  }
-
-  function drawPieChart() {
-    var data = google.visualization.arrayToDataTable([
-      ['Task', 'Hours per Day'],
-      ['가전',  8],
-      ['식품',  4],
-      ['의류',  2],
-      ['기타',  2],
-    ]);
-
-    var options = {
-      title: '주요매출'
-    };
-
-    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-    chart.draw(data, options);
-  }
-</script>
-
+    
     
 </head>
 <body>
@@ -179,149 +134,53 @@
                 <article class="main_content_side">
                     <!-- 여기부터 글 작성 -->
                     <div class="main_head">
-                        <p class="main_head_title">관리자메인</p>
+                        <p class="main_head_title">배너관리</p>
                         <div style="float: right;">
-                            <p style="font-size: 16px;">Home <span>> 관리자 메인</span></p>
+                            <p style="font-size: 16px;">Home > 환경설정 ><span> 배너관리</span></p>
                         </div>
                     </div>
+
+                    <!-- 버전 정보 -->
+                    <div class="banner">
+                        <ul>
+                            <a href=""><li>메인상단배너</li></a>
+                            <a href=""><li>메인슬라이더배너</li></a>
+                            <a href=""><li>상품 상세보기 배너</li></a>
+                            <a href=""><li>회원로그인 배너</li></a>
+                            <a href=""><li>마이페이지 배너</li></a>
+                        </ul>
+                    </div>
+                    <p class="title">메인 상단 배너</p>
+
+                    <form action="#" class="banner_form">
+                        <table class="banner_table">
+                            <thead>
+                                <th><input type="checkbox"></th>
+                                <th>번호</th>
+                                <th>이미지</th>
+                                <th>배너정보</th>
+                                <th>배너위치</th>
+                                <th>시작일</th>
+                                <th>종료일</th>
+                                <th>시작시간</th>
+                                <th>종료시간</th>
+                                <th>관리</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                    <td>1</td>
+                                    <td><img src="/lotteOn/images/blnk_star.png" alt=""></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </form>
                     
-                    <!-- 집계현황 -->
-                    <div class="summary">
-                        <div style="float: left; width: 50%;">
-                            <p class="title">집계현황</p>
-                            <div id="columnchart_material" style="width: 100%; height: 300px;">
-                            </div>
-                        </div>
-                        <div style="float: right; width: 50%;">
-                            <div id="piechart" style="width: 100%; height: 300px;"></div>
-                        </div>
-                    </div>
-
-                    <!-- 운영현황 -->
-                    <div class="operation">
-                        <p class="title">운영현황</p>
-                        <table class="operation_table" style="margin-bottom: 20px;">
-                            <tr>
-                                <th>입금대기</th>
-                                <th>배송준비</th>
-                                <th>취소요청</th>
-                                <th>교환요청</th>
-                                <th>반품요청</th>
-                            </tr>
-                            <tr>
-                                <td>101</td>
-                                <td>124</td>
-                                <td>14</td>
-                                <td>7</td>
-                                <td>24</td>
-                            </tr>
-                        </table>
-
-                        <table class="operation_table">
-                            <tr>
-                                <th>주문건수</th>
-                                <th>주문금액</th>
-                                <th>회원가입</th>
-                                <th>방문자 수</th>
-                                <th>문의 게시물</th>
-                            </tr>
-                            <tr>
-                                <td>주문건수</td>
-                                <td>주문금액</td>
-                                <td>회원가입</td>
-                                <td>방문자 수 </td>
-                                <td>반품요청</td>
-                            </tr>
-                        </table>
-
-                        <table class="operation_today" style="margin-bottom: 15px;">
-                            <tr>
-                                <td>오늘</td>
-                                <td>60</td>
-                                <td>오늘</td>
-                                <td>1,200,000</td>
-                                <td>오늘</td>
-                                <td>102</td>
-                                <td>어제</td>
-                                <td>1,200</td>
-                                <td>어제</td>
-                                <td>12</td>
-                            </tr>
-                            <tr>
-                                <td>오늘</td>
-                                <td>71</td>
-                                <td>어제</td>
-                                <td>2,500,000</td>
-                                <td>어제</td>
-                                <td>130</td>
-                                <td>오늘</td>
-                                <td>1,300</td>
-                                <td>오늘</td>
-                                <td>13</td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <!-- 공지사항 -->
-                    <div class="notice">
-                        <p class="title">공지사항</p>
-                        <table>
-                            <tr>
-                                <td>[안내] 해외결제사칭문자주의</td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내] 해외결제사칭문자주의</td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내] 해외결제사칭문자주의</td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내] 해외결제사칭문자주의</td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[안내] 해외결제사칭문자주의</td>
-                                <td>22.10.31</td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <div class="cs">
-                        <p class="title">고객문의</p>
-                        <table>
-                            <tr>
-                                <td>[가입] 가입문의내용</td>
-                                <td>chh**</td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[가입] 가입문의내용</td>
-                                <td>chh**</td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[가입] 가입문의내용</td>
-                                <td>chh**</td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[가입] 가입문의내용</td>
-                                <td>chh**</td>
-                                <td>22.10.31</td>
-                            </tr>
-                            <tr>
-                                <td>[가입] 가입문의내용</td>
-                                <td>chh**</td>
-                                <td>22.10.31</td>
-                            </tr>
-                        </table>
-                    </div>
                 
 
-     
                 </article>
             </section>
         </main>
