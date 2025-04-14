@@ -50,6 +50,19 @@
             }
             });
 
+            const tabs = document.querySelectorAll('.tab-menu li');
+            const panes = document.querySelectorAll('.tab-pane');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                panes.forEach(p => p.classList.remove('active'));
+
+                tab.classList.add('active');
+                const target = tab.getAttribute('data-tab');
+                document.getElementById(target).classList.add('active');
+                });
+            });
         });
       </script>
       
@@ -260,9 +273,10 @@
                                         <span>배송비 무료</span>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <select class="choice">
+                                <tr class="choice">
+                                    <td>옵션선택</td>
+                                    <td>
+                                        <select>
                                             <option>선택하기</option>
                                             <option>딥디크: 오드퍼퓸 플레르드뽀</option>
                                         </select>
@@ -284,13 +298,320 @@
                                         <button type="submit" class="buy">바로 구매하기</button>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr class="product_banner">
                                     <td colspan="2">
-                                    <!--<img src="/lotteOn/images/product/product_banner.png" class="product_banner">-->
+                                        <img src="/lotteOn/images/product/product_banner.png" class="product_banner">
                                     </td>
                                 </tr>
                             </table>
                         </from>
+                    </div>
+                    <div class="tabs">
+                        <ul class="tab-menu">
+                          <li class="active" data-tab="detail">상세정보</li>
+                          <li data-tab="review">리뷰(439)</li>
+                          <li data-tab="qna">Q&A(239)</li>
+                          <li data-tab="exchange">교환/반품 안내</li>
+                        </ul>
+                        <div class="tab-content">
+                          <div id="detail" class="tab-pane active">
+                            <table class="product_info">
+                                <tr>
+                                    <td>향</td>
+                                    <td>머스크</td>
+                                </tr>
+                                <tr>
+                                    <td>타입</td>
+                                    <td>스프레이향수</td>
+                                </tr>
+                                <tr>
+                                    <td>농도</td>
+                                    <td>오드퍼퓸</td>
+                                </tr>
+                                <tr>
+                                    <td>용량</td>
+                                    <td>75ml</td>
+                                </tr>
+                                <tr>
+                                    <td>성별</td>
+                                    <td>남녀공용</td>
+                                </tr>
+                            </table>
+                            <img src="/lotteOn/images/product/lotteimage.png">
+                            <p>MD 공지사항</p>
+                            <img src="/lotteOn/images/product/beautyfesta.jpeg">
+                            <p>[딥티크] ; 플레르 드 뽀 오 드 퍼퓸 75ml</p>
+                            <p>
+                                딥티크에 있어서 향수는 예술이고 예술은 곧 여행입니다. 아직 잘 알려지지 않은 후각의 세계를 통해 색다른 어코드(조합)를 찾아 떠나는 상상여행.<br>
+                                창조의 시간 속에서 결함을 통해 얻어지는 새로운 아이디어와 이야기가 가득한 그 어딘가를 향해 떠나는 여행.<br>
+                                딥티크는 이렇게 ‘다양한 장르나 문화의 경계를 자유롭게 넘나들며 시각, 후각, 촉각을 통해 향수의 경이로움으로 세계를 끊임없이 재현한다’는<br>
+                                한결같은 의지를 항상 꿈과 현실의 두 세계 사이에서 공존합니다.
+                            </p>
+                            <p>플레르 드 뽀(Fleur de Peau)는 계열/피부의 꽃, 은은한 머스크와 아이리스가 구성하는 살결의 감각적인 향. 플레르 드 뽀는 불어로 ‘피부의 꽃’이라는 뜻입니다.<br>
+                                고대 그리스 신화 중 가장 정열적이고 관능적인 묘사였던 에로스의 사랑 이야기를 자연스럽고 살 내음을 연상시키는 향으로 표현하였습니다.<br>
+                                신화만큼이나 신비로운 머스크 향은 관능적이고 지속적인 잔향으로 피부를 정화해줍니다.<br>
+                                숨처럼 흡수하고 숨처럼 보드랍고 파우더리한 아이리스와 앰버, 프루티한 앰브레트 시드로 강조되는 머스크향은 촉각적인 차원에서 그 진가를 발휘합니다.<br>
+                                핑크 페퍼콘은 머스크의 부드러움과 확연한 대조를 이루게 됩니다.<br>
+                            </p>
+                            <p>상품필수정보</p>
+                            <table class="product_assential">
+                                <tr><th>원산지</th><td>프랑스</td></tr>
+                                <tr><th>모델명</th><td>onFleurDePeau75ml</td></tr>
+                                <tr><th>상품번호</th><td>LE1207082718_1238704374</td></tr>
+                                <tr><th>상품상태</th><td>새상품</td></tr>
+                                <tr><th>브랜드</th><td>딥티크</td></tr>
+                                <tr><th>내용물의 용량 또는 중량</th><td>75ml</td></tr>
+                                <tr><th>제품 주요 사양</th><td>모든 피부 타입</td></tr>
+                                <tr><th>사용기한 또는 개봉 후 사용기간</th>
+                                <td>개봉 후 36개월 / 제조년월일부터 10개월 이내 상품을 발송합니다. (제품별로 상이하므로 고객센터 문의: 02-772-3225)</td>
+                                </tr>
+                                <tr><th>사용방법</th><td>맥박이 뛰는 부위, 옷깃이 스치는 곳에 분사하여 사용합니다.</td></tr>
+                                <tr><th>화장품제조업자 및 화장품책임판매업자</th>
+                                <td>제조자: 씨씨아이알엔디 / 제조판매업자: 씨씨인터내셔널</td>
+                                </tr>
+                                <tr><th>제조국</th><td>프랑스</td></tr>
+                                <tr><th>전성분</th>
+                                <td>
+                                    변성알코올, 향료, 정제수, 에칠헥실메톡시신나메이트, 에칠헥실살리실레이트, 부틸메톡시디벤조일메탄,<br>
+                                    비에이치티, 리모넨, 리날룰, 알파-아이소메틸아이오논, 파네솔, 제라니올, 시트랄, 시트로넬롤
+                                </td>
+                                </tr>
+                                <tr><th>기능성 여부</th><td>해당없음</td></tr>
+                                <tr><th>사용할 때 주의사항</th>
+                                <td>
+                                    1. 화장품 사용 중 붉은 반점, 부어오름, 가려움증 등의 이상이 있을 경우 사용 중지<br>
+                                    2. 상처가 있는 부위에는 사용을 자제할 것<br>
+                                    3. 보관 및 취급 시의 주의사항: 어린이 손에 닿지 않는 곳에 보관할 것, 고온 또는 저온의 장소 및 직사광선을 피해 보관할 것
+                                </td>
+                                </tr>
+                                <tr><th>품질보증기준</th><td>관련법 및 소비자분쟁해결기준에 따름</td></tr>
+                                <tr><th>소비자상담 관련 전화번호</th><td>딥티크 담당자 / 1644-4490</td></tr>
+                            </table>                              
+                        </div>
+                        <div id="review" class="tab-pane">
+                            <p>리뷰 4.8 / 5</p>
+                            <div class="review_pick">
+                                <p class="title">리뷰 PICK ★</p>
+                                <div class="review_slider">
+                                  <div class="review_card">
+                                    <div class="review_img">
+                                      <img src="/lotteOn/images/product/review_diptique_flerdefeau.jpg" alt="리뷰 이미지">
+                                    </div>
+                                    <div class="review_content">
+                                      <div class="stars">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <p>5</p>
+                                      </div>
+                                      <p class="nickname">wis*** · 2024.06.03</p>
+                                      <p class="review_text">
+                                        일단 택배 받자마자 꼼꼼한 포장에 만족했고요<br>
+                                        내용물 보니 무려 딥로 시코스 오드 뚜왈렛을 증정품
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div class="review_card">
+                                    <div class="review_img">
+                                      <img src="/lotteOn/images/product/review_diptique_flerdefeau.jpg" alt="리뷰 이미지">
+                                    </div>
+                                    <div class="review_content">
+                                      <div class="stars">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <p>5</p>
+                                      </div>
+                                      <p class="nickname">wis*** · 2024.06.03</p>
+                                      <p class="review_text">
+                                        일단 택배 받자마자 꼼꼼한 포장에 만족했고요<br>
+                                        내용물 보니 무려 딥로 시코스 오드 뚜왈렛을 증정품
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div class="review_card">
+                                    <div class="review_img">
+                                      <img src="/lotteOn/images/product/review_diptique_flerdefeau.jpg" alt="리뷰 이미지">
+                                    </div>
+                                    <div class="review_content">
+                                      <div class="stars">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <p>5</p>
+                                      </div>
+                                      <p class="nickname">wis*** · 2024.06.03</p>
+                                      <p class="review_text">
+                                        일단 택배 받자마자 꼼꼼한 포장에 만족했고요<br>
+                                        내용물 보니 무려 딥로 시코스 오드 뚜왈렛을 증정품
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div class="review_card">
+                                    <div class="review_img">
+                                      <img src="/lotteOn/images/product/review_diptique_flerdefeau.jpg" alt="리뷰 이미지">
+                                    </div>
+                                    <div class="review_content">
+                                      <div class="stars">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <p>5</p>
+                                      </div>
+                                      <p class="nickname">wis*** · 2024.06.03</p>
+                                      <p class="review_text">
+                                        일단 택배 받자마자 꼼꼼한 포장에 만족했고요<br>
+                                        내용물 보니 무려 딥로 시코스 오드 뚜왈렛을 증정품
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div class="review_card">
+                                    <div class="review_img">
+                                      <img src="/lotteOn/images/product/review_diptique_flerdefeau.jpg" alt="리뷰 이미지">
+                                    </div>
+                                    <div class="review_content">
+                                      <div class="stars">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <img src="/lotteOn/images/product/full_star.png" alt="★">
+                                        <p>5</p>
+                                      </div>
+                                      <p class="nickname">wis*** · 2024.06.03</p>
+                                      <p class="review_text">
+                                        일단 택배 받자마자 꼼꼼한 포장에 만족했고요<br>
+                                        내용물 보니 무려 딥로 시코스 오드 뚜왈렛을 증정품
+                                      </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="review_nav">
+                            </div>
+                            <div class="reviews">
+                                <div>
+                                    <p>총 439건</p>
+                                    <div>
+                                        <a href="#">도움돼요순</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                                        <a href="#">랭킹순</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                                        <a href="#">최신순</a>
+                                    </div>
+                                </div>
+                                <div class="reviews_content">
+                                    <p>nickname</p>
+                                    <div class="stars">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <p>5</p>
+                                    </div>
+                                    <p>판매자 : 롯데백화점 본점</p>
+                                    <p>
+                                        딥디크 유명한 향중에 하나라 플뽀는 구하기 힘들대서 품절되기 전에 구매해놨어요
+                                        집에 도착하자마자 뿌려보고 싶은 마음을 향수와 같이 안정화 시키고 일주일 뒤는 오늘 뿌렸는데 이게 후추향인가?라고 계속 흡흡 하는데 옛날에 맡던 향 엄마 화장서 나던향이라 그런가 공감이 되더라고요
+                                        살짝씩 향이 스치니 지금보다 날씨가 좀 쌀쌀해지면 더 좋을거 같은 느낌이네요
+                                        지금은 여름향수 샘플링 쓰다가 가을되면 본격적으로 착석 해야겠어요~
+                                    </p>
+                                    <img src="/lotteOn/images/product/review_diptique_flerdefeau.jpg">
+                                </div>
+                                <div class="reviews_content">
+                                    <p>nickname</p>
+                                    <div class="stars">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <p>5</p>
+                                    </div>
+                                    <p>판매자 : 롯데백화점 본점</p>
+                                    <p>
+                                        딥디크 유명한 향중에 하나라 플뽀는 구하기 힘들대서 품절되기 전에 구매해놨어요
+                                        집에 도착하자마자 뿌려보고 싶은 마음을 향수와 같이 안정화 시키고 일주일 뒤는 오늘 뿌렸는데 이게 후추향인가?라고 계속 흡흡 하는데 옛날에 맡던 향 엄마 화장서 나던향이라 그런가 공감이 되더라고요
+                                        살짝씩 향이 스치니 지금보다 날씨가 좀 쌀쌀해지면 더 좋을거 같은 느낌이네요
+                                        지금은 여름향수 샘플링 쓰다가 가을되면 본격적으로 착석 해야겠어요~
+                                    </p>
+                                </div>
+                                <div class="reviews_content">
+                                    <p>nickname</p>
+                                    <div class="stars">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <p>5</p>
+                                    </div>
+                                    <p>판매자 : 롯데백화점 본점</p>
+                                    <p>
+                                        딥디크 유명한 향중에 하나라 플뽀는 구하기 힘들대서 품절되기 전에 구매해놨어요
+                                        집에 도착하자마자 뿌려보고 싶은 마음을 향수와 같이 안정화 시키고 일주일 뒤는 오늘 뿌렸는데 이게 후추향인가?라고 계속 흡흡 하는데 옛날에 맡던 향 엄마 화장서 나던향이라 그런가 공감이 되더라고요
+                                        살짝씩 향이 스치니 지금보다 날씨가 좀 쌀쌀해지면 더 좋을거 같은 느낌이네요
+                                        지금은 여름향수 샘플링 쓰다가 가을되면 본격적으로 착석 해야겠어요~
+                                    </p>
+                                    <img src="/lotteOn/images/product/review_diptique_flerdefeau.jpg">
+                                </div>
+                                <div class="reviews_content">
+                                    <p>nickname</p>
+                                    <div class="stars">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <p>5</p>
+                                    </div>
+                                    <p>판매자 : 롯데백화점 본점</p>
+                                    <p>
+                                        딥디크 유명한 향중에 하나라 플뽀는 구하기 힘들대서 품절되기 전에 구매해놨어요
+                                        집에 도착하자마자 뿌려보고 싶은 마음을 향수와 같이 안정화 시키고 일주일 뒤는 오늘 뿌렸는데 이게 후추향인가?라고 계속 흡흡 하는데 옛날에 맡던 향 엄마 화장서 나던향이라 그런가 공감이 되더라고요
+                                        살짝씩 향이 스치니 지금보다 날씨가 좀 쌀쌀해지면 더 좋을거 같은 느낌이네요
+                                        지금은 여름향수 샘플링 쓰다가 가을되면 본격적으로 착석 해야겠어요~
+                                    </p>
+                                </div>
+                                <div class="reviews_content">
+                                    <p>nickname</p>
+                                    <div class="stars">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <img src="/lotteOn/images/product/full_star.png">
+                                        <p>5</p>
+                                    </div>
+                                    <p>판매자 : 롯데백화점 본점</p>
+                                    <p>
+                                        딥디크 유명한 향중에 하나라 플뽀는 구하기 힘들대서 품절되기 전에 구매해놨어요
+                                        집에 도착하자마자 뿌려보고 싶은 마음을 향수와 같이 안정화 시키고 일주일 뒤는 오늘 뿌렸는데 이게 후추향인가?라고 계속 흡흡 하는데 옛날에 맡던 향 엄마 화장서 나던향이라 그런가 공감이 되더라고요
+                                        살짝씩 향이 스치니 지금보다 날씨가 좀 쌀쌀해지면 더 좋을거 같은 느낌이네요
+                                        지금은 여름향수 샘플링 쓰다가 가을되면 본격적으로 착석 해야겠어요~
+                                    </p>
+                                    <img src="/lotteOn/images/product/review_diptique_flerdefeau.jpg">
+                                </div>
+                                <div class="reviews_page">
+                                    <a href="#"><</a>
+                                    <a href="#">1</a>
+                                    <a href="#">2</a>
+                                    <a href="#">3</a>
+                                    <a href="#">4</a>
+                                    <a href="#">5</a>
+                                    <a href="#">6</a>
+                                    <a href="#">></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="qna" class="tab-pane"> Q&A 내용</div>
+                        <div id="exchange" class="tab-pane"> 교환/반품 안내 내용</div>
                     </div>
                 </div>
             </section>
