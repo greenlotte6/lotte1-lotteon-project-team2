@@ -1,6 +1,7 @@
 .nav {
-        margin: 20px 0;
-        border: 1px solid black;
+        display: flex;
+        gap: 5px;
+        margin: 30px 0 40px 0;
     }
 
 .nav > button {
@@ -16,28 +17,24 @@
 .page_name {
     width: 100%;
     height: 100px;
-    border: 1px solid black;
     color: #333;
     font-size: 35px;
     font-weight: 900;
     text-align: center;
     line-height: 100px;
+    margin-bottom: 20px;
 }
 
 aside {
     float: left;
     width: 150px;
     height: auto;
-    border: 1px solid black;
-    border-top: 1px solid #333;
-    padding: 10px;
 }
 
 .category > p {
     font-size: 20px;
     font-weight: 700;
     color: #333;
-    margin: 20px 0;
 }
 
 .category > div {
@@ -45,6 +42,12 @@ aside {
     font-weight: 700;
     color: #333;
     margin: 20px;
+}
+
+.parent {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
 }
 
 .category .children {
@@ -125,14 +128,11 @@ aside {
     margin-left: 200px;
     width: 1000px;
     height: auto;
-    border: 1px solid black;
-    border-bottom: 1px solid #333;
 }
 
 .bar {
     width: 100%;
     height: 30px;
-    border: 1px solid black;
 }
 
 .bar > p {
@@ -143,10 +143,10 @@ aside {
 }
 
 .bar > div {
+    color: #333;
+    font-size: 18px;
     float: right;
     display: flex;
-    gap: 5px;
-    margin-right: 15px;
 }
 
 .bar > div > a{
@@ -156,8 +156,9 @@ aside {
 
 .list {
     width: 100%;
-    height: 30px;
-    padding: 3px;
+    height: 45px;
+    padding-top: 6px;
+    margin: 10px 0;
     box-sizing: border-box;
     border-bottom: 1px solid #999;
 }
@@ -174,14 +175,12 @@ aside {
 table {
     width: 100%;
     height: auto;
-    border: 1px solid black;
     margin: 30px 0;
     box-sizing: border-box;
 }
 
 table tr, td {
     height: 100px;
-    border: 1px solid black;
 }
 
 table tr > td:nth-of-type(1) {
@@ -241,6 +240,7 @@ table span,
 }
 
 table a {
+    font-size: 16px;
     color: black;
 }
 
@@ -265,11 +265,9 @@ td:nth-child(4) a img {
 
 .page {
     width: auto;
-    border: 1px solid black;
     display: flex;
     gap: 10px;
-    margin-left: 300px;
-    margin-bottom: 30px
+    margin: 70px 0 70px 300px;
 }
 
 .page > a {
@@ -293,14 +291,13 @@ td:nth-child(4) a img {
 }
 
 .view-toggle {
-    margin: 20px 0 0 900px;
+    margin-left: 414px;
 }
 
 .view-toggle img {
     width: 28px;
     height: 28px;
     cursor: pointer;
-    margin-right: 10px;
 }
 
 .grid-container {
@@ -322,3 +319,8 @@ td:nth-child(4) a img {
     height: 300px;
     margin-bottom: 10px;
 }
+
+.product-card > a > p:nth-of-type(2) {
+    font-size: 16px;
+}
+

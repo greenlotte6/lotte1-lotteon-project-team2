@@ -5,16 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>롯데On 로그인 : 롯데On</title>
     <link rel="stylesheet" href="/lotteOn/css/layout/layout.css" />
-    <style>
-      .title {
-        font-size: 24px;
-        font-weight: bold;
-      }
-
-      .login {
-        border-top: 1px solid black;
-      }
-    </style>
+    <link rel="stylesheet" href="/lotteOn/css/member/signup.css" />
   </head>
   <body>
     <div id="wrapper">
@@ -32,18 +23,6 @@
 
           <div class="logo">
             <img src="/lotteOn/images/logo.png" alt="lotteOn" />
-            <div class="search">
-              <form action="#">
-                <input type="search" placeholder="검색어를 입력하세요" />
-                <button type="submit" class="header_search">
-                  <img
-                    src="/lotteOn/images/search_ico.svg"
-                    alt="검색"
-                    class="search-icon"
-                  />
-                </button>
-              </form>
-            </div>
           </div>
         </div>
       </header>
@@ -53,9 +32,79 @@
         <section class="content">
           <!-- 글 시작-->
           <article class="main_content">
-            <p class="title">로그인</p>
-            <div class="login">
-              <p>내용 작성</p>
+            <p class="title">약관동의</p>
+            <div class="terms">
+              <form action="#" class="termForm">
+                <div class="term-box">
+                  <div class="term-header">
+                    <span class="required">(필수)</span> 이용약관
+                  </div>
+
+                  <textarea name="term" class="term-content" readonly>
+                      여기에 약관 내용을 넣으세요...
+                    </textarea
+                  >
+
+                  <div class="term-footer">
+                    <label class="checkbox">
+                      <input type="checkbox" />
+                      동의하기
+                    </label>
+                  </div>
+
+                  <div class="term-header">
+                    <span class="required">(필수)</span> 전자금융 이용약관
+                  </div>
+
+                  <textarea name="term" class="term-content" readonly>
+                      여기에 약관 내용을 넣으세요...
+                    </textarea
+                  >
+
+                  <div class="term-footer">
+                    <label class="checkbox">
+                      <input type="checkbox" />
+                      동의하기
+                    </label>
+                  </div>
+
+                  <div class="term-header">
+                    <span class="required">(필수)</span> 개인정보 수집동의
+                  </div>
+
+                  <textarea name="term" class="term-content" readonly>
+                      여기에 약관 내용을 넣으세요...
+                    </textarea
+                  >
+
+                  <div class="term-footer">
+                    <label class="checkbox">
+                      <input type="checkbox" />
+                      동의하기
+                    </label>
+                  </div>
+
+                  <div class="term-header">
+                    <span class="choice">(선택)</span> 위치정보 이용약관
+                  </div>
+
+                  <textarea name="term" class="term-content" readonly>
+                      여기에 약관 내용을 넣으세요...
+                    </textarea
+                  >
+
+                  <div class="term-footer">
+                    <label class="checkbox">
+                      <input type="checkbox" />
+                      동의하기
+                    </label>
+                  </div>
+                </div>
+
+                <div class="btnbox">
+                  <a href="#" class="btn">동의하기</a>
+                </div>
+              </form>
             </div>
           </article>
           <!-- 글 끝-->

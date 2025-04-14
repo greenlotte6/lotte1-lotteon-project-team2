@@ -243,7 +243,7 @@ main {
 }
 
 
-/* 사이드 바 */
+/* 사이드 바*/
 
 .sidebar {
     box-sizing: border-box;
@@ -279,6 +279,7 @@ main {
 .sidebar-menu li a:hover {
     background-color: #d6d6d6;
 }
+
 
 .main_info{
     width: 100%;

@@ -76,13 +76,6 @@
         <main>
             <section class="content">
                 <p class="page_name">향수</p>
-                <nav class="nav">
-                    <button type="button">히트상품</button>
-                    <button type="button">추천상품</button>
-                    <button type="button">최신상품</button>
-                    <button type="button">인기상품</button>
-                    <button type="button">할인상품</button>
-                </nav>
                 <!-- 사이드바-->
                 <aside>
                     <div class="category">
@@ -90,7 +83,7 @@
                         <div class="category-item">
                         <div class="parent">뷰티</div>
                         <div class="children">
-                            <a href="/lotteOn/view/product/beauty/skincare.html">스킨케어</a>
+                            <a href="/lotteOn/view/product/beauty/skincare/skincare.html">스킨케어</a>
                             <a href="/lotteOn/view/product/beauty/makeup">메이크업</a>
                             <a href="/lotteOn/view/product/beauty/perfume">향수</a>
                         </div>
@@ -172,7 +165,7 @@
                         <p>베스트 상품</p>
                         <div>
                             <div class="img-wrap">
-                                <img src="/lotteOn/images/Diptyque_FleurdePeau.jpg"><br>
+                                <img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"><br>
                                 <span class="rank">1</span>
                             </div>
                             <a href="#">딥디크 오드퍼퓸 플레르드뽀 75ml</a><br>
@@ -182,7 +175,7 @@
                         </div>
                         <div>
                             <div class="img-wrap">
-                                <img src="/lotteOn/images/lelabo_another.jpg"><br>
+                                <img src="/lotteOn/images/product/lelabo_another.jpg"><br>
                                 <span class="rank">2</span>
                             </div>
                             <a href="#">르라보 어나더 13 75ml</a>
@@ -192,7 +185,7 @@
                         </div>
                         <div>
                             <div class="img-wrap">
-                                <img src="/lotteOn/images/loewe_sutileze.jpg"><br>
+                                <img src="/lotteOn/images/product/loewe_sutileze.jpg"><br>
                                 <span class="rank">3</span>
                             </div>
                             <a href="#">로에베 아이레 수틸레사 오 드 뚜알렛 50ml</a>
@@ -225,17 +218,26 @@
                         </div>
                     </div>
                     <div class="product_list">
-                        <div class="view-toggle">
-                            <img src="/lotteOn/images/list.png" id="listViewBtn" alt="리스트">
-                            <img src="/lotteOn/images/grid.png" id="gridViewBtn" alt="그리드">
-                        </div>
+                        <nav class="nav">
+                            <button type="button">히트상품</button>
+                            <button type="button">추천상품</button>
+                            <button type="button">최신상품</button>
+                            <button type="button">인기상품</button>
+                            <button type="button">할인상품</button>
+                            <div class="view-toggle">
+                                <img src="/lotteOn/images/product/list.png" id="listViewBtn" alt="리스트">
+                                <img src="/lotteOn/images/product/grid.png" id="gridViewBtn" alt="그리드">
+                            </div>
+                        </nav>
                         <div id="listView">
                             <table>
                                 <tr>
-                                    <td><img src="/lotteOn/images/Diptyque_FleurdePeau.jpg"></td>
+                                    <td><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
                                     <td>
-                                        <span class="brand">딥디크</span><br>
-                                        오드퍼퓸 플레르드뽀 75ml
+                                        <a href="#">
+                                            <span class="brand">딥디크</span><br>
+                                            오드퍼퓸 플레르드뽀 75ml
+                                        </a>
                                     </td>
                                     <td>
                                         <span class="price_current">27,000원</span><br>
@@ -244,23 +246,25 @@
                                         <div class="free_deliver">무료배송</div>
                                     </td>
                                     <td>
-                                        <img src="/lotteOn/images/home.png"><a href="#">판매자</a><br>
-                                        <img src="/lotteOn/images/medal.png"><span>고객만족우수</span><br>
+                                        <img src="/lotteOn/images/product/home.png"><a href="#">판매자</a><br>
+                                        <img src="/lotteOn/images/product/medal.png"><span>고객만족우수</span><br>
                                         <a href="#">
                                             상품평
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/blnk_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/blnk_star.png">
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><img src="/lotteOn/images/lelabo_another.jpg"></td>
+                                    <td><img src="/lotteOn/images/product/lelabo_another.jpg"></td>
                                     <td>
-                                        <span class="brand">르라보</span><br>
-                                        어나더13 75ml
+                                        <a href="#">
+                                            <span class="brand">르라보</span><br>
+                                            어나더13 75ml
+                                        </a>
                                     </td>
                                     <td>
                                         <span class="price_current">27,000원</span><br>
@@ -269,23 +273,25 @@
                                         <span class="deliver">배송비 2,500</span>
                                     </td>
                                     <td>
-                                        <img src="/lotteOn/images/home.png"><a href="#">판매자</a><br>
-                                        <img src="/lotteOn/images/medal.png"><span>고객만족우수</span><br>
+                                        <img src="/lotteOn/images/product/home.png"><a href="#">판매자</a><br>
+                                        <img src="/lotteOn/images/product/medal.png"><span>고객만족우수</span><br>
                                         <a href="#">
                                             상품평
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/blnk_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/blnk_star.png">
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><img src="/lotteOn/images/loewe_sutileze.jpg"></td>
+                                    <td><img src="/lotteOn/images/product/loewe_sutileze.jpg"></td>
                                     <td>
-                                        <span class="brand">로에베</span><br>
-                                        아이레 수틸레사 오 드 뚜알렛 50ml
+                                        <a href="#">
+                                            <span class="brand">로에베</span><br>
+                                            아이레 수틸레사 오 드 뚜알렛 50ml
+                                        </a>
                                     </td>
                                     <td>
                                         <span class="price_current">27,000원</span><br>
@@ -294,23 +300,25 @@
                                         <div class="free_deliver">무료배송</div>
                                     </td>
                                     <td>
-                                        <img src="/lotteOn/images/home.png"><a href="#">판매자</a><br>
-                                        <img src="/lotteOn/images/medal.png"><span>고객만족우수</span><br>
+                                        <img src="/lotteOn/images/product/home.png"><a href="#">판매자</a><br>
+                                        <img src="/lotteOn/images/product/medal.png"><span>고객만족우수</span><br>
                                         <a href="#">
                                             상품평
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/blnk_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/blnk_star.png">
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><img src="/lotteOn/images/Diptyque_FleurdePeau.jpg"></td>
+                                    <td><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
                                     <td>
-                                        <span class="brand">딥디크</span><br>
-                                        오드퍼퓸 플레르드뽀 75ml
+                                        <a href="#">
+                                            <span class="brand">딥디크</span><br>
+                                            오드퍼퓸 플레르드뽀 75ml
+                                        </a>
                                     </td>
                                     <td>
                                         <span class="price_current">27,000원</span><br>
@@ -319,23 +327,25 @@
                                         <span class="deliver">배송비 2,500</span>
                                     </td>
                                     <td>
-                                        <img src="/lotteOn/images/home.png"><a href="#">판매자</a><br>
-                                        <img src="/lotteOn/images/medal.png"><span>고객만족우수</span><br>
+                                        <img src="/lotteOn/images/product/home.png"><a href="#">판매자</a><br>
+                                        <img src="/lotteOn/images/product/medal.png"><span>고객만족우수</span><br>
                                         <a href="#">
                                             상품평
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/blnk_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/blnk_star.png">
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><img src="/lotteOn/images/lelabo_another.jpg"></td>
+                                    <td><img src="/lotteOn/images/product/lelabo_another.jpg"></td>
                                     <td>
-                                        <span class="brand">르라보</span><br>
-                                        어나더13 75ml
+                                        <a href="#">
+                                            <span class="brand">르라보</span><br>
+                                            어나더13 75ml
+                                        </a>
                                     </td>
                                     <td>
                                         <span class="price_current">27,000원</span><br>
@@ -344,23 +354,25 @@
                                         <div class="free_deliver">무료배송</div>
                                     </td>
                                     <td>
-                                        <img src="/lotteOn/images/home.png"><a href="#">판매자</a><br>
-                                        <img src="/lotteOn/images/medal.png"><span>고객만족우수</span><br>
+                                        <img src="/lotteOn/images/product/home.png"><a href="#">판매자</a><br>
+                                        <img src="/lotteOn/images/product/medal.png"><span>고객만족우수</span><br>
                                         <a href="#">
                                             상품평 
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/blnk_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/blnk_star.png">
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><img src="/lotteOn/images/loewe_sutileze.jpg"></td>
+                                    <td><img src="/lotteOn/images/product/loewe_sutileze.jpg"></td>
                                     <td>
-                                        <span class="brand">로에베</span><br>
-                                        아이레 수틸레사 오 드 뚜알렛 50ml
+                                        <a href="#">
+                                            <span class="brand">로에베</span><br>
+                                            아이레 수틸레사 오 드 뚜알렛 50ml
+                                        </a>
                                     </td>
                                     <td>
                                         <span class="price_current">27,000원</span><br>
@@ -369,23 +381,25 @@
                                         <span class="deliver">배송비 2,500</span>
                                     </td>
                                     <td>
-                                        <img src="/lotteOn/images/home.png"><a href="#">판매자</a><br>
-                                        <img src="/lotteOn/images/medal.png"><span>고객만족우수</span><br>
+                                        <img src="/lotteOn/images/product/home.png"><a href="#">판매자</a><br>
+                                        <img src="/lotteOn/images/product/medal.png"><span>고객만족우수</span><br>
                                         <a href="#">
                                             상품평
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/blnk_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/blnk_star.png">
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><img src="/lotteOn/images/Diptyque_FleurdePeau.jpg"></td>
+                                    <td><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
                                     <td>
-                                        <span class="brand">딥디크</span><br>
-                                        오드퍼퓸 플레르드뽀 75ml
+                                        <a href="#">
+                                            <span class="brand">딥디크</span><br>
+                                            오드퍼퓸 플레르드뽀 75ml
+                                        </a>
                                     </td>
                                     <td>
                                         <span class="price_current">27,000원</span><br>
@@ -394,23 +408,25 @@
                                         <div class="free_deliver">무료배송</div>
                                     </td>
                                     <td>
-                                        <img src="/lotteOn/images/home.png"><a href="#">판매자</a><br>
-                                        <img src="/lotteOn/images/medal.png"><span>고객만족우수</span><br>
+                                        <img src="/lotteOn/images/product/home.png"><a href="#">판매자</a><br>
+                                        <img src="/lotteOn/images/product/medal.png"><span>고객만족우수</span><br>
                                         <a href="#">
                                             상품평
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/blnk_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/blnk_star.png">
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><img src="/lotteOn/images/lelabo_another.jpg"></td>
+                                    <td><img src="/lotteOn/images/product/lelabo_another.jpg"></td>
                                     <td>
-                                        <span class="brand">르라보</span><br>
-                                        어나더 13 75ml
+                                        <a href="#">
+                                            <span class="brand">르라보</span><br>
+                                            어나더13 75ml
+                                        </a>
                                     </td>
                                     <td>
                                         <span class="price_current">27,000원</span><br>
@@ -419,23 +435,25 @@
                                         <span class="deliver">배송비 2,500</span>
                                     </td>
                                     <td>
-                                        <img src="/lotteOn/images/home.png"><a href="#">판매자</a><br>
-                                        <img src="/lotteOn/images/medal.png"><span>고객만족우수</span><br>
+                                        <img src="/lotteOn/images/product/home.png"><a href="#">판매자</a><br>
+                                        <img src="/lotteOn/images/product/medal.png"><span>고객만족우수</span><br>
                                         <a href="#">
                                             상품평
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/blnk_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/blnk_star.png">
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><img src="/lotteOn/images/loewe_sutileze.jpg"></td>
+                                    <td><img src="/lotteOn/images/product/loewe_sutileze.jpg"></td>
                                     <td>
-                                        <span class="brand">로에베</span><br>
-                                        아이레 수틸레사 오 드 뚜알렛 50ml
+                                        <a href="#">
+                                            <span class="brand">로에베</span><br>
+                                            아이레 수틸레사 오 드 뚜알렛 50ml
+                                        </a>
                                     </td>
                                     <td>
                                         <span class="price_current">27,000원</span><br>
@@ -444,23 +462,25 @@
                                         <div class="free_deliver">무료배송</div>
                                     </td>
                                     <td>
-                                        <img src="/lotteOn/images/home.png"><a href="#">판매자</a><br>
-                                        <img src="/lotteOn/images/medal.png"><span>고객만족우수</span><br>
+                                        <img src="/lotteOn/images/product/home.png"><a href="#">판매자</a><br>
+                                        <img src="/lotteOn/images/product/medal.png"><span>고객만족우수</span><br>
                                         <a href="#">
                                             상품평 
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/blnk_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/blnk_star.png">
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><img src="/lotteOn/images/Diptyque_FleurdePeau.jpg"></td>
+                                    <td><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
                                     <td>
-                                        <span class="brand">딥디크</span><br>
-                                        오드퍼퓸 플레르드뽀 75ml
+                                        <a href="#">
+                                            <span class="brand">딥디크</span><br>
+                                            오드퍼퓸 플레르드뽀 75ml
+                                        </a>
                                     </td>
                                     <td>
                                         <span class="price_current">27,000원</span><br>
@@ -469,15 +489,15 @@
                                         <span class="deliver">배송비 2,500</span>
                                     </td>
                                     <td>
-                                        <img src="/lotteOn/images/home.png"><a href="#">판매자</a><br>
-                                        <img src="/lotteOn/images/medal.png"><span>고객만족우수</span><br>
+                                        <img src="/lotteOn/images/product/home.png"><a href="#">판매자</a><br>
+                                        <img src="/lotteOn/images/product/medal.png"><span>고객만족우수</span><br>
                                         <a href="#">
                                             상품평
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/full_star.png">
-                                            <img src="/lotteOn/images/blnk_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/full_star.png">
+                                            <img src="/lotteOn/images/product/blnk_star.png">
                                         </a>
                                     </td>
                                 </tr>
@@ -488,90 +508,110 @@
                         <div id="gridView" style="display: none;">
                             <div class="grid-container">
                             <div class="product-card">
-                                <img src="/lotteOn/images/Diptyque_FleurdePeau.jpg" alt="딥디크">
-                                <p class="brand">딥디크</p>
-                                <p>오드퍼퓸 플레르드뽀 75ml</p>
+                                <img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg" alt="딥디크">
+                                <a href="#">
+                                    <p class="brand">딥디크</p>
+                                    <p>오드퍼퓸 플레르드뽀 75ml</p>
+                                </a>
                                 <p class="price_current">27,000원</p>
                                 <span class="price_original">3,000원</span>
                                 <span class="sale">10%↓</span><br>
                                 <div class="free_deliver">무료배송</div>
                             </div>
                             <div class="product-card">
-                                <img src="/lotteOn/images/lelabo_another.jpg" alt="르라보">
-                                <p class="brand">르라보</p>
-                                <p>어나더13 75ml</p>
+                                <img src="/lotteOn/images/product/lelabo_another.jpg" alt="르라보">
+                                <a href="#">
+                                    <p class="brand">르라보</p>
+                                    <p>어나더13 75ml</p>
+                                </a>
                                 <p class="price_current">27,000원</p>
                                 <span class="price_original">3,000원</span>
                                 <span class="sale">10%↓</span><br>
                                 <span class="deliver">배송비 2,500</span>
                             </div>
                             <div class="product-card">
-                                <img src="/lotteOn/images/loewe_sutileze.jpg" alt="로에베">
-                                <p class="brand">로에베</p>
-                                <p>아이레 수틸레사 오 드 뚜알렛 50ml</p>
+                                <img src="/lotteOn/images/product/loewe_sutileze.jpg" alt="로에베">
+                                <a>
+                                    <p class="brand">로에베</p>
+                                    <p>아이레 수틸레사 오 드 뚜알렛 50ml</p>
+                                </a>
                                 <p class="price_current">27,000원</p>
                                 <span class="price_original">3,000원</span>
                                 <span class="sale">10%↓</span><br>
                                 <span class="deliver">배송비 2,500</span>
                             </div>
                             <div class="product-card">
-                                <img src="/lotteOn/images/Diptyque_FleurdePeau.jpg" alt="딥디크">
-                                <p class="brand">딥디크</p>
-                                <p>오드퍼퓸 플레르드뽀 75ml</p>
+                                <img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg" alt="딥디크">
+                                <a href="#">
+                                    <p class="brand">딥디크</p>
+                                    <p>오드퍼퓸 플레르드뽀 75ml</p>
+                                </a>
                                 <p class="price_current">27,000원</p>
                                 <span class="price_original">3,000원</span>
                                 <span class="sale">10%↓</span><br>
                                 <div class="free_deliver">무료배송</div>
                             </div>
                             <div class="product-card">
-                                <img src="/lotteOn/images/lelabo_another.jpg" alt="르라보">
-                                <p class="brand">르라보</p>
-                                <p>어나더13 75ml</p>
+                                <img src="/lotteOn/images/product/lelabo_another.jpg" alt="르라보">
+                                <a href="#">
+                                    <p class="brand">르라보</p>
+                                    <p>어나더13 75ml</p>
+                                </a>
                                 <p class="price_current">27,000원</p>
                                 <span class="price_original">3,000원</span>
                                 <span class="sale">10%↓</span><br>
                                 <span class="deliver">배송비 2,500</span>
                             </div>
                             <div class="product-card">
-                                <img src="/lotteOn/images/loewe_sutileze.jpg" alt="로에베">
-                                <p class="brand">로에베</p>
-                                <p>아이레 수틸레사 오 드 뚜알렛 50ml</p>
+                                <img src="/lotteOn/images/product/loewe_sutileze.jpg" alt="로에베">
+                                <a>
+                                    <p class="brand">로에베</p>
+                                    <p>아이레 수틸레사 오 드 뚜알렛 50ml</p>
+                                </a>
                                 <p class="price_current">27,000원</p>
                                 <span class="price_original">3,000원</span>
                                 <span class="sale">10%↓</span><br>
                                 <span class="deliver">배송비 2,500</span>
                             </div>
                             <div class="product-card">
-                                <img src="/lotteOn/images/Diptyque_FleurdePeau.jpg" alt="딥디크">
-                                <p class="brand">딥디크</p>
-                                <p>오드퍼퓸 플레르드뽀 75ml</p>
+                                <img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg" alt="딥디크">
+                                <a href="#">
+                                    <p class="brand">딥디크</p>
+                                    <p>오드퍼퓸 플레르드뽀 75ml</p>
+                                </a>
                                 <p class="price_current">27,000원</p>
                                 <span class="price_original">3,000원</span>
                                 <span class="sale">10%↓</span><br>
                                 <div class="free_deliver">무료배송</div>
                             </div>
                             <div class="product-card">
-                                <img src="/lotteOn/images/lelabo_another.jpg" alt="르라보">
-                                <p class="brand">르라보</p>
-                                <p>어나더13 75ml</p>
+                                <img src="/lotteOn/images/product/lelabo_another.jpg" alt="르라보">
+                                <a href="#">
+                                    <p class="brand">르라보</p>
+                                    <p>어나더13 75ml</p>
+                                </a>
                                 <p class="price_current">27,000원</p>
                                 <span class="price_original">3,000원</span>
                                 <span class="sale">10%↓</span><br>
                                 <span class="deliver">배송비 2,500</span>
                             </div>
                             <div class="product-card">
-                                <img src="/lotteOn/images/loewe_sutileze.jpg" alt="로에베">
-                                <p class="brand">로에베</p>
-                                <p>아이레 수틸레사 오 드 뚜알렛 50ml</p>
+                                <img src="/lotteOn/images/product/loewe_sutileze.jpg" alt="로에베">
+                                <a>
+                                    <p class="brand">로에베</p>
+                                    <p>아이레 수틸레사 오 드 뚜알렛 50ml</p>
+                                </a>
                                 <p class="price_current">27,000원</p>
                                 <span class="price_original">3,000원</span>
                                 <span class="sale">10%↓</span><br>
                                 <span class="deliver">배송비 2,500</span>
                             </div>
                             <div class="product-card">
-                                <img src="/lotteOn/images/Diptyque_FleurdePeau.jpg" alt="딥디크">
-                                <p class="brand">딥디크</p>
-                                <p>오드퍼퓸 플레르드뽀 75ml</p>
+                                <img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg" alt="딥디크">
+                                <a href="#">
+                                    <p class="brand">딥디크</p>
+                                    <p>오드퍼퓸 플레르드뽀 75ml</p>
+                                </a>
                                 <p class="price_current">27,000원</p>
                                 <span class="price_original">3,000원</span>
                                 <span class="sale">10%↓</span><br>
