@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/lotteOn/css/myPage/table-main.css">
+    <link rel="stylesheet" href="/lotteOn/css/myPage/table-sub.css">
+    <link rel="stylesheet" href="/lotteOn/css/myPage/modal-header.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="modal-wrapper">
+        <div class="modal-header">
+            <div class="modal-name">
+                <h1>주문상세</h1>
+            </div>
+            <div class="order-date">
+                <h2>2025-04-14</h2>
+            </div>
+            <div class="exit" onclick="location.href='#'" style="cursor: pointer;">
+                <h1>X</h1> <!-- 수정 예정 -->
+            </div>
+        </div>
+        <div class="modal-main">
+            <div class="title-area">
+                <h1>주문정보</h1>
+            </div>
+            <div class="order-info table-main">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>날짜</th>
+                            <th>상품정보</th>
+                            <th>결제금액</th>
+                            <th>상태</th>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td>2025-12-31</td>
+                            <td class="product-info">
+                                <div class="img-container">
+                                    <div class="img">
+                                        이미지
+                                    </div>
+                                </div>
+                                <div class="text-area">
+                                    <p>주문번호 : 1012211341</p>
+                                    <p>(주) 상호명</p>
+                                    <p>상품명</p>
+                                    <p>수량 : 1개</p>
+                                    <p>34,000원</p>
+                                </div>
+                            </td>
+                            <td>
+                                <p>판매가 : 34,000원</p>
+                                <p>할인 : -3,000원</p>
+                                <p>결제금액 : 31,000원</p>
+                            </td>
+                            <td>배송완료</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="delivery-info table-sub">
+                <div class="title-area">
+                    <h1>배송정보</h1>
+                </div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>이름</td>
+                            <td>홍길동</td>
+                        </tr>
+                        <tr>
+                            <td>연락처</td>
+                            <td>010-1234-1001</td>
+                        </tr>
+                        <tr>
+                            <td>주소</td>
+                            <td>[210**] 부산광역시 진구 대연동 121 10층 1004호</td>
+                        </tr>
+                        <tr>
+                            <td>배송요청사항</td>
+                            <td>없음</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

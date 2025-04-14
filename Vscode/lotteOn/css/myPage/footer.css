@@ -1,9 +1,0 @@
-.footer{
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-    height: 30px;
-    width: 1200px;
-    border: 1px solid black;
-}
