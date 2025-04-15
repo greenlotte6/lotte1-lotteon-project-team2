@@ -7,20 +7,49 @@
     <link rel="stylesheet" href="/lotteOn/css/myPage/layout.css">
     <link rel="stylesheet" href="/lotteOn/css/myPage/myPageMain.css">
     <link rel="stylesheet" href="/lotteOn/css/mypage/table-main.css">
-    <script src="/lotteOn/js/"></script>
-    <script>
+    <script src="/lotteOn/js/orderHistory.js"></script>
 
-        //문의내역 상태 글자 색
-        document.addEventListener('DOMContentLoaded', function(){
-            document.querySelectorAll('.inquiry-status').forEach(function(el) {
-            if (el.textContent.trim() === '답변완료') {
-                el.style.color = '#00b050';
-            }
-            });
-        });
-        //문의내역 상태 글자 색
-    </script>
+    <style>
+        .search-by-period{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 50px;
+            background: #dce6f2;
+            margin-block: 10px;
+        }
 
+        .search-by-period {
+            background: #f8f9fa;
+            padding: 16px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        .search-by-period p {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .filterDate {
+            margin-right: 8px;
+            padding: 6px 16px;
+            background: #1976d2;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .filterDate:hover {
+            background: #1565c0;
+        }
+        .datepicker {
+            margin: 0 4px;
+            padding: 4px 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
     <div id="wrapper">
@@ -35,7 +64,6 @@
                         <a href="#">장바구니</a>
                     </div>            
                 </div>
-
                 <div class="logo">
                     <img src="/lotteOn/images/logo.png" alt="lotteOn">
                     <div class="search">
@@ -108,9 +136,21 @@
                     </div>
                     <div class="order-details">
                         <div class="title-area">
-                            <h1>최근주문내역</h1>
+                            <h1>전체주문내역</h1>
                             <a href="#">더보기 ></a>
                         </div>
+                        <div class="search-by-period">
+                            <p>조회기간</p>
+                            <div>
+                                <button class="filterDate" data-period="3">3일</button>
+                                <button class="filterDate" data-period="7">7일</button>
+                                <button class="filterDate" data-period="30">1개월</button>
+                                <button class="filterDate" data-period="90">3개월</button>
+                            </div>
+                            <input type="date" class="datepicker" id="startDate">
+                            ~
+                            <input type="date" class="datepicker" id="endDate">
+                          </div>
                         <div class="order-details-table">
                             <table>
                                 <tbody>
@@ -196,202 +236,6 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-                    <div class="points-accrual-details">
-                        <div class="title-area">
-                            <h1>포인트적립내역</h1>
-                            <a href="#">더보기 ></a>
-                        </div>
-                        <div class="points-accrual-details-table">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <th>날짜</th>
-                                        <th>상품명</th>
-                                        <th>주문번호</th>
-                                        <th>작립금액</th>
-                                        <th>비고</th>
-                                        <th>유효기간</th>
-                                    </tr>
-                                </tbody>
-                                <tbody>
-                                    <tr>
-                                        <td>2022-12-13</td>
-                                        <td>구분</td>
-                                        <td>2022121001</td>
-                                        <td>340</td>
-                                        <td>상품 구매확정</td>
-                                        <td>2024-12-10</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2022-12-13</td>
-                                        <td>구분</td>
-                                        <td>2022121001</td>
-                                        <td>340</td>
-                                        <td>상품 구매확정</td>
-                                        <td>2024-12-10</td>
-                                    </tr>                                <tr>
-                                        <td>2022-12-13</td>
-                                        <td>구분</td>
-                                        <td>2022121001</td>
-                                        <td>340</td>
-                                        <td>상품 구매확정</td>
-                                        <td>2024-12-10</td>
-                                    </tr>                                <tr>
-                                        <td>2022-12-13</td>
-                                        <td>구분</td>
-                                        <td>2022121001</td>
-                                        <td>340</td>
-                                        <td>상품 구매확정</td>
-                                        <td>2024-12-10</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="product-review">
-                        <div class="title-area">
-                            <h1>상품평</h1>
-                            <a href="#">더보기 ></a>
-                        </div>
-                        <div class="product-details-table">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <th>번호</th>
-                                        <th>상품명</th>
-                                        <th>내용</th>
-                                        <th>평점</th>
-                                        <th>작성일</th>
-                                    </tr>
-                                </tbody>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>상품번호 / 상품명</td>
-                                        <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                        <td>☆☆☆☆☆</td>
-                                        <td>2024-12-10</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>상품번호 / 상품명</td>
-                                        <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                        <td>☆☆☆☆☆</td>
-                                        <td>2024-12-10</td>
-                                    </tr>                                <tr>
-                                        <td>3</td>
-                                        <td>상품번호 / 상품명</td>
-                                        <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                        <td>☆☆☆☆☆</td>
-                                        <td>2024-12-10</td>
-                                    </tr>                                <tr>
-                                        <td>4</td>
-                                        <td>상품번호 / 상품명</td>
-                                        <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                        <td>☆☆☆☆☆</td>
-                                        <td>2024-12-10</td>
-                                    </tr>                                <tr>
-                                        <td>5</td>
-                                        <td>상품번호 / 상품명</td>
-                                        <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                        <td>☆☆☆☆☆</td>
-                                        <td>2024-12-10</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="inquiry-details">
-                        <div class="title-area">
-                            <h1>문의내역</h1>
-                            <a href="#">더보기 ></a>
-                        </div>
-                        <div class="inquiry-details-table">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <th>번호</th>
-                                        <th>문의채널</th>
-                                        <th>문의유형</th>
-                                        <th>제목</th>
-                                        <th>작성일</th>
-                                        <th>상태</th>
-                                    </tr>
-                                </tbody>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>고객센터</td>
-                                        <td>주문 / 결제</td>
-                                        <td>신용카드 결제 중 오류난 경우 어떻게 하나요?</td>
-                                        <td>2022-12-12</td>
-                                        <td class="inquiry-status">검토중</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>고객센터</td>
-                                        <td>주문 / 결제</td>
-                                        <td>신용카드 결제 중 오류난 경우 어떻게 하나요?</td>
-                                        <td>2022-12-12</td>
-                                        <td class="inquiry-status">답변완료</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>고객센터</td>
-                                        <td>주문 / 결제</td>
-                                        <td>신용카드 결제 중 오류난 경우 어떻게 하나요?</td>
-                                        <td>2022-12-12</td>
-                                        <td class="inquiry-status">답변완료</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>판매자 게시판</td>
-                                        <td>배송</td>
-                                        <td>신용카드 결제 중 오류난 경우 어떻게 하나요?</td>
-                                        <td>2022-12-12</td>
-                                        <td class="inquiry-status">답변완료</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>고객센터</td>
-                                        <td>주문 / 결제</td>
-                                        <td>신용카드 결제 중 오류난 경우 어떻게 하나요?</td>
-                                        <td>2022-12-12</td>
-                                        <td class="inquiry-status">답변완료</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="mySetting">
-                        <div class="title-area">
-                            <h1>나의설정</h1>
-                        </div>
-                        <div class="mySetting-background">
-                            <div class="mySetting-margin">
-                                <div>
-                                    <h1>기본배송지설정<a href="#">변경</a></h1>
-                                    <h2>부산광역시  진구 대연동 120 한빛 빌딩 10층</h2>
-                                </div>
-                                <div >
-                                    <h1>기본배송지설정<a href="#">변경</a></h1>
-                                    <h2>
-                                        abc123@naver.com</br>
-                                        (최종수정일 2021-12-10)
-                                    </h2>
-                                </div>
-                                <div>
-                                    <h1>기본배송지설정<a href="#">변경</a></h1>
-                                    <h2>
-                                        <h2>
-                                            010-1234-1001</br>
-                                            (최종수정일 2021-12-10)
-                                        </h2>
-                                    </h2>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </article>

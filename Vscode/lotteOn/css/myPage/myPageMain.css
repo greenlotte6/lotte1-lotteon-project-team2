@@ -186,3 +186,16 @@
     color: #bfbfbf;
 }
 
+
+.inquiry-details-table tbody:nth-child(2) tr td:nth-child(6){
+    color: #bfbfbf;
+}
+
+.coupon-caution li::marker{
+    color: black;
+}
+
+.coupon-caution{
+    margin-top: 150px;
+    color: #bfbfbf;
+}
