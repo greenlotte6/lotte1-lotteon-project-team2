@@ -67,3 +67,57 @@
     color: #4F95D2 ;
     padding: 5px;
 }
+
+.modal_title_id{
+    margin-left: 20px;
+    font-size: 12px;
+    color: white;
+}
+
+/* 주문 현황 모달 */
+.order_detail{
+    width: 100%;
+    border-top: 2px solid black;
+}
+
+.order_detail thead th{
+    height: 40px;
+}
+
+.order_detail thead th:nth-child(1){
+    width: 40px;
+}
+
+.order_detail thead th:nth-child(2){
+    width: 80px;
+}
+
+.order_detail thead th:nth-child(3){
+    width: 0px;
+}
+
+.order_detail thead th:nth-child(4){
+    width: 40px;
+}
+
+.order_detail thead th:nth-child(5){
+    width: 40px;
+}
+
+.order_detail thead th:nth-child(6){
+    width: 40px;
+}
+
+.order_detail thead th:nth-child(7){
+    width: 40px;
+}
+
+.order_detail thead th:nth-child(8){
+    width: 40px;
+}
+
+.order_detail thead th:nth-child(9){
+    width: 40px;
+}
+
+
