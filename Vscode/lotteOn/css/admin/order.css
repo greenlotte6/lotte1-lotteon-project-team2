@@ -1,0 +1,69 @@
+.order_list_form{
+    width: 100%;
+}
+
+.order_list_form table{
+    text-align: center;
+    width: 100%;
+    border-top: 1px solid #D2D2D2 ;
+}
+
+.order_list_form table thead th{
+    height: 50px;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.order_list_form table thead th:nth-child(1){
+    width: 120px;
+}
+
+.order_list_form table thead th:nth-child(2){
+    width: 80px;
+}
+
+.order_list_form table thead th:nth-child(3){
+    width: 80px;
+}
+
+.order_list_form table thead th:nth-child(4){
+    width: 80px;
+}
+
+.order_list_form table thead th:nth-child(5){
+    width: 60px;
+}
+
+.order_list_form table thead th:nth-child(6){
+    width: 80px;
+}
+
+.order_list_form table thead th:nth-child(7){
+    width: 80px;
+}
+
+.order_list_form table thead th:nth-child(8){
+    width: 80px;
+}
+
+.order_list_form table thead th:nth-child(9){
+    width: 160px;
+}
+
+.order_list_form table thead th:nth-child(10){
+    width: 80px;
+}
+
+.order_list_form table tbody tr td{
+    height: 60px;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.no a{
+    text-decoration: underline;
+}
+
+.delivery a{
+    border: 1px solid #4F95D2 ;
+    color: #4F95D2 ;
+    padding: 5px;
+}
