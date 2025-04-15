@@ -217,6 +217,12 @@ table{
     font-weight: bold;
 }
 
+.modal_title_black{
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+}
+
 .modal.on {
     display: block;
 }
