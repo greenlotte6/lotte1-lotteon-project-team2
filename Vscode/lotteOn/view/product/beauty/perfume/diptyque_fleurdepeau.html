@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/lotteOn/css/layout/layout.css">
-    <link rel="stylesheet" href="/lotteOn/css/product/product_detail.css">
+    <link rel="stylesheet" href="/lotteOn/css/product/detail.css">
     <title>상품상세보기 : 롯데On</title>
 </head>
 
@@ -31,23 +31,40 @@
               }
             });
           });
+          
+          const plusBtns = document.querySelectorAll('.btn-plus');
+            const minusBtns = document.querySelectorAll('.btn-minus');
+            const quantityEls = document.querySelectorAll('#quantity');
+            const priceTotals = document.querySelectorAll('.price_total');
 
-            const plusBtn = document.querySelector('.btn-plus');
-            const minusBtn = document.querySelector('.btn-minus');
-            const quantity = document.getElementById('quantity');
-
-            let count = 1;
-
-            plusBtn.addEventListener('click', () => {
-            count++;
-            quantity.textContent = count;
+            const unitPrices = Array.from(priceTotals).map((el, i) => {
+                const priceText = el.textContent.replace(/[^0-9]/g, '');
+                const initialCount = parseInt(quantityEls[i].textContent);
+                return parseInt(priceText) / initialCount;
             });
 
-            minusBtn.addEventListener('click', () => {
-            if (count > 1) {
-                count--;
-                quantity.textContent = count;
-            }
+            plusBtns.forEach((btn, index) => {
+                btn.addEventListener('click', () => {
+                let count = parseInt(quantityEls[index].textContent);
+                count++;
+                quantityEls[index].textContent = count;
+
+                const totalPrice = unitPrices[index] * count;
+                priceTotals[index].textContent = totalPrice.toLocaleString() + '원';
+                });
+            });
+
+            minusBtns.forEach((btn, index) => {
+                btn.addEventListener('click', () => {
+                let count = parseInt(quantityEls[index].textContent);
+                if (count > 1) {
+                    count--;
+                    quantityEls[index].textContent = count;
+
+                    const totalPrice = unitPrices[index] * count;
+                    priceTotals[index].textContent = totalPrice.toLocaleString() + '원';
+                }
+                });
             });
 
             const tabs = document.querySelectorAll('.tab-menu li');
@@ -230,7 +247,7 @@
                     </div>
                     <div class="product_page">
                         <img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg">
-                        <from>
+                        <form action="#">
                             <table>
                                 <tr>
                                     <td colspan="2">상품번호 : 10010118412</td>
@@ -261,9 +278,9 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <div class="coupon">
+                                        <button type="button" class="coupon">
                                             주문 시 적용되는 할인 확인하기
-                                        </div>
+                                        </button>
                                     </td>
                                 </tr>
                                 <tr class="deliver">
@@ -290,11 +307,11 @@
                                             <button class="btn-plus">+</button>
                                           </div>
                                     </td>
-                                    <td><span class="price_total">27,550원</span></td>
+                                    <td><span class="price_total">274,550원</span></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <button type="submit" class="cart">장바구니 담기</button>
+                                        <button type="button" class="cart">장바구니 담기</button>
                                         <button type="submit" class="buy">바로 구매하기</button>
                                     </td>
                                 </tr>
@@ -304,7 +321,7 @@
                                     </td>
                                 </tr>
                             </table>
-                        </from>
+                        </form>
                         <div class="tabs">
                             <ul class="tab-menu">
                             <li class="active" data-tab="detail">상세정보</li>
@@ -720,7 +737,7 @@
                                         <li>1. 마이롯데 &gt; 주문/배송조회로 이동</li>
                                         <li>2. 주문건에서 '교환/반품접수' 버튼 선택</li>
                                       </ol>
-                                      <button type="button">주문배송조회 바로가기</button>
+                                      <a href="#"><button type="button">주문배송조회 바로가기</button></a>
                                       <p>마이롯데에서 접수가 어려우신 경우 롯데ON 고객센터(1899-7000)으로 문의하여 주시기 바랍니다.</p>
                                   
                                       <h2>교환/반품 비용</h2>
