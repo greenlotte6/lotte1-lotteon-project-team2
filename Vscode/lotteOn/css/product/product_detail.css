@@ -315,10 +315,6 @@ tr:nth-child(9) {
     height: 150px
 }
 
-.product_banner{
-    height: 150px;
-}
-  
 .tab-menu {
     display: flex;
     border-bottom: 1px solid #ccc;
@@ -576,4 +572,209 @@ tr:nth-child(9) {
     background-color: #333;
     color: #fff;
 }
+
+#qna {
+    width: 950px;
+    margin: 0 25px;
+}
+
+#qna > p:nth-of-type(1) {
+    color: #333;
+    width: 100%;
+    height: 50px;
+    margin-top: 30px;
+    font-size: 20px;
+    font-weight: 700;
+    border-bottom: 1px solid #333;
+}
+
+#qna > div:nth-of-type(1) {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    margin-top: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+#qna > div:nth-of-type(1) > p {
+    color: #666;
+    float: left; 
+}
+
+#qna > div:nth-of-type(1) span {
+    color: #333;
+    font-weight: 700;
+}
+
+#qna > div:nth-of-type(1) > button {
+    margin-left: 465px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    width: 100px;
+    height: 40px;
+}
+
+.qna_content {
+    border-bottom: 1px solid #eee;
+    padding-top: 10px;
+    box-sizing: border-box;
+}
+
+.qna_content > p:nth-of-type(1),
+.answer > p:nth-of-type(2) {
+    color: #666;
+}
+
+.qna_content > *,
+.qna_content * {
+    margin: 10px 0;
+}
+
+.answer {
+    width: 930px;
+    height: auto;
+    margin: 10px 0 10px 20px;
+    padding: 5px 15px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background-color: #eee;
+}
+
+.answer span {
+    display: inline-block;
+    width: 40px;
+    height: 14px;
+    border: 1px solid #ef2a23;
+    color: #ef2a23;
+    text-align: center;
+    line-height: 14px;
+    margin-left: 5px;
+}
+
+.qna_content > div:nth-of-type(2) {
+    display: flex;
+}
+
+.qna_content > div:nth-of-type(2) > p {
+    color: #666;
+    margin-left: 840px;
+}
+
+#exchange {
+    width: 950px;
+    margin: 0 25px;
+}
+
+.exchange-info h2,
+.exchange-policy h2 {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 30px 0 10px 0;
+  color: #222;
+}
+
+.exchange-info h3,
+.exchange-policy h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 24px 0 12px;
+  color: #333;
+}
+
+.exchange-info h4,
+.exchange-policy h4 {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 16px 0 10px;
+}
+
+.exchange-info p:nth-of-type(2) {
+    font-size: 12px;
+    color: #999;
+}
+
+.exchange-info p,
+.exchange-policy p {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.exchange-info p > span {
+    font-weight: 700;
+    font-size: 14px;
+    color: black;
+}
+
+.exchange-info table,
+.exchange-policy table {
+  width: 100%;
+  height: 200px;
+  border-top: 1px solid #ccc;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+#exchange table th {
+    color: #666;
+}
+
+.exchange-info table th,
+.exchange-info table td,
+.exchange-policy table th,
+.exchange-policy table td {
+  border-bottom: 1px solid #eee;
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.exchange-info table th,
+.exchange-policy table th {
+  width: 160px;
+  background-color: #f9f9f9;
+  color: #222;
+  font-weight: 500;
+}
+
+.exchange-info ul,
+.exchange-info ol,
+.exchange-policy ul,
+.exchange-policy ol {
+  margin-left: 20px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #444;
+}
+
+.exchange-info ul li,
+.exchange-info ol li,
+.exchange-policy ul li,
+.exchange-policy ol li {
+  margin-bottom: 6px;
+}
+
+.exchange-info ul ul,
+.exchange-policy ul ul {
+  margin-left: 18px;
+  list-style-type: disc;
+}
+
+.exchange-info button,
+.exchange-policy button {
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  padding: 8px 14px;
+  border-radius: 4px;
+  margin: 10px 0 20px 0;
+}
+
+
+
+
   
