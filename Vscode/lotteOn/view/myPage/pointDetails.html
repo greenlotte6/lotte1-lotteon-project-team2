@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="/lotteOn/css/myPage/myPageMain.css">
     <link rel="stylesheet" href="/lotteOn/css/mypage/table-main.css">
     <link rel="stylesheet" href="/lotteOn/css/myPage/pagination.css">
+    <link rel="stylesheet" href="/lotteOn/css/myPage/searchPeriod.css">
+    <script src="/lotteOn/js/myPage/searchPeriod.js"></script>
 
 </head>
 <body>
@@ -23,7 +25,6 @@
                         <a href="#">장바구니</a>
                     </div>            
                 </div>
-
                 <div class="logo">
                     <img src="/lotteOn/images/logo.png" alt="lotteOn">
                     <div class="search">
@@ -98,8 +99,43 @@
                         <div class="title-area">
                             <h1>포인트내역</h1>
                         </div>
+                        <div class="searchSpace">
+                            <p>기간조회</p>
+                            <label>
+                                <input type="radio" name="choice" value="31">
+                                <span>최근 1개월</span>
+                            </label>
+                                <label>
+                                <input type="radio" name="choice" value="93">
+                                <span>최근 3개월</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="choice" value="3">
+                                <span>직접입력</span>
+                            </label>
+                            <form class="search_form" action="#">
+                                <input type="date" class="datepicker" id="startDate">
+                                ~
+                                <input type="date" class="datepicker" id="endDate">
+                                <select name="" id="">
+                                    <option value="">전체</option>
+                                    <option value="">입금대기</option>
+                                    <option value="">결제완료</option>
+                                    <option value="">출고지시</option>
+                                    <option value="">상품준비중</option>
+                                    <option value="">배송중</option>
+                                    <option value="">배송완료</option>
+                                    <option value="">구매확정</option>
+                                    <option value="">취소</option>
+                                    <option value="">교환</option>
+                                    <option value="">반품</option>
+                                </select>
+                                <input type="search" placeholder="검색어를 입력하세요">
+                                <button>검색</button>
+                            </form>
+                        </div>
                         <div class="order-details-table">
-                            <table>
+                            <table class="table-main">
                                 <tbody>
                                     <tr>
                                         <th>날짜</th>

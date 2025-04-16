@@ -35,3 +35,45 @@ table{
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+
+.table-mySetting button{
+    width: 100px;
+    height: 30px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #747783;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+
+
+.table-mySetting select{
+    width: 150px;
+    height: 30px;
+}
+
+.email-input{
+    width: 150px;
+}
+
+.phone-input{
+    width: 100px;
+}
+
+
+.modify-btn button{
+    float: right;
+    margin-top: 30px;
+    height: 40px;
+    background-color: #548ed5;
+    color: #ffffff;
+}
+
+.delete-btn button{
+    background-color: #c0080f;
+    color: #ffffff;
+    font-weight: 400;
+}
