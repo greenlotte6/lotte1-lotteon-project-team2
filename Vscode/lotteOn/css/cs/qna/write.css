@@ -29,6 +29,7 @@
     padding: 10px 30px;
     font-size: 14px;
 }
+
 /*루트*/
 .cs_main_info{
     width: 100%;
@@ -131,6 +132,10 @@ textarea {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+}
+
+.select-group{
+  width: 450px;
 }
 
 .select-group {

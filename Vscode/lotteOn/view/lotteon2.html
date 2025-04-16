@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공지사항</title>
-    <link rel="stylesheet" href="/lotteOn/css/cs/notice/view.css">
+    <title>lotteon</title>
     <link rel="stylesheet" href="/lotteOn/css/layout/layout.css">
-    <style>
-    </style>
+    <link rel="stylesheet" href="/lotteOn/css/lotteon.css">
+    <!-- 헤더 푸터만 있습니다.(광고버전)-->
+    
+   
 </head>
 <body>
     <div id="wrapper">
-        <!-- 헤더 시작 -->
         <header>
+            <div class="advertisement" 
+            style="background-color: #F2F2F2; font-size: 38px; text-align: center;">광고</div>
             <div class="header_main">
                 <div class="user_menu">
                     <div>
@@ -25,61 +27,39 @@
 
                 <div class="logo">
                     <img src="/lotteOn/images/logo.png" alt="lotteOn">
+                    <div class="search">
+                        <form action="#">
+                            <input type="search" placeholder="검색어를 입력하세요">
+                            <button type="submit" class="header_search">
+                                <img src="/lotteOn/images/search_ico.svg" alt="검색" class="search-icon">
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </header>
-        <!-- 헤더 끝 -->
         <main>
-            <section class="content">
-                <!-- 왼쪽 사이드바 -->
-                <aside class="cs-sidebar">
-                    <div class="cs-title">자주묻는질문</div>
-                  
-                    <ul class="cs-menu">
-                      <li class="active"><a href="#">회원</a></li>
-                      <li><a href="#">쿠폰 / 이벤트</a></li>
-                      <li><a href="#">주문 / 결제</a></li>
-                      <li><a href="#">배송</a></li>
-                      <li><a href="#">취소 / 반품 / 교환</a></li>
-                      <li><a href="#">여행 / 숙박 / 항공</a></li>
-                      <li><a href="#">안전거래</a></li>
-                    </ul>
+            <div class="main-container">
 
-                </aside>
-                <!-- 사이드바 끝-->
-                <!-- 오른쪽 글 -->
-                <article class="main_content_side">
-                    <div class="notice-container">
-                        <h2>자주묻는질문</h2>
-                        <div class="notice-view">
-                            <div class="notice-header">
-                            <div class="notice-title"><span class="B_Q">Q.</span>제목<br><span class="notice-date">2025.00.00</span></div>
-                            </div>
-                            <div class="notice-content">
-                                <p>
-                                    내용<br>
-                                    test<br>
-                                    내용<br>
-                                    test<br>
-                                    내용<br>
-                                    test<br>
-                                    내용<br>
-                                    test<br>
-                                    내용<br>
-                                    test<br>
-                                </p>
-                            </div>
-                        
-                            <div class="notice-footer">
-                            <button onclick="history.back()">목록</button>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-            </section>
+              <section class="main-banner">
+                <div class="swiper mySwiper">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="/lotteOn/images/lotteon/배너이미지1.png" alt="배너1" /></div>
+                    <div class="swiper-slide"><img src="/lotteOn/images/lotteon/배너이미지2.png" alt="배너2" /></div>
+                    <div class="swiper-slide"><img src="/lotteOn/images/lotteon/배너이미지3.png" alt="배너3" /></div>
+                    <div class="swiper-slide"><img src="/lotteOn/images/lotteon/배너이미지4.png" alt="배너4" /></div>
+                    <div class="swiper-slide"><img src="/lotteOn/images/lotteon/배너이미지5.png" alt="배너5" /></div>
+                  </div>
+                  <!-- 하단 점 -->
+                  <div class="swiper-pagination"></div>
+                </div>
+              </section>
+
+              <!--사이드 바-->
+              <!--사이드 바-->
+                
+              </div>          
         </main>
-
-        <!-- 푸터 시작 -->
         <footer>
             <div class="footer_info">
                 <div>
@@ -145,7 +125,27 @@
                 <p>Copyright © LOTTESHOPPING Co., LTD. All rights reserved.</p>
             </div>
         </footer>
-        <!-- 푸터 끝 -->
     </div>
+    
 </body>
+<!-- Swiper CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+  const swiper = new Swiper(".mySwiper", {
+    loop: true,
+    effect: "slide", // 옆으로 이동
+    autoplay: {
+      delay: 4000,
+      disableOnInteraction: false
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true
+    }
+  });
+</script>
 </html>
+
+
