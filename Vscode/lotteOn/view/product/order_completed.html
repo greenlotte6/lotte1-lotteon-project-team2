@@ -4,151 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/lotteOn/css/layout/layout.css">
-    <link rel="stylesheet" href="/lotteOn/css/product/cart.css">
-    <title>장바구니 : 롯데On</title>
+    <link rel="stylesheet" href="/lotteOn/css/product/order_completed.css">
+    <title>주문완료 : 롯데On</title>
 </head>
 
 <body>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const parents = document.querySelectorAll(".category .parent");
-
+      
+          const parents = document.querySelectorAll(".category .parent");
+              
             parents.forEach(parent => {
                 parent.style.cursor = "pointer";
+        
                 parent.addEventListener("click", () => {
                 const currentChildren = parent.nextElementSibling;
-
+        
                 document.querySelectorAll(".category .children").forEach(children => {
                     if (children !== currentChildren) {
                     children.style.display = "none";
                     }
                 });
-
+        
                 if (currentChildren && currentChildren.classList.contains("children")) {
                     const isVisible = currentChildren.style.display === "block";
                     currentChildren.style.display = isVisible ? "none" : "block";
                 }
                 });
             });
-
-            const plusBtns = document.querySelectorAll('.btn-plus');
-            const minusBtns = document.querySelectorAll('.btn-minus');
-            const checkAll = document.querySelector('#check-all');
-            const itemCheckboxes = document.querySelectorAll('.cart_content input[type="checkbox"]');
-
-            function updateSummary() {
-                let totalCount = 0;
-                let originalTotalAmount = 0;
-                let discountTotal = 0;
-                let actualPayAmount = 0;
-                const uniqueVendors = new Set();
-
-                const deliveryFeePerVendor = 2500;
-                const freeShippingLimit = 1000000;
-
-                itemCheckboxes.forEach((cb) => {
-                if (cb.checked) {
-                    const cartContent = cb.closest('.cart_content');
-                    const quantity = parseInt(cartContent.querySelector('.quantity').textContent);
-
-                    const priceOriginalEl = cartContent.querySelector('.price_original');
-                    const priceTotalEl = cartContent.querySelector('.price_total');
-
-                    const unitOriginal = parseInt(priceOriginalEl.dataset.unit);
-                    const unitTotal = parseInt(priceTotalEl.dataset.unit);
-
-                    const itemDiscount = (unitOriginal - unitTotal) * quantity;
-                    const itemOriginalPrice = unitOriginal * quantity;
-                    const itemTotalPrice = unitTotal * quantity;
-
-                    const vendorNameEl = cartContent.querySelector('.vendor-name');
-                    if (vendorNameEl) {
-                    uniqueVendors.add(vendorNameEl.textContent.trim());
-                    }
-
-                    totalCount += quantity;
-                    originalTotalAmount += itemOriginalPrice;
-                    discountTotal += itemDiscount;
-                    actualPayAmount += itemTotalPrice;
-                }
-                });
-
-                const orderAmount = originalTotalAmount - discountTotal;
-                const shippingCost = (totalCount > 0 && orderAmount < freeShippingLimit) ? uniqueVendors.size * deliveryFeePerVendor : 0;
-                const finalTotal = orderAmount + shippingCost;
-
-                const shippingText =
-                totalCount === 0 ? '0'
-                    : orderAmount >= freeShippingLimit ? '무료'
-                    : shippingCost.toLocaleString() + '원';
-
-                const point = Math.floor(orderAmount * 0.01);
-
-                document.getElementById('summary-count').textContent = totalCount;
-                document.getElementById('summary-amount').textContent = originalTotalAmount.toLocaleString();
-                document.getElementById('summary-discount').textContent = '-' + discountTotal.toLocaleString();
-                document.getElementById('summary-shipping').textContent = shippingText;
-                document.getElementById('summary-point').textContent = point.toLocaleString();
-                document.getElementById('summary-total').textContent = finalTotal.toLocaleString() + '원';
-            }
-
-            plusBtns.forEach((btn) => {
-                btn.addEventListener('click', () => {
-                const cartContent = btn.closest('.cart_content');
-                const quantityEl = cartContent.querySelector('.quantity');
-                let count = parseInt(quantityEl.textContent);
-                count++;
-                quantityEl.textContent = count;
-
-                const priceOriginalEl = cartContent.querySelector('.price_original');
-                const priceTotalEl = cartContent.querySelector('.price_total');
-                const unitOriginal = parseInt(priceOriginalEl.dataset.unit);
-                const unitTotal = parseInt(priceTotalEl.dataset.unit);
-
-                // 💡 수량 반영하여 원가, 총가 동시 업데이트
-                priceOriginalEl.textContent = (unitOriginal * count).toLocaleString() + '원';
-                priceTotalEl.textContent = (unitTotal * count).toLocaleString() + '원';
-
-                updateSummary();
-                });
-            });
-
-            minusBtns.forEach((btn) => {
-                btn.addEventListener('click', () => {
-                const cartContent = btn.closest('.cart_content');
-                const quantityEl = cartContent.querySelector('.quantity');
-                let count = parseInt(quantityEl.textContent);
-                if (count > 1) {
-                    count--;
-                    quantityEl.textContent = count;
-
-                    const priceOriginalEl = cartContent.querySelector('.price_original');
-                    const priceTotalEl = cartContent.querySelector('.price_total');
-                    const unitOriginal = parseInt(priceOriginalEl.dataset.unit);
-                    const unitTotal = parseInt(priceTotalEl.dataset.unit);
-
-                    // 💡 수량 반영하여 원가, 총가 동시 업데이트
-                    priceOriginalEl.textContent = (unitOriginal * count).toLocaleString() + '원';
-                    priceTotalEl.textContent = (unitTotal * count).toLocaleString() + '원';
-
-                    updateSummary();
-                }
-                });
-            });
-
-            itemCheckboxes.forEach(cb => cb.addEventListener('change', updateSummary));
-
-            checkAll.addEventListener('change', function () {
-                const isChecked = this.checked;
-                itemCheckboxes.forEach(cb => cb.checked = isChecked);
-                updateSummary();
-            });
-
-            itemCheckboxes.forEach(cb => cb.checked = false);
-            updateSummary();
-            });
-
-      
+        });
       </script>
       
     <div id="wrapper">
@@ -304,105 +188,116 @@
                 <!-- 사이드 바 끝 -->
                  
                 <!-- 메인 시작 -->
-                <div class="cart">
-                    <h1>장바구니</h1>
-                    <div>
-                        <div>
-                            <div class="cart_header">
-                                <input type="checkbox" id="check-all">
-                                <label for="check-all">전체선택(3)</label>
-                                <button type="button">선택삭제</button>
-                            </div>
-                            <div class="cart_content" data-point="1">
-                                <div><label><input type="checkbox">롯데마트</label></div>
-                                <div>
-                                  <div class="cart_product">
-                                    <div><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></div>
-                                    <div>
-                                      <p class="vendor-name">롯데마트</p>
-                                      <p><span>딥디크 </span>오드퍼퓸 75ml</p>
-                                      <p>단일상품</p>
-                                      <p>4/17 도착 예정</p>
-                                    </div>
-                                  </div>
-                                  <div class="quantity-box">
-                                    <button class="btn-minus">-</button>
-                                    <span class="quantity">1</span>
-                                    <button class="btn-plus">+</button>
-                                  </div>
-                                  <div class="cart_price">
-                                    <p class="price_original" data-unit="300000">300,000원</p>
-                                    <p class="price_total" data-unit="200000">200,000원</p>
-                                    <p>혜택변경</p>
-                                  </div>
-                                </div>
-                            </div>
-                        
-                            <div class="cart_content" data-point="1">
-                                <div><label><input type="checkbox">롯데백화점</label></div>
-                                <div>
-                                  <div class="cart_product">
-                                    <div><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></div>
-                                    <div>
-                                      <p class="vendor-name">롯데백화점</p>
-                                      <p><span>딥디크 </span>오드퍼퓸 75ml</p>
-                                      <p>단일상품</p>
-                                      <p>4/17 도착 예정</p>
-                                    </div>
-                                  </div>
-                                  <div class="quantity-box">
-                                    <button class="btn-minus">-</button>
-                                    <span class="quantity">1</span>
-                                    <button class="btn-plus">+</button>
-                                  </div>
-                                  <div class="cart_price">
-                                    <p class="price_original" data-unit="400000">400,000원</p>
-                                    <p class="price_total" data-unit="300000">300,000원</p>
-                                    <p>혜택변경</p>
-                                  </div>
-                                </div>
-                            </div>
-
-                            <div class="cart_content" data-point="1">
-                                <div><label><input type="checkbox">롯데백화점</label></div>
-                                <div>
-                                  <div class="cart_product">
-                                    <div><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></div>
-                                    <div>
-                                      <p class="vendor-name">롯데백화점</p>
-                                      <p><span>딥디크 </span>오드퍼퓸 75ml</p>
-                                      <p>단일상품</p>
-                                      <p>4/17 도착 예정</p>
-                                    </div>
-                                  </div>
-                                  <div class="quantity-box">
-                                    <button class="btn-minus">-</button>
-                                    <span class="quantity">1</span>
-                                    <button class="btn-plus">+</button>
-                                  </div>
-                                  <div class="cart_price">
-                                    <p class="price_original" data-unit="400000">400,000원</p>
-                                    <p class="price_total" data-unit="300000">300,000원</p>
-                                    <p>혜택변경</p>
-                                  </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cart_summary">
-                            <p>결제예정금액</p>
-                            <form>
-                                <table>
-                                    <tr><th>상품수</th><td id="summary-count">0</td></tr>
-                                    <tr><th>상품금액</th><td id="summary-amount">0</td></tr>
-                                    <tr><th>할인금액</th><td id="summary-discount">0</td></tr>
-                                    <tr><th>배송비</th><td id="summary-shipping">0</td></tr>
-                                    <tr><th>적립 포인트</th><td id="summary-point">0</td></tr>
-                                    <tr class="total"><th>총</th><td id="summary-total">0</td></tr>
-                                    <tr><td colspan="2"><button type="submit">주문하기</button></td></tr>
-                                </table>
-                            </form>
-                          </div>
-                    </div>    
+                <div class="order">
+                    <h1>주문완료</h1>
+                    <table class="order_content">
+                        <tr>
+                            <th colspan="2"></th>
+                            <th>상품명</th>
+                            <th>수량</th>
+                            <th>판매가</th>
+                            <th>할인</th>
+                            <th>포인트</th>
+                            <th>배송비</th>
+                            <th>총합</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
+                            <td>
+                                <p class="vendor-name">롯데백화점</p><br>
+                                <span>딥디크</span><br>
+                                오드퍼퓸 플레르드뽀 75ml
+                            </td>
+                            <td class="quantity">1</td>
+                            <td class="price_original" data-unit="300000"ㄴ>300,000</td>
+                            <td class="price_total" data-unit="200000">100,000</td>
+                            <td>3,000</td>
+                            <td>2,500</td>
+                            <td>302,500</td>
+                        </tr>
+                    </table>
+                    <table class="order_content">
+                        <tr>
+                            <th colspan="2"></th>
+                            <th>상품명</th>
+                            <th>수량</th>
+                            <th>판매가</th>
+                            <th>할인</th>
+                            <th>포인트</th>
+                            <th>배송비</th>
+                            <th>총합</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
+                            <td>
+                                <p class="vendor-name">롯데백화점</p><br>
+                                <span>딥디크</span><br>
+                                오드퍼퓸 플레르드뽀 75ml
+                            </td>
+                            <td class="quantity">1</td>
+                            <td class="price_original" data-unit="300000"ㄴ>300,000</td>
+                            <td class="price_total" data-unit="200000">100,000</td>
+                            <td>3,000</td>
+                            <td>2,500</td>
+                            <td>302,500</td>
+                        </tr>
+                    </table>
+                    <table class="order_content">
+                        <tr>
+                            <th colspan="2"></th>
+                            <th>상품명</th>
+                            <th>수량</th>
+                            <th>판매가</th>
+                            <th>할인</th>
+                            <th>포인트</th>
+                            <th>배송비</th>
+                            <th>총합</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
+                            <td>
+                                <p class="vendor-name">롯데백화점</p><br>
+                                <span>딥디크</span><br>
+                                오드퍼퓸 플레르드뽀 75ml
+                            </td>
+                            <td class="quantity">1</td>
+                            <td class="price_original" data-unit="300000"ㄴ>300,000</td>
+                            <td class="price_total" data-unit="200000">100,000</td>
+                            <td>3,000</td>
+                            <td>2,500</td>
+                            <td>302,500</td>
+                        </tr>
+                    </table>
+                    <div class="order_info">
+                        <p>주문정보</p>
+                        <table>
+                            <tr><th>주문번호</th><td>1000121121</td></tr>
+                            <tr><th>결제방법</th><td>신용카드</td></tr>
+                            <tr><th>주문자</th><td>홍길동</td></tr>
+                            <tr><th>연락처</th><td>010-1212-1212</td></tr>
+                       </table>
+                    </div>   
+                    <div class="shipping_info">
+                        <p>배송정보</p>
+                        <table>
+                            <tr><th>수취인</th><td>홍길동</td></tr>
+                            <tr><th>연락처</th><td>010-1212-1212</td></tr>
+                            <tr><th>배송지 주소</th><td>부산 금정구 123-111 10층</td></tr>
+                        </table>
+                    </div>   
+                    <div class="cart_summary">
+                        <p>주문금액</p>
+                        <form>
+                            <table>
+                                <tr><th>총 상품수</th><td id="summary-count">0</td></tr>
+                                <tr><th>총 상품금액</th><td id="summary-amount">0</td></tr>
+                                <tr><th>총 할인금액</th><td id="summary-discount">0</td></tr>
+                                <tr><th>총 배송비</th><td id="summary-shipping">0</td></tr>
+                                <tr><th>총 적립 포인트</th><td id="summary-point">0</td></tr>
+                                <tr class="total"><th>총 결제금액</th><td id="summary-total">0</td></tr>
+                            </table>
+                        </form>
+                    </div>
                 </div>
             </section>
         </main>

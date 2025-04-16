@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>판매자별 테이블 접기</title>
+  <style>
+    .vendor-section {
+      margin-bottom: 30px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .vendor-header {
+      background-color: #f0f0f0;
+      font-weight: bold;
+      padding: 10px 16px;
+      cursor: pointer;
+    }
+
+    .vendor-group .order_content {
+      display: none;
+    }
+
+    .vendor-group .order_content:first-of-type {
+      display: table;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ✅ 원래 있던 테이블들 (순서 무관, JS가 묶어줍니다) -->
+<div id="tables-container">
+  
+  <table class="order_content">
+    <tr>
+      <th></th>
+      <th>상품명</th>
+      <th>수량</th>
+      <th>판매가</th>
+      <th>할인</th>
+      <th>포인트</th>
+      <th>배송비</th>
+      <th>총합</th>
+    </tr>
+    <tr>
+      <td><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
+      <td>
+        <p class="vendor-name">롯데백화점</p><br>
+        <span>딥디크</span><br>
+        오드퍼퓸 플레르드뽀 75ml
+      </td>
+      <td class="quantity">1</td>
+      <td class="cart_price">
+        <p class="price_original" data-unit="400000">400,000</p>
+        <p class="price_total" data-unit="300000">300,000</p>
+      </td>
+      <td>25%</td>
+      <td>3,000</td>
+      <td>2,500</td>
+      <td>302,500</td>
+    </tr>
+  </table>
+
+  <table class="order_content">
+    <tr>
+      <th></th>
+      <th>상품명</th>
+      <th>수량</th>
+      <th>판매가</th>
+      <th>할인</th>
+      <th>포인트</th>
+      <th>배송비</th>
+      <th>총합</th>
+    </tr>
+    <tr>
+      <td><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
+      <td>
+        <p class="vendor-name">롯데백화점</p><br>
+        <span>딥디크</span><br>
+        오드퍼퓸 플레르드뽀 75ml
+      </td>
+      <td class="quantity">1</td>
+      <td class="cart_price">
+        <p class="price_original" data-unit="400000">400,000</p>
+        <p class="price_total" data-unit="300000">300,000</p>
+      </td>
+      <td>25%</td>
+      <td>3,000</td>
+      <td>2,500</td>
+      <td>302,500</td>
+    </tr>
+  </table>
+
+  <table class="order_content">
+    <tr>
+      <th></th>
+      <th>상품명</th>
+      <th>수량</th>
+      <th>판매가</th>
+      <th>할인</th>
+      <th>포인트</th>
+      <th>배송비</th>
+      <th>총합</th>
+    </tr>
+    <tr>
+      <td><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
+      <td>
+        <p class="vendor-name">롯데마트</p><br>
+        <span>딥디크</span><br>
+        오드퍼퓸 플레르드뽀 75ml
+      </td>
+      <td class="quantity">1</td>
+      <td class="cart_price">
+        <p class="price_original" data-unit="300000">300,000</p>
+        <p class="price_total" data-unit="200000">200,000</p>
+      </td>
+      <td>33%</td>
+      <td>3,000</td>
+      <td>2,500</td>
+      <td>302,500</td>
+    </tr>
+  </table>
+
+  <table class="order_content">
+    <tr>
+      <th></th>
+      <th>상품명</th>
+      <th>수량</th>
+      <th>판매가</th>
+      <th>할인</th>
+      <th>포인트</th>
+      <th>배송비</th>
+      <th>총합</th>
+    </tr>
+    <tr>
+      <td><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
+      <td>
+        <p class="vendor-name">롯데마트</p><br>
+        <span>딥디크</span><br>
+        오드퍼퓸 플레르드뽀 75ml
+      </td>
+      <td class="quantity">1</td>
+      <td class="cart_price">
+        <p class="price_original" data-unit="300000">300,000</p>
+        <p class="price_total" data-unit="200000">200,000</p>
+      </td>
+      <td>33%</td>
+      <td>3,000</td>
+      <td>2,500</td>
+      <td>302,500</td>
+    </tr>
+  </table>
+
+</div>
+
+<script>
+  const tables = Array.from(document.querySelectorAll('.order_content'));
+  const container = document.getElementById('tables-container');
+  const vendorGroups = {};
+
+  tables.forEach(table => {
+    const vendor = table.querySelector('.vendor-name')?.innerText.trim();
+    if (!vendor) return;
+    if (!vendorGroups[vendor]) vendorGroups[vendor] = [];
+    vendorGroups[vendor].push(table);
+  });
+
+  container.innerHTML = '';
+
+  Object.entries(vendorGroups).forEach(([vendor, tables]) => {
+    const section = document.createElement('div');
+    section.className = 'vendor-section';
+
+    const header = document.createElement('div');
+    header.className = 'vendor-header';
+    header.innerText = `${vendor} ▼`;
+
+    const group = document.createElement('div');
+    group.className = 'vendor-group';
+
+    tables.forEach((table, i) => {
+      if (i !== 0) table.style.display = 'none';
+      group.appendChild(table);
+    });
+
+    header.addEventListener('click', () => {
+      const allTables = group.querySelectorAll('.order_content');
+      allTables.forEach((t, i) => {
+        if (i === 0) return; // 첫 테이블은 항상 보임
+        t.style.display = t.style.display === 'none' ? 'table' : 'none';
+      });
+    });
+
+    section.appendChild(header);
+    section.appendChild(group);
+    container.appendChild(section);
+  });
+</script>
+
+</body>
+</html>
