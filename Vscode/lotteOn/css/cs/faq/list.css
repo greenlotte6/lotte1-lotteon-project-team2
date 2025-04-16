@@ -110,7 +110,8 @@
     padding-bottom: 20px;
   }
   
-/* FAQ 섹션 */
+
+
 .faq-section {
   background-color: #fff;
   padding: 20px;
@@ -120,7 +121,13 @@
   margin-bottom: 30px;
 }
 
-/* FAQ 카테고리 */
+.B_Q{
+  font-size: 20px;
+  margin-right: 5px;
+  color: #1548d4;
+  font-weight: bold;
+}
+
 .faq-category {
   margin: 0px;
 }
@@ -132,7 +139,6 @@
   margin-bottom: 10px;
 }
 
-/* FAQ 항목 */
 .faq-item {
   margin-bottom: 10px;
 }
