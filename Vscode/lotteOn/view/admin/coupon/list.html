@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 주문현황 : 롯데On</title>
+    <title>관리자 쿠폰목록 : 롯데On</title>
     <link rel="stylesheet" href="/lotteOn/css/admin/admin.css">
-    <link rel="stylesheet" href="/lotteOn/css/admin/order.css">
+    <link rel="stylesheet" href="/lotteOn/css/admin/coupon.css">
     <link rel="stylesheet" href="/lotteOn/css/layout/layout.css">
     
     <!-- 사이드바-->
@@ -132,9 +132,9 @@
                 <article class="main_content_side">
                     <!-- 여기부터 글 작성 -->
                     <div class="main_head">
-                        <p class="main_head_title">주문현황</p>
+                        <p class="main_head_title">쿠폰목록</p>
                         <div style="float: right;">
-                            <p style="font-size: 16px;">Home > 주문관리 ><span> 주문현황</span></p>
+                            <p style="font-size: 16px;">Home > 쿠폰관리 ><span> 쿠폰목록</span></p>
                         </div>
                     </div>
 
@@ -142,9 +142,9 @@
                         <div class="select_box">
                             <form action="#">
                                 <select name="brand" style="width: 100px;">
-                                    <option value="상품명">주문번호</option>
-                                    <option value="상품번호">주문자</option>
-                                    <option value="판매자">주문자명</option>
+                                    <option value="쿠폰번호">쿠폰번호</option>
+                                    <option value="쿠폰명">쿠폰명</option>
+                                    <option value="발급자">발급자</option>
                                 </select>
                                 <input type="text" name="keyword" class="search_text" placeholder="키워드 입력">
                                 <input type="submit" class="search_btn" value="검색">
@@ -152,49 +152,37 @@
                         </div>
                     </div>
 
-                    <form action="#" class="order_list_form">
-                        <table>
-                            <thead>
-                                <th>주문번호</th>
-                                <th>주문자</th>
-                                <th>주문자명</th>
-                                <th>상품명</th>
-                                <th>주문건수</th>
-                                <th>주문합계</th>
-                                <th>결제수단</th>
-                                <th>주문상태</th>
-                                <th>주문일</th>
-                                <th>배송</th>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="no"><a class="detail" href="#">10121211341</a></td>
-                                    <td>abc123</td>
-                                    <td>김유신</td>
-                                    <td>맥북</td>
-                                    <td>2</td>
-                                    <td>102,900</td>
-                                    <td>신용카드</td>
-                                    <td>결제카드</td>
-                                    <td>0000-00-00 00:00:00</td>
-                                    <td><a href="#" class="delivery">배송하기</a> </td>
-                                </tr>
-                                <tr>
-                                    <td class="no"><a href="#" class="detail">10121211341</a></td>
-                                    <td>abc123</td>
-                                    <td>김유신</td>
-                                    <td>맥북</td>
-                                    <td>2</td>
-                                    <td>102,900</td>
-                                    <td>신용카드</td>
-                                    <td>결제카드</td>
-                                    <td>0000-00-00 00:00:00</td>
-                                    <td><a href="#" class="delivery">배송하기</a> </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <table class="coupon_list_table">
+                        <thead>
+                            <th>쿠폰번호</th>
+                            <th>쿠폰종류</th>
+                            <th>쿠폰명</th>
+                            <th>혜택</th>
+                            <th>사용기간</th>
+                            <th>발급자</th>
+                            <th>발급수</th>
+                            <th>사용수</th>
+                            <th>상태</th>
+                            <th>발급일</th>
+                            <th>관리</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="no"><a class="detail" href="#">10121211341</a></td>
+                                <td>개발상품 할인</td>
+                                <td>10월 한달 감사 쿠폰</td>
+                                <td>2,000 할인</td>
+                                <td>0000-00-00 ~ 0000-00-00</td>
+                                <td>(주)다있어</td>
+                                <td>102</td>
+                                <td>43</td>
+                                <td>발급중</td>
+                                <td>0000-00-00 00:00:00</td>
+                                <td><a href="#" class="manage">종료</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-                    </form>
                     <!-- 페이징 -->
                     <p style="text-align: center; margin-top: 10px;">
                         이전 1 2 3 4 5 다음
