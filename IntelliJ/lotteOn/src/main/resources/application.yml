@@ -31,11 +31,11 @@ spring:
                     starttls:
                         enable: true
     application:
-        name: greendae
+        name: lotteOn
         version: ${version}
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        password: Qwerty123@
+        password: Asdf33143!@
         url: jdbc:mysql://13.209.74.140:3306/greendae
         username: greendae
     devtools:
