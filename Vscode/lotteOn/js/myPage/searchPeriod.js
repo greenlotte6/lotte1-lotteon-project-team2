@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 document.getElementById('endDate').value = getToday();
                 document.getElementById('startDate').value = getDateNDaysAgo(92);
             } else if (this.value === "3") { // 직접입력
-                // 직접입력은 사용자가 날짜를 직접 선택하도록 두고, 별도 처리 없음
+
                 document.getElementById('startDate').value = "";
                 document.getElementById('endDate').value = "";
             }

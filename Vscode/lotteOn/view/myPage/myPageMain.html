@@ -12,6 +12,50 @@
     <script src="/lotteOn/js/myPage/modal.js"></script>
     <script src="/lotteOn/js/myPage/inquiry.js"></script>
 
+    <style>
+        .rating {
+            display: flex;
+        }
+
+        .rating__input {
+            display: none; /* 라디오버튼 hide */
+        }
+
+        .rating__label .star-icon {
+            width: 24px;
+            height: 24px;
+            display: block;
+            background-image: url("../images/ico-star-empty.svg");
+            background-repeat: no-repeat;
+        }
+        .rating__label {
+            width: 12px; /* 원본 사이즈/2 */
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .rating__label .star-icon {
+            width: 12px; /* 원본 사이즈/2 */
+            height: 24px;
+            display: block;
+            position: relative;
+            left: 0;
+            background-image: url("/lotteOn/images/ico-star-empty.svg");
+            background-repeat: no-repeat;
+        }
+
+        .rating__label--full .star-icon {
+            background-position: right;
+        }
+        .rating__label--half .star-icon {
+            background-position: left;
+        }
+
+        .star:has(~ .star:hover)::after {
+            background-image: url("../images/ico-star-full.svg");;
+        }
+
+    </style>
+
 </head>
 <body>
     <div id="wrapper">
@@ -120,9 +164,33 @@
                                                 </div>
                                             </div>
                                             <div class="text-area">
-                                                <p class="order_detail_a">주문번호 : 1012211341</p>
-                                                <p class="seller_info_a">(주) 상호명</p>
-                                                <p>상품명</p>
+                                                <a href="#" class="order_details_a order_number">주문번호 : 1012211341</a>
+                                                <a href="#" class="seller_info_a">(주) 상호명</a>
+                                                <a href="#">상품명</a>
+                                                <p>수량 : 1개</p>
+                                                <p>34,000원</p>
+                                            </div>
+                                        </td>
+                                        <td>배송완료</td>
+                                        <td>
+                                            <input type="submit" class="orderdetails-btn purhase_confirm_btn" value="구매확정" data-order="#">
+                                            <input type="submit" class="orderdetails-btn product_review_btn" value="상품평쓰기">
+                                            <input type="submit" class="orderdetails-btn return_request_btn" value="반품신청">
+                                            <input type="submit" class="orderdetails-btn exchange_request_btn" value="교환신청">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2022-12-13</td>
+                                        <td class="product-info">
+                                            <div class="img-container">
+                                                <div class="img">
+                                                    이미지
+                                                </div>
+                                            </div>
+                                            <div class="text-area">
+                                                <a href="#" class="order_detail_a">주문번호 : 1012211341</a>
+                                                <a href="#" class="seller_info_a">(주) 상호명</a>
+                                                <a href="#">상품명</a>
                                                 <p>수량 : 1개</p>
                                                 <p>34,000원</p>
                                             </div>
@@ -144,19 +212,19 @@
                                                 </div>
                                             </div>
                                             <div class="text-area">
-                                                <p>주문번호 : 1012211341</p>
-                                                <p>(주) 상호명</p>
-                                                <p>상품명</p>
+                                                <a href="#" class="order_detail_a">주문번호 : 1012211341</a>
+                                                <a href="#" class="seller_info_a">(주) 상호명</a>
+                                                <a href="#">상품명</a>
                                                 <p>수량 : 1개</p>
                                                 <p>34,000원</p>
                                             </div>
                                         </td>
                                         <td>배송완료</td>
                                         <td>
-                                            <input type="submit" class="orderdetails-btn" value="구매확정">
-                                            <input type="submit" class="orderdetails-btn" value="상품평쓰기">
-                                            <input type="submit" class="orderdetails-btn" value="반품신청">
-                                            <input type="submit" class="orderdetails-btn" value="교환신청">
+                                            <input type="submit" class="orderdetails-btn purhase_confirm_btn" value="구매확정">
+                                            <input type="submit" class="orderdetails-btn product_review_btn" value="상품평쓰기">
+                                            <input type="submit" class="orderdetails-btn return_request_btn" value="반품신청">
+                                            <input type="submit" class="orderdetails-btn exchange_request_btn" value="교환신청">
                                         </td>
                                     </tr>
                                     <tr>
@@ -168,19 +236,19 @@
                                                 </div>
                                             </div>
                                             <div class="text-area">
-                                                <p>주문번호 : 1012211341</p>
-                                                <p>(주) 상호명</p>
-                                                <p>상품명</p>
+                                                <a href="#" class="order_detail_a">주문번호 : 1012211341</a>
+                                                <a href="#" class="seller_info_a">(주) 상호명</a>
+                                                <a href="#">상품명</a>
                                                 <p>수량 : 1개</p>
                                                 <p>34,000원</p>
                                             </div>
                                         </td>
                                         <td>배송완료</td>
                                         <td>
-                                            <input type="submit" class="orderdetails-btn " value="구매확정">
-                                            <input type="submit" class="orderdetails-btn" value="상품평쓰기">
-                                            <input type="submit" class="orderdetails-btn" value="반품신청">
-                                            <input type="submit" class="orderdetails-btn" value="교환신청">
+                                            <input type="submit" class="orderdetails-btn purhase_confirm_btn" value="구매확정">
+                                            <input type="submit" class="orderdetails-btn product_review_btn" value="상품평쓰기">
+                                            <input type="submit" class="orderdetails-btn return_request_btn" value="반품신청">
+                                            <input type="submit" class="orderdetails-btn exchange_request_btn" value="교환신청">
                                         </td>
                                     </tr>
                                 </tbody>
@@ -199,7 +267,7 @@
                                         <th>날짜</th>
                                         <th>상품명</th>
                                         <th>주문번호</th>
-                                        <th>작립금액</th>
+                                        <th>적립금액</th>
                                         <th>비고</th>
                                         <th>유효기간</th>
                                     </tr>
@@ -262,7 +330,50 @@
                                         <td>1</td>
                                         <td>상품번호 / 상품명</td>
                                         <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                        <td>☆☆☆☆☆</td>
+                                        <td>
+                                            <div class="rating">
+                                                <label class="rating__label rating__label--half star" for="starhalf">
+                                                    <input type="radio" id="star1half" class="rating__input" name="rating" value="">
+                                                    <span class="star-icon"></span>
+                                                </label>
+                                                <label class="rating__label rating__label--full star" for="star1">
+                                                    <input type="radio" id="star1" class="rating__input" name="rating" value="">
+                                                    <span class="star-icon"></span>
+                                                </label>
+                                                <label class="rating__label rating__label--half star" for="starhalf">
+                                                    <input type="radio" id="star2half" class="rating__input" name="rating" value="">
+                                                    <span class="star-icon"></span>
+                                                </label>
+                                                <label class="rating__label rating__label--full star" for="star1">
+                                                    <input type="radio" id="star2" class="rating__input" name="rating" value="">
+                                                    <span class="star-icon"></span>
+                                                </label>
+                                                <label class="rating__label rating__label--half star" for="starhalf">
+                                                    <input type="radio" id="star3half" class="rating__input" name="rating" value="">
+                                                    <span class="star-icon"></span>
+                                                </label>
+                                                <label class="rating__label rating__label--full star" for="star1">
+                                                    <input type="radio" id="star3" class="rating__input" name="rating" value="">
+                                                    <span class="star-icon"></span>
+                                                </label>
+                                                <label class="rating__label rating__label--half star" for="starhalf">
+                                                    <input type="radio" id="star4half" class="rating__input" name="rating" value="">
+                                                    <span class="star-icon"></span>
+                                                </label>
+                                                <label class="rating__label rating__label--full star" for="star1">
+                                                    <input type="radio" id="star4" class="rating__input" name="rating" value="">
+                                                    <span class="star-icon"></span>
+                                                </label>
+                                                <label class="rating__label rating__label--half star" for="starhalf">
+                                                    <input type="radio" id="star5half" class="rating__input" name="rating" value="">
+                                                    <span class="star-icon"></span>
+                                                </label>
+                                                <label class="rating__label rating__label--full star" for="star1">
+                                                    <input type="radio" id="star5" class="rating__input" name="rating" value="">
+                                                    <span class="star-icon"></span>
+                                                </label>
+                                            </div>
+                                        </td>
                                         <td>2024-12-10</td>
                                     </tr>
                                     <tr>
@@ -526,10 +637,22 @@
                                     <tr>
                                         <td>반품유형</td>
                                         <td>
-                                            <input type="radio"/> 단순 변심 &ensp;
-                                            <input type="radio"/> 파손 및 불량 &ensp;
-                                            <input type="radio"/> 주문 실수 &ensp;
-                                            <input type="radio"/> 기타 &ensp;
+                                            <label>
+                                                <input type="radio" name="choice">
+                                                <span>단순 변심</span>
+                                            </label>
+                                                <label>
+                                                <input type="radio" name="choice">
+                                                <span>파손 및 불량</span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="choice">
+                                                <span>주문 실수</span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="choice">
+                                                <span>기타</span>
+                                            </label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -617,10 +740,22 @@
                                     <tr>
                                         <td>반품유형</td>
                                         <td>
-                                            <input type="radio"/> 단순 변심 &ensp;
-                                            <input type="radio"/> 파손 및 불량 &ensp;
-                                            <input type="radio"/> 주문 실수 &ensp;
-                                            <input type="radio"/> 기타 &ensp;
+                                            <label>
+                                                <input type="radio" name="choice">
+                                                <span>단순 변심</span>
+                                            </label>
+                                                <label>
+                                                <input type="radio" name="choice">
+                                                <span>파손 및 불량</span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="choice">
+                                                <span>주문 실수</span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="choice">
+                                                <span>기타</span>
+                                            </label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -731,7 +866,6 @@
                 </div>
             </div>
         </div>
-
         <!--판매자정보 모달 팝업-->
         <div class="modal seller_info_modal">
             <div class="modal_popup">
@@ -786,8 +920,61 @@
                                 <p>* 위 정보는 전자상거래법 제 20조 제 2항 및 동법 시행령 제 25조 제 2항에 의거하여 소비자 보호에 의거 공개합니다.</p>
                             </div>
                             <div class="btn">
-                                <input type="submit" value="문의하기" onclick="location.href='#'";>
+                                <input type="submit" class="inquiry_btn" value="문의하기">
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--문의하기 모달-->
+        <div class="modal inquiry_modal">
+            <div class="modal_popup">
+                <div class="modal-wrapper">
+                    <div class="modal-header">
+                        <div class="modal-name">
+                            <p>문의하기</p>
+                        </div>
+                        <div class="exit" onclick="location.href='#'" style="cursor: pointer;">
+                            <p class="modalClose">X</p> <!-- 수정 예정 -->
+                        </div>
+                    </div>
+                    <div class="modal-main table-sub">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>문의종류</td>
+                                    <td>
+                                        <input type="radio" name="role" value=""/> 상품 &ensp;
+                                        <input type="radio" name="role" value=""/> 배송 &ensp;
+                                        <input type="radio" name="role" value=""/> 반품/취소 &ensp;
+                                        <input type="radio" name="role" value=""/> 교환 &ensp;
+                                        <input type="radio" name="role" value=""/> 기타 &ensp;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td>
+                                        <input type="text">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>제목</td>
+                                    <td>
+                                        <input type="text">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>내용</td>
+                                    <td>
+                                        <textarea></textarea>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="btn">
+                            <input type="submit" value="등록하기" onclick="location.href='#'">
+                            <input type="submit" value="취소" class="modalClose">
                         </div>
                     </div>
                 </div>

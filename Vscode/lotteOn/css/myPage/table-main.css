@@ -58,6 +58,13 @@ table{
     height: auto;
 }
 
-.text-area{
+
+.text-area p, .text-area a{
     display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.text-area a{
+    text-decoration-line: underline;
 }

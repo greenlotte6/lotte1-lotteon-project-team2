@@ -248,9 +248,10 @@ main {
 .sidebar {
     box-sizing: border-box;
     width: 200px;
-    border: 1px solid #C0C0C0;
     float: left;
     border-collapse: collapse;
+    height: 100vh;
+    border-right: 1px solid #C0C0C0;
 }
 
 .sidebar-title {
@@ -261,6 +262,11 @@ main {
     border-bottom: 1px solid #ccc;
     color: #333;
     border-collapse: collapse;
+}
+
+.sidebar-menu {
+    border: 1px solid #C0C0C0;
+    
 }
 
 .sidebar-menu li {

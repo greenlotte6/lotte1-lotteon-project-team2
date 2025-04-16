@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function(){
-    const modal = document.querySelector('.modal');
+    const modal = document.querySelectorAll('.modal');
     const modalClose = document.querySelectorAll('.modalClose');
 
 
@@ -8,49 +8,65 @@ document.addEventListener('DOMContentLoaded', function(){
     const return_request_modal = document.querySelector('.return_request_modal');
     const exchange_request_modal = document.querySelector('.exchange_request_modal');
     const seller_info_modal = document.querySelector('.seller_info_modal');
-    const order_detail_modal = document.querySelector('.order_detail_modal');
+    const order_details_modal = document.querySelector('.order_detail_modal');
+    const inquiry_modal = document.querySelector('.inquiry_modal');
 
-    const purhase_confirm_btn = document.querySelector('.purhase_confirm_btn');
-    const product_review_btn = document.querySelector('.product_review_btn');
-    const return_request_btn = document.querySelector('.return_request_btn');
-    const exchange_request_btn = document.querySelector('.exchange_request_btn');
-    const seller_info_a = document.querySelector('.seller_info_a');
-    const order_detail_a = document.querySelector('.order_detail_a');
 
     
-    // 구매확정 모달
-    purhase_confirm_btn.addEventListener('click', function(){
-        purhase_confirm_modal.style.display = 'block';
-        
+
+
+    const purhase_confirm_btn = document.querySelectorAll('.purhase_confirm_btn');
+    const product_review_btn = document.querySelectorAll('.product_review_btn');
+    const return_request_btn = document.querySelectorAll('.return_request_btn');
+    const exchange_request_btn = document.querySelectorAll('.exchange_request_btn');
+    const seller_info_a = document.querySelectorAll('.seller_info_a');
+    const order_details_a = document.querySelectorAll('.order_detail_a');
+    const inquiry_btn = document.querySelectorAll('.inquiry_btn');
+
+
+    purhase_confirm_btn.forEach(function(btn){
+        btn.addEventListener('click', function(){
+            purhase_confirm_modal.style.display ='block';
+        });
     });
 
-    // 상품평 모달
-    product_review_btn.addEventListener('click', function(){
-        product_review_modal.style.display = 'block';
-        
+    product_review_btn.forEach(function(btn){
+        btn.addEventListener('click', function(){
+            product_review_modal.style.display ='block';
+        });
     });
     
-    // 반품신청 모달
-    return_request_btn.addEventListener('click', function(){
-        return_request_modal.style.display = 'block';
-        
+    return_request_btn.forEach(function(btn){
+        btn.addEventListener('click', function(){
+            return_request_modal.style.display ='block';
+        });
     });
 
-    // 교환신청 모달
-    exchange_request_btn.addEventListener('click', function(){
-        exchange_request_modal.style.display = 'block';
-        
+    exchange_request_btn.forEach(function(btn){
+        btn.addEventListener('click', function(){
+            exchange_request_modal.style.display ='block';
+        });
     });
 
-    // 주문상세 모달
-    order_detail_a.addEventListener('click', function(){
-        order_detail_modal.style.display = 'block';
-    })
+    seller_info_a.forEach(function(btn){
+        btn.addEventListener('click', function(){
+            seller_info_modal.style.display ='block';
+        });
+    });
 
-    // 판매자정보 모달
-    seller_info_a.addEventListener('click', function(){
-        seller_info_modal.style.display = 'block';
-    })
+    order_details_a.forEach(function(btn){
+        btn.addEventListener('click', function(){
+            order_details_modal.style.display ='block';
+        });
+    });
+
+    inquiry_btn.forEach(function(btn){
+        btn.addEventListener('click', function(){
+            inquiry_modal.style.display ='block';
+            seller_info_modal.style.display = 'none';
+        });
+    });
+
 
 
     // 모달 닫기 버튼
