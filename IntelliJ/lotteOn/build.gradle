@@ -4,8 +4,15 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.7'
 }
 
-group = 'kr.co.lotteon'
+group = 'kr.co.lotteOn'
 version = '0.0.1-SNAPSHOT'
+
+// application.properties 파일 참조를 위한 스크립트
+processResources {
+    filesMatching("application.yml") {
+        expand(project.properties)
+    }
+}
 
 java {
     toolchain {
@@ -43,4 +50,8 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+clean {
+    delete file("src/main/generated")
 }
