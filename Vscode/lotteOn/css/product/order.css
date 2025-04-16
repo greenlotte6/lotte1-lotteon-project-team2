@@ -172,7 +172,8 @@ aside {
     color: #333;
 }
 
-.price_origin {
+.price_origin,
+.price_original {
     color: #aaa;
     text-decoration: line-through;
 }
@@ -181,153 +182,60 @@ aside {
     color: red;
 }
 
-.cart {
+.order {
     margin-left: 200px;
     width: 1000px;
     height: auto;
+    border: 1px solid black;
 }
 
-.cart > h1 {
+.order > h1 {
     font-size: 30px;
     font-weight: 700;
     text-align: center;
     margin: 40px 0;
 }
 
-.cart_header {
-    width: 600px;
-    margin-top: 20px;
-}
-
-.cart_header > button {
-    width: 70px;
-    height: 30px;
-    margin-left: 440px;
-    border: 1px solid #999;
-    border-radius: 5px;
-    background-color: #fff;
-}
-
-.cart_content {
-    width: 600px;
+.order_content {
+    width: 999px;
     height: auto;
     border: 1px solid #eee;
-    box-sizing: border-box;
-    margin-top: 10px;
     margin-bottom: 30px;
-}
-  
-.cart_content > div {
-    display: flex;
-    align-items: center;
+    border-collapse: collapse;
 }
 
-.cart_content > div:nth-of-type(1) {
-    padding: 18px 10px;
-    box-sizing: border-box;
+.order_content td,
+.order_content th {
+    text-align: center;
+    font-size: 14px;
     border-bottom: 1px solid #eee;
+    padding: 5px;
 }
 
-.cart_content > div:nth-of-type(1) > label {
-    font-size: 18px;
-    font-weight: 700;
-}
-
-.cart label > input {
-    margin-right: 10px;
-}
-
-.cart_content img {
+.order_content img {
     width: 100px;
     height: 100px;
 }
 
-.cart_product {
-    display: flex;  
-    padding: 10px 0;
-}
-
-.cart_product p {
-    margin: 5px 0;
-}
-
-.cart_product p:nth-of-type(1) {
+.vendor-name {
     width: 70px;
     height: 20px;
     background-color: #78685b;
     color: #fff;
     text-align: center;
     line-height: 20px;
+    margin-left: 130px;
+    margin-bottom: -15px;
 }
 
-.cart_product  p:nth-of-type(2) > span {
+.order_content td span {
     font-size: 14px;
     font-weight: 700;
 } 
 
-.cart_content p:nth-of-type(3) {
-    color: #666;
-}
-
-.cart_content p:nth-of-type(4) {
-    color: #4185ed;
-}
-
-.quantity-box {
-    display: flex;
-    align-items: center;
-    width: 100px;
-    height: 80px;
-    margin: 0 20px;
-    border-right: 1px solid #eee;
-    border-left: 1px solid #eee;
-}
-
-.quantity-box button {
-    margin: 10px;
-    width: 25px;
-    height: 25px;
-    color: #666;
-    font-size: 14px;
-    background-color: #fff;
-    border: 1px solid #aaa;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-.cart_price > p {
-    margin: 5px 0;
-}
-
-.price_original {
-    color: #999;
-    text-decoration: line-through;
-}
-
-.cart_price > p:nth-child(2) {
-    font-weight: 700;
-    font-size: 16px;
-}
-
-.cart_price > p:nth-child(3) {
-    width: 60px;
-    height: 20px;
-    border: 1px solid #ef2a23;
-    border-radius: 5px;
-    text-align: center;
-    line-height: 20px;
-    color: #ef2a23;
-}
-
-.cart > div {
-    display: flex;
-}
-
 .cart_summary {
     width: 350px;
     height: 400px;
-    margin-top: 20px;
-    margin-left: 20px;
     border: 1px solid #eee;
     padding: 10px;
 }
@@ -352,6 +260,10 @@ aside {
     font-size: 14px;
 }
 
+.order_content td p {
+    font-size: 14px;
+}
+
 .cart_summary table th {
     color: #666;
     text-align: left; 
@@ -369,8 +281,6 @@ aside {
 .total > td {
     border-top: 1px solid #eee;
     color: #ef2a23;
-    font-size: 20px;
-    font-weight: 700;
 }
 
 .cart_summary table button {
@@ -382,3 +292,77 @@ aside {
     color: #fff;
     font-size: 20px;
 }
+
+.vendor-section {
+    margin-bottom: 30px;
+}
+
+.vendor-header {
+    background-color: #f8f8f8;
+    padding: 14px 20px;
+    font-weight: 600;
+    font-size: 18px;
+    color: #333;
+    display: flex;
+    justify-content: space-between; 
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.vendor-title {
+    font-size: inherit; 
+}
+
+.vendor-toggle-icon {
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
+}
+
+.vendor-group .order_content {
+    display: none;
+}
+
+.vendor-group .order_content:first-of-type {
+    display: table;
+}
+
+.order_info {
+    border: 1px solid black;
+    display: flex;
+}
+
+.order_info > div > p {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin: 20px 0;
+}
+
+.order_info > div:nth-child(1) > table {
+    width: 500px;
+    border: 1px solid black;
+}
+
+.order_info > div:nth-child(1) > table td,
+.order_info > div:nth-child(1) > table th {
+    font-size: 14px;
+    color: #333;
+    text-align: left;
+    padding: 5px;
+}
+
+.order_info > div:nth-child(1) > table input {
+    width: 200px;
+    height: 30px;
+}
+
+.order_info table tr:nth-child(4) input,
+.order_info table tr:nth-child(5) input,
+.order_info table tr:nth-child(6) textarea {
+    width: 350px;
+}
+
+
+
+
