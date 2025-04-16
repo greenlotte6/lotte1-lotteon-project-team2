@@ -185,6 +185,10 @@ table {
   border-collapse: collapse;
 }
 
+textarea{
+    border: 1px solid #DEDEDE ;
+}
+
 /* 모달 */
 .modal_btn {
   display: block;
@@ -300,6 +304,7 @@ table {
   background-color: #a6a6a6;
   border: none;
   font-size: 16px;
+  cursor: pointer;
 }
 
 .modal_btn_register {
@@ -311,6 +316,13 @@ table {
   background-color: #00b050;
   border: none;
   font-size: 16px;
+  cursor: pointer;
+}
+
+.modal_title_id{
+    margin-left: 20px;
+    font-size: 12px;
+    color: white;
 }
 
 /* 검색 부분 */
@@ -354,3 +366,5 @@ table {
   overflow: hidden;
   margin-bottom: 20px;
 }
+
+

@@ -12,8 +12,212 @@
 
 .coupon_list_table thead th{
     height: 40px;
+    border-bottom: 1px solid #E8E8E8;
+}
+
+.coupon_list_table tbody tr td{
+    height: 50px;
+    border-bottom: 1px solid #E8E8E8;
 }
 
 .coupon_list_table thead th:nth-child(1){
-    
+    width: 85px;
+}
+
+.coupon_list_table thead th:nth-child(2){
+    width: 91px;
+}
+
+.coupon_list_table thead th:nth-child(3){
+    width: 130px;
+}
+
+.coupon_list_table thead th:nth-child(4){
+    width: 80px;
+}
+
+.coupon_list_table thead th:nth-child(5){
+    width: 160px;
+}
+
+.coupon_list_table thead th:nth-child(6){
+    width: 80px;
+}
+
+.coupon_list_table thead th:nth-child(7){
+    width: 40px;
+}
+
+.coupon_list_table thead th:nth-child(8){
+    width: 40px;
+}
+
+.coupon_list_table thead th:nth-child(9){
+    width: 40px;
+}
+
+.coupon_list_table thead th:nth-child(10){
+    width: 130px;
+}
+
+
+.coupon_list_table thead th:nth-child(11){
+    width: 40px;
+}
+
+.no a{
+    text-decoration: underline;
+}
+
+.coupon_info{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.coupon_info tbody tr td{
+    height: 40px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-top: 1px solid #D9D9D9;
+    border-bottom: 1px solid #D9D9D9;
+}
+
+.coupon_info tbody tr td:nth-child(1){
+    width: 100px;
+    background-color: #F2F2F2;
+    text-align: center;
+}
+
+.coupon_info tbody tr td:nth-child(2){
+    width: 300px;
+}
+
+.coupon_info tbody tr td:nth-child(3){
+    width: 100px;
+    background-color: #F2F2F2;
+}
+
+.coupon_info tbody tr td:nth-child(4){
+    width: 150px;
+}
+
+.coupon_info tbody tr:nth-last-child(1){
+    height: auto;
+    min-height: 60px;
+}
+
+#close_btn{
+    margin: 0px auto;
+    box-sizing: border-box;
+    width: 120px;
+    height: 40px;
+    color: white;
+    background-color: #00b050;
+    border: none;
+    font-size: 16px;
+    display: block;
+    cursor: pointer;
+}
+
+.coupon_register_table{
+    width: 100%;
+}
+
+.coupon_register_table tr td{
+    height: 40px;
+    border-top: 1px solid #D2D2D2;
+    border-bottom: 1px solid #D2D2D2;
+    padding-left: 10px;
+}
+
+.coupon_register_table tr td:nth-child(1){
+    text-align: center;
+    background-color: #F2F2F2;
+    width: 100px;
+}
+
+.coupon_register_table tr td:nth-child(2){
+    width: 500px;
+}
+
+.coupon_register_table select{
+    width: 20%;
+    height: 60%;
+}
+
+.coupon_register_table input[type="text"]{
+    height: 60%;
+    width: 60%;
+}
+
+.coupon_register_table textarea{
+    width: 60%;
+    height: 80%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 20px; /* 줄 간격, 칸 간격 */
+    margin-bottom: 1rem;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 80px; /* 최소 너비 고정 */
+}
+
+
+/* 쿠폰발급현황*/
+
+.coupon_issued_table{
+    width: 100%;
+    border-top: 1px solid #A6A6A6;
+    text-align: center;
+}
+
+.coupon_issued_table thead th{
+    height: 40px;
+    border-bottom: 1px solid #E8E8E8;
+}
+
+.coupon_issued_table tbody tr td{
+    height: 50px;
+    border-bottom: 1px solid #E8E8E8;
+}
+
+.coupon_issued_table thead th:nth-child(1){
+    width: 100px;
+}
+
+.coupon_issued_table thead th:nth-child(2){
+    width: 100px;
+}
+
+.coupon_issued_table thead th:nth-child(3){
+    width: 80px;
+}
+
+.coupon_issued_table thead th:nth-child(4){
+    width: 100px;
+}
+
+.coupon_issued_table thead th:nth-child(5){
+    width: 60px;
+}
+
+.coupon_issued_table thead th:nth-child(6){
+    width: 60px;
+}
+
+.coupon_issued_table thead th:nth-child(7){
+    width: 120px;
+}
+
+.coupon_issued_table thead th:nth-child(8){
+    width: 40px;
 }

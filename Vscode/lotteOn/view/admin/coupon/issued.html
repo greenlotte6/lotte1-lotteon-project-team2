@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 쿠폰목록 : 롯데On</title>
+    <title>관리자 쿠폰발급현황 : 롯데On</title>
     <link rel="stylesheet" href="/lotteOn/css/admin/admin.css">
     <link rel="stylesheet" href="/lotteOn/css/admin/coupon.css">
     <link rel="stylesheet" href="/lotteOn/css/layout/layout.css">
@@ -132,9 +132,9 @@
                 <article class="main_content_side">
                     <!-- 여기부터 글 작성 -->
                     <div class="main_head">
-                        <p class="main_head_title">쿠폰목록</p>
+                        <p class="main_head_title">쿠폰발급현황</p>
                         <div style="float: right;">
-                            <p style="font-size: 16px;">Home > 쿠폰관리 ><span> 쿠폰목록</span></p>
+                            <p style="font-size: 16px;">Home > 쿠폰관리 ><span> 쿠폰발급현황</span></p>
                         </div>
                     </div>
 
@@ -142,9 +142,10 @@
                         <div class="select_box">
                             <form action="#">
                                 <select name="brand" style="width: 100px;">
+                                    <option value="발급번호">발급번호</option>
                                     <option value="쿠폰번호">쿠폰번호</option>
                                     <option value="쿠폰명">쿠폰명</option>
-                                    <option value="발급자">발급자</option>
+                                    <option value="사용자">사용자</option>
                                 </select>
                                 <input type="text" name="keyword" class="search_text" placeholder="키워드 입력">
                                 <input type="submit" class="search_btn" value="검색">
@@ -152,47 +153,29 @@
                         </div>
                     </div>
 
-                    <table class="coupon_list_table">
+                    <table class="coupon_issued_table">
                         <thead>
+                            <th>발급번호</th>
                             <th>쿠폰번호</th>
                             <th>쿠폰종류</th>
                             <th>쿠폰명</th>
-                            <th>혜택</th>
-                            <th>사용기간</th>
-                            <th>발급자</th>
-                            <th>발급수</th>
-                            <th>사용수</th>
+                            <th>사용자</th>
                             <th>상태</th>
-                            <th>발급일</th>
+                            <th>사용일</th>
                             <th>관리</th>
                         </thead>
                         <tbody>
                             <tr>
                                 <td class="no"><a class="detail" href="#">10121211341</a></td>
+                                <td>10121211341</td>
                                 <td>개발상품 할인</td>
                                 <td>10월 한달 감사 쿠폰</td>
-                                <td>2,000 할인</td>
-                                <td>0000-00-00 ~ 0000-00-00</td>
-                                <td>(주)다있어</td>
-                                <td>102</td>
-                                <td>43</td>
-                                <td>발급중</td>
+                                <td>akwe123</td>
+                                <td style="color: red;">미사용</td>
                                 <td>0000-00-00 00:00:00</td>
-                                <td><a href="#" class="manage">종료</a></td>
+                                <td><a href="#" class="manage">중단</a></td>
                             </tr>
-                            <tr>
-                                <td class="no"><a class="detail" href="#">10121211341</a></td>
-                                <td>개발상품 할인</td>
-                                <td>10월 한달 감사 쿠폰</td>
-                                <td>2,000 할인</td>
-                                <td>0000-00-00 ~ 0000-00-00</td>
-                                <td>(주)다있어</td>
-                                <td>102</td>
-                                <td>43</td>
-                                <td>발급중</td>
-                                <td>0000-00-00 00:00:00</td>
-                                <td><a href="#" class="manage">종료</a></td>
-                            </tr>
+                           
                         </tbody>
                     </table>
 
@@ -294,12 +277,24 @@
                             <td>(주)다있어</td>
                         </tr>
                         <tr>
+                            <td>발급번호</td>
+                            <td>10120012134</td>
+                            <td>사용여부</td>
+                            <td style="color: red;">미사용</td>
+                        </tr>
+                        <tr>
                             <td>쿠폰종류</td>
-                            <td colspan="3">개별상품 할인</td>
+                            <td>개별상품 할인</td>
+                            <td>발급대상</td>
+                            <td>akwe121</td>
                         </tr>
                         <tr>
                             <td>쿠폰명</td>
                             <td colspan="3">10월 한달 감사 쿠폰 포인트</td>
+                        </tr>
+                        <tr>
+                            <td>혜택</td>
+                            <td colspan="3">2,000 원 할인</td>
                         </tr>
                         <tr>
                             <td>사용기간</td>
