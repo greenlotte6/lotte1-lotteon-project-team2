@@ -1,0 +1,55 @@
+logging:
+    level:
+        org:
+            hibernate:
+                orm:
+                    jdbc:
+                        bind: trace
+        root: info
+mybatis:
+    mapper-locations: classpath:mappers/**/*.xml
+server:
+    port: 8080
+    servlet:
+        context-path: /
+spring:
+    servlet:
+        multipart:
+            location: uploads
+            max-file-size: 10MB
+
+    mail:
+        host: smtp.gmail.com
+        port: 587
+        username: clsrntkdgh@gmail.com
+        password: redohcjnlkzeagdo
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    timeout: 5000
+                    starttls:
+                        enable: true
+    application:
+        name: greendae
+        version: ${version}
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        password: Qwerty123@
+        url: jdbc:mysql://13.209.74.140:3306/greendae
+        username: greendae
+    devtools:
+        livereload:
+            enabled: true
+    jpa:
+        database: mysql
+        hibernate:
+            ddl-auto: none
+            naming:
+                physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        properties:
+            hibernate:
+                format_sql: true
+                show_sql: false
+    thymeleaf:
+        prefix: classpath:/templates
