@@ -15,6 +15,42 @@
     font-weight: 600;
 }
 
+.sidebar {
+    box-sizing: border-box;
+    width: 200px;
+    border: 1px solid #C0C0C0;
+    float: left;
+    border-collapse: collapse;
+}
+
+.sidebar-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    color: #333;
+    border-collapse: collapse;
+}
+
+.sidebar-menu li {
+    border-bottom: 1px solid #ddd;
+    border-collapse: collapse;
+}
+
+.sidebar-menu li a {
+    display: block;
+    padding: 10px 40px; 
+    color: #333;
+    font-weight: 400;
+    transition: background-color 0.2s;
+}
+
+.sidebar-menu li a:hover {
+    background-color: #d6d6d6;
+}
+
+
 .cs-title {
     color: #111;
     text-align: center;
@@ -134,3 +170,66 @@
     font-weight: bold;
     margin: 8px 0;
 }
+
+.hit-products {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+  }
+  
+  .hit-products .section-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #111;
+    padding-bottom: 10px;
+  }
+  
+  .product-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    padding-bottom: 10px;
+    transition: transform 0.2s ease;
+  }
+  
+  .product-card:hover {
+    transform: translateY(-6px);
+  }
+  
+  .product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .product-info {
+    padding: 12px;
+  }
+  
+  .product-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .product-price {
+    font-size: 14px;
+    color: #444;
+  }
+  
+  .product-price del {
+    color: #aaa;
+    margin-right: 6px;
+  }
+  
+  .product-price .discount {
+    color: crimson;
+    margin-right: 6px;
+  }
+  
+  .product-price strong {
+    color: #000;
+  }
+  
