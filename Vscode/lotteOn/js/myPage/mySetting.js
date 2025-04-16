@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function(){
-    
+    // 이메일 입력
     const email2nd = document.getElementById('email-2nd');
     const emailSelect = document.getElementById('email-select');
     
@@ -10,7 +10,5 @@ document.addEventListener('DOMContentLoaded', function(){
         email2nd.value = this.value;
       }
     });
-    
-
     
 });
