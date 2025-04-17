@@ -22,7 +22,7 @@ jobs:
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2.6.0
         with:
-          arguments: build -x test # 테스트 제외하고 빌드 실행
+          arguments: build -x
           build-root-directory: IntelliJ/lotteOn
 
       - name: Get JAR_FILE
