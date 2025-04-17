@@ -59,6 +59,8 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
             log.info("email={}", email);
         }
 
+        log.info("▶ 추출된 사용자 정보: email={}, name={}", email, name);
+
         String uid = email.substring(0, email.lastIndexOf("@"));
 
         if(provider.equals("kakao")){
@@ -68,23 +70,26 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
         }else{
             uid = "G_" + uid;
         }
-
+        log.info("▶ 생성된 uid={}", uid);
         // 회원 테이블에서 사용자 확인
         Optional<User> optUser = userRepository.findById(uid);
-
+        log.info("▶ DB 조회 결과: 존재함? {}", optUser.isPresent());
         User user = null;
         if(optUser.isPresent()){
             // 회원이 존재하지 않으면 정보를 저장
             user = optUser.get();
+            log.info("▶ 기존 사용자 로그인: {}", user.getUid());
         }else{
             user = User.builder()
                     .uid(uid)
                     .name(name)
+                    .email(email)
                     .role("USER")
                     .provider(provider)
                     .build();
-
+            log.info("▶ 신규 사용자 저장 시도: {}", user);
             userRepository.save(user);
+            log.info("▶ 사용자 저장 완료");
         }
 
 
