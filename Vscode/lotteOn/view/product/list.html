@@ -9,61 +9,67 @@
 </head>
 
 <body>
-    <script>
-        // 슬라이드 인덱스 저장
-        let index = 0;
-      
-        // 슬라이더 이동 함수 (전역 선언)
-        function moveSlide(direction) {
-          const slides = document.getElementById('slides');
-          const totalSlides = Math.ceil(slides.children.length / 2);
-          
-          index += direction;
-          if (index < 0) index = totalSlides - 1;
-          if (index >= totalSlides) index = 0;
-      
-          slides.style.transform = `translateX(-${index * 100}%)`;
-        }
-      
-        // 리스트 / 그리드 뷰 전환 함수 (전역 선언)
-        function toggleView(view) {
-          const wrapper = document.getElementById('productWrapper');
-          wrapper.classList.remove('list', 'grid');
-          wrapper.classList.add(view);
-        }
-      
-        // DOM 로드 후 실행
-        document.addEventListener("DOMContentLoaded", function () {
-          // 카테고리 아코디언 기능
-          const parents = document.querySelectorAll(".category .parent");
-      
-          parents.forEach(parent => {
-            parent.style.cursor = "pointer";
-      
-            parent.addEventListener("click", () => {
-              const currentChildren = parent.nextElementSibling;
-      
-              document.querySelectorAll(".category .children").forEach(children => {
-                if (children !== currentChildren) {
-                  children.style.display = "none";
-                }
-              });
-      
-              if (currentChildren && currentChildren.classList.contains("children")) {
-                const isVisible = currentChildren.style.display === "block";
-                currentChildren.style.display = isVisible ? "none" : "block";
-              }
-            });
+  <script>
+    // 슬라이드 인덱스 저장
+    let index = 0;
+  
+    // 슬라이더 이동 함수
+    function moveSlide(direction) {
+      const slides = document.getElementById('slides');
+      const totalSlides = Math.ceil(slides.children.length / 2);
+  
+      index += direction;
+      if (index < 0) index = totalSlides - 1;
+      if (index >= totalSlides) index = 0;
+  
+      slides.style.transform = `translateX(-${index * 100}%)`;
+    }
+  
+    // 리스트 / 그리드 뷰 전환 함수
+    function toggleView(view) {
+      const wrapper = document.getElementById('productWrapper');
+      const toGridBtn = document.getElementById('toGrid');
+      const toListBtn = document.getElementById('toList');
+  
+      wrapper.classList.remove('list', 'grid');
+      wrapper.classList.add(view);
+  
+      // 버튼 상태도 같이 바꾸기
+      if (view === 'grid') {
+        toGridBtn.style.display = 'none';
+        toListBtn.style.display = 'inline-block';
+      } else {
+        toGridBtn.style.display = 'inline-block';
+        toListBtn.style.display = 'none';
+      }
+    }
+  
+    // DOM 로드 후 실행
+    document.addEventListener("DOMContentLoaded", function () {
+      // 카테고리 아코디언 기능
+      const parents = document.querySelectorAll(".category .parent");
+  
+      parents.forEach(parent => {
+        parent.style.cursor = "pointer";
+  
+        parent.addEventListener("click", () => {
+          const currentChildren = parent.nextElementSibling;
+  
+          document.querySelectorAll(".category .children").forEach(children => {
+            if (children !== currentChildren) {
+              children.style.display = "none";
+            }
           });
-      
-          // 리스트/그리드 버튼 이벤트 연결 (onclick 속성 안 써도 됨)
-          const listBtn = document.querySelector(".view-toggle button:nth-child(1)");
-          const gridBtn = document.querySelector(".view-toggle button:nth-child(2)");
-      
-          listBtn.addEventListener("click", () => toggleView("list"));
-          gridBtn.addEventListener("click", () => toggleView("grid"));
+  
+          if (currentChildren && currentChildren.classList.contains("children")) {
+            const isVisible = currentChildren.style.display === "block";
+            currentChildren.style.display = isVisible ? "none" : "block";
+          }
         });
-    </script>
+      });
+    });
+  </script>
+  
       
 <body>
     <div id="wrapper">
@@ -358,9 +364,14 @@
                             </div>
                         </div>
                         <div class="view-toggle">
-                            <button onclick="toggleView('list')"><img src="/lotteOn/images/product/list.png"></button>
-                            <button onclick="toggleView('grid')"><img src="/lotteOn/images/product/grid.png"></button>
+                          <button id="toGrid" onclick="toggleView('grid')">
+                            <img src="/lotteOn/images/product/grid.png" alt="그리드 보기">
+                          </button>
+                          <button id="toList" onclick="toggleView('list')" style="display: none;">
+                            <img src="/lotteOn/images/product/list.png" alt="리스트 보기">
+                          </button>
                         </div>
+                        
                     </div>
                 
                     <div id="productWrapper" class="product-wrapper list">
@@ -376,7 +387,8 @@
                           </div>
                           <div class="product-price">
                             <del>164,000원</del><br>
-                            <span class="discount">5%</span> 155,800원
+                            <span class="discount">5%</span> 
+                            <span>155,800</span> 원
                             <div class="icons">
                               <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
                               <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
@@ -394,7 +406,8 @@
                             </div>
                             <div class="product-price">
                               <del>164,000원</del><br>
-                              <span class="discount">5%</span> 155,800원
+                              <span class="discount">5%</span>
+                              <span>155,800</span> 원
                               <div class="icons">
                                 <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
                                 <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
@@ -412,7 +425,8 @@
                             </div>
                             <div class="product-price">
                               <del>164,000원</del><br>
-                              <span class="discount">5%</span> 155,800원
+                              <span class="discount">5%</span>
+                              <span>155,800</span> 원
                               <div class="icons">
                                 <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
                                 <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
@@ -430,7 +444,8 @@
                             </div>
                             <div class="product-price">
                               <del>164,000원</del><br>
-                              <span class="discount">5%</span> 155,800원
+                              <span class="discount">5%</span>  
+                              <span>155,800</span> 원
                               <div class="icons">
                                 <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
                                 <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
@@ -448,7 +463,8 @@
                             </div>
                             <div class="product-price">
                               <del>164,000원</del><br>
-                              <span class="discount">5%</span> 155,800원
+                              <span class="discount">5%</span> 
+                              <span>155,800</span> 원
                               <div class="icons">
                                 <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
                                 <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
@@ -466,7 +482,8 @@
                             </div>
                             <div class="product-price">
                               <del>164,000원</del><br>
-                              <span class="discount">5%</span> 155,800원
+                              <span class="discount">5%</span> 
+                              <span>155,800</span> 원
                               <div class="icons">
                                 <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
                                 <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
@@ -484,7 +501,8 @@
                             </div>
                             <div class="product-price">
                               <del>164,000원</del><br>
-                              <span class="discount">5%</span> 155,800원
+                              <span class="discount">5%</span>
+                              <span>155,800</span> 원
                               <div class="icons">
                                 <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
                                 <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
@@ -502,7 +520,8 @@
                             </div>
                             <div class="product-price">
                               <del>164,000원</del><br>
-                              <span class="discount">5%</span> 155,800원
+                              <span class="discount">5%</span> 
+                              <span>155,800</span> 원
                               <div class="icons">
                                 <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
                                 <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
@@ -520,7 +539,8 @@
                             </div>
                             <div class="product-price">
                               <del>164,000원</del><br>
-                              <span class="discount">5%</span> 155,800원
+                              <span class="discount">5%</span> 
+                              <span>155,800</span> 원
                               <div class="icons">
                                 <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
                                 <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
@@ -538,7 +558,8 @@
                             </div>
                             <div class="product-price">
                               <del>164,000원</del><br>
-                              <span class="discount">5%</span> 155,800원
+                              <span class="discount">5%</span>
+                              <span>155,800</span> 원
                               <div class="icons">
                                 <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
                                 <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
@@ -556,7 +577,8 @@
                             </div>
                             <div class="product-price">
                               <del>164,000원</del><br>
-                              <span class="discount">5%</span> 155,800원
+                              <span class="discount">5%</span>  
+                              <span>155,800</span> 원
                               <div class="icons">
                                 <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
                                 <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
@@ -574,7 +596,8 @@
                             </div>
                             <div class="product-price">
                               <del>164,000원</del><br>
-                              <span class="discount">5%</span> 155,800원
+                              <span class="discount">5%</span> 
+                              <span>155,800</span> 원
                               <div class="icons">
                                 <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
                                 <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
