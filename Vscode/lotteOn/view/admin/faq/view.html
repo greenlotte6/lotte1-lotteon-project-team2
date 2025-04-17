@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>관리자 문의하기목록 : 롯데On</title>
+    <title>관리자 자주묻는질문 보기 : 롯데On</title>
     <link rel="stylesheet" href="/lotteOn/css/admin/admin.css" />
-    <link rel="stylesheet" href="/lotteOn/css/admin/qna/list.css" />
+    <link rel="stylesheet" href="/lotteOn/css/admin/faq/view.css" />
     <link rel="stylesheet" href="/lotteOn/css/layout/layout.css" />
 
     <!-- 사이드바-->
@@ -133,79 +133,46 @@
           <article class="main_content_side">
             <!-- 여기부터 글 작성 -->
             <div class="main_head">
-              <p class="main_head_title">문의하기 목록</p>
+              <p class="main_head_title">자주묻는질문 보기</p>
               <div style="float: right">
                 <p style="font-size: 16px">
-                  Home > 고객센터 ><span>문의하기</span>
+                  Home > 고객센터 ><span>자주묻는질문</span>
                 </p>
               </div>
             </div>
 
-            <div class="select_div">
-              <div class="select_box">
-                <form action="#">
-                  <select name="brand" style="width: 100px">
-                    <option value="1차유형">1차유형&emsp;&emsp;▼</option>
-                    <option value="1차유형">1차유형&emsp;&emsp;▼</option>
-                  </select>
-                  <select name="brand" style="width: 100px">
-                    <option value="2차유형">2차유형&emsp;&emsp;▼</option>
-                    <option value="2차유형">2차유형&emsp;&emsp;▼</option>
-                  </select>
-                </form>
-              </div>
-            </div>
+            <div class="Blank_box"></div>
 
-            <form action="#" class="member_list_form">
+            <form action="#" class="reply_list_form">
               <table>
-                <thead>
-                  <th><input type="checkbox" /></th>
-                  <th>번호</th>
-                  <th>1차유형</th>
-                  <th>2차유형</th>
-                  <th>제목</th>
-                  <th>작성자</th>
-                  <th>작성일</th>
-                  <th>상태</th>
-                </thead>
                 <tbody>
                   <tr>
-                    <td>
-                      <input type="checkbox" />
-                    </td>
-                    <td>120</td>
-                    <td>회원</td>
-                    <td>가입</td>
-                    <td>개인회원과 법인회원에 차이가 있나요 ?</td>
-                    <td>ch***</td>
-                    <td>00.00.00</td>
-                    <td>검토중</td>
+                    <td class="label">유형</td>
+                    <td>회원 - 가입</td>
                   </tr>
 
                   <tr>
+                    <td class="label">제목</td>
+                    <td>개인회원과 법인회원의 차이가 있나요?</td>
+                  </tr>
+
+                  <tr>
+                    <td class="label">내용</td>
                     <td>
-                      <input type="checkbox" />
+                      개인회원하고 법인회원하고 차이를 알고 싶어요. 그리고
+                      법인회원으로 가입하면 혜택이 있나요? 마지막으로
+                      법인가입하려면 어떻게 해야하죠? 알려주세요
                     </td>
-                    <td>120</td>
-                    <td>회원</td>
-                    <td>가입</td>
-                    <td>개인회원과 법인회원에 차이가 있나요 ?</td>
-                    <td>ch***</td>
-                    <td>00.00.00</td>
-                    <td style="color: blue">답변완료</td>
                   </tr>
                 </tbody>
               </table>
 
-              <div style="margin-top: 20px">
-                <button type="submit" class="delete_btn">선택삭제</button>
+              <div class="button_group">
+                <button type="button" class="delete_button">삭제</button>
+                <button type="submit" class="modify_button">수정</button>
+                <button type="button" class="list_button">목록</button>
               </div>
             </form>
-
-            <!-- 페이징 -->
-            <p style="text-align: center; margin-top: 10px">
-              이전 1 2 3 4 5 다음
-            </p>
           </article>
         </section>
       </main>
