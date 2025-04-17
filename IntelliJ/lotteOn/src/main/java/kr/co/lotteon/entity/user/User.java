@@ -31,6 +31,9 @@ public class User {
     private String nationality; // 국적
     private String zip;         // 우편번호
 
+    // OAuth 인증 업체 정보
+    private String provider;
+
     @CreationTimestamp
     private LocalDateTime regDate; // 가입일자
 
