@@ -142,7 +142,8 @@ main {
   margin-top: 20px;
 }
 
-.delete_button {
+.delete_button,
+.modify_button {
   margin-top: 5px;
   box-sizing: border-box;
   width: 100px;
@@ -185,8 +186,8 @@ table {
   border-collapse: collapse;
 }
 
-textarea{
-    border: 1px solid #DEDEDE ;
+textarea {
+  border: 1px solid #dedede;
 }
 
 /* 모달 */
@@ -248,10 +249,10 @@ textarea{
   font-weight: bold;
 }
 
-.modal_title_black{
-    color: black;
-    font-size: 16px;
-    font-weight: bold;
+.modal_title_black {
+  color: black;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .modal.on {
@@ -319,10 +320,10 @@ textarea{
   cursor: pointer;
 }
 
-.modal_title_id{
-    margin-left: 20px;
-    font-size: 12px;
-    color: white;
+.modal_title_id {
+  margin-left: 20px;
+  font-size: 12px;
+  color: white;
 }
 
 /* 검색 부분 */
@@ -366,5 +367,3 @@ textarea{
   overflow: hidden;
   margin-bottom: 20px;
 }
-
-
