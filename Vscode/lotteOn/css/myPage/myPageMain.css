@@ -66,19 +66,7 @@
     width: 100%;
 }
 
-.img-container{
-    display: flex;
-    height: 150px;
-    justify-content: center;
-    align-items: center;
-}
 
-.img {
-    width: 120px;
-    height: 120px;
-    margin-right: 5px;
-    border: 1px solid black;
-}
 
 
 .order-details tr{

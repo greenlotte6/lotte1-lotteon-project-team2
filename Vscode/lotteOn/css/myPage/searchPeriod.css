@@ -3,7 +3,7 @@ input[type="radio"] {
 }
 input[type="radio"] + span {
     display: inline-block;
-    padding: 5px 15px;
+    padding: 5px 10px;
     border: 1px solid #aaa;
     border-radius: 4px;
     background: #ffffff;
