@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const return_request_modal = document.querySelector('.return_request_modal');
     const exchange_request_modal = document.querySelector('.exchange_request_modal');
     const seller_info_modal = document.querySelector('.seller_info_modal');
-    const order_details_modal = document.querySelector('.order_detail_modal');
+    const order_details_modal = document.querySelector('.order_details_modal');
     const inquiry_modal = document.querySelector('.inquiry_modal');
 
 
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const return_request_btn = document.querySelectorAll('.return_request_btn');
     const exchange_request_btn = document.querySelectorAll('.exchange_request_btn');
     const seller_info_a = document.querySelectorAll('.seller_info_a');
-    const order_details_a = document.querySelectorAll('.order_detail_a');
+    const order_details_a = document.querySelectorAll('.order_details_a');
     const inquiry_btn = document.querySelectorAll('.inquiry_btn');
 
 

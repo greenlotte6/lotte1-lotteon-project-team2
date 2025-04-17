@@ -3,6 +3,7 @@
 table{
     width: 100%;
     border-collapse: collapse;
+    
 }
 
 
@@ -22,12 +23,21 @@ table{
     padding-left: 15px;
 }
 
+.table-sub td{
+    font-size: 14px;
+}
+
 .table-sub table input[type="text"]{
     width: 300px;
     height: 30px;
     border: 1px solid #a6a6a6;
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+.table-sub input[type="radio"]{
+    margin-left: 8px;
+    margin-right: 3px;
 }
 
 textarea{
