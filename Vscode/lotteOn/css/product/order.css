@@ -186,7 +186,7 @@ aside {
     margin-left: 200px;
     width: 1000px;
     height: auto;
-    border: 1px solid black;
+    margin-bottom: 100px;
 }
 
 .order > h1 {
@@ -212,6 +212,7 @@ aside {
     padding: 5px;
 }
 
+
 .order_content img {
     width: 100px;
     height: 100px;
@@ -235,9 +236,10 @@ aside {
 
 .cart_summary {
     width: 350px;
-    height: 400px;
+    height: 450px;
     border: 1px solid #eee;
     padding: 10px;
+    margin-left: 130px;
 }
 
 .cart_summary > p {
@@ -328,7 +330,6 @@ aside {
 }
 
 .order_info {
-    border: 1px solid black;
     display: flex;
 }
 
@@ -336,12 +337,23 @@ aside {
     font-size: 18px;
     font-weight: 600;
     color: #333;
-    margin: 20px 0;
+    margin-top: 30px;
+    margin-bottom: 10px;
 }
 
 .order_info > div:nth-child(1) > table {
     width: 500px;
-    border: 1px solid black;
+}
+
+.order_info > div:nth-child(1) > table  button {
+    margin-left: 5px;
+    width: 60px;
+    height: 32px;
+    border: none;
+    border-radius: 5px;
+    background-color: #a8a5a5;
+    font-size: 14px;
+    color: #fff;
 }
 
 .order_info > div:nth-child(1) > table td,
@@ -362,6 +374,62 @@ aside {
 .order_info table tr:nth-child(6) textarea {
     width: 350px;
 }
+
+.discount_info {
+    width: 100%;
+    height: auto;
+}
+
+.discount_info > div {
+    font-size: 14px;
+}
+
+.discount_info > div > p {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.discount_info button {
+    margin-left: 5px;
+    width: 60px;
+    height: 24px;
+    border: none;
+    border-radius: 5px;
+    background-color:  #a8a5a5;
+    font-size: 14px;
+    color: #fff;
+}
+
+.discount_info > div > input,
+.discount_info > div > select {
+    margin-left: 10px;
+    width: 120px;
+    font-size: 14px;
+}
+
+.payment-methods {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 12px 24px;
+    padding: 5px 0;
+  }
+  
+  .payment-option {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+  }
+  
+  .kakaopay-label {
+    background: #ffeb00;
+    color: #000;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+
 
 
 

@@ -1,18 +1,3 @@
-.nav {
-        display: flex;
-        gap: 5px;
-        margin: 30px 0 40px 0;
-    }
-
-.nav > button {
-    width: 100px;
-    height: 30px;
-    color: #333;
-    font-size: 14px;
-    border: 1px solid #b2b2b2;
-    border-radius: 5px;
-    background-color: white;
-}
 
 .page_name {
     width: 100%;
@@ -199,10 +184,14 @@ aside {
     margin-top: 20px;
 }
 
+.cart_header > input {
+    margin-right: 5px;
+}
+
 .cart_header > button {
-    width: 70px;
-    height: 30px;
-    margin-left: 440px;
+    width: 65px;
+    height: 25px;
+    margin-left: 450px;
     border: 1px solid #999;
     border-radius: 5px;
     background-color: #fff;
