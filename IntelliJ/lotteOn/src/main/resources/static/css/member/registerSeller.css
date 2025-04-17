@@ -1,0 +1,70 @@
+.title {
+  font-size: 24px;
+  font-weight: bold;
+}
+.registerForm-container {
+  border-top: 1px solid black;
+}
+.registerForm {
+  width: 100%;
+  margin-top: 25px;
+}
+.registerForm table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.registerForm td {
+  padding: 10px;
+  vertical-align: middle;
+}
+.registerForm td:first-child {
+  width: 160px;
+  font-weight: bold;
+  background-color: #f6f6f6;
+  text-align: right;
+}
+.registerForm input[type="text"],
+.registerForm input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+.registerForm .description {
+  display: block;
+  font-size: 12px;
+  color: gray;
+  margin-top: 4px;
+}
+.required {
+  color: red;
+  margin-left: 4px;
+  font-weight: normal;
+  font-size: 12px;
+}
+.addrs {
+  margin-top: 6px;
+  display: block;
+  width: 100%;
+}
+.btnbox {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+.register-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #c0392b;
+  color: white;
+  width: 400px;
+  height: 20px;
+  font-weight: bold;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 20px;
+}
