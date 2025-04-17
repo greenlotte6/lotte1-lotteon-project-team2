@@ -82,10 +82,10 @@ spring:
             redirect-uri: http://localhost:8080/login/oauth2/code/kakao
 
             # 카카오 > 내 애플리케이션 > 요약정보 > REST API 키 입력
-            client-id: ENC("RVfojS4WZ7f8mrpVuTbJf1Eqy3V0qSe6Th5vKEswB1htfx2aHt2QHYD+GVE5aalJ")
+            client-id: ENC("K4+Ewgcgye8xKOBKaoDAMrNsEHKEk9jhSroFhk8kcqaMaox96Hww0Z6iebWXXyvz")
 
             # 카카오 > 내 애플리케이션 > 카카오 로그인 > 보안 > Client Secret 생성 후 입력
-            client-secret: ENC("ff/Q/fdSk4EB0fDGzFOudRztMTtJ3oYCPgHhDX7c0iyOaOy/gCZuMaOUrs+eFS1x")
+            client-secret: ENC("mBR6Yfz08Z6rUnlxXkqa2m/3BM/MWkY0fwxX7NnY6ltRAvvXRekO4Em7Uk0JXRb2")
 
             client-authentication-method: client_secret_post
             scope:
@@ -94,8 +94,8 @@ spring:
               - account_email
 
           google:
-            client-id: ENC("mr0gGXxopzEnt88AvRDFbrZsh8LoGzrOoP2vba5q1PCYrpWibxkQnlpPlAwX/ZLIfa0U8uW0SPDEipM6gafO3FH7+T5N/S+bc9fBMszdod4ENjqOaYurMA==")
-            client-secret: ENC("Xdod142xqZvygv8TRt3QS4XSLPz2gRi9WDSXzb+CoqNe6ZBxu5QJ0rpuZJZe+1Ju")
+            client-id: ENC("ulRddMvAq2uykQAVpPKN7YR1aLbrBHr1yhELtgDqijeCpfX8gAfuqTuf1YLGSOaN0T+8R4aNQW5geAH327wRodQjYKo6JT75HuzTOeTZ0N2BhJkeLriWWA==")
+            client-secret: ENC("gG0dgP/Y9gpD9VkV31XZYOglhbCmxNmzjwekgxlo04SpOhQVlImi59jj0X4WgXIb")
             redirect-uri: http://localhost:8080/login/oauth2/code/google
             scope:
               - email
@@ -106,8 +106,8 @@ spring:
             authorization-grant-type: authorization_code
             redirect-uri: http://localhost:8080/login/oauth2/code/naver
 
-            client-id: ENC("NkVYLW0Zhq4ppZFxu5qodptT7LtrufADqUcr7l5XNbM=")
-            client-secret: ENC("DNJbSQUugVhOpXRty8+3JWa5R5dLfkDs")
+            client-id: ENC("2lFmuHXayfA6Voee2j5mE2q3q8kRxFn8yQ0KZ+gTVZ8=")
+            client-secret: ENC("8Gzpq0DfyfkTlOZzhFHoWzDuB4EmEDrY")
 
             client-authentication-method: client_secret_post
             scope:
