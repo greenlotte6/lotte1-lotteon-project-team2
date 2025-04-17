@@ -36,13 +36,66 @@
                 </button>
               </form>
             </div>
+            <div class="user-icons">
+              <div class="icon-item">
+                <a href="#">
+                <img src="/lotteOn/images/lotteon/나의 찜.PNG" alt="나의 찜">
+                </a>
+                <span>나의 찜</span>
+              </div>
+              <div class="icon-item">
+                <a href="#">
+                <img src="/lotteOn/images/lotteon/마이롯데.PNG" alt="마이롯데">
+                </a>
+                <span>마이롯데</span>
+              </div>
+              <div class="icon-item">
+                <a href="#">
+                <img src="/lotteOn/images/lotteon/장바구니.PNG" alt="장바구니">
+                 </a>
+                <span>장바구니</span>
+              </div>
+            </div>
+            
           </div>
         </div>
         <div class="gnb">
-          <div class="category">
-            <img src="/lotteOn/images/lotteon/목록버튼.PNG" alt="카테고리" />
+          <div class="category-wrapper">
+            <div class="category" id="categoryBtn">
+              <img src="/lotteOn/images/lotteon/목록버튼.PNG" alt="카테고리" />
+              
+              <div class="category-menu" id="categoryMenu">
+                <ul>
+                  <li data-index="0"><a href="#">패션 / 의류 / 뷰티</a></li>
+                  <li data-index="1"><a href="#">가전 / 디지털</a></li>
+                  <li data-index="2"><a href="#">식품 / 생필품</a></li>
+                  <li data-index="3"><a href="#">홈 / 문구 / 취미</a></li>
+                </ul>
+              </div>
+              
+              <div class="subcategory-menu" id="subcategoryMenu">
+                <ul data-index="0">
+                  <li><a href="#">패션</a></li>
+                  <li><a href="#">의류</a></li>
+                  <li><a href="#">뷰티</a></li>
+                </ul>
+                <ul data-index="1">
+                  <li><a href="#">가전</a></li>
+                  <li><a href="#">디지털</a></li>
+                </ul>
+                <ul data-index="2">
+                  <li><a href="#">식품</a></li>
+                  <li><a href="#">생필품</a></li>
+                </ul>
+                <ul data-index="3">
+                  <li><a href="#">홈</a></li>
+                  <li><a href="#">문구</a></li>
+                </ul>
+              </div>
+              
+            </div>
           </div>
-        
+
           <ul class="nav-menu">
             <li><a href="#">히트상품</a></li>
             <li><a href="#">추천상품</a></li>
@@ -133,7 +186,7 @@
                   </div>
                 </section>
                 <section class="hit-products">
-                  <div class="section-title">히트상품</div>
+                  <div class="section-title">추천상품</div>
                   <div class="product-grid">
                     <div class="product-card">
                       <img src="/lotteOn/images/cs/coupon.png" alt="상품1">
@@ -182,7 +235,7 @@
                   </div>
                 </section>
                 <section class="hit-products">
-                  <div class="section-title">히트상품</div>
+                  <div class="section-title">할인상품</div>
                   <div class="product-grid">
                     <div class="product-card">
                       <img src="/lotteOn/images/cs/coupon.png" alt="상품1">
@@ -230,46 +283,59 @@
                     </div>
                   </div>
                 </section>
+                <section class="hit-products">
+                  <div class="section-title">할인상품</div>
+                  <div class="product-grid">
+                    <div class="product-card">
+                      <img src="/lotteOn/images/cs/coupon.png" alt="상품1">
+                      <div class="product-info">
+                        <div class="product-name">인기 니트 가디건</div>
+                        <div class="product-price">
+                          <del>39,000원</del>
+                          <span class="discount">20%</span>
+                          <strong>31,200원</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="product-card">
+                      <img src="/lotteOn/images/cs/coupon.png" alt="상품2">
+                      <div class="product-info">
+                        <div class="product-name">스타일 슬랙스</div>
+                        <div class="product-price">
+                          <del>59,000원</del>
+                          <span class="discount">25%</span>
+                          <strong>44,250원</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="product-card">
+                      <img src="/lotteOn/images/cs/coupon.png" alt="상품3">
+                      <div class="product-info">
+                        <div class="product-name">향수 세트</div>
+                        <div class="product-price">
+                          <del>89,000원</del>
+                          <span class="discount">10%</span>
+                          <strong>80,100원</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="product-card">
+                      <img src="/lotteOn/images/cs/coupon.png" alt="상품4">
+                      <div class="product-info">
+                        <div class="product-name">향수 세트</div>
+                        <div class="product-price">
+                          <del>89,000원</del>
+                          <span class="discount">10%</span>
+                          <strong>80,100원</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+  
               </div>
               <!--사이드 바-->
               <aside class="sidebar">
-                <!-- 카테고리 메뉴 -->
-                <nav class="category-menu">
-                  <ul>
-                    <li class="has-sub">
-                      <a href="#">패션 ∘ 의류 ∘ 뷰티</a>
-                      <ul class="sub-category">
-                        <li><a href="#">여성의류</a></li>
-                        <li><a href="#">남성의류</a></li>
-                        <li><a href="#">뷰티소품</a></li>
-                      </ul>
-                    </li>
-                    <li class="has-sub">
-                      <a href="#">가전 ∘ 디지털</a>
-                      <ul class="sub-category">
-                        <li><a href="#">TV</a></li>
-                        <li><a href="#">PC</a></li>
-                      </ul>
-                    </li>
-                    <li class="has-sub">
-                        <a href="#">식품 ∘ 생필품</a>
-                        <ul class="sub-category">
-                          <li><a href="#">식품</a></li>
-                          <li><a href="#">생필품</a></li>
-                        </ul>
-                      </li>
-                      <li class="has-sub">
-                        <a href="#">홈 ∘ 문구 ∘ 취미</a>
-                        <ul class="sub-category">
-                          <li><a href="#">홈</a></li>
-                          <li><a href="#">문구</a></li>
-                          <li><a href="#">취미</a></li>
-                        </ul>
-                      </li>
-                  </ul>
-                </nav>
-              
-                <!-- 베스트 상품 -->
                 <div class="best-products">
                   <h2>베스트 상품</h2>
                   <ol class="product-list">
@@ -285,59 +351,59 @@
                         </div>
                       </div>
                     </li>
+                    
                     <li>
-                        <div class="rank">2</div>
-                        <img src="/lotteOn/images/cs/coupon.png" alt="상품1">
-                        <div class="info">
-                          <div class="name">상품명</div>
-                          <div class="price">
-                            <del>30,000원</del>
-                            <span class="discount">10%</span>
-                            <strong>27,000원</strong>
-                          </div>
+                      <div class="rank">2</div>
+                      <img src="/lotteOn/images/cs/coupon.png" alt="상품2">
+                      <div class="info">
+                        <div class="name">상품명</div>
+                        <div class="price">
+                          <del>30,000원</del>
+                          <span class="discount">10%</span>
+                          <strong>27,000원</strong>
                         </div>
-                      </li>
-                      <li>
-                        <div class="rank">3</div>
-                        <img src="/lotteOn/images/cs/coupon.png" alt="상품1">
-                        <div class="info">
-                          <div class="name">상품명</div>
-                          <div class="price">
-                            <del>30,000원</del>
-                            <span class="discount">10%</span>
-                            <strong>27,000원</strong>
-                          </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="rank">3</div>
+                      <img src="/lotteOn/images/cs/coupon.png" alt="상품3">
+                      <div class="info">
+                        <div class="name">상품명</div>
+                        <div class="price">
+                          <del>30,000원</del>
+                          <span class="discount">10%</span>
+                          <strong>27,000원</strong>
                         </div>
-                      </li>
-                      <li>
-                        <div class="rank">4</div>
-                        <img src="/lotteOn/images/cs/coupon.png" alt="상품1">
-                        <div class="info">
-                          <div class="name">상품명</div>
-                          <div class="price">
-                            <del>30,000원</del>
-                            <span class="discount">10%</span>
-                            <strong>27,000원</strong>
-                          </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="rank">4</div>
+                      <img src="/lotteOn/images/cs/coupon.png" alt="상품4">
+                      <div class="info">
+                        <div class="name">상품명</div>
+                        <div class="price">
+                          <del>30,000원</del>
+                          <span class="discount">10%</span>
+                          <strong>27,000원</strong>
                         </div>
-                      </li>
-                      <li>
-                        <div class="rank">5</div>
-                        <img src="/lotteOn/images/cs/coupon.png" alt="상품1">
-                        <div class="info">
-                          <div class="name">상품명</div>
-                          <div class="price">
-                            <del>30,000원</del>
-                            <span class="discount">10%</span>
-                            <strong>27,000원</strong>
-                          </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="rank">5</div>
+                      <img src="/lotteOn/images/cs/coupon.png" alt="상품5">
+                      <div class="info">
+                        <div class="name">상품명</div>
+                        <div class="price">
+                          <del>30,000원</del>
+                          <span class="discount">10%</span>
+                          <strong>27,000원</strong>
                         </div>
-                      </li>
+                      </div>
+                    </li>
                   </ol>
                 </div>
-                <!-- 베스트 상품 -->
               </aside>
-            <!--사이드 바-->
+              
             </div>
         </main>
         <footer>
@@ -406,7 +472,64 @@
             </div>
         </footer>
     </div>
-    
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const categoryBtn = document.getElementById('categoryBtn');
+        const categoryMenu = document.getElementById('categoryMenu');
+        const subcategoryMenu = document.getElementById('subcategoryMenu');
+        const categoryItems = categoryMenu.querySelectorAll('li');
+        const subMenus = subcategoryMenu.querySelectorAll('ul');
+      
+        categoryBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          const isVisible = categoryMenu.style.display === 'block';
+          categoryMenu.style.display = isVisible ? 'none' : 'block';
+          subcategoryMenu.style.display = 'none';
+          categoryItems.forEach(i => i.classList.remove('active'));
+        });
+      
+        categoryItems.forEach(item => {
+          item.addEventListener('click', function (e) {
+            e.stopPropagation();
+      
+            categoryItems.forEach(i => i.classList.remove('active'));
+            this.classList.add('active');
+      
+            const rect = this.getBoundingClientRect();
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
+      
+            const topPos = rect.top + scrollTop;
+            const leftPos = rect.right + scrollLeft;
+      
+            subcategoryMenu.style.top = topPos + 'px';
+            subcategoryMenu.style.left = leftPos + 'px';
+            subcategoryMenu.style.display = 'block';
+      
+            const index = this.getAttribute('data-index');
+            subMenus.forEach(ul => {
+              ul.style.display = (ul.getAttribute('data-index') === index) ? 'block' : 'none';
+            });
+      
+            document.body.appendChild(subcategoryMenu);
+          });
+        });
+      
+
+        document.addEventListener('click', function (e) {
+          if (!categoryBtn.contains(e.target) &&
+              !categoryMenu.contains(e.target) &&
+              !subcategoryMenu.contains(e.target)) {
+            categoryMenu.style.display = 'none';
+            subcategoryMenu.style.display = 'none';
+            categoryItems.forEach(i => i.classList.remove('active'));
+          }
+        });
+        
+      });
+      </script>
+      
+      
 </body>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -424,7 +547,6 @@
       }
     });
   
-    // 클릭 이벤트 연결
     document.querySelector(".prev-area").addEventListener("click", () => {
       swiper.slidePrev();
     });
@@ -432,6 +554,36 @@
     document.querySelector(".next-area").addEventListener("click", () => {
       swiper.slideNext();
     });
+
+    
+    document.addEventListener('DOMContentLoaded', function () {
+    const sidebar = document.querySelector('.sidebar');
+    const defaultTop = sidebar.offsetTop;
+    const triggerOffset = 300; // 몇 px부터 따라오기 시작
+    const stopDistance = 800;  // 페이지 하단에서 이만큼 남기고 멈춤
+
+    window.addEventListener('scroll', function () {
+      const scrollY = window.scrollY || document.documentElement.scrollTop;
+      const sidebarHeight = sidebar.offsetHeight;
+      const pageHeight = document.documentElement.scrollHeight;
+
+      // 이동하고자 하는 top 위치 계산
+      let targetTop = scrollY - triggerOffset + defaultTop;
+
+      // sidebar가 도달할 수 있는 최대 위치 계산
+      const maxTop = pageHeight - sidebarHeight - stopDistance;
+
+      if (scrollY > triggerOffset) {
+        if (targetTop > maxTop) {
+          targetTop = maxTop;
+        }
+        sidebar.style.top = targetTop + 'px';
+      } else {
+        sidebar.style.top = defaultTop + 'px';
+      }
+    });
+  });
+
   </script>
 </html>
 
