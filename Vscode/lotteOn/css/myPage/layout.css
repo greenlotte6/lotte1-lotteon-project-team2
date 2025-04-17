@@ -143,6 +143,8 @@ footer > .footer_content{
 }
 
 .footer_content_detail{
+    display: flex;
+    justify-content: center;
     width: 1200px;
     height: 100%;
     margin: 0 auto;
@@ -151,6 +153,8 @@ footer > .footer_content{
 .footer_content_detail img{
     float: left;
     margin-right: 40px;
+    width: 155px;
+    height: 36px;
 }
 
 .footer_content_detail > div{

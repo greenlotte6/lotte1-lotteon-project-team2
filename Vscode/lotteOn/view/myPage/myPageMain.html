@@ -9,52 +9,10 @@
     <link rel="stylesheet" href="/lotteOn/css/mypage/table-main.css">
     <link rel="stylesheet" href="/lotteOn/css/myPage/modal.css">
     <link rel="stylesheet" href="/lotteOn/css/myPage/table-sub.css">
+    <link rel="stylesheet" href="/lotteOn/css/myPage/starRating.css">
+    <link rel="stylesheet" href="/lotteOn/css/myPage/myPageRating.css">
     <script src="/lotteOn/js/myPage/modal.js"></script>
     <script src="/lotteOn/js/myPage/inquiry.js"></script>
-
-    <style>
-        .rating {
-            display: flex;
-        }
-
-        .rating__input {
-            display: none; /* 라디오버튼 hide */
-        }
-
-        .rating__label .star-icon {
-            width: 24px;
-            height: 24px;
-            display: block;
-            background-image: url("../images/ico-star-empty.svg");
-            background-repeat: no-repeat;
-        }
-        .rating__label {
-            width: 12px; /* 원본 사이즈/2 */
-            overflow: hidden;
-            cursor: pointer;
-        }
-        .rating__label .star-icon {
-            width: 12px; /* 원본 사이즈/2 */
-            height: 24px;
-            display: block;
-            position: relative;
-            left: 0;
-            background-image: url("/lotteOn/images/ico-star-empty.svg");
-            background-repeat: no-repeat;
-        }
-
-        .rating__label--full .star-icon {
-            background-position: right;
-        }
-        .rating__label--half .star-icon {
-            background-position: left;
-        }
-
-        .star:has(~ .star:hover)::after {
-            background-image: url("../images/ico-star-full.svg");;
-        }
-
-    </style>
 
 </head>
 <body>
@@ -331,48 +289,14 @@
                                         <td>상품번호 / 상품명</td>
                                         <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
                                         <td>
-                                            <div class="rating">
-                                                <label class="rating__label rating__label--half star" for="starhalf">
-                                                    <input type="radio" id="star1half" class="rating__input" name="rating" value="">
-                                                    <span class="star-icon"></span>
-                                                </label>
-                                                <label class="rating__label rating__label--full star" for="star1">
-                                                    <input type="radio" id="star1" class="rating__input" name="rating" value="">
-                                                    <span class="star-icon"></span>
-                                                </label>
-                                                <label class="rating__label rating__label--half star" for="starhalf">
-                                                    <input type="radio" id="star2half" class="rating__input" name="rating" value="">
-                                                    <span class="star-icon"></span>
-                                                </label>
-                                                <label class="rating__label rating__label--full star" for="star1">
-                                                    <input type="radio" id="star2" class="rating__input" name="rating" value="">
-                                                    <span class="star-icon"></span>
-                                                </label>
-                                                <label class="rating__label rating__label--half star" for="starhalf">
-                                                    <input type="radio" id="star3half" class="rating__input" name="rating" value="">
-                                                    <span class="star-icon"></span>
-                                                </label>
-                                                <label class="rating__label rating__label--full star" for="star1">
-                                                    <input type="radio" id="star3" class="rating__input" name="rating" value="">
-                                                    <span class="star-icon"></span>
-                                                </label>
-                                                <label class="rating__label rating__label--half star" for="starhalf">
-                                                    <input type="radio" id="star4half" class="rating__input" name="rating" value="">
-                                                    <span class="star-icon"></span>
-                                                </label>
-                                                <label class="rating__label rating__label--full star" for="star1">
-                                                    <input type="radio" id="star4" class="rating__input" name="rating" value="">
-                                                    <span class="star-icon"></span>
-                                                </label>
-                                                <label class="rating__label rating__label--half star" for="starhalf">
-                                                    <input type="radio" id="star5half" class="rating__input" name="rating" value="">
-                                                    <span class="star-icon"></span>
-                                                </label>
-                                                <label class="rating__label rating__label--full star" for="star1">
-                                                    <input type="radio" id="star5" class="rating__input" name="rating" value="">
-                                                    <span class="star-icon"></span>
-                                                </label>
-                                            </div>
+                                            <div class="myPage-rating">
+                                                <span class="star"></span>
+                                                <span class="star"></span>
+                                                <span class="star"></span>
+                                                <span class="star"></span>
+                                                <span class="star"></span>
+                                                <span class="myPage-score">(4.5)</span>
+                                              </div>
                                         </td>
                                         <td>2024-12-10</td>
                                     </tr>
@@ -380,25 +304,64 @@
                                         <td>2</td>
                                         <td>상품번호 / 상품명</td>
                                         <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                        <td>☆☆☆☆☆</td>
+                                        <td>
+                                            <div class="myPage-rating">
+                                                <span class="star"></span>
+                                                <span class="star"></span>
+                                                <span class="star"></span>
+                                                <span class="star"></span>
+                                                <span class="star"></span>
+                                                <span class="myPage-score">(4.5)</span>
+                                              </div>
+                                        </td>
                                         <td>2024-12-10</td>
-                                    </tr>                                <tr>
+                                    </tr>
+                                    <tr>
                                         <td>3</td>
                                         <td>상품번호 / 상품명</td>
                                         <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                        <td>☆☆☆☆☆</td>
+                                        <td>
+                                            <div class="myPage-rating">
+                                                <span class="star"></span>
+                                                <span class="star"></span>
+                                                <span class="star"></span>
+                                                <span class="star"></span>
+                                                <span class="star"></span>
+                                                <span class="myPage-score">(4.5)</span>
+                                              </div>
+                                        </td>
                                         <td>2024-12-10</td>
-                                    </tr>                                <tr>
+                                    </tr>
+                                    <tr>
                                         <td>4</td>
                                         <td>상품번호 / 상품명</td>
                                         <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                        <td>☆☆☆☆☆</td>
+                                        <td>
+                                            <div class="myPage-rating">
+                                                <span class="star"></span>
+                                                <span class="star"></span>
+                                                <span class="star"></span>
+                                                <span class="star"></span>
+                                                <span class="star"></span>
+                                                <span class="myPage-score">(4.5)</span>
+                                              </div>
+                                        </td>
                                         <td>2024-12-10</td>
-                                    </tr>                                <tr>
+                                    </tr>
+                                    <tr>
                                         <td>5</td>
                                         <td>상품번호 / 상품명</td>
                                         <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                        <td>☆☆☆☆☆</td>
+                                        <td>
+                                            <div class="myPage-rating">
+                                                <span class="star"></span>
+                                                <span class="star"></span>
+                                                <span class="star"></span>
+                                                <span class="star"></span>
+                                                <span class="star"></span>
+                                                <span class="myPage-score">(4.5)</span>
+                                              </div>
+                                        </td>
                                         <td>2024-12-10</td>
                                     </tr>
                                 </tbody>
@@ -512,7 +475,7 @@
                             <p class="modalClose">X</p> <!-- 수정 예정 -->
                         </div>
                     </div>
-                    <div class="modal-main table-sub">
+                    <form class="modal-main table-sub">
                         <div class="purhase_confirm_content" style="margin: 80px; font-size: 20px;">
                             <p>상품을 받으셨나요?</p>
                             <p>상품을 받으신 분만 구매확정을 해주세요.</p>
@@ -521,7 +484,7 @@
                             <input type="submit" value="확인" onclick="location.href='#'">
                             <input type="submit" value="취소" class="modalClose">
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -531,13 +494,13 @@
                 <div class="modal-wrapper">
                     <div class="modal-header">
                         <div class="modal-name">
-                            <p>상품평 작성</p>
+                            <p>상품리뷰</p>
                         </div>
                         <div class="exit" onclick="location.href='#'" style="cursor: pointer;">
                             <p class="modalClose">X</p> <!-- 수정 예정 -->
                         </div>
                     </div>
-                    <div class="modal-main table-sub">
+                    <form class="modal-main table-sub">
                         <table>
                             <tbody>
                                 <tr>
@@ -547,7 +510,18 @@
                                 <tr>
                                     <td>만족도</td>
                                     <td>
-                                        ☆☆☆☆☆<!-- 수정예정 -->
+                                        <div class="star-rating">
+                                            <input type="radio" id="star5_modal1" name="rating_modal1" value="5"><label for="star5_modal1" class="full" title="5점"></label>
+                                            <input type="radio" id="star4half_modal1" name="rating_modal1" value="4.5"><label for="star4half_modal1" class="half" title="4.5점"></label>
+                                            <input type="radio" id="star4_modal1" name="rating_modal1" value="4"><label for="star4_modal1" class="full" title="4점"></label>
+                                            <input type="radio" id="star3half_modal1" name="rating_modal1" value="3.5"><label for="star3half_modal1" class="half" title="3.5점"></label>
+                                            <input type="radio" id="star3_modal1" name="rating_modal1" value="3"><label for="star3_modal1" class="full" title="3점"></label>
+                                            <input type="radio" id="star2half_modal1" name="rating_modal1" value="2.5"><label for="star2half_modal1" class="half" title="2.5점"></label>
+                                            <input type="radio" id="star2_modal1" name="rating_modal1" value="2"><label for="star2_modal1" class="full" title="2점"></label>
+                                            <input type="radio" id="star1half_modal1" name="rating_modal1" value="1.5"><label for="star1half_modal1" class="half" title="1.5점"></label>
+                                            <input type="radio" id="star1_modal1" name="rating_modal1" value="1"><label for="star1_modal1" class="full" title="1점"></label>
+                                            <input type="radio" id="star0half_modal1" name="rating_modal1" value="0.5"><label for="star0half_modal1" class="half" title="0.5점"></label>
+                                          </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -571,7 +545,7 @@
                             <input type="submit" value="작성완료" onclick="location.href='#'";>
                             <input type="submit" value="취소" class="modalClose">
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -628,7 +602,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="return-Request table-sub">
+                        <form class="return-Request table-sub">
                             <div class="title-area">
                                 <h1>반품정보 입력</h1>
                             </div>
@@ -673,7 +647,7 @@
                                 <input type="submit" value="반품신청" onclick="location.href='#'">
                                 <input type="submit" value="취소" class="modalClose">
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -731,7 +705,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="return-Request table-sub">
+                        <form class="return-Request table-sub">
                             <div class="title-area">
                                 <h1>교환정보 입력</h1>
                             </div>
@@ -776,13 +750,13 @@
                                 <input type="submit" value="교환신청" onclick="location.href='#'";>
                                 <input type="submit" value="취소" class="modalClose">
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
         <!--주문상세-->
-        <div class="modal order_detail_modal">
+        <div class="modal order_details_modal">
             <div class="modal_popup">
                 <div class="modal-wrapper">
                     <div class="modal-header">
@@ -939,7 +913,7 @@
                             <p class="modalClose">X</p> <!-- 수정 예정 -->
                         </div>
                     </div>
-                    <div class="modal-main table-sub">
+                    <form class="modal-main table-sub">
                         <table>
                             <tbody>
                                 <tr>
@@ -976,7 +950,7 @@
                             <input type="submit" value="등록하기" onclick="location.href='#'">
                             <input type="submit" value="취소" class="modalClose">
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

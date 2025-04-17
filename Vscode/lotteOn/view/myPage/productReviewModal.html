@@ -6,6 +6,37 @@
     <link rel="stylesheet" href="/lotteOn/css/myPage/modal.css">
     <link rel="stylesheet" href="/lotteOn/css/myPage/table-sub.css">
     <title>Document</title>
+    <style>
+    .star-rating {
+      direction: rtl;
+      display: inline-flex;
+    }
+    .star-rating input[type="radio"] {
+      display: none;
+    }
+    .star-rating label {
+      width: 50px;
+      height: 50px;
+      background: url('/lotteOn/images/ico-star-empty.svg') no-repeat center/cover;
+      cursor: pointer;
+      position: relative;
+      display: inline-block;
+      padding: 0;
+      margin: 0;
+    }
+    .star-rating label.full {
+      clip-path: inset(0 0 0 50%);
+      margin-left: -50px;
+    }
+    .star-rating label.half {
+      clip-path: inset(0 50% 0 0);
+    }
+    .star-rating input[type="radio"]:checked ~ label,
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+      background-image: url('/lotteOn/images/ico-star-full.svg');
+    }
+    </style>
 </head>
 <body>
     <div class="modal-wrapper">
@@ -27,7 +58,18 @@
                     <tr>
                         <td>만족도</td>
                         <td>
-                            ☆☆☆☆☆<!-- 수정예정 -->
+                            <div class="star-rating">
+                                <input type="radio" id="star5" name="rating" value="5"><label for="star5" class="full" title="5점"></label>
+                                <input type="radio" id="star4half" name="rating" value="4.5"><label for="star4half" class="half" title="4.5점"></label>
+                                <input type="radio" id="star4" name="rating" value="4"><label for="star4" class="full" title="4점"></label>
+                                <input type="radio" id="star3half" name="rating" value="3.5"><label for="star3half" class="half" title="3.5점"></label>
+                                <input type="radio" id="star3" name="rating" value="3"><label for="star3" class="full" title="3점"></label>
+                                <input type="radio" id="star2half" name="rating" value="2.5"><label for="star2half" class="half" title="2.5점"></label>
+                                <input type="radio" id="star2" name="rating" value="2"><label for="star2" class="full" title="2점"></label>
+                                <input type="radio" id="star1half" name="rating" value="1.5"><label for="star1half" class="half" title="1.5점"></label>
+                                <input type="radio" id="star1" name="rating" value="1"><label for="star1" class="full" title="1점"></label>
+                                <input type="radio" id="star0half" name="rating" value="0.5"><label for="star0half" class="half" title="0.5점"></label>
+                              </div>
                         </td>
                     </tr>
                     <tr>
