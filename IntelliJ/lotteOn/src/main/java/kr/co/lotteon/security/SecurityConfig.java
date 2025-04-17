@@ -1,18 +1,22 @@
 package kr.co.lotteon.security;
 
+import kr.co.lotteon.oauth2.Oauth2UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+@RequiredArgsConstructor
 @EnableMethodSecurity(prePostEnabled = true)
 @Configuration
 public class SecurityConfig {
+
+    private final Oauth2UserService oauth2UserService;
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
@@ -31,21 +35,13 @@ public class SecurityConfig {
                 .invalidateHttpSession(true)
                 .logoutSuccessUrl("/user/login?code=101"));
 
-        /*
-            인가 설정
-             - MyUserDetails 권한 목록 생성하는 메서드(getAuthorities)에서 접두어로 ROLE_ 입력해야 hasRole, hasAnyRole 권한 처리됨
-             - Spring Security는 기본적으로 인가 페이지 대해 login 페이지로 redirect 수행
-        */
-
-        // Student, Professor, Normal, Admin
-
-        http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/").permitAll()
-                // .requestMatchers("/admin/**").hasRole("Admin")
-                // .requestMatchers("/support/**").hasAnyRole("Student", "Professor" ,"Admin")
-                // .requestMatchers("/admission/freeboard/write").hasAnyRole("Admin", "Normal","Professor","Student")
-
-                .anyRequest().permitAll());
+        // ✅ OAuth2 로그인 설정
+        http.oauth2Login(oauth2 -> oauth2
+                .loginPage("/user/login") // OAuth2 로그인도 동일한 로그인 폼 사용
+                .userInfoEndpoint(userInfo -> userInfo
+                        .userService(oauth2UserService)) // 사용자 정보 후처리 서비스
+                .defaultSuccessUrl("/") // OAuth2 로그인 성공 시 이동 경로 (선택)
+        );
 
         // 기타 보안 설정
         http.csrf(AbstractHttpConfigurer::disable);
@@ -54,11 +50,9 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        // 암호화
+    public PasswordEncoder passwordEncoder(){
+        // Security 암호화 인코더 설정
         return new BCryptPasswordEncoder();
     }
-
-
 
 }

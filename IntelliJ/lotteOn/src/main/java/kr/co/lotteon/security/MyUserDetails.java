@@ -6,16 +6,27 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Builder
-public class MyUserDetails implements UserDetails {
+public class MyUserDetails implements UserDetails, OAuth2User {
 
     private User user;
+
+    // 구글 사용자 정보
+    private Map<String, Object> attributes;
+    private String accessToken;
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -57,5 +68,10 @@ public class MyUserDetails implements UserDetails {
     public boolean isEnabled() {
         // 계정 활성화 여부
         return true;
+    }
+
+    @Override
+    public String getName() {
+        return user.getUid();
     }
 }
