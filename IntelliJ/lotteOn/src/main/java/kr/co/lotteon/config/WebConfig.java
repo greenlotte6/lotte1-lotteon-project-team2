@@ -18,8 +18,6 @@ public class WebConfig implements WebMvcConfigurer {
         // 기본 static 경로 설정 (예: /static/ 경로로 접근할 수 있도록 설정)
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
-
-
     }
 */
 
