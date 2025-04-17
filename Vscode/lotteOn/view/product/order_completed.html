@@ -10,30 +10,120 @@
 
 <body>
     <script>
+        // 롯데On 주문 페이지 전체 스크립트
         document.addEventListener("DOMContentLoaded", function () {
-      
-          const parents = document.querySelectorAll(".category .parent");
-              
-            parents.forEach(parent => {
-                parent.style.cursor = "pointer";
-        
-                parent.addEventListener("click", () => {
-                const currentChildren = parent.nextElementSibling;
-        
-                document.querySelectorAll(".category .children").forEach(children => {
-                    if (children !== currentChildren) {
-                    children.style.display = "none";
-                    }
-                });
-        
-                if (currentChildren && currentChildren.classList.contains("children")) {
-                    const isVisible = currentChildren.style.display === "block";
-                    currentChildren.style.display = isVisible ? "none" : "block";
-                }
-                });
+  
+        // ✅ 카테고리 아코디언
+        document.querySelectorAll(".category .parent").forEach(parent => {
+          parent.style.cursor = "pointer";
+          parent.addEventListener("click", () => {
+            const currentChildren = parent.nextElementSibling;
+            document.querySelectorAll(".category .children").forEach(children => {
+              if (children !== currentChildren) {
+                children.style.display = "none";
+              }
             });
+            if (currentChildren && currentChildren.classList.contains("children")) {
+              const isVisible = currentChildren.style.display === "block";
+              currentChildren.style.display = isVisible ? "none" : "block";
+            }
+          });
         });
-      </script>
+  
+        // ✅ 판매자별 테이블 접기
+        const tables = Array.from(document.querySelectorAll('.order_content'));
+        const container = document.getElementById('tables-container');
+        const vendorGroups = {};
+  
+        tables.forEach(table => {
+          const vendor = table.querySelector('.vendor-name')?.innerText.trim();
+          if (!vendor) return;
+          if (!vendorGroups[vendor]) vendorGroups[vendor] = [];
+          vendorGroups[vendor].push(table);
+        });
+  
+        container.innerHTML = '';
+  
+        Object.entries(vendorGroups).forEach(([vendor, tables]) => {
+          const section = document.createElement('div');
+          section.className = 'vendor-section';
+  
+          const header = document.createElement('div');
+          header.className = 'vendor-header';
+  
+          const titleSpan = document.createElement('span');
+          titleSpan.className = 'vendor-title';
+          titleSpan.innerText = vendor;
+  
+          const iconSpan = document.createElement('span');
+          iconSpan.className = 'vendor-toggle-icon';
+          iconSpan.innerText = '▼';
+  
+          header.appendChild(titleSpan);
+          header.appendChild(iconSpan);
+  
+          const group = document.createElement('div');
+          group.className = 'vendor-group';
+  
+          tables.forEach((table, i) => {
+            if (i !== 0) table.style.display = 'none';
+            group.appendChild(table);
+          });
+  
+          header.addEventListener('click', () => {
+            const isOpen = header.classList.toggle('open');
+            const allTables = group.querySelectorAll('.order_content');
+            allTables.forEach((t, i) => {
+              if (i === 0) return;
+              t.style.display = isOpen ? 'table' : 'none';
+            });
+          });
+  
+          section.appendChild(header);
+          section.appendChild(group);
+          container.appendChild(section);
+        });
+  
+        // ✅ 각 상품 계산
+        document.querySelectorAll('.order_content').forEach(table => {
+          const row = table.querySelector('tr:nth-of-type(2)');
+          if (!row) return;
+  
+          const originalEl = row.querySelector('.price_original');
+          const saleEl = row.querySelector('.price_total');
+          const discountEl = row.querySelector('.discount-rate');
+          const pointEl = row.querySelector('.point');
+          const shippingEl = row.querySelector('.shipping');
+          const totalEl = row.querySelector('.total');
+          const quantityEl = row.querySelector('.quantity');
+  
+          const quantity = parseInt(quantityEl?.innerText || '1', 10);
+          const originalUnit = parseInt(originalEl?.dataset.unit || '0', 10);
+          const discountRate = parseFloat((discountEl?.innerText || '0').replace('%', '')) || 0;
+  
+          if (!isNaN(discountRate) && originalUnit > 0 && quantity > 0) {
+            const original = originalUnit * quantity;
+            originalEl.innerText = original.toLocaleString();
+  
+            const unitSale = Math.floor(originalUnit * (1 - discountRate / 100));
+            const sale = unitSale * quantity;
+            saleEl.dataset.unit = sale;
+            saleEl.innerText = sale.toLocaleString();
+  
+            const point = Math.floor(unitSale * 0.01 * quantity);
+            if (pointEl) pointEl.innerText = point.toLocaleString();
+  
+            const shipping = parseInt(shippingEl?.innerText.replace(/[^0-9]/g, '') || '0', 10);
+            const total = sale + shipping;
+            if (totalEl) totalEl.innerText = total.toLocaleString();
+          }
+        });
+      
+    });
+  
+  
+  
+    </script>
       
     <div id="wrapper">
         <!-- 헤더 시작 -->
@@ -190,84 +280,182 @@
                 <!-- 메인 시작 -->
                 <div class="order">
                     <h1>주문완료</h1>
-                    <table class="order_content">
-                        <tr>
-                            <th colspan="2"></th>
-                            <th>상품명</th>
-                            <th>수량</th>
-                            <th>판매가</th>
-                            <th>할인</th>
-                            <th>포인트</th>
-                            <th>배송비</th>
-                            <th>총합</th>
-                        </tr>
-                        <tr>
-                            <td colspan="2"><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
-                            <td>
-                                <p class="vendor-name">롯데백화점</p><br>
-                                <span>딥디크</span><br>
-                                오드퍼퓸 플레르드뽀 75ml
-                            </td>
-                            <td class="quantity">1</td>
-                            <td class="price_original" data-unit="300000"ㄴ>300,000</td>
-                            <td class="price_total" data-unit="200000">100,000</td>
-                            <td>3,000</td>
-                            <td>2,500</td>
-                            <td>302,500</td>
-                        </tr>
-                    </table>
-                    <table class="order_content">
-                        <tr>
-                            <th colspan="2"></th>
-                            <th>상품명</th>
-                            <th>수량</th>
-                            <th>판매가</th>
-                            <th>할인</th>
-                            <th>포인트</th>
-                            <th>배송비</th>
-                            <th>총합</th>
-                        </tr>
-                        <tr>
-                            <td colspan="2"><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
-                            <td>
-                                <p class="vendor-name">롯데백화점</p><br>
-                                <span>딥디크</span><br>
-                                오드퍼퓸 플레르드뽀 75ml
-                            </td>
-                            <td class="quantity">1</td>
-                            <td class="price_original" data-unit="300000"ㄴ>300,000</td>
-                            <td class="price_total" data-unit="200000">100,000</td>
-                            <td>3,000</td>
-                            <td>2,500</td>
-                            <td>302,500</td>
-                        </tr>
-                    </table>
-                    <table class="order_content">
-                        <tr>
-                            <th colspan="2"></th>
-                            <th>상품명</th>
-                            <th>수량</th>
-                            <th>판매가</th>
-                            <th>할인</th>
-                            <th>포인트</th>
-                            <th>배송비</th>
-                            <th>총합</th>
-                        </tr>
-                        <tr>
-                            <td colspan="2"><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
-                            <td>
-                                <p class="vendor-name">롯데백화점</p><br>
-                                <span>딥디크</span><br>
-                                오드퍼퓸 플레르드뽀 75ml
-                            </td>
-                            <td class="quantity">1</td>
-                            <td class="price_original" data-unit="300000"ㄴ>300,000</td>
-                            <td class="price_total" data-unit="200000">100,000</td>
-                            <td>3,000</td>
-                            <td>2,500</td>
-                            <td>302,500</td>
-                        </tr>
-                    </table>
+                    <div id="tables-container">
+                        <table class="order_content">
+                            <tr>
+                                <th></th>
+                                <th>상품명</th>
+                                <th>수량</th>
+                                <th>판매가</th>
+                                <th>할인</th>
+                                <th>포인트</th>
+                                <th>배송비</th>
+                                <th>총합</th>
+                            </tr>
+                            <tr>
+                                <td><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
+                                <td>
+                                    <p class="vendor-name">롯데백화점</p><br>
+                                    <span>딥디크</span><br>
+                                    오드퍼퓸 플레르드뽀 75ml
+                                </td>
+                                <td class="quantity">2</td>
+                                <td class="cart_price">
+                                    <p class="price_original" data-unit="300000">300,000</p>
+                                    <p class="price_total" data-unit="0">0</p>
+                                </td>
+                                <td class="discount-rate">10%</td>
+                                <td class="point">0</td>
+                                <td class="shipping">2,500</td>
+                                <td class="total">0</td>
+                            </tr>
+                          </table>
+                          <table class="order_content">
+                            <tr>
+                                <th></th>
+                                <th>상품명</th>
+                                <th>수량</th>
+                                <th>판매가</th>
+                                <th>할인</th>
+                                <th>포인트</th>
+                                <th>배송비</th>
+                                <th>총합</th>
+                            </tr>
+                            <tr>
+                                <td><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
+                                <td>
+                                    <p class="vendor-name">롯데마트</p><br>
+                                    <span>딥디크</span><br>
+                                    오드퍼퓸 플레르드뽀 75ml
+                                </td>
+                                <td class="quantity">1</td>
+                                <td class="cart_price">
+                                    <p class="price_original" data-unit="300000">300,000</p>
+                                    <p class="price_total" data-unit="0">0</p>
+                                </td>
+                                <td class="discount-rate">20%</td>
+                                <td class="point">0</td>
+                                <td class="shipping">2,500</td>
+                                <td class="total">0</td>
+                            </tr>
+                          </table>
+                          <table class="order_content">
+                            <tr>
+                                <th></th>
+                                <th>상품명</th>
+                                <th>수량</th>
+                                <th>판매가</th>
+                                <th>할인</th>
+                                <th>포인트</th>
+                                <th>배송비</th>
+                                <th>총합</th>
+                            </tr>
+                            <tr>
+                                <td><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
+                                <td>
+                                    <p class="vendor-name">롯데백화점</p><br>
+                                    <span>딥디크</span><br>
+                                    오드퍼퓸 플레르드뽀 75ml
+                                </td>
+                                <td class="quantity">1</td>
+                                <td class="cart_price">
+                                    <p class="price_original" data-unit="400000">400,000</p>
+                                    <p class="price_total" data-unit="0">0</p>
+                                </td>
+                                <td class="discount-rate">10%</td>
+                                <td class="point">0</td>
+                                <td class="shipping">2,500</td>
+                                <td class="total">0</td>
+                            </tr>
+                          </table>
+                          <table class="order_content">
+                            <tr>
+                                <th></th>
+                                <th>상품명</th>
+                                <th>수량</th>
+                                <th>판매가</th>
+                                <th>할인</th>
+                                <th>포인트</th>
+                                <th>배송비</th>
+                                <th>총합</th>
+                            </tr>
+                            <tr>
+                                <td><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
+                                <td>
+                                    <p class="vendor-name">롯데마트</p><br>
+                                    <span>딥디크</span><br>
+                                    오드퍼퓸 플레르드뽀 75ml
+                                </td>
+                                <td class="quantity">2</td>
+                                <td class="cart_price">
+                                    <p class="price_original" data-unit="300000">300,000</p>
+                                    <p class="price_total" data-unit="0">0</p>
+                                </td>
+                                <td class="discount-rate">5%</td>
+                                <td class="point">0</td>
+                                <td class="shipping">2,500</td>
+                                <td class="total">0</td>
+                            </tr>
+                          </table>
+                          <table class="order_content">
+                            <tr>
+                                <th></th>
+                                <th>상품명</th>
+                                <th>수량</th>
+                                <th>판매가</th>
+                                <th>할인</th>
+                                <th>포인트</th>
+                                <th>배송비</th>
+                                <th>총합</th>
+                            </tr>
+                            <tr>
+                                <td><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
+                                <td>
+                                    <p class="vendor-name">롯데쇼핑</p><br>
+                                    <span>딥디크</span><br>
+                                    오드퍼퓸 플레르드뽀 75ml
+                                </td>
+                                <td class="quantity">1</td>
+                                <td class="cart_price">
+                                    <p class="price_original" data-unit="400000">400,000</p>
+                                    <p class="price_total" data-unit="0">0</p>
+                                </td>
+                                <td class="discount-rate">10%</td>
+                                <td class="point">0</td>
+                                <td class="shipping">2,500</td>
+                                <td class="total">0</td>
+                            </tr>
+                          </table>
+                          <table class="order_content">
+                            <tr>
+                                <th></th>
+                                <th>상품명</th>
+                                <th>수량</th>
+                                <th>판매가</th>
+                                <th>할인</th>
+                                <th>포인트</th>
+                                <th>배송비</th>
+                                <th>총합</th>
+                            </tr>
+                            <tr>
+                                <td><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
+                                <td>
+                                    <p class="vendor-name">롯데쇼핑</p><br>
+                                    <span>딥디크</span><br>
+                                    오드퍼퓸 플레르드뽀 75ml
+                                </td>
+                                <td class="quantity">2</td>
+                                <td class="cart_price">
+                                    <p class="price_original" data-unit="300000">300,000</p>
+                                    <p class="price_total" data-unit="0">0</p>
+                                </td>
+                                <td class="discount-rate">5%</td>
+                                <td class="point">0</td>
+                                <td class="shipping">2,500</td>
+                                <td class="total">0</td>
+                            </tr>
+                          </table>
+                    </div>
                     <div class="order_info">
                         <p>주문정보</p>
                         <table>
@@ -286,17 +474,15 @@
                         </table>
                     </div>   
                     <div class="cart_summary">
-                        <p>주문금액</p>
-                        <form>
-                            <table>
-                                <tr><th>총 상품수</th><td id="summary-count">0</td></tr>
-                                <tr><th>총 상품금액</th><td id="summary-amount">0</td></tr>
-                                <tr><th>총 할인금액</th><td id="summary-discount">0</td></tr>
-                                <tr><th>총 배송비</th><td id="summary-shipping">0</td></tr>
-                                <tr><th>총 적립 포인트</th><td id="summary-point">0</td></tr>
-                                <tr class="total"><th>총 결제금액</th><td id="summary-total">0</td></tr>
-                            </table>
-                        </form>
+                        <p>결제정보</p>
+                        <table>
+                            <tr><th>총 상품수</th><td id="summary-count">0</td></tr>
+                            <tr><th>총 상품금액</th><td id="summary-amount">0</td></tr>
+                            <tr><th> 총 할인금액</th><td id="summary-discount">0</td></tr>
+                            <tr><th>배송비</th><td id="summary-shipping">0</td></tr>
+                            <tr><th>적립 포인트</th><td id="summary-point">0</td></tr>
+                            <tr class="total"><th>총</th><td id="summary-total">0</td></tr>
+                        </table>
                     </div>
                 </div>
             </section>
