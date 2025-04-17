@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 /*
 * Application 암호화를 위한 환경설정
 * */
+
 @Configuration
 public class JasyptConfig {
 
