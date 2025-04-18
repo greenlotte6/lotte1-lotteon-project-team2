@@ -47,8 +47,11 @@
               <tr>
                 <td>아이디<span class="required">*</span></td>
                 <td>
-                  <input type="text" name="uid" placeholder="아이디 입력" />
-                  <span class="description">영문·숫자 조합 4~10자 이내</span>
+                  <div class="input-with-btn" >
+                  <input type="text" id="uid" name="uid" placeholder="아이디 입력" />
+                  <button type="button" id="btnCheckUid" class="btn btn-small btn-auth">중복확인</button>
+                  <span id="uidMessage" class="error-message"></span>
+        </div>
                 </td>
               </tr>
               <tr>

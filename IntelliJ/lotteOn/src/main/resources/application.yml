@@ -23,6 +23,8 @@ spring:
       location: uploads
       max-file-size: 10MB
 
+
+
   mail:
     host: smtp.gmail.com
     port: 587
