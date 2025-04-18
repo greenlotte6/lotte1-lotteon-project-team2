@@ -235,6 +235,7 @@ h2 {
   }
 
   .brand {
+    font-size: 16px;
     font-weight: 700;
   }
 
@@ -341,16 +342,30 @@ h2 {
   }
 
   .product-info > span:nth-of-type(2),
-  .product-info > span:nth-of-type(3) {
+  .product-info > .pname {
     margin-top: 5px;
     font-size: 16px;
     display: inline-block;
   }
 
+
   .product-info .meta {
     font-size: 12px;
     color: #555;
     margin: 4px 0;
+  }
+
+  .product-info .star {
+    color: black;
+    font-weight: bold;
+  }
+
+  .excellent {
+    font-family: 'Pretendard', sans-serif;
+    display: inline-block;     
+    color: #666;               
+    font-size: 13px !important;                               
+    margin-left: 5px;
   }
 
   .product-price {
