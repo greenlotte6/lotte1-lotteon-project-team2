@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c06a04ed-7e49-437c-8795-ec5aeed2ffab" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/product/order.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/product/order.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/product/order.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/product/order.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/product/order_completed.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/product/order_completed.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +72,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.LotteOnApplication.executor": "Run",
-    "git-widget-placeholder": "f/pai",
+    "git-widget-placeholder": "pai",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/GGG/Desktop/lotteOn2/IntelliJ/lotteOn",
@@ -125,6 +127,7 @@
       <workItem from="1744935856597" duration="269000" />
       <workItem from="1744936135357" duration="3049000" />
       <workItem from="1744948589323" duration="5127000" />
+      <workItem from="1744956882487" duration="1286000" />
     </task>
     <servers />
   </component>
