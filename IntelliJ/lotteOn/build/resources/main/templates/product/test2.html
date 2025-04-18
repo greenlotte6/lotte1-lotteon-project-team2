@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>카테고리 베스트 상품</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: sans-serif; padding: 20px; background: #fff; }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .view-toggle {
+      text-align: right;
+      margin-bottom: 20px;
+    }
+
+    .view-toggle button {
+      background: #f5f5f5;
+      border: 1px solid #ccc;
+      padding: 6px 12px;
+      cursor: pointer;
+      margin-left: 5px;
+    }
+
+    .product-wrapper.grid .product-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .product-wrapper.grid .product-item {
+      flex-direction: column;
+      align-items: flex-start;
+      border: 1px solid #ddd;
+      padding: 15px;
+    }
+
+    .product-wrapper.grid .product-item img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    .product-wrapper.grid .product-price {
+      width: 100%;
+      text-align: left;
+    }
+
+    .product-wrapper.list .product-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .product-item {
+      display: flex;
+      border: 1px solid #ddd;
+      padding: 15px;
+      background: #fff;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .product-item img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+    }
+
+    .product-info {
+      flex: 1;
+    }
+
+    .product-info h4 {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .product-info .meta {
+      font-size: 12px;
+      color: #555;
+      margin: 4px 0;
+    }
+
+    .product-price {
+      text-align: right;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .product-price .icons {
+      margin-top: 8px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 5px;
+    }
+
+    .product-price .icons img {
+      width: 18px;
+      height: 18px;
+    }
+
+    .badge-free {
+      display: inline-block;
+      padding: 2px 6px;
+      margin-top: 4px;
+      margin-bottom: 4px;
+      background-color: #f5f5f5;
+      border: 1px solid #ccc;
+      font-size: 12px;
+      font-weight: 600;
+      color: #555;
+      border-radius: 3px;
+    }
+
+    .discount {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="view-toggle">
+      <button onclick="toggleView('list')">리스트 보기</button>
+      <button onclick="toggleView('grid')">그리드 보기</button>
+    </div>
+
+    <div id="productWrapper" class="product-wrapper list">
+      <div class="product-list">
+        <div class="product-item">
+          <img src="/lotteOn/images/product/product.jpg" alt="상품 썸네일">
+          <div class="product-info">
+            <h4><span class="vendor">롯데백화점</span> 로에베 퍼퓸 아이레 수틸레사 오 드 뚜왈렛 50ML</h4>
+            <div class="meta">★ 4.8 | 리뷰 82</div>
+            <span class="badge-free">무료배송</span>
+          </div>
+          <div class="product-price">
+            <del>164,000원</del><br>
+            <span class="discount">5%</span> 155,800원
+            <div class="icons">
+              <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
+              <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
+            </div>
+          </div>
+        </div>
+        <!-- 💡 동일 구조의 상품-item 계속 추가 -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleView(view) {
+      const wrapper = document.getElementById('productWrapper');
+      wrapper.classList.remove('list', 'grid');
+      wrapper.classList.add(view);
+    }
+  </script>
+</body>
+</html>

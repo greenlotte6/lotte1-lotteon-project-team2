@@ -1,0 +1,181 @@
+
+.location-container {
+    position: relative;
+}
+.location-container ul {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 42px;
+    padding: 0;
+    margin: 0;
+}
+.location-container ul li a {
+    font-size: 14px;
+    font-weight: 350;
+    color: #333;
+    margin-left: 10px;
+
+}
+.location-container ul li:last-child a {
+    font-weight: bold;
+}
+
+.submenu {
+    display: none;
+    background-color: #f3f3f3;
+}
+.submenu li a {
+    padding: 10px 30px;
+    font-size: 14px;
+}
+
+/*루트*/
+.cs_main_info{
+    width: 100%;
+    height: 60px;
+    border-bottom: 1px solid #757575;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.cs_main_info p{
+    font-weight: bold;
+    font-size: 20px;
+    text-align: right;
+}
+
+
+/*사이드*/
+.content{
+    display: flex;
+ } 
+
+.cs-sidebar {
+    width: 200px;
+    border: 1px solid #ddd;
+    padding: 20px;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .cs-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #111;
+  }
+  
+  .cs-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px 0;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .cs-menu li {
+    border-bottom: 1px solid #eee;
+  }
+  
+  .cs-menu li a {
+    display: block;
+    padding: 12px 10px;
+    font-size: 15px;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .cs-menu li.active a {
+    font-weight: bold;
+    color: #d22;
+  }
+  .cs-menu li:not(.active):hover a {
+    color: #d22;
+    font-weight: bold;
+    background-color: #f9f9f9;
+  }
+
+/*사이드 끝*/ 
+
+.write-container {
+  width: 900px;
+  max-width: 1000px;
+  margin: 15px;
+}
+
+.write-container h2 {
+  font-size: 26px;
+  font-weight: 700;
+  border-bottom: 2px solid #222;
+  padding-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  margin-top: 8px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+input[type="text"],
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.select-group{
+  width: 450px;
+}
+
+.select-group {
+  display: flex;
+  gap: 10px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.btn.cancel {
+  background-color: #ccc;
+  color: #333;
+}
+
+.btn.submit {
+  background-color: #5a91f5;
+  color: white;
+}
+
+.btn.submit:hover {
+  background-color: #366ee3;
+}
+
+.btn.cancel:hover {
+  background-color: #aaa;
+}

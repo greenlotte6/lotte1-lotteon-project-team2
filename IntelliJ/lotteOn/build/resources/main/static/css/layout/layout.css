@@ -51,7 +51,7 @@ header{
 
 .user_menu > div{
     float: right;
-    width: 320px;
+    width: auto;
     text-align: right;  
 }
 
