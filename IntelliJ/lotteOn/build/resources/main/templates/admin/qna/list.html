@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>관리자 문의하기목록 : 롯데On</title>
+    <link rel="stylesheet" href="/css/admin/admin.css" />
+    <link rel="stylesheet" href="/css/admin/qna/list.css" />
+    <link rel="stylesheet" href="/css/layout/layout.css" />
+
+    <!-- 사이드바-->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const toggles = document.querySelectorAll(".menu-toggle");
+
+        toggles.forEach((toggle) => {
+          toggle.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            // 현재 클릭된 toggle 외 다른 submenu는 닫기 (원하면 제거 가능)
+            toggles.forEach((otherToggle) => {
+              if (otherToggle !== toggle) {
+                otherToggle.classList.remove("active");
+                const otherSubmenu = otherToggle.nextElementSibling;
+                if (
+                  otherSubmenu &&
+                  otherSubmenu.classList.contains("submenu")
+                ) {
+                  otherSubmenu.style.display = "none";
+                }
+              }
+            });
+
+            // 현재 submenu toggle
+            const submenu = this.nextElementSibling;
+            if (submenu && submenu.classList.contains("submenu")) {
+              const isVisible = submenu.style.display === "block";
+              submenu.style.display = isVisible ? "none" : "block";
+              this.classList.toggle("active", !isVisible);
+            }
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div id="wrapper">
+      <!-- 헤더 시작 -->
+      <header>
+        <div class="header_main">
+          <div class="user_menu">
+            <div>
+              <a href="#">홈 |</a>
+              <a href="#">로그아웃 |</a>
+              <a href="#">고객센터</a>
+            </div>
+          </div>
+
+          <div class="logo">
+            <img src="/images/logo.png" alt="lotteOn" />
+          </div>
+        </div>
+      </header>
+      <!-- 헤더 끝 -->
+      <main>
+        <section class="content">
+          <!-- 왼쪽 사이드바 -->
+          <aside class="sidebar">
+            <!-- Sidebar -->
+            <div class="sidebar">
+              <h3 class="sidebar-title">관리 메뉴</h3>
+              <ul class="sidebar-menu">
+                <li>
+                  <a href="#" class="menu-toggle">환경설정</a>
+                  <ul class="submenu">
+                    <li><a href="#">기본설정</a></li>
+                    <li><a href="#">배너관리</a></li>
+                    <li><a href="#">약관관리</a></li>
+                    <li><a href="#">카테고리</a></li>
+                    <li><a href="#">버전관리</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#" class="menu-toggle">상점관리</a>
+                  <ul class="submenu">
+                    <li><a href="#">상점목록</a></li>
+                    <li><a href="#">매출현황</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#" class="menu-toggle">회원관리</a>
+                  <ul class="submenu">
+                    <li><a href="#">회원목록</a></li>
+                    <li><a href="#">포인트관리</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#" class="menu-toggle">상품관리</a>
+                  <ul class="submenu">
+                    <li><a href="#">상품목록</a></li>
+                    <li><a href="#">상품등록</a></li>
+                    <li><a href="#">카테고리</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#" class="menu-toggle">주문관리</a>
+                  <ul class="submenu">
+                    <li><a href="#">주문현황</a></li>
+                    <li><a href="#">배송현황</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#" class="menu-toggle">쿠폰관리</a>
+                  <ul class="submenu">
+                    <li><a href="#">쿠폰등록</a></li>
+                    <li><a href="#">쿠폰발급현황</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="#" class="menu-toggle">고객센터</a>
+                  <ul class="submenu">
+                    <li><a href="#">공지사항</a></li>
+                    <li><a href="#">자주묻는질문</a></li>
+                    <li><a href="#">문의하기</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </aside>
+
+          <!-- 사이드바 끝-->
+          <!-- 오른쪽 글 -->
+          <article class="main_content_side">
+            <!-- 여기부터 글 작성 -->
+            <div class="main_head">
+              <p class="main_head_title">문의하기 목록</p>
+              <div style="float: right">
+                <p style="font-size: 16px">
+                  Home > 고객센터 ><span>문의하기</span>
+                </p>
+              </div>
+            </div>
+
+            <div class="select_div">
+              <div class="select_box">
+                <form action="#">
+                  <select name="brand" style="width: 100px">
+                    <option value="1차유형">1차유형&emsp;&emsp;▼</option>
+                    <option value="1차유형">1차유형&emsp;&emsp;▼</option>
+                  </select>
+                  <select name="brand" style="width: 100px">
+                    <option value="2차유형">2차유형&emsp;&emsp;▼</option>
+                    <option value="2차유형">2차유형&emsp;&emsp;▼</option>
+                  </select>
+                </form>
+              </div>
+            </div>
+
+            <form action="#" class="member_list_form">
+              <table>
+                <thead>
+                  <th><input type="checkbox" /></th>
+                  <th>번호</th>
+                  <th>1차유형</th>
+                  <th>2차유형</th>
+                  <th>제목</th>
+                  <th>작성자</th>
+                  <th>작성일</th>
+                  <th>상태</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <input type="checkbox" />
+                    </td>
+                    <td>120</td>
+                    <td>회원</td>
+                    <td>가입</td>
+                    <td>개인회원과 법인회원에 차이가 있나요 ?</td>
+                    <td>ch***</td>
+                    <td>00.00.00</td>
+                    <td>검토중</td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <input type="checkbox" />
+                    </td>
+                    <td>120</td>
+                    <td>회원</td>
+                    <td>가입</td>
+                    <td>개인회원과 법인회원에 차이가 있나요 ?</td>
+                    <td>ch***</td>
+                    <td>00.00.00</td>
+                    <td style="color: blue">답변완료</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div style="margin-top: 20px">
+                <button type="submit" class="delete_btn">선택삭제</button>
+              </div>
+            </form>
+
+            <!-- 페이징 -->
+            <p style="text-align: center; margin-top: 10px">
+              이전 1 2 3 4 5 다음
+            </p>
+          </article>
+        </section>
+      </main>
+
+      <!-- 푸터 시작 -->
+      <footer>
+        <div class="footer_info">
+          <div>
+            <a href="#">회사소개</a>
+            <a href="#">서비스이용약관</a>
+            <a href="#">개인정보처리방침</a>
+            <a href="#">전자금융거래약관</a>
+          </div>
+        </div>
+        <div class="footer_content">
+          <div class="footer_content_detail">
+            <img src="/images/footer_logo.png" alt="" />
+            <div>
+              <p class="footer_title">LotteOn Project</p>
+              <p>
+                개발자 : 우상호, 최명기, 김소현, 오재영, 홍준혁 <br />
+                주소 : 부산광역시 부산진구 부전동 266-2 그린컴퓨터아카데미
+                <br /><br />
+                사업자등록번호 : 529-85-00774(롯데쇼핑(주) e커머스사업부) <br />
+                통신판매업 신고 : 2024-서울강남-04439 사업자 정보 확인 <br />
+                호스팅 서비스사업자 : 롯데쇼핑(주) e커머스사업부 <br />
+              </p>
+
+              <p class="footer_sub_title" style="margin-top: 10px">
+                롯데쇼핑 e커머스 사업부 에스크로
+              </p>
+              <p>
+                고객님의 안전거래를 위해 현금 등으로 결제 시 결제금액 전액에
+                대해 <br />
+                소비자 피해 방지 서비스를 이용합니다.
+              </p>
+            </div>
+            <div>
+              <p class="footer_sub_title">고객센터</p>
+              <p>
+                전화번호 : 1899-7000(유료) <br />
+                E-mail : lotteon@lotte.net <br />
+                <a href="#" class="a_deco">분쟁해결기준</a><br />
+                <!-- 정적 페이지 이동 (연결 할 페이지 없으면 삭제 예정)-->
+                <a href="#" class="footer_btn"> FAQ 보기 </a>
+                <a href="#" class="footer_btn"> 1대1 문의하기 </a>
+                <a href="#" class="footer_btn"> 고객센터 </a>
+                <a href="#" class="footer_btn"> 공지사항 </a>
+              </p>
+
+              <p class="footer_sub_title">전자금융거래 분쟁 담당</p>
+              <p>Tel : 1899-7000(유료) E-mail : lotteon@lotte.net</p>
+              <a href="#" class="a_deco">안전거래센터</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer_version">
+          <p>
+            롯데쇼핑(주)는 통신판매중개자이며 통신판매의 거래당사자가 아닙니다.
+            입점판매자가 등록한 상품정보 및 거래에 대해 롯데쇼핑(주)는 일체
+            책임을 지지 않습니다.
+          </p>
+          <p>Copyright © LOTTESHOPPING Co., LTD. All rights reserved.</p>
+        </div>
+      </footer>
+      <!-- 푸터 끝 -->
+    </div>
+  </body>
+</html>

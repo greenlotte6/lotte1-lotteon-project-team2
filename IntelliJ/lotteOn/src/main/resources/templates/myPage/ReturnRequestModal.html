@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/lotteOn/css/myPage/table-main.css">
+    <link rel="stylesheet" href="/lotteOn/css/myPage/table-sub.css">
+    <link rel="stylesheet" href="/lotteOn/css/myPage/modal.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="modal-wrapper">
+        <div class="modal-header">
+            <div class="modal-name">
+                <p>반품신청</p>
+            </div>
+            <div class="exit" onclick="location.href='#'" style="cursor: pointer;">
+                <p class="modalClose">X</p> <!-- 수정 예정 -->
+            </div>
+        </div>
+        <div class="modal-main">
+            <div class="title-area">
+                <h1>상품정보</h1>
+            </div>
+            <div class="order-info table-main">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>날짜</th>
+                            <th>상품정보</th>
+                            <th>결제금액</th>
+                            <th>상태</th>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td>2025-12-31</td>
+                            <td class="product-info">
+                                <div class="img-container">
+                                    <div class="img">
+                                        이미지
+                                    </div>
+                                </div>
+                                <div class="text-area">
+                                    <p>주문번호 : 1012211341</p>
+                                    <p>(주) 상호명</p>
+                                    <p>상품명</p>
+                                    <p>수량 : 1개</p>
+                                    <p>34,000원</p>
+                                </div>
+                            </td>
+                            <td>
+                                <p>판매가 : 34,000원</p>
+                                <p>할인 : -3,000원</p>
+                                <p>결제금액 : 31,000원</p>
+                            </td>
+                            <td>배송완료</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="return-Request table-sub">
+                <div class="title-area">
+                    <h1>반품정보 입력</h1>
+                </div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>반품유형</td>
+                            <td>
+                                <label>
+                                    <input type="radio" name="choice">
+                                    <span>단순 변심</span>
+                                </label>
+                                    <label>
+                                    <input type="radio" name="choice">
+                                    <span>파손 및 불량</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="choice">
+                                    <span>주문 실수</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="choice">
+                                    <span>기타</span>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>사유입력</td>
+                            <td>
+                                <textarea></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>사진첨부(선택)</td>
+                            <td class="file">
+                                <input type="file">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="btn">
+                    <input type="submit" value="반품신청" onclick="location.href='#'";>
+                    <input type="submit" value="취소" onclick="location.href='#'">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

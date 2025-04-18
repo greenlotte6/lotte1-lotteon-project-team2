@@ -1,0 +1,66 @@
+.reply_list_form {
+  width: 100%;
+  overflow: hidden;
+}
+
+.reply_list_form table {
+  width: 100%;
+  text-align: center;
+  border-top: 1px solid black;
+}
+
+.reply_list_form a {
+  display: inline-block;
+  padding: 2px;
+  margin-bottom: 2px;
+}
+
+.reply_list_form tr {
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.reply_list_form td.label {
+  font-weight: bold;
+  color: #000;
+  width: 100px; /* 라벨 칸 너비 */
+  vertical-align: top;
+  padding: 10px;
+  background-color: #f9f9f9; /* 배경 살짝 차별화해도 보기 좋아 */
+}
+
+.reply_list_form textarea {
+  width: 65%;
+  height: 100px;
+  padding: 8px 12px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 14px;
+  resize: vertical;
+  margin-left: 0;
+  display: block;
+}
+
+/* 라벨용 왼쪽 td 스타일 (왼쪽 정렬 + 중앙 정렬 제거) */
+.reply_list_form td:first-child {
+  font-weight: bold;
+  color: #000;
+  text-align: left; /* 왼쪽 정렬 */
+  vertical-align: middle; /* 위쪽 정렬로 자연스럽게 */
+  width: 120px;
+  background-color: #f9f9f9;
+  padding: 8px 10px;
+  font-size: 14px;
+}
+
+/* 오른쪽 내용용 td */
+.reply_list_form td:last-child {
+  text-align: left; /* 왼쪽 정렬 */
+  padding: 20px 10px;
+  font-size: 14px;
+}
+
+.Blank_box {
+  width: 100%;
+  height: 60px;
+}
