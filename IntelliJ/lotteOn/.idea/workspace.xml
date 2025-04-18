@@ -5,191 +5,87 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c06a04ed-7e49-437c-8795-ec5aeed2ffab" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/modules/lotteOn.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/AdminController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/admin/admin.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/admin/config.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/admin/coupon.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/admin/faq/list.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/admin/faq/modify.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/admin/faq/view.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/admin/faq/write.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/admin/main.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/admin/member.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/admin/notice/list.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/admin/notice/modify.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/admin/notice/view.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/admin/notice/write.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/admin/order.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/admin/product.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/admin/qna/list.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/admin/qna/reply.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/admin/qna/view.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/admin/recruit/list.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/admin/shop.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/admin/관리자" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/company/culture.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/company/employment.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/company/index.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/company/media.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/company/회사소개" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/cs/faq/list.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/cs/index.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/cs/notice/list.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/cs/notice/view.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/cs/qna/list.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/cs/qna/view.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/cs/qna/write.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/cs/고객센터" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/index_layout.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/lotteon.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/main/메인" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/myPage/layout.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/myPage/modal.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/myPage/myPageMain.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/myPage/myPageRating.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/myPage/pagination.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/myPage/searchPeriod.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/myPage/starRating.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/myPage/table-main.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/myPage/table-mySetting.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/myPage/table-sub.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/policy/buyer.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/policy/finance.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/policy/location.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/policy/privacy.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/policy/seller.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/policy/정책" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/product/cart.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/product/detail.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/product/list.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/product/order.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/product/order_completed.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/product/search.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/product/상품" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/lotteon/나의 찜.PNG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/lotteon/마이롯데.PNG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/images/lotteon/장바구니.PNG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/adminmain.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/aside.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/company/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/faq_list.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/myPage/inquiry.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/myPage/modal.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/myPage/mySetting.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/myPage/postcode.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/myPage/searchPeriod.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/product_sidebar.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/config/banner.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/config/basic.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/config/category.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/config/policy.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/config/version.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/coupon/issued.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/coupon/list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/faq/list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/faq/modify.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/faq/view.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/faq/write.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/main.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/member/list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/member/point.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/notice/list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/notice/modify.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/notice/view.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/notice/write.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/order/delivery.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/order/list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/product/list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/product/register.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/qna/list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/qna/reply.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/qna/view.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/recruit/list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/shop/list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/shop/sales.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/company/culture.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/company/employment.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/company/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/company/media.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/cs/faq/cancle.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/cs/faq/cuppon.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/cs/faq/delivery.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/cs/faq/list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/cs/faq/order.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/cs/faq/safedeal.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/cs/faq/trip.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/cs/faq/view.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/cs/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/cs/notice/dangerproduct.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/cs/notice/event.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/cs/notice/list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/cs/notice/safedeal.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/cs/notice/service.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/cs/notice/view.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/cs/qna/cancle.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/cs/qna/cuppon.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/cs/qna/delivery.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/cs/qna/list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/cs/qna/order.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/cs/qna/safedeal.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/cs/qna/trip.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/cs/qna/view.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/cs/qna/write.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/index2.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/layout/layout.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/layout/layout_ad.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/myPage/PurchaseConfirmationModal.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/myPage/ReturnRequestModal.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/myPage/couponDetails.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/myPage/exchangeRequestModal.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/myPage/inquiryModal.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/myPage/myInquiry.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/myPage/myPageMain.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/myPage/myReview.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/myPage/mySetting.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/myPage/orderDetailsModal.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/myPage/orderHistory.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/myPage/pointDetails.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/myPage/productReviewModal.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/myPage/sellerInfoModal.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/policy/buyer.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/policy/finance.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/policy/location.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/policy/main.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/policy/privacy.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/policy/seller.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/product/basic.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/product/beauty/perfume/diptyque_fleurdepeau.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/product/beauty/skincare/skincare.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/product/cart.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/product/list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/product/order.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/product/order_completed.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/product/search.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/product/test.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/product/test2.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/inc/footer.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/inc/header.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/inc/sidebar.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/layout/footer.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/layout/header.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/config/JasyptConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/config/JasyptConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/controller/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/controller/AdminController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/layout/layout.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/css/layout/layout.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/config/banner.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/config/banner.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/config/basic.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/config/basic.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/config/category.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/config/category.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/config/policy.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/config/policy.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/config/version.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/config/version.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/coupon/issued.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/coupon/issued.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/coupon/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/coupon/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/faq/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/faq/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/faq/modify.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/faq/modify.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/faq/view.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/faq/view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/faq/write.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/faq/write.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/member/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/member/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/member/point.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/member/point.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/notice/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/notice/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/notice/modify.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/notice/modify.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/notice/view.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/notice/view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/notice/write.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/notice/write.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/order/delivery.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/order/delivery.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/order/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/order/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/product/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/product/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/product/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/product/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/qna/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/qna/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/qna/reply.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/qna/reply.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/qna/view.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/qna/view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/recruit/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/recruit/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/shop/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/shop/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/shop/sales.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/shop/sales.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/resources/main/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/JasyptConfig.class.uniqueId0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/index2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/AdminController.class.uniqueId0" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/AdminController.class.uniqueId0" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/AdminController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/layout/layout.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/layout/layout.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/config/banner.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/config/banner.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/config/basic.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/config/basic.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/config/category.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/config/category.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/config/policy.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/config/policy.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/config/version.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/config/version.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/coupon/issued.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/coupon/issued.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/coupon/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/coupon/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/faq/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/faq/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/faq/modify.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/faq/modify.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/faq/view.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/faq/view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/faq/write.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/faq/write.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/member/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/member/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/member/point.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/member/point.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/notice/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/notice/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/notice/modify.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/notice/modify.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/notice/view.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/notice/view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/notice/write.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/notice/write.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/order/delivery.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/order/delivery.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/order/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/order/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/product/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/product/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/product/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/product/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/qna/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/qna/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/qna/reply.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/qna/reply.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/qna/view.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/qna/view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/recruit/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/recruit/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/shop/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/shop/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/shop/sales.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/shop/sales.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index2.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -222,6 +118,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -239,6 +136,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
     "Gradle.Build lotteOn.executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
@@ -248,7 +146,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.LotteOnApplication.executor": "Run",
-    "git-widget-placeholder": "pai",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/GGG/Desktop/lotteOn/IntelliJ/lotteOn/src/main/resources/static/images/lotteon",
@@ -301,7 +199,7 @@
       <workItem from="1744935695890" duration="93000" />
       <workItem from="1744935806045" duration="41000" />
       <workItem from="1744935856597" duration="269000" />
-      <workItem from="1744936135357" duration="3049000" />
+      <workItem from="1744936135357" duration="10456000" />
     </task>
     <servers />
   </component>
