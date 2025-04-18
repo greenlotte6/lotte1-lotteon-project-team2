@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/lotteOn/css/layout/layout.css">
-    <link rel="stylesheet" href="/lotteOn/css/product/order_completed.css">
+    <link rel="stylesheet" href="/css/layout/layout.css">
+    <link rel="stylesheet" href="/css/product/order_completed.css">
     <title>주문완료 : 롯데On</title>
 </head>
 
@@ -127,30 +127,7 @@
       
     <div id="wrapper">
         <!-- 헤더 시작 -->
-        <header>
-            <div class="header_main">
-                <div class="user_menu">
-                    <div>
-                        <a href="#">로그인 |</a>
-                        <a href="#">회원가입 |</a>
-                        <a href="#">마이페이지 |</a>
-                        <a href="#">장바구니</a>
-                    </div>            
-                </div>
-
-                <div class="logo">
-                    <img src="/lotteOn/images/logo.png" alt="lotteOn">
-                    <div class="search">
-                        <form action="#">
-                            <input type="search" placeholder="검색어를 입력하세요">
-                            <button type="submit" class="header_search">
-                                <img src="/lotteOn/images/search_ico.svg" alt="검색" class="search-icon">
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </header>
+        <th:block th:include="/layout/header.html"/>
         <!-- 헤더 끝 -->
 
         <!-- 메인 내용 시작 -->
@@ -163,81 +140,81 @@
                         <div class="category-item">
                         <div class="parent">뷰티</div>
                         <div class="children">
-                            <a href="/lotteOn/view/product/beauty/skincare/skincare.html">스킨케어</a>
-                            <a href="/lotteOn/view/product/beauty/makeup">메이크업</a>
-                            <a href="/lotteOn/view/product/beauty/perfume">향수</a>
+                            <a href="/view/product/beauty/skincare/skincare.html">스킨케어</a>
+                            <a href="/view/product/beauty/makeup">메이크업</a>
+                            <a href="/view/product/beauty/perfume">향수</a>
                         </div>
                         </div>
                     
                         <div class="category-item">
                         <div class="parent">럭셔리</div>
                         <div class="children">
-                            <a href="/lotteOn/view/product/luxury/bag">가방</a>
-                            <a href="/lotteOn/view/product/luxury/watch">시계</a>
-                            <a href="/lotteOn/view/product/luxury/shoes">신발</a>
+                            <a href="/view/product/luxury/bag">가방</a>
+                            <a href="/view/product/luxury/watch">시계</a>
+                            <a href="/view/product/luxury/shoes">신발</a>
                         </div>
                         </div>
                     
                         <div class="category-item">
                         <div class="parent">여성패션</div>
                         <div class="children">
-                            <a href="/lotteOn/view/product/wfashion/onepiece">원피스</a>
-                            <a href="/lotteOn/view/product/wfashion/blouse">블라우스</a>
-                            <a href="/lotteOn/view/product/wfashion/pants">팬츠</a>
+                            <a href="/view/product/wfashion/onepiece">원피스</a>
+                            <a href="/view/product/wfashion/blouse">블라우스</a>
+                            <a href="/view/product/wfashion/pants">팬츠</a>
                         </div>
                         </div>
                     
                         <div class="category-item">
                         <div class="parent">남성패션</div>
                         <div class="children">
-                            <a href="/lotteOn/view/product/mfashion/shirt">셔츠</a>
-                            <a href="/lotteOn/view/product/mfashion/slacks">슬랙스</a>
-                            <a href="/lotteOn/view/product/mfashion/jacket">자켓</a>
+                            <a href="/view/product/mfashion/shirt">셔츠</a>
+                            <a href="/view/product/mfashion/slacks">슬랙스</a>
+                            <a href="/view/product/mfashion/jacket">자켓</a>
                         </div>
                         </div>
                     
                         <div class="category-item">
                         <div class="parent">가전</div>
                         <div class="children">
-                            <a href="/lotteOn/view/product/electronics/computer">컴퓨터</a>
-                            <a href="/lotteOn/view/product/electronics/game">게임</a>
-                            <a href="/lotteOn/view/product/electronics/tv">티비</a>
+                            <a href="/view/product/electronics/computer">컴퓨터</a>
+                            <a href="/view/product/electronics/game">게임</a>
+                            <a href="/view/product/electronics/tv">티비</a>
                         </div>
                         </div>
                     
                         <div class="category-item">
                         <div class="parent">가구</div>
                         <div class="children">
-                            <a href="/lotteOn/view/product/furniture/sofa">쇼파</a>
-                            <a href="/lotteOn/view/product/furniture/bed">침구</a>
-                            <a href="/lotteOn/view/product/furniture/wardrobe">옷장</a>
+                            <a href="/view/product/furniture/sofa">쇼파</a>
+                            <a href="/view/product/furniture/bed">침구</a>
+                            <a href="/view/product/furniture/wardrobe">옷장</a>
                         </div>
                         </div>
                     
                         <div class="category-item">
                         <div class="parent">반려동물</div>
                         <div class="children">
-                            <a href="/lotteOn/view/product/pet/dog">강아지</a>
-                            <a href="/lotteOn/view/product/pet/cat">고양이</a>
-                            <a href="/lotteOn/view/product/pet/parrot">앵무새</a>
+                            <a href="/view/product/pet/dog">강아지</a>
+                            <a href="/view/product/pet/cat">고양이</a>
+                            <a href="/view/product/pet/parrot">앵무새</a>
                         </div>
                         </div>
                     
                         <div class="category-item">
                         <div class="parent">취미</div>
                         <div class="children">
-                            <a href="/lotteOn/view/product/hobby/knitting">뜨개</a>
-                            <a href="/lotteOn/view/product/hobby/badminton">배드민턴</a>
-                            <a href="/lotteOn/view/product/hobby/poldance">폴댄스</a>
+                            <a href="/view/product/hobby/knitting">뜨개</a>
+                            <a href="/view/product/hobby/badminton">배드민턴</a>
+                            <a href="/view/product/hobby/poldance">폴댄스</a>
                         </div>
                         </div>
                     
                         <div class="category-item">
                         <div class="parent">여행</div>
                         <div class="children">
-                            <a href="/lotteOn/view/product/travel/asia">아시아</a>
-                            <a href="/lotteOn/view/product/travel/europe">유럽</a>
-                            <a href="/lotteOn/view/product/travel/northamerica">북미</a>
+                            <a href="/view/product/travel/asia">아시아</a>
+                            <a href="/view/product/travel/europe">유럽</a>
+                            <a href="/view/product/travel/northamerica">북미</a>
                         </div>
                         </div>
                     </div>
@@ -245,7 +222,7 @@
                         <p>베스트 상품</p>
                         <div>
                             <div class="img-wrap">
-                                <img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"><br>
+                                <img src="/images/product/Diptyque_FleurdePeau.jpg"><br>
                                 <span class="rank">1</span>
                             </div>
                             <a href="#">딥디크 오드퍼퓸 플레르드뽀 75ml</a><br>
@@ -255,7 +232,7 @@
                         </div>
                         <div>
                             <div class="img-wrap">
-                                <img src="/lotteOn/images/product/lelabo_another.jpg"><br>
+                                <img src="/images/product/lelabo_another.jpg"><br>
                                 <span class="rank">2</span>
                             </div>
                             <a href="#">르라보 어나더 13 75ml</a>
@@ -265,7 +242,7 @@
                         </div>
                         <div>
                             <div class="img-wrap">
-                                <img src="/lotteOn/images/product/loewe_sutileze.jpg"><br>
+                                <img src="/images/product/loewe_sutileze.jpg"><br>
                                 <span class="rank">3</span>
                             </div>
                             <a href="#">로에베 아이레 수틸레사 오 드 뚜알렛 50ml</a>
@@ -293,7 +270,7 @@
                                 <th>총합</th>
                             </tr>
                             <tr>
-                                <td><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
+                                <td><img src="/images/product/Diptyque_FleurdePeau.jpg"></td>
                                 <td>
                                     <p class="vendor-name">롯데백화점</p><br>
                                     <span>딥디크</span><br>
@@ -322,7 +299,7 @@
                                 <th>총합</th>
                             </tr>
                             <tr>
-                                <td><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
+                                <td><img src="/images/product/Diptyque_FleurdePeau.jpg"></td>
                                 <td>
                                     <p class="vendor-name">롯데마트</p><br>
                                     <span>딥디크</span><br>
@@ -351,7 +328,7 @@
                                 <th>총합</th>
                             </tr>
                             <tr>
-                                <td><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
+                                <td><img src="/images/product/Diptyque_FleurdePeau.jpg"></td>
                                 <td>
                                     <p class="vendor-name">롯데백화점</p><br>
                                     <span>딥디크</span><br>
@@ -380,7 +357,7 @@
                                 <th>총합</th>
                             </tr>
                             <tr>
-                                <td><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
+                                <td><img src="/images/product/Diptyque_FleurdePeau.jpg"></td>
                                 <td>
                                     <p class="vendor-name">롯데마트</p><br>
                                     <span>딥디크</span><br>
@@ -409,7 +386,7 @@
                                 <th>총합</th>
                             </tr>
                             <tr>
-                                <td><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
+                                <td><img src="/images/product/Diptyque_FleurdePeau.jpg"></td>
                                 <td>
                                     <p class="vendor-name">롯데쇼핑</p><br>
                                     <span>딥디크</span><br>
@@ -438,7 +415,7 @@
                                 <th>총합</th>
                             </tr>
                             <tr>
-                                <td><img src="/lotteOn/images/product/Diptyque_FleurdePeau.jpg"></td>
+                                <td><img src="/images/product/Diptyque_FleurdePeau.jpg"></td>
                                 <td>
                                     <p class="vendor-name">롯데쇼핑</p><br>
                                     <span>딥디크</span><br>
@@ -501,7 +478,7 @@
             </div>
             <div class="footer_content">
                 <div class="footer_content_detail">
-                    <img src="/lotteOn/images/footer_logo.png" alt="">
+                    <img src="/images/footer_logo.png" alt="">
                     <div>
                         <p class="footer_title">LotteOn Project</p>
                         <p>

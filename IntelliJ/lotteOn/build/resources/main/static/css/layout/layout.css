@@ -60,7 +60,13 @@ header{
     margin-left: 10px;
 }
 
-.logo img{
+.logo_img{
+    width: 200px;
+    height: 40px;
+    float: left;
+}
+
+.logo > img{
     width: 200px;
     height: 40px;
     float: left;

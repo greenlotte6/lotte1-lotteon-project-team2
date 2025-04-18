@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/lotteOn/css/layout/layout.css">
-    <link rel="stylesheet" href="/lotteOn/css/product/search.css">
+    <link rel="stylesheet" href="/css/layout/layout.css">
+    <link rel="stylesheet" href="/css/product/search.css">
     <title>상품검색 : 롯데On</title>
 </head>
 
@@ -74,30 +74,7 @@
 <body>
     <div id="wrapper">
          <!-- 헤더 시작 -->
-         <header>
-            <div class="header_main">
-                <div class="user_menu">
-                    <div>
-                        <a href="#">로그인 |</a>
-                        <a href="#">회원가입 |</a>
-                        <a href="#">마이페이지 |</a>
-                        <a href="#">장바구니</a>
-                    </div>            
-                </div>
-
-                <div class="logo">
-                    <img src="/lotteOn/images/logo.png" alt="lotteOn">
-                    <div class="search">
-                        <form action="#">
-                            <input type="search" placeholder="검색어를 입력하세요">
-                            <button type="submit" class="header_search">
-                                <img src="/lotteOn/images/search_ico.svg" alt="검색" class="search-icon">
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </header>
+        <th:block th:include="/layout/header.html"/>
         <!-- 헤더 끝 -->
         <main>
             <section class="content">
@@ -116,81 +93,81 @@
                         <div class="category-item">
                         <div class="parent">뷰티</div>
                         <div class="children">
-                            <a href="/lotteOn/view/product/beauty/skincare/skincare.html">스킨케어</a>
-                            <a href="/lotteOn/view/product/beauty/makeup">메이크업</a>
-                            <a href="/lotteOn/view/product/beauty/perfume">향수</a>
+                            <a href="/view/product/beauty/skincare/skincare.html">스킨케어</a>
+                            <a href="/view/product/beauty/makeup">메이크업</a>
+                            <a href="/view/product/beauty/perfume">향수</a>
                         </div>
                         </div>
                     
                         <div class="category-item">
                         <div class="parent">럭셔리</div>
                         <div class="children">
-                            <a href="/lotteOn/view/product/luxury/bag">가방</a>
-                            <a href="/lotteOn/view/product/luxury/watch">시계</a>
-                            <a href="/lotteOn/view/product/luxury/shoes">신발</a>
+                            <a href="/view/product/luxury/bag">가방</a>
+                            <a href="/view/product/luxury/watch">시계</a>
+                            <a href="/view/product/luxury/shoes">신발</a>
                         </div>
                         </div>
                     
                         <div class="category-item">
                         <div class="parent">여성패션</div>
                         <div class="children">
-                            <a href="/lotteOn/view/product/wfashion/onepiece">원피스</a>
-                            <a href="/lotteOn/view/product/wfashion/blouse">블라우스</a>
-                            <a href="/lotteOn/view/product/wfashion/pants">팬츠</a>
+                            <a href="/view/product/wfashion/onepiece">원피스</a>
+                            <a href="/view/product/wfashion/blouse">블라우스</a>
+                            <a href="/view/product/wfashion/pants">팬츠</a>
                         </div>
                         </div>
                     
                         <div class="category-item">
                         <div class="parent">남성패션</div>
                         <div class="children">
-                            <a href="/lotteOn/view/product/mfashion/shirt">셔츠</a>
-                            <a href="/lotteOn/view/product/mfashion/slacks">슬랙스</a>
-                            <a href="/lotteOn/view/product/mfashion/jacket">자켓</a>
+                            <a href="/view/product/mfashion/shirt">셔츠</a>
+                            <a href="/view/product/mfashion/slacks">슬랙스</a>
+                            <a href="/view/product/mfashion/jacket">자켓</a>
                         </div>
                         </div>
                     
                         <div class="category-item">
                         <div class="parent">가전</div>
                         <div class="children">
-                            <a href="/lotteOn/view/product/electronics/computer">컴퓨터</a>
-                            <a href="/lotteOn/view/product/electronics/game">게임</a>
-                            <a href="/lotteOn/view/product/electronics/tv">티비</a>
+                            <a href="/view/product/electronics/computer">컴퓨터</a>
+                            <a href="/view/product/electronics/game">게임</a>
+                            <a href="/view/product/electronics/tv">티비</a>
                         </div>
                         </div>
                     
                         <div class="category-item">
                         <div class="parent">가구</div>
                         <div class="children">
-                            <a href="/lotteOn/view/product/furniture/sofa">쇼파</a>
-                            <a href="/lotteOn/view/product/furniture/bed">침구</a>
-                            <a href="/lotteOn/view/product/furniture/wardrobe">옷장</a>
+                            <a href="/view/product/furniture/sofa">쇼파</a>
+                            <a href="/view/product/furniture/bed">침구</a>
+                            <a href="/view/product/furniture/wardrobe">옷장</a>
                         </div>
                         </div>
                     
                         <div class="category-item">
                         <div class="parent">반려동물</div>
                         <div class="children">
-                            <a href="/lotteOn/view/product/pet/dog">강아지</a>
-                            <a href="/lotteOn/view/product/pet/cat">고양이</a>
-                            <a href="/lotteOn/view/product/pet/parrot">앵무새</a>
+                            <a href="/view/product/pet/dog">강아지</a>
+                            <a href="/view/product/pet/cat">고양이</a>
+                            <a href="/view/product/pet/parrot">앵무새</a>
                         </div>
                         </div>
                     
                         <div class="category-item">
                         <div class="parent">취미</div>
                         <div class="children">
-                            <a href="/lotteOn/view/product/hobby/knitting">뜨개</a>
-                            <a href="/lotteOn/view/product/hobby/badminton">배드민턴</a>
-                            <a href="/lotteOn/view/product/hobby/poldance">폴댄스</a>
+                            <a href="/view/product/hobby/knitting">뜨개</a>
+                            <a href="/view/product/hobby/badminton">배드민턴</a>
+                            <a href="/view/product/hobby/poldance">폴댄스</a>
                         </div>
                         </div>
                     
                         <div class="category-item">
                         <div class="parent">여행</div>
                         <div class="children">
-                            <a href="/lotteOn/view/product/travel/asia">아시아</a>
-                            <a href="/lotteOn/view/product/travel/europe">유럽</a>
-                            <a href="/lotteOn/view/product/travel/northamerica">북미</a>
+                            <a href="/view/product/travel/asia">아시아</a>
+                            <a href="/view/product/travel/europe">유럽</a>
+                            <a href="/view/product/travel/northamerica">북미</a>
                         </div>
                         </div>
                     </div>
@@ -207,7 +184,7 @@
                             <form action="#">
                               <input type="search" placeholder="검색어를 입력하세요">
                               <button type="submit" class="header_search">
-                                <img src="/lotteOn/images/search_ico.svg" alt="검색" class="search-icon">
+                                <img src="/images/search_ico.svg" alt="검색" class="search-icon">
                               </button>
                             </form>
                           </div>
@@ -231,10 +208,10 @@
                     </div>
                     <div class="slider">
                       <div class="slides" id="slides">
-                        <img src="/lotteOn/images/product/banner1.jpg" alt="배너 1">
-                        <img src="/lotteOn/images/product/banner2.jpg" alt="배너 2">
-                        <img src="/lotteOn/images/product/banner1.jpg" alt="배너 3">
-                        <img src="/lotteOn/images/product/banner2.jpg" alt="배너 4">
+                        <img src="/images/product/banner1.jpg" alt="배너 1">
+                        <img src="/images/product/banner2.jpg" alt="배너 2">
+                        <img src="/images/product/banner1.jpg" alt="배너 3">
+                        <img src="/images/product/banner2.jpg" alt="배너 4">
                       </div>
                       <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
                       <button class="next" onclick="moveSlide(1)">&#10095;</button>
@@ -244,12 +221,12 @@
                     <div class="best-grid">
                       <div class="best-card">
                         <p class="rank">01</p>
-                        <img class="product-img" src="/lotteOn/images/product/product.jpg" alt="상품1" />
+                        <img class="product-img" src="/images/product/product.jpg" alt="상품1" />
                         <div class="vendor-row">
                           <span class="vendor-name">롯데백화점</span>
                           <div class="icons">
-                            <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
-                            <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
+                            <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                            <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
                           </div>
                         </div>
                         <p class="name"><span class="brand">샤넬</span> 상스 오 스플렌디드 50ml</p>
@@ -258,12 +235,12 @@
                       </div>
                       <div class="best-card">
                         <p class="rank">02</p>
-                        <img class="product-img" src="/lotteOn/images/product/product.jpg" alt="상품1" />
+                        <img class="product-img" src="/images/product/product.jpg" alt="상품1" />
                         <div class="vendor-row">
                           <span class="vendor-name">롯데백화점</span>
                           <div class="icons">
-                            <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
-                            <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
+                            <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                            <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
                           </div>
                         </div>
                         <p class="name"><span class="brand">샤넬</span> 상스 오 스플렌디드 50ml</p>
@@ -272,12 +249,12 @@
                       </div>
                       <div class="best-card">
                         <p class="rank">03</p>
-                        <img class="product-img" src="/lotteOn/images/product/product.jpg" alt="상품1" />
+                        <img class="product-img" src="/images/product/product.jpg" alt="상품1" />
                         <div class="vendor-row">
                           <span class="vendor-name">롯데백화점</span>
                           <div class="icons">
-                            <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
-                            <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
+                            <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                            <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
                           </div>
                         </div>
                         <p class="name"><span class="brand">샤넬</span> 상스 오 스플렌디드 50ml</p>
@@ -286,12 +263,12 @@
                       </div>
                       <div class="best-card">
                         <p class="rank">04</p>
-                        <img class="product-img" src="/lotteOn/images/product/product.jpg" alt="상품1" />
+                        <img class="product-img" src="/images/product/product.jpg" alt="상품1" />
                         <div class="vendor-row">
                           <span class="vendor-name">롯데백화점</span>
                           <div class="icons">
-                            <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
-                            <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
+                            <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                            <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
                           </div>
                         </div>
                         <p class="name"><span class="brand">샤넬</span> 상스 오 스플렌디드 50ml</p>
@@ -300,12 +277,12 @@
                       </div>
                       <div class="best-card">
                         <p class="rank">05</p>
-                        <img class="product-img" src="/lotteOn/images/product/product.jpg" alt="상품1" />
+                        <img class="product-img" src="/images/product/product.jpg" alt="상품1" />
                         <div class="vendor-row">
                           <span class="vendor-name">롯데백화점</span>
                           <div class="icons">
-                            <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
-                            <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
+                            <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                            <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
                           </div>
                         </div>
                         <p class="name"><span class="brand">샤넬</span> 상스 오 스플렌디드 50ml</p>
@@ -314,12 +291,12 @@
                       </div>
                       <div class="best-card">
                         <p class="rank">06</p>
-                        <img class="product-img" src="/lotteOn/images/product/product.jpg" alt="상품1" />
+                        <img class="product-img" src="/images/product/product.jpg" alt="상품1" />
                         <div class="vendor-row">
                           <span class="vendor-name">롯데백화점</span>
                           <div class="icons">
-                            <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
-                            <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
+                            <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                            <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
                           </div>
                         </div>
                         <p class="name"><span class="brand">샤넬</span> 상스 오 스플렌디드 50ml</p>
@@ -328,12 +305,12 @@
                       </div>
                       <div class="best-card">
                         <p class="rank">07</p>
-                        <img class="product-img" src="/lotteOn/images/product/product.jpg" alt="상품1" />
+                        <img class="product-img" src="/images/product/product.jpg" alt="상품1" />
                         <div class="vendor-row">
                           <span class="vendor-name">롯데백화점</span>
                           <div class="icons">
-                            <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
-                            <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
+                            <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                            <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
                           </div>
                         </div>
                         <p class="name"><span class="brand">샤넬</span> 상스 오 스플렌디드 50ml</p>
@@ -342,12 +319,12 @@
                       </div>
                       <div class="best-card">
                         <p class="rank">08</p>
-                        <img class="product-img" src="/lotteOn/images/product/product.jpg" alt="상품1" />
+                        <img class="product-img" src="/images/product/product.jpg" alt="상품1" />
                         <div class="vendor-row">
                           <span class="vendor-name">롯데백화점</span>
                           <div class="icons">
-                            <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
-                            <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
+                            <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                            <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
                           </div>
                         </div>
                         <p class="name"><span class="brand">샤넬</span> 상스 오 스플렌디드 50ml</p>
@@ -356,12 +333,12 @@
                       </div>
                       <div class="best-card">
                         <p class="rank">09</p>
-                        <img class="product-img" src="/lotteOn/images/product/product.jpg" alt="상품1" />
+                        <img class="product-img" src="/images/product/product.jpg" alt="상품1" />
                         <div class="vendor-row">
                           <span class="vendor-name">롯데백화점</span>
                           <div class="icons">
-                            <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
-                            <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
+                            <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                            <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
                           </div>
                         </div>
                         <p class="name"><span class="brand">샤넬</span> 상스 오 스플렌디드 50ml</p>
@@ -370,12 +347,12 @@
                       </div>
                          <div class="best-card">
                         <p class="rank">10</p>
-                        <img class="product-img" src="/lotteOn/images/product/product.jpg" alt="상품1" />
+                        <img class="product-img" src="/images/product/product.jpg" alt="상품1" />
                         <div class="vendor-row">
                           <span class="vendor-name">롯데백화점</span>
                           <div class="icons">
-                            <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
-                            <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
+                            <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                            <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
                           </div>
                         </div>
                         <p class="name"><span class="brand">샤넬</span> 상스 오 스플렌디드 50ml</p>
@@ -397,10 +374,10 @@
                         </div>
                         <div class="view-toggle">
                           <button id="toGrid" onclick="toggleView('grid')">
-                            <img src="/lotteOn/images/product/grid.png" alt="그리드 보기">
+                            <img src="/images/product/grid.png" alt="그리드 보기">
                           </button>
                           <button id="toList" onclick="toggleView('list')" style="display: none;">
-                            <img src="/lotteOn/images/product/list.png" alt="리스트 보기">
+                            <img src="/images/product/list.png" alt="리스트 보기">
                           </button>
                         </div>
                         
@@ -409,7 +386,7 @@
                     <div id="productWrapper" class="product-wrapper list">
                       <div class="product-list">
                         <div class="product-item">
-                          <img src="/lotteOn/images/product/product.jpg" alt="상품 썸네일">
+                          <img src="/images/product/product.jpg" alt="상품 썸네일">
                           <div class="product-info">
                             <span class="vendor-name">롯데백화점</span><br>
                             <span class="brand">로에베</span>
@@ -422,13 +399,13 @@
                             <span class="discount">5%</span> 
                             <span>155,800</span> 원
                             <div class="icons">
-                              <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
-                              <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
+                              <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                              <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
                             </div>
                           </div>
                         </div>
                         <div class="product-item">
-                            <img src="/lotteOn/images/product/product.jpg" alt="상품 썸네일">
+                            <img src="/images/product/product.jpg" alt="상품 썸네일">
                             <div class="product-info">
                               <span class="vendor-name">롯데백화점</span><br>
                               <span class="brand">로에베</span>
@@ -441,13 +418,13 @@
                               <span class="discount">5%</span>
                               <span>155,800</span> 원
                               <div class="icons">
-                                <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
-                                <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
+                                <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                                <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
                               </div>
                             </div>
                         </div>
                         <div class="product-item">
-                            <img src="/lotteOn/images/product/product.jpg" alt="상품 썸네일">
+                            <img src="/images/product/product.jpg" alt="상품 썸네일">
                             <div class="product-info">
                               <span class="vendor-name">롯데백화점</span><br>
                               <span class="brand">로에베</span>
@@ -460,13 +437,13 @@
                               <span class="discount">5%</span>
                               <span>155,800</span> 원
                               <div class="icons">
-                                <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
-                                <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
+                                <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                                <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
                               </div>
                             </div>
                         </div>
                         <div class="product-item">
-                            <img src="/lotteOn/images/product/product.jpg" alt="상품 썸네일">
+                            <img src="/images/product/product.jpg" alt="상품 썸네일">
                             <div class="product-info">
                               <span class="vendor-name">롯데백화점</span><br>
                               <span class="brand">로에베</span>
@@ -479,13 +456,13 @@
                               <span class="discount">5%</span>  
                               <span>155,800</span> 원
                               <div class="icons">
-                                <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
-                                <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
+                                <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                                <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
                               </div>
                             </div>
                         </div>
                         <div class="product-item">
-                            <img src="/lotteOn/images/product/product.jpg" alt="상품 썸네일">
+                            <img src="/images/product/product.jpg" alt="상품 썸네일">
                             <div class="product-info">
                               <span class="vendor-name">롯데백화점</span><br>
                               <span class="brand">로에베</span>
@@ -498,13 +475,13 @@
                               <span class="discount">5%</span> 
                               <span>155,800</span> 원
                               <div class="icons">
-                                <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
-                                <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
+                                <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                                <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
                               </div>
                             </div>
                         </div>
                         <div class="product-item">
-                            <img src="/lotteOn/images/product/product.jpg" alt="상품 썸네일">
+                            <img src="/images/product/product.jpg" alt="상품 썸네일">
                             <div class="product-info">
                               <span class="vendor-name">롯데백화점</span><br>
                               <span class="brand">로에베</span>
@@ -517,13 +494,13 @@
                               <span class="discount">5%</span> 
                               <span>155,800</span> 원
                               <div class="icons">
-                                <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
-                                <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
+                                <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                                <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
                               </div>
                             </div>
                         </div>
                         <div class="product-item">
-                            <img src="/lotteOn/images/product/product.jpg" alt="상품 썸네일">
+                            <img src="/images/product/product.jpg" alt="상품 썸네일">
                             <div class="product-info">
                               <span class="vendor-name">롯데백화점</span><br>
                               <span class="brand">로에베</span>
@@ -536,13 +513,13 @@
                               <span class="discount">5%</span>
                               <span>155,800</span> 원
                               <div class="icons">
-                                <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
-                                <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
+                                <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                                <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
                               </div>
                             </div>
                         </div>
                         <div class="product-item">
-                            <img src="/lotteOn/images/product/product.jpg" alt="상품 썸네일">
+                            <img src="/images/product/product.jpg" alt="상품 썸네일">
                             <div class="product-info">
                               <span class="vendor-name">롯데백화점</span><br>
                               <span class="brand">로에베</span>
@@ -555,13 +532,13 @@
                               <span class="discount">5%</span> 
                               <span>155,800</span> 원
                               <div class="icons">
-                                <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
-                                <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
+                                <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                                <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
                               </div>
                             </div>
                         </div>
                         <div class="product-item">
-                            <img src="/lotteOn/images/product/product.jpg" alt="상품 썸네일">
+                            <img src="/images/product/product.jpg" alt="상품 썸네일">
                             <div class="product-info">
                               <span class="vendor-name">롯데백화점</span><br>
                               <span class="brand">로에베</span>
@@ -574,13 +551,13 @@
                               <span class="discount">5%</span> 
                               <span>155,800</span> 원
                               <div class="icons">
-                                <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
-                                <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
+                                <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                                <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
                               </div>
                             </div>
                         </div>
                         <div class="product-item">
-                            <img src="/lotteOn/images/product/product.jpg" alt="상품 썸네일">
+                            <img src="/images/product/product.jpg" alt="상품 썸네일">
                             <div class="product-info">
                               <span class="vendor-name">롯데백화점</span><br>
                               <span class="brand">로에베</span>
@@ -593,13 +570,13 @@
                               <span class="discount">5%</span>
                               <span>155,800</span> 원
                               <div class="icons">
-                                <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
-                                <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
+                                <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                                <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
                               </div>
                             </div>
                         </div>
                         <div class="product-item">
-                            <img src="/lotteOn/images/product/product.jpg" alt="상품 썸네일">
+                            <img src="/images/product/product.jpg" alt="상품 썸네일">
                             <div class="product-info">
                               <span class="vendor-name">롯데백화점</span><br>
                               <span class="brand">로에베</span>
@@ -612,13 +589,13 @@
                               <span class="discount">5%</span>  
                               <span>155,800</span> 원
                               <div class="icons">
-                                <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
-                                <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
+                                <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                                <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
                               </div>
                             </div>
                         </div>
                         <div class="product-item">
-                            <img src="/lotteOn/images/product/product.jpg" alt="상품 썸네일">
+                            <img src="/images/product/product.jpg" alt="상품 썸네일">
                             <div class="product-info">
                               <span class="vendor-name">롯데백화점</span><br>
                               <span class="brand">로에베</span>
@@ -631,8 +608,8 @@
                               <span class="discount">5%</span> 
                               <span>155,800</span> 원
                               <div class="icons">
-                                <button><img src="/lotteOn/images/product/icon_favorite.png" alt="찜"></button>
-                                <button><img src="/lotteOn/images/product/icon_cart.png" alt="장바구니"></button>
+                                <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                                <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
                               </div>
                             </div>
                         </div>
@@ -666,7 +643,7 @@
             </div>
             <div class="footer_content">
                 <div class="footer_content_detail">
-                    <img src="/lotteOn/images/footer_logo.png" alt="">
+                    <img src="/images/footer_logo.png" alt="">
                     <div>
                         <p class="footer_title">LotteOn Project</p>
                         <p>

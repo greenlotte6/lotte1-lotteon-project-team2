@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/lotteOn/css/myPage/layout.css">
-    <link rel="stylesheet" href="/lotteOn/css/myPage/myPageMain.css">
-    <link rel="stylesheet" href="/lotteOn/css/mypage/table-main.css">
-    <link rel="stylesheet" href="/lotteOn/css/myPage/pagination.css">
-    <link rel="stylesheet" href="/lotteOn/css/myPage/searchPeriod.css">
-    <script src="/lotteOn/js/myPage/searchPeriod.js"></script>
+    <link rel="stylesheet" href="/css/myPage/layout.css">
+    <link rel="stylesheet" href="/css/myPage/myPageMain.css">
+    <link rel="stylesheet" href="/css/mypage/table-main.css">
+    <link rel="stylesheet" href="/css/myPage/pagination.css">
+    <link rel="stylesheet" href="/css/myPage/searchPeriod.css">
+    <script src="/js/myPage/searchPeriod.js"></script>
 
 </head>
 <body>
@@ -26,12 +26,12 @@
                     </div>            
                 </div>
                 <div class="logo">
-                    <img src="/lotteOn/images/logo.png" alt="lotteOn">
+                    <img src="/images/logo.png" alt="lotteOn">
                     <div class="search">
                         <form action="#">
                             <input type="search" placeholder="검색어를 입력하세요">
                             <button type="submit" class="header_search">
-                                <img src="/lotteOn/images/search_ico.svg" alt="검색" class="search-icon">
+                                <img src="/images/search_ico.svg" alt="검색" class="search-icon">
                             </button>
                         </form>
                     </div>
@@ -65,30 +65,7 @@
             </div>
             <section class="content">
                 <!-- 왼쪽 사이드바 -->
-                <aside class="sidebar">
-                    <div>
-                        <ul class="sidebar-menu">
-                            <li>
-                              <a href="#" class="menu-toggle">전체주문내역</a>
-                            </li>
-                            <li>
-                              <a href="#" class="menu-toggle">포인트내역</a>
-                            </li>
-                            <li>
-                              <a href="#" class="menu-toggle">쿠폰</a>
-                            </li>
-                            <li>
-                              <a href="#" class="menu-toggle">나의리뷰</a>
-                            </li>
-                            <li>
-                              <a href="#" class="menu-toggle">문의하기</a>
-                            </li>
-                            <li>
-                              <a href="#" class="menu-toggle">나의설정</a>
-                            </li>
-                        </ul>
-                    </div>
-                </aside>
+                <th:block th:include="/myPage/inc/sidebar"/>
                 <!-- 사이드바 끝-->
                 <!-- 오른쪽 글 -->
                 <article class="main_content_side">
@@ -209,7 +186,7 @@
             </div>
             <div class="footer_content">
                 <div class="footer_content_detail">
-                    <img src="/lotteOn/images/footer_logo.png" alt="">
+                    <img src="/images/footer_logo.png" alt="">
                     <div>
                         <p class="footer_title">LotteOn Project</p>
                         <p>

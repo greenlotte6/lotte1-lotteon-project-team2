@@ -8,7 +8,7 @@ main {
 .main_banner_box {
   width: 100%;
   height: 500px;
-  background-image: url("/lotteOn/images/company/slide8.webp");
+  background-image: url("/images/company/slide8.webp");
   position: relative;
   overflow: hidden;
   background-size: cover; /* ✅ 이미지를 영역에 맞게 확대/축소 */
