@@ -117,7 +117,6 @@ aside {
 
 main {
     height: auto;
-    border: 1px solid black;
 }
 
 .container {
@@ -128,7 +127,6 @@ main {
     min-height: 1000px;
     margin: 0 auto;
     margin-bottom: 100px;
-    border: 1px solid black;
 }
 
 .slider {
@@ -328,7 +326,6 @@ h2 {
     padding: 10px;
     gap: 15px;
     box-sizing: border-box; /* ★ 패딩 포함 너비 계산 */
-    border: 1px solid black;
   }
 
   .product-item > img {
