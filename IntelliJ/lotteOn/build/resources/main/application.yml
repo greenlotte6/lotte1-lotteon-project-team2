@@ -23,6 +23,8 @@ spring:
       location: uploads
       max-file-size: 10MB
 
+
+
   mail:
     host: smtp.gmail.com
     port: 587
@@ -37,7 +39,7 @@ spring:
             enable: true
   application:
     name: lotteOn
-    version: 0.0.2-SNAPSHOT
+    version: 0.0.1-SNAPSHOT
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: Asdf33143!@
