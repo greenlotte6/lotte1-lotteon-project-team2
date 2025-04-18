@@ -5,10 +5,81 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c06a04ed-7e49-437c-8795-ec5aeed2ffab" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/추가사항.txt" beforeDir="false" afterPath="$PROJECT_DIR$/추가사항.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/controller/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/controller/AdminController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/layout/layout.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/css/layout/layout.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/config/banner.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/config/banner.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/config/basic.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/config/basic.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/config/category.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/config/category.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/config/policy.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/config/policy.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/config/version.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/config/version.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/coupon/issued.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/coupon/issued.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/coupon/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/coupon/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/faq/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/faq/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/faq/modify.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/faq/modify.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/faq/view.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/faq/view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/faq/write.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/faq/write.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/member/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/member/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/member/point.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/member/point.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/notice/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/notice/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/notice/modify.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/notice/modify.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/notice/view.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/notice/view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/notice/write.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/notice/write.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/order/delivery.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/order/delivery.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/order/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/order/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/product/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/product/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/product/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/product/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/qna/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/qna/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/qna/reply.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/qna/reply.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/qna/view.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/qna/view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/recruit/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/recruit/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/shop/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/shop/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/shop/sales.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/admin/shop/sales.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/index2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/layout/layout.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/layout/layout.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/config/banner.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/config/banner.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/config/basic.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/config/basic.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/config/category.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/config/category.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/config/policy.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/config/policy.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/config/version.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/config/version.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/coupon/issued.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/coupon/issued.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/coupon/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/coupon/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/faq/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/faq/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/faq/modify.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/faq/modify.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/faq/view.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/faq/view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/faq/write.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/faq/write.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/member/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/member/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/member/point.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/member/point.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/notice/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/notice/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/notice/modify.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/notice/modify.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/notice/view.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/notice/view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/notice/write.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/notice/write.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/order/delivery.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/order/delivery.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/order/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/order/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/product/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/product/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/product/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/product/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/qna/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/qna/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/qna/reply.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/qna/reply.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/qna/view.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/qna/view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/recruit/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/recruit/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/shop/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/shop/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/shop/sales.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/shop/sales.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index2.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,33 +130,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Build lotteOn.executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.LotteOnApplication.executor": "Run",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/GGG/Desktop/lotteOn2/IntelliJ/lotteOn",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.keymap",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build lotteOn.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.LotteOnApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/GGG/Desktop/lotteOn2/IntelliJ/lotteOn&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\GGG\Desktop\lotteOn\IntelliJ\lotteOn\src\main\resources\static\images\lotteon" />
@@ -124,7 +195,7 @@
       <workItem from="1744935806045" duration="41000" />
       <workItem from="1744935856597" duration="269000" />
       <workItem from="1744936135357" duration="3049000" />
-      <workItem from="1744948589323" duration="50000" />
+      <workItem from="1744948589323" duration="388000" />
     </task>
     <servers />
   </component>
