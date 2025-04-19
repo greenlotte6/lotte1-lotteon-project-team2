@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/css/myPage/layout.css">
-    <link rel="stylesheet" href="/css/myPage/myPageMain.css">
-    <link rel="stylesheet" href="/css/mypage/table-main.css">
-    <link rel="stylesheet" href="/css/mypage/table-sub.css">
-    <link rel="stylesheet" href="/css/myPage/modal.css">
-    <link rel="stylesheet" href="/css/myPage/searchPeriod.css">
-    <script src="/js/myPage/searchPeriod.js"></script>
-    <script src="/js/myPage/modal.js"></script>
+    <link rel="stylesheet" href="/lotteOn/css/myPage/layout.css">
+    <link rel="stylesheet" href="/lotteOn/css/myPage/myPageMain.css">
+    <link rel="stylesheet" href="/lotteOn/css/mypage/table-main.css">
+    <link rel="stylesheet" href="/lotteOn/css/mypage/table-sub.css">
+    <link rel="stylesheet" href="/lotteOn/css/myPage/modal.css">
+    <link rel="stylesheet" href="/lotteOn/css/myPage/searchPeriod.css">
+    <script src="/lotteOn/js/myPage/searchPeriod.js"></script>
+    <script src="/lotteOn/js/myPage/modal.js"></script>
 
 </head>
 <body>
@@ -28,12 +28,12 @@
                     </div>            
                 </div>
                 <div class="logo">
-                    <img src="/images/logo.png" alt="lotteOn">
+                    <img src="/lotteOn/images/logo.png" alt="lotteOn">
                     <div class="search">
                         <form action="#">
                             <input type="search" placeholder="검색어를 입력하세요">
                             <button type="submit" class="header_search">
-                                <img src="/images/search_ico.svg" alt="검색" class="search-icon">
+                                <img src="/lotteOn/images/search_ico.svg" alt="검색" class="search-icon">
                             </button>
                         </form>
                     </div>
@@ -67,7 +67,30 @@
             </div>
             <section class="content">
                 <!-- 왼쪽 사이드바 -->
-                <th:block th:include="/myPage/inc/sidebar"/>
+                <aside class="sidebar">
+                    <div>
+                        <ul class="sidebar-menu">
+                            <li>
+                              <a href="#" class="menu-toggle">전체주문내역</a>
+                            </li>
+                            <li>
+                              <a href="#" class="menu-toggle">포인트내역</a>
+                            </li>
+                            <li>
+                              <a href="#" class="menu-toggle">쿠폰</a>
+                            </li>
+                            <li>
+                              <a href="#" class="menu-toggle">나의리뷰</a>
+                            </li>
+                            <li>
+                              <a href="#" class="menu-toggle">문의하기</a>
+                            </li>
+                            <li>
+                              <a href="#" class="menu-toggle">나의설정</a>
+                            </li>
+                        </ul>
+                    </div>
+                </aside>
                 <!-- 사이드바 끝-->
                 <!-- 오른쪽 글 -->
                 <article class="main_content_side">
@@ -132,7 +155,7 @@
                                         <td>2022-12-13</td>
                                         <td class="product-info">
                                             <div class="img-container">
-                                                <img class="img" src="/images/product/lelabo_another.jpg" alt="">
+                                                <img class="img" src="/lotteOn/images/product/lelabo_another.jpg" alt="">
                                             </div>
                                             <div class="text-area">
                                                 <p>주문번호 : 1012211341</p>
@@ -154,7 +177,7 @@
                                         <td>2022-12-13</td>
                                         <td class="product-info">
                                             <div class="img-container">
-                                                <img class="img" src="/images/product/lelabo_another.jpg" alt="">
+                                                <img class="img" src="/lotteOn/images/product/lelabo_another.jpg" alt="">
                                             </div>
                                             <div class="text-area">
                                                 <p>주문번호 : 1012211341</p>
@@ -176,7 +199,7 @@
                                         <td>2022-12-13</td>
                                         <td class="product-info">
                                             <div class="img-container">
-                                                <img class="img" src="/images/product/lelabo_another.jpg" alt="">
+                                                <img class="img" src="/lotteOn/images/product/lelabo_another.jpg" alt="">
                                             </div>
                                             <div class="text-area">
                                                 <p>주문번호 : 1012211341</p>
@@ -198,7 +221,7 @@
                                         <td>2022-12-13</td>
                                         <td class="product-info">
                                             <div class="img-container">
-                                                <img class="img" src="/images/product/lelabo_another.jpg" alt="">
+                                                <img class="img" src="/lotteOn/images/product/lelabo_another.jpg" alt="">
                                             </div>
                                             <div class="text-area">
                                                 <p>주문번호 : 1012211341</p>
@@ -220,7 +243,7 @@
                                         <td>2022-12-13</td>
                                         <td class="product-info">
                                             <div class="img-container">
-                                                <img class="img" src="/images/product/lelabo_another.jpg" alt="">
+                                                <img class="img" src="/lotteOn/images/product/lelabo_another.jpg" alt="">
                                             </div>
                                             <div class="text-area">
                                                 <p>주문번호 : 1012211341</p>
@@ -242,7 +265,7 @@
                                         <td>2022-12-13</td>
                                         <td class="product-info">
                                             <div class="img-container">
-                                                <img class="img" src="/images/product/lelabo_another.jpg" alt="">
+                                                <img class="img" src="/lotteOn/images/product/lelabo_another.jpg" alt="">
                                             </div>
                                             <div class="text-area">
                                                 <p>주문번호 : 1012211341</p>
@@ -374,7 +397,7 @@
                                         <td>2025-12-31</td>
                                         <td class="product-info">
                                             <div class="img-container">
-                                                <img class="img" src="/images/product/lelabo_another.jpg" alt="">
+                                                <img class="img" src="/lotteOn/images/product/lelabo_another.jpg" alt="">
                                             </div>
                                             <div class="text-area">
                                                 <p>주문번호 : 1012211341</p>
@@ -463,7 +486,7 @@
                                         <td>2025-12-31</td>
                                         <td class="product-info">
                                             <div class="img-container">
-                                                <img class="img" src="/images/product/lelabo_another.jpg" alt="">
+                                                <img class="img" src="/lotteOn/images/product/lelabo_another.jpg" alt="">
                                             </div>
                                             <div class="text-area">
                                                 <p>주문번호 : 1012211341</p>
@@ -533,7 +556,7 @@
             </div>
             <div class="footer_content">
                 <div class="footer_content_detail">
-                    <img src="/images/footer_logo.png" alt="">
+                    <img src="/lotteOn/images/footer_logo.png" alt="">
                     <div>
                         <p class="footer_title">LotteOn Project</p>
                         <p>
