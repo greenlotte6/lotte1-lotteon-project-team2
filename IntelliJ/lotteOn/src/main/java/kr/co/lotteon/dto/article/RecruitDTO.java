@@ -1,6 +1,6 @@
 package kr.co.lotteon.dto.article;
 
-import kr.co.lotteon.entity.user.User;
+import kr.co.lotteon.dto.user.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +18,7 @@ public class RecruitDTO {
 
     private int no;
 
-    private User user;
+    private UserDTO user;
 
     private String title; //제목
     private String department; // 채용부서

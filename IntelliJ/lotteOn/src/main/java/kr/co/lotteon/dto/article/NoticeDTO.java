@@ -1,6 +1,6 @@
 package kr.co.lotteon.dto.article;
 
-import kr.co.lotteon.entity.user.User;
+import kr.co.lotteon.dto.user.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +18,7 @@ public class NoticeDTO {
 
     private int no;
 
-    private User user;
+    private UserDTO user;
 
     /*
      * 관리자 공지사항 수정(5-7-4)

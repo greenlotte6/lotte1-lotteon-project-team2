@@ -1,4 +1,4 @@
-package kr.co.lotteon.dto.member;
+package kr.co.lotteon.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
