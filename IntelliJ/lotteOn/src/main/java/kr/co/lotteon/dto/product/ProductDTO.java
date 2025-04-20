@@ -1,6 +1,6 @@
 package kr.co.lotteon.dto.product;
 
-import kr.co.lotteon.dto.review.ReviewDTO;
+import kr.co.lotteon.dto.feedback.ReviewDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
