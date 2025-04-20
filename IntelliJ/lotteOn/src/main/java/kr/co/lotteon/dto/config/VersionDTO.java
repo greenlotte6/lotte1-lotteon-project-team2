@@ -1,5 +1,6 @@
 package kr.co.lotteon.dto.config;
 
+import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +19,7 @@ public class VersionDTO {
 
     private int vno;
 
-    private User user;
+    private UserDTO user;
 
     private String version; //버전정보
     private LocalDateTime wdate; // 등록일
