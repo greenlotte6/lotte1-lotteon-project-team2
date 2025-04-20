@@ -5,72 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c06a04ed-7e49-437c-8795-ec5aeed2ffab" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/product/order.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/product/order.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/product/order.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/product/order.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/product/order_completed.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/product/order_completed.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/controller/product/ProductController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/controller/product/ProductListController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/page/PageRequestDTO$PageRequestDTOBuilder.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/page/PageRequestDTO.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/page/PageResponseDTO$PageResponseDTOBuilder.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/page/PageResponseDTO.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/product/ProductDTO$ProductDTOBuilder.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/product/ProductDTO.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/review/ReviewDTO$ReviewDTOBuilder.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/review/ReviewDTO.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/seller/seller$sellerBuilder.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/seller/seller.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/product/Product$ProductBuilder.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/product/Product.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/product/QProduct.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/review/QReview.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/review/Review$ReviewBuilder.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/review/Review.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/seller/QSeller.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/seller/Seller$SellerBuilder.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/seller/Seller.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/repository/custom/ProductRepositoryCustom.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/repository/impl/ProductRepositoryImpl.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/repository/product/ProductRepository.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/classes/java/test/kr/co/lotteon/LotteOnApplicationTests.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/kr/co/lotteon/entity/product/QProduct.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/kr/co/lotteon/entity/review/QReview.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/kr/co/lotteon/entity/seller/QSeller.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/libs/lotteOn-0.0.1-SNAPSHOT-plain.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/libs/lotteOn-0.0.1-SNAPSHOT.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/reports/tests/test/classes/kr.co.lotteon.LotteOnApplicationTests.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/reports/tests/test/css/base-style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/reports/tests/test/css/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/reports/tests/test/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/reports/tests/test/js/report.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/reports/tests/test/packages/kr.co.lotteon.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/resolvedMainClassName" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/test-results/test/TEST-kr.co.lotteon.LotteOnApplicationTests.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/test-results/test/binary/output.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/test-results/test/binary/output.bin.idx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/test-results/test/binary/results.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/tmp/bootJar/MANIFEST.MF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ProductRepository.class.uniqueId0" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ProductRepositoryCustom.class.uniqueId2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ProductRepositoryImpl.class.uniqueId1" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/tmp/compileTestJava/previous-compilation-data.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/tmp/jar/MANIFEST.MF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/product/ProductListController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/page/PageRequestDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/page/PageResponseDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/product/ProductDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/review/ReviewDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/seller/seller.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/product/Product.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/review/Review.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/seller/Seller.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/repository/custom/ProductRepositoryCustom.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/repository/impl/ProductRepositoryImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/repository/product/ProductRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/checksums/md5-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/checksums/sha1-checksums.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/category/MainCategoryDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/category/SubCategoryDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/config/TermsDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/category/MainCategory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/category/SubCategory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/config/Config.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/config/Terms.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/repository/category/MainCategoryRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/repository/category/SubCategoryRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/kr/co/lotteon/repository/category/SubCategoryRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../DB/LotteOn.mwb" beforeDir="false" afterPath="$PROJECT_DIR$/../../DB/LotteOn.mwb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../DB/LotteOn.mwb.bak" beforeDir="false" afterPath="$PROJECT_DIR$/../../DB/LotteOn.mwb.bak" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.bin" afterDir="false" />
@@ -79,14 +25,333 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/lotteOn.main.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/controller/ProductController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ProductController.class.uniqueId0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/product/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Vscode/lotteOn/view/product/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vscode/lotteOn/view/product/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/LotteOnApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/config/AppConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/config/AppInfo$AppInfoBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/config/AppInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/config/JasyptConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/config/QueryDslConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/config/WebConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/controller/AdminController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/controller/CompanyController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/controller/CsController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/controller/HomeController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/controller/MemberController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/controller/MyController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/controller/PolicyController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/controller/product/ProductController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/controller/product/ProductListController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/UserDTO$UserDTOBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/UserDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/page/PageRequestDTO$PageRequestDTOBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/page/PageRequestDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/page/PageResponseDTO$PageResponseDTOBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/page/PageResponseDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/product/ProductDTO$ProductDTOBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/product/ProductDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/review/ReviewDTO$ReviewDTOBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/review/ReviewDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/seller/seller$sellerBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/seller/seller.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/Version.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/product/Product$ProductBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/product/Product.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/product/QProduct.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/review/QReview.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/review/Review$ReviewBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/review/Review.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/seller/QSeller.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/seller/Seller$SellerBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/seller/Seller.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/user/QUser.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/user/User$UserBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/user/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/interceptor/AppInfoInterceptor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/oauth2/Oauth2UserService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/repository/UserRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/repository/custom/ProductRepositoryCustom.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/repository/impl/ProductRepositoryImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/repository/product/ProductRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/security/MyUserDetails$MyUserDetailsBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/security/MyUserDetails.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/security/MyUserDetailsService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/security/SecurityConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/service/UserService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/kr/co/lotteon/LotteOnApplicationTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/kr/co/lotteon/entity/product/QProduct.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/kr/co/lotteon/entity/review/QReview.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/kr/co/lotteon/entity/seller/QSeller.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/generated/sources/annotationProcessor/java/main/kr/co/lotteon/entity/user/QUser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/libs/lotteOn-0.0.1-SNAPSHOT-plain.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/libs/lotteOn-0.0.1-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/classes/kr.co.lotteon.LotteOnApplicationTests.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/css/base-style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/js/report.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/packages/kr.co.lotteon.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resolvedMainClassName" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/admin/admin.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/admin/config.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/admin/coupon.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/admin/faq/list.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/admin/faq/modify.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/admin/faq/view.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/admin/faq/write.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/admin/main.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/admin/member.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/admin/notice/list.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/admin/notice/modify.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/admin/notice/view.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/admin/notice/write.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/admin/order.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/admin/product.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/admin/qna/list.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/admin/qna/reply.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/admin/qna/view.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/admin/recruit/list.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/admin/shop.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/admin/관리자" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/company/culture.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/company/employment.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/company/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/company/media.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/company/회사소개" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/cs/faq/list.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/cs/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/cs/notice/list.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/cs/notice/view.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/cs/qna/list.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/cs/qna/view.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/cs/qna/write.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/cs/고객센터" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/index_layout.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/layout/companyCommon.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/layout/layout.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/layout/공통" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/lotteon.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/main/메인" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/member/join.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/member/login.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/member/register.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/member/registerSeller.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/member/signup.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/member/회원" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/myPage/layout.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/myPage/modal.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/myPage/myPageMain.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/myPage/myPageRating.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/myPage/pagination.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/myPage/searchPeriod.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/myPage/starRating.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/myPage/table-main.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/myPage/table-mySetting.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/myPage/table-sub.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/policy/buyer.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/policy/finance.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/policy/location.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/policy/privacy.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/policy/seller.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/policy/정책" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/product/cart.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/product/detail.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/product/list.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/product/order.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/product/order_completed.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/product/search.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/css/product/상품" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/company/link.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/company/main_banner.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/company/slide1.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/company/slide2.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/company/slide3.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/company/slide4.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/company/slide5.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/company/slide6.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/company/slide7.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/company/slide8.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/company/timeline.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/cs/cash.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/cs/clipboard.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/cs/coupon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/cs/delivery.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/cs/manager.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/cs/refund.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/footer_logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/ico-star-empty.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/ico-star-full.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/lotteon/나의 찜.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/lotteon/마이롯데.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/lotteon/목록버튼.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/lotteon/배너이미지1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/lotteon/배너이미지2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/lotteon/배너이미지3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/lotteon/배너이미지4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/lotteon/배너이미지5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/lotteon/장바구니.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/member/award-logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/member/google.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/member/kakao.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/member/naver.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/policy/print.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/product/Diptyque_FleurdePeau.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/product/banner1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/product/banner2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/product/beautyfesta.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/product/blnk_star.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/product/full_star.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/product/grid.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/product/home.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/product/icon_cart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/product/icon_favorite.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/product/lelabo_another.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/product/list.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/product/loewe_sutileze.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/product/lotteimage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/product/medal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/product/product.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/product/product_banner.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/product/review_diptique_flerdefeau.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/reading_glass.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/search_ico.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/images/tset logo1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/adminmain.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/aside.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/company/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/faq_list.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/myPage/inquiry.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/myPage/modal.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/myPage/mySetting.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/myPage/postcode.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/myPage/searchPeriod.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/js/product_sidebar.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/config/banner.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/config/basic.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/config/category.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/config/policy.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/config/version.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/coupon/issued.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/coupon/list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/faq/list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/faq/modify.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/faq/view.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/faq/write.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/inc/footer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/inc/header.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/inc/sidebar.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/main.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/member/list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/member/point.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/notice/list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/notice/modify.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/notice/view.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/notice/write.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/order/delivery.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/order/list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/product/list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/product/register.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/qna/list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/qna/reply.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/qna/view.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/recruit/list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/shop/list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/admin/shop/sales.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/company/culture.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/company/employment.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/company/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/company/media.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/cs/faq/cancle.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/cs/faq/cuppon.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/cs/faq/delivery.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/cs/faq/list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/cs/faq/order.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/cs/faq/safedeal.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/cs/faq/trip.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/cs/faq/view.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/cs/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/cs/notice/dangerproduct.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/cs/notice/event.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/cs/notice/list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/cs/notice/safedeal.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/cs/notice/service.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/cs/notice/view.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/cs/qna/cancle.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/cs/qna/cuppon.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/cs/qna/delivery.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/cs/qna/list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/cs/qna/order.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/cs/qna/safedeal.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/cs/qna/trip.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/cs/qna/view.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/cs/qna/write.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/layout/footer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/layout/header.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/layout/header_select.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/layout/layout.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/layout/layout_ad.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/member/join.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/member/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/member/register.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/member/registerSeller.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/member/sample.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/member/signup.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/myPage/PurchaseConfirmationModal.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/myPage/ReturnRequestModal.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/myPage/couponDetails.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/myPage/exchangeRequestModal.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/myPage/inc/sidebar.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/myPage/inquiryModal.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/myPage/myInquiry.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/myPage/myPageMain.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/myPage/myReview.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/myPage/mySetting.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/myPage/orderDetailsModal.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/myPage/orderHistory.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/myPage/pointDetails.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/myPage/productReviewModal.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/myPage/sellerInfoModal.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/policy/buyer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/policy/finance.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/policy/location.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/policy/privacy.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/policy/seller.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/product/basic.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/product/beauty/perfume/diptyque_fleurdepeau.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/product/beauty/skincare/skincare.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/product/cart.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/product/list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/product/order.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/product/order_completed.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/product/search.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/test-results/test/TEST-kr.co.lotteon.LotteOnApplicationTests.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/test-results/test/binary/output.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/test-results/test/binary/output.bin.idx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/test-results/test/binary/results.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/bootJar/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ProductRepository.class.uniqueId0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ProductRepositoryCustom.class.uniqueId2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ProductRepositoryImpl.class.uniqueId1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileTestJava/previous-compilation-data.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jar/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/UserDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/product/Product.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/review/Review.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/review/Review.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/seller/Seller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/seller/Seller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/user/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/repository/custom/ProductRepositoryCustom.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/repository/impl/ProductRepositoryImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/repository/product/ProductRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/index_layout.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/index_layout.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,8 +398,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -157,8 +423,14 @@
   "keyToString": {
     "DefaultHtmlFileTemplate": "HTML File",
     "Gradle.Build lotteOn.executor": "Run",
+    "Gradle.LotteOnApplicationTests.executor": "Run",
+    "Gradle.SubCategoryRepositoryTest.findByCategoryName.executor": "Run",
     "Gradle.lotteOn [build].executor": "Run",
     "Gradle.lotteOn [clean].executor": "Run",
+    "JUnit.LotteOnApplicationTests.executor": "Run",
+    "JUnit.SubCategoryRepositoryTest.executor": "Run",
+    "JUnit.SubCategoryRepositoryTest.findByCategoryName.executor": "Run",
+    "JUnit.SubCategoryRepositoryTest.registerCategory.executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -167,11 +439,12 @@
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.LotteOnApplication.executor": "Run",
-
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "git-widget-placeholder": "pai",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/lotte6/Desktop/greendae",
+    "last_opened_file_path": "C:/Users/samsung/Desktop/lotte6/프로젝트/lotteOn/IntelliJ/lotteOn",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -180,7 +453,7 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.language.and.region",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -191,34 +464,19 @@
       <recent name="C:\Users\GGG\Desktop\lotteOn\IntelliJ\lotteOn\src\main\resources\static\js" />
       <recent name="C:\Users\GGG\Desktop\lotteOn\IntelliJ\lotteOn\src\main\resources\templates" />
     </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="kr.co.lotteon.repository.category" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="kr.co.lotteon.dto.category" />
       <recent name="kr.co.lotteon.entity.seller" />
       <recent name="kr.co.lotteon.dto.page" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.lotteOn [build]">
-    <configuration name="lotteOn [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Spring Boot.LotteOnApplication">
     <configuration name="lotteOn [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -241,6 +499,68 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="LotteOnApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lotteOn.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="kr.co.lotteon.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="kr.co.lotteon" />
+      <option name="MAIN_CLASS_NAME" value="kr.co.lotteon.LotteOnApplicationTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SubCategoryRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lotteOn.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="kr.co.lotteon.repository.category.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="kr.co.lotteon.repository.category" />
+      <option name="MAIN_CLASS_NAME" value="kr.co.lotteon.repository.category.SubCategoryRepositoryTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SubCategoryRepositoryTest.findByCategoryName" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lotteOn.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="kr.co.lotteon.repository.category.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="kr.co.lotteon.repository.category" />
+      <option name="MAIN_CLASS_NAME" value="kr.co.lotteon.repository.category.SubCategoryRepositoryTest" />
+      <option name="METHOD_NAME" value="findByCategoryName" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SubCategoryRepositoryTest.registerCategory" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lotteOn.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="kr.co.lotteon.repository.category.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="kr.co.lotteon.repository.category" />
+      <option name="MAIN_CLASS_NAME" value="kr.co.lotteon.repository.category.SubCategoryRepositoryTest" />
+      <option name="METHOD_NAME" value="registerCategory" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="LotteOnApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="lotteOn.main" />
@@ -251,7 +571,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.lotteOn [build]" />
+        <item itemvalue="JUnit.SubCategoryRepositoryTest.findByCategoryName" />
+        <item itemvalue="JUnit.SubCategoryRepositoryTest.registerCategory" />
+        <item itemvalue="JUnit.SubCategoryRepositoryTest" />
+        <item itemvalue="JUnit.LotteOnApplicationTests" />
         <item itemvalue="Gradle.lotteOn [clean]" />
       </list>
     </recent_temporary>
@@ -281,7 +604,9 @@
       <workItem from="1744957458380" duration="113000" />
       <workItem from="1744957590123" duration="17000" />
       <workItem from="1744957613548" duration="7449000" />
-
+      <workItem from="1744983559270" duration="7857000" />
+      <workItem from="1745105309796" duration="1001000" />
+      <workItem from="1745136553261" duration="5500000" />
     </task>
     <servers />
   </component>
