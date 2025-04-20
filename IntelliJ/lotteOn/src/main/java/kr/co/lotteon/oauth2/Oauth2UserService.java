@@ -2,7 +2,7 @@ package kr.co.lotteon.oauth2;
 
 
 import kr.co.lotteon.entity.user.User;
-import kr.co.lotteon.repository.UserRepository;
+import kr.co.lotteon.repository.user.UserRepository;
 import kr.co.lotteon.security.MyUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
