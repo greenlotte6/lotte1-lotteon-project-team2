@@ -37,7 +37,7 @@ public class CsController {
 
     @GetMapping("/cs/qna/list")
     public String qnaList() {
-        return "/cs/faq/list";
+        return "/cs/qna/list";
     }
 
     @GetMapping("/cs/qna/view")

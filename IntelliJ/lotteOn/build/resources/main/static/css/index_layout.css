@@ -290,7 +290,6 @@ footer{
     height: auto;
     background-color: #F2F2F2;
     overflow: hidden;
-    position: relative;
 }
 
 .footer{
@@ -417,4 +416,3 @@ main {
     box-sizing: border-box;
     padding: 5px 40px 40px 40px;
 }
-

@@ -37,43 +37,8 @@
                     }
                 });
             });
-
         });
     </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const cateV1 = document.querySelector("select[name='cateV1']");
-            const cateV2 = document.querySelector("select[name='cateV2']");
-            if (cateV1) {
-                cateV1.addEventListener("change", function() {
-
-                    let mainCate = this.value;
-
-                    // 기존 학과 옵션 초기화
-                    cateV2.innerHTML =  '<option value="">2차 카테고리 지정</option>';
-
-                    fetch(`/subCategory/list?MainCategory=`+encodeURIComponent(mainCate))
-                        .then(response => response.json())
-                        .then(data => {
-                            data.forEach(dept => {
-                                let option = document.createElement("option");
-                                option.value = dept.deptNo;
-                                option.textContent = dept.deptName;
-                                cateV2.appendChild(option);
-                            })
-
-                            console.log(data);
-                        }).catch(err => {
-                        console.log(err);
-                    })
-
-
-                });
-            }
-        });
-    </script>
-
 </head>
 <body>
     <div id="wrapper">
@@ -107,7 +72,7 @@
                                 <td>1차 분류</td>
                                 <td>
                                     <select name="cateV1">
-                                        <option value="회사"></option>
+                                        <option value="1차 분류 선택">1차 분류 선택</option>
                                     </select>
                                 </td>
                             </tr>
@@ -115,7 +80,7 @@
                                 <td>2차 분류</td>
                                 <td>
                                     <select name="cateV2">
-
+                                        <option value="2차 분류 선택">2차 분류 선택</option>
                                     </select>
                                 </td>
                             </tr>

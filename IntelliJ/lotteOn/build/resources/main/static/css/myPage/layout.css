@@ -84,7 +84,6 @@ header{
     width: 1200px;
     height: 80px;
     margin: 0 auto;
-    border: 1px solid black;
 }
 
 .search-icon {
@@ -246,45 +245,58 @@ main {
 
 /* 사이드 바 */
 
-.sidebar {
-    box-sizing: border-box;
-    width: 200px;
+aside {
     float: left;
-    border-collapse: collapse;
-    height: 100vh;
-    border-right: 1px solid #C0C0C0;
+    width: 150px;
+    height: auto;
+
 }
 
-.sidebar-title {
-    text-align: center;
+.sidebar-menu a {
     font-size: 18px;
-    font-weight: 600;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
+    font-weight: 500;
     color: #333;
-    border-collapse: collapse;
+    padding-inline: 10px;
+    margin-left: 10px;
 }
 
-.sidebar-menu {
-    border: 1px solid #C0C0C0;
-    
+.sidebar-menu li:nth-child(1){
+    margin-top: 20px;
 }
 
-.sidebar-menu li {
-    border-bottom: 1px solid #ddd;
-    border-collapse: collapse;
+.sidebar-menu li{
+    margin-bottom: 20px;
 }
 
-.sidebar-menu li a {
+.category > div {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+}
+
+.parent {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+}
+
+.category .children {
+    display: none;
+    margin-left: 15px;
+    margin-top: 5px;
+}
+
+.category .children a {
     display: block;
-    padding: 10px 40px; 
+    font-size: 14px;
     color: #333;
-    font-weight: 400;
-    transition: background-color 0.2s;
+    margin: 5px 0;
+    text-decoration: none;
+    transition: color 0.2s;
 }
 
-.sidebar-menu li a:hover {
-    background-color: #d6d6d6;
+.category .children a:hover {
+    color: red;
 }
 
 .main_info{
