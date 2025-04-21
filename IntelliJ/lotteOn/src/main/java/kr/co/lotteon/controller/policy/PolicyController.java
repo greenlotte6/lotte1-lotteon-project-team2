@@ -40,6 +40,4 @@ public class PolicyController {
         return "/policy/privacy";
     }
 
-
-
 }

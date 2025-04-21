@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 : 롯데On</title>
+    <link rel="stylesheet" href="/css/admin/admin.css">
+    <link rel="stylesheet" href="/css/admin/main.css">
+    <link rel="stylesheet" href="/css/layout/layout.css">
+    
+    <!-- 사이드바-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggles = document.querySelectorAll('.menu-toggle');
+
+            toggles.forEach(toggle => {
+                toggle.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    // 현재 클릭된 toggle 외 다른 submenu는 닫기 (원하면 제거 가능)
+                    toggles.forEach(otherToggle => {
+                        if (otherToggle !== toggle) {
+                            otherToggle.classList.remove('active');
+                            const otherSubmenu = otherToggle.nextElementSibling;
+                            if (otherSubmenu && otherSubmenu.classList.contains('submenu')) {
+                                otherSubmenu.style.display = 'none';
+                            }
+                        }
+                    });
+
+                    // 현재 submenu toggle
+                    const submenu = this.nextElementSibling;
+                    if (submenu && submenu.classList.contains('submenu')) {
+                        const isVisible = submenu.style.display === 'block';
+                        submenu.style.display = isVisible ? 'none' : 'block';
+                        this.classList.toggle('active', !isVisible);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!-- 차트 -->
+    <!-- 차트 스크립트 하나로 통합 -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['bar', 'corechart']});
+  google.charts.setOnLoadCallback(drawAllCharts);
+
+  function drawAllCharts() {
+    drawBarChart();
+    drawPieChart();
+  }
+
+  function drawBarChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['day', '주문', '결제', '취소'],
+      ['10-10', 1000, 400, 200],
+      ['10-11', 1170, 460, 250],
+      ['10-12', 660, 1120, 300],
+      ['10-13', 1030, 540, 350],
+      ['10-14', 1030, 540, 350]
+    ]);
+
+    var options = { chart: {} };
+
+    var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+    chart.draw(data, google.charts.Bar.convertOptions(options));
+  }
+
+  function drawPieChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['Task', 'Hours per Day'],
+      ['가전',  8],
+      ['식품',  4],
+      ['의류',  2],
+      ['기타',  2],
+    ]);
+
+    var options = {
+      title: '주요매출'
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+    chart.draw(data, options);
+  }
+</script>
+
+    
+</head>
+<body>
+    <div id="wrapper">
+        <!-- 헤더 시작 -->
+        <th:block th:include="/admin/inc/header.html"/>
+        <!-- 헤더 끝 -->
+        <main>
+            <section class="content">
+                <!-- 왼쪽 사이드바 -->
+                <th:block th:include="/admin/inc/sidebar.html"/>
+
+                <!-- 사이드바 끝-->
+                <!-- 오른쪽 글 -->
+                <article class="main_content_side">
+                    <!-- 여기부터 글 작성 -->
+                    <div class="main_head">
+                        <p class="main_head_title">관리자메인</p>
+                        <div style="float: right;">
+                            <p style="font-size: 16px;">Home <span>> 관리자 메인</span></p>
+                        </div>
+                    </div>
+                    
+                    <!-- 집계현황 -->
+                    <div class="summary">
+                        <div style="float: left; width: 50%;">
+                            <p class="title">집계현황</p>
+                            <div id="columnchart_material" style="width: 100%; height: 300px;">
+                            </div>
+                        </div>
+                        <div style="float: right; width: 50%;">
+                            <div id="piechart" style="width: 100%; height: 300px;"></div>
+                        </div>
+                    </div>
+
+                    <!-- 운영현황 -->
+                    <div class="operation">
+                        <p class="title">운영현황</p>
+                        <table class="operation_table" style="margin-bottom: 20px;">
+                            <tr>
+                                <th>입금대기</th>
+                                <th>배송준비</th>
+                                <th>취소요청</th>
+                                <th>교환요청</th>
+                                <th>반품요청</th>
+                            </tr>
+                            <tr>
+                                <td>101</td>
+                                <td>124</td>
+                                <td>14</td>
+                                <td>7</td>
+                                <td>24</td>
+                            </tr>
+                        </table>
+
+                        <table class="operation_table">
+                            <tr>
+                                <th>주문건수</th>
+                                <th>주문금액</th>
+                                <th>회원가입</th>
+                                <th>방문자 수</th>
+                                <th>문의 게시물</th>
+                            </tr>
+                            <tr>
+                                <td>주문건수</td>
+                                <td>주문금액</td>
+                                <td>회원가입</td>
+                                <td>방문자 수 </td>
+                                <td>반품요청</td>
+                            </tr>
+                        </table>
+
+                        <table class="operation_today" style="margin-bottom: 15px;">
+                            <tr>
+                                <td>오늘</td>
+                                <td>60</td>
+                                <td>오늘</td>
+                                <td>1,200,000</td>
+                                <td>오늘</td>
+                                <td>102</td>
+                                <td>어제</td>
+                                <td>1,200</td>
+                                <td>어제</td>
+                                <td>12</td>
+                            </tr>
+                            <tr>
+                                <td>오늘</td>
+                                <td>71</td>
+                                <td>어제</td>
+                                <td>2,500,000</td>
+                                <td>어제</td>
+                                <td>130</td>
+                                <td>오늘</td>
+                                <td>1,300</td>
+                                <td>오늘</td>
+                                <td>13</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- 공지사항 -->
+                    <div class="notice">
+                        <p class="title">공지사항</p>
+                        <table>
+                            <tr>
+                                <td>[안내] 해외결제사칭문자주의</td>
+                                <td>22.10.31</td>
+                            </tr>
+                            <tr>
+                                <td>[안내] 해외결제사칭문자주의</td>
+                                <td>22.10.31</td>
+                            </tr>
+                            <tr>
+                                <td>[안내] 해외결제사칭문자주의</td>
+                                <td>22.10.31</td>
+                            </tr>
+                            <tr>
+                                <td>[안내] 해외결제사칭문자주의</td>
+                                <td>22.10.31</td>
+                            </tr>
+                            <tr>
+                                <td>[안내] 해외결제사칭문자주의</td>
+                                <td>22.10.31</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="cs">
+                        <p class="title">고객문의</p>
+                        <table>
+                            <tr>
+                                <td>[가입] 가입문의내용</td>
+                                <td>chh**</td>
+                                <td>22.10.31</td>
+                            </tr>
+                            <tr>
+                                <td>[가입] 가입문의내용</td>
+                                <td>chh**</td>
+                                <td>22.10.31</td>
+                            </tr>
+                            <tr>
+                                <td>[가입] 가입문의내용</td>
+                                <td>chh**</td>
+                                <td>22.10.31</td>
+                            </tr>
+                            <tr>
+                                <td>[가입] 가입문의내용</td>
+                                <td>chh**</td>
+                                <td>22.10.31</td>
+                            </tr>
+                            <tr>
+                                <td>[가입] 가입문의내용</td>
+                                <td>chh**</td>
+                                <td>22.10.31</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </article>
+            </section>
+        </main>
+
+        <!-- 푸터 시작 -->
+        <th:block th:include="/admin/inc/footer.html"/>
+        <!-- 푸터 끝 -->
+    </div>
+</body>
+</html>

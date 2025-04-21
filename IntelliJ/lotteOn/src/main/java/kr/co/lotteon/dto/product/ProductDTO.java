@@ -1,33 +1,44 @@
 package kr.co.lotteon.dto.product;
 
-import kr.co.lotteon.dto.feedback.ReviewDTO;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import kr.co.lotteon.dto.category.MainCategoryDTO;
+import kr.co.lotteon.dto.category.SubCategoryDTO;
+import kr.co.lotteon.dto.seller.SellerDTO;
+import lombok.*;
+import java.time.LocalDateTime;
 
-import java.util.List;
-
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class ProductDTO {
 
-    private int no;
-    private String cate;
-    private String name;
-    private String description;
-    private int price;
-    private int stock;
-    private String rdate;
-    private String wdate;
-    private String productcol;
-    private int salesCount;
+    private int prodNo;
 
-    // 추가 컬럼
-    private String cname;
-    private List<ReviewDTO> reviews;
+    // 카테고리 및 판매자 ID
+    private MainCategoryDTO mainCateNo;
+    private SubCategoryDTO subCateNo;
+    private SellerDTO company;
 
+    // 상품 정보
+    private String prodName;
+    private int prodPrice;
+    private int prodPoint;
+    private int prodStock;
+    private int prodSold;
+    private int prodDiscount;
+    private int prodDeliveryFree;
+    private String prodContent;
 
+    private LocalDateTime regDate;
+    private int hit;
+
+    // 리뷰 정보
+    private double ratingTotal;
+    private int reviewCount;
+
+    // (선택적으로 보여줄 이름들)
+    private String mainCateName;
+    private String subCateName;
+    private String sellerName;
 }

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 회원목록 : 롯데On</title>
+    <link rel="stylesheet" href="/css/admin/admin.css">
+    <link rel="stylesheet" href="/css/admin/member.css">
+    <link rel="stylesheet" href="/css/layout/layout.css">
+    
+    <!-- 사이드바-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggles = document.querySelectorAll('.menu-toggle');
+
+            toggles.forEach(toggle => {
+                toggle.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    // 현재 클릭된 toggle 외 다른 submenu는 닫기 (원하면 제거 가능)
+                    toggles.forEach(otherToggle => {
+                        if (otherToggle !== toggle) {
+                            otherToggle.classList.remove('active');
+                            const otherSubmenu = otherToggle.nextElementSibling;
+                            if (otherSubmenu && otherSubmenu.classList.contains('submenu')) {
+                                otherSubmenu.style.display = 'none';
+                            }
+                        }
+                    });
+
+                    // 현재 submenu toggle
+                    const submenu = this.nextElementSibling;
+                    if (submenu && submenu.classList.contains('submenu')) {
+                        const isVisible = submenu.style.display === 'block';
+                        submenu.style.display = isVisible ? 'none' : 'block';
+                        this.classList.toggle('active', !isVisible);
+                    }
+                });
+            });
+        });
+    </script>
+
+    
+    
+</head>
+<body>
+    <div id="wrapper">
+        <!-- 헤더 시작 -->
+        <th:block th:include="/admin/inc/header.html"/>
+        <!-- 헤더 끝 -->
+        <main>
+            <section class="content">
+                <!-- 왼쪽 사이드바 -->
+                <th:block th:include="/admin/inc/sidebar.html"/>
+                <!-- 사이드바 끝-->
+                <!-- 오른쪽 글 -->
+                <article class="main_content_side">
+                    <!-- 여기부터 글 작성 -->
+                    <div class="main_head">
+                        <p class="main_head_title">회원목록</p>
+                        <div style="float: right;">
+                            <p style="font-size: 16px;">Home > 회원관리 ><span> 회원목록</span></p>
+                        </div>
+                    </div>
+
+                    <div class="select_div">
+                        <div class="select_box">
+                            <form action="#">
+                                <select name="brand">
+                                    <option value="아이디">아이디</option>
+                                    <option value="이름">이름</option>
+                                    <option value="이메일">이메일</option>
+                                    <option value="휴대폰">휴대폰</option>
+                                </select>
+                                <input type="text" name="keyword" class="search_text" placeholder="검색어 입력">
+                                <input type="submit" class="search_btn" value="검색">
+                            </form>
+                        </div>
+                    </div>
+
+                    <form action="#" class="member_list_form">
+                        <table>
+                            <thead>
+                                <th><input type="checkbox"></th>
+                                <th>번호</th>
+                                <th>아이디</th>
+                                <th>이름</th>
+                                <th>성별</th>
+                                <th>등급</th>
+                                <th>포인트</th>
+                                <th>이메일</th>
+                                <th>휴대폰</th>
+                                <th>가입일</th>
+                                <th>상태</th>
+                                <th>관리</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                    <td>5</td>
+                                    <td>아이디</td>
+                                    <td>정우성</td>
+                                    <td>M</td>
+                                    <td>
+                                        <select name="rank">
+                                            <option value="VVIP">VVIP</option>
+                                            <option value="VIP">VIP</option>
+                                            <option value="GOLD">GOLD</option>
+                                            <option value="SILVER">SILVER</option>
+                                            <option value="FAMILY">FAMILY</option>
+                                        </select>
+                                    </td>
+                                    <td>1,5000</td>
+                                    <td>xxxx@naver.com</td>
+                                    <td>010-1234-5678</td>
+                                    <td>0000-00-00 00:00:00</td>
+                                    <td style="color: green;">정상</td>
+                                    <td>
+                                        <a href="#" id="modal_modify">[ 수정 ]</a><br>
+                                        <a href="#">[ 중지 ]</a>
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+
+                        <div style="margin-top: 20px;">
+                            <button type="submit" class="modify_btn">선택수정</button>
+                        </div>
+                    </form>
+                    <!-- 페이징 -->
+                    <p style="text-align: center; margin-top: 10px;">
+                        이전 1 2 3 4 5 다음
+                    </p>
+                    
+                </article>
+            </section>
+        </main>
+
+        <!-- 푸터 시작 -->
+        <th:block th:include="/admin/inc/footer.html"/>
+        <!-- 푸터 끝 -->
+    </div>
+
+
+
+    <!-- 모달 -->
+    <!-- 배너 등록 모달 -->
+    <div class="modal">
+        <div class="modal_popup">
+            <div class="modal_head">
+                <span class="modal_title">회원수정</span>
+                <button type="button" class="close_btn">X</button>
+            </div>
+
+            <div class="modal_main">
+                <form action="#" class="member">
+                    <table class="modal_member">
+                        <tr>
+                            <td>아이디</td>
+                            <td>
+                                <input type="text" name="uid">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>이름</td>
+                            <td>
+                                <input type="text" name="name" placeholder="홍길동">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>성별</td>
+                            <td>
+                                <input name="gender" type="radio" value="남">남
+                                <input name="gender" type="radio" value="여" style="margin-left: 10px;">여
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>등급</td>
+                            <td>
+                                <input type="text" name="rank" readonly value="FAMILY"> 
+                                <span style="margin-left: 10px;">등급 수정은 회원 목록에서 선택수정 가능</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>상태</td>
+                            <td style="color: #57C479;">정상</td>
+                        </tr>
+                        <tr>
+                            <td>EMAIL</td>
+                            <td>
+                                <input type="text" name="email">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>휴대폰</td>
+                            <td>
+                                <input type="text" name="hp">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>우편번호</td>
+                            <td>
+                                <input type="text" name="zip" id="zip" placeholder="우편번호 선택"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>기본주소</td>
+                            <td>
+                                <input class="inputs" type="text" name="addr1" id="addr1"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>상세주소</td>
+                            <td>
+                                <input class="inputs" type="text" name="addr2" id="addr2" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>가입일</td>
+                            <td>0000-00-00 00:00:00</td>
+                        </tr>
+                        <tr>
+                            <td>최근로그인날짜</td>
+                            <td>0000-00-00 00:00:00</td>
+                        </tr>
+                        <tr>
+                            <td>기타</td>
+                            <td>
+                                <textarea name="content" placeholder="회원에대한기타정보입력"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <button type="submit" class="modal_btn">수정하기</button>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.querySelector('.modal');
+        const modalOpen = document.querySelector('#modal_modify');
+        const modalClose = document.querySelector('.close_btn');
+
+        //열기 버튼을 눌렀을 때 모달팝업이 열림
+        modalOpen.addEventListener('click',function(){
+            //'on' class 추가
+            modal.classList.add('on');
+        });
+        //닫기 버튼을 눌렀을 때 모달팝업이 닫힘
+        modalClose.addEventListener('click',function(){
+            //'on' class 제거
+            modal.classList.remove('on');
+        });
+    </script>
+
+
+
+
+</body>
+</html>

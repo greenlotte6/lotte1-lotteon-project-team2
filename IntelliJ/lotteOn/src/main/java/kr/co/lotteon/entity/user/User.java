@@ -36,4 +36,15 @@ public class User {
     // OAuth 인증 업체 정보
     private String provider;
 
+    @PrePersist
+    public void prePersist() {
+        if (this.role == null) {
+            this.role = "USER";
+        } 
+        
+        if (this.state == null) {
+            this.state = "정상";
+        }
+    }
+
 }
