@@ -35,15 +35,15 @@
 }
 
 .member_list_form table thead th:nth-child(4) {
-  width: 58px;
+  width: 90px;
 }
 
 .member_list_form table thead th:nth-child(5) {
-  width: 38px;
+  width: 50px;
 }
 
 .member_list_form table thead th:nth-child(6) {
-  width: 100px;
+  width: 150px;
 }
 
 .member_list_form table thead th:nth-child(7) {
@@ -51,15 +51,15 @@
 }
 
 .member_list_form table thead th:nth-child(8) {
-  width: 140px;
+  width: 70px;
 }
 
 .member_list_form table thead th:nth-child(9) {
-  width: 130px;
+  width: 70px;
 }
 
 .member_list_form table thead th:nth-child(10) {
-  width: 140px;
+  width: 70px;
 }
 
 .member_list_form table thead th:nth-child(11) {
