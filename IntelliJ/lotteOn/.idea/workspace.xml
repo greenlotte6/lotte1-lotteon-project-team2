@@ -138,6 +138,116 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/service/product/공간용" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Vscode/lotteOn/view/product/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vscode/lotteOn/view/product/list.html" afterDir="false" />
+    <list default="true" id="c06a04ed-7e49-437c-8795-ec5aeed2ffab" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/css/common/header.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/common/footer.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/common/header.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.13/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.13/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/checksums/md5-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.13/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/checksums/sha1-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/static/css/index_layout.css" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/static/css/index_layout.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/static/css/layout/layout.css" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/static/css/layout/layout.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/static/css/myPage/layout.css" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/static/css/myPage/layout.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/static/css/myPage/modal.css" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/static/css/myPage/modal.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/static/js/myPage/modal.js" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/static/js/myPage/modal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/admin/inc/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/admin/inc/header.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/layout/footer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/layout/header.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/layout/header_select.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/layout/layout.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/layout/layout_ad.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/myPage/PurchaseConfirmationModal.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/myPage/ReturnRequestModal.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/myPage/couponDetails.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/myPage/couponDetails.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/myPage/exchangeRequestModal.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/myPage/inc/sidebar.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/myPage/inc/sidebar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/myPage/inquiryModal.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/myPage/myInquiry.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/myPage/myInquiry.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/myPage/myPageMain.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/myPage/myPageMain.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/myPage/myReview.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/myPage/myReview.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/myPage/mySetting.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/myPage/mySetting.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/myPage/orderDetailsModal.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/myPage/orderHistory.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/myPage/pointDetails.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/myPage/pointDetails.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/myPage/productReviewModal.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/myPage/sellerInfoModal.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/policy/buyer.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/policy/buyer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/policy/finance.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/policy/finance.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/policy/location.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/policy/location.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/policy/privacy.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/policy/privacy.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/policy/seller.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/policy/seller.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/product/basic.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/product/basic.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/product/cart.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/product/cart.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/product/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/product/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/product/order.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/product/order.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/product/order_completed.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/product/order_completed.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/product/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/product/search.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/mypage/MyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/mypage/MyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/policy/PolicyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/policy/PolicyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/product/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/product/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/index_layout.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/index_layout.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/layout/layout.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/layout/layout.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/myPage/layout.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/myPage/layout.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/myPage/modal.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/myPage/modal.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/myPage/modal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/myPage/modal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/inc/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/inc/header.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/layout/footer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/layout/header.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/layout/header_select.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/layout/layout.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/layout/layout_ad.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/myPage/PurchaseConfirmationModal.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/modal/PurchaseConfirmationModal.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/myPage/ReturnRequestModal.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/modal/ReturnRequestModal.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/myPage/couponDetails.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/myPage/couponDetails.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/myPage/exchangeRequestModal.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/modal/exchangeRequestModal.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/myPage/inc/sidebar.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/myPage/inc/sidebar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/myPage/inquiryModal.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/modal/inquiryModal.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/myPage/myInquiry.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/myPage/myInquiry.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/myPage/myPageMain.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/myPage/myPageMain.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/myPage/myReview.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/myPage/myReview.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/myPage/mySetting.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/myPage/mySetting.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/myPage/orderDetailsModal.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/modal/orderDetailsModal.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/myPage/orderHistory.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/myPage/orderDetails.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/myPage/pointDetails.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/myPage/pointDetails.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/myPage/productReviewModal.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/modal/productReviewModal.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/myPage/sellerInfoModal.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/modal/sellerInfoModal.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/policy/buyer.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/policy/buyer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/policy/finance.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/policy/finance.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/policy/location.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/policy/location.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/policy/privacy.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/policy/privacy.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/policy/seller.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/policy/seller.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/product/basic.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/product/basic.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/product/cart.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/product/cart.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/product/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/product/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/product/order.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/product/order.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/product/order_completed.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/product/order_completed.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/product/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/product/search.html" afterDir="false" />
+    <list default="true" id="ea09e1ec-a69e-497f-bfbf-272142edb9cc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/service/seller/SellerService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/admin/postcode.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/admin/member/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/admin/member/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/admin/shop/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/admin/shop/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/layout/footer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/layout/header_select.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/layout/layout.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/layout/layout_ad.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/admin/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/admin/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/seller/SellerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/seller/SellerDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/seller/Seller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/seller/Seller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/user/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/member/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/member/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/shop/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/shop/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/layout/footer.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/inc/modal/shopRegister.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/layout/header_select.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/layout/layout.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/layout/layout_ad.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/보안.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/추가사항.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,40 +259,16 @@
       <ProjectState />
     </projectState>
   </component>
-  <component name="ExternalProjectsManager">
-    <system id="GRADLE">
-      <state>
-        <task path="$PROJECT_DIR$">
-          <activation />
-        </task>
-        <projects_view>
-          <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="lotteOn" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="lotteOn" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="lotteOn" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build" type="c8890929:TasksNode$1" />
-              </path>
-            </expand>
-            <select />
-          </tree_state>
-        </projects_view>
-      </state>
-    </system>
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Class" />
+        <option value="JUnit5 Test Class" />
+        <option value="Class" />
+        <option value="Interface" />
+        <option value="HTML File" />
+        <option value="CSS File" />
+        <option value="HTML File" />
         <option value="Class" />
       </list>
     </option>
@@ -191,13 +277,13 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 4
+  &quot;associatedIndex&quot;: 3
 }</component>
   <component name="ProjectId" id="2w11XF9SKKUovspbR8PMxLkNDYr" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
   </component>
+  <component name="ProjectId" id="2w13IXdiipcxZ5faq5MURfDSPTN" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -212,11 +298,22 @@
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/lotte6/Desktop/lotte1-lotteon-project-team2/IntelliJ/lotteOn/src/main/java/kr/co/lotteon/repository",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "jaeyeong",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/lotte2/Desktop/workspace/lotteOn/lotte1-lotteon-project-team2/IntelliJ/lotteOn/src/main/resources/templates/common",
+    "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "ml.llm.LLMConfigurable",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -224,6 +321,27 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\lotte6\Desktop\lotte1-lotteon-project-team2\IntelliJ\lotteOn\src\main\java\kr\co\lotteon\repository" />
       <recent name="C:\Users\lotte6\Desktop\lotte1-lotteon-project-team2\IntelliJ\lotteOn\src\main\java\kr\co\lotteon\dto" />
+      <recent name="C:\Users\lotte2\Desktop\workspace\lotteOn\lotte1-lotteon-project-team2\IntelliJ\lotteOn\src\main\resources\templates\common" />
+      <recent name="C:\Users\samsung\Desktop\lotte6\프로젝트\lotteOn\IntelliJ\lotteOn\src\main\java\kr\co\lotteon\service\seller" />
+      <recent name="C:\Users\samsung\Desktop\lotte6\프로젝트\lotteOn\IntelliJ\lotteOn\src\main\java\kr\co\lotteon\service\point" />
+      <recent name="C:\Users\samsung\Desktop\lotte6\프로젝트\lotteOn\IntelliJ\lotteOn\src\main\java\kr\co\lotteon\service\coupon" />
+      <recent name="C:\Users\GGG\Desktop\lotteOn\IntelliJ\lotteOn\src\main\resources\static\images\lotteon" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\lotte2\Desktop\workspace\lotteOn\lotte1-lotteon-project-team2\IntelliJ\lotteOn\src\main\resources\templates\layout" />
+      <recent name="C:\Users\lotte2\Desktop\workspace\lotteOn\lotte1-lotteon-project-team2\IntelliJ\lotteOn\src\main\resources\templates\modal" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="kr.co.lotteon.repository.user" />
+      <recent name="kr.co.lotteon.repository.category" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="kr.co.lotteon.dto.category" />
+      <recent name="kr.co.lotteon.entity.seller" />
+      <recent name="kr.co.lotteon.dto.page" />
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.LotteOnApplication">
@@ -271,6 +389,39 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="LotteOnApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="lotteOn.test" />
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.LotteOnApplication.executor&quot;: &quot;Run&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/GGG/Desktop/lotte1-lotteon-project-team2/IntelliJ/lotteOn&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Application.LotteOnApplication">
+    <configuration name="LotteOnApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="kr.co.lotteon.LotteOnApplication" />
+      <module name="lotteOn.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="kr.co.lotteon.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="LotteOnApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="lotteOn.main" />
@@ -283,6 +434,7 @@
       <list>
         <item itemvalue="Gradle.lotteOn [build]" />
         <item itemvalue="Gradle.lotteOn [clean]" />
+        <item itemvalue="Application.LotteOnApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -304,6 +456,30 @@
       <updated>1745194304539</updated>
       <workItem from="1745194306630" duration="93000" />
       <workItem from="1745194813058" duration="10637000" />
+      <changelist id="ea09e1ec-a69e-497f-bfbf-272142edb9cc" name="Changes" comment="" />
+      <created>1745195174135</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1744935694713</updated>
+      <workItem from="1744935695890" duration="93000" />
+      <workItem from="1744935806045" duration="41000" />
+      <workItem from="1744935856597" duration="269000" />
+      <workItem from="1744936135357" duration="3049000" />
+      <workItem from="1744948589323" duration="5127000" />
+      <workItem from="1744956882487" duration="1286000" />
+      <workItem from="1744957458380" duration="113000" />
+      <workItem from="1744957590123" duration="17000" />
+      <workItem from="1744957613548" duration="7449000" />
+      <workItem from="1744983559270" duration="7857000" />
+      <workItem from="1745105309796" duration="1001000" />
+      <workItem from="1745136553261" duration="5500000" />
+      <workItem from="1745143440857" duration="7796000" />
+      <workItem from="1745180186421" duration="8145000" />
+      <workItem from="1745193289215" duration="405000" />
+      <workItem from="1745194141345" duration="10494000" />
+      <updated>1745195174135</updated>
+      <workItem from="1745195175300" duration="4162000" />
+      <workItem from="1745199350087" duration="4371000" />
     </task>
     <servers />
   </component>
