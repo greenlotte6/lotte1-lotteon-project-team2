@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const modalClose = document.querySelectorAll('.modalClose');
 
 
-    const purhase_confirm_modal = document.querySelector('.purhase_confirm_modal');
+    const purchase_confirm_modal = document.querySelector('.purchase_confirm_modal');
     const product_review_modal = document.querySelector('.product_review_modal');
     const return_request_modal = document.querySelector('.return_request_modal');
     const exchange_request_modal = document.querySelector('.exchange_request_modal');
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function(){
     
 
 
-    const purhase_confirm_btn = document.querySelectorAll('.purhase_confirm_btn');
+    const purchase_confirm_btn = document.querySelectorAll('.purchase_confirm_btn');
     const product_review_btn = document.querySelectorAll('.product_review_btn');
     const return_request_btn = document.querySelectorAll('.return_request_btn');
     const exchange_request_btn = document.querySelectorAll('.exchange_request_btn');
@@ -24,9 +24,9 @@ document.addEventListener('DOMContentLoaded', function(){
     const inquiry_btn = document.querySelectorAll('.inquiry_btn');
 
 
-    purhase_confirm_btn.forEach(function(btn){
+    purchase_confirm_btn.forEach(function(btn){
         btn.addEventListener('click', function(){
-            purhase_confirm_modal.style.display ='block';
+            purchase_confirm_modal.style.display ='block';
         });
     });
 
