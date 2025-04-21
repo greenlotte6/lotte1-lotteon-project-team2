@@ -7,44 +7,14 @@
     <link rel="stylesheet" href="/css/admin/admin.css">
     <link rel="stylesheet" href="/css/admin/product.css">
     <link rel="stylesheet" href="/css/layout/layout.css">
-    
+
     <!-- 사이드바-->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const toggles = document.querySelectorAll('.menu-toggle');
-
-            toggles.forEach(toggle => {
-                toggle.addEventListener('click', function (e) {
-                    e.preventDefault();
-
-                    // 현재 클릭된 toggle 외 다른 submenu는 닫기 (원하면 제거 가능)
-                    toggles.forEach(otherToggle => {
-                        if (otherToggle !== toggle) {
-                            otherToggle.classList.remove('active');
-                            const otherSubmenu = otherToggle.nextElementSibling;
-                            if (otherSubmenu && otherSubmenu.classList.contains('submenu')) {
-                                otherSubmenu.style.display = 'none';
-                            }
-                        }
-                    });
-
-                    // 현재 submenu toggle
-                    const submenu = this.nextElementSibling;
-                    if (submenu && submenu.classList.contains('submenu')) {
-                        const isVisible = submenu.style.display === 'block';
-                        submenu.style.display = isVisible ? 'none' : 'block';
-                        this.classList.toggle('active', !isVisible);
-                    }
-                });
-            });
-
-        });
-    </script>
+    <script src="/js/admin/sidebar.js"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const cateV1 = document.querySelector("select[name='cateV1']");
-            const cateV2 = document.querySelector("select[name='cateV2']");
+            const cateV1 = document.querySelector("select[name='MainCateNo']");
+            const cateV2 = document.querySelector("select[name='subCateNo']");
             if (cateV1) {
                 cateV1.addEventListener("change", function() {
 
@@ -67,9 +37,16 @@
                         console.log(err);
                     })
 
-
                 });
             }
+
+            const prodPrice = document.getElementById("prodPrice");
+            const prodPoint = document.getElementById("prodPoint");
+
+            prodPrice.addEventListener("change", function (){
+                let point = this.value/100;
+                prodPoint.value = point;
+            })
         });
     </script>
 
@@ -94,7 +71,7 @@
                         </div>
                     </div>
 
-                    <form action="#">
+                    <form th:action="@{/admin/product/register}" method="post" enctype="multipart/form-data">
                         <!-- 상품 분류 -->
                         <p class="title">상품분류</p>
                         <div class="text_div">
@@ -105,7 +82,7 @@
                             <tr>
                                 <td>1차 분류</td>
                                 <td>
-                                    <select name="cateV1">
+                                    <select name="MainCateNo">
                                         <option value="1">뷰티</option>
                                         <option value="2">럭셔리</option>
                                         <option value="3">여성패션</option>
@@ -121,8 +98,8 @@
                             <tr>
                                 <td>2차 분류</td>
                                 <td>
-                                    <select name="cateV2">
-
+                                    <select name="subCateNo">
+                                        <option>2차 카테고리</option>
                                     </select>
                                 </td>
                             </tr>
@@ -136,48 +113,48 @@
                         <table class="basic">
                             <tr>
                                 <td>상품명</td>
-                                <td><input type="text"></td>
+                                <td><input type="text" name="prodName"></td>
                             </tr>
                             <tr>
                                 <td>기본설명</td>
-                                <td><input type="text"></td>
+                                <td><input type="text" name="prodContent"></td>
                             </tr>
                             <tr>
                                 <td>제조사</td>
-                                <td><input type="text"></td>
+                                <td><input type="text" name="company"></td>
                             </tr>
                             <tr>
                                 <td>상품금액</td>
-                                <td><input type="text">원</td>
+                                <td><input type="text" name="prodPrice" id="prodPrice">원</td>
                             </tr>
                             <tr>
                                 <td>할인율</td>
-                                <td><input type="text">%</td>
+                                <td><input type="text" name="prodDiscount">%</td>
                             </tr>
                             <tr>
                                 <td>포인트</td>
-                                <td><input type="text">원</td>
+                                <td><input type="text" name="prodPoint" id="prodPoint" readonly>원</td>
                             </tr>
                             <tr>
                                 <td>재고수량</td>
-                                <td><input type="text">개</td>
+                                <td><input type="text" name="prodStock">개</td>
                             </tr>
                             <tr>
                                 <td>배송비</td>
-                                <td><input type="text">원</td>
+                                <td><input type="text" name="prodDeliveryFee">원</td>
                             </tr>
                             <tr style="height: 120px;">
                                 <td>상품 이미지</td>
                                 <td>
-                                    <input type="file"> <span>크기 190 x 190, 상품 목록에 출력 될 이미지 입니다.</span> <br>
-                                    <input type="file"> <span>크기 230 x 230, 상품 메인에 출력 될 이미지 입니다.</span> <br>
-                                    <input type="file"> <span>크기 456 x 456, 상품 상세에 출력 될 이미지 입니다.</span>
+                                    <input type="file" name="file1"> <span>크기 190 x 190, 상품 목록에 출력 될 이미지 입니다.</span> <br>
+                                    <input type="file" name="file2"> <span>크기 230 x 230, 상품 메인에 출력 될 이미지 입니다.</span> <br>
+                                    <input type="file" name="file3"> <span>크기 456 x 456, 상품 상세에 출력 될 이미지 입니다.</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>상품 상세정보</td>
                                 <td>
-                                    <input type="file"> <span>크기 940px, 높이 제약없음, 크기 최대 1MB</span>
+                                    <input type="file" name="file4"> <span>크기 940px, 높이 제약없음, 크기 최대 1MB</span>
                                 </td>
                             </tr>
                         </table>
@@ -193,21 +170,21 @@
                         <table class="option" id="optionTable">
                             <tr>
                                 <td>옵션1</td>
-                                <td><input type="text"></td>
+                                <td><input type="text" name="opt1"></td>
                                 <td>옵션1 항목</td>
-                                <td><input type="text"></td>
+                                <td><input type="text" name="opt1Cont"></td>
                             </tr>
                             <tr>
                                 <td>옵션2</td>
-                                <td><input type="text"></td>
+                                <td><input type="text" name="opt2"></td>
                                 <td>옵션2 항목</td>
-                                <td><input type="text"></td>
+                                <td><input type="text" name="opt2Cont"></td>
                             </tr>
                             <tr>
                                 <td>옵션3</td>
-                                <td><input type="text"></td>
+                                <td><input type="text" name="opt3"></td>
                                 <td>옵션3 항목</td>
-                                <td><input type="text"></td>
+                                <td><input type="text" name="opt3Cont"></td>
                             </tr>
                         </table>
 
@@ -219,23 +196,29 @@
                                 const table = document.getElementById('optionTable');
                                 const rowCount = table.rows.length + 1;
 
-                                const newRow = table.insertRow();
+                                if(rowCount<=6){
+                                    const newRow = table.insertRow();
 
-                                const cell1 = newRow.insertCell(0);
-                                cell1.textContent = `옵션${rowCount}`;
+                                    const cell1 = newRow.insertCell(0);
+                                    cell1.textContent = `옵션${rowCount}`;
 
-                                const cell2 = newRow.insertCell(1);
-                                const input1 = document.createElement('input');
-                                input1.type = 'text';
-                                cell2.appendChild(input1);
+                                    const cell2 = newRow.insertCell(1);
+                                    const input1 = document.createElement('input');
+                                    input1.type = 'text';
+                                    cell2.appendChild(input1);
 
-                                const cell3 = newRow.insertCell(2);
-                                cell3.textContent = `옵션${rowCount} 항목`;
+                                    const cell3 = newRow.insertCell(2);
+                                    cell3.textContent = `옵션${rowCount} 항목`;
 
-                                const cell4 = newRow.insertCell(3);
-                                const input2 = document.createElement('input');
-                                input2.type = 'text';
-                                cell4.appendChild(input2);
+                                    const cell4 = newRow.insertCell(3);
+                                    const input2 = document.createElement('input');
+                                    input2.type = 'text';
+                                    cell4.appendChild(input2);
+                                }else{
+                                    alert("상품 선택정보는 6개가 최대 입니다.")
+                                }
+
+
                             });
                         </script>
 

@@ -7,84 +7,55 @@
     <link rel="stylesheet" href="/css/admin/admin.css">
     <link rel="stylesheet" href="/css/admin/main.css">
     <link rel="stylesheet" href="/css/layout/layout.css">
-    
+
     <!-- 사이드바-->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const toggles = document.querySelectorAll('.menu-toggle');
-
-            toggles.forEach(toggle => {
-                toggle.addEventListener('click', function (e) {
-                    e.preventDefault();
-
-                    // 현재 클릭된 toggle 외 다른 submenu는 닫기 (원하면 제거 가능)
-                    toggles.forEach(otherToggle => {
-                        if (otherToggle !== toggle) {
-                            otherToggle.classList.remove('active');
-                            const otherSubmenu = otherToggle.nextElementSibling;
-                            if (otherSubmenu && otherSubmenu.classList.contains('submenu')) {
-                                otherSubmenu.style.display = 'none';
-                            }
-                        }
-                    });
-
-                    // 현재 submenu toggle
-                    const submenu = this.nextElementSibling;
-                    if (submenu && submenu.classList.contains('submenu')) {
-                        const isVisible = submenu.style.display === 'block';
-                        submenu.style.display = isVisible ? 'none' : 'block';
-                        this.classList.toggle('active', !isVisible);
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="/js/admin/sidebar.js"></script>
 
     <!-- 차트 -->
     <!-- 차트 스크립트 하나로 통합 -->
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-  google.charts.load('current', {'packages':['bar', 'corechart']});
-  google.charts.setOnLoadCallback(drawAllCharts);
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar', 'corechart']});
+      google.charts.setOnLoadCallback(drawAllCharts);
 
-  function drawAllCharts() {
-    drawBarChart();
-    drawPieChart();
-  }
+      function drawAllCharts() {
+        drawBarChart();
+        drawPieChart();
+      }
 
-  function drawBarChart() {
-    var data = google.visualization.arrayToDataTable([
-      ['day', '주문', '결제', '취소'],
-      ['10-10', 1000, 400, 200],
-      ['10-11', 1170, 460, 250],
-      ['10-12', 660, 1120, 300],
-      ['10-13', 1030, 540, 350],
-      ['10-14', 1030, 540, 350]
-    ]);
+      function drawBarChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['day', '주문', '결제', '취소'],
+          ['10-10', 1000, 400, 200],
+          ['10-11', 1170, 460, 250],
+          ['10-12', 660, 1120, 300],
+          ['10-13', 1030, 540, 350],
+          ['10-14', 1030, 540, 350]
+        ]);
 
-    var options = { chart: {} };
+        var options = { chart: {} };
 
-    var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
-    chart.draw(data, google.charts.Bar.convertOptions(options));
-  }
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
 
-  function drawPieChart() {
-    var data = google.visualization.arrayToDataTable([
-      ['Task', 'Hours per Day'],
-      ['가전',  8],
-      ['식품',  4],
-      ['의류',  2],
-      ['기타',  2],
-    ]);
+      function drawPieChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['가전',  8],
+          ['식품',  4],
+          ['의류',  2],
+          ['기타',  2],
+        ]);
 
-    var options = {
-      title: '주요매출'
-    };
+        var options = {
+          title: '주요매출'
+        };
 
-    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-    chart.draw(data, options);
-  }
-</script>
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data, options);
+      }
+    </script>
 
     
 </head>
