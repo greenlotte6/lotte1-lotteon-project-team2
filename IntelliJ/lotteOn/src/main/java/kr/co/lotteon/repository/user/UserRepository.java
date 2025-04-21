@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,String> {
+    boolean existsByUid(String uid);    // 아이디 중복 체크용
+    boolean existsByEmail(String email);    // 이메일 중복 체크도 가능
 
 }
 
