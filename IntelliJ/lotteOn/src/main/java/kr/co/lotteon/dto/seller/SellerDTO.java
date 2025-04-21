@@ -12,7 +12,7 @@ public class SellerDTO {
 
     private int sno;          // 판매자 번호 (PK)
 
-    private UserDTO uid;      // 회원 아이디 (User FK)
+    private UserDTO user;      // 회원 아이디 (User FK)
 
     /*
      *   rank : 판매자 등급 ( 카테고리별 상품목록 출력하기 / 2-1)
