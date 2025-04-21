@@ -4,59 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c06a04ed-7e49-437c-8795-ec5aeed2ffab" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../Vscode/lotteOn/css/admin/recruit/list.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vscode/lotteOn/css/admin/recruit/list.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/coupon/CouponDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/coupon/CouponIssueDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/point/PointDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/seller/CompanySalesDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/user/UserDetailsDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/coupon/Coupon.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/coupon/CouponIssue.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/point/Point.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/seller/CompanySales.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/user/UserDetails.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/repository/coupon/CouponIssueRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/repository/coupon/CouponRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/repository/point/PointRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/repository/seller/SellerRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/repository/user/UserDetailsRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/service/coupon/공간용" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/service/point/공간용" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/service/seller/공간용" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/kr/co/lotteon/repository/user/UserDetailsRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.lock" afterDir="false" />
+    <list default="true" id="ea09e1ec-a69e-497f-bfbf-272142edb9cc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/service/seller/SellerService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/admin/postcode.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/FaqDTO$FaqDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/FaqDTO$FaqDTOBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/FaqDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/FaqDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/InquiryDTO$InquiryDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/InquiryDTO$InquiryDTOBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/InquiryDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/InquiryDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/NoticeDTO$NoticeDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/NoticeDTO$NoticeDTOBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/NoticeDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/NoticeDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/RecruitDTO$RecruitDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/RecruitDTO$RecruitDTOBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/RecruitDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/RecruitDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/config/VersionDTO$VersionDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/config/VersionDTO$VersionDTOBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/config/VersionDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/config/VersionDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/feedback/ExchangeDTO$ExchangeDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/feedback/ExchangeDTO$ExchangeDTOBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/feedback/ExchangeDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/feedback/ExchangeDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/feedback/ReturnDTO$ReturnDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/feedback/ReturnDTO$ReturnDTOBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/feedback/ReturnDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/feedback/ReturnDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/member/UserDTO$UserDTOBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/member/UserDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/seller/seller$sellerBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/seller/seller.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/seller/Seller.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/seller/Seller.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/user/QMember.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/article/FaqDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/article/FaqDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/article/InquiryDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/article/InquiryDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/article/NoticeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/article/NoticeDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/article/RecruitDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/article/RecruitDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/config/VersionDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/config/VersionDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/feedback/ExchangeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/feedback/ExchangeDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/feedback/ReturnDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/feedback/ReturnDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/member/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/user/UserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/seller/seller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/seller/SellerDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/admin/member/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/admin/member/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/admin/shop/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/admin/shop/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/layout/footer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/layout/header_select.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/layout/layout.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/layout/layout_ad.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/admin/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/admin/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/seller/SellerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/seller/SellerDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/seller/Seller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/seller/Seller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/user/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/member/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/member/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/shop/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/shop/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/layout/footer.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/inc/modal/shopRegister.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/layout/header_select.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/layout/layout.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/layout/layout_ad.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/보안.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/추가사항.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,233 +37,52 @@
       <ProjectState />
     </projectState>
   </component>
-  <component name="ExternalProjectsManager">
-    <system id="GRADLE">
-      <state>
-        <task path="$PROJECT_DIR$">
-          <activation />
-        </task>
-        <projects_view>
-          <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="lotteOn" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="lotteOn" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="lotteOn" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build" type="c8890929:TasksNode$1" />
-              </path>
-            </expand>
-            <select />
-          </tree_state>
-        </projects_view>
-      </state>
-    </system>
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
-        <option value="JUnit5 Test Class" />
         <option value="Class" />
-        <option value="Interface" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mysql/mysql-connector-j/9.1.0/5fb1d513278e1a9767dfa80ea9d8d7ee909f1a/mysql-connector-j-9.1.0.jar!/com/mysql/cj/jdbc/exceptions/SQLError.class" root0="SKIP_INSPECTION" />
-  </component>
   <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 4
+  &quot;associatedIndex&quot;: 3
 }</component>
-  <component name="ProjectId" id="2vsZMbbmbn4DWhI18i0fB3Jkyg5" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectId" id="2w13IXdiipcxZ5faq5MURfDSPTN" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;Gradle.Build lotteOn.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;Application.LotteOnApplication.executor&quot;: &quot;Run&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Spring Boot.LotteOnApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/choi&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/GGG/Desktop/lotteOn/IntelliJ/lotteOn/src/main/resources/static/images/lotteon&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/GGG/Desktop/lotte1-lotteon-project-team2/IntelliJ/lotteOn&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "Gradle.Build lotteOn.executor": "Run",
-    "Gradle.LotteOnApplicationTests.executor": "Run",
-    "Gradle.SubCategoryRepositoryTest.findByCategoryName.executor": "Run",
-    "Gradle.lotteOn [build].executor": "Run",
-    "Gradle.lotteOn [clean].executor": "Run",
-    "JUnit.LotteOnApplicationTests.executor": "Run",
-    "JUnit.SubCategoryRepositoryTest.executor": "Run",
-    "JUnit.SubCategoryRepositoryTest.findByCategoryName.executor": "Run",
-    "JUnit.SubCategoryRepositoryTest.registerCategory.executor": "Run",
-    "JUnit.UserDetailsRepositoryTest.find.executor": "Run",
-    "JUnit.UserDetailsRepositoryTest.test.executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.LotteOnApplication.executor": "Run",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "pai",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/samsung/Desktop/lotte6/프로젝트/lotteOn/IntelliJ/lotteOn/src/main/java/kr/co/lotteon/service/seller",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
   }
 }</component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\samsung\Desktop\lotte6\프로젝트\lotteOn\IntelliJ\lotteOn\src\main\java\kr\co\lotteon\service\seller" />
-      <recent name="C:\Users\samsung\Desktop\lotte6\프로젝트\lotteOn\IntelliJ\lotteOn\src\main\java\kr\co\lotteon\service\point" />
-      <recent name="C:\Users\samsung\Desktop\lotte6\프로젝트\lotteOn\IntelliJ\lotteOn\src\main\java\kr\co\lotteon\service\coupon" />
-      <recent name="C:\Users\GGG\Desktop\lotteOn\IntelliJ\lotteOn\src\main\resources\static\images\lotteon" />
-      <recent name="C:\Users\GGG\Desktop\lotteOn\IntelliJ\lotteOn\src\main\resources\static\css" />
-    </key>
-    <key name="CreateTestDialog.Recents.Supers">
-      <recent name="" />
-    </key>
-    <key name="CreateTestDialog.RecentsKey">
-      <recent name="kr.co.lotteon.repository.user" />
-      <recent name="kr.co.lotteon.repository.category" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="kr.co.lotteon.dto.category" />
-      <recent name="kr.co.lotteon.entity.seller" />
-      <recent name="kr.co.lotteon.dto.page" />
-    </key>
-  </component>
-  <component name="RunManager" selected="Spring Boot.LotteOnApplication">
-    <configuration name="lotteOn [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="clean" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="LotteOnApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="lotteOn.test" />
+  <component name="RunManager" selected="Application.LotteOnApplication">
+    <configuration name="LotteOnApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="kr.co.lotteon.LotteOnApplication" />
+      <module name="lotteOn.main" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="kr.co.lotteon.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="kr.co.lotteon" />
-      <option name="MAIN_CLASS_NAME" value="kr.co.lotteon.LotteOnApplicationTests" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SubCategoryRepositoryTest.findByCategoryName" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="lotteOn.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="kr.co.lotteon.repository.category.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="kr.co.lotteon.repository.category" />
-      <option name="MAIN_CLASS_NAME" value="kr.co.lotteon.repository.category.SubCategoryRepositoryTest" />
-      <option name="METHOD_NAME" value="findByCategoryName" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserDetailsRepositoryTest.find" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="lotteOn.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="kr.co.lotteon.repository.user.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="kr.co.lotteon.repository.user" />
-      <option name="MAIN_CLASS_NAME" value="kr.co.lotteon.repository.user.UserDetailsRepositoryTest" />
-      <option name="METHOD_NAME" value="find" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserDetailsRepositoryTest.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="lotteOn.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="kr.co.lotteon.repository.user.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="kr.co.lotteon.repository.user" />
-      <option name="MAIN_CLASS_NAME" value="kr.co.lotteon.repository.user.UserDetailsRepositoryTest" />
-      <option name="METHOD_NAME" value="test" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -309,11 +97,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.LotteOnApplicationTests" />
-        <item itemvalue="Gradle.lotteOn [clean]" />
-        <item itemvalue="JUnit.UserDetailsRepositoryTest.find" />
-        <item itemvalue="JUnit.UserDetailsRepositoryTest.test" />
-        <item itemvalue="JUnit.SubCategoryRepositoryTest.findByCategoryName" />
+        <item itemvalue="Application.LotteOnApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -326,38 +110,19 @@
     </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
-  <component name="StructureViewState">
-    <option name="selectedTab" value="Logical" />
-  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="c06a04ed-7e49-437c-8795-ec5aeed2ffab" name="Changes" comment="" />
-      <created>1744935694713</created>
+      <changelist id="ea09e1ec-a69e-497f-bfbf-272142edb9cc" name="Changes" comment="" />
+      <created>1745195174135</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1744935694713</updated>
-      <workItem from="1744935695890" duration="93000" />
-      <workItem from="1744935806045" duration="41000" />
-      <workItem from="1744935856597" duration="269000" />
-      <workItem from="1744936135357" duration="3049000" />
-      <workItem from="1744948589323" duration="5127000" />
-      <workItem from="1744956882487" duration="1286000" />
-      <workItem from="1744957458380" duration="113000" />
-      <workItem from="1744957590123" duration="17000" />
-      <workItem from="1744957613548" duration="7449000" />
-      <workItem from="1744983559270" duration="7857000" />
-      <workItem from="1745105309796" duration="1001000" />
-      <workItem from="1745136553261" duration="5500000" />
-      <workItem from="1745143440857" duration="7796000" />
-      <workItem from="1745180186421" duration="8145000" />
+      <updated>1745195174135</updated>
+      <workItem from="1745195175300" duration="4162000" />
+      <workItem from="1745199350087" duration="4371000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
   </component>
 </project>

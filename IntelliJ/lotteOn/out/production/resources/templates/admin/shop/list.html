@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="/css/admin/admin.css">
     <link rel="stylesheet" href="/css/admin/shop.css">
     <link rel="stylesheet" href="/css/layout/layout.css">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script th:src="@{/js/admin/postcode.js}"></script>
     
     <!-- 사이드바-->
     <script>
@@ -189,90 +191,8 @@
 
 
     <!-- 모달 -->
-    <!-- 배너 등록 모달 -->
-    <div class="modal">
-        <div class="modal_popup">
-            <div class="modal_head">
-                <span class="modal_title">상품등록</span>
-                <button type="button" class="close_btn">X</button>
-            </div>
-
-            <div class="modal_main">
-                <form action="#" class="shop">
-                    <table class="modal_shop" style="margin-bottom: 10px;">
-                        <tr>
-                            <td>아이디</td>
-                            <td>
-                                <input type="text" >
-                                <span>영문, 숫자 4~12 자 설정</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>비밀번호</td>
-                            <td>
-                                <input type="text">
-                                <span>영문, 숫자, 특수문자 8~12자 설정</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>비밀번호확인</td>
-                            <td>
-                                <input type="text">
-                            </td>
-                        </tr>
-                    </table>
-
-                    <table class="modal_shop">
-                        <tr>
-                            <td>상호명</td>
-                            <td>
-                                <input type="text" placeholder="상호명입력예 ) (주)">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>대표</td>
-                            <td>
-                                <input type="text" placeholder="이름입력">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>사업자등록번호</td>
-                            <td>
-                                <input type="text" placeholder="사업자등록번호입력">
-                                <span>-포함 12자리 입력</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>통신판매업번호</td>
-                            <td>
-                                <input type="text" placeholder="통신판매업번호입력">
-                                <span>-포함 12자리 입력</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>전화번호</td>
-                            <td><input type="text" placeholder="전화번호입력"></td>
-                        </tr>
-                        <tr>
-                            <td>팩스번호입력</td>
-                            <td><input type="text" placeholder="전화번호입력"></td>
-                        </tr>
-                        <tr style="height: 120px;">
-                            <td>주소</td>
-                            <td class="address_form">
-                                <input type="text" name="zip" id="zip" readonly placeholder="우편번호 선택"/> <br>
-                                <input class="inputs" type="text" name="addr1" id="addr1" readonly placeholder="기본주소 선택"/> <br>
-                                <input class="inputs"type="text" name="addr2" id="addr2" placeholder="상세주소 입력"/>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <button type="submit" class="modal_btn">등록하기</button>
-                </form>
-                
-            </div>
-        </div>
-    </div>
+    <!-- 판매자 등록 모달 -->
+    <th:block th:include="/admin/inc/modal/shopRegister.html"/>
 
     <script>
         const modal = document.querySelector('.modal');
