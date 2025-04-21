@@ -51,19 +51,18 @@
                     let mainCate = this.value;
 
                     // 기존 학과 옵션 초기화
-                    cateV2.innerHTML =  '<option value="">2차 카테고리 지정</option>';
-
+                    cateV2.innerHTML =  '';
                     fetch(`/subCategory/list?MainCategory=`+encodeURIComponent(mainCate))
                         .then(response => response.json())
                         .then(data => {
-                            data.forEach(dept => {
+
+                            data.forEach(cateVer2 => {
                                 let option = document.createElement("option");
-                                option.value = dept.deptNo;
-                                option.textContent = dept.deptName;
+                                option.value = cateVer2.subCateNo;
+                                option.textContent = cateVer2.subCategoryName;
                                 cateV2.appendChild(option);
                             })
 
-                            console.log(data);
                         }).catch(err => {
                         console.log(err);
                     })
@@ -107,7 +106,15 @@
                                 <td>1차 분류</td>
                                 <td>
                                     <select name="cateV1">
-                                        <option value="회사"></option>
+                                        <option value="1">뷰티</option>
+                                        <option value="2">럭셔리</option>
+                                        <option value="3">여성패션</option>
+                                        <option value="4">남성패션</option>
+                                        <option value="5">가전</option>
+                                        <option value="6">가구</option>
+                                        <option value="7">반려동물</option>
+                                        <option value="8">취미</option>
+                                        <option value="9">여행</option>
                                     </select>
                                 </td>
                             </tr>
