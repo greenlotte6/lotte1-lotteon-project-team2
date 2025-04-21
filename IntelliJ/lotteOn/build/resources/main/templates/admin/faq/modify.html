@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>관리자 자주묻는질문 수정 : 롯데On</title>
+    <link rel="stylesheet" href="/css/admin/admin.css" />
+    <link rel="stylesheet" href="/css/admin/faq/modify.css" />
+    <link rel="stylesheet" href="/css/layout/layout.css" />
+
+    <!-- 사이드바-->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const toggles = document.querySelectorAll(".menu-toggle");
+
+        toggles.forEach((toggle) => {
+          toggle.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            // 현재 클릭된 toggle 외 다른 submenu는 닫기 (원하면 제거 가능)
+            toggles.forEach((otherToggle) => {
+              if (otherToggle !== toggle) {
+                otherToggle.classList.remove("active");
+                const otherSubmenu = otherToggle.nextElementSibling;
+                if (
+                  otherSubmenu &&
+                  otherSubmenu.classList.contains("submenu")
+                ) {
+                  otherSubmenu.style.display = "none";
+                }
+              }
+            });
+
+            // 현재 submenu toggle
+            const submenu = this.nextElementSibling;
+            if (submenu && submenu.classList.contains("submenu")) {
+              const isVisible = submenu.style.display === "block";
+              submenu.style.display = isVisible ? "none" : "block";
+              this.classList.toggle("active", !isVisible);
+            }
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div id="wrapper">
+      <!-- 헤더 시작 -->
+      <th:block th:include="/admin/inc/header.html"/>
+      <!-- 헤더 끝 -->
+      <main>
+        <section class="content">
+          <!-- 왼쪽 사이드바 -->
+          <th:block th:include="/admin/inc/sidebar.html"/>
+          <!-- 사이드바 끝-->
+          <!-- 오른쪽 글 -->
+          <article class="main_content_side">
+            <!-- 여기부터 글 작성 -->
+            <div class="main_head">
+              <p class="main_head_title">자주묻는질문 수정</p>
+              <div style="float: right">
+                <p style="font-size: 16px">
+                  Home > 고객센터 ><span>자주묻는질문</span>
+                </p>
+              </div>
+            </div>
+
+            <div class="Blank_box"></div>
+
+            <form action="#" class="reply_list_form">
+              <table>
+                <tbody>
+                  <tr>
+                    <td class="label">유형</td>
+                    <td>
+                      <input
+                        type="text"
+                        name="title"
+                        placeholder="회원"
+                        class="type_input1"
+                      />
+                      <input
+                        type="text"
+                        name="title"
+                        placeholder="가입"
+                        class="type_input1"
+                      />
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="label">제목</td>
+                    <td>
+                      <input
+                        type="text"
+                        name="title"
+                        placeholder="제목을 입력합니다."
+                        class="type_input2"
+                      />
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="label">내용</td>
+                    <td>
+                      <textarea
+                        name="content"
+                        placeholder="내용을입력합니다."
+                      ></textarea>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="button_group">
+                <button type="button" class="delete_button">취소하기</button>
+                <button
+                  type="submit"
+                  class="modify_button"
+                  style="background-color: #9ab8e6"
+                >
+                  수정하기
+                </button>
+              </div>
+            </form>
+          </article>
+        </section>
+      </main>
+
+      <!-- 푸터 시작 -->
+      <th:block th:include="/admin/inc/footer.html"/>
+      <!-- 푸터 끝 -->
+    </div>
+  </body>
+</html>

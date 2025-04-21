@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 상품목록 : 롯데On</title>
+    <link rel="stylesheet" href="/css/admin/admin.css">
+    <link rel="stylesheet" href="/css/admin/product.css">
+    <link rel="stylesheet" href="/css/layout/layout.css">
+    
+    <!-- 사이드바-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggles = document.querySelectorAll('.menu-toggle');
+
+            toggles.forEach(toggle => {
+                toggle.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    // 현재 클릭된 toggle 외 다른 submenu는 닫기 (원하면 제거 가능)
+                    toggles.forEach(otherToggle => {
+                        if (otherToggle !== toggle) {
+                            otherToggle.classList.remove('active');
+                            const otherSubmenu = otherToggle.nextElementSibling;
+                            if (otherSubmenu && otherSubmenu.classList.contains('submenu')) {
+                                otherSubmenu.style.display = 'none';
+                            }
+                        }
+                    });
+
+                    // 현재 submenu toggle
+                    const submenu = this.nextElementSibling;
+                    if (submenu && submenu.classList.contains('submenu')) {
+                        const isVisible = submenu.style.display === 'block';
+                        submenu.style.display = isVisible ? 'none' : 'block';
+                        this.classList.toggle('active', !isVisible);
+                    }
+                });
+            });
+        });
+    </script>
+
+</head>
+<body>
+    <div id="wrapper">
+        <!-- 헤더 시작 -->
+        <th:block th:include="/admin/inc/header.html"/>
+        <!-- 헤더 끝 -->
+        <main>
+            <section class="content">
+                <!-- 왼쪽 사이드바 -->
+                <th:block th:include="/admin/inc/sidebar.html"/>
+
+                <!-- 사이드바 끝-->
+                <!-- 오른쪽 글 -->
+                <article class="main_content_side">
+                    <!-- 여기부터 글 작성 -->
+                    <div class="main_head">
+                        <p class="main_head_title">상품현황</p>
+                        <div style="float: right;">
+                            <p style="font-size: 16px;">Home > 상품관리 ><span> 상품목록</span></p>
+                        </div>
+                    </div>
+
+                    <div class="select_div">
+                        <div class="select_box">
+                            <form action="#">
+                                <select name="brand">
+                                    <option value="상품명">상품명</option>
+                                    <option value="상품번호">상품번호</option>
+                                    <option value="판매자">판매자</option>
+                                    <option value="제조사">제조사</option>
+                                </select>
+                                <input type="text" name="keyword" class="search_text" placeholder="키워드 입력">
+                                <input type="submit" class="search_btn" value="검색">
+                            </form>
+                        </div>
+                    </div>
+
+                    <form action="#" class="product_list_form">
+                        <table>
+                            <thead>
+                                <th><input type="checkbox"></th>
+                                <th>사진</th>
+                                <th>상품코드</th>
+                                <th>상품명</th>
+                                <th>판매가격</th>
+                                <th>할인율</th>
+                                <th>포인트</th>
+                                <th>재고</th>
+                                <th>판매자</th>
+                                <th>조회</th>
+                                <th>관리</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                    <td>
+                                        <img src="/images/product/blnk_star.png" alt="별">
+                                        <img src="/images/product/blnk_star.png" alt="별">
+                                        <img src="/images/product/blnk_star.png" alt="별">
+                                    </td>
+                                    <td>201603292</td>
+                                    <td>상품명 #1</td>
+                                    <td>32,000</td>
+                                    <td>10%</td>
+                                    <td>320</td>
+                                    <td>1,000</td>
+                                    <td>(주) 다파라</td>
+                                    <td>120</td>
+                                    <td>
+                                        <a href="#">[삭제]</a>
+                                        <a href="#">[수정]</a>
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+
+                        <div style="margin-top: 20px;">
+                            <button type="submit" class="delete_btn">선택삭제</button>
+                            <button class="register_btn">상품등록</button>
+                        </div>
+                    </form>
+                    <!-- 페이징 -->
+                    <p style="text-align: center; margin-top: 10px;">
+                        이전 1 2 3 4 5 다음
+                    </p>
+                    
+                </article>
+            </section>
+        </main>
+
+        <!-- 푸터 시작 -->
+        <th:block th:include="/admin/inc/footer.html"/>
+        <!-- 푸터 끝 -->
+    </div>
+</body>
+</html>

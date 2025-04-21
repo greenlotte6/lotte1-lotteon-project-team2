@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 배송현황 : 롯데On</title>
+    <link rel="stylesheet" href="/css/admin/admin.css">
+    <link rel="stylesheet" href="/css/admin/order.css">
+    <link rel="stylesheet" href="/css/layout/layout.css">
+    
+    <!-- 사이드바-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggles = document.querySelectorAll('.menu-toggle');
+
+            toggles.forEach(toggle => {
+                toggle.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    // 현재 클릭된 toggle 외 다른 submenu는 닫기 (원하면 제거 가능)
+                    toggles.forEach(otherToggle => {
+                        if (otherToggle !== toggle) {
+                            otherToggle.classList.remove('active');
+                            const otherSubmenu = otherToggle.nextElementSibling;
+                            if (otherSubmenu && otherSubmenu.classList.contains('submenu')) {
+                                otherSubmenu.style.display = 'none';
+                            }
+                        }
+                    });
+
+                    // 현재 submenu toggle
+                    const submenu = this.nextElementSibling;
+                    if (submenu && submenu.classList.contains('submenu')) {
+                        const isVisible = submenu.style.display === 'block';
+                        submenu.style.display = isVisible ? 'none' : 'block';
+                        this.classList.toggle('active', !isVisible);
+                    }
+                });
+            });
+        });
+    </script>
+
+</head>
+<body>
+    <div id="wrapper">
+        <!-- 헤더 시작 -->
+        <th:block th:include="/admin/inc/header.html"/>
+        <!-- 헤더 끝 -->
+        <main>
+            <section class="content">
+                <!-- 왼쪽 사이드바 -->
+                <th:block th:include="/admin/inc/sidebar.html"/>
+
+                <!-- 사이드바 끝-->
+                <!-- 오른쪽 글 -->
+                <article class="main_content_side">
+                    <!-- 여기부터 글 작성 -->
+                    <div class="main_head">
+                        <p class="main_head_title">배송현황</p>
+                        <div style="float: right;">
+                            <p style="font-size: 16px;">Home > 주문관리 ><span> 배송현황</span></p>
+                        </div>
+                    </div>
+
+                    <div class="select_div">
+                        <div class="select_box">
+                            <form action="#">
+                                <select name="brand" style="width: 100px;">
+                                    <option value="송장번호">송장번호</option>
+                                    <option value="주문번호">주문번호</option>
+                                    <option value="수령인">수령인</option>
+                                </select>
+                                <input type="text" name="keyword" class="search_text" placeholder="키워드 입력">
+                                <input type="submit" class="search_btn" value="검색">
+                            </form>
+                        </div>
+                    </div>
+
+                    <form action="#" class="delivery_list_form">
+                        <table>
+                            <thead>
+                                <th>송장번호</th>
+                                <th>택배사</th>
+                                <th>주문번호</th>
+                                <th>수령인</th>
+                                <th>상품명</th>
+                                <th>건수</th>
+                                <th>물품합계</th>
+                                <th>배송비</th>
+                                <th>배송상태</th>
+                                <th>접수일</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="no"><a class="detail" href="#">10121211341</a></td>
+                                    <td>로젠택배</td>
+                                    <td>10121211341</td>
+                                    <td>김유신</td>
+                                    <td>OOO</td>
+                                    <td>3</td>
+                                    <td>68,400</td>
+                                    <td>무료</td>
+                                    <td style="color: #3783CA;">배송준비</td>
+                                    <td> 0000-00-00 00:00:00</td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+
+                    </form>
+                    <!-- 페이징 -->
+                    <p style="text-align: center; margin-top: 10px;">
+                        이전 1 2 3 4 5 다음
+                    </p>
+                    
+                </article>
+            </section>
+        </main>
+
+        <!-- 푸터 시작 -->
+        <th:block th:include="/admin/inc/footer.html"/>
+        <!-- 푸터 끝 -->
+    </div>
+
+
+    <!-- 모달 -->
+    <!-- 주문상세 모달 -->
+    <div class="modal">
+        <div class="modal_popup">
+            <div class="modal_head">
+                <span class="modal_title">주문상세</span><span class="modal_title_id">10121211341</span>
+                <button type="button" class="close_btn">X</button>
+            </div>
+
+            <div class="modal_main">
+                <p class="modal_title_black">상품정보</p>
+                <table class="order_detail">
+                    <thead>
+                        <th></th>
+                        <th>상품번호</th>
+                        <th>상품명</th>
+                        <th>판매자</th>
+                        <th>가격</th>
+                        <th>할인</th>
+                        <th>수량</th>
+                        <th>배송비</th>
+                        <th>결제금액</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src="/images/product/blnk_star.png" style="width: 40px; height: 40px;" alt="별">
+                            </td>
+                            <td>120120021</td>
+                            <td>상품명</td>
+                            <td>(주)상호명</td>
+                            <td>2,4000</td>
+                            <td>-1,200</td>
+                            <td>3</td>
+                            <td>0</td>
+                            <td>68,400</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- 배송 정보 모달 -->
+                <p class="modal_title_black" style="margin-top: 50px;">배송정보</p>
+                <table class="info">
+                    <tr>
+                        <td>주문번호</td>
+                        <td>10121211341</td>
+                    </tr>
+                    <tr>
+                        <td>수령인</td>
+                        <td>김유신</td>
+                    </tr>
+                    <tr>
+                        <td>연락처</td>
+                        <td>010-1234-1234</td>
+                    </tr>
+                    <tr>
+                        <td>배송지 주소</td>
+                        <td>부산 부산진구 123-11 10 층</td>
+                    </tr>
+                    <tr>
+                        <td>택배사</td>
+                        <td>로젠택배</td>
+                    </tr>
+                    <tr>
+                        <td>송장번호</td>
+                        <td>10122102315</td>
+                    </tr>
+                    <tr>
+                        <td>기타</td>
+                        <td>감사합니다. 수고하세요.</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.querySelector('.modal');
+        const modalOpenBtns = document.querySelectorAll('.detail');
+        const modalClose = document.querySelector('.close_btn');
+
+        //열기 버튼을 눌렀을 때 모달팝업이 열림
+        modalOpenBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault(); // 링크 클릭 방지
+                modal.classList.add('on');
+            });
+        });
+
+        //닫기 버튼을 눌렀을 때 모달팝업이 닫힘
+        modalClose.addEventListener('click',function(){
+            //'on' class 제거
+            modal.classList.remove('on');
+        });
+
+    </script>
+
+</body>
+</html>

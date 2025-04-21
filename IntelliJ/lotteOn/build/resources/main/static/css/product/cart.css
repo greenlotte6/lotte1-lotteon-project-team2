@@ -1,0 +1,373 @@
+
+.page_name {
+    width: 100%;
+    height: 100px;
+    color: #333;
+    font-size: 35px;
+    font-weight: 900;
+    text-align: center;
+    line-height: 100px;
+    margin-bottom: 20px;
+}
+
+aside {
+    float: left;
+    width: 150px;
+    height: auto;
+}
+
+.category > p {
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+}
+
+.category > div {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+    margin: 20px;
+}
+
+.parent {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+}
+
+.category .children {
+    display: none;
+    margin-left: 15px;
+    margin-top: 5px;
+}
+
+.category .children a {
+    display: block;
+    font-size: 14px;
+    color: #333;
+    margin: 5px 0;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.category .children a:hover {
+    color: red;
+}
+
+.parent:hover {
+    color: red;
+}
+
+.best {
+    width: 100%;
+    height: auto;
+    border-top: 1px solid #b2b2b2;
+    border-bottom: 1px solid #b2b2b2;
+    margin-top: 40px;
+}
+
+.best > p {
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+    margin: 20px 0;
+}
+
+.best > div {
+    margin: 20px 0;
+}
+
+.best img {
+    position: relative;
+    width: 100%;
+    height: 130px;
+}
+
+.img-wrap {
+    position: relative; 
+}
+
+.rank {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background-color: #333;
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 4px 8px;
+    border-radius: 3px;
+    z-index: 10;
+}
+
+.best > div > a {
+    color: #333;
+    font-size: 14px;
+}
+
+.best > div > span {
+    font-size: 14px;
+}
+
+.bar {
+    width: 100%;
+    height: 30px;
+}
+
+.bar > p {
+    float: left;
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+}
+
+.bar > div {
+    color: #333;
+    font-size: 18px;
+    float: right;
+    display: flex;
+}
+
+.bar > div > a{
+    color: #333;
+    font-size: 18px;
+}
+
+.list {
+    width: 100%;
+    height: 45px;
+    padding-top: 6px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    border-bottom: 1px solid #999;
+}
+
+.list a {
+    font-size: 18px;
+    color: #999;
+}
+
+.list a:hover {
+    color: #333;
+}
+
+.price_current {
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+}
+
+.price_origin {
+    color: #aaa;
+    text-decoration: line-through;
+}
+
+.sale {
+    color: red;
+}
+
+.cart {
+    margin-left: 200px;
+    width: 1000px;
+    height: auto;
+}
+
+.cart > h1 {
+    font-size: 30px;
+    font-weight: 700;
+    text-align: center;
+    margin: 40px 0;
+}
+
+.cart_header {
+    width: 600px;
+    margin-top: 20px;
+}
+
+.cart_header > input {
+    margin-right: 5px;
+}
+
+.cart_header > button {
+    width: 65px;
+    height: 25px;
+    margin-left: 450px;
+    border: 1px solid #999;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.cart_content {
+    width: 600px;
+    height: auto;
+    border: 1px solid #eee;
+    box-sizing: border-box;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+  
+.cart_content > div {
+    display: flex;
+    align-items: center;
+}
+
+.cart_content > div:nth-of-type(1) {
+    padding: 18px 10px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #eee;
+}
+
+.cart_content > div:nth-of-type(1) > label {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.cart label > input {
+    margin-right: 10px;
+}
+
+.cart_content img {
+    width: 100px;
+    height: 100px;
+}
+
+.cart_product {
+    display: flex;  
+    padding: 10px 0;
+}
+
+.cart_product p {
+    margin: 5px 0;
+}
+
+.cart_product p:nth-of-type(1) {
+    width: 70px;
+    height: 20px;
+    background-color: #78685b;
+    color: #fff;
+    text-align: center;
+    line-height: 20px;
+}
+
+.cart_product  p:nth-of-type(2) > span {
+    font-size: 14px;
+    font-weight: 700;
+} 
+
+.cart_content p:nth-of-type(3) {
+    color: #666;
+}
+
+.cart_content p:nth-of-type(4) {
+    color: #4185ed;
+}
+
+.quantity-box {
+    display: flex;
+    align-items: center;
+    width: 100px;
+    height: 80px;
+    margin: 0 20px;
+    border-right: 1px solid #eee;
+    border-left: 1px solid #eee;
+}
+
+.quantity-box button {
+    margin: 10px;
+    width: 25px;
+    height: 25px;
+    color: #666;
+    font-size: 14px;
+    background-color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.cart_price > p {
+    margin: 5px 0;
+}
+
+.price_original {
+    color: #999;
+    text-decoration: line-through;
+}
+
+.cart_price > p:nth-child(2) {
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.cart_price > p:nth-child(3) {
+    width: 60px;
+    height: 20px;
+    border: 1px solid #ef2a23;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 20px;
+    color: #ef2a23;
+}
+
+.cart > div {
+    display: flex;
+}
+
+.cart_summary {
+    width: 350px;
+    height: 400px;
+    margin-top: 20px;
+    margin-left: 20px;
+    border: 1px solid #eee;
+    padding: 10px;
+}
+
+.cart_summary > p {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.cart_summary table {
+    width: 100%;
+    border-collapse: collapse;
+    box-sizing: border-box;
+}
+
+.cart_summary table td, 
+.cart_summary table th {
+    padding: 10px;
+    font-size: 14px;
+}
+
+.cart_summary table th {
+    color: #666;
+    text-align: left; 
+    font-size: 14px;
+}
+
+.cart_summary table td {
+    font-weight: 700;
+    text-align: right; 
+    padding: 5px;
+    font-size: 14px;
+}
+
+.total > th,
+.total > td {
+    border-top: 1px solid #eee;
+    color: #ef2a23;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.cart_summary table button {
+    width: 100%;
+    height: 50px;
+    background-color: #ef2a23;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 20px;
+}

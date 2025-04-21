@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>환경설정 버전관리 : 롯데On</title>
+    <link rel="stylesheet" href="/css/admin/admin.css">
+    <link rel="stylesheet" href="/css/admin/config.css">
+    <link rel="stylesheet" href="/css/layout/layout.css">
+
+    
+    
+    <!-- 사이드바-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggles = document.querySelectorAll('.menu-toggle');
+
+            toggles.forEach(toggle => {
+                toggle.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    // 현재 클릭된 toggle 외 다른 submenu는 닫기 (원하면 제거 가능)
+                    toggles.forEach(otherToggle => {
+                        if (otherToggle !== toggle) {
+                            otherToggle.classList.remove('active');
+                            const otherSubmenu = otherToggle.nextElementSibling;
+                            if (otherSubmenu && otherSubmenu.classList.contains('submenu')) {
+                                otherSubmenu.style.display = 'none';
+                            }
+                        }
+                    });
+
+                    // 현재 submenu toggle
+                    const submenu = this.nextElementSibling;
+                    if (submenu && submenu.classList.contains('submenu')) {
+                        const isVisible = submenu.style.display === 'block';
+                        submenu.style.display = isVisible ? 'none' : 'block';
+                        this.classList.toggle('active', !isVisible);
+                    }
+                });
+            });
+        });
+    </script>
+
+</head>
+<body>
+    <div id="wrapper">
+        <!-- 헤더 시작 -->
+        <th:block th:include="/admin/inc/header.html"/>
+        <!-- 헤더 끝 -->
+        <main>
+            <section class="content">
+                <!-- 왼쪽 사이드바 -->
+                <th:block th:include="/admin/inc/sidebar.html"/>
+
+                <!-- 사이드바 끝-->
+                <!-- 오른쪽 글 -->
+                <article class="main_content_side">
+                    <!-- 여기부터 글 작성 -->
+                    <div class="main_head">
+                        <p class="main_head_title">버전관리</p>
+                        <div style="float: right;">
+                            <p style="font-size: 16px;">Home > 환경설정 ><span> 버전관리</span></p>
+                        </div>
+                    </div>
+
+                    <!-- 카테고리 관리-->
+                    <p class="title">버전 목록</p>
+                    <div class="text_div">
+                        <p>사이트 버전 목록입니다.</p>
+                    </div>
+
+                    <form action="#" class="version_form">
+                        <table>
+                            <thead>
+                                <th>
+                                    <input type="checkbox">
+                                </th>
+                                <th>번호</th>
+                                <th>버전</th>
+                                <th>작성자</th>
+                                <th>등록일시</th>
+                                <th>변경내역</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                    <td>1</td>
+                                    <td>0.0.1-SNAPSHOT</td>
+                                    <td>chhak0503</td>
+                                    <td>2024.10.13 17:12:00</td>
+                                    <td><a href="#" id="version_view">[ 확인 ]</a></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                    <td>1</td>
+                                    <td>0.0.1-SNAPSHOT</td>
+                                    <td>chhak0503</td>
+                                    <td>2024.10.13 17:12:00</td>
+                                    <td><a href="#" id="version_view">[ 확인 ]</a></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                    <td>1</td>
+                                    <td>0.0.1-SNAPSHOT</td>
+                                    <td>chhak0503</td>
+                                    <td>2024.10.13 17:12:00</td>
+                                    <td><a href="#" id="version_view">[ 확인 ]</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="button_div">
+                            <button type="submit" class="config_btn" style="background-color: #BFBFBF; float: left;">선택삭제</button>
+                            <button id="banner_register" class="config_btn" style="float: right;">등록</button>
+                        </div>
+                    </form>
+                    
+                    <!-- 페이징 -->
+                    <p style="text-align: center; margin-top: 10px;">
+                        이전 1 2 3 4 5 다음
+                    </p>
+                </article>
+            </section>
+        </main>
+
+        <!-- 푸터 시작 -->
+        <th:block th:include="/admin/inc/footer.html"/>
+        <!-- 푸터 끝 -->
+    </div>
+
+    <!-- 변경내역 확인 모달 -->
+    <div class="modal" id="version_view_Modal">
+        <div class="modal_popup">
+            <div class="modal_head">
+                <span class="modal_title">버전확인</span>
+                <button type="button" class="close_btn">X</button>
+            </div>
+
+            <div class="modal_main">
+                <table class="modal_version">
+                    <tr>
+                        <td>버전</td>
+                        <td>
+                            0.0.1-SNAPSHOT
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>변경내역</td>
+                        <td class="version_td" style="text-align: left;">
+                            - 프로젝트 생성 및 전체 구조 설계 <br> 
+                            - 회원가입 아이디 중복체크 완료   <br> 
+                            - 관리자 상품 등록 완료 <br> 
+                            - 개발을 위한 제반 사항 처리 <br> 
+                        </td>
+                    </tr>
+                </table>
+                <button class="modal_close" >닫기</button> 
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById("version_view_Modal");
+            const openBtns = document.querySelectorAll("#version_view"); // 트리거 버튼 id는 사용자가 설정 필요
+            const closeBtn = modal.querySelector(".close_btn");
+            const modal_close = modal.querySelector(".modal_close");
+        
+            openBtns.forEach(btn => {
+                btn.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    modal.style.display = "block";
+                });
+            });
+        
+            closeBtn.addEventListener("click", function () {
+                modal.style.display = "none";
+            });
+
+            modal_close.addEventListener("click", function () {
+                modal.style.display = "none";
+            });
+        
+            window.addEventListener("click", function (e) {
+                if (e.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+        });
+    </script>
+
+    <!-- 변경내역 확인 모달 -->
+    <div class="modal" id="bannerRegisterModal">
+        <div class="modal_popup">
+            <div class="modal_head">
+                <span class="modal_title">버전확인</span>
+                <button type="button" class="close_btn">X</button>
+            </div>
+
+            <div class="modal_main">
+                <form action="#">
+                    <table class="modal_version">
+                        <tr>
+                            <td>
+                                버전
+                            </td>
+                            <td>
+                                <input type="text" placeholder="버전입력하기">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>변경내역</td>
+                            <td class="version_td">
+                                <textarea name="content" placeholder="변경내역작성하기"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                    <button type="submit" class="modal_btn" >등록하기</button> 
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById("bannerRegisterModal");
+            const openBtns = document.querySelectorAll("#banner_register"); // 트리거 버튼 id는 사용자가 설정 필요
+            const closeBtn = modal.querySelector(".close_btn");
+            const modal_close = modal.querySelector(".modal_close");
+            const modal_btn = modal.querySelector(".modal_btn");
+        
+            openBtns.forEach(btn => {
+                btn.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    modal.style.display = "block";
+                });
+            });
+        
+            closeBtn.addEventListener("click", function () {
+                modal.style.display = "none";
+            });
+            
+            modal_btn.addEventListener("click", function () {
+                modal.style.display = "none";
+            });
+
+            modal_close.addEventListener("click", function () {
+                modal.style.display = "none";
+            });
+        
+            window.addEventListener("click", function (e) {
+                if (e.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+        });
+    </script>
+
+
+
+</body>
+</html>

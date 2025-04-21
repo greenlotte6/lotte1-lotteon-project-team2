@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 상점목록 : 롯데On</title>
+    <link rel="stylesheet" href="/css/admin/admin.css">
+    <link rel="stylesheet" href="/css/admin/shop.css">
+    <link rel="stylesheet" href="/css/layout/layout.css">
+    
+    <!-- 사이드바-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggles = document.querySelectorAll('.menu-toggle');
+
+            toggles.forEach(toggle => {
+                toggle.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    // 현재 클릭된 toggle 외 다른 submenu는 닫기 (원하면 제거 가능)
+                    toggles.forEach(otherToggle => {
+                        if (otherToggle !== toggle) {
+                            otherToggle.classList.remove('active');
+                            const otherSubmenu = otherToggle.nextElementSibling;
+                            if (otherSubmenu && otherSubmenu.classList.contains('submenu')) {
+                                otherSubmenu.style.display = 'none';
+                            }
+                        }
+                    });
+
+                    // 현재 submenu toggle
+                    const submenu = this.nextElementSibling;
+                    if (submenu && submenu.classList.contains('submenu')) {
+                        const isVisible = submenu.style.display === 'block';
+                        submenu.style.display = isVisible ? 'none' : 'block';
+                        this.classList.toggle('active', !isVisible);
+                    }
+                });
+            });
+        });
+    </script>
+
+    
+    
+</head>
+<body>
+    <div id="wrapper">
+        <!-- 헤더 시작 -->
+        <th:block th:include="/admin/inc/header.html"/>
+        <!-- 헤더 끝 -->
+        <main>
+            <section class="content">
+                <!-- 왼쪽 사이드바 -->
+                <th:block th:include="/admin/inc/sidebar.html"/>
+
+                <!-- 사이드바 끝-->
+                <!-- 오른쪽 글 -->
+                <article class="main_content_side">
+                    <!-- 여기부터 글 작성 -->
+                    <div class="main_head">
+                        <p class="main_head_title">상점목록</p>
+                        <div style="float: right;">
+                            <p style="font-size: 16px;">Home > 상점관리 ><span> 상점목록</span></p>
+                        </div>
+                    </div>
+
+                    <div class="select_div">
+                        <div class="select_box">
+                            <form action="#">
+                                <select name="brand">
+                                    <option value="상호명">상호명</option>
+                                    <option value="대표자">대표자</option>
+                                    <option value="사업자등록번호">사업자등록번호</option>
+                                    <option value="연락처">연락처</option>
+                                    <option value="키워드">키워드</option>
+                                </select>
+                                <input type="text" name="keyword" class="search_text" placeholder="검색어 입력">
+                                <input type="submit" class="search_btn" value="검색">
+                            </form>
+                        </div>
+                        <div class="select_info">
+                                <span style="color: #36B04B;">●운영중지</span> 
+                                <span style="color: #F40000;">●운영중지</span> 
+                                <span style="color: #2771C3;">●운영준비</span>   
+                        </div>
+                    </div>
+
+                    <form action="#" class="shop_list_form">
+                        <table>
+                            <thead>
+                                <th><input type="checkbox"></th>
+                                <th>번호</th>
+                                <th>상호명</th>
+                                <th>대표</th>
+                                <th>사업자등록번호</th>
+                                <th>통신판매업번호</th>
+                                <th>연락처</th>
+                                <th>운영</th>
+                                <th>관리</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                    <td>5</td>
+                                    <td>(주)다나와</td>
+                                    <td>정우성</td>
+                                    <td>112-12-12345</td>
+                                    <td>2024-서울강남-04433</td>
+                                    <td>010-1234-1001</td>
+                                    <td style="color: #36B04B;">●</td>
+                                    <td><a href="#">[중단]</a></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                    <td>5</td>
+                                    <td>(주)다나와</td>
+                                    <td>정우성</td>
+                                    <td>112-12-12345</td>
+                                    <td>2024-서울강남-04433</td>
+                                    <td>010-1234-1001</td>
+                                    <td style="color: #36B04B;">●</td>
+                                    <td><a href="#">[중단]</a></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                    <td>5</td>
+                                    <td>(주)다나와</td>
+                                    <td>정우성</td>
+                                    <td>112-12-12345</td>
+                                    <td>2024-서울강남-04433</td>
+                                    <td>010-1234-1001</td>
+                                    <td style="color: #36B04B;">●</td>
+                                    <td><a href="#">[중단]</a></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                    <td>5</td>
+                                    <td>(주)다나와</td>
+                                    <td>정우성</td>
+                                    <td>112-12-12345</td>
+                                    <td>2024-서울강남-04433</td>
+                                    <td>010-1234-1001</td>
+                                    <td style="color: #36B04B;">●</td>
+                                    <td><a href="#">[중단]</a></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                    <td>5</td>
+                                    <td>(주)다나와</td>
+                                    <td>정우성</td>
+                                    <td>112-12-12345</td>
+                                    <td>2024-서울강남-04433</td>
+                                    <td>010-1234-1001</td>
+                                    <td style="color: #36B04B;">●</td>
+                                    <td><a href="#">[중단]</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div style="margin-top: 20px;">
+                            <button type="submit" class="delete_btn">선택삭제</button>
+                            <button id="modal_register" class="register_btn">상점등록</button>
+                        </div>
+                    </form>
+                    <!-- 페이징 -->
+                    <p style="text-align: center; margin-top: 10px;">
+                        이전 1 2 3 4 5 다음
+                    </p>
+                    
+                </article>
+            </section>
+        </main>
+
+        <!-- 푸터 시작 -->
+        <th:block th:include="/admin/inc/footer.html"/>
+        <!-- 푸터 끝 -->
+    </div>
+
+
+
+    <!-- 모달 -->
+    <!-- 배너 등록 모달 -->
+    <div class="modal">
+        <div class="modal_popup">
+            <div class="modal_head">
+                <span class="modal_title">상품등록</span>
+                <button type="button" class="close_btn">X</button>
+            </div>
+
+            <div class="modal_main">
+                <form action="#" class="shop">
+                    <table class="modal_shop" style="margin-bottom: 10px;">
+                        <tr>
+                            <td>아이디</td>
+                            <td>
+                                <input type="text" >
+                                <span>영문, 숫자 4~12 자 설정</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>비밀번호</td>
+                            <td>
+                                <input type="text">
+                                <span>영문, 숫자, 특수문자 8~12자 설정</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>비밀번호확인</td>
+                            <td>
+                                <input type="text">
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table class="modal_shop">
+                        <tr>
+                            <td>상호명</td>
+                            <td>
+                                <input type="text" placeholder="상호명입력예 ) (주)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>대표</td>
+                            <td>
+                                <input type="text" placeholder="이름입력">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>사업자등록번호</td>
+                            <td>
+                                <input type="text" placeholder="사업자등록번호입력">
+                                <span>-포함 12자리 입력</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>통신판매업번호</td>
+                            <td>
+                                <input type="text" placeholder="통신판매업번호입력">
+                                <span>-포함 12자리 입력</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>전화번호</td>
+                            <td><input type="text" placeholder="전화번호입력"></td>
+                        </tr>
+                        <tr>
+                            <td>팩스번호입력</td>
+                            <td><input type="text" placeholder="전화번호입력"></td>
+                        </tr>
+                        <tr style="height: 120px;">
+                            <td>주소</td>
+                            <td class="address_form">
+                                <input type="text" name="zip" id="zip" readonly placeholder="우편번호 선택"/> <br>
+                                <input class="inputs" type="text" name="addr1" id="addr1" readonly placeholder="기본주소 선택"/> <br>
+                                <input class="inputs"type="text" name="addr2" id="addr2" placeholder="상세주소 입력"/>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <button type="submit" class="modal_btn">등록하기</button>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.querySelector('.modal');
+        const modalOpen = document.querySelector('#modal_register');
+        const modalClose = document.querySelector('.close_btn');
+
+        //열기 버튼을 눌렀을 때 모달팝업이 열림
+        modalOpen.addEventListener('click',function(){
+            //'on' class 추가
+            modal.classList.add('on');
+        });
+        //닫기 버튼을 눌렀을 때 모달팝업이 닫힘
+        modalClose.addEventListener('click',function(){
+            //'on' class 제거
+            modal.classList.remove('on');
+        });
+    </script>
+
+
+
+
+</body>
+</html>

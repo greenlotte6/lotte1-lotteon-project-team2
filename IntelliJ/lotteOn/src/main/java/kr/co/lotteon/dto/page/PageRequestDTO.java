@@ -23,11 +23,13 @@ public class PageRequestDTO {
     private int pg = 1;
 
     @Builder.Default
-    private int size = 10;
+    private int size = 12;
 
     private String searchType;
     private String keyword;
 
+    // 추가 필드 ( 상품 목록 정렬용)
+    private String sortType;
 
     public PageRequest getPageable(String sort){
         return PageRequest.of(this.pg - 1, this.size, Sort.by(sort).descending());
