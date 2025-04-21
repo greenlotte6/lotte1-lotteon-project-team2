@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const passRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,16}$/;
 
-    form.addEventListener("submit", function (e) {
+    form.pass2.addEventListener("focusout", function (e) {
         const pass = passInput.value;
         const pass2 = pass2Input.value;
 
@@ -71,38 +71,54 @@ document.addEventListener("DOMContentLoaded", function () {
 // 이메일 인증 유효성 검사
 document.addEventListener("DOMContentLoaded", function () {
     const emailInput = document.getElementById("email");
-    const emailMessage = document.getElementById("emailMessage");
     const btnCheckEmail = document.getElementById("btnCheckEmail");
+    const emailMessage = document.getElementById("emailMessage");
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const codeBox = document.getElementById("codeBox");
+    const emailCode = document.getElementById("emailCode");
+    const btnVerifyCode = document.getElementById("btnVerifyCode");
+    const codeMessage = document.getElementById("codeMessage");
 
+    // 이메일 인증코드 전송
     btnCheckEmail.addEventListener("click", function () {
         const email = emailInput.value;
 
-        if (!emailRegex.test(email)) {
-            emailMessage.textContent = "올바른 이메일 형식이 아닙니다.";
-            emailMessage.style.color = "red";
-            return;
-        }
-
-        // TODO: 이메일 중복 체크 또는 인증 메일 전송 API 요청
-        fetch(`/user/checkEmail?email=${email}`)
-            .then(res => res.json())
-            .then(isExist => {
-                if (isExist) {
-                    emailMessage.textContent = "이미 등록된 이메일입니다.";
-                    emailMessage.style.color = "red";
-                } else {
-                    emailMessage.textContent = "사용 가능한 이메일입니다.";
-                    emailMessage.style.color = "green";
-
-                    // 실제 인증 메일 전송 로직을 이곳에 추가 가능
-                }
+        fetch("/email/sendCode", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({ email })
+        })
+            .then(res => res.text())
+            .then(msg => {
+                emailMessage.textContent = msg;
+                emailMessage.style.color = "green";
+                codeBox.style.display = "block"; // 인증코드 입력창 보이기
             })
             .catch(err => {
-                console.error("이메일 인증 실패", err);
-                emailMessage.textContent = "서버 오류가 발생했습니다.";
+                emailMessage.textContent = "인증코드 전송 실패";
                 emailMessage.style.color = "red";
+            });
+    });
+
+    // 인증코드 확인
+    btnVerifyCode.addEventListener("click", function () {
+        const code = emailCode.value;
+
+        fetch("/email/verifyCode", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            credentials : "include",
+            body: new URLSearchParams({ inputCode: code })
+        })
+            .then(res => res.text())
+            .then(result => {
+                if (result === "success") {
+                    codeMessage.textContent = "인증 완료!";
+                    codeMessage.style.color = "green";
+                } else {
+                    codeMessage.textContent = "인증 실패. 다시 시도하세요.";
+                    codeMessage.style.color = "red";
+                }
             });
     });
 });

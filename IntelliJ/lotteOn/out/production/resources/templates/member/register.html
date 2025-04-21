@@ -7,6 +7,10 @@
   <link rel="stylesheet" th:href="@{/css/layout/layout.css}" />
   <link rel="stylesheet" th:href="@{/css/member/register.css}" />
   <script th:src="@{/js/member/signupValidation.js}"></script>
+
+
+
+
 </head>
 <body>
 <div id="wrapper">
@@ -85,19 +89,39 @@
                 <td>이메일</td>
                 <td>
                   <div class="input-with-btn">
-                    <input type="email" name="email" placeholder="이메일 입력" />
+                    <input type="email" id="email" name="email" placeholder="이메일 입력" />
                     <button type="button" id="btnCheckEmail" class="btn btn-small btn-auth">이메일 인증</button>
-                    <span id="emailMessage" class="error-message"></span>
+                  </div>
+                  <span id="emailMessage" class="error-message"></span>
+
+                  <!-- 인증 코드 입력칸 (초기에는 hidden) -->
+                  <div id="codeBox" style="margin-top: 10px; display: none;">
+                    <input type="text" id="emailCode" placeholder="인증코드 입력" />
+                    <button type="button" id="btnVerifyCode" class="btn btn-small">인증 확인</button>
+                    <span id="codeMessage" class="error-message"></span>
                   </div>
                 </td>
               </tr>
               <tr>
-                <td>휴대폰</td>
+                <td>휴대폰<span class="required">*</span></td>
                 <td>
+                  <!-- 휴대폰 입력 + 인증 버튼 -->
                   <div class="input-with-btn">
-                    <input type="text" name="phone" placeholder="휴대폰 입력" />
-                    <button type="button" class="btn btn-small btn-auth">휴대폰 인증</button>
+                    <input type="text" id="phone" name="phone" placeholder="휴대폰 입력 (예: +821012345678)" />
+                    <button type="button" class="btn btn-small btn-auth" onclick="sendCode()">인증 요청</button>
                   </div>
+
+                  <!-- reCAPTCHA invisible 컨테이너 -->
+                  <div id="recaptcha-container" style="margin-top: 10px;"></div>
+
+                  <!-- 인증코드 입력 + 확인 버튼 -->
+                  <div class="input-with-btn" style="margin-top: 10px;">
+                    <input type="text" id="verifyCode" placeholder="인증 코드 입력" />
+                    <button type="button" class="btn btn-small btn-auth" onclick="verifyCode()">코드 확인</button>
+                  </div>
+
+                  <!-- 결과 메시지 출력 -->
+                  <span id="phoneMessage" class="error-message" style="display:block; margin-top:10px;"></span>
                 </td>
               </tr>
               <tr>
@@ -171,5 +195,13 @@
   </footer>
   <!-- 푸터 끝 -->
 </div>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+
+<!-- Firebase Phone Auth 스크립트 -->
+<script src="/js/member/firebasePhoneAuth.js"></script>
 </body>
+
+
 </html>
