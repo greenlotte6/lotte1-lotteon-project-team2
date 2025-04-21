@@ -34,7 +34,9 @@ header {
     box-sizing: border-box;
     overflow: visible;
     min-width: 1200px;
+
 }
+
 
 .header_main, .advertisement {
     width: 100%;
@@ -67,7 +69,7 @@ header {
     margin-bottom: 20px;
   }
 
-.logo > img {
+.logo > a > img {
     width: 200px;
     height: 40px;
 }

@@ -5,6 +5,7 @@ logging:
         orm:
           jdbc:
             bind: trace
+    kr.co.lotteOn.controller.product: debug  # ← 여기에 추가
     root: info
 
 jasypt:
@@ -51,7 +52,7 @@ spring:
   jpa:
     database: mysql
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
