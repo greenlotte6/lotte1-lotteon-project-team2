@@ -1,0 +1,89 @@
+<header>
+    <div class="advertisement">광고</div>
+    <div class="header_main">
+        <div class="user_menu">
+            <div>
+                <a th:href="@{/member/login}">로그인/회원가입</a>
+                <a th:href="@{/my/home}">마이페이지</a>
+                <a th:href="@{/admin}">관리자</a>
+            </div>
+        </div>
+        <div class="logo">
+            <a th:href="@{/}">
+                <img src="/images/logo.png" alt="lotteOn">
+            </a>
+            <div class="search">
+                <form action="#">
+                    <input type="search" placeholder="검색어를 입력하세요"/>
+                    <button type="submit" class="header_search">
+                        <img src="/images/search_ico.svg" alt="검색" class="search-icon"/>
+                    </button>
+                </form>
+            </div>
+            <div class="user-icons">
+                <div class="icon-item">
+                    <a href="#">
+                        <img src="/images/lotteon/나의 찜.PNG" alt="나의 찜">
+                    </a>
+                    <span>나의 찜</span>
+                </div>
+                <div class="icon-item">
+                    <a th:href="@{/my/home}">
+                        <img src="/images/lotteon/마이롯데.PNG" alt="마이롯데">
+                    </a>
+                    <span>마이롯데</span>
+                </div>
+                <div class="icon-item">
+                    <a th:href="@{/product/cart}">
+                        <img src="/images/lotteon/장바구니.PNG" alt="장바구니">
+                    </a>
+                    <span>장바구니</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="gnb">
+        <div class="category-wrapper">
+            <div class="category" id="categoryBtn">
+                <img src="/images/lotteon/목록버튼.PNG" alt="카테고리" />
+
+                <div class="category-menu" id="categoryMenu">
+                    <ul>
+                        <li data-index="0"><a href="#">패션 / 의류 / 뷰티</a></li>
+                        <li data-index="1"><a href="#">가전 / 디지털</a></li>
+                        <li data-index="2"><a href="#">식품 / 생필품</a></li>
+                        <li data-index="3"><a href="#">홈 / 문구 / 취미</a></li>
+                    </ul>
+                </div>
+                <div class="subcategory-menu" id="subcategoryMenu">
+                    <ul data-index="0">
+                        <li><a th:href="@{/product/list}">패션</a></li>
+                        <li><a th:href="@{/product/list}">의류</a></li>
+                        <li><a th:href="@{/product/list}">뷰티</a></li>
+                    </ul>
+                    <ul data-index="1">
+                        <li><a th:href="@{/product/list}">가전</a></li>
+                        <li><a th:href="@{/product/list}">디지털</a></li>
+                    </ul>
+                    <ul data-index="2">
+                        <li><a th:href="@{/product/list}">식품</a></li>
+                        <li><a th:href="@{/product/list}">생필품</a></li>
+                    </ul>
+                    <ul data-index="3">
+                        <li><a th:href="@{/product/list}">홈</a></li>
+                        <li><a th:href="@{/product/list}">문구</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <ul class="nav-menu">
+            <li><a href="#">히트상품</a></li>
+            <li><a href="#">추천상품</a></li>
+            <li><a href="#">최신상품</a></li>
+            <li><a href="#">인기상품</a></li>
+            <li><a href="#">할인상품</a></li>
+        </ul>
+    </div>
+</header>

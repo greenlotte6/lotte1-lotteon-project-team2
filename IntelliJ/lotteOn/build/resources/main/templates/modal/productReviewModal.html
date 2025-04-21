@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/myPage/modal.css">
+    <link rel="stylesheet" href="/css/myPage/table-sub.css">
+    <link rel="stylesheet" href="/css/myPage/starRating.css">
+    <title>Document</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div class="modal-wrapper">
+        <div class="modal-header">
+            <div class="modal-name">
+                <p>상품리뷰</p>
+            </div>
+            <div class="exit" onclick="location.href='#'" style="cursor: pointer;">
+                <p class="modalClose">X</p> <!-- 수정 예정 -->
+            </div>
+        </div>
+        <div class="modal-main table-sub">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>상품명</td>
+                        <td>상품명 출력</td>
+                    </tr>
+                    <tr>
+                        <td>만족도</td>
+                        <td>
+                            <div class="star-rating">
+                                <input type="radio" id="star5" name="rating" value="5"><label for="star5" class="full" title="5점"></label>
+                                <input type="radio" id="star4half" name="rating" value="4.5"><label for="star4half" class="half" title="4.5점"></label>
+                                <input type="radio" id="star4" name="rating" value="4"><label for="star4" class="full" title="4점"></label>
+                                <input type="radio" id="star3half" name="rating" value="3.5"><label for="star3half" class="half" title="3.5점"></label>
+                                <input type="radio" id="star3" name="rating" value="3"><label for="star3" class="full" title="3점"></label>
+                                <input type="radio" id="star2half" name="rating" value="2.5"><label for="star2half" class="half" title="2.5점"></label>
+                                <input type="radio" id="star2" name="rating" value="2"><label for="star2" class="full" title="2점"></label>
+                                <input type="radio" id="star1half" name="rating" value="1.5"><label for="star1half" class="half" title="1.5점"></label>
+                                <input type="radio" id="star1" name="rating" value="1"><label for="star1" class="full" title="1점"></label>
+                                <input type="radio" id="star0half" name="rating" value="0.5"><label for="star0half" class="half" title="0.5점"></label>
+                              </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>내용</td>
+                        <td>
+                            <textarea></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>사진</td>
+                        <td class="file">
+                            <input type="file" name="file1"/>
+                            <input type="file" name="file2"/>
+                            <input type="file" name="file3"/>
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <div class="btn">
+                <input type="submit" value="작성완료" onclick="location.href='#'";>
+                <input type="submit" value="취소" onclick="location.href='#'">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
