@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/css/index_layout.css">
     <script src="/js/myPage/modal.js"></script>
     <script src="/js/myPage/inquiry.js"></script>
-
+    <script src="/js/headerMenu.js"></script>
 </head>
 <body>
     <div id="wrapper">
@@ -385,18 +385,18 @@
                         <div class="mySetting-background">
                             <div class="mySetting-margin">
                                 <div>
-                                    <h1>기본배송지설정<a href="#">변경</a></h1>
+                                    <h1>기본배송지설정<a th:href="@{/my/info}">변경</a></h1>
                                     <h2>부산광역시  진구 대연동 120 한빛 빌딩 10층</h2>
                                 </div>
                                 <div >
-                                    <h1>Email 설정<a href="#">변경</a></h1>
+                                    <h1>Email 설정<a th:href="@{/my/info}">변경</a></h1>
                                     <h2>
                                         abc123@naver.com</br>
                                         (최종수정일 2021-12-10)
                                     </h2>
                                 </div>
                                 <div>
-                                    <h1>휴대폰 설정<a href="#">변경</a></h1>
+                                    <h1>휴대폰 설정<a th:href="@{/my/info}">변경</a></h1>
                                     <h2>
                                         <h2>
                                             010-1234-1001</br>
