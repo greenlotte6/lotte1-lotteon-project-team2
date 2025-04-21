@@ -16,9 +16,9 @@ public class ProductDTO {
     private int prodNo;
 
     // 카테고리 및 판매자 ID
-    private MainCategoryDTO mainCateNo;
-    private SubCategoryDTO subCateNo;
-    private SellerDTO company;
+    private SubCategoryDTO subCate;
+    private String company;
+    private String thumb;
 
     // 상품 정보
     private String prodName;
@@ -37,8 +37,5 @@ public class ProductDTO {
     private double ratingTotal;
     private int reviewCount;
 
-    // (선택적으로 보여줄 이름들)
-    private String mainCateName;
-    private String subCateName;
-    private String sellerName;
+
 }
