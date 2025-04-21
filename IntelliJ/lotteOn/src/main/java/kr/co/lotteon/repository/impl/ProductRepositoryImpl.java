@@ -33,7 +33,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     public Page<Tuple> selectAllForList(PageRequestDTO pageRequestDTO, Pageable pageable) {
         String cate = pageRequestDTO.getCate();
 
-        BooleanExpression expression = qProduct.mainCategory.mainCategoryName.contains(cate);
+        BooleanExpression expression = qProduct.subCategory.subCategoryName.contains(cate);
 
         List<Tuple> tupleList = queryFactory
                 .select(qProduct, qSeller.company)
@@ -60,7 +60,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     // 베스트 상품
     @Override
     public Page<Tuple> selectBestAllForList(String cate) {
-        BooleanExpression expression = qProduct.mainCategory.mainCategoryName.contains(cate);
+        BooleanExpression expression = qProduct.subCategory.subCategoryName.contains(cate);
 
         // 오늘로부터 3개월 전 날짜 계산
         LocalDateTime threeMonthsAgo = LocalDate.now().minusMonths(3).atStartOfDay();
@@ -98,7 +98,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             case "latest" -> orderSpecifier = qProduct.regDate.desc();  // 최신등록순
         }
 
-        BooleanExpression expression = qProduct.mainCategory.mainCategoryName.contains(cate);
+        BooleanExpression expression = qProduct.subCategory.subCategoryName.contains(cate);
 
         List<Tuple> tupleList = queryFactory
                 .select(qProduct, qSeller.company)
