@@ -17,7 +17,7 @@ public class MyController {
 
     @GetMapping("/my/order")
     public String order() {
-        return "/myPage/couponDetails";
+        return "/myPage/orderDetails";
     }
 
     @GetMapping("/my/point")
@@ -26,9 +26,7 @@ public class MyController {
     }
 
     @GetMapping("/my/coupon")
-    public String coupon() {
-        return "/myPage/couponDetails";
-    }
+    public String coupon() {return "/myPage/couponDetails";}
 
     @GetMapping("/my/review")
     public String review() {

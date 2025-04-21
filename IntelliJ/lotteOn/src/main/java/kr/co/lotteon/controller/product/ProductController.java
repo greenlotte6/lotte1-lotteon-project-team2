@@ -2,6 +2,7 @@ package kr.co.lotteon.controller.product;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.type.NStringTypeHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -33,5 +34,8 @@ public class ProductController {
         return "/product/search";
     }
 
+    // 장바구니
+    @GetMapping("/product/cart")
+    public String cart() {return "/product/cart";}
 
 }
