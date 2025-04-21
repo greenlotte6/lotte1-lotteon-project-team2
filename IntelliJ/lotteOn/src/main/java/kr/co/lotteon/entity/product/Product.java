@@ -24,10 +24,6 @@ public class Product {
     private int prodNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mainCateNo") // mainCategory 외래키
-    private MainCategory mainCategory;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subCateNo") // subCategory 외래키
     private SubCategory subCategory;
 
