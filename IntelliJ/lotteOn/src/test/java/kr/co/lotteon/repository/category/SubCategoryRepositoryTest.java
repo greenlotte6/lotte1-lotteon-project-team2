@@ -17,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class SubCategoryRepositoryTest {
 
     /*
-
     @Autowired
     private SubCategoryRepository subCategoryRepository;
 
@@ -27,16 +26,17 @@ class SubCategoryRepositoryTest {
     @Test
     void registerCategory(){
 
-
         MainCategory maincate = MainCategory.builder()
                 .mainCategoryName("여성패션")
                 .build();
 
-        MainCategory savedCategory = mainCategoryRepository.save(maincate);
+        // MainCategory savedCategory = mainCategoryRepository.save(maincate);
+
+        MainCategory mainCategory = mainCategoryRepository.findById(1).get();
 
         SubCategory subcate = SubCategory.builder()
-                .mainCategory(savedCategory)
-                .subCategoryName("브랜드의류")
+                .mainCategory(mainCategory)
+                .subCategoryName("브랜드의류2")
                 .build();
 
         subCategoryRepository.save(subcate);
@@ -49,8 +49,7 @@ class SubCategoryRepositoryTest {
         SubCategory subCategory = subCategoryRepository.findById(1).get();
         System.out.println(subCategory);
     }
-
-    */
+*/
 
 
 }
