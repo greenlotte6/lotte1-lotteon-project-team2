@@ -2,7 +2,6 @@ package kr.co.lotteon.dto.feedback;
 
 
 import kr.co.lotteon.dto.user.UserDTO;
-import kr.co.lotteon.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

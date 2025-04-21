@@ -4,29 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c06a04ed-7e49-437c-8795-ec5aeed2ffab" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../Vscode/lotteOn/css/admin/recruit/list.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vscode/lotteOn/css/admin/recruit/list.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/coupon/CouponDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/coupon/CouponIssueDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/point/PointDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/seller/CompanySalesDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/user/UserDetailsDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/coupon/Coupon.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/coupon/CouponIssue.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/point/Point.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/seller/CompanySales.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/user/UserDetails.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/repository/coupon/CouponIssueRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/repository/coupon/CouponRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/repository/point/PointRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/repository/seller/SellerRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/repository/user/UserDetailsRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/service/coupon/공간용" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/service/point/공간용" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/service/seller/공간용" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/kr/co/lotteon/repository/user/UserDetailsRepositoryTest.java" afterDir="false" />
+    <list default="true" id="13a11bfd-b9ea-4007-b799-2cfd61421b56" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/LotteOnApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/LotteOnApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/config/AppInfo$AppInfoBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/config/AppInfo$AppInfoBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/config/AppInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/config/AppInfo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/config/WebConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/config/WebConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/controller/product/ProductController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/controller/product/ProductListController.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/FaqDTO$FaqDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/FaqDTO$FaqDTOBuilder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/FaqDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/FaqDTO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/InquiryDTO$InquiryDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/InquiryDTO$InquiryDTOBuilder.class" afterDir="false" />
@@ -35,28 +29,115 @@
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/NoticeDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/NoticeDTO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/RecruitDTO$RecruitDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/RecruitDTO$RecruitDTOBuilder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/RecruitDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/article/RecruitDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/category/MainCategoryDTO$MainCategoryDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/category/MainCategoryDTO$MainCategoryDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/category/MainCategoryDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/category/MainCategoryDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/category/SubCategoryDTO$SubCategoryDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/category/SubCategoryDTO$SubCategoryDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/category/SubCategoryDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/category/SubCategoryDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/config/BannerDTO$BannerDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/config/BannerDTO$BannerDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/config/BannerDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/config/BannerDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/config/ConfigDTO$ConfigDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/config/ConfigDTO$ConfigDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/config/ConfigDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/config/ConfigDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/config/TermsDTO$TermsDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/config/TermsDTO$TermsDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/config/TermsDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/config/TermsDTO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/config/VersionDTO$VersionDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/config/VersionDTO$VersionDTOBuilder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/config/VersionDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/config/VersionDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/coupon/CouponDTO$CouponDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/coupon/CouponDTO$CouponDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/coupon/CouponDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/coupon/CouponDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/coupon/CouponIssueDTO$CouponIssueDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/coupon/CouponIssueDTO$CouponIssueDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/coupon/CouponIssueDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/coupon/CouponIssueDTO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/feedback/ExchangeDTO$ExchangeDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/feedback/ExchangeDTO$ExchangeDTOBuilder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/feedback/ExchangeDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/feedback/ExchangeDTO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/feedback/ReturnDTO$ReturnDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/feedback/ReturnDTO$ReturnDTOBuilder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/feedback/ReturnDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/feedback/ReturnDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/member/UserDTO$UserDTOBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/member/UserDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/seller/seller$sellerBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/seller/seller.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/feedback/ReviewDTO$ReviewDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/feedback/ReviewDTO$ReviewDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/feedback/ReviewDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/feedback/ReviewDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/page/PageRequestDTO$PageRequestDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/page/PageRequestDTO$PageRequestDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/page/PageRequestDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/page/PageRequestDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/page/PageResponseDTO$PageResponseDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/page/PageResponseDTO$PageResponseDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/page/PageResponseDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/page/PageResponseDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/point/PointDTO$PointDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/point/PointDTO$PointDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/point/PointDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/point/PointDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/product/ProductDTO$ProductDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/product/ProductDTO$ProductDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/product/ProductDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/product/ProductDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/seller/SellerDTO$SellerDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/seller/SellerDTO$SellerDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/seller/SellerDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/seller/SellerDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/user/UserDTO$UserDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/user/UserDTO$UserDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/user/UserDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/user/UserDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/user/UserDetailsDTO$UserDetailsDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/user/UserDetailsDTO$UserDetailsDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/user/UserDetailsDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/dto/user/UserDetailsDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/article/Faq$FaqBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/article/Faq$FaqBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/article/Faq.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/article/Faq.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/article/Inquiry$InquiryBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/article/Inquiry$InquiryBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/article/Inquiry.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/article/Inquiry.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/article/Notice$NoticeBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/article/Notice$NoticeBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/article/Notice.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/article/Notice.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/article/QFaq.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/article/QFaq.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/article/QInquiry.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/article/QInquiry.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/article/QNotice.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/article/QNotice.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/article/QRecruit.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/article/QRecruit.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/article/Recruit$RecruitBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/article/Recruit$RecruitBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/article/Recruit.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/article/Recruit.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/category/MainCategory$MainCategoryBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/category/MainCategory$MainCategoryBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/category/MainCategory.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/category/MainCategory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/category/QMainCategory.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/category/QMainCategory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/category/QSubCategory.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/category/QSubCategory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/category/SubCategory$SubCategoryBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/category/SubCategory$SubCategoryBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/category/SubCategory.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/category/SubCategory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/Banner$BannerBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/Banner$BannerBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/Banner.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/Banner.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/Config$ConfigBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/Config$ConfigBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/Config.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/Config.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/QBanner.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/QBanner.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/QConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/QConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/QTerms.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/QTerms.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/QVersion.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/QVersion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/Terms$TermsBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/Terms$TermsBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/Terms.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/Terms.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/Version$VersionBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/Version$VersionBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/Version.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/config/Version.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/coupon/Coupon$CouponBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/coupon/Coupon$CouponBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/coupon/Coupon.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/coupon/Coupon.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/coupon/CouponIssue$CouponIssueBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/coupon/CouponIssue$CouponIssueBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/coupon/CouponIssue.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/coupon/CouponIssue.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/coupon/QCoupon.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/coupon/QCoupon.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/coupon/QCouponIssue.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/coupon/QCouponIssue.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/feedback/Exchange$ExchangeBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/feedback/Exchange$ExchangeBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/feedback/Exchange.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/feedback/Exchange.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/feedback/QExchange.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/feedback/QExchange.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/feedback/QReturn.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/feedback/QReturn.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/feedback/Return$ReturnBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/feedback/Return$ReturnBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/feedback/Return.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/feedback/Return.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/point/Point$PointBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/point/Point$PointBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/point/Point.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/point/Point.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/point/QPoint.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/point/QPoint.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/review/Review.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/review/Review.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/seller/QCompanySales.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/seller/QSeller.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/seller/QSeller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/seller/Seller$SellerBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/seller/Seller$SellerBuilder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/seller/Seller.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/seller/Seller.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/user/QMember.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/article/FaqDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/article/FaqDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/article/InquiryDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/article/InquiryDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/article/NoticeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/article/NoticeDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/article/RecruitDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/article/RecruitDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/config/VersionDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/config/VersionDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/user/QUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/user/QUser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/user/QUserDetails.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/user/QUserDetails.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/user/User$UserBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/user/User$UserBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/user/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/user/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/user/UserDetails$UserDetailsBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/user/UserDetails$UserDetailsBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/user/UserDetails.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/entity/user/UserDetails.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/interceptor/AppInfoInterceptor.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/interceptor/AppInfoInterceptor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/oauth2/Oauth2UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/oauth2/Oauth2UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/security/MyUserDetails$MyUserDetailsBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/security/MyUserDetails$MyUserDetailsBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/security/MyUserDetails.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/security/MyUserDetails.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/security/MyUserDetailsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/security/MyUserDetailsService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/security/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/kr/co/lotteon/security/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/product/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/product/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/product/ProductListController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/feedback/ExchangeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/feedback/ExchangeDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/feedback/ReturnDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/feedback/ReturnDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/member/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/user/UserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/seller/seller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/seller/SellerDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/seller/Seller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/seller/Seller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/page/PageRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/page/PageRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/product/ProductDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/seller/SellerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/seller/SellerDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/review/Review.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/entity/review/Review.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/service/product/공간용" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Vscode/lotteOn/view/product/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vscode/lotteOn/view/product/list.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,118 +183,72 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
-        <option value="JUnit5 Test Class" />
         <option value="Class" />
-        <option value="Interface" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mysql/mysql-connector-j/9.1.0/5fb1d513278e1a9767dfa80ea9d8d7ee909f1a/mysql-connector-j-9.1.0.jar!/com/mysql/cj/jdbc/exceptions/SQLError.class" root0="SKIP_INSPECTION" />
-  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 4
 }</component>
-  <component name="ProjectId" id="2vsZMbbmbn4DWhI18i0fB3Jkyg5" />
+  <component name="ProjectId" id="2w11XF9SKKUovspbR8PMxLkNDYr" />
   <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
+    <ConfirmationsSetting value="1" id="Add" />
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Build lotteOn.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Spring Boot.LotteOnApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/choi&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/GGG/Desktop/lotteOn/IntelliJ/lotteOn/src/main/resources/static/images/lotteon&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "Gradle.Build lotteOn.executor": "Run",
-    "Gradle.LotteOnApplicationTests.executor": "Run",
-    "Gradle.SubCategoryRepositoryTest.findByCategoryName.executor": "Run",
     "Gradle.lotteOn [build].executor": "Run",
     "Gradle.lotteOn [clean].executor": "Run",
-    "JUnit.LotteOnApplicationTests.executor": "Run",
-    "JUnit.SubCategoryRepositoryTest.executor": "Run",
-    "JUnit.SubCategoryRepositoryTest.findByCategoryName.executor": "Run",
-    "JUnit.SubCategoryRepositoryTest.registerCategory.executor": "Run",
-    "JUnit.UserDetailsRepositoryTest.find.executor": "Run",
-    "JUnit.UserDetailsRepositoryTest.test.executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.LotteOnApplication.executor": "Run",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "pai",
-    "ignore.virus.scanning.warn.message": "true",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/samsung/Desktop/lotte6/프로젝트/lotteOn/IntelliJ/lotteOn/src/main/java/kr/co/lotteon/service/seller",
+    "last_opened_file_path": "C:/Users/lotte6/Desktop/lotte1-lotteon-project-team2/IntelliJ/lotteOn/src/main/java/kr/co/lotteon/repository",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\samsung\Desktop\lotte6\프로젝트\lotteOn\IntelliJ\lotteOn\src\main\java\kr\co\lotteon\service\seller" />
-      <recent name="C:\Users\samsung\Desktop\lotte6\프로젝트\lotteOn\IntelliJ\lotteOn\src\main\java\kr\co\lotteon\service\point" />
-      <recent name="C:\Users\samsung\Desktop\lotte6\프로젝트\lotteOn\IntelliJ\lotteOn\src\main\java\kr\co\lotteon\service\coupon" />
-      <recent name="C:\Users\GGG\Desktop\lotteOn\IntelliJ\lotteOn\src\main\resources\static\images\lotteon" />
-      <recent name="C:\Users\GGG\Desktop\lotteOn\IntelliJ\lotteOn\src\main\resources\static\css" />
-    </key>
-    <key name="CreateTestDialog.Recents.Supers">
-      <recent name="" />
-    </key>
-    <key name="CreateTestDialog.RecentsKey">
-      <recent name="kr.co.lotteon.repository.user" />
-      <recent name="kr.co.lotteon.repository.category" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="kr.co.lotteon.dto.category" />
-      <recent name="kr.co.lotteon.entity.seller" />
-      <recent name="kr.co.lotteon.dto.page" />
+      <recent name="C:\Users\lotte6\Desktop\lotte1-lotteon-project-team2\IntelliJ\lotteOn\src\main\java\kr\co\lotteon\repository" />
+      <recent name="C:\Users\lotte6\Desktop\lotte1-lotteon-project-team2\IntelliJ\lotteOn\src\main\java\kr\co\lotteon\dto" />
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.LotteOnApplication">
+    <configuration name="lotteOn [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="lotteOn [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -236,69 +271,6 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="LotteOnApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="lotteOn.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="kr.co.lotteon.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="kr.co.lotteon" />
-      <option name="MAIN_CLASS_NAME" value="kr.co.lotteon.LotteOnApplicationTests" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SubCategoryRepositoryTest.findByCategoryName" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="lotteOn.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="kr.co.lotteon.repository.category.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="kr.co.lotteon.repository.category" />
-      <option name="MAIN_CLASS_NAME" value="kr.co.lotteon.repository.category.SubCategoryRepositoryTest" />
-      <option name="METHOD_NAME" value="findByCategoryName" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserDetailsRepositoryTest.find" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="lotteOn.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="kr.co.lotteon.repository.user.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="kr.co.lotteon.repository.user" />
-      <option name="MAIN_CLASS_NAME" value="kr.co.lotteon.repository.user.UserDetailsRepositoryTest" />
-      <option name="METHOD_NAME" value="find" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserDetailsRepositoryTest.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="lotteOn.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="kr.co.lotteon.repository.user.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="kr.co.lotteon.repository.user" />
-      <option name="MAIN_CLASS_NAME" value="kr.co.lotteon.repository.user.UserDetailsRepositoryTest" />
-      <option name="METHOD_NAME" value="test" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="LotteOnApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="lotteOn.main" />
@@ -309,11 +281,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.LotteOnApplicationTests" />
+        <item itemvalue="Gradle.lotteOn [build]" />
         <item itemvalue="Gradle.lotteOn [clean]" />
-        <item itemvalue="JUnit.UserDetailsRepositoryTest.find" />
-        <item itemvalue="JUnit.UserDetailsRepositoryTest.test" />
-        <item itemvalue="JUnit.SubCategoryRepositoryTest.findByCategoryName" />
       </list>
     </recent_temporary>
   </component>
@@ -326,38 +295,19 @@
     </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
-  <component name="StructureViewState">
-    <option name="selectedTab" value="Logical" />
-  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="c06a04ed-7e49-437c-8795-ec5aeed2ffab" name="Changes" comment="" />
-      <created>1744935694713</created>
+      <changelist id="13a11bfd-b9ea-4007-b799-2cfd61421b56" name="Changes" comment="" />
+      <created>1745194304539</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1744935694713</updated>
-      <workItem from="1744935695890" duration="93000" />
-      <workItem from="1744935806045" duration="41000" />
-      <workItem from="1744935856597" duration="269000" />
-      <workItem from="1744936135357" duration="3049000" />
-      <workItem from="1744948589323" duration="5127000" />
-      <workItem from="1744956882487" duration="1286000" />
-      <workItem from="1744957458380" duration="113000" />
-      <workItem from="1744957590123" duration="17000" />
-      <workItem from="1744957613548" duration="7449000" />
-      <workItem from="1744983559270" duration="7857000" />
-      <workItem from="1745105309796" duration="1001000" />
-      <workItem from="1745136553261" duration="5500000" />
-      <workItem from="1745143440857" duration="7796000" />
-      <workItem from="1745180186421" duration="8145000" />
+      <updated>1745194304539</updated>
+      <workItem from="1745194306630" duration="93000" />
+      <workItem from="1745194813058" duration="10637000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
   </component>
 </project>

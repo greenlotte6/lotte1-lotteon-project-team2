@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 회원 포인트 : 롯데On</title>
+    <link rel="stylesheet" href="/css/admin/admin.css">
+    <link rel="stylesheet" href="/css/admin/member.css">
+    <link rel="stylesheet" href="/css/layout/layout.css">
+    
+    <!-- 사이드바-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggles = document.querySelectorAll('.menu-toggle');
+
+            toggles.forEach(toggle => {
+                toggle.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    // 현재 클릭된 toggle 외 다른 submenu는 닫기 (원하면 제거 가능)
+                    toggles.forEach(otherToggle => {
+                        if (otherToggle !== toggle) {
+                            otherToggle.classList.remove('active');
+                            const otherSubmenu = otherToggle.nextElementSibling;
+                            if (otherSubmenu && otherSubmenu.classList.contains('submenu')) {
+                                otherSubmenu.style.display = 'none';
+                            }
+                        }
+                    });
+
+                    // 현재 submenu toggle
+                    const submenu = this.nextElementSibling;
+                    if (submenu && submenu.classList.contains('submenu')) {
+                        const isVisible = submenu.style.display === 'block';
+                        submenu.style.display = isVisible ? 'none' : 'block';
+                        this.classList.toggle('active', !isVisible);
+                    }
+                });
+            });
+        });
+    </script>
+
+</head>
+<body>
+    <div id="wrapper">
+        <!-- 헤더 시작 -->
+        <th:block th:include="/admin/inc/header.html"/>
+        <!-- 헤더 끝 -->
+        <main>
+            <section class="content">
+                <!-- 왼쪽 사이드바 -->
+                <th:block th:include="/admin/inc/sidebar.html"/>
+
+                <!-- 사이드바 끝-->
+                <!-- 오른쪽 글 -->
+                <article class="main_content_side">
+                    <!-- 여기부터 글 작성 -->
+                    <div class="main_head">
+                        <p class="main_head_title">포인트관리</p>
+                        <div style="float: right;">
+                            <p style="font-size: 16px;">Home > 회원관리 ><span> 포인트관리</span></p>
+                        </div>
+                    </div>
+
+                    <div class="select_div">
+                        <div class="select_box">
+                            <form action="#">
+                                <select name="brand">
+                                    <option value="아이디">아이디</option>
+                                    <option value="이름">이름</option>
+                                    <option value="이메일">이메일</option>
+                                    <option value="휴대폰">휴대폰</option>
+                                </select>
+                                <input type="text" name="keyword" class="search_text" placeholder="검색어 입력">
+                                <input type="submit" class="search_btn" value="검색">
+                            </form>
+                        </div>
+                    </div>
+
+                    <form action="#" class="point_list_form">
+                        <table>
+                            <thead>
+                                <th><input type="checkbox"></th>
+                                <th>번호</th>
+                                <th>아이디</th>
+                                <th>이름</th>
+                                <th>지급 포인트</th>
+                                <th>잔여 포인트</th>
+                                <th>지급 내용</th>
+                                <th>지급 날짜</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>5</td>
+                                    <td>abc1234</td>
+                                    <td>정우성</td>
+                                    <td>1,000</td>
+                                    <td>15,000</td>
+                                    <td>구매확정 포인트지급</td>
+                                    <td>0000-00-00 00:00:00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div style="margin-top: 20px;">
+                            <button type="submit" class="delete_btn">선택삭제</button>
+                        </div>
+                    </form>
+                    <!-- 페이징 -->
+                    <p style="text-align: center; margin-top: 10px;">
+                        이전 1 2 3 4 5 다음
+                    </p>
+                    
+                </article>
+            </section>
+        </main>
+
+        <!-- 푸터 시작 -->
+        <th:block th:include="/admin/inc/footer.html"/>
+        <!-- 푸터 끝 -->
+    </div>
+
+</body>
+</html>

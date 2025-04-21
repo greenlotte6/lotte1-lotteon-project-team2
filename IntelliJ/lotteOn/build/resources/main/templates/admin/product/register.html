@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 상품등록 : 롯데On</title>
+    <link rel="stylesheet" href="/css/admin/admin.css">
+    <link rel="stylesheet" href="/css/admin/product.css">
+    <link rel="stylesheet" href="/css/layout/layout.css">
+    
+    <!-- 사이드바-->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggles = document.querySelectorAll('.menu-toggle');
+
+            toggles.forEach(toggle => {
+                toggle.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    // 현재 클릭된 toggle 외 다른 submenu는 닫기 (원하면 제거 가능)
+                    toggles.forEach(otherToggle => {
+                        if (otherToggle !== toggle) {
+                            otherToggle.classList.remove('active');
+                            const otherSubmenu = otherToggle.nextElementSibling;
+                            if (otherSubmenu && otherSubmenu.classList.contains('submenu')) {
+                                otherSubmenu.style.display = 'none';
+                            }
+                        }
+                    });
+
+                    // 현재 submenu toggle
+                    const submenu = this.nextElementSibling;
+                    if (submenu && submenu.classList.contains('submenu')) {
+                        const isVisible = submenu.style.display === 'block';
+                        submenu.style.display = isVisible ? 'none' : 'block';
+                        this.classList.toggle('active', !isVisible);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <!-- 헤더 시작 -->
+        <th:block th:include="/admin/inc/header.html"/>
+        <!-- 헤더 끝 -->
+        <main>
+            <section class="content">
+                <!-- 왼쪽 사이드바 -->
+                <th:block th:include="/admin/inc/sidebar.html"/>
+                <!-- 사이드바 끝-->
+                <!-- 오른쪽 글 -->
+                <article class="main_content_side">
+                    <!-- 여기부터 글 작성 -->
+                    <div class="main_head">
+                        <p class="main_head_title">상품등록</p>
+                        <div style="float: right;">
+                            <p style="font-size: 16px;">Home > 상품관리 ><span> 상품등록</span></p>
+                        </div>
+                    </div>
+
+                    <form action="#">
+                        <!-- 상품 분류 -->
+                        <p class="title">상품분류</p>
+                        <div class="text_div">
+                            <p>1차, 2차 카테고리 기본분류는 반드시 선택하셔야 합니다.</p>
+                        </div>
+
+                        <table class="category">
+                            <tr>
+                                <td>1차 분류</td>
+                                <td>
+                                    <select name="cateV1">
+                                        <option value="1차 분류 선택">1차 분류 선택</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2차 분류</td>
+                                <td>
+                                    <select name="cateV2">
+                                        <option value="2차 분류 선택">2차 분류 선택</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- 기본정보 분류 -->
+                        <p class="title">기본정보</p>
+                        <div class="text_div">
+                            <p>기본정보는 반드시 입력해야 합니다.</p>
+                        </div>
+                        <table class="basic">
+                            <tr>
+                                <td>상품명</td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr>
+                                <td>기본설명</td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr>
+                                <td>제조사</td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr>
+                                <td>상품금액</td>
+                                <td><input type="text">원</td>
+                            </tr>
+                            <tr>
+                                <td>할인율</td>
+                                <td><input type="text">%</td>
+                            </tr>
+                            <tr>
+                                <td>포인트</td>
+                                <td><input type="text">원</td>
+                            </tr>
+                            <tr>
+                                <td>재고수량</td>
+                                <td><input type="text">개</td>
+                            </tr>
+                            <tr>
+                                <td>배송비</td>
+                                <td><input type="text">원</td>
+                            </tr>
+                            <tr style="height: 120px;">
+                                <td>상품 이미지</td>
+                                <td>
+                                    <input type="file"> <span>크기 190 x 190, 상품 목록에 출력 될 이미지 입니다.</span> <br>
+                                    <input type="file"> <span>크기 230 x 230, 상품 메인에 출력 될 이미지 입니다.</span> <br>
+                                    <input type="file"> <span>크기 456 x 456, 상품 상세에 출력 될 이미지 입니다.</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>상품 상세정보</td>
+                                <td>
+                                    <input type="file"> <span>크기 940px, 높이 제약없음, 크기 최대 1MB</span>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- 상품 선택정보 분류 -->
+                        <p class="title">상품 선택정보</p>
+                        <div class="text_div" style="height: 60px; line-height: 20px; ">
+                            <p>상품별 선택정보(옵션)입력입니다. <br>
+                                예시) 옵션 : 사이즈, 옵션1 항목: XXL,XL,L,M,S(, 콤마로 구분)
+                            </p>
+                        </div>
+
+                        <table class="option" id="optionTable">
+                            <tr>
+                                <td>옵션1</td>
+                                <td><input type="text"></td>
+                                <td>옵션1 항목</td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr>
+                                <td>옵션2</td>
+                                <td><input type="text"></td>
+                                <td>옵션2 항목</td>
+                                <td><input type="text"></td>
+                            </tr>
+                            <tr>
+                                <td>옵션3</td>
+                                <td><input type="text"></td>
+                                <td>옵션3 항목</td>
+                                <td><input type="text"></td>
+                            </tr>
+                        </table>
+
+                        <button type="button" class="register_btn" id="addOptionBtn">옵션 추가</button>
+
+                        
+                        <script>
+                            document.getElementById('addOptionBtn').addEventListener('click', function() {
+                                const table = document.getElementById('optionTable');
+                                const rowCount = table.rows.length + 1;
+
+                                const newRow = table.insertRow();
+
+                                const cell1 = newRow.insertCell(0);
+                                cell1.textContent = `옵션${rowCount}`;
+
+                                const cell2 = newRow.insertCell(1);
+                                const input1 = document.createElement('input');
+                                input1.type = 'text';
+                                cell2.appendChild(input1);
+
+                                const cell3 = newRow.insertCell(2);
+                                cell3.textContent = `옵션${rowCount} 항목`;
+
+                                const cell4 = newRow.insertCell(3);
+                                const input2 = document.createElement('input');
+                                input2.type = 'text';
+                                cell4.appendChild(input2);
+                            });
+                        </script>
+
+
+                        <!-- 상품정보 제공고시 분류 -->
+                        <p class="title">상품정보 제공고시</p>
+                        <div class="text_div">
+                            <p>[전자상거래에 관한 상품정보 제공에 관한 고시] 항목에 의거 등록하는 정보입니다.</p>
+                        </div>
+                        <table class="basic">
+                            <tr>
+                                <td>상품상태</td>
+                                <td><input type="text" placeholder="새상품"></td>
+                            </tr>
+                            <tr>
+                                <td>과세상품</td>
+                                <td><input type="text" placeholder="과세상품"></td>
+                            </tr>
+                            <tr>
+                                <td>영수증 발행</td>
+                                <td><input type="text" placeholder="발행가능 - 신용카드전표, 온라인현금영수증" style="width: 60%;"></td>
+                            </tr>
+                            <tr>
+                                <td>사업자구분</td>
+                                <td><input type="text" placeholder="사업자판매자" style="width: 60%;"></td>
+                            </tr>
+                            <tr>
+                                <td>원산지</td>
+                                <td><input type="text" placeholder="국내산"></td>
+                            </tr>
+                        </table>
+
+                        <div class="text_alert" style="height: 60px; margin-top: 15px;">
+                            <p>
+                                전자상거래등에서의 상품등의 정보 제공에 관한 고시에 따라 총 35개 상품군에 대해 상품 특성등을 양식에 따라 <br>
+                                입력할 수 있습니다.
+                            </p>
+                        </div>
+
+                        <button type="submit" class="register_btn">등록하기</button>
+
+
+                    </form>
+
+     
+                </article>
+            </section>
+        </main>
+
+        <!-- 푸터 시작 -->
+        <th:block th:include="/admin/inc/footer.html"/>
+        <!-- 푸터 끝 -->
+    </div>
+</body>
+</html>
