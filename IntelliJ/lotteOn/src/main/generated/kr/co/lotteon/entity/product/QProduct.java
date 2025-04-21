@@ -24,8 +24,6 @@ public class QProduct extends EntityPathBase<Product> {
 
     public final NumberPath<Integer> hit = createNumber("hit", Integer.class);
 
-    public final kr.co.lotteon.entity.category.QMainCategory mainCategory;
-
     public final StringPath prodContent = createString("prodContent");
 
     public final NumberPath<Integer> prodDeliveryFee = createNumber("prodDeliveryFee", Integer.class);
@@ -74,7 +72,6 @@ public class QProduct extends EntityPathBase<Product> {
 
     public QProduct(Class<? extends Product> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.mainCategory = inits.isInitialized("mainCategory") ? new kr.co.lotteon.entity.category.QMainCategory(forProperty("mainCategory")) : null;
         this.seller = inits.isInitialized("seller") ? new kr.co.lotteon.entity.seller.QSeller(forProperty("seller"), inits.get("seller")) : null;
         this.subCategory = inits.isInitialized("subCategory") ? new kr.co.lotteon.entity.category.QSubCategory(forProperty("subCategory"), inits.get("subCategory")) : null;
     }
