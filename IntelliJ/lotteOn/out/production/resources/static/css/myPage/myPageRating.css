@@ -8,13 +8,13 @@
 .myPage-rating .star {
     width: 20px;
     height: 20px;
-    background: url('/lotteOn/images/ico-star-empty.svg') no-repeat center/cover;
+    background: url('/images/ico-star-empty.svg') no-repeat center/cover;
     display: inline-block;
     margin-right: 2px;
 }
 
 .myPage-rating .star.active {
-    background-image: url('/lotteOn/images/ico-star-full.svg');
+    background-image: url('/images/ico-star-full.svg');
 }
 
 .myPage-rating .myPage-score {
