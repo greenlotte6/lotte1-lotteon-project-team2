@@ -1,8 +1,14 @@
 package kr.co.lotteon.controller.admin;
 
 import jakarta.servlet.http.HttpServletRequest;
+import kr.co.lotteon.dto.product.ProductDTO;
+import kr.co.lotteon.dto.product.ProductDetailDTO;
+import kr.co.lotteon.dto.product.ProductImageDTO;
 import kr.co.lotteon.dto.seller.SellerDTO;
 import kr.co.lotteon.dto.user.UserDTO;
+import kr.co.lotteon.service.admin.adminService;
+import kr.co.lotteon.service.product.ImageService;
+import kr.co.lotteon.service.product.ProductService;
 import kr.co.lotteon.service.seller.SellerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +24,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController {
 
     private final SellerService sellerService;
+    private final ImageService imageService;
+    private final ProductService productService;
+    private final adminService adminService;
 
     // 관리자 메인
     @GetMapping
@@ -115,6 +124,25 @@ public class AdminController {
     @GetMapping("/product/register")
     public String productRegister(){
         return "/admin/product/register";
+    }
+
+    @PostMapping("/product/register")
+    public String productRegister(ProductDTO productDTO, ProductDetailDTO productDetailDTO, ProductImageDTO productImageDTO){
+
+        System.out.println(productDetailDTO);
+        System.out.println(productImageDTO);
+        System.out.println(productDTO);
+
+        // 상품 저장
+        adminService.saveProduct(productDTO);
+
+        // 이미지 저장
+        imageService.saveImage(productImageDTO);
+
+
+
+        System.out.println("이동");
+        return "redirect:/admin/product/register";
     }
 
     /*

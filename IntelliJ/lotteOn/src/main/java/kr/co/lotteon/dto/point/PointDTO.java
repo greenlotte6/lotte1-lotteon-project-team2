@@ -1,14 +1,12 @@
 package kr.co.lotteon.dto.point;
 
 import kr.co.lotteon.dto.user.UserDTO;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Data
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
