@@ -24,13 +24,10 @@ public class ProductController {
     @GetMapping("/product/list")
     public String list(PageRequestDTO pageRequestDTO, Model model) {
         PageResponseDTO pageResponseDTO = productService.selectAllForList(pageRequestDTO);
-        List<ProductDTO> productList = productService.selectBestAllForList(pageRequestDTO.getCate());
+        List<ProductDTO> productList = productService.selectBestAllForList(pageRequestDTO.getSubCateNo());
         model.addAttribute(pageResponseDTO);
         model.addAttribute(productList);
 
-
-        log.info("pageResponseDTO: {}", pageResponseDTO);
-        log.info("productList: {}", productList);
         return "/product/list";
     }
 
@@ -39,6 +36,7 @@ public class ProductController {
     public String getSortedProductList(PageRequestDTO dto, Model model) {
         PageResponseDTO pageResponseDTO = productService.sortedProducts(dto);
         model.addAttribute("pageResponseDTO", pageResponseDTO);
+
         return "product/list :: productListFragment";
     }
 

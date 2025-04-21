@@ -10,13 +10,14 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Builder
 public class ProductDTO {
 
     private int prodNo;
 
     // 카테고리 및 판매자 ID
-    private SubCategoryDTO subCate;
+    private int subCateNo;
     private String company;
     private String thumb;
 
