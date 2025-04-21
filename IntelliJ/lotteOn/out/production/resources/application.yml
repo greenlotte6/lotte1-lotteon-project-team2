@@ -5,6 +5,7 @@ logging:
         orm:
           jdbc:
             bind: trace
+    kr.co.lotteOn.controller.product: debug  # ← 여기에 추가
     root: info
 
 jasypt:
