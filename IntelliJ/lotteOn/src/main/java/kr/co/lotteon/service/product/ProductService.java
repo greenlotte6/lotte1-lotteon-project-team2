@@ -23,7 +23,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ModelMapper modelMapper;
 
-    // ✅ 상품 목록 조회
+    // 상품 목록 조회
     public PageResponseDTO selectAllForList(PageRequestDTO pageRequestDTO) {
         Pageable pageable = pageRequestDTO.getPageable("no");
 
@@ -53,26 +53,29 @@ public class ProductService {
                 .build();
     }
 
-    // ✅ 베스트 상품 조회
-    public List<ProductDTO> selectBestAllForList(String cate) {
-        Page<Tuple> pageProduct = productRepository.selectBestAllForList(cate);
+    //  베스트 상품 조회
+    public List<ProductDTO> selectBestAllForList(int subCateNo) {
+        Page<Tuple> pageProduct = productRepository.selectBestAllForList(subCateNo);
 
-        return pageProduct.getContent().stream().map(tuple -> {
+        List<ProductDTO> productDTOList = pageProduct.getContent().stream().map(tuple -> {
             Product product = tuple.get(0, Product.class);
-            String company = tuple.get(1,  String.class);
-            String thumb = tuple.get(2,  String.class);
+            String company = tuple.get(1, String.class);
+            String thumb = tuple.get(2, String.class);
 
             ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
             productDTO.setCompany(company);
             productDTO.setThumb(thumb);
 
-
-            log.info("productDTO: {}", productDTO);
             return productDTO;
         }).toList();
+
+        log.info("BsetProductDTOList: {}", productDTOList);
+
+        return productDTOList;
     }
 
-    // ✅ 정렬된 상품 목록 조회
+
+    //  정렬된 상품 목록 조회
     public PageResponseDTO sortedProducts(PageRequestDTO pageRequestDTO) {
         Pageable pageable = pageRequestDTO.getPageable("no");
 

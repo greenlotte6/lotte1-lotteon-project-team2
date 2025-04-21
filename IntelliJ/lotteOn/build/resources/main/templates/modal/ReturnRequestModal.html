@@ -3,19 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/lotteOn/css/myPage/table-main.css">
-    <link rel="stylesheet" href="/lotteOn/css/myPage/table-sub.css">
-    <link rel="stylesheet" href="/lotteOn/css/myPage/modal.css">
+    <link rel="stylesheet" href="/css/myPage/table-main.css">
+    <link rel="stylesheet" href="/css/myPage/table-sub.css">
+    <link rel="stylesheet" href="/css/myPage/modal.css">
     <title>Document</title>
 </head>
 <body>
     <div class="modal-wrapper">
         <div class="modal-header">
             <div class="modal-name">
-                <p>주문상세</p>
-            </div>
-            <div class="order-date">
-                <p>2025-04-14</p>
+                <p>반품신청</p>
             </div>
             <div class="exit" onclick="location.href='#'" style="cursor: pointer;">
                 <p class="modalClose">X</p> <!-- 수정 예정 -->
@@ -23,7 +20,7 @@
         </div>
         <div class="modal-main">
             <div class="title-area">
-                <h1>주문정보</h1>
+                <h1>상품정보</h1>
             </div>
             <div class="order-info table-main">
                 <table>
@@ -62,30 +59,51 @@
                     </tbody>
                 </table>
             </div>
-            <div class="delivery-info table-sub">
+            <div class="return-Request table-sub">
                 <div class="title-area">
-                    <h1>배송정보</h1>
+                    <h1>반품정보 입력</h1>
                 </div>
                 <table>
                     <tbody>
                         <tr>
-                            <td>이름</td>
-                            <td>홍길동</td>
+                            <td>반품유형</td>
+                            <td>
+                                <label>
+                                    <input type="radio" name="choice">
+                                    <span>단순 변심</span>
+                                </label>
+                                    <label>
+                                    <input type="radio" name="choice">
+                                    <span>파손 및 불량</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="choice">
+                                    <span>주문 실수</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="choice">
+                                    <span>기타</span>
+                                </label>
+                            </td>
                         </tr>
                         <tr>
-                            <td>연락처</td>
-                            <td>010-1234-1001</td>
+                            <td>사유입력</td>
+                            <td>
+                                <textarea></textarea>
+                            </td>
                         </tr>
                         <tr>
-                            <td>주소</td>
-                            <td>[210**] 부산광역시 진구 대연동 121 10층 1004호</td>
-                        </tr>
-                        <tr>
-                            <td>배송요청사항</td>
-                            <td>없음</td>
+                            <td>사진첨부(선택)</td>
+                            <td class="file">
+                                <input type="file">
+                            </td>
                         </tr>
                     </tbody>
                 </table>
+                <div class="btn">
+                    <input type="submit" value="반품신청" onclick="location.href='#'";>
+                    <input type="submit" value="취소" onclick="location.href='#'">
+                </div>
             </div>
         </div>
     </div>

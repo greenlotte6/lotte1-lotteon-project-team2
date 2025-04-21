@@ -6,6 +6,7 @@
   <title>롯데On 일반 회원가입</title>
   <link rel="stylesheet" th:href="@{/css/layout/layout.css}" />
   <link rel="stylesheet" th:href="@{/css/member/register.css}" />
+  <script th:src="@{/js/member/signupValidation.js}"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -14,10 +15,10 @@
     <div class="header_main">
       <div class="user_menu">
         <div>
-          <a href="#">로그인 |</a>
-          <a href="#">회원가입 |</a>
-          <a href="#">마이페이지 |</a>
-          <a href="#">장바구니</a>
+          <a th:href="@{/member/login}">로그인 |</a>
+          <a th:href="@{/member/register}">회원가입 |</a>
+          <a th:href="@{/member/myPageMain}">마이페이지 |</a>
+          <a th:href="@{/product/cart}">장바구니</a>
         </div>
       </div>
 
@@ -50,23 +51,23 @@
                   <div class="input-with-btn" >
                   <input type="text" id="uid" name="uid" placeholder="아이디 입력" />
                   <button type="button" id="btnCheckUid" class="btn btn-small btn-auth">중복확인</button>
+                  </div>
                   <span id="uidMessage" class="error-message"></span>
-        </div>
                 </td>
               </tr>
               <tr>
                 <td>비밀번호<span class="required">*</span></td>
                 <td>
-                  <input type="password" name="pass" placeholder="비밀번호 입력" />
-                  <span class="description">
-                    비밀번호는 8-16자리 이내, 영문ㆍ숫자ㆍ특수문자 조합
+                  <input type="password" id="pass" name="pass" placeholder="비밀번호 입력" />
+                  <span id="passError" class="error-message">
                   </span>
                 </td>
               </tr>
               <tr>
                 <td>비밀번호 확인<span class="required">*</span></td>
                 <td>
-                  <input type="password" name="pass2" placeholder="비밀번호 확인 입력" />
+                  <input type="password" id="pass2" name="pass2" placeholder="비밀번호 확인 입력" />
+                  <span id="pass2Error" class="error-message" ></span>
                 </td>
               </tr>
               <tr>
@@ -85,7 +86,8 @@
                 <td>
                   <div class="input-with-btn">
                     <input type="email" name="email" placeholder="이메일 입력" />
-                    <button type="button" class="btn btn-small btn-auth">이메일 인증</button>
+                    <button type="button" id="btnCheckEmail" class="btn btn-small btn-auth">이메일 인증</button>
+                    <span id="emailMessage" class="error-message"></span>
                   </div>
                 </td>
               </tr>

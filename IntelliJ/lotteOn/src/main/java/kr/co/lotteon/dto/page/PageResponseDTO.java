@@ -14,7 +14,7 @@ public class PageResponseDTO<T> {
 
     private List<T> dtoList;
 
-    private String cate;
+    private int subCateNo;
     private int pg;
     private int size;
     private int total;
@@ -27,7 +27,7 @@ public class PageResponseDTO<T> {
 
     @Builder
     public PageResponseDTO(PageRequestDTO pageRequestDTO, List<T> dtoList, int total) {
-        this.cate = pageRequestDTO.getCate();
+        this.subCateNo = pageRequestDTO.getSubCateNo();
         this.pg = pageRequestDTO.getPg();
         this.size = pageRequestDTO.getSize();
         this.total = total;

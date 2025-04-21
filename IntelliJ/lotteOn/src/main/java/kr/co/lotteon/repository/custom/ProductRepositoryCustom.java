@@ -10,7 +10,7 @@ public interface ProductRepositoryCustom {
 
     public Page<Tuple> selectAllForList(PageRequestDTO pageRequestDTO, Pageable pageable);
 
-    public Page<Tuple> selectBestAllForList(String cate);
+    public Page<Tuple> selectBestAllForList(int subCate);
 
     public Page<Tuple> sortedProducts(PageRequestDTO pageRequestDTO, Pageable pageable);
 }
