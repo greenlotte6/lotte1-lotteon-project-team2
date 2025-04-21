@@ -6,6 +6,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.entity.product.QProduct;
+import kr.co.lotteon.entity.product.QProductImage;
 import kr.co.lotteon.entity.seller.QSeller;
 import kr.co.lotteon.repository.custom.ProductRepositoryCustom;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,8 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     private final JPAQueryFactory queryFactory;
     private final QProduct qProduct = QProduct.product;
     private final QSeller qSeller = QSeller.seller;
+    private final QProductImage qProductImage = QProductImage.productImage;
+
 
     // 상품 목록
     @Override
@@ -36,10 +39,10 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         BooleanExpression expression = qProduct.subCategory.subCategoryName.contains(cate);
 
         List<Tuple> tupleList = queryFactory
-                .select(qProduct, qSeller.company)
+                .select(qProduct, qSeller.company, qProductImage.sNameThumb3)
                 .from(qProduct)
-                .join(qSeller)
-                .on(qProduct.seller.sno.eq(qSeller.sno))
+                .join(qSeller).on(qProduct.seller.sno.eq(qSeller.sno))
+                .leftJoin(qProductImage).on(qProductImage.product.eq(qProduct))
                 .where(expression)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -69,14 +72,15 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         BooleanExpression recentProduct = qProduct.regDate.after(threeMonthsAgo);
 
         List<Tuple> tupleList = queryFactory
-                .select(qProduct, qSeller.company)
+                .select(qProduct, qSeller.company, qProductImage.sNameThumb3)
                 .from(qProduct)
-                .join(qSeller)
-                .on(qProduct.seller.sno.eq(qSeller.sno))
+                .join(qSeller).on(qProduct.seller.sno.eq(qSeller.sno))
+                .leftJoin(qProductImage).on(qProductImage.product.eq(qProduct))
                 .where(expression.and(recentProduct))
                 .orderBy(qProduct.prodSold.desc())
                 .limit(10)
                 .fetch();
+
 
         return new PageImpl<>(tupleList);
     }
@@ -101,10 +105,10 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         BooleanExpression expression = qProduct.subCategory.subCategoryName.contains(cate);
 
         List<Tuple> tupleList = queryFactory
-                .select(qProduct, qSeller.company)
+                .select(qProduct, qSeller.company, qProductImage.sNameThumb3)
                 .from(qProduct)
-                .join(qSeller)
-                .on(qProduct.seller.sno.eq(qSeller.sno))
+                .join(qSeller).on(qProduct.seller.sno.eq(qSeller.sno))
+                .leftJoin(qProductImage).on(qProductImage.product.eq(qProduct))
                 .where(expression)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())

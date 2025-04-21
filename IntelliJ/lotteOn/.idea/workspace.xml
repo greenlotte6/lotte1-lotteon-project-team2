@@ -5,10 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="288e0e98-1fbb-4274-9c5a-259ceeafe9b5" name="Changes" comment="">
+
       <change afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/category/CategoryController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/resources/templates/admin/product/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/admin/product/register.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/product/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/product/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/product/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/product/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/product/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/product/ProductDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/repository/impl/ProductRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/repository/impl/ProductRepositoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/service/product/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/service/product/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/product/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/product/list.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +29,7 @@
       <list>
         <option value="JUnit5 Test Class" />
         <option value="Class" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -37,6 +47,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
     "JUnit.ProductRepositoryTest.executor": "Run",
     "JUnit.ProductRepositoryTest.save.executor": "Run",
     "JUnit.SubCategoryRepositoryTest.registerCategory.executor": "Run",
@@ -154,6 +165,8 @@
       <workItem from="1745206738461" duration="4202000" />
       <workItem from="1745212871078" duration="5400000" />
       <workItem from="1745218326098" duration="15000" />
+      <workItem from="1745212871078" duration="515000" />
+      <workItem from="1745213817267" duration="3909000" />
     </task>
     <servers />
   </component>
