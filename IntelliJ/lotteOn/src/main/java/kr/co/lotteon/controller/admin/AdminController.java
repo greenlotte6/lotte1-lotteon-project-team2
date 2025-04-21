@@ -1,9 +1,14 @@
 package kr.co.lotteon.controller.admin;
 
+import jakarta.servlet.http.HttpServletRequest;
+import kr.co.lotteon.dto.seller.SellerDTO;
+import kr.co.lotteon.dto.user.UserDTO;
+import kr.co.lotteon.service.seller.SellerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequiredArgsConstructor
@@ -11,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+
+    private final SellerService sellerService;
 
     // 관리자 메인
     @GetMapping
@@ -21,7 +28,7 @@ public class AdminController {
     /*
     * 환경설정 기본설정
     * */
-    
+
     //기본설정
     @GetMapping("/config/basic")
     public String config() {
@@ -66,6 +73,17 @@ public class AdminController {
     @GetMapping("/shop/sales")
     public String shopSales(){
         return "/admin/shop/sales";
+    }
+
+    //판매자 등록/상점 등록
+    @PostMapping("/shop/register")
+    public String shopRegister(UserDTO userDTO, SellerDTO sellerDTO, HttpServletRequest req){
+
+        String regip = req.getRemoteAddr();
+        userDTO.setRegip(regip);
+        sellerService.saveSeller(userDTO, sellerDTO);
+
+        return "/admin/main";
     }
     
     /*

@@ -26,6 +26,12 @@ public class SellerDTO {
     private String ceo; //대표
     private String bizRegNo; //사업자등록번호
     private String commerceNo; //통신판매업번호
+
+    /*
+     *   rank : 판매자 등급 ( 카테고리별 상품목록 출력하기 / 2-1)
+     *   판매자 등급에 따른 뱃지 출력
+     *   임의로 FAMILY, SILVER, GOLD, VIP, VVIP 지정
+     * */
     private String rank; //판매자 등급
 
 }
