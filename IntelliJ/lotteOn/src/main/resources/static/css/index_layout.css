@@ -170,7 +170,7 @@ header {
     gap: 20px;
 }
 
-.category {
+.header_category {
     position: relative;
     width: 60px;
     height: 60px;
@@ -180,7 +180,7 @@ header {
     cursor: pointer;
   }
 
-.category img {
+.header_category img {
     width: 60px;
     height: 60px;
 }

@@ -67,7 +67,7 @@ header {
     gap: 30px;
     margin-top: 20px;
     margin-bottom: 20px;
-  }
+}
 
 .logo > a > img {
     width: 200px;
@@ -84,7 +84,7 @@ header {
     border-radius: 25px;
     padding: 0 20px;
     box-sizing: border-box;
-  }
+}
 
 
 .logo .search form {
@@ -136,26 +136,26 @@ header {
     align-items: center;
     justify-content: flex-end;
     margin-top: 10px;
-  }
-  
-  .icon-item {
+}
+
+.icon-item {
     display: flex;
     flex-direction: column;
     align-items: center;
     color: #333;
     cursor: pointer;
-  }
+}
 
-  .icon-item span {
+.icon-item span {
     font-size: 15px;
     font-weight: 500;
-  }
-  
-  .icon-item img {
+}
+
+.icon-item img {
     width: 50px;
     height: 40px;
     margin-bottom: 4px;
-  }
+}
 
 .gnb {
     display: flex;
@@ -170,7 +170,7 @@ header {
     gap: 20px;
 }
 
-.header_category {
+.header-category {
     position: relative;
     width: 60px;
     height: 60px;
@@ -178,9 +178,9 @@ header {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-  }
+}
 
-.header_category img {
+.header-category img {
     width: 60px;
     height: 60px;
 }
@@ -194,7 +194,7 @@ header {
     border: 1px solid #ddd;
     display: none;
     z-index: 1000;
-  }
+}
 
 .category-menu ul {
     list-style: none;
@@ -217,12 +217,12 @@ header {
 .category-menu li.active {
     background-color: #fce9e9;
     font-weight: bold;
-  }
-  
-  .category-menu li.active a {
+}
+
+.category-menu li.active a {
     color: red;
-  }
-  
+}
+
 
 .subcategory-menu {
     position: absolute;
@@ -231,26 +231,26 @@ header {
     border: 1px solid #ddd;
     display: none;
     z-index: 1001;
-  }
-  
-  .subcategory-menu ul {
+}
+
+.subcategory-menu ul {
     display: none;
     list-style: none;
     padding: 10px 0;
     margin: 0;
-  }
-  
-  .subcategory-menu ul li a {
+}
+
+.subcategory-menu ul li a {
     display: block;
     padding: 10px 20px;
     text-decoration: none;
     color: #333;
     font-size: 14px;
-  }
-  
-  .subcategory-menu ul li a:hover {
+}
+
+.subcategory-menu ul li a:hover {
     background-color: #fce9e9;
-  }
+}
 
 .nav-menu {
     display: flex;
@@ -258,11 +258,11 @@ header {
     justify-content: space-between;
     list-style: none;
     margin: 0;
-    padding: 0 80px; 
+    padding: 0 80px;
 }
 
 .nav-menu li a {
-    display: block; 
+    display: block;
     padding: 12px 50px;
     border-radius: 6px;
     font-size: 18px;
@@ -270,13 +270,13 @@ header {
     text-decoration: none;
     font-weight: 500;
     transition: all 0.2s ease;
-  }
-  
-  .nav-menu li a:hover {
+}
+
+.nav-menu li a:hover {
     background-color: #fce9e9;
     color: red;
     font-weight: bold;
-  }
+}
 
 .nav-menu li.active a {
     color: red;
