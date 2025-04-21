@@ -3,6 +3,12 @@ main {
   min-height: 500px;
 }
 
+.logo > a > img{
+  width: 200px;
+  height: 40px;
+  float: left;
+}
+
 .main_head_title {
   font-weight: bold;
   font-size: 24px;
