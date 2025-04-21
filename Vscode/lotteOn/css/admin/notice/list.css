@@ -35,7 +35,7 @@
 }
 
 .member_list_form table thead th:nth-child(4) {
-  width: 58px;
+  width: 130px;
 }
 
 .member_list_form table thead th:nth-child(5) {
@@ -43,11 +43,11 @@
 }
 
 .member_list_form table thead th:nth-child(6) {
-  width: 100px;
+  width: 60px;
 }
 
 .member_list_form table thead th:nth-child(7) {
-  width: 60px;
+  width: 50px;
 }
 
 .member_list_form table thead th:nth-child(8) {

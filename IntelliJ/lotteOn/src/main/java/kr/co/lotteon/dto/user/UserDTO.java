@@ -15,6 +15,7 @@ public class UserDTO{
 
     private String uid;     // 아이디
     private String pass;    // 비밀번호
+    private String pass2;   // 비밀번호 확인용 entity엔 없음
     private String name;    // 이름/회사명
     private String email;   // 이메일
     private String hp;      // 전화번호

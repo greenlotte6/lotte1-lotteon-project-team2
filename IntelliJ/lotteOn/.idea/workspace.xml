@@ -4,6 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+    <list default="true" id="f748effa-f482-4b6e-b8c6-0a38356db936" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/member/signupValidation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/resources/templates/member/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/resources/templates/member/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/user/MemberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/controller/user/MemberController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/user/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/dto/user/UserDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/repository/user/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/repository/user/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/service/user/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kr/co/lotteon/service/user/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/member/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/member/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Vscode/lotteOn/css/admin/faq/list.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vscode/lotteOn/css/admin/faq/list.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Vscode/lotteOn/css/admin/notice/list.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vscode/lotteOn/css/admin/notice/list.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Vscode/lotteOn/css/admin/qna/list.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../Vscode/lotteOn/css/admin/qna/list.css" afterDir="false" />
     <list default="true" id="13a11bfd-b9ea-4007-b799-2cfd61421b56" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock" afterDir="false" />
@@ -262,6 +275,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="JavaScript File" />
         <option value="Class" />
         <option value="JUnit5 Test Class" />
         <option value="Class" />
@@ -276,9 +290,22 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;beermoon&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/greenlotte6/lotte1-lotteon-project-team2.git&quot;,
+    &quot;accountId&quot;: &quot;8d0d117c-9e33-45f2-b199-8987311d6998&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
+  <component name="ProjectId" id="2w12cgTcy5zWYuIT2OMeKuGQIrM" />
   <component name="ProjectId" id="2w11XF9SKKUovspbR8PMxLkNDYr" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -290,6 +317,15 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.LotteOnApplication.executor": "Run",
+    "git-widget-placeholder": "feature/choi",
+    "kotlin-language-version-configured": "true",
     "Gradle.lotteOn [build].executor": "Run",
     "Gradle.lotteOn [clean].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -310,6 +346,10 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -449,6 +489,13 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+      <changelist id="f748effa-f482-4b6e-b8c6-0a38356db936" name="Changes" comment="" />
+      <created>1745194840157</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1745194840157</updated>
+      <workItem from="1745194842059" duration="24000" />
+      <workItem from="1745194887585" duration="7936000" />
       <changelist id="13a11bfd-b9ea-4007-b799-2cfd61421b56" name="Changes" comment="" />
       <created>1745194304539</created>
       <option name="number" value="Default" />
