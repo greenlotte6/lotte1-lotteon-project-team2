@@ -7,8 +7,8 @@ main {
 
 .main_banner_box {
   width: 100%;
-  height: 500px;
-  background-image: url("/images/company/slide8.webp");
+  height: auto;
+  background-image: url("/images/background.jpg");
   position: relative;
   overflow: hidden;
   background-size: cover; /* ✅ 이미지를 영역에 맞게 확대/축소 */
@@ -72,6 +72,7 @@ main {
   font-size: 24px;
   line-height: 1.6;
   color: #333;
+  margin-bottom: 30px;
 }
 
 .highlight {
@@ -170,4 +171,43 @@ main {
 .a {
   width: 200px;
   height: 50px;
+}
+
+
+.article_section{
+  display: flex;
+  width: 100%;
+  height: 347px;
+  border-radius: 10px;
+  margin-bottom: 50px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, .15);
+}
+
+.article_img{
+  width: 50%;
+  border-radius: 10px;
+}
+
+.article_text{
+  width: 50%;
+  border-radius: 10px;
+  padding: 70px
+}
+
+.article_section img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.article_section p:nth-child(1){
+  font-size: 25px;
+  font-weight: 500;
+  margin-bottom: 50px;
+}
+
+.article_section p:nth-child(2){
+  font-size: 15px;
+
 }

@@ -14,14 +14,14 @@
       <header>
         <div class="header_main">
           <div class="logo">
-            <img src="/images/logo.png" alt="lotteOn" />
+            <a th:href="@{/}"><img src="/images/logo.png" alt="lotteOn" /></a>
           </div>
           <div class="user_menu">
-            <a href="#">HOME</a>
-            <a href="#" class="active">기업문화</a>
-            <a href="#">소식과 이야기</a>
-            <a href="#">채용</a>
-            <a href="#">미디어</a>
+            <a th:href="@{/company/index}">HOME</a>
+            <a th:href="@{/company/culture}" class="active">기업문화</a>
+            <a th:href="@{/company/story}">소식과 이야기</a>
+            <a th:href="@{/company/recruit}">채용</a>
+            <a th:href="@{/company/media}">미디어</a>
           </div>
         </div>
       </header>
@@ -44,7 +44,6 @@
               </div>
             </div>
             <div class="Blank_box"></div>
-
             <div>
               <p class="title_desc">
                 롯데ON은 안정성 있게 , 혁신성 있게 우리의 문화를 만들어가고
@@ -54,51 +53,41 @@
                 그렇게 굵은 점을 찍어가며, 우리는 롯데ON과 함께 성장하고 있어요.
               </p>
             </div>
-
-            <div class="Blank_box"></div>
-
-            <div class="slide_h3">
-              <h3>롯데 ON을 더 알고 싶다면!</h3>
-            </div>
-
-            <p class="any_1">우리의 다양한 이야기를 소개합니다</p>
-
-            <div class="category">
-              <a href="#">전체보기</a>
-              <a href="#" class="active">기업문화</a>
-              <a href="#">인터뷰</a>
-              <a href="#">채용</a>
-              <a href="#">롯데ON 보도자료</a>
-              <a href="#">ESG</a>
-            </div>
-
-            <div class="sub_page_box">
-              <div class="sub_page">
-                <img src="/images/company/slide1.webp" />
-                <p class="caption">
-                  봄 스타일링 완성시 주문시 <br />봄 브랜드 와르르 75% 할인
-                </p>
+            <div class="article_section">
+              <div class="article_img">
+                <img src="/images/work.jpg"/>
               </div>
-              <div class="sub_page">
-                <img src="/images/company/slide1.webp" />
-                <p class="caption">
-                  봄 스타일링 완성시 주문시 <br />봄 브랜드 와르르 75% 할인
-                </p>
-              </div>
-              <div class="sub_page">
-                <img src="/images/company/slide1.webp" />
-                <p class="caption">
-                  봄 스타일링 완성시 주문시 <br />봄 브랜드 와르르 75% 할인
-                </p>
-              </div>
-              <div class="sub_page">
-                <img src="/images/company/slide1.webp" />
-                <p class="caption">
-                  봄 스타일링 완성시 주문시 <br />봄 브랜드 와르르 75% 할인
-                </p>
+              <div class="article_text">
+                <p>스스로 책임지고 자율적으로 일해요</p>
+                <p>“어른답게” 서로를 어른으로 대하고 배려하는 것이 중요해요.</br>
+                  스스로 판단하고 자율적으로 행동할 수 있기 때문에</br>
+                  더 높은 효율을 만들어나가며 일을 할 수 있어요.</p>
               </div>
             </div>
-            <div class="a"></div>
+            <div class="article_section">
+              <div class="article_text">
+                <p>목표와 방향을 생각하며 나아가요.</p>
+                <p>“혁신적으로” 일의 목적을 충분히 생각하는 것으로부터</br>
+                  우리의 아이디어는 시작되고,높은 목표는 혁신적인 방향을</br>
+                  만들어 낼 수 있다고 믿어요. 그 과정에서 우리가 더 잘할 수</br>
+                  있는 것이 무엇인지 항상 고민해요.</p>
+              </div>
+              <div class="article_img">
+                <img src="/images/background2.jpg"/>
+              </div>
+            </div>
+            <div class="article_section">
+              <div class="article_img">
+                <img src="/images/teamwork.jpg" alt="teamwork"/>
+              </div>
+              <div class="article_text">
+                <p>스스로 책임지고 자율적으로 일해요</p>
+                <p>“원팀으로” 롯데ON의 뛰어난 동료들과 서로 의지하며</br>
+                  여러 팀이 함께 집중해서 시너지를 만들어내요.</br>
+                  서비스를 더 좋은 방향으로 만들어가기 위해</br>
+                  소통과 협업을 중요하게 생각해요.</p>
+              </div>
+            </div>
           </article>
         </section>
       </main>
@@ -106,66 +95,7 @@
       <!-- 메인 끝 -->
 
       <!-- 푸터 시작 -->
-      <footer>
-        <div class="footer_info">
-          <div>
-            <a href="#">회사소개</a>
-            <a href="#">서비스이용약관</a>
-            <a href="#">개인정보처리방침</a>
-            <a href="#">전자금융거래약관</a>
-          </div>
-        </div>
-        <div class="footer_content">
-          <div class="footer_content_detail">
-            <img src="/images/footer_logo.png" alt="" />
-            <div>
-              <p class="footer_title">LotteOn Project</p>
-              <p>
-                개발자 : 우상호, 최명기, 김소현, 오재영, 홍준혁 <br />
-                주소 : 부산광역시 부산진구 부전동 266-2 그린컴퓨터아카데미
-                <br /><br />
-                사업자등록번호 : 529-85-00774(롯데쇼핑(주) e커머스사업부) <br />
-                통신판매업 신고 : 2024-서울강남-04439 사업자 정보 확인 <br />
-                호스팅 서비스사업자 : 롯데쇼핑(주) e커머스사업부 <br />
-              </p>
-
-              <p class="footer_sub_title" style="margin-top: 10px">
-                롯데쇼핑 e커머스 사업부 에스크로
-              </p>
-              <p>
-                고객님의 안전거래를 위해 현금 등으로 결제 시 결제금액 전액에
-                대해 <br />
-                소비자 피해 방지 서비스를 이용합니다.
-              </p>
-            </div>
-            <div>
-              <p class="footer_sub_title">고객센터</p>
-              <p>
-                전화번호 : 1899-7000(유료) <br />
-                E-mail : lotteon@lotte.net <br />
-                <a href="#" class="a_deco">분쟁해결기준</a><br />
-                <!-- 정적 페이지 이동 (연결 할 페이지 없으면 삭제 예정)-->
-                <a href="#" class="footer_btn"> FAQ 보기 </a>
-                <a href="#" class="footer_btn"> 1대1 문의하기 </a>
-                <a href="#" class="footer_btn"> 고객센터 </a>
-                <a href="#" class="footer_btn"> 공지사항 </a>
-              </p>
-
-              <p class="footer_sub_title">전자금융거래 분쟁 담당</p>
-              <p>Tel : 1899-7000(유료) E-mail : lotteon@lotte.net</p>
-              <a href="#" class="a_deco">안전거래센터</a>
-            </div>
-          </div>
-        </div>
-        <div class="footer_version">
-          <p>
-            롯데쇼핑(주)는 통신판매중개자이며 통신판매의 거래당사자가 아닙니다.
-            입점판매자가 등록한 상품정보 및 거래에 대해 롯데쇼핑(주)는 일체
-            책임을 지지 않습니다.
-          </p>
-          <p>Copyright © LOTTESHOPPING Co., LTD. All rights reserved.</p>
-        </div>
-      </footer>
+      <th:block th:include="/common/footer.html"/>
       <!-- 푸터 끝 -->
     </div>
     <script src="/js/company/index.js"></script>

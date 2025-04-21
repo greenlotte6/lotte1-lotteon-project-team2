@@ -6,26 +6,13 @@
     <title>고객센터 : 롯데On</title>
     <link rel="stylesheet" href="/css/layout/layout.css">
     <link rel="stylesheet" href="/css/cs/index.css">
+    <link rel="stylesheet" href="/css/common/header.css">
+    <script src="/js/headerMenu.js"></script>
 </head>
 <body>
     <div id="wrapper">
         <!-- 헤더 시작 -->
-        <header>
-            <div class="header_main">
-                <div class="user_menu">
-                    <div>
-                        <a href="#">로그인 |</a>
-                        <a href="#">회원가입 |</a>
-                        <a href="#">마이페이지 |</a>
-                        <a href="#">장바구니</a>
-                    </div>            
-                </div>
-
-                <div class="logo">
-                    <img src="/images/logo.png" alt="lotteOn">
-                </div>
-            </div>
-        </header>
+        <th:block th:include="/common/header.html"/>
         <!-- 헤더 끝 -->
         <!-- 메인 시작 -->
         <main>
@@ -34,7 +21,7 @@
                 <article class="cs-main_content">
                     <div class="cs-title"><span>롯데 ON</span>이 도와드릴게요!</div>
                     <div class="cs-section">
-                        <h2>공지사항 <a href="#" class="more-link">전체보기</a></h2>
+                        <h2>공지사항 <a th:href="@{/cs/notice/list}" class="more-link">전체보기</a></h2>
                         <ul class="notice-list">
                             <li>[안내] 해외결제사 창 문자주의 <span class="date">22.10.31</span></li>
                             <li>[안내] 해외결제사 창 문자주의 <span class="date">22.10.31</span></li>
@@ -45,7 +32,7 @@
                     </div>
                     
                     <div class="cs-section">
-                        <h2>자주하는질문 <a href="#" class="more-link">전체보기</a></h2>
+                        <h2>자주하는질문 <a th:href="@{/cs/faq/list}" class="more-link">전체보기</a></h2>
                         <div class="faq-icons">
                             <div class="faq-icon">
                                 <a href="#">
@@ -86,7 +73,7 @@
                         </div>
                     </div>
                     <div class="cs-section">
-                        <h2>문의하기 <a href="#" class="more-link">전체보기</a></h2>
+                        <h2>문의하기 <a th:href="@{/cs/qna/list}" class="more-link">전체보기</a></h2>
                         <ul class="qna-list">
                             <li>
                                 [회원] 개인회원과 법인회원의 차이가 있나요?
