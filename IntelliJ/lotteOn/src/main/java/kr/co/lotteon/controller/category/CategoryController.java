@@ -16,6 +16,8 @@ import java.util.List;
 @Slf4j
 public class CategoryController {
 
+
+
     @ResponseBody
     @GetMapping("/subCategory/list")
     public List<SubCategoryDTO> subCategoryList(@RequestParam("MainCategory") String mainCategory){
