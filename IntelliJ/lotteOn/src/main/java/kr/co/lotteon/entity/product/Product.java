@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 public class Product {
 
     @Id
-    private int prodNo;
+    private String prodNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subCateNo") // subCategory 외래키
@@ -47,6 +47,7 @@ public class Product {
     private double ratingTotal; // 상품 리뷰 총 점
     private int reviewCount;    // 상품 리뷰 총 수
     private double ratingAvg;   // 상품 리뷰 평균
+    private String prodBrand;
 
 
 }

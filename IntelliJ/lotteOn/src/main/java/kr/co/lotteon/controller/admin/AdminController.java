@@ -6,6 +6,7 @@ import kr.co.lotteon.dto.product.ProductDetailDTO;
 import kr.co.lotteon.dto.product.ProductImageDTO;
 import kr.co.lotteon.dto.seller.SellerDTO;
 import kr.co.lotteon.dto.user.UserDTO;
+import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.service.admin.adminService;
 import kr.co.lotteon.service.product.ImageService;
 import kr.co.lotteon.service.product.ProductService;
@@ -134,14 +135,14 @@ public class AdminController {
         System.out.println(productDTO);
 
         // 상품 저장
-        adminService.saveProduct(productDTO);
+        Product savedProduct = adminService.saveProduct(productDTO);
 
         // 이미지 저장
-        imageService.saveImage(productImageDTO);
+        imageService.saveImage(productImageDTO, savedProduct);
 
+        // 상품 상세 정보 저장
+        adminService.saveProductDetail(productDetailDTO, savedProduct);
 
-
-        System.out.println("이동");
         return "redirect:/admin/product/register";
     }
 
