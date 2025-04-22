@@ -2,6 +2,8 @@ package kr.co.lotteon.controller.admin;
 
 import jakarta.servlet.http.HttpServletRequest;
 import kr.co.lotteon.dto.config.TermsDTO;
+import kr.co.lotteon.dto.page.PageRequestDTO;
+import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.dto.product.ProductDetailDTO;
 import kr.co.lotteon.dto.product.ProductImageDTO;
@@ -40,8 +42,8 @@ public class AdminController {
     }
 
     /*
-    * 환경설정 기본설정
-    * */
+     * 환경설정 기본설정
+     * */
 
     //기본설정
     @GetMapping("/config/basic")
@@ -93,8 +95,8 @@ public class AdminController {
     }
 
     /*
-    * 관리자 상점목록
-    * */
+     * 관리자 상점목록
+     * */
 
     //상점 목록
     @GetMapping("/shop/list")
@@ -118,11 +120,11 @@ public class AdminController {
 
         return "/admin/main";
     }
-    
+
     /*
-    * 관리자 회원목록
-    * */
-    
+     * 관리자 회원목록
+     * */
+
     //회원목록
     @GetMapping("/member/list")
     public String memberList(){
@@ -136,13 +138,31 @@ public class AdminController {
     }
 
     /*
-    * 관리자 상품 목록
-    * */
+     * 관리자 상품 목록
+     * */
 
     // 상품현황
     @GetMapping("/product/list")
-    public String productList(){
+    public String productList(PageRequestDTO pageRequestDTO, Model model){
+        PageResponseDTO pageResponseDTO = adminService.selectAllForList(pageRequestDTO);
+        model.addAttribute(pageResponseDTO);
+
+        System.out.println(pageResponseDTO);
+        System.out.println(pageResponseDTO);
+        System.out.println(pageResponseDTO);
+
         return "/admin/product/list";
+    }
+
+    @GetMapping("/product/delete")
+    public String productDelete(@RequestParam("no") String no){
+
+        System.out.println(no);
+        System.out.println(no);
+        System.out.println(no);
+        System.out.println(no);
+        adminService.deleteProduct(no);
+        return "redirect:/admin/product/list";
     }
 
     @GetMapping("/product/register")
@@ -152,10 +172,6 @@ public class AdminController {
 
     @PostMapping("/product/register")
     public String productRegister(ProductDTO productDTO, ProductDetailDTO productDetailDTO, ProductImageDTO productImageDTO){
-
-        System.out.println(productDetailDTO);
-        System.out.println(productImageDTO);
-        System.out.println(productDTO);
 
         // 상품 저장
         Product savedProduct = adminService.saveProduct(productDTO);
@@ -170,8 +186,8 @@ public class AdminController {
     }
 
     /*
-    * 관리자 주문현황
-    * */
+     * 관리자 주문현황
+     * */
 
     //주문현황
     @GetMapping("/order/list")
@@ -186,8 +202,8 @@ public class AdminController {
     }
 
     /*
-    * 관리자 쿠폰 목록
-    * */
+     * 관리자 쿠폰 목록
+     * */
 
     //쿠폰목록
     @GetMapping("/coupon/list")
@@ -200,10 +216,10 @@ public class AdminController {
     public String issued(){
         return "/admin/coupon/issued";
     }
-    
+
     /*
-    * 관리자 고객센터 목록 (공지사항/자주묻는질문/문의하기/채용하기)
-    * */
+     * 관리자 고객센터 목록 (공지사항/자주묻는질문/문의하기/채용하기)
+     * */
 
     //공지사항
     @GetMapping("/cs/notice/list")

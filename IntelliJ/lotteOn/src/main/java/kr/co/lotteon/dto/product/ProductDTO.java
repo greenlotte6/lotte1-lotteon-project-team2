@@ -41,5 +41,9 @@ public class ProductDTO {
     private int reviewCount;
     private double ratingAvg;
 
+    // 관련DTO
+    private SellerDTO seller;
+    private SubCategoryDTO subCategory;
+    private ProductImageDTO productImageDTO;
 
 }
