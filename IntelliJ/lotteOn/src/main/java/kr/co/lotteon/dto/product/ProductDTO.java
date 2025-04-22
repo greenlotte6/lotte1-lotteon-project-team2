@@ -30,7 +30,7 @@ public class ProductDTO {
     private int prodStock;
     private int prodSold;
     private int prodDiscount;
-    private int prodDeliveryFree;
+    private int prodDeliveryFee;
     private String prodContent;
 
     private LocalDateTime regDate;
