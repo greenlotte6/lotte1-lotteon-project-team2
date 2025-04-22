@@ -6,46 +6,22 @@
     <title>문의하기</title>
     <link rel="stylesheet" href="/css/cs/qna/list.css">
     <link rel="stylesheet" href="/css/layout/layout.css">
-    <style>
-    </style>
+    <link rel="stylesheet" href="/css/index_layout.css">
+    <link rel="stylesheet" href="/css/cs/qna/sidebar.css">
+    <link rel="stylesheet" href="/css/common/header.css">
+    <script src="/js/headerMenu.js"></script>
 </head>
 <body>
     <div id="wrapper">
         <!-- 헤더 시작 -->
-        <header>
-            <div class="header_main">
-                <div class="user_menu">
-                    <div>
-                        <a href="#">로그인 |</a>
-                        <a href="#">회원가입 |</a>
-                        <a href="#">마이페이지 |</a>
-                        <a href="#">장바구니</a>
-                    </div>            
-                </div>
-
-                <div class="logo">
-                    <img src="/images/logo.png" alt="lotteOn">
-                </div>
-            </div>
-        </header>
+        <th:block th:include="/common/header.html"/>
         <!-- 헤더 끝 -->
         <main>
             <section class="content">
                 <!-- 왼쪽 사이드바 -->
-                <aside class="cs-sidebar">
-                    <div class="cs-title">문의하기</div>
-                  
-                    <ul class="cs-menu">
-                      <li class="active"><a href="#">회원</a></li>
-                      <li><a href="#">쿠폰 / 이벤트</a></li>
-                      <li><a href="#">주문 / 결제</a></li>
-                      <li><a href="#">배송</a></li>
-                      <li><a href="#">취소 / 반품 / 교환</a></li>
-                      <li><a href="#">여행 / 숙박 / 항공</a></li>
-                      <li><a href="#">안전거래</a></li>
-                    </ul>
-
-                </aside>
+                <div class="list-page">
+                    <th:block th:include="/cs/qna/inc/sidebar.html"/>
+                </div>
                 <!-- 사이드바 끝-->
                 <!-- 오른쪽 글 -->
                 <div class="main_content_side">

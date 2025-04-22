@@ -77,19 +77,18 @@
     border-bottom: 1px solid #eee;
   }
   
-  .cs-menu li a {
+
+
+.cs-menu li a{
     display: block;
     padding: 12px 10px;
     font-size: 15px;
     color: #333;
     text-decoration: none;
-  }
-  
-  .cs-menu li.active a {
-    font-weight: bold;
-    color: #d22;
-  }
-  .cs-menu li:not(.active):hover a {
+}
+
+
+.cs-menu li:not(.active):hover a {
     color: #d22;
     font-weight: bold;
     background-color: #f9f9f9;
