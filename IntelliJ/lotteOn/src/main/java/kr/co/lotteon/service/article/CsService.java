@@ -2,16 +2,13 @@ package kr.co.lotteon.service.article;
 
 import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.entity.article.Inquiry;
-import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.article.InquiryRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Security;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,23 +20,22 @@ public class CsService {
     public void register(InquiryDTO inquiryDTO) {
 
         // 엔티티 변환
-        User user = User.builder()
-                .uid(inquiryDTO.getUser().getUid())
-                .build();
-
         Inquiry inquiry = modelMapper.map(inquiryDTO, Inquiry.class);
-        inquiry.setUser(user);
 
         inquiryRepository.save(inquiry);
 
     }
 
+    public List<InquiryDTO> findAll() {
+        
+        // DTO 변환
+        List<Inquiry> inquiryList = inquiryRepository.findAll();
 
-    @Transactional
-    public String userGet(){
-        Authentication auth  = SecurityContextHolder.getContext().getAuthentication();
-         String username = auth.getName();
-         return username;
+        List<InquiryDTO> inquiryDTOList = inquiryList.stream()
+                .map(inquiry -> modelMapper.map(inquiry, InquiryDTO.class))
+                .collect(Collectors.toList());
+
+        return inquiryDTOList;
     }
 
 
