@@ -1,8 +1,8 @@
 package kr.co.lotteon.controller.user;
 
 import kr.co.lotteon.dto.user.UserDTO;
-import kr.co.lotteon.entity.user.SignUp;
-import kr.co.lotteon.service.user.SignupService;
+import kr.co.lotteon.entity.config.Terms;
+import kr.co.lotteon.service.user.TermsService;
 import kr.co.lotteon.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final UserService userService;
-    private final SignupService signupService;
+    private final TermsService termsService;
 
 
 
@@ -36,9 +36,11 @@ public class MemberController {
     public String signup(Model model) {
 
 
-        SignUp signup = signupService.getSignUp(); // 인스턴스 명은 소문자!
-        model.addAttribute("signup", signup);
-        return "member/signup";
+        Terms terms = termsService.getTerms(); // 인스턴스 명은 소문자!
+
+
+        model.addAttribute("terms", terms);
+        return "/member/signup";
     }
 
     @GetMapping("/member/register")

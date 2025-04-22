@@ -41,8 +41,8 @@
                 <span class="required">(필수)</span> 이용약관
               </div>
 
-                <textarea name="terms1" class="term-content" readonly th:text="${signup.terms}">
-여기에 약관 내용을 넣으세요...
+                <textarea name="terms1" class="term-content" readonly >[[${terms.terms}]]
+
                   </textarea>
 
               <div class="term-footer">
@@ -56,8 +56,8 @@
                 <span class="required">(필수)</span> 전자금융 이용약관
               </div>
 
-                <textarea name="terms2" class="term-content" readonly th:text="${signup.finance}">
-여기에 약관 내용을 넣으세요...
+                <textarea name="terms2" class="term-content" readonly >[[${terms.finance}]]
+
                   </textarea>
 
               <div class="term-footer">
@@ -71,8 +71,8 @@
                 <span class="required">(필수)</span> 개인정보 수집동의
               </div>
 
-                <textarea name="terms3" class="term-content" readonly th:text="${signup.privacy}">
-여기에 약관 내용을 넣으세요...
+                <textarea name="terms3" class="term-content" readonly >[[${terms.privacy}]]
+
                   </textarea>
 
               <div class="term-footer">
@@ -86,9 +86,9 @@
                 <span class="choice">(선택)</span> 위치정보 이용약관
               </div>
 
-                <textarea name="terms4" class="term-content" readonly th:text="${signup.location}">
+                <textarea name="terms4" class="term-content" readonly>[[${terms.location}]]
 
-여기에 약관 내용을 넣으세요...
+
                   </textarea>
 
               <div class="term-footer">
