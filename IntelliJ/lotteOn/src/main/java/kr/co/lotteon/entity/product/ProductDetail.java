@@ -13,7 +13,7 @@ import lombok.*;
 @ToString
 @Builder
 @Entity
-@Table(name = "ProductDetails")
+@Table(name = "ProductDetail")
 public class ProductDetail {
 
     @Id
