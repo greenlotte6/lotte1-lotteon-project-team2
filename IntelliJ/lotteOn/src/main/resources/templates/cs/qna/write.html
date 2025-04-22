@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="/css/cs/qna/sidebar.css">
     <link rel="stylesheet" href="/css/common/header.css">
     <script src="/js/headerMenu.js"></script>
-    <style>
-    </style>
+    <script src="/js/cs/write.js"></script>
+
 </head>
 <body>
     <div id="wrapper">
@@ -28,19 +28,73 @@
                 <!-- 오른쪽 글 -->
                 <form class="write-container" th:action="@{/cs/qna/write}" method="post">
                     <h2>회원</h2>
-                    <input type="text" name="writer" th:value="${username}">
+                    <input type="hidden" name="writer" th:value="${#authentication.principal.user.uid}"/>
                     <div class="form-group">
-                      <label for="type1">문의유형</label>
-                      <div class="select-group">
-                        <select id="type1" name="cateV1">
-                          <option>유형선택</option>
-                          <option>회원가입</option>
-                          <option>로그인</option>
-                        </select>
-                        <select id="type2" name="cateV2">
-                          <option>상세선택</option>
-                        </select>
-                      </div>
+                        <label for="type1">문의유형</label>
+                            <div class="select-group">
+                            <select id="type1" name="cateV1">
+                                <option value="" disabled selected hidden>유형선택</option>
+                                <option value="member">회원</option>
+                                <option value="coupon">쿠폰/이벤트</option>
+                                <option value="order">주문/결제</option>
+                                <option value="delivery">배송</option>
+                                <option value="cancel">취소/반품/환불</option>
+                                <option value="travel">여행/숙박/항공</option>
+                                <option value="safe">안전거래</option>
+                            </select>
+                            <select class="type2 memberSelect" name="cateV2">
+                                <option value="" disabled selected hidden>유형선택</option>
+                                <option>가입</option>
+                                <option>탈퇴</option>
+                                <option>회원정보</option>
+                                <option>로그인</option>
+                            </select>
+                            <select class="type2 couponSelect" name="cateV2">
+                                <option value="" disabled selected hidden>유형선택</option>
+                                <option>쿠폰/할인혜택</option>
+                                <option>포인트</option>
+                                <option>제휴</option>
+                                <option>이벤트</option>
+                            </select>
+                            <select class="type2 orderSelect" name="cateV2">
+                                <option value="" disabled selected hidden>유형선택</option>
+                                <option>상품</option>
+                                <option>결제</option>
+                                <option>구매내역</option>
+                                <option>영수증/증빙</option>
+                            </select>
+                            <select class="type2 deliverySelect" name="cateV2">
+                                <option value="" disabled selected hidden>유형선택</option>
+                                <option>배송상태/시간</option>
+                                <option>배송정보확인/변경</option>
+                                <option>해외배송</option>
+                                <option>당일배송</option>
+                                <option>해외직구</option>
+                            </select>
+                            <select class="type2 cancelSelect" name="cateV2">
+                                <option value="" disabled selected hidden>유형선택</option>
+                                <option>반품신청/철회</option>
+                                <option>반품정보확인/변경</option>
+                                <option>교환 AS신청/철회</option>
+                                <option>교환정보확인/변경</option>
+                                <option>취소신청/철회</option>
+                                <option>취소확인/환불정보</option>
+                            </select>
+                                <select class="type2 travelSelect" name="cateV2">
+                                <option value="" disabled selected hidden>유형선택</option>
+                                <option>여행/숙박</option>
+                                <option>항공</option>
+                            </select>
+                            <select class="type2 safeSelect" name="cateV2">
+                                <option value="" disabled selected hidden>유형선택</option>
+                                <option>서비스 이용규칙 위반</option>
+                                <option>지식재산권침해</option>
+                                <option>게시물정책위반</option>
+                                <option>직거래/외부거래유도</option>
+                                <option>표시광고</option>
+                                <option>청소년 위해상품/이미지</option>
+                            </select>
+                        </div>
                     </div>
                   
                     <div class="form-group">
@@ -60,73 +114,8 @@
                   </form>
             </section>
         </main>
-
         <!-- 푸터 시작 -->
-        <footer>
-            <div class="footer_info">
-                <div>
-                    <a href="#">회사소개</a>
-                    <a href="#">서비스이용약관</a>
-                    <a href="#">개인정보처리방침</a>
-                    <a href="#">전자금융거래약관</a>
-                </div>
-            </div>
-            <div class="footer_content">
-                <div class="footer_content_detail">
-                    <img src="/images/footer_logo.png" alt="">
-                    <div>
-                        <p class="footer_title">LotteOn Project</p>
-                        <p>
-                            개발자 : 우상호, 최명기, 김소현, 오재영, 홍준혁 <br>
-                            주소 : 부산광역시 부산진구 부전동 266-2 그린컴퓨터아카데미 <br><br>
-                            사업자등록번호 : 529-85-00774(롯데쇼핑(주) e커머스사업부) <br>
-                            통신판매업 신고 : 2024-서울강남-04439 사업자 정보 확인 <br>
-                            호스팅 서비스사업자 : 롯데쇼핑(주) e커머스사업부 <br>
-                        </p>
-
-                        <p class="footer_sub_title" style="margin-top: 10px;">롯데쇼핑 e커머스 사업부 에스크로</p>
-                        <p>
-                            고객님의 안전거래를 위해 현금 등으로 결제 시 결제금액 전액에 대해 <br>
-                            소비자 피해 방지 서비스를 이용합니다.
-                        </p>
-                    </div>
-                    <div>
-                        <p class="footer_sub_title">고객센터</p>
-                        <p>
-                            전화번호 : 1899-7000(유료) <br>
-                            E-mail : lotteon@lotte.net <br>
-                            <a href="#" class="a_deco">분쟁해결기준</a><br> <!-- 정적 페이지 이동 (연결 할 페이지 없으면 삭제 예정)-->
-                            <a href="#" class="footer_btn">
-                                FAQ 보기
-                            </a>
-                            <a href="#" class="footer_btn">
-                                1대1 문의하기
-                            </a>
-                            <a href="#" class="footer_btn">
-                                고객센터
-                            </a>
-                            <a href="#" class="footer_btn">
-                                공지사항
-                            </a>
-                        </p>
-
-                        <p class="footer_sub_title">전자금융거래 분쟁 담당</p>
-                        <p>
-                            Tel : 1899-7000(유료)
-                            E-mail : lotteon@lotte.net
-                        </p>
-                        <a href="#" class="a_deco">안전거래센터</a>
-                    </div>
-                </div>
-
-            </div>
-            <div class="footer_version">
-                <p>
-                    롯데쇼핑(주)는 통신판매중개자이며 통신판매의 거래당사자가 아닙니다. 입점판매자가 등록한 상품정보 및 거래에 대해 롯데쇼핑(주)는 일체 책임을 지지 않습니다.
-                </p>
-                <p>Copyright © LOTTESHOPPING Co., LTD. All rights reserved.</p>
-            </div>
-        </footer>
+        <th:block th:include="/common/footer.html"/>
         <!-- 푸터 끝 -->
     </div>
 </body>

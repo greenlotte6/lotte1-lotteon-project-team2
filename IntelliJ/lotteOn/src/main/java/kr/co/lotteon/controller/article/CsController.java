@@ -1,21 +1,32 @@
 package kr.co.lotteon.controller.article;
 
+import jakarta.servlet.http.HttpServletRequest;
 import kr.co.lotteon.dto.article.InquiryDTO;
+import kr.co.lotteon.dto.user.UserDTO;
+import kr.co.lotteon.entity.article.Inquiry;
 import kr.co.lotteon.service.article.CsService;
+import kr.co.lotteon.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
 @Controller
 public class CsController {
 
-    private final CsService csService;
 
+    private final CsService csService;
+    private final UserService userService;
 
 
 
@@ -98,7 +109,14 @@ public class CsController {
 
 
     @GetMapping("/cs/qna/list")
-    public String qnaList() {return "/cs/qna/list";}
+    public String qnaList(InquiryDTO inquiryDTO, Model model) {
+
+        List<InquiryDTO> inquiryDTOS = csService.findAll();
+
+        model.addAttribute("inquiryDTOS", inquiryDTOS);
+
+        return "/cs/qna/list";
+    }
 
     @GetMapping("/cs/qna/view")
     public String qnaView() {
@@ -140,11 +158,19 @@ public class CsController {
         return "/cs/qna/write";
     }
 
-
+    // 문의하기 작성
     @PostMapping("/cs/qna/write")
-    public String qnaWrite(InquiryDTO inquiryDTO, Model model){
+    public String qnaWrite(InquiryDTO inquiryDTO, HttpServletRequest request, @RequestParam("writer") String uid){
 
-        model.addAttribute("username", csService.userGet());
+        String regip = request.getRemoteAddr();
+        inquiryDTO.setRegip(regip);
+
+        // 1. UserDTO 조회
+        UserDTO user = userService.findById(uid);
+
+        inquiryDTO.setUser(user);
+
+
 
         csService.register(inquiryDTO);
 

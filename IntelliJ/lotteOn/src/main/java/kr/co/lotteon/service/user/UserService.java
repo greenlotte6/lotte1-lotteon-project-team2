@@ -6,8 +6,11 @@ import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -15,6 +18,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ModelMapper modelMapper;
 
     public boolean checkUid(String uid) {
         return userRepository.existsByUid(uid);
@@ -35,6 +39,19 @@ public class UserService {
                 .build();
 
         userRepository.save(user);
+    }
+
+    public UserDTO findById(String uid){
+        Optional<User> optUser = userRepository.findById(uid);
+
+        if(optUser.isPresent()){
+            User user = optUser.get();
+            UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+
+            return userDTO;
+        }
+
+        return null;
     }
 
 
