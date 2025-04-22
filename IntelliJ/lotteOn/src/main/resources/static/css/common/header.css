@@ -8,7 +8,6 @@ header {
 
 }
 
-
 .header_main, .advertisement {
     width: 100%;
     max-width: 1200px;
@@ -18,12 +17,24 @@ header {
 .user_menu {
     height: 30px;
     margin-top: 10px;
+    text-align: right;
+    align-items: center;
+}
+
+.menu_items{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .user_menu > div {
+    display: flex;
     float: right;
-    width: auto;
     text-align: right;
+}
+
+.login{
+    display: flex;
 }
 
 .user_menu a {

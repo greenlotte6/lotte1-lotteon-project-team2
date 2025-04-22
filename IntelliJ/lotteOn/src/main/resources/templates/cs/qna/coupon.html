@@ -3,63 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>안전거래</title>
-    <link rel="stylesheet" href="/css/cs/notice/list.css">
+    <title>쿠폰 / 이벤트</title>
+    <link rel="stylesheet" href="/css/cs/qna/list.css">
     <link rel="stylesheet" href="/css/layout/layout.css">
-    <style>
-    </style>
+    <link rel="stylesheet" href="/css/index_layout.css">
+    <link rel="stylesheet" href="/css/cs/qna/sidebar.css">
+    <link rel="stylesheet" href="/css/common/header.css">
+    <script src="/js/headerMenu.js"></script>
 </head>
 <body>
     <div id="wrapper">
         <!-- 헤더 시작 -->
-        <header>
-            <div class="header_main">
-                <div class="user_menu">
-                    <div>
-                        <a href="#">로그인 |</a>
-                        <a href="#">회원가입 |</a>
-                        <a href="#">마이페이지 |</a>
-                        <a href="#">장바구니</a>
-                    </div>            
-                </div>
-
-                <div class="logo">
-                    <img src="/images/logo.png" alt="lotteOn">
-                </div>
-            </div>
-        </header>
+        <th:block th:include="/common/header.html"/>
         <!-- 헤더 끝 -->
         <main>
             <section class="content">
                 <!-- 왼쪽 사이드바 -->
-                <aside class="cs-sidebar">
-                    <div class="cs-title">공지사항</div>
-                  
-                    <ul class="cs-menu">
-                      <li><a href="#">전체</a></li>
-                      <li><a href="#">고객서비스</a></li>
-                      <li class="active"><a href="#">안전거래</a></li>
-                      <li><a href="#">위해상품</a></li>
-                      <li><a href="#">이벤트당첨</a></li>
-                    </ul>
-
-                </aside>
+                <div class="coupon-page">
+                    <th:block th:include="/cs/qna/inc/sidebar.html"/>
+                </div>
                 <!-- 사이드바 끝-->
                 <!-- 오른쪽 글 -->
                 <div class="main_content_side">
                     <div class="notice-container">
                         <div class="location-container">
-                            <h2>공지사항</h2>
+                            <h2>쿠폰 / 이벤트</h2>
                             <div>
                                 <ul>
                                     <li>
                                         <a href="#">고객센터 > </a>
                                     </li>
                                     <li>
-                                        <a href="#">공지사항 > </a>
+                                        <a href="#">문의하기 > </a>
                                     </li>
                                     <li>
-                                        <a href="#" class="this-location">안전거래</a>
+                                        <a href="#" class="this-location">쿠폰 / 이벤트</a>
                                     </li>
                                 </ul>
                             </div>
@@ -68,33 +46,41 @@
                           <li>
                             <div class="notice-header">
                                 <a href="#" class="title">데이터 연동예정</a>
+                                <span class="status">상태1(기능)</span>
+                                <span class="writer">작성자1(기능)</span>
                                 <span class="date">2025.00.00</span>
                             </div>
                           </li>
                           <li>
                             <div class="notice-header">
                                 <a href="#" class="title">데이터 연동예정</a>
+                                <span class="status">상태1(기능)</span>
+                                <span class="writer">작성자1(기능)</span>
                                 <span class="date">2025.00.00</span>
                             </div>
                           </li>
                           <li>
                             <div class="notice-header">
                                 <a href="#" class="title">데이터 연동예정</a>
+                                <span class="status">상태1(기능)</span>
+                                <span class="writer">작성자1(기능)</span>
                                 <span class="date">2025.00.00</span>
                             </div>
                           </li>
                         </ul>
-                      
-                        <div class="pagination">
-                            <a href="#" class="active">1</a>
-                            <a href="#">2</a>
-                            <a href="#">3</a>
-                            <a href="#">4</a>
-                            <a href="#">5</a>
-                            <a href="#">6</a>
-                            <span>...</span>
-                            <a href="#">11</a>
-                            <a href="#">❯</a>
+                        <div class="notice-footer">
+                            <div class="pagination">
+                                <a href="#" class="active">1</a>
+                                <a href="#">2</a>
+                                <a href="#">3</a>
+                                <a href="#">4</a>
+                                <a href="#">5</a>
+                                <a href="#">6</a>
+                                <span>...</span>
+                                <a href="#">11</a>
+                                <a href="#">❯</a>
+                            </div>
+                            <a href="#" class="inquiry-btn">문의하기</a>
                         </div>
                     </div>
                 </div>
@@ -114,7 +100,7 @@
             </div>
             <div class="footer_content">
                 <div class="footer_content_detail">
-                    <img src="/images/footer_logo.png" alt="">
+                    <img src="/lotteOn/images/footer_logo.png" alt="">
                     <div>
                         <p class="footer_title">LotteOn Project</p>
                         <p>

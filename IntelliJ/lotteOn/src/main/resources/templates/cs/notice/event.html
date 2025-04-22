@@ -6,44 +6,22 @@
     <title>이벤트 당첨</title>
     <link rel="stylesheet" href="/css/cs/notice/list.css">
     <link rel="stylesheet" href="/css/layout/layout.css">
-    <style>
-    </style>
+    <link rel="stylesheet" href="/css/index_layout.css">
+    <link rel="stylesheet" href="/css/cs/notice/sidebar.css">
+    <link rel="stylesheet" href="/css/common/header.css">
+    <script src="/js/headerMenu.js"></script>
 </head>
 <body>
     <div id="wrapper">
         <!-- 헤더 시작 -->
-        <header>
-            <div class="header_main">
-                <div class="user_menu">
-                    <div>
-                        <a href="#">로그인 |</a>
-                        <a href="#">회원가입 |</a>
-                        <a href="#">마이페이지 |</a>
-                        <a href="#">장바구니</a>
-                    </div>            
-                </div>
-
-                <div class="logo">
-                    <img src="/images/logo.png" alt="lotteOn">
-                </div>
-            </div>
-        </header>
+        <th:block th:include="/common/header.html"/>
         <!-- 헤더 끝 -->
         <main>
             <section class="content">
                 <!-- 왼쪽 사이드바 -->
-                <aside class="cs-sidebar">
-                    <div class="cs-title">공지사항</div>
-                  
-                    <ul class="cs-menu">
-                      <li><a href="#">전체</a></li>
-                      <li><a href="#">고객서비스</a></li>
-                      <li><a href="#">안전거래</a></li>
-                      <li><a href="#">위해상품</a></li>
-                      <li class="active"><a href="#">이벤트당첨</a></li>
-                    </ul>
-
-                </aside>
+                <div class="event-page">
+                    <th:block th:include="/cs/notice/inc/sidebar.html"/>
+                </div>
                 <!-- 사이드바 끝-->
                 <!-- 오른쪽 글 -->
                 <div class="main_content_side">
