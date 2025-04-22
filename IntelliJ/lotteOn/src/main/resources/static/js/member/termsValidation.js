@@ -14,6 +14,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // ✅ 모든 필수 항목 동의 시 이동
-        window.location.href = "/member/register";
+        window.location.href = "/user/member/register";
     });
 });
