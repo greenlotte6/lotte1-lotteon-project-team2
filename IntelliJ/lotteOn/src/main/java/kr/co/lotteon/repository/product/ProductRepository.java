@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository  extends JpaRepository<Product, Integer>, ProductRepositoryCustom {
-    List<Product> findByProdNoStartingWith(String prodNo);
+    List<Product> findByProdNoStartingWith(String select);
 }

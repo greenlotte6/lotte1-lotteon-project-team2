@@ -5,18 +5,17 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @AllArgsConstructor
 @Builder
 public class ProductDetailDTO {
 
     private int no;
 
-    private int prodNo;           // 상품 번호 (Product FK)
+    private String prodNo;           // 상품 번호 (Product FK)
 
     private String receiptType;   // 영수증 유형
     private String prodState;     // 상품 상태
-    private String taxFree;       // 면세 여부(과세상품)
+    private String taxFree;       // 면세 여부
     private String bizType;       // 사업자 유형
     private String origin;        // 원산지
 

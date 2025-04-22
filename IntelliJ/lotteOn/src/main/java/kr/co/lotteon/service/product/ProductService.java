@@ -43,9 +43,6 @@ public class ProductService {
 
         int total = (int) pageProduct.getTotalElements();
 
-        log.info("total: {}", total);
-        log.info("productDTOList: {}", productDTOList);
-
         return PageResponseDTO.<ProductDTO>builder()
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(productDTOList)
@@ -74,7 +71,6 @@ public class ProductService {
         return productDTOList;
     }
 
-
     //  정렬된 상품 목록 조회
     public PageResponseDTO sortedProducts(PageRequestDTO pageRequestDTO) {
         Pageable pageable = pageRequestDTO.getPageable("no");
@@ -102,3 +98,4 @@ public class ProductService {
                 .build();
     }
 }
+

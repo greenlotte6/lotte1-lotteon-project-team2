@@ -16,8 +16,6 @@ public class PageRequestDTO {
     @Builder.Default
     private int no = 1;
 
-    private int subCateNo;
-
     @Builder.Default
     private int pg = 1;
 
@@ -30,6 +28,10 @@ public class PageRequestDTO {
     // 추가 필드 ( 상품 목록 정렬용)
     @Builder.Default
     private String sortType = "latest";
+
+    private int subCateNo; // 하위 카테고리
+
+    private String period; // 판매 많은 순, 후기 많은 순
 
     public PageRequest getPageable(String sort){
         return PageRequest.of(this.pg - 1, this.size, Sort.by(sort).descending());
