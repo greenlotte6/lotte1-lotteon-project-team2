@@ -16,7 +16,7 @@ public class ProductDetailDTO {
 
     private String receiptType;   // 영수증 유형
     private String prodState;     // 상품 상태
-    private String taxFree;       // 면세 여부
+    private String taxFree;       // 면세 여부(과세상품)
     private String bizType;       // 사업자 유형
     private String origin;        // 원산지
 
