@@ -1,6 +1,7 @@
 package kr.co.lotteon.controller.admin;
 
 import jakarta.servlet.http.HttpServletRequest;
+import kr.co.lotteon.dto.config.TermsDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.dto.product.ProductDetailDTO;
 import kr.co.lotteon.dto.product.ProductImageDTO;
@@ -8,15 +9,17 @@ import kr.co.lotteon.dto.seller.SellerDTO;
 import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.service.admin.adminService;
+import kr.co.lotteon.service.config.ConfigService;
 import kr.co.lotteon.service.product.ImageService;
 import kr.co.lotteon.service.product.ProductService;
 import kr.co.lotteon.service.seller.SellerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -26,6 +29,7 @@ public class AdminController {
 
     private final SellerService sellerService;
     private final ImageService imageService;
+    private final ConfigService configService;
     private final ProductService productService;
     private final adminService adminService;
 
@@ -53,9 +57,28 @@ public class AdminController {
 
     //약관관리
     @GetMapping("/config/policy")
-    public String policy() {
+    public String policy(Model model) {
+
+        TermsDTO termsDTO = configService.findTerms();
+        model.addAttribute("terms", termsDTO);
         return "/admin/config/policy";
     }
+
+    //약관변경
+    @ResponseBody
+    @PostMapping("/terms/modify")
+    public void modifyTerms(@RequestBody Map<String, String> payload) {
+        String cate = payload.get("cate");
+        String content = payload.get("content");
+
+        configService.modify(cate, content);
+
+        System.out.println("cate = " + cate);
+        System.out.println("content = " + content);
+    }
+
+
+
 
     // 카테고리 (미완성)
     @GetMapping("/config/category")

@@ -11,6 +11,10 @@
     <!-- 사이드바-->
     <script src="/js/admin/sidebar.js"></script>
 
+    <!-- 약관 -->
+    <script src="/js/admin/terms.js"></script>
+
+
 </head>
 <body>
     <div id="wrapper">
@@ -38,18 +42,16 @@
                         <p>회원가입 및 정책 페이지 노출 약관입니다.</p>
                     </div>
 
-                    <form action="#" class="term">
+                    <form action="#" class="term" id="terms">
                         <table class="term_table">
                             <tr>
                                 <td>약관내용</td>
                                 <td>
-                                    <textarea name="buy_term">
-
-                                    </textarea>
+                                    <textarea name="terms">[[${terms.terms}]]</textarea>
                                 </td>
                             </tr>
                         </table>
-                        <button type="submit" class="config_btn">수정하기</button>
+                        <button type="button" id="termsBtn" class="config_btn">수정하기</button>
                     </form>
                     
                     <!-- 판매회원 약관  -->
@@ -58,17 +60,16 @@
                         <p>회원가입 및 정책 페이지 노출 약관입니다.</p>
                     </div>
 
-                    <form action="#" class="term">
+                    <form action="#" class="term" id="tax">
                         <table class="term_table">
                             <tr>
                                 <td>약관내용</td>
                                 <td>
-                                    <textarea name="term">
-                                    </textarea>
+                                    <textarea name="tax">[[${terms.tax}]]</textarea>
                                 </td>
                             </tr>
                         </table>
-                        <button type="submit" class="config_btn">수정하기</button>
+                        <button type="button" id="taxBtn" class="config_btn">수정하기</button>
                     </form>
                     
 
@@ -78,59 +79,52 @@
                         <p>회원가입 및 정책 페이지 노출 약관입니다.</p>
                     </div>
 
-                    <form action="#" class="term">
+                    <form action="#" class="term" id="finance">
                         <table class="term_table">
                             <tr>
                                 <td>약관내용</td>
                                 <td>
-                                    <textarea name="term">
-
-                                    </textarea>
+                                    <textarea name="finance">[[${terms.finance}]]</textarea>
                                 </td>
                             </tr>
                         </table>
-                        <button type="submit" class="config_btn">수정하기</button>
+                        <button type="button" id="financesBtn" class="config_btn">수정하기</button>
                     </form>
                     
-
                     <!-- 위치정보 이용약관  -->
                     <p class="title">위치정보 이용약관</p>
                     <div class="text_div">
                         <p>회원가입 및 정책 페이지 노출 약관입니다.</p>
                     </div>
 
-                    <form action="#" class="term">
+                    <form action="#" class="term" id="location">
                         <table class="term_table">
                             <tr>
                                 <td>약관내용</td>
                                 <td>
-                                    <textarea name="term">
-
-                                    </textarea>
+                                    <textarea name="location">[[${terms.location}]]</textarea>
                                 </td>
                             </tr>
                         </table>
-                        <button type="submit" class="config_btn">수정하기</button>
+                        <button type="button" id="locationBtn" class="config_btn">수정하기</button>
                     </form>
 
                     <!-- 개인정보처리방침 이용약관  -->
-                    <p class="title">위치정보 이용약관</p>
+                    <p class="title">개인정보처리방침 이용약관</p>
                     <div class="text_div">
                         <p>회원가입 및 정책 페이지 노출 약관입니다.</p>
                     </div>
 
-                    <form action="#" class="term">
+                    <form action="#" class="term" id="privacy" >
                         <table class="term_table">
                             <tr>
                                 <td>약관내용</td>
                                 <td>
-                                    <textarea name="term">
-
-                                    </textarea>
+                                    <textarea name="privacy">[[${terms.privacy}]]</textarea>
                                 </td>
                             </tr>
                         </table>
-                        <button type="submit" class="config_btn">수정하기</button>
+                        <button type="button" id="privacyBtn" class="config_btn">수정하기</button>
                     </form>
                     
                 </article>
