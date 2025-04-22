@@ -59,11 +59,11 @@
 }
 
 .btn {
-  padding: 20px 180px;
+
   background-color: #c0392b;
   color: white;
-  width: 300px;
-  height: 200px;
+  width: 200px;
+  height: 60px;
   font-weight: bold;
   border-radius: 4px;
   text-decoration: none;

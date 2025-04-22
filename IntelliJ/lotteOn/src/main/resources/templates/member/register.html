@@ -7,6 +7,7 @@
   <link rel="stylesheet" th:href="@{/css/layout/layout.css}" />
   <link rel="stylesheet" th:href="@{/css/member/register.css}" />
   <script th:src="@{/js/member/signupValidation.js}"></script>
+  <script th:src="@{/js/member/daumPostcode.js}"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -122,7 +123,7 @@
               <tr>
                 <td>주소</td>
                 <td class="address">
-                  <input type="text" name="zip" id="postcode" placeholder="우편번호 선택" readonly onclick="DaumPostcode()" />
+                  <input type="text" name="zip" id="postcode" placeholder="우편번호 선택" readonly onclick="execDaumPostcode()" />
                   <input type="text" class="addrs" id="address" name="addr1" placeholder="기본주소 선택" readonly />
                   <input type="text" class="addrs" id="detailAddress" name="addr2" placeholder="상세주소 입력" />
                 </td>
@@ -191,6 +192,8 @@
   <!-- 푸터 끝 -->
 </div>
 
+<!-- daum 우편번호 API CDN -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <!-- Firebase SDK (compat 버전 사용) -->
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
