@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 public class ProductDTO {
 
-    private int prodNo;
+    private String prodNo;
 
     // 카테고리 및 판매자 ID
     private int subCateNo;
@@ -42,6 +42,7 @@ public class ProductDTO {
     private double ratingTotal; // 상품 리뷰 총 점
     private int reviewCount;    // 상품 리뷰 총 수
     private double ratingAvg;   // 상품 리뷰 평균
+    private String prodBrand;
 
 
 }
