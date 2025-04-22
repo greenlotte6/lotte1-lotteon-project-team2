@@ -26,11 +26,8 @@ public class PageRequestDTO {
     private String keyword;
 
     // 추가 필드 ( 상품 목록 정렬용)
-    @Builder.Default
-    private String sortType = "latest";
-
+    private String sortType;
     private int subCateNo; // 하위 카테고리
-
     private String period; // 판매 많은 순, 후기 많은 순
 
     public PageRequest getPageable(String sort){

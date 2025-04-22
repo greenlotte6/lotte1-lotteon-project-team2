@@ -27,6 +27,9 @@ public class ProductController {
         List<ProductDTO> productList = productService.selectBestAllForList(pageRequestDTO.getSubCateNo());
         model.addAttribute(pageResponseDTO);
         model.addAttribute(productList);
+
+        log.info("pageResponseDTO: {}", pageResponseDTO);
+        log.info("BestproductList: {}", productList);
         return "/product/list";
     }
 

@@ -57,6 +57,9 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 .where(expression)
                 .fetchOne();
 
+        log.info("total: {}", total);
+        log.info("tupleList: {}", tupleList);
+
         return new PageImpl<>(tupleList, pageable, total);
     }
 

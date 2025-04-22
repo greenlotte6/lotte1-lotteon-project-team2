@@ -271,11 +271,10 @@
                                 <span class="brand" th:text="${product.prodBrand}">브랜드</span>
                                 <span class="pname" th:text="${product.prodName}">상품명</span>
                                 <div class="meta">
-                                    <span th:text="'★ ' + ${product.ratingAvg}">★ 4.8</span>
-                                    &nbsp;|&nbsp;
-                                    리뷰 <span th:text="${product.reviewCount}">0</span>
+                                    <span th:text="'★ ' + ${product.ratingAvg}">★ 4.8</span>&nbsp;|&nbsp;리뷰 <span th:text="${product.reviewCount}">0</span>
                                 </div>
-                                <span class="badge-free" th:if="${product.prodDeliveryFree == 0}">무료배송</span>
+                                <span class="badge-free" th:if="${product.prodDeliveryFee == 0}">무료배송</span>
+                                <span class="badge-fee" th:if="${product.prodDeliveryFee != 0}" th:text="${#numbers.formatInteger(product.prodDeliveryFee, 3, 'COMMA') + '원'}">배송비</span>
                             </div>
                             <div class="product-price">
                                 <del th:text="${#numbers.formatInteger(product.prodPrice, 3, 'COMMA')} + '원'">정가</del><br>

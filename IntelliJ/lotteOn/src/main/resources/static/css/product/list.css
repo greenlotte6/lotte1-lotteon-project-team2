@@ -308,6 +308,18 @@ h2 {
     border-radius: 3px;
 }
 
+.badge-fee {
+    display: inline-block;
+    padding: 2px 6px;
+    margin-top: 4px;
+    background-color: #f5f5f5;
+    border: none;
+    font-size: 14px;
+    color: #555;
+    border-radius: 3px;
+}
+
+
 .details {
     font-size: 12px;
     color: #777;
