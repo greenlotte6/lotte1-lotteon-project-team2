@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const passRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,16}$/;
 
-    form.addEventListener("submit", function (e) {
+    form.pass2.addEventListener("focusout", function (e) {
         const pass = passInput.value;
         const pass2 = pass2Input.value;
 
@@ -73,6 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const emailInput = document.getElementById("email");
     const emailMessage = document.getElementById("emailMessage");
     const btnCheckEmail = document.getElementById("btnCheckEmail");
+    const codeBox = document.getElementById("codeBox");
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -85,24 +86,51 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // TODO: 이메일 중복 체크 또는 인증 메일 전송 API 요청
-        fetch(`/user/checkEmail?email=${email}`)
-            .then(res => res.json())
-            .then(isExist => {
-                if (isExist) {
-                    emailMessage.textContent = "이미 등록된 이메일입니다.";
-                    emailMessage.style.color = "red";
-                } else {
-                    emailMessage.textContent = "사용 가능한 이메일입니다.";
-                    emailMessage.style.color = "green";
+        fetch('/email/sendCode', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({ email: email })
+        })
+            .then(res => res.text())
+            .then(msg => {
+                emailMessage.textContent = msg;
+                emailMessage.style.color = "green";
 
-                    // 실제 인증 메일 전송 로직을 이곳에 추가 가능
-                }
+                codeBox.style.display = "block";
             })
             .catch(err => {
                 console.error("이메일 인증 실패", err);
                 emailMessage.textContent = "서버 오류가 발생했습니다.";
                 emailMessage.style.color = "red";
+            });
+    });
+
+
+    const btnVerifyCode = document.getElementById("btnVerifyCode");
+    const emailCodeInput = document.getElementById("emailCode");
+    const codeMessage = document.getElementById("codeMessage");
+
+    btnVerifyCode.addEventListener("click", function () {
+        const inputCode = emailCodeInput.value;
+
+        fetch('/email/verifyCode', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({ code: inputCode })
+        })
+            .then(res => res.text())
+            .then(msg => {
+                codeMessage.textContent = msg;
+                codeMessage.style.color = (msg.includes("성공") ? "green" : "red");
+            })
+            .catch(err => {
+                console.error("인증 확인 실패", err);
+                codeMessage.textContent = "서버 오류가 발생했습니다.";
+                codeMessage.style.color = "red";
             });
     });
 });
