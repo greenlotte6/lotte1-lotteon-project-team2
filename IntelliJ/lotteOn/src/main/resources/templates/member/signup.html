@@ -6,6 +6,7 @@
   <title>롯데On 약관동의</title>
   <link rel="stylesheet" th:href="@{/css/layout/layout.css}" />
   <link rel="stylesheet" th:href="@{/css/member/signup.css}" />
+    <script th:src="@{/js/member/termsValidation.js}" defer></script>
 </head>
 <body>
 <div id="wrapper">
@@ -14,10 +15,10 @@
     <div class="header_main">
       <div class="user_menu">
         <div>
-          <a href="#">로그인 |</a>
-          <a href="#">회원가입 |</a>
-          <a href="#">마이페이지 |</a>
-          <a href="#">장바구니</a>
+            <a th:href="@{/member/login}">로그인 |</a>
+            <a th:href="@{/member/register}">회원가입 |</a>
+            <a th:href="@{/member/myPageMain}">마이페이지 |</a>
+            <a th:href="@{/product/cart}">장바구니</a>
         </div>
       </div>
 
@@ -34,13 +35,13 @@
       <article class="main_content">
         <p class="title">약관동의</p>
         <div class="terms">
-          <form th:action="@{/user/register/terms}" method="post" class="termForm">
+          <form class="termForm">
             <div class="term-box">
               <div class="term-header">
                 <span class="required">(필수)</span> 이용약관
               </div>
 
-              <textarea name="terms1" class="term-content" readonly>
+                <textarea name="terms1" class="term-content" readonly th:text="${signup.terms}">
 여기에 약관 내용을 넣으세요...
                   </textarea>
 
@@ -55,7 +56,7 @@
                 <span class="required">(필수)</span> 전자금융 이용약관
               </div>
 
-              <textarea name="terms2" class="term-content" readonly>
+                <textarea name="terms2" class="term-content" readonly th:text="${signup.finance}">
 여기에 약관 내용을 넣으세요...
                   </textarea>
 
@@ -70,7 +71,7 @@
                 <span class="required">(필수)</span> 개인정보 수집동의
               </div>
 
-              <textarea name="terms3" class="term-content" readonly>
+                <textarea name="terms3" class="term-content" readonly th:text="${signup.privacy}">
 여기에 약관 내용을 넣으세요...
                   </textarea>
 
@@ -85,7 +86,8 @@
                 <span class="choice">(선택)</span> 위치정보 이용약관
               </div>
 
-              <textarea name="terms4" class="term-content" readonly>
+                <textarea name="terms4" class="term-content" readonly th:text="${signup.location}">
+
 여기에 약관 내용을 넣으세요...
                   </textarea>
 
@@ -98,7 +100,7 @@
             </div>
 
             <div class="btnbox">
-              <button type="submit" class="btn">동의하기</button>
+              <button type="button" class="btn" id="btnAgree">동의하기</button>
             </div>
           </form>
         </div>
