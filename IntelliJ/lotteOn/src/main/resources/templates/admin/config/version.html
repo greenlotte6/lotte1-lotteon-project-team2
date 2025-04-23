@@ -102,9 +102,19 @@
                     </form>
                     
                     <!-- 페이징 -->
-                    <p style="text-align: center; margin-top: 10px;">
-                        이전 1 2 3 4 5 다음
-                    </p>
+                    <div class="page">
+                        <th:block th:if="${verions.prev}">
+                            <a th:href="@{/admin/config/version(pg=${verions.start-1})}" class="prev">이전</a>
+                        </th:block>
+
+                        <th:block th:each="num:${#numbers.sequence(verions.start, verions.end)}">
+                            <a th:href="@{/admin/config/version(pg=${num})}" th:class="${num == verions.pg} ? 'current' : 'num'">[[${num}]]</a>
+                        </th:block>
+
+                        <th:block th:if="${verions.next}">
+                            <a th:href="@{/admin/config/version(pg=${verions.end+1})}" class="next">다음</a>
+                        </th:block>
+                    </div>
                 </article>
             </section>
         </main>

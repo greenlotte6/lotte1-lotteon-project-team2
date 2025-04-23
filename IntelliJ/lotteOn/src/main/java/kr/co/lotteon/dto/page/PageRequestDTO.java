@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 @Data
@@ -30,7 +31,7 @@ public class PageRequestDTO {
     private int subCateNo; // 하위 카테고리
     private String period; // 판매 많은 순, 후기 많은 순
 
-    public PageRequest getPageable(String sort){
+    public Pageable getPageable(String sort){
         return PageRequest.of(this.pg - 1, this.size, Sort.by(sort).descending());
 
     }
