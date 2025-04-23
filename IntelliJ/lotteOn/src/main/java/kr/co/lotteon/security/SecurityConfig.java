@@ -31,7 +31,7 @@ public class SecurityConfig {
 
         // 로그아웃 설정
         http.logout(logout -> logout
-                .logoutUrl("/user/member/logout")
+                .logoutUrl("/user/logout")
                 .invalidateHttpSession(true)
                 .logoutSuccessUrl("/user/member/login?code=101"));
 
