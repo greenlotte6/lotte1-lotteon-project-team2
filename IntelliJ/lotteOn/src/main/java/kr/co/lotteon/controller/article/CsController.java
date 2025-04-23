@@ -102,9 +102,8 @@ public class CsController {
 
 
 
-
     @GetMapping("/cs/qna/list")
-    public String qnaList(@RequestParam("cateV1") String cateV1,Model model, PageRequestDTO pageRequestDTO) {
+    public String qnaList(@RequestParam("cateV1") String cateV1, Model model, PageRequestDTO pageRequestDTO) {
 
         PageResponseDTO<InquiryDTO> responseDTO = csService.findAll(pageRequestDTO, cateV1);
         model.addAttribute("cateV1", cateV1);
