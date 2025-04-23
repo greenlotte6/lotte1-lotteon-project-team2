@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="/css/cs/qna/list.css">
     <link rel="stylesheet" href="/css/layout/layout.css">
     <link rel="stylesheet" href="/css/index_layout.css">
-    <link rel="stylesheet" href="/css/cs/qna/sidebar.css">
     <link rel="stylesheet" href="/css/common/header.css">
     <link rel="stylesheet" href="/css/common/table-main.css">
     <link rel="stylesheet" href="/css/myPage/pagination.css">
@@ -75,11 +74,11 @@
                         </div>
                         <div class="notice-footer">
                             <div class="pagination">
-                                <a class="prev" th:if="${responseDTO.prev}" th:href="@{/cs/qna/list(pg=${responseDTO.start - 1}, size=${responseDTO.size})}">이전</a>
+                                <a class="prev" th:if="${responseDTO.prev}" th:href="@{/cs/qna/list(cateV1=${cateV1}, pg=${responseDTO.start - 1}, size=${responseDTO.size})}">이전</a>
                                 <th:block th:each="i: ${#numbers.sequence(responseDTO.start, responseDTO.end)}">
-                                    <a th:href="@{/cs/qna/list(cateV1='회원', pg=${i}, size=${responseDTO.size})}" th:text="${i}" th:class="${i == responseDTO.pg ? 'active' : ''}"></a>
+                                    <a th:href="@{/cs/qna/list(cateV1=${cateV1}, pg=${i}, size=${responseDTO.size})}" th:text="${i}" th:class="${i == responseDTO.pg ? 'active' : ''}"></a>
                                 </th:block>
-                                <a class="next" th:if="${responseDTO.next}" th:href="@{/cs/qna/list(pg=${responseDTO.end + 1}, size=${responseDTO.size})}">다음</a>
+                                <a class="next" th:if="${responseDTO.next}" th:href="@{/cs/qna/list(cateV1=${cateV1}, pg=${responseDTO.end + 1}, size=${responseDTO.size})}">다음</a>
                             </div>
                         </div>
                     </div>

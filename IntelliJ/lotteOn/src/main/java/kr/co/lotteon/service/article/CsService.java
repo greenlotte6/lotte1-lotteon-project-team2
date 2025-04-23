@@ -38,6 +38,7 @@ public class CsService {
 
     public PageResponseDTO<InquiryDTO> findAll(PageRequestDTO pageRequestDTO, String cateV1) {
 
+        pageRequestDTO.setSize(10);
         Pageable pageable = pageRequestDTO.getPageable("no");
         Page<Inquiry> pageInquiry;
 
@@ -62,6 +63,34 @@ public class CsService {
                 .total(total)
                 .build();
     }
+
+
+    public PageResponseDTO<InquiryDTO> adminFindAll(PageRequestDTO pageRequestDTO) {
+
+        pageRequestDTO.setSize(10);
+        Pageable pageable = pageRequestDTO.getPageable("no");
+        Page<Inquiry> pageInquiry;
+
+
+        pageInquiry = inquiryRepository.findAll(pageable);
+
+
+
+
+        List<InquiryDTO> inquiryDTOList = pageInquiry.getContent().stream()
+                .map(inquiry -> modelMapper.map(inquiry, InquiryDTO.class)) // ModelMapper 사용
+                .collect(Collectors.toList());
+
+        int total = (int) pageInquiry.getTotalElements();
+
+        return PageResponseDTO.<InquiryDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(inquiryDTOList)
+                .total(total)
+                .build();
+    }
+
+
 
 
 

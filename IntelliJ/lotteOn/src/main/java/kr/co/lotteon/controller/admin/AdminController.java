@@ -1,6 +1,7 @@
 package kr.co.lotteon.controller.admin;
 
 import jakarta.servlet.http.HttpServletRequest;
+import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.config.TermsDTO;
 import kr.co.lotteon.dto.config.VersionDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
@@ -12,6 +13,7 @@ import kr.co.lotteon.dto.seller.SellerDTO;
 import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.service.admin.adminService;
+import kr.co.lotteon.service.article.CsService;
 import kr.co.lotteon.service.config.ConfigService;
 import kr.co.lotteon.service.product.ImageService;
 import kr.co.lotteon.service.product.ProductService;
@@ -38,6 +40,7 @@ public class AdminController {
     private final ConfigService configService;
     private final ProductService productService;
     private final adminService adminService;
+    private final CsService csService;
 
     // 관리자 메인
     @GetMapping
@@ -183,10 +186,6 @@ public class AdminController {
     @GetMapping("/product/delete")
     public String productDelete(@RequestParam("no") String no){
 
-        System.out.println(no);
-        System.out.println(no);
-        System.out.println(no);
-        System.out.println(no);
         adminService.deleteProduct(no);
         return "redirect:/admin/product/list";
     }
@@ -261,7 +260,12 @@ public class AdminController {
 
     //문의하기 목록
     @GetMapping("/cs/qna/list")
-    public String qnaList(){
+    public String qnaList(Model model, PageRequestDTO pageRequestDTO){
+
+        PageResponseDTO<InquiryDTO> responseDTO = csService.adminFindAll(pageRequestDTO);
+
+        model.addAttribute("responseDTO", responseDTO);
+
         return "/admin/qna/list";
     }
 
