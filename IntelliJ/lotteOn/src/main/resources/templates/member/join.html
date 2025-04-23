@@ -14,10 +14,10 @@
     <div class="header_main">
       <div class="user_menu">
         <div>
-          <a href="#">로그인 |</a>
-          <a href="#">회원가입 |</a>
-          <a href="#">마이페이지 |</a>
-          <a href="#">장바구니</a>
+          <a th:href="@{/user/member/login}">로그인 |</a>
+          <a th:href="@{/user/member/join}">회원가입 |</a>
+          <a th:href="@{/user/member/myPageMain}">마이페이지 |</a>
+          <a th:href="@{/user/product/cart}">장바구니</a>
         </div>
       </div>
 
@@ -55,13 +55,13 @@
             <p class="user-join-box">일반회원가입</p>
             <p>개인구매회원 (외국인 포함)</p>
             <p>만 14세 이상 가능</p>
-            <a th:href="@{/user/join}" class="btn-link">회원가입</a>
+            <a th:href="@{/user/member/signup}" class="btn-link">회원가입</a>
           </div>
           <div class="seller-join">
             <p class="seller-join-box">판매회원가입</p>
             <p>사업자판매회원</p>
             <p>사업자등록증을 보유한 회원</p>
-            <a th:href="@{/seller/join}" class="btn-link">회원가입</a>
+            <a th:href="@{/user/member/sellerSignup}" class="btn-link">회원가입</a>
           </div>
         </div>
       </article>
