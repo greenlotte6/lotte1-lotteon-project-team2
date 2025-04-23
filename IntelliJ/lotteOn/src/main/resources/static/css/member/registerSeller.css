@@ -68,3 +68,31 @@
   text-decoration: none;
   font-size: 20px;
 }
+
+.input-with-btn {
+  display: flex;
+  gap: 8px;
+}
+
+.input-with-btn input {
+  flex: 1;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+}
+
+
+.btn-small {
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  white-space: nowrap;
+}
+
+.btn-auth {
+  background-color: #5b8ad6;
+  color: white;
+}

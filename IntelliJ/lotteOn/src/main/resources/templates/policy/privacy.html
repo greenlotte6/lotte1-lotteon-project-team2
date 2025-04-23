@@ -25,23 +25,33 @@
               <!-- ✅ 실제 탭 요소들을 이 안으로 -->
               <div class="terms-tabs">
                 <div class="tab">
-                  <img src="/images/cs/cash.PNG" />
+                  <a th:href="@{/policy/buyer}">
+                    <img src="/images/cs/cash.PNG" />
+                  </a>
                   <span>구매회원 약관</span>
                 </div>
                 <div class="tab">
-                  <img src="/images/cs/cash.PNG" />
+                  <a th:href="@{/policy/seller}">
+                    <img src="/images/cs/cash.PNG" />
+                  </a>
                   <span>판매회원 약관</span>
                 </div>
                 <div class="tab">
-                  <img src="/images/cs/cash.PNG" />
+                  <a th:href="@{/policy/finance}">
+                    <img src="/images/cs/cash.PNG" />
+                  </a>
                   <span>전자금융거래</span>
                 </div>
                 <div class="tab">
-                  <img src="/images/cs/cash.PNG" />
+                  <a th:href="@{/policy/location}">
+                    <img src="/images/cs/cash.PNG" />
+                  </a>
                   <span>위치정보 약관</span>
                 </div>
                 <div class="tab active">
-                  <img src="/images/cs/cash.PNG" />
+                  <a th:href="@{/policy/privacy}">
+                    <img src="/images/cs/cash.PNG" />
+                  </a>
                   <span>개인정보처리</span>
                 </div>
               </div>
@@ -50,9 +60,11 @@
             <div class="terms-header">
               <h2>개인정보처리 이용약관</h2>
               <img
-                src="/images/policy/print.png"
-                alt="인쇄"
-                class="print-icon"
+                  src="/images/policy/print.png"
+                  alt="인쇄"
+                  class="print-icon"
+                  onclick="window.print()"
+                  style="cursor: pointer;"
               />
             </div>
 
@@ -60,7 +72,7 @@
             <div class="terms-body">
               <div>
                 <h3>제 1조 (목적)</h3>
-                <p>
+                <p th:text="${terms.section1}">
                   본 약관은 롯데쇼핑㈜(이하 "회사"라 함)가 운영하는 사이트,
                   온라인 쇼핑몰 및 매장에서 제공하는 관련 서비스(모바일 및
                   인터넷 관련 서비스 포함, 이하 “서비스”라 함)를 이용함에 있어
@@ -72,7 +84,7 @@
               </div>
               <div>
                 <h3>제 2조 (약간의 명시, 효력과개정)</h3>
-                <p>
+                <p th:text="${terms.section2}">
                   본 약관은 롯데쇼핑㈜(이하 "회사"라 함)가 운영하는 사이트,
                   온라인 쇼핑몰 및 매장에서 제공하는 관련 서비스(모바일 및
                   인터넷 관련 서비스 포함, 이하 “서비스”라 함)를 이용함에 있어
@@ -84,7 +96,7 @@
               </div>
               <div>
                 <h3>제 3조</h3>
-                <p>
+                <p th:text="${terms.section3}">
                   본 약관은 롯데쇼핑㈜(이하 "회사"라 함)가 운영하는 사이트,
                   온라인 쇼핑몰 및 매장에서 제공하는 관련 서비스(모바일 및
                   인터넷 관련 서비스 포함, 이하 “서비스”라 함)를 이용함에 있어
@@ -96,7 +108,7 @@
               </div>
               <div>
                 <h3>제 4조</h3>
-                <p>
+                <p th:text="${terms.section4}">
                   본 약관은 롯데쇼핑㈜(이하 "회사"라 함)가 운영하는 사이트,
                   온라인 쇼핑몰 및 매장에서 제공하는 관련 서비스(모바일 및
                   인터넷 관련 서비스 포함, 이하 “서비스”라 함)를 이용함에 있어
@@ -108,7 +120,7 @@
               </div>
               <div>
                 <h3>제 5조</h3>
-                <p>
+                <p th:text="${terms.section5}">
                   본 약관은 롯데쇼핑㈜(이하 "회사"라 함)가 운영하는 사이트,
                   온라인 쇼핑몰 및 매장에서 제공하는 관련 서비스(모바일 및
                   인터넷 관련 서비스 포함, 이하 “서비스”라 함)를 이용함에 있어

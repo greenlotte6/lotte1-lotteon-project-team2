@@ -1,21 +1,28 @@
 package kr.co.lotteon.controller.article;
 
+import jakarta.servlet.http.HttpServletRequest;
 import kr.co.lotteon.dto.article.InquiryDTO;
+import kr.co.lotteon.dto.page.PageRequestDTO;
+import kr.co.lotteon.dto.page.PageResponseDTO;
+import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.service.article.CsService;
+import kr.co.lotteon.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RequiredArgsConstructor
 @Slf4j
 @Controller
 public class CsController {
 
-    private final CsService csService;
 
+    private final CsService csService;
+    private final UserService userService;
 
 
 
@@ -96,17 +103,32 @@ public class CsController {
 
 
 
-
     @GetMapping("/cs/qna/list")
-    public String qnaList() {return "/cs/qna/list";}
+    public String qnaList(@RequestParam("cateV1") String cateV1,Model model, PageRequestDTO pageRequestDTO) {
+
+        PageResponseDTO<InquiryDTO> responseDTO = csService.findAll(pageRequestDTO, cateV1);
+        model.addAttribute("cateV1", cateV1);
+        model.addAttribute("responseDTO", responseDTO);
+        return "/cs/qna/list";
+    }
 
     @GetMapping("/cs/qna/view")
-    public String qnaView() {
+    public String qnaView(Model model, @RequestParam("no") int no) {
+
+        InquiryDTO inquiryDTO = csService.findById(no);
+
+        model.addAttribute("inquiryDTO", inquiryDTO);
+
         return "/cs/qna/view";
     }
 
     @GetMapping("/cs/qna/coupon")
-    public String qnaCoupon() {
+    public String qnaCoupon(@RequestParam("cateV1") String cateV1,Model model, PageRequestDTO pageRequestDTO) {
+
+        PageResponseDTO<InquiryDTO> responseDTO = csService.findAll(pageRequestDTO, cateV1);
+        model.addAttribute("cateV1", cateV1);
+        model.addAttribute("responseDTO", responseDTO);
+
         return "/cs/qna/coupon";
     }
 
@@ -116,7 +138,12 @@ public class CsController {
     }
 
     @GetMapping("/cs/qna/delivery")
-    public String qnaDelivery() {
+    public String qnaDelivery(@RequestParam("cateV1") String cateV1,Model model, PageRequestDTO pageRequestDTO) {
+
+        PageResponseDTO<InquiryDTO> responseDTO = csService.findAll(pageRequestDTO, cateV1);
+        model.addAttribute("cateV1", cateV1);
+        model.addAttribute("responseDTO", responseDTO);
+
         return "/cs/qna/delivery";
     }
 
@@ -131,7 +158,12 @@ public class CsController {
     }
 
     @GetMapping("/cs/qna/safeDeal")
-    public String qnaSafeDeal() {
+    public String qnaSafeDeal(@RequestParam("cateV1") String cateV1,Model model, PageRequestDTO pageRequestDTO) {
+
+        PageResponseDTO<InquiryDTO> responseDTO = csService.findAll(pageRequestDTO, cateV1);
+        model.addAttribute("cateV1", cateV1);
+        model.addAttribute("responseDTO", responseDTO);
+
         return "/cs/qna/safeDeal";
     }
 
@@ -140,15 +172,26 @@ public class CsController {
         return "/cs/qna/write";
     }
 
-
+    // 문의하기 작성
     @PostMapping("/cs/qna/write")
-    public String qnaWrite(InquiryDTO inquiryDTO, Model model){
+    public String qnaWrite(InquiryDTO inquiryDTO, HttpServletRequest request, @RequestParam("writer") String uid, @RequestParam("cateV1") String cateV1){
 
-        model.addAttribute("username", csService.userGet());
+        String regip = request.getRemoteAddr();
+        inquiryDTO.setRegip(regip);
+
+        // UserDTO 조회
+        UserDTO user = userService.findById(uid);
+
+        inquiryDTO.setUser(user);
+
 
         csService.register(inquiryDTO);
 
-        return "redirect:/cs/qna/list";
+        log.info("cateV1: {}", cateV1);
+
+
+
+        return null;
     }
 
 

@@ -59,6 +59,7 @@ spring:
         show_sql: false
   thymeleaf:
     prefix: classpath:/templates
+
   security:
     oauth2:
       client:

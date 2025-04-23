@@ -37,18 +37,19 @@
         <div class="login">
           <!-- 왼쪽 로그인 영역 -->
           <div class="login-left">
-            <form th:action="@{/login}" method="post">
+
+            <form method="post">
               <div class="login-main-row">
                 <!-- 입력 필드 -->
                 <div class="login-rows">
                   <div class="login-row">
                     <label for="userName">아이디</label>
-                    <input type="text" name="userName" id="userName" placeholder="아이디" />
+                    <input type="text" name="uid" id="userName" placeholder="아이디" />
                   </div>
 
                   <div class="login-row">
                     <label for="userPassword">비밀번호</label>
-                    <input type="password" name="userPassword" id="userPassword" placeholder="비밀번호" />
+                    <input type="password" name="pass" id="userPassword" placeholder="비밀번호" />
                   </div>
                 </div>
 

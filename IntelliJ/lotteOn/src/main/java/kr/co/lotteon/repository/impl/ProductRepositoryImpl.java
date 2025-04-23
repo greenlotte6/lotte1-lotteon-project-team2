@@ -148,5 +148,30 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         return new PageImpl<>(tupleList, pageable, total);
     }
 
+    // 관리자 상품 목록 조회(관리자)
+    @Override
+    public Page<Tuple> selectAllForListByRole(PageRequestDTO pageRequestDTO, Pageable pageable) {
+
+        pageRequestDTO.setSize(10);
+
+        List<Tuple> tupleList = queryFactory
+                .select(qProduct, qSeller.company, qProductImage)
+                .from(qProduct)
+                .join(qSeller).on(qProduct.seller.sno.eq(qSeller.sno))
+                .leftJoin(qProductImage).on(qProductImage.product.eq(qProduct))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(qProduct.regDate.asc()) // 정렬 조건
+                .fetch();
+
+        long total = queryFactory
+                .select(qProduct.count())
+                .from(qProduct)
+                .join(qSeller)
+                .on(qProduct.seller.sno.eq(qSeller.sno))
+                .fetchOne();
+
+        return new PageImpl<>(tupleList, pageable, total);
+    }
 
 }

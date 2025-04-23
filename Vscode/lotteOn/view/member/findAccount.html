@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로그인/비밀번호 찾기</title>
+    <link rel="stylesheet" href="/lotteOn/css/member/findAccount.css" />
+    <script src="/lotteOn/js/member/tab.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <main>
+        <div class="accountBox">
+          <h2 class="title-box">
+            <span>
+              <img
+                src="/lotteOn/images/logo.png"
+                alt="lotteOn"
+                class="logo-box"
+              />
+            </span>
+            <span class="text"> 아이디/비밀번호 찾기 </span>
+          </h2>
+          <article>
+            <div class="tab-menu">
+              <button class="tab active" data-tab="id">아이디 찾기</button>
+              <button class="tab" data-tab="pw">비밀번호 찾기</button>
+            </div>
+
+            <div class="tab-content">
+              <div id="id" class="tab-form active">
+                <div class="member-type">
+                  <button
+                    type="button"
+                    class="member-btn active"
+                    data-type="user"
+                  >
+                    일반회원
+                  </button>
+                  <button type="button" class="member-btn" data-type="seller">
+                    판매회원
+                  </button>
+                </div>
+
+                <!-- 공통 안내 문구 -->
+                <div class="auth_select_text">인증방법을 선택해주세요</div>
+
+                <!-- 인증 방식 - 일반회원용 -->
+                <div class="auth-method user-form active">
+                  <button class="auth-btn">
+                    <img
+                      src="/lotteOn/images/member/phone_icon.png"
+                      class="btn-icon"
+                      style="width: 28px; height: 28px"
+                    />
+                    휴대폰 인증
+                  </button>
+                  <button class="auth-btn">
+                    <img
+                      src="/lotteOn/images/member/email_icon.png"
+                      class="btn-icon"
+                      style="width: 28px; height: 28px"
+                    />
+                    이메일 인증
+                  </button>
+                </div>
+
+                <!-- 인증 방식 - 판매회원용 -->
+                <div class="auth-method seller-form">
+                  <button>사업자번호 인증</button>
+                </div>
+              </div>
+              <div id="pw" class="tab-form">
+                <!-- 비밀번호 찾기 폼 -->
+                <p>비밀번호 찾기 폼 내용</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

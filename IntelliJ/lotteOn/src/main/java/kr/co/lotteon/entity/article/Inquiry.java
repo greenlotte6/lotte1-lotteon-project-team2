@@ -3,6 +3,7 @@ package kr.co.lotteon.entity.article;
 import jakarta.persistence.*;
 import kr.co.lotteon.entity.user.User;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -29,6 +30,8 @@ public class Inquiry {
     private String cateV2; //2차 유형(가입,탈퇴)
     private String title; //제목
     private String content; //내용
+
+    @CreationTimestamp
     private LocalDateTime wdate; // 등록일
     private String state;  // (검토 중, 답변완료)
     private String regip;  // 컴퓨터IP
@@ -54,4 +57,16 @@ public class Inquiry {
     private String prodNo;
 
     private int password; // 비밀번호 4자리
+
+    @PrePersist
+    public void prePersist() {
+        if (this.channel == null) {
+            this.channel = "고객센터";
+        }
+        if(this.state == null){
+            this.state = "검토중";
+        }
+    }
+
+
 }

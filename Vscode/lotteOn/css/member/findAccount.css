@@ -1,0 +1,144 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: NotoSansKR, Malgun Gothic, arial, sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+.wrapper {
+  width: 1140px;
+
+  border: 1px solid red;
+}
+
+main {
+  width: 1140px;
+  height: 995.11px;
+  border: 1px solid blue;
+  display: flex;
+  justify-content: center;
+  padding: 45px 0px 120px;
+}
+
+.title-box {
+  margin: 60px 0px 28px;
+}
+
+.logo-box {
+  width: 122px;
+  height: 35px;
+  padding-bottom: 5px;
+}
+
+.logo-box img {
+  width: 122px;
+  height: 35px;
+}
+
+.text {
+  display: block;
+  font-size: 40px;
+}
+
+.accountBox {
+  width: 529.97px;
+  height: 770.11px;
+  border: 1px solid green;
+  margin: 0px 305.016px;
+  padding: 0px 0px 162px;
+}
+
+.tab-menu {
+  display: flex;
+
+  border-bottom: 1px solid #999;
+  margin-bottom: 20px;
+}
+
+.tab {
+  width: 265px;
+  height: 47px;
+  border: none;
+  background: none;
+  padding: 16px 68px;
+  font-size: 18px;
+  color: #999;
+  cursor: pointer;
+  border-top: 2px solid transparent;
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
+}
+
+.tab.active {
+  color: black;
+  font-weight: bold;
+  border: 1px solid #333;
+  border-bottom: none;
+
+  background: white;
+}
+
+.tab-form {
+  display: none;
+}
+
+.tab-form.active {
+  display: block;
+}
+
+.member-type {
+  display: flex;
+  justify-content: space-between; /* 양 끝 정렬 */
+  width: 100%;
+  padding-bottom: 40px;
+  gap: 20px;
+}
+
+.member-btn {
+  width: 250px;
+  height: 44px;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  background-color: white;
+  color: #333;
+
+  cursor: pointer;
+}
+
+.member-btn.active {
+  background-color: black;
+  color: white;
+  width: 250px;
+  height: 44px;
+}
+
+.auth-method {
+  display: none;
+  margin-top: 20px;
+}
+
+.auth-method.active {
+  display: block;
+}
+
+.auth_select_text {
+  font-size: 24px;
+  letter-spacing: 0.24px;
+  line-height: 1.42px;
+  margin-bottom: 24px;
+}
+
+.auth-btn {
+  width: 529px;
+  height: 44px;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  background-color: white;
+  margin-top: 10px;
+  color: #333;
+
+  cursor: pointer;
+}

@@ -6,6 +6,8 @@
   <title>롯데On 판매자 회원가입</title>
   <link rel="stylesheet" th:href="@{/css/layout/layout.css}" />
   <link rel="stylesheet" th:href="@{/css/member/registerSeller.css}" />
+  <script th:src="@{/js/member/signupValidation.js}"></script>
+  <script th:src="@{/js/member/daumPostcode.js}"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -33,33 +35,40 @@
       <article class="main_content">
         <p class="title">판매자 회원가입</p>
         <div class="registerForm-container">
-          <form th:action="@{/seller/register}" method="post" class="registerForm">
+          <form th:action="@{/user/member/registerSeller}" method="post" class="registerForm">
             <table>
               <tr>
                 <td>아이디<span class="required">*</span></td>
                 <td>
-                  <input type="text" name="uid" placeholder="아이디 입력" />
-                  <span class="description">영문·숫자 조합 4~10자 이내</span>
+                  <div class="input-with-btn" >
+                    <input type="text" id="uid" name="uid" placeholder="아이디 입력" />
+                    <button type="button" id="btnCheckUid" class="btn btn-small btn-auth">중복확인</button>
+                  </div>
+                  <span id="uidMessage" class="error-message"></span>
                 </td>
               </tr>
               <tr>
                 <td>비밀번호<span class="required">*</span></td>
                 <td>
-                  <input type="password" name="pass" placeholder="비밀번호 입력" />
-                  <span class="description">비밀번호는 8-16자리 이내, 영문ㆍ숫자ㆍ특수문자 조합</span>
+                  <input type="password" id="pass" name="pass" placeholder="비밀번호 입력" />
+                  <span id="passError" class="error-message">
+                  </span>
                 </td>
               </tr>
               <tr>
                 <td>비밀번호 확인<span class="required">*</span></td>
-                <td><input type="password" name="pass2" placeholder="비밀번호 확인 입력" /></td>
+                <td>
+                  <input type="password" id="pass2" name="pass2" placeholder="비밀번호 확인 입력" />
+                  <span id="pass2Error" class="error-message" ></span>
+                </td>
               </tr>
               <tr>
                 <td>회사명</td>
-                <td><input type="text" name="companyName" placeholder="회사명입력 예 (주)상호명" /></td>
+                <td><input type="text" name="company" placeholder="회사명입력 예 (주)상호명" /></td>
               </tr>
               <tr>
                 <td>대표</td>
-                <td><input type="text" name="owner" placeholder="이름 입력" /></td>
+                <td><input type="text" name="ceo" placeholder="이름 입력" /></td>
               </tr>
               <tr>
                 <td>사업자등록번호</td>
@@ -70,7 +79,9 @@
               </tr>
               <tr>
                 <td>통신판매업번호</td>
-                <td><input type="text" name="salesRegNo" placeholder="통신판매업번호입력" /></td>
+                <td><input type="text" name="commerceNo" placeholder="통신판매업번호입력" />
+                  <span class="description">- 포함 8 자리 입력</span>
+                </td>
               </tr>
               <tr>
                 <td>전화번호</td>
@@ -83,7 +94,7 @@
               <tr>
                 <td>주소</td>
                 <td class="address">
-                  <input type="text" name="zip" id="postcode" placeholder="우편번호 선택" readonly onclick="DaumPostcode()" />
+                  <input type="text" name="zip" id="postcode" placeholder="우편번호 선택" readonly onclick="execDaumPostcode()" />
                   <input type="text" class="addrs" id="address" name="addr1" placeholder="기본주소 선택" readonly />
                   <input type="text" class="addrs" id="detailAddress" name="addr2" placeholder="상세주소 입력" />
                 </td>
@@ -154,5 +165,8 @@
   </footer>
   <!-- 푸터 끝 -->
 </div>
+
+<!-- daum 우편번호 API CDN -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </body>
 </html>

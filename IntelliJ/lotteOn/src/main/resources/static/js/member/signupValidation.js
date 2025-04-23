@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     btnCheckUid.addEventListener("click", function () {
         const uid = uidInput.value;
 
-        fetch(`/user/checkUid?uid=${uid}`)
+        fetch(`/user/user/checkUid?uid=${uid}`)
             .then(res => res.json())
             .then(isExist => {
                 if (isExist) {
