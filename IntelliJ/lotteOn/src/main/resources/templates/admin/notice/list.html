@@ -10,6 +10,7 @@
 
     <!-- 사이드바-->
     <script src="/js/admin/sidebar.js"></script>
+
   </head>
   <body>
     <div id="wrapper">
@@ -71,74 +72,17 @@
                     <td>120</td>
                     <td>00.00.00</td>
                     <td>
-                      <a href="#" id="modal_modify">[ 수정 ]</a><br />
-                      <a href="#">[ 중지 ]</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input type="checkbox" />
-                    </td>
-                    <td>100</td>
-                    <td>이벤트 당첨</td>
-                    <td>[발표]아이폰 16 당첨 이벤트</td>
-                    <td>120</td>
-                    <td>00.00.00</td>
-                    <td>
-                      <a href="#" id="modal_modify">[ 수정 ]</a><br />
-                      <a href="#">[ 중지 ]</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <input type="checkbox" />
-                    </td>
-                    <td>100</td>
-                    <td>안전거래</td>
-                    <td>[안내] 로젠택배 반품/ 교환 수거지시 지연안내</td>
-                    <td>120</td>
-                    <td>00.00.00</td>
-                    <td>
-                      <a href="#" id="modal_modify">[ 수정 ]</a><br />
+                      <a href="#" id="modal_modify">[ 삭제 ]</a><br />
                       <a href="#">[ 중지 ]</a>
                     </td>
                   </tr>
 
-                  <tr>
-                    <td>
-                      <input type="checkbox" />
-                    </td>
-                    <td>100</td>
-                    <td>고객서비스</td>
-                    <td>[안내] 위치정보이용 약관 개정 공지</td>
-                    <td>120</td>
-                    <td>00.00.00</td>
-                    <td>
-                      <a href="#" id="modal_modify">[ 수정 ]</a><br />
-                      <a href="#">[ 중지 ]</a>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>
-                      <input type="checkbox" />
-                    </td>
-                    <td>100</td>
-                    <td>위해상품</td>
-                    <td>[위해상품정보] 롯데자이언츠 해체</td>
-                    <td>120</td>
-                    <td>00.00.00</td>
-                    <td>
-                      <a href="#" id="modal_modify">[ 수정 ]</a><br />
-                      <a href="#">[ 중지 ]</a>
-                    </td>
-                  </tr>
                 </tbody>
               </table>
 
               <div style="margin-top: 20px">
                 <button type="submit" class="delete_btn">선택삭제</button>
-                <button type="submit" class="register_btn">작성하기</button>
+                <button type="button" class="register_btn" id="write">작성하기</button>
               </div>
             </form>
             <!-- 페이징 -->
@@ -278,6 +222,10 @@
         //'on' class 제거
         modal.classList.remove("on");
       });
+
+        document.getElementById("write").addEventListener("click",function () {
+        window.location.href="/admin/cs/notice/write";
+      })
     </script>
   </body>
 </html>
