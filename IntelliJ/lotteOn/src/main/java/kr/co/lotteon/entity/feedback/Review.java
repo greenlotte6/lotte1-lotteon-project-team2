@@ -1,4 +1,4 @@
-package kr.co.lotteon.entity.review;
+package kr.co.lotteon.entity.feedback;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -38,4 +38,5 @@ public class Review {
     private LocalDateTime wdate; // 리뷰 작성일
 
     private BigDecimal rating; // 평점
+
 }

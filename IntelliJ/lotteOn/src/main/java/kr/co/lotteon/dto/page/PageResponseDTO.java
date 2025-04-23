@@ -17,6 +17,7 @@ public class PageResponseDTO<T> {
     private int subCateNo;
     private String sortType;
     private String period;
+
     private int pg;
     private int size;
     private int total;
@@ -30,8 +31,6 @@ public class PageResponseDTO<T> {
     @Builder
     public PageResponseDTO(PageRequestDTO pageRequestDTO, List<T> dtoList, int total) {
         this.subCateNo = pageRequestDTO.getSubCateNo();
-        this.sortType = pageRequestDTO.getSortType();
-        this.period = pageRequestDTO.getPeriod();
         this.pg = pageRequestDTO.getPg();
         this.size = pageRequestDTO.getSize();
         this.total = total;
