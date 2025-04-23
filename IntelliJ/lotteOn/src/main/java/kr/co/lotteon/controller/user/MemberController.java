@@ -50,8 +50,10 @@ public class MemberController {
         return "/member/register";
     }
 
-    @PostMapping("/user/register")
-    public String register(@ModelAttribute UserDTO userDTO) {
+    @PostMapping("/member/register")
+    public String register(@ModelAttribute UserDTO userDTO, @RequestParam("phone") String phone) {
+
+        userDTO.setHp(phone);
         log.info("▶ 회원가입 요청 데이터: {}", userDTO);
 
         userService.register(userDTO);
