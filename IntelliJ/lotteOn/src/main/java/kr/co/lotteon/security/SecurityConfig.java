@@ -23,21 +23,21 @@ public class SecurityConfig {
 
         // 로그인 설정
         http.formLogin(login -> login
-                .loginPage("/user/login")
+                .loginPage("/user/member/login")
                 .defaultSuccessUrl("/")
-                .failureUrl("/user/login?code=100")
+                .failureUrl("/user/member/login?code=100")
                 .usernameParameter("uid")
                 .passwordParameter("pass"));
 
         // 로그아웃 설정
         http.logout(logout -> logout
-                .logoutUrl("/user/logout")
+                .logoutUrl("/user/member/logout")
                 .invalidateHttpSession(true)
-                .logoutSuccessUrl("/user/login?code=101"));
+                .logoutSuccessUrl("/user/member/login?code=101"));
 
         // ✅ OAuth2 로그인 설정
         http.oauth2Login(oauth2 -> oauth2
-                .loginPage("/user/login") // OAuth2 로그인도 동일한 로그인 폼 사용
+                .loginPage("/user/member/login") // OAuth2 로그인도 동일한 로그인 폼 사용
                 .userInfoEndpoint(userInfo -> userInfo
                         .userService(oauth2UserService)) // 사용자 정보 후처리 서비스
                 .defaultSuccessUrl("/") // OAuth2 로그인 성공 시 이동 경로 (선택)

@@ -32,6 +32,7 @@ public class Product {
     private Seller seller;
 
     private String prodName; // 상품명
+    private String prodBrand; // 상품 브랜드
     private int prodPrice; // 상품 가격
     private int prodPoint; // 상품 포인트
     private int prodStock; // 상품 재고
@@ -47,7 +48,7 @@ public class Product {
     private double ratingTotal; // 상품 리뷰 총 점
     private int reviewCount;    // 상품 리뷰 총 수
     private double ratingAvg;   // 상품 리뷰 평균
-    private String prodBrand;
+
 
 
 }

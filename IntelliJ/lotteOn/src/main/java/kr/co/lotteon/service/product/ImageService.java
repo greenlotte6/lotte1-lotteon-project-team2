@@ -1,10 +1,7 @@
 package kr.co.lotteon.service.product;
 
-import kr.co.lotteon.dto.product.ProductDetailDTO;
 import kr.co.lotteon.dto.product.ProductImageDTO;
 import kr.co.lotteon.entity.product.Product;
-import kr.co.lotteon.entity.product.ProductDetail;
-import kr.co.lotteon.entity.product.ProductImage;
 import kr.co.lotteon.repository.product.ProductImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +24,7 @@ public class ImageService {
     @Value("${spring.servlet.multipart.location}")
     private String uploadDir;
 
-    public void saveImage(ProductImageDTO productImageDTO, Product saveProduct) {
+    public void saveImage(ProductImageDTO productImageDTO, Product savedProduct) {
 
         // 리스트 출력 이미지 변환
         String oName = productImageDTO.getFile1().getOriginalFilename();
@@ -63,11 +60,7 @@ public class ImageService {
 
         log.info("productImageDTO : " +productImageDTO.toString());
 
-        // 상품 이미지 엔티티 만들기
-        ProductImage productImage = modelMapper.map(productImageDTO, ProductImage.class);
-        productImage.setProduct(saveProduct);
 
-        productImageRepository.save(productImage);
 
     }
 

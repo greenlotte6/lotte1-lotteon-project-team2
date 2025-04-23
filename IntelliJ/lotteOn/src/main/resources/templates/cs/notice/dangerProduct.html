@@ -3,90 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>안전거래</title>
-    <link rel="stylesheet" href="/css/cs/faq/list.css">
+    <title>위해상품</title>
+    <link rel="stylesheet" href="/css/cs/notice/list.css">
     <link rel="stylesheet" href="/css/layout/layout.css">
+    <link rel="stylesheet" href="/css/index_layout.css">
+    <link rel="stylesheet" href="/css/cs/notice/sidebar.css">
+    <link rel="stylesheet" href="/css/common/header.css">
+    <script src="/js/headerMenu.js"></script>
+
 </head>
 <body>
     <div id="wrapper">
         <!-- 헤더 시작 -->
-        <header>
-            <div class="header_main">
-                <div class="user_menu">
-                    <div>
-                        <a href="#">로그인 |</a>
-                        <a href="#">회원가입 |</a>
-                        <a href="#">마이페이지 |</a>
-                        <a href="#">장바구니</a>
-                    </div>            
-                </div>
-
-                <div class="logo">
-                    <img src="/images/logo.png" alt="lotteOn">
-                </div>
-            </div>
-        </header>
+        <th:block th:include="/common/header.html"/>
         <!-- 헤더 끝 -->
         <main>
             <section class="content">
                 <!-- 왼쪽 사이드바 -->
-                <aside class="cs-sidebar">
-                    <div class="cs-title">자주묻는질문</div>
-                  
-                    <ul class="cs-menu">
-                      <li><a href="#">회원</a></li>
-                      <li><a href="#">쿠폰 / 이벤트</a></li>
-                      <li><a href="#">주문 / 결제</a></li>
-                      <li><a href="#">배송</a></li>
-                      <li><a href="#">취소 / 반품 / 교환</a></li>
-                      <li><a href="#">여행 / 숙박 / 항공</a></li>
-                      <li class="active"><a href="#">안전거래</a></li>
-                    </ul>
-
-                </aside>
+                <div class="dangerProduct-page">
+                    <th:block th:include="/cs/notice/inc/sidebar.html"/>
+                </div>
                 <!-- 사이드바 끝-->
                 <!-- 오른쪽 글 -->
                 <div class="main_content_side">
                     <div class="notice-container">
                         <div class="location-container">
-                            <h2>안전거래</h2>
+                            <h2>공지사항</h2>
                             <div>
                                 <ul>
                                     <li>
                                         <a href="#">고객센터 > </a>
                                     </li>
                                     <li>
-                                        <a href="#">자주묻는 질문 > </a>
+                                        <a href="#">공지사항 > </a>
                                     </li>
                                     <li>
-                                        <a href="#" class="this-location">안전거래</a>
+                                        <a href="#" class="this-location">위해상품</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
-                    </div>
-                    <section class="faq-section">
-                        <div class="faq-category" id="signup-section">
-                            <h2>안전거래</h2>
-                            <div class="faq-item" id="signup-1">
-                                <a href="#"><span class="B_Q">Q.</span>개인회원과 법인회원이 어떻게 다르나요?(출력내용)</a>
+                        <ul class="notice-list">
+                          <li>
+                            <div class="notice-header">
+                                <a href="#" class="title">데이터 연동예정</a>
+                                <span class="date">2025.00.00</span>
                             </div>
-                            <div class="faq-item" id="signup-2">
-                                <a href="#"><span class="B_Q">Q.</span>개인회원과 법인회원이 가입 절차가 다르나요?(출력내용)</a>
+                          </li>
+                          <li>
+                            <div class="notice-header">
+                                <a href="#" class="title">데이터 연동예정</a>
+                                <span class="date">2025.00.00</span>
                             </div>
-                            <div class="faq-item" id="signup-3">
-                                <a href="#"><span class="B_Q">Q.</span>개인회원과 법인회원이 가입 시 필요한 정보가 다르나요?(출력내용)</a>
+                          </li>
+                          <li>
+                            <div class="notice-header">
+                                <a href="#" class="title">데이터 연동예정</a>
+                                <span class="date">2025.00.00</span>
                             </div>
-                            <div class="faq-item more" id="signup-4">
-                                <a href="#"><span class="B_Q">Q.</span>개인회원과 법인회원이 가입 시 이용할 수 있는 혜택이 다르나요?(더보기내용)</a>
-                            </div>
-                            <button class="toggle-button" id="signup-toggle">더보기</button>
+                          </li>
+                        </ul>
+                      
+                        <div class="pagination">
+                            <a href="#" class="active">1</a>
+                            <a href="#">2</a>
+                            <a href="#">3</a>
+                            <a href="#">4</a>
+                            <a href="#">5</a>
+                            <a href="#">6</a>
+                            <span>...</span>
+                            <a href="#">11</a>
+                            <a href="#">❯</a>
                         </div>
-                    </section>
+                    </div>
                 </div>
-                </div>
+
             </section>
-            
         </main>
 
         <!-- 푸터 시작 -->
@@ -157,6 +149,5 @@
         </footer>
         <!-- 푸터 끝 -->
     </div>
-    <script src="/js/faq_list.js"></script>
 </body>
 </html>

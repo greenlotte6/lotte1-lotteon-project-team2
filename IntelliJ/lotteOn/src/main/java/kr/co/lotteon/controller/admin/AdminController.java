@@ -2,6 +2,7 @@ package kr.co.lotteon.controller.admin;
 
 import jakarta.servlet.http.HttpServletRequest;
 import kr.co.lotteon.dto.config.TermsDTO;
+import kr.co.lotteon.dto.config.VersionDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
@@ -17,10 +18,13 @@ import kr.co.lotteon.service.product.ProductService;
 import kr.co.lotteon.service.seller.SellerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -42,8 +46,8 @@ public class AdminController {
     }
 
     /*
-    * 환경설정 기본설정
-    * */
+     * 환경설정 기본설정
+     * */
 
     //기본설정
     @GetMapping("/config/basic")
@@ -90,15 +94,35 @@ public class AdminController {
 
     // 버전관리
     @GetMapping("/config/version")
-    public String version() {
+    public String version(PageRequestDTO pageRequestDTO, Model model) {
+
+        PageResponseDTO pageResponseDTO = configService.selectAll(pageRequestDTO);
+        model.addAttribute("verions",pageResponseDTO);
+
+        System.out.println(pageResponseDTO);
         return "/admin/config/version";
+    }
+
+    // 버전등록
+    @PostMapping("/config/version/register")
+    public String registerVersion(VersionDTO versionDTO, @AuthenticationPrincipal UserDetails userDetails) {
+
+        configService.saveVersion(versionDTO, userDetails);
+        return "redirect:/admin/config/version";
+    }
+
+    // 버전삭제
+    @PostMapping("/config/version/delete")
+    public String deleteVersions(@RequestParam("deleteVno") List<Integer> deleteVnos) {
+        configService.deleteVersions(deleteVnos);
+        return "redirect:/admin/config/version";
     }
 
 
 
     /*
-    * 관리자 상점목록
-    * */
+     * 관리자 상점목록
+     * */
 
     //상점 목록
     @GetMapping("/shop/list")
@@ -122,11 +146,11 @@ public class AdminController {
 
         return "/admin/main";
     }
-    
+
     /*
-    * 관리자 회원목록
-    * */
-    
+     * 관리자 회원목록
+     * */
+
     //회원목록
     @GetMapping("/member/list")
     public String memberList(){
@@ -140,8 +164,8 @@ public class AdminController {
     }
 
     /*
-    * 관리자 상품 목록
-    * */
+     * 관리자 상품 목록
+     * */
 
     // 상품현황
     @GetMapping("/product/list")
@@ -159,6 +183,10 @@ public class AdminController {
     @GetMapping("/product/delete")
     public String productDelete(@RequestParam("no") String no){
 
+        System.out.println(no);
+        System.out.println(no);
+        System.out.println(no);
+        System.out.println(no);
         adminService.deleteProduct(no);
         return "redirect:/admin/product/list";
     }
@@ -184,8 +212,8 @@ public class AdminController {
     }
 
     /*
-    * 관리자 주문현황
-    * */
+     * 관리자 주문현황
+     * */
 
     //주문현황
     @GetMapping("/order/list")
@@ -200,8 +228,8 @@ public class AdminController {
     }
 
     /*
-    * 관리자 쿠폰 목록
-    * */
+     * 관리자 쿠폰 목록
+     * */
 
     //쿠폰목록
     @GetMapping("/coupon/list")
@@ -214,10 +242,10 @@ public class AdminController {
     public String issued(){
         return "/admin/coupon/issued";
     }
-    
+
     /*
-    * 관리자 고객센터 목록 (공지사항/자주묻는질문/문의하기/채용하기)
-    * */
+     * 관리자 고객센터 목록 (공지사항/자주묻는질문/문의하기/채용하기)
+     * */
 
     //공지사항
     @GetMapping("/cs/notice/list")

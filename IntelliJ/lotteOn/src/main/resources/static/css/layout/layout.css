@@ -36,7 +36,6 @@ header{
     margin-bottom: 40px;
 }
 
-
 .header_main{
     margin: 0 auto;
     width: 1200px;
@@ -284,6 +283,8 @@ main {
 .sidebar-menu li a:hover {
     background-color: #d6d6d6;
 }
+
+
 
 
 .main_info{

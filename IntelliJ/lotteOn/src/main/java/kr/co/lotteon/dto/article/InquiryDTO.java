@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -24,6 +25,8 @@ public class InquiryDTO {
     private String cateV2; //2차 유형(가입,탈퇴)
     private String title; //제목
     private String content; //내용
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime wdate; // 등록일
     private String state;  // (검토 중, 답변완료)
     private String regip;  // 컴퓨터IP

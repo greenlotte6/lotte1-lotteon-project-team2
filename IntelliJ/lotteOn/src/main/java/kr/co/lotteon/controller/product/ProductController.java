@@ -28,16 +28,24 @@ public class ProductController {
         model.addAttribute(pageResponseDTO);
         model.addAttribute(productList);
 
+        log.info("pageResponseDTO: {}", pageResponseDTO);
+        log.info("BestproductList: {}", productList);
         return "/product/list";
     }
 
     // 상품 정렬 리스트
     @GetMapping("/product/list/sorted")
-    public String getSortedProductList(PageRequestDTO dto, Model model) {
-        PageResponseDTO pageResponseDTO = productService.sortedProducts(dto);
-        model.addAttribute("pageResponseDTO", pageResponseDTO);
+    public String getSortedProductList(PageRequestDTO pageRequestDTO, Model model) {
+        PageResponseDTO pageResponseDTO = productService.sortedProducts(pageRequestDTO);
+        List<ProductDTO> productList = productService.selectBestAllForList(pageRequestDTO.getSubCateNo());
+        model.addAttribute(pageResponseDTO);
+        model.addAttribute(productList);
 
-        return "product/list :: productListFragment";
+        log.info("SortedpageResponseDTO: {}", pageResponseDTO);
+        log.info("SortedBestproductList: {}", productList);
+
+        log.info("pageRequestDTO: {}", pageRequestDTO);
+        return "/product/list";
     }
 
     // 상세보기

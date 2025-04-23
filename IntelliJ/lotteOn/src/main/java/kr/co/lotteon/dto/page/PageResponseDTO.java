@@ -15,6 +15,8 @@ public class PageResponseDTO<T> {
     private List<T> dtoList;
 
     private int subCateNo;
+    private String sortType;
+    private String period;
     private int pg;
     private int size;
     private int total;
@@ -28,6 +30,8 @@ public class PageResponseDTO<T> {
     @Builder
     public PageResponseDTO(PageRequestDTO pageRequestDTO, List<T> dtoList, int total) {
         this.subCateNo = pageRequestDTO.getSubCateNo();
+        this.sortType = pageRequestDTO.getSortType();
+        this.period = pageRequestDTO.getPeriod();
         this.pg = pageRequestDTO.getPg();
         this.size = pageRequestDTO.getSize();
         this.total = total;
@@ -38,7 +42,7 @@ public class PageResponseDTO<T> {
 
         this.startNo = total - ((pg - 1) * size);
 
-        int blockSize = 3; // 원하는 블록 크기
+        int blockSize = 10; // 원하는 블록 크기
         this.end = (int) (Math.ceil(this.pg / (double) blockSize)) * blockSize;
         this.start = this.end - (blockSize - 1);
 

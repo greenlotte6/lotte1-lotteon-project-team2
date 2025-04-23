@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 @Data
@@ -16,8 +17,6 @@ public class PageRequestDTO {
     @Builder.Default
     private int no = 1;
 
-    private int subCateNo;
-
     @Builder.Default
     private int pg = 1;
 
@@ -28,13 +27,11 @@ public class PageRequestDTO {
     private String keyword;
 
     // 추가 필드 ( 상품 목록 정렬용)
-    @Builder.Default
-    private String sortType = "latest";
+    private String sortType;
+    private int subCateNo; // 하위 카테고리
+    private String period; // 판매 많은 순, 후기 많은 순
 
-    // 추가 필드 ( 관리자 상품 목록 (판매자/관리자 구별))
-    private String role;
-
-    public PageRequest getPageable(String sort){
+    public Pageable getPageable(String sort){
         return PageRequest.of(this.pg - 1, this.size, Sort.by(sort).descending());
 
     }

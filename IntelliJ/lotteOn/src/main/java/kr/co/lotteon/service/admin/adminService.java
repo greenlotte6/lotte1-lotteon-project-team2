@@ -46,10 +46,10 @@ public class adminService {
 
 
     /*
-    * 관리자 페이지 (상품 등록 메서드)
-    * */
+     * 관리자 페이지 (상품 등록 메서드)
+     * */
     public Product saveProduct(ProductDTO productDTO) {
-        
+
         // 판매자, 서브카테고리 호출
         Seller seller = sellerRepository.findByCompany(productDTO.getCompany());
         SubCategory subCategory = subCategoryRepository.findById(productDTO.getSubCateNo()).get();
@@ -65,7 +65,7 @@ public class adminService {
         if(subNo.length()==1){
             subNo = "0" + subNo;
         }
-        
+
         String mainNo = String.valueOf(subCategory.getMainCategory().getMainCateNo());
         if(mainNo.length()==1){
             mainNo = "0" + mainNo;
@@ -93,8 +93,8 @@ public class adminService {
     }
 
     /*
-    * 제품 상세 정보 저장 메서드
-    * */
+     * 제품 상세 정보 저장 메서드
+     * */
     public void saveProductDetail(ProductDetailDTO productDetailDTO, Product savedProduct) {
 
         ProductDetail productDetail = modelMapper.map(productDetailDTO, ProductDetail.class);
@@ -146,8 +146,8 @@ public class adminService {
         Optional<Product> optProduct = productRepository.findById(no);
 
         /*
-        * 상품을 삭제할 때
-        * */
+         * 상품을 삭제할 때
+         * */
         if(optProduct.isPresent()){
             Product product = optProduct.get();
 
