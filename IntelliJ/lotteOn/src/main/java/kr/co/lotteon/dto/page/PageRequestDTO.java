@@ -21,7 +21,7 @@ public class PageRequestDTO {
     private int pg = 1;
 
     @Builder.Default
-    private int size = 10;
+    private int size = 12;
 
     private String searchType;
     private String keyword;
@@ -35,7 +35,5 @@ public class PageRequestDTO {
         return PageRequest.of(this.pg - 1, this.size, Sort.by(sort).descending());
 
     }
-
-
 
 }
