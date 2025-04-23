@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/admin/admin.css" />
     <link rel="stylesheet" href="/css/admin/qna/list.css" />
     <link rel="stylesheet" href="/css/layout/layout.css" />
+    <script src="/js/common/state.js"></script>
 
     <!-- 사이드바-->
     <script src="/js/admin/sidebar.js"></script>
@@ -51,7 +52,7 @@
 
             <form action="#" class="member_list_form">
               <table>
-                <thead>
+                <tr>
                   <th><input type="checkbox" /></th>
                   <th>번호</th>
                   <th>1차유형</th>
@@ -60,34 +61,20 @@
                   <th>작성자</th>
                   <th>작성일</th>
                   <th>상태</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <input type="checkbox" />
-                    </td>
-                    <td>120</td>
-                    <td>회원</td>
-                    <td>가입</td>
-                    <td>개인회원과 법인회원에 차이가 있나요 ?</td>
-                    <td>ch***</td>
-                    <td>00.00.00</td>
-                    <td>검토중</td>
-                  </tr>
+                </tr>
+                <tr th:each="inquiry, i : ${responseDTO.dtoList}">
+                  <td>
+                    <input type="checkbox" />
+                  </td>
+                  <td th:text="${responseDTO.startNo - i.index}"></td>
+                  <td th:text="${inquiry.cateV1}"></td>
+                  <td th:text="${inquiry.cateV2}"></td>
+                  <td><a th:href="@{/cs/qna/view(no=${inquiry.no})}">[[${inquiry.title}]]</a></td>
+                  <td th:text="${inquiry.user.name}"></td>
+                  <td th:text="${#temporals.format(inquiry.wdate, 'yyyy-MM-dd')}"></td>
+                  <td class="state" th:text="${inquiry.state}"></td>
+                </tr>
 
-                  <tr>
-                    <td>
-                      <input type="checkbox" />
-                    </td>
-                    <td>120</td>
-                    <td>회원</td>
-                    <td>가입</td>
-                    <td>개인회원과 법인회원에 차이가 있나요 ?</td>
-                    <td>ch***</td>
-                    <td>00.00.00</td>
-                    <td style="color: blue">답변완료</td>
-                  </tr>
-                </tbody>
               </table>
 
               <div style="margin-top: 20px">
@@ -96,9 +83,20 @@
             </form>
 
             <!-- 페이징 -->
-            <p style="text-align: center; margin-top: 10px">
-              이전 1 2 3 4 5 다음
-            </p>
+            <div class="notice-footer">
+              <div class="page">
+                <th:block th:if="${responseDTO.prev}">
+                  <a th:href="@{/admin/cs/qna/list(pg=${responseDTO.start - 1}, size=${responseDTO.size})}" class="prev">이전</a>
+                </th:block>
+                <th:block th:each="i: ${#numbers.sequence(responseDTO.start, responseDTO.end)}">
+                  <a th:href="@{/admin/cs/qna/list(cateV1='회원', pg=${i}, size=${responseDTO.size})}" th:text="${i}" th:class="${i == responseDTO.pg ? 'active' : ''}"></a>
+                </th:block>
+
+                <th:block th:if="${responseDTO.next}">
+                  <a th:href="@{/admin/cs/qna/list(pg=${responseDTO.end + 1}, size=${responseDTO.size})}" class="next">다음</a>
+                </th:block>
+              </div>
+            </div>
           </article>
         </section>
       </main>
