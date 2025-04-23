@@ -3,6 +3,7 @@ package kr.co.lotteon.entity.config;
 import jakarta.persistence.*;
 import kr.co.lotteon.entity.user.User;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -26,6 +27,8 @@ public class Version {
     private User user;
 
     private String version; //버전정보
+
+    @CreationTimestamp
     private LocalDateTime wdate; // 등록일
     private String content; //내용
 

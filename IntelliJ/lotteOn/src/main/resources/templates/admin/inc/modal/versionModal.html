@@ -1,0 +1,126 @@
+<!-- 변경내역 확인 모달 -->
+<div class="modal" id="version_view_Modal">
+    <div class="modal_popup">
+        <div class="modal_head">
+            <span class="modal_title">버전확인</span>
+            <button type="button" class="close_btn">X</button>
+        </div>
+
+        <div class="modal_main">
+            <table class="modal_version">
+                <tr>
+                    <td>버전</td>
+                    <td id="modal_version_val"></td>
+                </tr>
+                <tr>
+                    <td>변경내역</td>
+                    <td id="modal_content_val" class="version_td" style="text-align: left;"></td>
+                </tr>
+            </table>
+            <button class="modal_close" >닫기</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const modal = document.getElementById("version_view_Modal");
+        const openBtns = document.querySelectorAll(".version_view_btn");
+        const closeBtn = modal.querySelector(".close_btn");
+        const modal_close = modal.querySelector(".modal_close");
+
+        const versionVal = document.getElementById("modal_version_val");
+        const contentVal = document.getElementById("modal_content_val");
+
+        openBtns.forEach(btn => {
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+
+                // data 속성에서 값 가져오기
+                const version = btn.getAttribute("data-version");
+                const content = btn.getAttribute("data-content");
+
+                // 모달에 값 주입
+                versionVal.textContent = version;
+                contentVal.innerHTML = content.replace(/\n/g, "<br>"); // 개행 처리
+
+                modal.style.display = "block";
+            });
+        });
+
+        closeBtn.addEventListener("click", () => modal.style.display = "none");
+        modal_close.addEventListener("click", () => modal.style.display = "none");
+        window.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    });
+</script>
+
+<!-- 버전추가 모달 -->
+<div class="modal" id="bannerRegisterModal">
+    <div class="modal_popup">
+        <div class="modal_head">
+            <span class="modal_title">버전확인</span>
+            <button type="button" class="close_btn">X</button>
+        </div>
+
+        <div class="modal_main">
+            <form th:action="@{/admin/config/version/register}" method="post">
+                <table class="modal_version">
+                    <tr>
+                        <td>
+                            버전
+                        </td>
+                        <td>
+                            <input type="text" placeholder="버전입력하기" name="version">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>변경내역</td>
+                        <td class="version_td">
+                            <textarea name="content" placeholder="변경내역작성하기"></textarea>
+                        </td>
+                    </tr>
+                </table>
+                <button type="submit" class="modal_btn" >등록하기</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const modal = document.getElementById("bannerRegisterModal");
+        const openBtns = document.querySelectorAll("#banner_register"); // 트리거 버튼 id는 사용자가 설정 필요
+        const closeBtn = modal.querySelector(".close_btn");
+        const modal_close = modal.querySelector(".modal_close");
+        const modal_btn = modal.querySelector(".modal_btn");
+
+        openBtns.forEach(btn => {
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+                modal.style.display = "block";
+            });
+        });
+
+        closeBtn.addEventListener("click", function () {
+            modal.style.display = "none";
+        });
+
+        modal_btn.addEventListener("click", function () {
+            modal.style.display = "none";
+        });
+
+        modal_close.addEventListener("click", function () {
+            modal.style.display = "none";
+        });
+
+        window.addEventListener("click", function (e) {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    });
+</script>

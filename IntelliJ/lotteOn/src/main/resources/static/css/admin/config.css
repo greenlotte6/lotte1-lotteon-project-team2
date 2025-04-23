@@ -313,6 +313,7 @@
     border: none;
     font-size: 16px;
     display: block;
+    cursor: pointer;
 }
 
 /* 환경 설정 */
