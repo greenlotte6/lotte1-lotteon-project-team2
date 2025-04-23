@@ -68,24 +68,23 @@
             });
         });
 
-        document.getElementById('salesPeriodSelect').addEventListener('change', function() {
+        document.getElementById('salesPeriodSelect').addEventListener('change', function () {
             const period = this.value;
             const subCateNo = '[[${pageResponseDTO.subCateNo}]]';
 
             if (period !== "") {
-                location.href = `/product/list/sorted?sortType=mostSales&period=${period}&subCateNo=${subCateNo}`;
+                location.href = `/product/list/mostSales${period}?sortType=mostSales&period=${period}&subCateNo=${subCateNo}`;
             }
         });
 
-        document.getElementById('reviewPeriodSelect').addEventListener('change', function() {
-            const period = this.value;
+        document.getElementById('reviewPeriodSelect').addEventListener('change', function () {
+            const period = this.value; // 1y, 6m, 1m
             const subCateNo = '[[${pageResponseDTO.subCateNo}]]';
 
             if (period !== "") {
-                location.href = `/product/list/sorted?sortType=manyReviews&period=${period}&subCateNo=${subCateNo}`;
+                location.href = `/product/list/manyReviews${period}?sortType=manyReviews&period=${period}&subCateNo=${subCateNo}`;
             }
         });
-
     });
 </script>
 
@@ -238,16 +237,16 @@
                                 <option value="6month">6개월</option>
                                 <option value="1month">1개월</option>
                             </select>
-                            <a th:href="@{/product/list/sorted(sortType='lowPrice', subCateNo=${pageResponseDTO.subCateNo})}">&nbsp;&nbsp;|&nbsp;&nbsp;낮은가격순&nbsp;&nbsp;|&nbsp;&nbsp;</a>
-                            <a th:href="@{/product/list/sorted(sortType='highPrice', subCateNo=${pageResponseDTO.subCateNo})}">높은가격순&nbsp;&nbsp;|&nbsp;&nbsp;</a>
-                            <a th:href="@{/product/list/sorted(sortType='highRating', subCateNo=${pageResponseDTO.subCateNo})}">평점높은순&nbsp;&nbsp;|&nbsp;&nbsp;</a>
+                            <a th:href="@{/product/list/lowPrice(sortType='lowPrice', subCateNo=${pageResponseDTO.subCateNo})}">&nbsp;&nbsp;|&nbsp;&nbsp;낮은가격순&nbsp;&nbsp;|&nbsp;&nbsp;</a>
+                            <a th:href="@{/product/list/highPrice(sortType='highPrice', subCateNo=${pageResponseDTO.subCateNo})}">높은가격순&nbsp;&nbsp;|&nbsp;&nbsp;</a>
+                            <a th:href="@{/product/list/highRating(sortType='highRating', subCateNo=${pageResponseDTO.subCateNo})}">평점높은순&nbsp;&nbsp;|&nbsp;&nbsp;</a>
                             <select id="reviewPeriodSelect">
                                 <option value="">후기많은순</option>
                                 <option value="1year">1년</option>
                                 <option value="6month">6개월</option>
                                 <option value="1month">1개월</option>
                             </select>
-                            <a th:href="@{/product/list/sorted(sortType='latest', subCateNo=${pageResponseDTO.subCateNo})}">&nbsp;&nbsp;|&nbsp;&nbsp;최근등록순
+                            <a th:href="@{/product/list/latest(sortType='latest', subCateNo=${pageResponseDTO.subCateNo})}">&nbsp;&nbsp;|&nbsp;&nbsp;최근등록순
                             </a>
                         </div>
                     </div>
@@ -291,18 +290,19 @@
 
                 <div class="page">
                     <th:block th:if="${pageResponseDTO.prev}">
-                        <a th:href="@{/product/list(pg=${pageResponseDTO.start - 1}, subCateNo=${pageResponseDTO.subCateNo})}" class="prev">&lt;</a>
+                        <a th:href="@{/product/list/manyReviews6month(sortType='manyReviews', period='6month', pg=${pageResponseDTO.start - 1}, subCateNo=${pageResponseDTO.subCateNo})}" class="prev">&lt;</a>
                     </th:block>
                     <th:block th:each="num : ${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end)}">
-                        <a th:href="@{/product/list(pg=${num}, subCateNo=${pageResponseDTO.subCateNo})}"
+                        <a th:href="@{/product/list/manyReviews6month(sortType='manyReviews', period='6month', pg=${num}, subCateNo=${pageResponseDTO.subCateNo})}"
                            th:class="${num == pageResponseDTO.pg} ? 'current' : 'num'">
                             [[${num}]]
                         </a>
                     </th:block>
                     <th:block th:if="${pageResponseDTO.next}">
-                        <a th:href="@{/product/list(pg=${pageResponseDTO.end + 1}, subCateNo=${pageResponseDTO.subCateNo})}" class="next">&gt;</a>
+                        <a th:href="@{/product/list/manyReviews6month(sortType='manyReviews', period='6month', pg=${pageResponseDTO.end + 1}, subCateNo=${pageResponseDTO.subCateNo})}" class="next">&gt;</a>
                     </th:block>
                 </div>
+
             </div>
         </section>
     </main>

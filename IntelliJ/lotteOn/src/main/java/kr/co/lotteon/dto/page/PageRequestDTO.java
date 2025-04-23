@@ -26,10 +26,13 @@ public class PageRequestDTO {
     private String searchType;
     private String keyword;
 
-    // 추가 필드 ( 상품 목록 정렬용)
+    // 추가 필드 (상품 목록 정렬용)
     private String sortType;
     private int subCateNo; // 하위 카테고리
     private String period; // 판매 많은 순, 후기 많은 순
+
+    // 추가 필드 (글 번호)
+    private String prodNo;
 
     public Pageable getPageable(String sort){
         return PageRequest.of(this.pg - 1, this.size, Sort.by(sort).descending());

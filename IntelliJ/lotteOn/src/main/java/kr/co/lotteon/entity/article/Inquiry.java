@@ -50,6 +50,14 @@ public class Inquiry {
     private String channel; // (고객센터,판매자)
     private String email;   // 마이페이지 문의하기에서 입력하는 email
 
+    /*
+    * 상품 페이지에서 출력하기 위한 상품 코드
+    * */
+
+    private String prodNo;
+
+    private int password; // 비밀번호 4자리
+
     @PrePersist
     public void prePersist() {
         if (this.channel == null) {
@@ -59,5 +67,6 @@ public class Inquiry {
             this.state = "검토중";
         }
     }
+
 
 }

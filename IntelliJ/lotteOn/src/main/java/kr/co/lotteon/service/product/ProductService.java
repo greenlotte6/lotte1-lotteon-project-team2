@@ -1,19 +1,16 @@
 package kr.co.lotteon.service.product;
 
-import com.querydsl.core.Tuple;
+import jakarta.transaction.Transactional;
 import kr.co.lotteon.dto.page.PageRequestDTO;
-import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.repository.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -23,79 +20,27 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ModelMapper modelMapper;
 
-    // 상품 목록 조회
-    public PageResponseDTO selectAllForList(PageRequestDTO pageRequestDTO) {
-        Pageable pageable = pageRequestDTO.getPageable("no");
+    // 상품 + 판매자 + 쿠폰 + 배너
+    public ProductDTO findByProdNo(PageRequestDTO pageRequestDTO) {
+        String prodNo = pageRequestDTO.getProdNo();
+        Optional<Product> optProduct = productRepository.findByProdNo(prodNo);
 
-        Page<Tuple> pageProduct = productRepository.selectAllForList(pageRequestDTO, pageable);
-
-        List<ProductDTO> productDTOList = pageProduct.getContent().stream().map(tuple -> {
-            Product product = tuple.get(0, Product.class);
-            String company = tuple.get(1,  String.class);
-            String thumb = tuple.get(2,  String.class);
-
+        if(optProduct.isPresent()) {
+            Product product = optProduct.get();
             ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
-            productDTO.setCompany(company);
-            productDTO.setThumb(thumb);
-
             return productDTO;
-        }).toList();
-
-        int total = (int) pageProduct.getTotalElements();
-
-        return PageResponseDTO.<ProductDTO>builder()
-                .pageRequestDTO(pageRequestDTO)
-                .dtoList(productDTOList)
-                .total(total)
-                .build();
+        }
+        return null;
     }
 
-    //  베스트 상품 조회
-    public List<ProductDTO> selectBestAllForList(int subCateNo) {
-        Page<Tuple> pageProduct = productRepository.selectBestAllForList(subCateNo);
-
-        List<ProductDTO> productDTOList = pageProduct.getContent().stream().map(tuple -> {
-            Product product = tuple.get(0, Product.class);
-            String company = tuple.get(1, String.class);
-            String thumb = tuple.get(2, String.class);
-
-            ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
-            productDTO.setCompany(company);
-            productDTO.setThumb(thumb);
-
-            return productDTO;
-        }).toList();
-
-        log.info("BsetProductDTOList: {}", productDTOList);
-
-        return productDTOList;
+    // 글 조회수
+    @Transactional
+    public void increaseHit(PageRequestDTO pageRequestDTO) {
+        String prodNo = pageRequestDTO.getProdNo();
+        Product product = productRepository.findByProdNo(prodNo)
+                .orElseThrow(() -> new RuntimeException("해당 게시글이 존재하지 않습니다."));
+        product.setHit(product.getHit() + 1);
     }
 
-    //  정렬된 상품 목록 조회
-    public PageResponseDTO sortedProducts(PageRequestDTO pageRequestDTO) {
-        Pageable pageable = pageRequestDTO.getPageable("no");
-
-        Page<Tuple> pageProduct = productRepository.sortedProducts(pageRequestDTO, pageable);
-
-        List<ProductDTO> productDTOList = pageProduct.getContent().stream().map(tuple -> {
-            Product product = tuple.get(0, Product.class);
-            String company = tuple.get(1, String.class);
-            String thumb = tuple.get(2, String.class);
-
-            ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
-            productDTO.setCompany(company);
-            productDTO.setThumb(thumb);
-
-            return productDTO;
-        }).toList();
-
-        int total = (int) pageProduct.getTotalElements();
-
-        return PageResponseDTO.<ProductDTO>builder()
-                .pageRequestDTO(pageRequestDTO)
-                .dtoList(productDTOList)
-                .total(total)
-                .build();
-    }
 }
 

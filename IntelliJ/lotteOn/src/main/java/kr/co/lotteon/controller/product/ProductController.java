@@ -4,14 +4,16 @@ package kr.co.lotteon.controller.product;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
+import kr.co.lotteon.dto.product.ProductDetailDTO;
+import kr.co.lotteon.service.article.InquiryService;
+import kr.co.lotteon.service.product.ProductDetailService;
 import kr.co.lotteon.service.product.ProductService;
+import kr.co.lotteon.service.feedback.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -19,38 +21,25 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-
-    // 기본 리스트
-    @GetMapping("/product/list")
-    public String list(PageRequestDTO pageRequestDTO, Model model) {
-        PageResponseDTO pageResponseDTO = productService.selectAllForList(pageRequestDTO);
-        List<ProductDTO> productList = productService.selectBestAllForList(pageRequestDTO.getSubCateNo());
-        model.addAttribute(pageResponseDTO);
-        model.addAttribute(productList);
-
-        log.info("pageResponseDTO: {}", pageResponseDTO);
-        log.info("BestproductList: {}", productList);
-        return "/product/list";
-    }
-
-    // 상품 정렬 리스트
-    @GetMapping("/product/list/sorted")
-    public String getSortedProductList(PageRequestDTO pageRequestDTO, Model model) {
-        PageResponseDTO pageResponseDTO = productService.sortedProducts(pageRequestDTO);
-        List<ProductDTO> productList = productService.selectBestAllForList(pageRequestDTO.getSubCateNo());
-        model.addAttribute(pageResponseDTO);
-        model.addAttribute(productList);
-
-        log.info("SortedpageResponseDTO: {}", pageResponseDTO);
-        log.info("SortedBestproductList: {}", productList);
-
-        log.info("pageRequestDTO: {}", pageRequestDTO);
-        return "/product/list";
-    }
+    private final ProductDetailService productDetailService;
+    private final ReviewService reviewService;
+    private final InquiryService inquiryService;
 
     // 상세보기
     @GetMapping("/product/view")
-    public String Productview() {
+    public String Productview(PageRequestDTO pageRequestDTO, Model model) {
+        productService.increaseHit(pageRequestDTO);
+        // 상품
+        ProductDTO product = productService.findByProdNo(pageRequestDTO);
+        // 상품 상세
+        ProductDetailDTO productDetailDTO = productDetailService.findByProdNo(pageRequestDTO);
+        // 리뷰
+        PageResponseDTO reviewPageResponseDTO = reviewService.selectAllForList(pageRequestDTO);
+        // qna
+        PageResponseDTO inquiryPageResponseDTO = inquiryService.selectAllForList(pageRequestDTO);
+
+
+
         return "/product/beauty/perfume/diptyque_fleurdepeau";
     }
 
