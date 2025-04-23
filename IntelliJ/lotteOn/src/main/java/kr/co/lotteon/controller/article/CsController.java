@@ -103,11 +103,8 @@ public class CsController {
 
 
 
-
     @GetMapping("/cs/qna/list")
     public String qnaList(@RequestParam("cateV1") String cateV1,Model model, PageRequestDTO pageRequestDTO) {
-
-        System.out.println(cateV1);
 
         PageResponseDTO<InquiryDTO> responseDTO = csService.findAll(pageRequestDTO, cateV1);
         model.addAttribute("cateV1", cateV1);
@@ -126,7 +123,12 @@ public class CsController {
     }
 
     @GetMapping("/cs/qna/coupon")
-    public String qnaCoupon() {
+    public String qnaCoupon(@RequestParam("cateV1") String cateV1,Model model, PageRequestDTO pageRequestDTO) {
+
+        PageResponseDTO<InquiryDTO> responseDTO = csService.findAll(pageRequestDTO, cateV1);
+        model.addAttribute("cateV1", cateV1);
+        model.addAttribute("responseDTO", responseDTO);
+
         return "/cs/qna/coupon";
     }
 
@@ -136,7 +138,12 @@ public class CsController {
     }
 
     @GetMapping("/cs/qna/delivery")
-    public String qnaDelivery() {
+    public String qnaDelivery(@RequestParam("cateV1") String cateV1,Model model, PageRequestDTO pageRequestDTO) {
+
+        PageResponseDTO<InquiryDTO> responseDTO = csService.findAll(pageRequestDTO, cateV1);
+        model.addAttribute("cateV1", cateV1);
+        model.addAttribute("responseDTO", responseDTO);
+
         return "/cs/qna/delivery";
     }
 
@@ -151,7 +158,12 @@ public class CsController {
     }
 
     @GetMapping("/cs/qna/safeDeal")
-    public String qnaSafeDeal() {
+    public String qnaSafeDeal(@RequestParam("cateV1") String cateV1,Model model, PageRequestDTO pageRequestDTO) {
+
+        PageResponseDTO<InquiryDTO> responseDTO = csService.findAll(pageRequestDTO, cateV1);
+        model.addAttribute("cateV1", cateV1);
+        model.addAttribute("responseDTO", responseDTO);
+
         return "/cs/qna/safeDeal";
     }
 
@@ -162,7 +174,7 @@ public class CsController {
 
     // 문의하기 작성
     @PostMapping("/cs/qna/write")
-    public String qnaWrite(InquiryDTO inquiryDTO, HttpServletRequest request, @RequestParam("writer") String uid){
+    public String qnaWrite(InquiryDTO inquiryDTO, HttpServletRequest request, @RequestParam("writer") String uid, @RequestParam("cateV1") String cateV1){
 
         String regip = request.getRemoteAddr();
         inquiryDTO.setRegip(regip);
@@ -175,7 +187,11 @@ public class CsController {
 
         csService.register(inquiryDTO);
 
-        return "redirect:/cs/qna/list";
+        log.info("cateV1: {}", cateV1);
+
+
+
+        return null;
     }
 
 
