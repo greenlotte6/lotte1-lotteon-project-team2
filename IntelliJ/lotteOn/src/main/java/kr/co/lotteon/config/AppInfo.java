@@ -32,7 +32,7 @@ public class AppInfo {
         if(version == null){
             appVersion = appVersionSub;
         }else {
-            appVersion = appVersionSub;
+            appVersion = version.getVersion();
         }
 
     }

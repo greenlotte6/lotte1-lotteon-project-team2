@@ -29,8 +29,6 @@ public class VersionRepositoryImpl implements VersionRepositoryCustom {
     @Override
     public Page<Tuple> selectAllForList(PageRequestDTO pageRequestDTO, Pageable pageable) {
 
-        pageRequestDTO.setSize(10);
-
         List<Tuple> tupleList = queryFactory
                 .select(qVersion, qUser.uid)
                 .from(qVersion)
