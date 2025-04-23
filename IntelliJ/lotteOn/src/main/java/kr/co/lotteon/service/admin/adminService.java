@@ -1,29 +1,34 @@
 package kr.co.lotteon.service.admin;
 
+import ch.qos.logback.core.model.Model;
 import com.querydsl.core.Tuple;
 import jakarta.transaction.Transactional;
+import kr.co.lotteon.dto.article.NoticeDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.dto.product.ProductDetailDTO;
 import kr.co.lotteon.dto.product.ProductImageDTO;
+import kr.co.lotteon.entity.article.Notice;
 import kr.co.lotteon.entity.category.SubCategory;
 import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.entity.product.ProductDetail;
 import kr.co.lotteon.entity.product.ProductImage;
 import kr.co.lotteon.entity.seller.Seller;
+import kr.co.lotteon.entity.user.User;
+import kr.co.lotteon.repository.article.NoticeRepository;
 import kr.co.lotteon.repository.category.SubCategoryRepository;
 import kr.co.lotteon.repository.product.CartRepository;
 import kr.co.lotteon.repository.product.ProductDetailRepository;
 import kr.co.lotteon.repository.product.ProductImageRepository;
 import kr.co.lotteon.repository.product.ProductRepository;
 import kr.co.lotteon.repository.seller.SellerRepository;
-import kr.co.lotteon.service.seller.SellerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -41,6 +46,7 @@ public class adminService {
     private final SubCategoryRepository subCategoryRepository;
     private final ProductImageRepository productImageRepository;
     private final CartRepository cartRepository;
+    private final NoticeRepository noticeRepository;
 
     private final ModelMapper modelMapper;
 
@@ -158,11 +164,91 @@ public class adminService {
         }
 
 
-        // 제품 삭제
+    }
 
-        // productDetailRepository.deleteByPro
+    
+    /*
+    * 공지사항 부분
+    * */
+    
+    // 공지사항 저장
+    public void saveNotice(NoticeDTO noticeDTO, UserDetails userDetails) {
+
+        User user = User.builder()
+                .uid(userDetails.getUsername())
+                .build();
+
+        Notice notice = modelMapper.map(noticeDTO, Notice.class);
+        notice.setUser(user);
+
+        noticeRepository.save(notice);
+
+    }
+
+    // 공지사항 목록 페이징
+    public PageResponseDTO findAllNotice(PageRequestDTO pageRequestDTO) {
+
+        pageRequestDTO.setSize(10);
+
+        Pageable pageable = pageRequestDTO.getPageable("no");
+
+        Page<Tuple> pageObject = noticeRepository.selectAllNotice(pageRequestDTO, pageable);
+
+        List<NoticeDTO> DTOList = pageObject.getContent().stream().map(tuple -> {
+            Notice notice = tuple.get(0, Notice.class);
+            return modelMapper.map(notice, NoticeDTO.class);
+        }).toList();
+
+        int total = (int) pageObject.getTotalElements();
+
+        log.info("total: {}", total);
+        log.info("productDTOList: {}", pageObject);
+
+        return PageResponseDTO.<NoticeDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(DTOList)
+                .total(total)
+                .build();
 
 
+    }
 
+    // 공지사항 삭제
+    public void deleteNoticeByNo(String no) {
+        noticeRepository.deleteById(Integer.parseInt(no));
+    }
+
+    // 공지사항 데이터 찾기
+    public NoticeDTO findNoticeByNo(String no) {
+        int pk = Integer.parseInt(no);
+        Optional<Notice> noticeOpt = noticeRepository.findById(pk);
+
+        if(noticeOpt.isPresent()){
+            Notice notice = noticeOpt.get();
+            NoticeDTO noticeDTO = modelMapper.map(notice, NoticeDTO.class);
+            return noticeDTO;
+        }
+
+        return null;
+
+    }
+
+    // 공지사항 수정하기
+    public void modify(NoticeDTO noticeDTO) {
+        Optional<Notice> noticeOpt = noticeRepository.findById(noticeDTO.getNo());
+        if(noticeOpt.isPresent()){
+            Notice notice = noticeOpt.get();
+            notice.setCate(noticeDTO.getCate());
+            notice.setTitle(noticeDTO.getTitle());
+            notice.setContent(noticeDTO.getContent());
+            noticeRepository.save(notice);
+        }
+
+    }
+
+    public void deleteNoticeByList(List<Integer> deleteNos) {
+        for( int i : deleteNos){
+            noticeRepository.deleteById(i);
+        }
     }
 }

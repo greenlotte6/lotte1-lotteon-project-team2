@@ -10,6 +10,14 @@
 
     <!-- 사이드바-->
     <script src="/js/admin/sidebar.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function (){
+        document.getElementById("list").addEventListener("click", function () {
+          window.location.href = "/admin/cs/notice/list";
+        });
+      });
+    </script>
   </head>
   <body>
     <div id="wrapper">
@@ -36,15 +44,17 @@
 
             <div class="Blank_box"></div>
 
-            <form action="#" class="reply_list_form">
+            <form class="reply_list_form" method="post">
               <table>
                 <tbody>
                   <tr>
                     <td class="label">유형</td>
                     <td>
-                      <select name="brand">
-                        <option value="1차유형">유형선택</option>
-                        <option value="1차유형">1차유형&emsp;&emsp;▼</option>
+                      <select name="cate">
+                        <option value="고객서비스">고객서비스</option>
+                        <option value="안전거래">안전거래</option>
+                        <option value="위해상품">위해상품</option>
+                        <option value="이벤트당첨">이벤트당첨</option>
                       </select>
                     </td>
                   </tr>
@@ -73,7 +83,7 @@
               </table>
 
               <div class="button_group">
-                <button type="button" class="delete_button">취소하기</button>
+                <button type="button" class="delete_button" id="list">취소하기</button>
                 <button type="submit" class="register_button">등록하기</button>
               </div>
             </form>

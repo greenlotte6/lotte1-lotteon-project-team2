@@ -114,6 +114,7 @@ main {
   background-color: #9ab8e6;
   border: none;
   font-size: 16px;
+  cursor: pointer;
 }
 
 .delete_btn {
@@ -126,6 +127,7 @@ main {
   background-color: #bfbfbf;
   border: none;
   font-size: 16px;
+  cursor: pointer;
 }
 
 .modify_btn {
@@ -138,6 +140,7 @@ main {
   background-color: #bfbfbf;
   border: none;
   font-size: 16px;
+  cursor: pointer;
 }
 
 /* 버튼 그룹 */
@@ -158,6 +161,7 @@ main {
   background-color: #bfbfbf;
   border: none;
   font-size: 16px;
+  cursor: pointer;
 }
 
 .register_button,
@@ -170,6 +174,7 @@ main {
   background-color: #9ab8e6;
   border: none;
   font-size: 16px;
+  cursor: pointer;
 }
 
 input {
