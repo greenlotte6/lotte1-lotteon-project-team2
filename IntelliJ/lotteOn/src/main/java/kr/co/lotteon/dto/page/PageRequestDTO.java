@@ -31,6 +31,9 @@ public class PageRequestDTO {
     @Builder.Default
     private String sortType = "latest";
 
+    // 추가 필드 ( 관리자 상품 목록 (판매자/관리자 구별))
+    private String role;
+
     public PageRequest getPageable(String sort){
         return PageRequest.of(this.pg - 1, this.size, Sort.by(sort).descending());
 

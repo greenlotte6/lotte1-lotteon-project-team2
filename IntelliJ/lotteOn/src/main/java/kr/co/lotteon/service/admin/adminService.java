@@ -1,19 +1,29 @@
 package kr.co.lotteon.service.admin;
 
+import com.querydsl.core.Tuple;
+import jakarta.transaction.Transactional;
+import kr.co.lotteon.dto.page.PageRequestDTO;
+import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.dto.product.ProductDetailDTO;
+import kr.co.lotteon.dto.product.ProductImageDTO;
 import kr.co.lotteon.entity.category.SubCategory;
 import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.entity.product.ProductDetail;
+import kr.co.lotteon.entity.product.ProductImage;
 import kr.co.lotteon.entity.seller.Seller;
 import kr.co.lotteon.repository.category.SubCategoryRepository;
+import kr.co.lotteon.repository.product.CartRepository;
 import kr.co.lotteon.repository.product.ProductDetailRepository;
+import kr.co.lotteon.repository.product.ProductImageRepository;
 import kr.co.lotteon.repository.product.ProductRepository;
 import kr.co.lotteon.repository.seller.SellerRepository;
 import kr.co.lotteon.service.seller.SellerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -29,7 +39,11 @@ public class adminService {
     private final ProductRepository productRepository;
     private final ProductDetailRepository productDetailRepository;
     private final SubCategoryRepository subCategoryRepository;
+    private final ProductImageRepository productImageRepository;
+    private final CartRepository cartRepository;
+
     private final ModelMapper modelMapper;
+
 
     /*
     * 관리자 페이지 (상품 등록 메서드)
@@ -86,5 +100,69 @@ public class adminService {
         ProductDetail productDetail = modelMapper.map(productDetailDTO, ProductDetail.class);
         productDetail.setProduct(savedProduct);
         productDetailRepository.save(productDetail);
+    }
+
+    public PageResponseDTO selectAllForList(PageRequestDTO pageRequestDTO) {
+
+        Pageable pageable = pageRequestDTO.getPageable("no");
+
+        Page<Tuple> pageProduct = productRepository.selectAllForListByRole(pageRequestDTO, pageable);
+
+        List<ProductDTO> productDTOList = pageProduct.getContent().stream().map(tuple -> {
+            Product product = tuple.get(0, Product.class);
+            String company = tuple.get(1,  String.class);
+            ProductImage productImage = tuple.get(2,  ProductImage.class);
+
+            ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+            productDTO.setCompany(company);
+
+            ProductImageDTO productImageDTO = modelMapper.map(productImage, ProductImageDTO.class);
+            productDTO.setProductImageDTO(productImageDTO);
+
+            return productDTO;
+        }).toList();
+
+        int total = (int) pageProduct.getTotalElements();
+
+        log.info("total: {}", total);
+        log.info("productDTOList: {}", productDTOList);
+
+        return PageResponseDTO.<ProductDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(productDTOList)
+                .total(total)
+                .build();
+
+    }
+
+    /*
+     * 제품 삭제
+     * */
+
+    @Transactional
+    public void deleteProduct(String no) {
+
+        // 제품 엔티티 출력
+        Optional<Product> optProduct = productRepository.findById(no);
+
+        /*
+        * 상품을 삭제할 때
+        * */
+        if(optProduct.isPresent()){
+            Product product = optProduct.get();
+
+            productDetailRepository.deleteByProduct(product);
+            productImageRepository.deleteByProduct(product);
+            cartRepository.deleteByProduct(product);
+            productRepository.deleteById(no);
+        }
+
+
+        // 제품 삭제
+
+        // productDetailRepository.deleteByPro
+
+
+
     }
 }

@@ -85,6 +85,30 @@
                                         <a href="#">[수정]</a>
                                     </td>
                                 </tr>
+
+                                <tr th:each="product : ${pageResponseDTO.dtoList}">
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                    <td>
+                                        <img src="/images/product/blnk_star.png" alt="별">
+                                        <img src="/images/product/blnk_star.png" alt="별">
+                                        <img src="/images/product/blnk_star.png" alt="별">
+                                    </td>
+                                    <td>[[${product.prodNo}]]</td>
+                                    <td>[[${product.prodName}]]</td>
+                                    <td>[[${product.prodPrice}]]</td>
+                                    <td>[[${product.prodDiscount}]]%</td>
+                                    <td>[[${product.prodPoint}]]</td>
+                                    <td>[[${product.prodStock}]]</td>
+                                    <td>[[${product.company}]]</td>
+                                    <td>[[${product.hit}]]</td>
+                                    <td>
+                                        <a th:href="@{/admin/product/delete(no=${product.prodNo})}">[삭제]</a>
+                                        <a href="#">[수정]</a>
+                                    </td>
+
+                                </tr>
                                 
                             </tbody>
                         </table>

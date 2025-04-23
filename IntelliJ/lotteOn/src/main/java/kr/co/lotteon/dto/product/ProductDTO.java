@@ -44,5 +44,8 @@ public class ProductDTO {
     private double ratingAvg;   // 상품 리뷰 평균
     private String prodBrand;
 
+    //이미지 정보
+    private ProductImageDTO productImageDTO;
+
 
 }

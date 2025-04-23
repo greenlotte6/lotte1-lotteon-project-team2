@@ -2,6 +2,8 @@ package kr.co.lotteon.controller.admin;
 
 import jakarta.servlet.http.HttpServletRequest;
 import kr.co.lotteon.dto.config.TermsDTO;
+import kr.co.lotteon.dto.page.PageRequestDTO;
+import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.dto.product.ProductDetailDTO;
 import kr.co.lotteon.dto.product.ProductImageDTO;
@@ -92,6 +94,8 @@ public class AdminController {
         return "/admin/config/version";
     }
 
+
+
     /*
     * 관리자 상점목록
     * */
@@ -141,8 +145,22 @@ public class AdminController {
 
     // 상품현황
     @GetMapping("/product/list")
-    public String productList(){
+    public String productList(PageRequestDTO pageRequestDTO, Model model){
+        PageResponseDTO pageResponseDTO = adminService.selectAllForList(pageRequestDTO);
+        model.addAttribute(pageResponseDTO);
+
+        System.out.println(pageResponseDTO);
+        System.out.println(pageResponseDTO);
+        System.out.println(pageResponseDTO);
+
         return "/admin/product/list";
+    }
+
+    @GetMapping("/product/delete")
+    public String productDelete(@RequestParam("no") String no){
+
+        adminService.deleteProduct(no);
+        return "redirect:/admin/product/list";
     }
 
     @GetMapping("/product/register")
@@ -152,10 +170,6 @@ public class AdminController {
 
     @PostMapping("/product/register")
     public String productRegister(ProductDTO productDTO, ProductDetailDTO productDetailDTO, ProductImageDTO productImageDTO){
-
-        System.out.println(productDetailDTO);
-        System.out.println(productImageDTO);
-        System.out.println(productDTO);
 
         // 상품 저장
         Product savedProduct = adminService.saveProduct(productDTO);

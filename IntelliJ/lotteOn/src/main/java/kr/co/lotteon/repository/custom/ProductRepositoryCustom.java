@@ -13,4 +13,6 @@ public interface ProductRepositoryCustom {
     public Page<Tuple> selectBestAllForList(int subCate);
 
     public Page<Tuple> sortedProducts(PageRequestDTO pageRequestDTO, Pageable pageable);
+
+    Page<Tuple> selectAllForListByRole(PageRequestDTO pageRequestDTO, Pageable pageable);
 }
