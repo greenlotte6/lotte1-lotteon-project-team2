@@ -152,41 +152,10 @@
     margin-right: 80px;
   }
 
-/* 페이지 + 버튼 */
-.notice-footer {
-  position: relative;
-  height: 60px;
-  margin-top: 30px;
-}
-
-.pagination {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 6px;
-  font-size: 14px;
-}
-
-.pagination a,
-.pagination span {
-  padding: 6px 12px;
-  border-radius: 4px;
-  color: #333;
-  text-decoration: none;
-  border: 1px solid #ccc;
-}
-
-.pagination a.active {
-  background-color: #222;
-  color: white;
-  font-weight: bold;
-  border-color: #222;
-}
 
 /* 문의하기 버튼*/
 .inquiry-btn {
-  position: absolute;
+  float: right;
   right: 0;
   transform: translateY(-50%);
   display: inline-block;
