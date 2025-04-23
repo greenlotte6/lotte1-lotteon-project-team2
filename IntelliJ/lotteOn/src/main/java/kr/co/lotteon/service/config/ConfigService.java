@@ -80,6 +80,7 @@ public class ConfigService {
     // 버전 출력 (관리자)
     public PageResponseDTO selectAll(PageRequestDTO pageRequestDTO) {
 
+        pageRequestDTO.setSize(10);
         Pageable pageable = pageRequestDTO.getPageable("no");
 
         Page<Tuple> pageVersion = versionRepository.selectAllForList(pageRequestDTO, pageable);

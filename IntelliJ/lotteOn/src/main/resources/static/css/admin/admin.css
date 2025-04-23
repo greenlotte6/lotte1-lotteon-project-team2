@@ -373,3 +373,48 @@ textarea {
   overflow: hidden;
   margin-bottom: 20px;
 }
+
+/* 페이징 스타일 */
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin: 20px 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.page a {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #333;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+.page a:hover {
+  background-color: #f0f0f0;
+  border-color: #999;
+}
+
+.page a.current {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+  font-weight: bold;
+}
+
+.page a.prev,
+.page a.next {
+  font-weight: 500;
+  background-color: #e9ecef;
+  color: #333;
+}
+
+.page a.prev:hover,
+.page a.next:hover {
+  background-color: #d4d9df;
+}
