@@ -2,6 +2,7 @@ package kr.co.lotteon.controller.admin;
 
 import jakarta.servlet.http.HttpServletRequest;
 import kr.co.lotteon.dto.config.TermsDTO;
+import kr.co.lotteon.dto.config.VersionDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
@@ -17,10 +18,13 @@ import kr.co.lotteon.service.product.ProductService;
 import kr.co.lotteon.service.seller.SellerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -90,9 +94,31 @@ public class AdminController {
 
     // 버전관리
     @GetMapping("/config/version")
-    public String version() {
+    public String version(PageRequestDTO pageRequestDTO, Model model) {
+
+        PageResponseDTO pageResponseDTO = configService.selectAll(pageRequestDTO);
+        model.addAttribute("verions",pageResponseDTO);
+
+        System.out.println(pageResponseDTO);
         return "/admin/config/version";
     }
+
+    // 버전등록
+    @PostMapping("/config/version/register")
+    public String registerVersion(VersionDTO versionDTO, @AuthenticationPrincipal UserDetails userDetails) {
+
+        configService.saveVersion(versionDTO, userDetails);
+        return "redirect:/admin/config/version";
+    }
+
+    // 버전삭제
+    @PostMapping("/config/version/delete")
+    public String deleteVersions(@RequestParam("deleteVno") List<Integer> deleteVnos) {
+        configService.deleteVersions(deleteVnos);
+        return "redirect:/admin/config/version";
+    }
+
+
 
     /*
      * 관리자 상점목록

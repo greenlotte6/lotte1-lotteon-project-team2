@@ -24,4 +24,7 @@ public class VersionDTO {
     private String version; //버전정보
     private LocalDateTime wdate; // 등록일
     private String content; //내용
+    
+    // 페이지 목록 출력용 유저 아이디
+    private String uid;
 }

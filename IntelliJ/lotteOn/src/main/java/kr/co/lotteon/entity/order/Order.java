@@ -45,4 +45,7 @@ public class Order {
 
     private String payment;       // 결제 수단
     private String paymentCont;   // 결제 상세 정보
+
+    private String color; // 상품 색상
+    private int size;  // 상품
 }
