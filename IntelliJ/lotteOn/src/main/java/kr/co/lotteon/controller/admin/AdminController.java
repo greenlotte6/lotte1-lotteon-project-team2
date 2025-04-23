@@ -252,6 +252,21 @@ public class AdminController {
         return "/admin/notice/list";
     }
 
+    @GetMapping("/cs/notice/write")
+    public String noticeWrite(){
+        return "/admin/notice/write";
+    }
+
+    @GetMapping("/cs/notice/view")
+    public String noticeView(){
+        return "/admin/notice/view";
+    }
+
+    @GetMapping("/cs/notice/modify")
+    public String noticeModify(){
+        return "/admin/notice/modify";
+    }
+
     //자주묻는질문
     @GetMapping("/cs/faq/list")
     public String faqList(){

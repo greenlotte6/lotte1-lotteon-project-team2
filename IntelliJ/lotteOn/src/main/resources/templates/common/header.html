@@ -6,7 +6,7 @@
             <div class="menu_items">
                 <div class="login">
                     <div sec:authorize="isAuthenticated()">
-                        <a href="#">로그아웃</a>
+                        <a th:href="@{/user/logout}">로그아웃</a>
                     </div>
                     <div sec:authorize="isAnonymous()">
                         <a th:href="@{/user/member/login}">로그인/회원가입</a>
