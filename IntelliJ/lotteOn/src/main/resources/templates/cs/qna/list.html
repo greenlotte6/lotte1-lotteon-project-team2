@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/css/common/table-main-width.css">
     <script src="/js/common/state.js"></script>
     <script src="/js/headerMenu.js"></script>
+
 </head>
 <body>
     <div id="wrapper">
@@ -32,7 +33,9 @@
                 <div class="main_content_side">
                     <div class="notice-container">
                         <div class="location-container">
-                            <h2>회원</h2>
+                            <div th:each="cateV1:${cateV1}">
+                                <h2 th:text="${cateV1}"></h2>
+                            </div>
                             <div>
                                 <ul>
                                     <li>
@@ -57,8 +60,8 @@
                                 <th>작성일</th>
                                 <th>상태</th>
                             </tr>
-                            <tr th:each="inquiry : ${responseDTO.dtoList}">
-                                <td th:text="${inquiry.no}"></td>
+                            <tr th:each="inquiry, i : ${responseDTO.dtoList}">
+                                <td th:text="${responseDTO.startNo - i.index}"></td>
                                 <td th:text="${inquiry.cateV1}"></td>
                                 <td th:text="${inquiry.cateV2}"></td>
                                 <td><a th:href="@{/cs/qna/view(no=${inquiry.no})}">[[${inquiry.title}]]</a></td>
@@ -81,7 +84,6 @@
                         </div>
                     </div>
                 </div>
-
             </section>
         </main>
 
@@ -152,6 +154,8 @@
             </div>
         </footer>
         <!-- 푸터 끝 -->
+
+
     </div>
 </body>
 </html>
