@@ -42,7 +42,7 @@ public class PageResponseDTO<T> {
 
         this.startNo = total - ((pg - 1) * size);
 
-        int blockSize = 3; // 원하는 블록 크기
+        int blockSize = 10; // 원하는 블록 크기
         this.end = (int) (Math.ceil(this.pg / (double) blockSize)) * blockSize;
         this.start = this.end - (blockSize - 1);
 

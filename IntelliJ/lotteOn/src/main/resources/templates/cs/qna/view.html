@@ -29,28 +29,30 @@
                         <h2>문의하기</h2>
                         <div class="notice-view">
                             <div class="notice-header">
-                            <div class="notice-title">질문<br><span class="writer">작성자1(기능)</span><span class="notice-date">2025.00.00</span></div>
+                                <div class="notice-title">
+                                    <p>질문</p>
+                                    <div>
+                                        <span th:text="${#temporals.format(inquiryDTO.wdate, 'yyyy-MM-dd')}"></span>
+                                        <span th:text="${inquiryDTO.user.name}"></span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="notice-content">
-                                <p>
-                                    내용<br>
-                                    test<br>
-                                </p>
+                                <p>[[${inquiryDTO.content}]]</p>
                             </div>
                         </div>
-                        <div class="notice-view">
+                        <div class="notice-view" th:if="${inquiryDTO.answer != null}">
                             <div class="notice-header">
-                            <div class="notice-title">응답<br><span class="notice-date">2025.00.00</span></div>
+                                <div class="notice-title">
+                                    <p>응답</p>
+                                </div>
                             </div>
                             <div class="notice-content">
-                                <p>
-                                    내용<br>
-                                    test<br>
-                                </p>
+                                <p class="content">[[${inquiryDTO.answer}]]</p>
                             </div>
                         </div>
                         <div class="notice-footer">
-                            <button onclick="history.back()">목록</button>
+                            <button type="button" th:onclick="|location.href='@{/cs/qna/list}'|">목록</button>
                         </div>
                     </div>
                 </article>

@@ -99,9 +99,27 @@
 }
 
 .notice-title {
+    border-bottom: 2px solid #222;
+}
+
+.notice-title div{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.notice-title div span{
+    margin-left: 10px;
+}
+
+.notice-title p {
   font-size: 25px;
   font-weight: 600;
-  border-bottom: 2px solid #222;
+}
+
+.notice-title span{
+    font-size: 15px;
+    color: #888;
+
 }
 
 .notice-date {

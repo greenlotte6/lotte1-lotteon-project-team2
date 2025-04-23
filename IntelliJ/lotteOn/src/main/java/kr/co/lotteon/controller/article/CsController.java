@@ -2,22 +2,18 @@ package kr.co.lotteon.controller.article;
 
 import jakarta.servlet.http.HttpServletRequest;
 import kr.co.lotteon.dto.article.InquiryDTO;
+import kr.co.lotteon.dto.page.PageRequestDTO;
+import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.user.UserDTO;
-import kr.co.lotteon.entity.article.Inquiry;
 import kr.co.lotteon.service.article.CsService;
 import kr.co.lotteon.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -109,17 +105,23 @@ public class CsController {
 
 
     @GetMapping("/cs/qna/list")
-    public String qnaList(InquiryDTO inquiryDTO, Model model) {
+    public String qnaList(@RequestParam("cateV1") String cateV1,Model model, PageRequestDTO pageRequestDTO) {
 
-        List<InquiryDTO> inquiryDTOS = csService.findAll();
+        System.out.println(cateV1);
 
-        model.addAttribute("inquiryDTOS", inquiryDTOS);
-
+        PageResponseDTO<InquiryDTO> responseDTO = csService.findAll(pageRequestDTO, cateV1);
+        model.addAttribute("cateV1", cateV1);
+        model.addAttribute("responseDTO", responseDTO);
         return "/cs/qna/list";
     }
 
     @GetMapping("/cs/qna/view")
-    public String qnaView() {
+    public String qnaView(Model model, @RequestParam("no") int no) {
+
+        InquiryDTO inquiryDTO = csService.findById(no);
+
+        model.addAttribute("inquiryDTO", inquiryDTO);
+
         return "/cs/qna/view";
     }
 
@@ -165,11 +167,10 @@ public class CsController {
         String regip = request.getRemoteAddr();
         inquiryDTO.setRegip(regip);
 
-        // 1. UserDTO 조회
+        // UserDTO 조회
         UserDTO user = userService.findById(uid);
 
         inquiryDTO.setUser(user);
-
 
 
         csService.register(inquiryDTO);
