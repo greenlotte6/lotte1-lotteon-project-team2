@@ -11,6 +11,60 @@
     <!-- 사이드바-->
     <script src="/js/admin/sidebar.js"></script>
 
+    <script>
+      document.addEventListener('DOMContentLoaded', function (){
+
+        // 삭제 기능
+        // 개별 삭제 링크에 confirm 추가
+        document.querySelectorAll('.delete-link').forEach(function(link) {
+          link.addEventListener('click', function(e) {
+            if (!confirm("정말 삭제하시겠습니까?")) {
+              e.preventDefault(); // 링크 이동 막기
+            }
+          });
+        });
+
+
+        document.getElementById("write").addEventListener("click", function () {
+          window.location.href = "/admin/cs/notice/write";
+        });
+
+        // 전체 체크박스
+        const deleteAllCheckbox = document.getElementById('deleteAll');
+
+        // 개별 체크박스
+        const deleteCheckboxes = document.querySelectorAll('input[name="deleteNo"]');
+
+        deleteAllCheckbox.addEventListener('change', function () {
+          const isChecked = this.checked;
+          deleteCheckboxes.forEach(cb => cb.checked = isChecked);
+        });
+
+        // 선택삭제 버튼 validation
+        document.querySelector('.member_list_form').addEventListener('submit', function(e) {
+          const checked = document.querySelectorAll('input[name="deleteNo"]:checked');
+          if (checked.length === 0) {
+            e.preventDefault();
+            alert('삭제할 항목을 선택해주세요.');
+          } else {
+            const confirmDelete = confirm('선택한 항목을 정말 삭제하시겠습니까?');
+            if (!confirmDelete) {
+              e.preventDefault();
+            }
+          }
+        });
+
+        document.querySelector('#cate').addEventListener('change',function(e){
+          this.form.submit();
+        })
+
+
+      });
+
+    </script>
+
+
+
   </head>
   <body>
     <div id="wrapper">
@@ -37,23 +91,22 @@
 
             <div class="select_div">
               <div class="select_box">
-                <form action="#">
-                  <select name="brand" style="width: 120px">
-                    <option value="유형선택">유형선택</option>
+                <form >
+                  <select name="searchType" id="cate" style="width: 120px" th:field="*{pageResponseDTO.searchType}">
+                    <option value="전체">전체</option>
                     <option value="고객서비스">고객서비스</option>
-                    <option value="이벤트당첨">이벤트당첨</option>
-                    <option value="안정거래">안정거래</option>
-                    <option value="고객서비스">고객서비스</option>
+                    <option value="안전거래">안전거래</option>
                     <option value="위해상품">위해상품</option>
+                    <option value="이벤트당첨">이벤트당첨</option>
                   </select>
                 </form>
               </div>
             </div>
 
-            <form action="#" class="member_list_form">
+            <form th:action="@{/admin/cs/notice/deleteList}" class="member_list_form">
               <table>
                 <thead>
-                  <th><input type="checkbox" /></th>
+                  <th><input type="checkbox" id="deleteAll"/></th>
                   <th>번호</th>
                   <th>유형</th>
                   <th>제목</th>
@@ -62,18 +115,18 @@
                   <th>관리</th>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr th:each="item, i : ${pageResponseDTO.dtoList}">
                     <td>
-                      <input type="checkbox" />
+                      <input type="checkbox" name="deleteNo" th:value="${item.no}" />
                     </td>
-                    <td>100</td>
-                    <td>고객서비스</td>
-                    <td>[안내] 해외결제 사칭문자 주의</td>
-                    <td>120</td>
-                    <td>00.00.00</td>
+                    <td>[[${pageResponseDTO.startNo - i.index}]]</td>
+                    <td>[[${item.cate}]]</td>
+                    <td><a th:href="@{/admin/cs/notice/view(no=${item.no})}">[[${item.title}]]</a></td>
+                    <td>[[${item.hit}]]</td>
+                    <td th:text="${#temporals.format(item.wdate, 'yyyy.MM.dd HH:mm:ss')}"></td>
                     <td>
-                      <a href="#" id="modal_modify">[ 삭제 ]</a><br />
-                      <a href="#">[ 중지 ]</a>
+                      <a th:href="@{/admin/cs/notice/delete(no=${item.no})}" class="delete-link">[ 삭제 ]</a><br />
+                      <a th:href="@{/admin/cs/notice/modify(no=${item.no})}">[ 수정 ]</a>
                     </td>
                   </tr>
 
@@ -86,9 +139,20 @@
               </div>
             </form>
             <!-- 페이징 -->
-            <p style="text-align: center; margin-top: 10px">
-              이전 1 2 3 4 5 다음
-            </p>
+            <div class="page">
+              <th:block th:if="${pageResponseDTO.prev}">
+                <a th:href="@{/admin/cs/notice/list(pg=${pageResponseDTO.start-1}, searchType=${pageResponseDTO.searchType})}" class="prev">이전</a>
+              </th:block>
+
+              <th:block th:each="num:${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end)}">
+                <a th:href="@{/admin/cs/notice/list(pg=${num} , searchType=${pageResponseDTO.searchType})}" th:class="${num == pageResponseDTO.pg} ? 'current' : 'num'">[[${num}]]</a>
+              </th:block>
+
+              <th:block th:if="${pageResponseDTO.next}">
+                <a th:href="@{/admin/cs/notice/list(pg=${pageResponseDTO.end+1} , searchType=${pageResponseDTO.searchType} )}" class="next">다음</a>
+              </th:block>
+            </div>
+
           </article>
         </section>
       </main>
@@ -98,134 +162,6 @@
       <!-- 푸터 끝 -->
     </div>
 
-    <!-- 모달 -->
-    <!-- 배너 등록 모달 -->
-    <div class="modal">
-      <div class="modal_popup">
-        <div class="modal_head">
-          <span class="modal_title">회원수정</span>
-          <button type="button" class="close_btn">X</button>
-        </div>
 
-        <div class="modal_main">
-          <form action="#" class="member">
-            <table class="modal_member">
-              <tr>
-                <td>아이디</td>
-                <td>
-                  <input type="text" name="uid" />
-                </td>
-              </tr>
-              <tr>
-                <td>이름</td>
-                <td>
-                  <input type="text" name="name" placeholder="홍길동" />
-                </td>
-              </tr>
-              <tr>
-                <td>성별</td>
-                <td>
-                  <input name="gender" type="radio" value="남" />남
-                  <input
-                    name="gender"
-                    type="radio"
-                    value="여"
-                    style="margin-left: 10px"
-                  />여
-                </td>
-              </tr>
-              <tr>
-                <td>등급</td>
-                <td>
-                  <input type="text" name="rank" readonly value="FAMILY" />
-                  <span style="margin-left: 10px"
-                    >등급 수정은 회원 목록에서 선택수정 가능</span
-                  >
-                </td>
-              </tr>
-              <tr>
-                <td>상태</td>
-                <td style="color: #57c479">정상</td>
-              </tr>
-              <tr>
-                <td>EMAIL</td>
-                <td>
-                  <input type="text" name="email" />
-                </td>
-              </tr>
-              <tr>
-                <td>휴대폰</td>
-                <td>
-                  <input type="text" name="hp" />
-                </td>
-              </tr>
-              <tr>
-                <td>우편번호</td>
-                <td>
-                  <input
-                    type="text"
-                    name="zip"
-                    id="zip"
-                    placeholder="우편번호 선택"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>기본주소</td>
-                <td>
-                  <input class="inputs" type="text" name="addr1" id="addr1" />
-                </td>
-              </tr>
-              <tr>
-                <td>상세주소</td>
-                <td>
-                  <input class="inputs" type="text" name="addr2" id="addr2" />
-                </td>
-              </tr>
-              <tr>
-                <td>가입일</td>
-                <td>0000-00-00 00:00:00</td>
-              </tr>
-              <tr>
-                <td>최근로그인날짜</td>
-                <td>0000-00-00 00:00:00</td>
-              </tr>
-              <tr>
-                <td>기타</td>
-                <td>
-                  <textarea
-                    name="content"
-                    placeholder="회원에대한기타정보입력"
-                  ></textarea>
-                </td>
-              </tr>
-            </table>
-
-            <button type="submit" class="modal_btn">수정하기</button>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <script>
-      const modal = document.querySelector(".modal");
-      const modalOpen = document.querySelector("#modal_modify");
-      const modalClose = document.querySelector(".close_btn");
-
-      //열기 버튼을 눌렀을 때 모달팝업이 열림
-      modalOpen.addEventListener("click", function () {
-        //'on' class 추가
-        modal.classList.add("on");
-      });
-      //닫기 버튼을 눌렀을 때 모달팝업이 닫힘
-      modalClose.addEventListener("click", function () {
-        //'on' class 제거
-        modal.classList.remove("on");
-      });
-
-        document.getElementById("write").addEventListener("click",function () {
-        window.location.href="/admin/cs/notice/write";
-      })
-    </script>
   </body>
 </html>
