@@ -40,6 +40,8 @@ public class CouponIssue {
     @CreationTimestamp
     private LocalDate regDate; // 발급일
 
+    private String issuedBy; // 발급자
+
     @PrePersist
     public void prePersist() {
         if (this.state == null) {
