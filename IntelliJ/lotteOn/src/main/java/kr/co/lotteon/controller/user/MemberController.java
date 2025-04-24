@@ -9,9 +9,12 @@ import kr.co.lotteon.service.user.TermsService;
 import kr.co.lotteon.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import kr.co.lotteon.entity.user.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 
 @Slf4j
@@ -104,7 +107,47 @@ public class MemberController {
     }
 
 
+    @GetMapping("/member/EmailAuth")
+    public String EmailAuth() {
+        return "/member/EmailAuth";
+    }
 
+    @GetMapping("/member/findAccount")
+    public String findAccount() {
+        return "/member/findAccount";
+    }
+
+    @GetMapping("/member/findIdResult")
+    public String findIdResult() {
+        return "/member/findIdResult";
+    }
+
+
+    @PostMapping("/member/findIdResult")
+    public String findUserId(@RequestParam String name,
+                             @RequestParam String hp,
+                             Model model) {
+        Optional<User> userOpt = userService.findByNameAndHp(name, hp);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            model.addAttribute("name", user.getName());
+            model.addAttribute("uid", user.getUid());
+            model.addAttribute("regDate", user.getRegDate());
+            return "/member/findIdResult";
+        } else {
+            model.addAttribute("error", "일치하는 회원이 없습니다.");
+            return "/member/phoneAuth";
+        }
+    }
+    @GetMapping("/member/phoneAuth")
+    public String phoneAuth() {
+        return "/member/phoneAuth";
+    }
+
+    @GetMapping("/member/resetPass")
+    public String resetPass() {
+        return "/member/resetPass";
+    }
 
 
 }

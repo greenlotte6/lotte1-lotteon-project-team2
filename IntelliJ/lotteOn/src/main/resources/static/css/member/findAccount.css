@@ -1,0 +1,194 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: NotoSansKR, Malgun Gothic, arial, sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+.wrapper {
+  width: 1140px;
+}
+
+main {
+  width: 1140px;
+  height: 995.11px;
+
+  display: flex;
+  justify-content: center;
+  padding: 45px 0 120px;
+}
+
+.title-box {
+  margin: 60px 0 28px;
+}
+
+.logo-box {
+  width: 122px;
+  height: 35px;
+  padding-bottom: 5px;
+}
+
+.logo-box img {
+  width: 122px;
+  height: 35px;
+}
+
+.text {
+  display: block;
+  font-size: 40px;
+}
+
+.accountBox {
+  width: 530px;
+  height: 770px;
+
+  margin: 0 auto;
+  padding: 0 0 162px;
+}
+
+.tab-menu {
+  display: flex;
+  border-bottom: 1px solid #ccc; /* 아래 테두리만 기본으로 표시 */
+  margin-bottom: 20px;
+}
+
+.tab {
+  width: 265px;
+  height: 47px;
+  font-size: 18px;
+  color: #999;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+  text-align: center;
+  padding: 12px 0;
+}
+
+.tab.active {
+  color: #000;
+  font-weight: bold;
+  background-color: white;
+
+  /* 테두리 위, 좌, 우만 표시 */
+  border: 1px solid #333;
+  border-bottom: 1px solid white; /* 아래 테두리를 숨겨서 연결 */
+
+  position: relative;
+  top: 1px; /* 아래선과 겹치지 않게 살짝 위로 */
+  z-index: 1; /* 테두리 위로 올라오게 */
+}
+
+.tab-form {
+  display: none;
+}
+
+.tab-form.active {
+  display: block;
+}
+
+.member-type {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-bottom: 40px;
+  gap: 20px;
+}
+
+.member-btn {
+  width: 250px;
+  height: 44px;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+}
+
+.member-btn.active {
+  background-color: black;
+  color: white;
+}
+
+.auth-method {
+  display: none;
+  margin-top: 20px;
+}
+
+.auth-method.active {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.auth_select_text {
+  font-size: 24px;
+  letter-spacing: 0.24px;
+  line-height: 1.42;
+  margin-bottom: 24px;
+}
+
+.auth-btn {
+  width: 100%;
+  height: 44px;
+  padding: 7px 0px;
+  border: 1px solid #ccc;
+  background-color: white;
+  margin-top: 10px;
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.auth-btn:hover {
+  background-color: #f5f5f5;
+}
+
+.btn-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.auth-method input {
+  height: 40px;
+  padding: 8px;
+  font-size: 14px;
+}
+
+.auth-method button[type="submit"] {
+  width: 100%;
+  height: 60px;
+  background-color: #ff3b30;
+  margin-top: 40px;
+  font-size: 16px;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.seller-num {
+  font-size: 18px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.notice-text {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.empty_box {
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  height: 40px;
+}
+
+
