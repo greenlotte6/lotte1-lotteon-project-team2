@@ -3,6 +3,7 @@ package kr.co.lotteon.entity.coupon;
 import jakarta.persistence.*;
 import kr.co.lotteon.entity.user.User;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -35,6 +36,10 @@ public class Coupon {
 
     private LocalDate validFrom; //사용기간 시작일
     private LocalDate  validTo; //사용기간 만료일
+
+    @CreationTimestamp
+    private LocalDate regDate; //발급일
+
     private int validDaysAfterIssue; //발급일로부터 ~일 이내
 
     private String caution; // 유의사항

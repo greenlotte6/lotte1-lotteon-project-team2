@@ -35,6 +35,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -287,5 +288,51 @@ public class adminService {
         }
 
 
+    }
+
+    /*
+    * 쿠폰 리스트
+    * */
+    public PageResponseDTO selectAllForCoupon(PageRequestDTO pageRequestDTO) {
+
+        pageRequestDTO.setSize(10);
+
+        if(pageRequestDTO.getSearchType()==null){
+            pageRequestDTO.setSearchType("전체");
+        }
+
+        Pageable pageable = pageRequestDTO.getPageable("no");
+        Page<Tuple> pageObject = couponRepository.selectAllCoupon(pageRequestDTO, pageable);
+
+        List<CouponDTO> DTOList = pageObject.getContent().stream().map(tuple -> {
+            Coupon coupon = tuple.get(0, Coupon.class);
+            if(coupon.getCouponName().contains("/")){
+                String name = coupon.getCouponName().split("/")[0];
+                coupon.setCouponName(name);
+            }
+            return modelMapper.map(coupon, CouponDTO.class);
+        }).toList();
+
+        int total = (int) pageObject.getTotalElements();
+
+        log.info("total: {}", total);
+        log.info("productDTOList: {}", pageObject);
+
+        return PageResponseDTO.<CouponDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(DTOList)
+                .total(total)
+                .build();
+        
+    }
+
+    // 쿠폰 만료
+    public void ExpiryCoupon(Long cno) {
+        Optional<Coupon> couponOpt = couponRepository.findById(cno);
+        if(couponOpt.isPresent()){
+            Coupon coupon = couponOpt.get();
+            coupon.setState("종료");
+            couponRepository.save(coupon);
+        }
     }
 }

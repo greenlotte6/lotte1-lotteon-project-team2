@@ -231,7 +231,9 @@ public class AdminController {
 
     //쿠폰목록
     @GetMapping("/coupon/list")
-    public String couponList(){
+    public String couponList(PageRequestDTO pageRequestDTO, Model model){
+        PageResponseDTO pageResponseDTO = adminService.selectAllForCoupon(pageRequestDTO);
+        model.addAttribute(pageResponseDTO);
         return "/admin/coupon/list";
     }
 
@@ -249,6 +251,13 @@ public class AdminController {
         System.out.println(couponDTO);
         adminService.saveCoupon(couponDTO,userDetails);
 
+        return "redirect:/admin/coupon/list";
+    }
+
+    // 쿠폰만료시키기
+    @GetMapping("/coupon/expiry")
+    public String couponExpiry(@RequestParam("cno") Long cno){
+        adminService.ExpiryCoupon(cno);
         return "redirect:/admin/coupon/list";
     }
 

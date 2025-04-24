@@ -11,6 +11,37 @@
     <!-- 사이드바-->
     <script src="/js/admin/sidebar.js"></script>
 
+    <style>
+        .able {
+            color: #6FCD8F;
+        }
+
+        .expired {
+            color: #909090;
+        }
+
+        .manageEnd{
+            border: none;
+            color: white;
+            background-color: #808080;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function (){
+
+            // 삭제 기능
+            // 개별 삭제 링크에 confirm 추가
+            document.querySelectorAll('.manage').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    if (!confirm("정말 삭제하시겠습니까?")) {
+                        e.preventDefault(); // 링크 이동 막기
+                    }
+                });
+            });
+        });
+    </script>
+
 </head>
 <body>
     <div id="wrapper">
@@ -35,8 +66,9 @@
 
                     <div class="select_div">
                         <div class="select_box">
-                            <form action="#">
-                                <select name="brand" style="width: 100px;">
+                            <form>
+                                <select name="searchType" style="width: 100px;" th:field="*{pageResponseDTO.searchType}">
+                                    <option value="전체">전체</option>
                                     <option value="쿠폰번호">쿠폰번호</option>
                                     <option value="쿠폰명">쿠폰명</option>
                                     <option value="발급자">발급자</option>
@@ -62,37 +94,45 @@
                             <th>관리</th>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="no"><a class="detail" href="#">10121211341</a></td>
-                                <td>개발상품 할인</td>
-                                <td>10월 한달 감사 쿠폰</td>
-                                <td>2,000 할인</td>
-                                <td>0000-00-00 ~ 0000-00-00</td>
-                                <td>(주)다있어</td>
-                                <td>102</td>
-                                <td>43</td>
-                                <td>발급중</td>
-                                <td>0000-00-00 00:00:00</td>
-                                <td><a href="#" class="manage">종료</a></td>
-                            </tr>
-                            <tr>
-                                <td class="no"><a class="detail" href="#">10121211341</a></td>
-                                <td>개발상품 할인</td>
-                                <td>10월 한달 감사 쿠폰</td>
-                                <td>2,000 할인</td>
-                                <td>0000-00-00 ~ 0000-00-00</td>
-                                <td>(주)다있어</td>
-                                <td>102</td>
-                                <td>43</td>
-                                <td>발급중</td>
-                                <td>0000-00-00 00:00:00</td>
-                                <td><a href="#" class="manage">종료</a></td>
+                            <tr th:each="item: ${pageResponseDTO.dtoList}">
+                                <td class="no"><a class="detail" href="#">[[${item.cno}]]</a></td>
+                                <td>[[${item.couponType}]]</td>
+                                <td>[[${item.couponName}]]</td>
+                                <td>[[${item.benefit}]]</td>
+                                <td>[[${item.validFrom}]] ~ [[${item.validTo}]] </td>
+                                <td>[[${item.issuedBy}]]</td>
+                                <td>[[${item.issueCount}]]</td>
+                                <td>[[${item.usedCount}]]</td>
+                                <td th:class="${item.state == '발급중' ? 'able' : item.state == '종료' ? 'expired' : ''}">
+                                    [[${item.state}]]
+                                </td>
+                                <td>[[${item.regDate}]]</td>
+                                <td>
+                                    <a th:href="@{/admin/coupon/expiry(cno=${item.cno})}" class="manage"
+                                       th:classappend="${item.state} == '종료' ? 'manageEnd'"
+                                    >종료</a>
+                                </td>
+                                <input type="hidden" id="content" th:value="${item.caution}">
                             </tr>
                         </tbody>
                     </table>
 
-                    <div style="margin-top: 20px;">
+                    <div style="margin-top: 20px; overflow: hidden">
                         <button class="register_btn">쿠폰등록</button>
+                    </div>
+
+                    <div class="page" style="margin-top: 10px;">
+                        <th:block th:if="${pageResponseDTO.prev}">
+                            <a th:href="@{/admin/coupon/list(pg=${pageResponseDTO.start-1}, searchType=${pageResponseDTO.searchType} , keyword=${pageResponseDTO.keyword})}" class="prev">이전</a>
+                        </th:block>
+
+                        <th:block th:each="num:${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end)}">
+                            <a th:href="@{/admin/coupon/list(pg=${num} , searchType=${pageResponseDTO.searchType} , keyword=${pageResponseDTO.keyword})}" th:class="${num == pageResponseDTO.pg} ? 'current' : 'num'">[[${num}]]</a>
+                        </th:block>
+
+                        <th:block th:if="${pageResponseDTO.next}">
+                            <a th:href="@{/admin/coupon/list(pg=${pageResponseDTO.end+1} , searchType=${pageResponseDTO.searchType} , keyword=${pageResponseDTO.keyword} )}" class="next">다음</a>
+                        </th:block>
                     </div>
 
 
@@ -121,25 +161,25 @@
                     <tbody>
                         <tr>
                             <td>쿠폰번호</td>
-                            <td>10121211341</td>
+                            <td id="cno">10121211341</td>
                             <td>발급처</td>
-                            <td>(주)다있어</td>
+                            <td id="issuedBy">(주)다있어</td>
                         </tr>
                         <tr>
                             <td>쿠폰종류</td>
-                            <td colspan="3">개별상품 할인</td>
+                            <td colspan="3" id="couponType">개별상품 할인</td>
                         </tr>
                         <tr>
                             <td>쿠폰명</td>
-                            <td colspan="3">10월 한달 감사 쿠폰 포인트</td>
+                            <td colspan="3" id="couponName">10월 한달 감사 쿠폰 포인트</td>
                         </tr>
                         <tr>
                             <td>사용기간</td>
-                            <td colspan="3">0000-00-00 ~ 0000-00-00</td>
+                            <td colspan="3" id="valid">0000-00-00 ~ 0000-00-00</td>
                         </tr>
                         <tr style="height: 120px;">
                             <td>유의사항</td>
-                            <td colspan="3">
+                            <td colspan="3" id="caution">
                                 상품 중복 할인 쿠폰<br>
                                  - 상품 1개에 대해 사용 가능<br>
                                  - 판매자 즉시할인/상품할인 쿠폰과 중복 사용 가능<br>
@@ -164,23 +204,46 @@
         const modalClose = document.querySelector('.close_btn');
         const modalClose2 = document.querySelector('#close_btn');
 
-        //열기 버튼을 눌렀을 때 모달팝업이 열림
+        const cno = document.getElementById("cno");
+        const issuedBy = document.getElementById("issuedBy");
+        const couponType = document.getElementById("couponType");
+        const couponName = document.getElementById("couponName");
+        const valid = document.getElementById("valid");
+        const caution = document.getElementById("caution");
+
+        // 모달을 여는 부분 수정
         modalOpenBtns.forEach(btn => {
             btn.addEventListener('click', function(e) {
-                e.preventDefault(); // 링크 클릭 방지
-                modal.classList.add('on');
+                e.preventDefault(); // Prevent default link behavior
+
+                // 데이터를 모달에 설정 (이 예시에서는 데이터가 링크에 속성으로 있다고 가정)
+                const couponData = btn.closest('tr'); // 클릭된 tr
+                const couponNumber = couponData.querySelector('.no a').textContent; // 쿠폰번호
+                const couponIssuedBy = couponData.querySelector('td:nth-child(6)').textContent; // 발급자
+                const couponTypeText = couponData.querySelector('td:nth-child(2)').textContent; // 쿠폰종류
+                const couponNameText = couponData.querySelector('td:nth-child(3)').textContent; // 쿠폰명
+                const validFrom = couponData.querySelector('td:nth-child(5)').textContent.split(' ~ ')[0]; // 시작일
+                const validTo = couponData.querySelector('td:nth-child(5)').textContent.split(' ~ ')[1]; // 종료일
+                const cautionText = couponData.querySelector('#content').value;
+
+                // 모달에 데이터 넣기
+                cno.textContent = couponNumber;
+                issuedBy.textContent = couponIssuedBy;
+                couponType.textContent = couponTypeText;
+                couponName.textContent = couponNameText;
+                valid.textContent = `${validFrom} ~ ${validTo}`;
+                caution.textContent = cautionText;
+
+                modal.classList.add('on'); // 모달 열기
             });
         });
 
-        //닫기 버튼을 눌렀을 때 모달팝업이 닫힘
-        modalClose.addEventListener('click',function(){
-            //'on' class 제거
+        // Close modal on 'X' or '닫기' button click
+        modalClose.addEventListener('click', function() {
             modal.classList.remove('on');
         });
 
-        //닫기 버튼을 눌렀을 때 모달팝업이 닫힘
-        modalClose2.addEventListener('click',function(){
-            //'on' class 제거
+        modalClose2.addEventListener('click', function() {
             modal.classList.remove('on');
         });
     </script>
@@ -287,8 +350,9 @@
         modalClose4.addEventListener('click', function() {
             modalRegister.classList.remove('on');
         });
-    
+
     </script>
+
 
 </body>
 </html>
