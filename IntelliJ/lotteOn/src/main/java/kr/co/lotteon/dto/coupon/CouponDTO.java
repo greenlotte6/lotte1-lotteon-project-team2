@@ -39,4 +39,7 @@ public class CouponDTO {
 
     private int usedCount; // 사용한 횟수
     private int issueCount; // 발급한 쿠폰수
+
+    // 목록 출력용 변수
+    private String uid;
 }
