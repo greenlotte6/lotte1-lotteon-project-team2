@@ -22,6 +22,8 @@ public class InquiryDTO {
     private UserDTO user;
     private String uid;
 
+    private String prodNo;
+
     private String cateV1; //1차 유형(회원)
     private String cateV2; //2차 유형(가입,탈퇴)
     private String title; //제목
@@ -45,8 +47,6 @@ public class InquiryDTO {
      * */
     private String channel; // (고객센터,판매자)
     private String email;   // 마이페이지 문의하기에서 입력하는 email
-
-    private String prodNo;
 
     private int password; // 비밀번호 4자리
 

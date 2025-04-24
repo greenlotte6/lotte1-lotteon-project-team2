@@ -39,7 +39,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         BooleanExpression expression = qProduct.subCategory.subCateNo.eq(subCateNo);
 
         List<Tuple> tupleList = queryFactory
-                .select(qProduct, qSeller.company, qProductImage.sNameThumb3)
+                .select(qProduct, qSeller.company, qProductImage.sNameList)
                 .from(qProduct)
                 .join(qSeller).on(qProduct.seller.sno.eq(qSeller.sno))
                 .leftJoin(qProductImage).on(qProductImage.product.prodNo.eq(qProduct.prodNo))
@@ -75,7 +75,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         BooleanExpression recentProduct = qProduct.regDate.after(threeMonthsAgo);
 
         List<Tuple> tupleList = queryFactory
-                .select(qProduct, qSeller.company, qProductImage.sNameThumb3)
+                .select(qProduct, qSeller.company, qProductImage.sNameList)
                 .from(qProduct)
                 .join(qSeller).on(qProduct.seller.sno.eq(qSeller.sno))
                 .leftJoin(qProductImage).on(qProductImage.product.eq(qProduct))
@@ -123,7 +123,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         }
 
         List<Tuple> tupleList = queryFactory
-                .select(qProduct, qSeller.company, qProductImage.sNameThumb3)
+                .select(qProduct, qSeller.company, qProductImage.sNameList)
                 .from(qProduct)
                 .join(qSeller).on(qProduct.seller.sno.eq(qSeller.sno))
                 .leftJoin(qProductImage).on(qProductImage.product.eq(qProduct))

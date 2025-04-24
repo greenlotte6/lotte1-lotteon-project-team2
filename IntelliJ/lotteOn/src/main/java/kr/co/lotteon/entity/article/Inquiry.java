@@ -26,6 +26,8 @@ public class Inquiry {
     @JoinColumn(name="writer")
     private User user;
 
+    private String prodNo;
+
     private String cateV1; //1차 유형(회원)
     private String cateV2; //2차 유형(가입,탈퇴)
     private String title; //제목
@@ -53,8 +55,6 @@ public class Inquiry {
     /*
     * 상품 페이지에서 출력하기 위한 상품 코드
     * */
-
-    private String prodNo;
 
     private int password; // 비밀번호 4자리
 

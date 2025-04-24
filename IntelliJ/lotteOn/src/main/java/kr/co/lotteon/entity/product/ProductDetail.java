@@ -22,8 +22,8 @@ public class ProductDetail {
 
     private String receiptType; // 영수증 유형
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "prodNo", nullable = false) // 상품 번호 외래키
+    @OneToOne
+    @JoinColumn(name="prodNo")
     private Product product;
 
     private String prodState; // 상품 상태

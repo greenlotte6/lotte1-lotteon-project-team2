@@ -20,10 +20,11 @@ public class ProductController {
     // 상세보기
     @GetMapping("/product/view")
     public String productView(PageRequestDTO pageRequestDTO, Model model) {
-        productService.increaseHit(pageRequestDTO);
+        log.info("PageRequestDTO: {}", pageRequestDTO);
         PageViewDTO pageViewDTO = productService.getPageViewDTO(pageRequestDTO);
         model.addAttribute("pageView", pageViewDTO);
-        return "/product/beauty/perfume/perfumeView";
+
+        return "/product/beauty/perfume/view";
     }
 
     // 주문하기

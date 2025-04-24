@@ -20,7 +20,8 @@ public class ProductDTO {
     private String mainCategoryName;
     private int subCateNo;
     private String company;
-    private String thumb;
+    private String sNameList;
+    private String sNameThumb3;
 
     // 상품 정보
     private String prodName;

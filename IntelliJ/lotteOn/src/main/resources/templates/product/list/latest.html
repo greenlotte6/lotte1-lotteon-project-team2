@@ -86,6 +86,30 @@
             }
         });
 
+        function attachProductClickHandler(containerSelector, cardSelector) {
+            const container = document.querySelector(containerSelector);
+
+            if (!container) return;
+
+            container.addEventListener('click', function (e) {
+                if (
+                    e.target.closest('.icons') ||
+                    e.target.closest('.star') ||
+                    e.target.closest('.review')
+                ) return;
+
+                const card = e.target.closest(cardSelector);
+                const prodNo = card?.dataset.prodno;
+
+                if (prodNo) {
+                    location.href = `/product/view?prodNo=${prodNo}`;
+                }
+            });
+        }
+
+        attachProductClickHandler('.best-grid', '.best-card');
+        attachProductClickHandler('#productWrapper', '.product-item');
+
     });
 </script>
 
@@ -204,9 +228,11 @@
 
                 <h2>카테고리 베스트 상품</h2>
                 <div class="best-grid">
-                    <div class="best-card" th:each="product, stat : ${productDTOList}">
+                    <div class="best-card"
+                         th:each="product, stat : ${productDTOList}"
+                         th:attr="data-prodno=${product.prodNo}">
                         <p class="rank" th:text="${stat.count}">1</p>
-                        <img class="product-img" th:src="${product.thumb}" alt="상품 이미지" />
+                        <img class="product-img" th:src="${product.sNameList}" alt="상품 이미지" />
                         <div class="vendor-row">
                             <span class="vendor-name" th:text="${product.company}">판매자명</span>
                             <div class="icons">
@@ -216,7 +242,7 @@
                         </div>
                         <p class="name">
                             <span class="brand" th:text="${product.prodBrand}"></span>
-                            <span th:text="${product.prodName}">상품명</span>
+                            <span class="product-name" th:text="${product.prodName}">상품명</span>
                         </p>
                         <p class="price">
                             <span class="discount" th:text="${product.prodDiscount + '%'}">10%</span>
@@ -264,8 +290,8 @@
 
                 <div id="productWrapper" class="product-wrapper list">
                     <div class="product-list">
-                        <div class="product-item" th:each="product : ${pageResponseDTO.dtoList}">
-                            <img th:src="${product.thumb}" alt="상품 썸네일">
+                        <div class="product-item" th:each="product : ${pageResponseDTO.dtoList}" th:attr="data-prodno=${product.prodNo}">
+                            <img th:src="${product.sNameList}" alt="상품 썸네일">
                             <div class="product-info">
                                 <span class="vendor-name" th:text="${product.company}">판매자명</span><br>
                                 <span class="brand" th:text="${product.prodBrand}">브랜드</span>

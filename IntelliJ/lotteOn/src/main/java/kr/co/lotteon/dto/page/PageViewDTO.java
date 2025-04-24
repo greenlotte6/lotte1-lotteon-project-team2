@@ -23,6 +23,6 @@ public class PageViewDTO {
     // 리뷰
     PageResponseDTO reviewPageResponseDTO;
     // qna
-    PageResponseDTO inquiryPageResponseDTO ;
+    //PageResponseDTO inquiryPageResponseDTO ;
 
 }
