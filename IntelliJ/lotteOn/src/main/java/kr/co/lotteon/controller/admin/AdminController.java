@@ -5,6 +5,7 @@ import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.article.NoticeDTO;
 import kr.co.lotteon.dto.config.TermsDTO;
 import kr.co.lotteon.dto.config.VersionDTO;
+import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
@@ -234,10 +235,21 @@ public class AdminController {
         return "/admin/coupon/list";
     }
 
-    //쿠폰목록
+    //쿠폰발급목록
     @GetMapping("/coupon/issued")
     public String issued(){
         return "/admin/coupon/issued";
+    }
+
+    //쿠폰등록
+    @PostMapping("/coupon/register")
+    public String reigster(CouponDTO couponDTO, @AuthenticationPrincipal UserDetails userDetails){
+
+        System.out.println(couponDTO);
+        System.out.println(couponDTO);
+        adminService.saveCoupon(couponDTO,userDetails);
+
+        return "redirect:/admin/coupon/list";
     }
 
     /*
@@ -247,13 +259,7 @@ public class AdminController {
     //공지사항
     @GetMapping("/cs/notice/list")
     public String noticeList(PageRequestDTO pageRequestDTO, Model model){
-
         PageResponseDTO pageResponseDTO = adminService.findAllNotice(pageRequestDTO);
-
-        System.out.println(pageResponseDTO);
-        System.out.println(pageResponseDTO);
-        System.out.println(pageResponseDTO);
-        System.out.println(pageResponseDTO);
         model.addAttribute(pageResponseDTO);
 
         return "/admin/notice/list";
