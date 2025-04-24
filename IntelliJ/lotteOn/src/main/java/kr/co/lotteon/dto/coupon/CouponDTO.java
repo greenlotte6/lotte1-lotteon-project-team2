@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -19,7 +20,7 @@ public class CouponDTO {
 
     // 쿠폰 DTO
 
-    private int cno;
+    private long cno;
 
     private UserDTO user;
 
@@ -28,9 +29,9 @@ public class CouponDTO {
     private String couponName; //쿠폰 이름
     private String benefit; //혜택 (2,000 할인, 15% 할인 등)
 
-    private LocalDateTime validFrom; //사용기간 시작일
-    private LocalDateTime validTo; //사용기간 만료일
-    private LocalDateTime validDaysAfterIssue; //발급일로부터 ~일 이내
+    private LocalDate validFrom; //사용기간 시작일
+    private LocalDate  validTo; //사용기간 만료일
+    private int validDaysAfterIssue; //발급일로부터 ~일 이내
 
     private String caution; // 유의사항
     private String state; // 상태(발급중, 종료)

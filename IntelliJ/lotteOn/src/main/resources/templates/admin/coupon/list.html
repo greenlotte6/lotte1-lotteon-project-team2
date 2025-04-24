@@ -91,10 +91,11 @@
                         </tbody>
                     </table>
 
-                    <!-- 페이징 -->
-                    <p style="text-align: center; margin-top: 10px;">
-                        이전 1 2 3 4 5 다음
-                    </p>
+                    <div style="margin-top: 20px;">
+                        <button class="register_btn">쿠폰등록</button>
+                    </div>
+
+
                     
                 </article>
             </section>
@@ -195,16 +196,16 @@
             </div>
 
             <div class="modal_main">
-                <form action="">
+                <form th:action="@{/admin/coupon/register}" method="post">
                     <table class="coupon_register_table">
                         <tr>
                             <td>발급처</td>
-                            <td><input type="text" placeholder="(주)다있어"></td>
+                            <td><input type="text" value="패밀리상사" name="issuedBy"></td>
                         </tr>
                         <tr>
                             <td>쿠폰종류</td>
                             <td>
-                                <select name="list">
+                                <select name="couponType">
                                     <option value="개별상품할인">개별상품할인</option>
                                     <option value="주문상품할인">주문상품할인</option>
                                     <option value="배송비 무료">배송비 무료</option>
@@ -213,29 +214,29 @@
                         </tr>
                         <tr>
                             <td>쿠폰명</td>
-                            <td><input type="text"></td>
+                            <td><input type="text" name="couponName"></td>
                         </tr>
                         <tr>
                             <td style="height: 100px;">혜택</td>
                             <td>
                                 <div class="radio-group">
-                                    <label class="radio-option"><input type="radio" name="discount">1,000 할인</label>
-                                    <label class="radio-option"><input type="radio" name="discount">2,000 할인</label>
-                                    <label class="radio-option"><input type="radio" name="discount">3,000 할인</label>
-                                    <label class="radio-option"><input type="radio" name="discount">4,000 할인</label>
-                                    <label class="radio-option"><input type="radio" name="discount">5,000 할인</label>
+                                    <label class="radio-option"><input type="radio" name="benefit" value="1,000 할인">1,000 할인</label>
+                                    <label class="radio-option"><input type="radio" name="benefit" value="2,000 할인">2,000 할인</label>
+                                    <label class="radio-option"><input type="radio" name="benefit" value="3,000 할인">3,000 할인</label>
+                                    <label class="radio-option"><input type="radio" name="benefit" value="4,000 할인">4,000 할인</label>
+                                    <label class="radio-option"><input type="radio" name="benefit" value="5,000 할인">5,000 할인</label>
                                 </div>
                                 
                                 <div class="radio-group">
-                                    <label class="radio-option"><input type="radio" name="discount">10% 할인</label>
-                                    <label class="radio-option"><input type="radio" name="discount">20% 할인</label>
-                                    <label class="radio-option"><input type="radio" name="discount">30% 할인</label>
-                                    <label class="radio-option"><input type="radio" name="discount">40% 할인</label>
-                                    <label class="radio-option"><input type="radio" name="discount">50% 할인</label>
+                                    <label class="radio-option"><input type="radio" name="benefit" value="10% 할인">10% 할인</label>
+                                    <label class="radio-option"><input type="radio" name="benefit" value="20% 할인">20% 할인</label>
+                                    <label class="radio-option"><input type="radio" name="benefit" value="30% 할인">30% 할인</label>
+                                    <label class="radio-option"><input type="radio" name="benefit" value="40% 할인">40% 할인</label>
+                                    <label class="radio-option"><input type="radio" name="benefit" value="50% 할인">50% 할인</label>
                                 </div>
                                 
                                 <div class="radio-group">
-                                    <label class="radio-option"><input type="radio" name="discount">배송비 무료</label>
+                                    <label class="radio-option"><input type="radio" name="benefit" value="배송비 무료" >배송비 무료</label>
                                 </div>
                                 
                             </td>
@@ -243,16 +244,16 @@
                         <tr>
                             <td style="height: 80px;">사용기간</td>
                             <td>
-                                <input type="date"> ~ <input type="date"> 
+                                <input type="date" name="validFrom"> ~ <input type="date" name="validTo">
                                 <br><br>
-                                또는 발급일로부터 <input type="text" style="width: 50px; height: 20px;"> 이내
+                                또는 발급일로부터 <input type="text" name="validDaysAfterIssue" style="width: 50px; height: 20px;">일 이내
 
                                 
                             </td>
                         </tr>
                         <tr>
                             <td style="height: 100px;">유의사항</td>
-                            <td><textarea name="notice"></textarea></td>
+                            <td><textarea name="caution"></textarea></td>
                         </tr>
                     </table>
                     <div class="recruit_btn_box">
@@ -266,7 +267,7 @@
 
     <script>
         const modalRegister = document.querySelector('#register');
-        const modalManageOpenBtns = document.querySelectorAll('.manage');
+        const modalManageOpenBtns = document.querySelectorAll('.register_btn');
         const modalClose3 = document.querySelector('#close_btn2');
         const modalClose4 = document.querySelector('.modal_btn_cancel');
     

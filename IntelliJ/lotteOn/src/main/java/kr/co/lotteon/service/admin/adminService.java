@@ -4,6 +4,7 @@ import ch.qos.logback.core.model.Model;
 import com.querydsl.core.Tuple;
 import jakarta.transaction.Transactional;
 import kr.co.lotteon.dto.article.NoticeDTO;
+import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
@@ -11,6 +12,7 @@ import kr.co.lotteon.dto.product.ProductDetailDTO;
 import kr.co.lotteon.dto.product.ProductImageDTO;
 import kr.co.lotteon.entity.article.Notice;
 import kr.co.lotteon.entity.category.SubCategory;
+import kr.co.lotteon.entity.coupon.Coupon;
 import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.entity.product.ProductDetail;
 import kr.co.lotteon.entity.product.ProductImage;
@@ -18,11 +20,13 @@ import kr.co.lotteon.entity.seller.Seller;
 import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.article.NoticeRepository;
 import kr.co.lotteon.repository.category.SubCategoryRepository;
+import kr.co.lotteon.repository.coupon.CouponRepository;
 import kr.co.lotteon.repository.product.CartRepository;
 import kr.co.lotteon.repository.product.ProductDetailRepository;
 import kr.co.lotteon.repository.product.ProductImageRepository;
 import kr.co.lotteon.repository.product.ProductRepository;
 import kr.co.lotteon.repository.seller.SellerRepository;
+import kr.co.lotteon.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -47,6 +51,8 @@ public class adminService {
     private final ProductImageRepository productImageRepository;
     private final CartRepository cartRepository;
     private final NoticeRepository noticeRepository;
+    private final UserRepository userRepository;
+    private final CouponRepository couponRepository;
 
     private final ModelMapper modelMapper;
 
@@ -190,8 +196,11 @@ public class adminService {
 
         pageRequestDTO.setSize(10);
 
-        Pageable pageable = pageRequestDTO.getPageable("no");
+        if(pageRequestDTO.getSearchType()==null){
+            pageRequestDTO.setSearchType("전체");
+        }
 
+        Pageable pageable = pageRequestDTO.getPageable("no");
         Page<Tuple> pageObject = noticeRepository.selectAllNotice(pageRequestDTO, pageable);
 
         List<NoticeDTO> DTOList = pageObject.getContent().stream().map(tuple -> {
@@ -250,5 +259,33 @@ public class adminService {
         for( int i : deleteNos){
             noticeRepository.deleteById(i);
         }
+    }
+
+
+    /*
+    * 쿠폰
+    * */
+    // 쿠폰 등록
+    public void saveCoupon(CouponDTO couponDTO, UserDetails userDetails) {
+        Coupon coupon = modelMapper.map(couponDTO, Coupon.class);
+
+        Optional<User> userOtp = userRepository.findById(userDetails.getUsername());
+
+        if(userOtp.isPresent()){
+            User user = userOtp.get();
+            coupon.setUser(user);
+            coupon.setIssuedBy(user.getName());
+
+            // 쿠폰 이름 : 내용 / (유저이름)
+            // 예) 삼성 7% 할인 / (관리자)
+            String couponName = coupon.getCouponName() + " / " + couponDTO.getIssuedBy();
+            coupon.setCouponName(couponName);
+
+            couponRepository.save(coupon);
+
+
+        }
+
+
     }
 }
