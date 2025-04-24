@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -23,5 +24,7 @@ public class CouponIssueDTO {
     private User user;
     private Coupon coupon;
     private String state; // 상태(사용, 미사용)
-    private LocalDateTime usedDate; //사용일
+
+    private LocalDate usedDate; //사용일
+    private LocalDate regDate;  //등록일
 }

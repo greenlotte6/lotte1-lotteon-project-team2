@@ -11,9 +11,11 @@ import kr.co.lotteon.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -23,6 +25,7 @@ public class CouponService {
 
     private final CouponRepository couponRepository;
     private final ModelMapper modelMapper;
+    private final CouponIssueRepository couponIssueRepository;
 
     public List<CouponDTO> findAllByCompany(String company) {
         List<Coupon> couponList = couponRepository.findAllByIssuedBy(company);
@@ -35,6 +38,29 @@ public class CouponService {
     }
 
 
+    public void IssueToUser(CouponDTO couponDTO, UserDetails userDetails) {
+        User user = User.builder()
+                .uid(userDetails.getUsername())
+                .build();
+
+        Optional<Coupon> couponOpt = couponRepository.findById(couponDTO.getCno());
+        if (couponOpt.isPresent()) {
+            Coupon coupon = couponOpt.get();
+            CouponIssue couponIssue = CouponIssue.builder()
+                    .coupon(coupon)
+                    .user(user)
+                    .build();
+
+            Boolean exist = couponIssueRepository.existsByUserAndCoupon(user, coupon);
+
+            // 쿠폰이 있을때만 등록
+            if(!exist){
+                couponIssueRepository.save(couponIssue);
+            }
+
+        }
 
 
+
+    }
 }

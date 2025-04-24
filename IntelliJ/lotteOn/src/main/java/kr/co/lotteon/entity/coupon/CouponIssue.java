@@ -3,7 +3,9 @@ package kr.co.lotteon.entity.coupon;
 import jakarta.persistence.*;
 import kr.co.lotteon.entity.user.User;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -21,7 +23,7 @@ public class CouponIssue {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int issueNo;
+    private long issueNo;
 
     @ManyToOne
     @JoinColumn(name="uid")
@@ -32,7 +34,18 @@ public class CouponIssue {
     private Coupon coupon;
 
     private String state; // 상태(사용, 미사용)
-    private LocalDateTime usedDate; //사용일
+    
+    private LocalDate usedDate; //사용일
 
+    @CreationTimestamp
+    private LocalDate regDate; // 발급일
+
+    @PrePersist
+    public void prePersist() {
+        if (this.state == null) {
+            this.state = "미사용";
+        }
+
+    }
 
 }
