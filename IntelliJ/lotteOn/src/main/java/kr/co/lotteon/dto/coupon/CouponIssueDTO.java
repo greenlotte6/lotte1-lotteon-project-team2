@@ -27,4 +27,6 @@ public class CouponIssueDTO {
 
     private LocalDate usedDate; //사용일
     private LocalDate regDate;  //등록일
+
+    private String issuedBy; // 발급자
 }

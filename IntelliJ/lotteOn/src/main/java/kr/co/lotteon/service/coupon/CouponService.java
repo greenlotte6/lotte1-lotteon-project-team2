@@ -45,10 +45,13 @@ public class CouponService {
 
         Optional<Coupon> couponOpt = couponRepository.findById(couponDTO.getCno());
         if (couponOpt.isPresent()) {
+
             Coupon coupon = couponOpt.get();
+
             CouponIssue couponIssue = CouponIssue.builder()
                     .coupon(coupon)
                     .user(user)
+                    .issuedBy(coupon.getIssuedBy())
                     .build();
 
             Boolean exist = couponIssueRepository.existsByUserAndCoupon(user, coupon);
