@@ -121,6 +121,8 @@ public class adminService {
 
     public PageResponseDTO selectAllForList(PageRequestDTO pageRequestDTO) {
 
+        pageRequestDTO.setSize(10);
+
         Pageable pageable = pageRequestDTO.getPageable("no");
 
         Page<Tuple> pageProduct = productRepository.selectAllForListByRole(pageRequestDTO, pageable);
@@ -133,8 +135,10 @@ public class adminService {
             ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
             productDTO.setCompany(company);
 
-            ProductImageDTO productImageDTO = modelMapper.map(productImage, ProductImageDTO.class);
-            productDTO.setProductImageDTO(productImageDTO);
+            if(productImage!=null){
+                ProductImageDTO productImageDTO = modelMapper.map(productImage, ProductImageDTO.class);
+                productDTO.setProductImageDTO(productImageDTO);
+            }
 
             return productDTO;
         }).toList();

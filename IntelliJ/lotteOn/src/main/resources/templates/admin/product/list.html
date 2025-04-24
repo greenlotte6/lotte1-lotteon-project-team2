@@ -63,29 +63,6 @@
                         <th>관리</th>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>
-                                <input type="checkbox">
-                            </td>
-                            <td>
-                                <img src="/images/product/blnk_star.png" alt="별">
-                                <img src="/images/product/blnk_star.png" alt="별">
-                                <img src="/images/product/blnk_star.png" alt="별">
-                            </td>
-                            <td>201603292</td>
-                            <td>상품명 #1</td>
-                            <td>32,000</td>
-                            <td>10%</td>
-                            <td>320</td>
-                            <td>1,000</td>
-                            <td>(주) 다파라</td>
-                            <td>120</td>
-                            <td>
-                                <a href="#">[삭제]</a>
-                                <a href="#">[수정]</a>
-                            </td>
-                        </tr>
-
                         <tr th:each="product : ${pageResponseDTO.dtoList}">
                             <td>
                                 <input type="checkbox">
@@ -113,15 +90,26 @@
                         </tbody>
                     </table>
 
-                    <div style="margin-top: 20px;">
+                    <div style="margin-top: 20px; overflow: hidden;">
                         <button type="submit" class="delete_btn">선택삭제</button>
                         <button class="register_btn">상품등록</button>
                     </div>
                 </form>
+
                 <!-- 페이징 -->
-                <p style="text-align: center; margin-top: 10px;">
-                    이전 1 2 3 4 5 다음
-                </p>
+                <div class="page">
+                    <th:block th:if="${pageResponseDTO.prev}">
+                        <a th:href="@{/admin/product/list(pg=${pageResponseDTO.start-1})}" class="prev">이전</a>
+                    </th:block>
+
+                    <th:block th:each="num:${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end)}">
+                        <a th:href="@{/admin/product/list(pg=${num})}" th:class="${num == pageResponseDTO.pg} ? 'current' : 'num'">[[${num}]]</a>
+                    </th:block>
+
+                    <th:block th:if="${pageResponseDTO.next}">
+                        <a th:href="@{/admin/product/list(pg=${pageResponseDTO.end+1})}" class="next">다음</a>
+                    </th:block>
+                </div>
 
             </article>
         </section>

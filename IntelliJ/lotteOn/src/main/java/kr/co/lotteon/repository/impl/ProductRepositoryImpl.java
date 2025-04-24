@@ -152,8 +152,6 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     @Override
     public Page<Tuple> selectAllForListByRole(PageRequestDTO pageRequestDTO, Pageable pageable) {
 
-        pageRequestDTO.setSize(10);
-
         List<Tuple> tupleList = queryFactory
                 .select(qProduct, qSeller.company, qProductImage)
                 .from(qProduct)
@@ -167,8 +165,8 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         long total = queryFactory
                 .select(qProduct.count())
                 .from(qProduct)
-                .join(qSeller)
-                .on(qProduct.seller.sno.eq(qSeller.sno))
+                .join(qSeller).on(qProduct.seller.sno.eq(qSeller.sno))
+                .leftJoin(qProductImage).on(qProductImage.product.eq(qProduct))
                 .fetchOne();
 
         return new PageImpl<>(tupleList, pageable, total);
