@@ -2,6 +2,7 @@ package kr.co.lotteon.controller.article;
 
 import jakarta.servlet.http.HttpServletRequest;
 import kr.co.lotteon.dto.article.InquiryDTO;
+import kr.co.lotteon.dto.article.NoticeDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.user.UserDTO;
@@ -32,7 +33,11 @@ public class CsController {
     }
 
     @GetMapping("/cs/notice/list")
-    public String noticeList() {
+    public String noticeList(Model model, PageRequestDTO pageRequestDTO, String cate) {
+
+        PageResponseDTO<NoticeDTO> responseDTO = csService.noticeFindAll(pageRequestDTO, cate);
+        model.addAttribute("responseDTO", responseDTO);
+
         return "/cs/notice/list";
     }
 
