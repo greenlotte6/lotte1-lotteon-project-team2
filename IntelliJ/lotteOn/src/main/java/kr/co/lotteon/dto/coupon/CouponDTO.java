@@ -30,7 +30,8 @@ public class CouponDTO {
     private String benefit; //혜택 (2,000 할인, 15% 할인 등)
 
     private LocalDate validFrom; //사용기간 시작일
-    private LocalDate  validTo; //사용기간 만료일
+    private LocalDate validTo; //사용기간 만료일
+    private LocalDate regDate; //발급일
     private int validDaysAfterIssue; //발급일로부터 ~일 이내
 
     private String caution; // 유의사항
