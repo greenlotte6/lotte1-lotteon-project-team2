@@ -1,0 +1,125 @@
+<!-- 쿠폰정보 모달 -->
+<div class="modal">
+    <div class="modal_popup">
+        <div class="modal_head">
+            <span class="modal_title">쿠폰정보</span><span class="modal_title_id">10121211341</span>
+            <button type="button" class="close_btn">X</button>
+        </div>
+
+        <div class="modal_main">
+            <table class="coupon_info">
+                <tbody>
+                <tr>
+                    <td>쿠폰번호</td>
+                    <td id="cno">10121211341</td>
+                    <td>발급처</td>
+                    <td id="issueBy">(주)다있어</td>
+                </tr>
+                <tr>
+                    <td>발급번호</td>
+                    <td id="issueNo">10120012134</td>
+                    <td>사용여부</td>
+                    <td id="state" style="color: red;">미사용</td>
+                </tr>
+                <tr>
+                    <td>쿠폰종류</td>
+                    <td id="couponType">개별상품 할인</td>
+                    <td>발급대상</td>
+                    <td id="user">akwe121</td>
+                </tr>
+                <tr>
+                    <td>쿠폰명</td>
+                    <td id="couponName" colspan="3">10월 한달 감사 쿠폰 포인트</td>
+                </tr>
+                <tr>
+                    <td>혜택</td>
+                    <td id="benefit" colspan="3">2,000 원 할인</td>
+                </tr>
+                <tr>
+                    <td>사용기간</td>
+                    <td id="date" colspan="3">0000-00-00 ~ 0000-00-00</td>
+                </tr>
+                <tr style="height: 120px;">
+                    <td>유의사항</td>
+                    <td colspan="3" id="caution">
+                        상품 중복 할인 쿠폰<br>
+                        - 상품 1개에 대해 사용 가능<br>
+                        - 판매자 즉시할인/상품할인 쿠폰과 중복 사용 가능<br>
+                        <br>
+                        사용처 <br>
+                        - (주)다있어
+
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <button id="close_btn" style="margin: 0 auto;">닫기</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const modal = document.querySelector('.modal');
+    const modalOpenBtns = document.querySelectorAll('.detail');
+    const modalClose = document.querySelector('.close_btn');
+    const modalClose2 = document.querySelector('#close_btn');
+
+    const cno = document.getElementById("cno");
+    const issueBy = document.getElementById("issueBy");
+    const issueNo = document.getElementById("issueNo");
+    const state = document.getElementById("state");
+    const couponType = document.getElementById("couponType");
+    const user = document.getElementById("user");
+    const couponName = document.getElementById("couponName");
+    const benefit = document.getElementById("benefit");
+    const date = document.getElementById("date");
+    const caution = document.getElementById("caution");
+    const modalNo = document.querySelector(".modal_title_id");
+
+    //열기 버튼을 눌렀을 때 모달팝업이 열림
+    modalOpenBtns.forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault(); // 링크 클릭 방지
+
+            const couponData = btn.closest('tr'); // 클릭된 tr
+            const CouponIssueNo = couponData.querySelector('.no a').textContent; // 발급번호
+            const CouponCno = couponData.querySelector('td:nth-child(2)').textContent; // 쿠폰번호
+            const CouponType = couponData.querySelector('td:nth-child(3)').textContent; // 쿠폰타입
+            const CouponName = couponData.querySelector('td:nth-child(4)').textContent; // 쿠폰이름
+            const User = couponData.querySelector('td:nth-child(5)').textContent; // 발급자
+            const State = couponData.querySelector('td:nth-child(6)').textContent; // 상태
+            const Date = couponData.querySelector('td:nth-child(7)').textContent; // 상태
+            const CautionValue = couponData.querySelector('#cautionValue').value;
+            const BenefitValue = couponData.querySelector('#benefitValue').value;
+            const IssuedByValue = couponData.querySelector('#issuedByValue').value;
+
+            modalNo.textContent = CouponIssueNo;
+            cno.textContent = CouponCno;
+            issueNo.textContent = CouponIssueNo;
+            couponType.textContent = CouponType;
+            couponName.textContent = CouponName;
+            user.textContent = User;
+            state.textContent = State;
+            date.textContent = Date;
+
+            issueBy.textContent = IssuedByValue;
+            benefit.textContent = BenefitValue;
+            caution.textContent = CautionValue;
+            modal.classList.add('on');
+        });
+    });
+
+    //닫기 버튼을 눌렀을 때 모달팝업이 닫힘
+    modalClose.addEventListener('click', function () {
+        //'on' class 제거
+        modal.classList.remove('on');
+    });
+
+    //닫기 버튼을 눌렀을 때 모달팝업이 닫힘
+    modalClose2.addEventListener('click', function () {
+        //'on' class 제거
+        modal.classList.remove('on');
+    });
+</script>

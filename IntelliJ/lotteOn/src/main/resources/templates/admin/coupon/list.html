@@ -152,7 +152,7 @@
     <div class="modal">
         <div class="modal_popup">
             <div class="modal_head">
-                <span class="modal_title">쿠폰정보</span><span class="modal_title_id">10121211341</span>
+                <span class="modal_title">쿠폰정보</span><span class="modal_title_id" id="cno2">10121211341</span>
                 <button type="button" class="close_btn">X</button>
             </div>
 
@@ -205,6 +205,7 @@
         const modalClose2 = document.querySelector('#close_btn');
 
         const cno = document.getElementById("cno");
+        const cno2 = document.getElementById("cno2");
         const issuedBy = document.getElementById("issuedBy");
         const couponType = document.getElementById("couponType");
         const couponName = document.getElementById("couponName");
@@ -228,6 +229,7 @@
 
                 // 모달에 데이터 넣기
                 cno.textContent = couponNumber;
+                cno2.textContent = couponNumber;
                 issuedBy.textContent = couponIssuedBy;
                 couponType.textContent = couponTypeText;
                 couponName.textContent = couponNameText;

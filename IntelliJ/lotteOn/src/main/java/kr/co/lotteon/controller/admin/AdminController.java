@@ -174,11 +174,6 @@ public class AdminController {
     public String productList(PageRequestDTO pageRequestDTO, Model model){
         PageResponseDTO pageResponseDTO = adminService.selectAllForList(pageRequestDTO);
         model.addAttribute(pageResponseDTO);
-
-        System.out.println(pageResponseDTO);
-        System.out.println(pageResponseDTO);
-        System.out.println(pageResponseDTO);
-
         return "/admin/product/list";
     }
 
@@ -237,20 +232,27 @@ public class AdminController {
         return "/admin/coupon/list";
     }
 
-    //쿠폰발급목록
+    //쿠폰발급목록 (유저가 발급한 쿠폰)
     @GetMapping("/coupon/issued")
-    public String issued(){
+    public String issued(PageRequestDTO pageRequestDTO, Model model){
+        PageResponseDTO pageResponseDTO = adminService.selectAllForIssuedCoupon(pageRequestDTO);
+        model.addAttribute(pageResponseDTO);
         return "/admin/coupon/issued";
+    }
+
+    //쿠폰발급목록 (검색)
+    @GetMapping("/coupon/issued/search")
+    public String issuedSearch(PageRequestDTO pageRequestDTO, Model model){
+        PageResponseDTO pageResponseDTO = adminService.selectAllForIssuedCoupon(pageRequestDTO);
+        model.addAttribute(pageResponseDTO);
+        System.out.println(pageResponseDTO);
+        return "/admin/coupon/issuedSearch";
     }
 
     //쿠폰등록
     @PostMapping("/coupon/register")
     public String reigster(CouponDTO couponDTO, @AuthenticationPrincipal UserDetails userDetails){
-
-        System.out.println(couponDTO);
-        System.out.println(couponDTO);
         adminService.saveCoupon(couponDTO,userDetails);
-
         return "redirect:/admin/coupon/list";
     }
 
@@ -260,6 +262,16 @@ public class AdminController {
         adminService.ExpiryCoupon(cno);
         return "redirect:/admin/coupon/list";
     }
+
+    // 발급된 쿠폰 만료 시키기
+    @GetMapping("/couponIssue")
+    public String couponIssue(@RequestParam("issueNo") Long issueNo){
+        adminService.ExpiryCouponIssue(issueNo);
+        return "redirect:/admin/coupon/issued";
+    }
+
+    
+
 
     /*
      * 관리자 고객센터 목록 (공지사항/자주묻는질문/문의하기/채용하기)

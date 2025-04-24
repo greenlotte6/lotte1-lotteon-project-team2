@@ -5,6 +5,7 @@ import com.querydsl.core.Tuple;
 import jakarta.transaction.Transactional;
 import kr.co.lotteon.dto.article.NoticeDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
+import kr.co.lotteon.dto.coupon.CouponIssueDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
@@ -13,6 +14,7 @@ import kr.co.lotteon.dto.product.ProductImageDTO;
 import kr.co.lotteon.entity.article.Notice;
 import kr.co.lotteon.entity.category.SubCategory;
 import kr.co.lotteon.entity.coupon.Coupon;
+import kr.co.lotteon.entity.coupon.CouponIssue;
 import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.entity.product.ProductDetail;
 import kr.co.lotteon.entity.product.ProductImage;
@@ -20,6 +22,7 @@ import kr.co.lotteon.entity.seller.Seller;
 import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.article.NoticeRepository;
 import kr.co.lotteon.repository.category.SubCategoryRepository;
+import kr.co.lotteon.repository.coupon.CouponIssueRepository;
 import kr.co.lotteon.repository.coupon.CouponRepository;
 import kr.co.lotteon.repository.product.CartRepository;
 import kr.co.lotteon.repository.product.ProductDetailRepository;
@@ -54,6 +57,7 @@ public class adminService {
     private final NoticeRepository noticeRepository;
     private final UserRepository userRepository;
     private final CouponRepository couponRepository;
+    private final CouponIssueRepository couponIssueRepository;
 
     private final ModelMapper modelMapper;
 
@@ -333,6 +337,51 @@ public class adminService {
             Coupon coupon = couponOpt.get();
             coupon.setState("종료");
             couponRepository.save(coupon);
+        }
+    }
+
+    // 발급된 쿠폰 리스트 출력
+    public PageResponseDTO selectAllForIssuedCoupon(PageRequestDTO pageRequestDTO) {
+
+        pageRequestDTO.setSize(10);
+
+        Pageable pageable = pageRequestDTO.getPageable("no");
+        Page<Tuple> pageObject = couponIssueRepository.selectAllCouponIssue(pageRequestDTO, pageable);
+
+        List<CouponIssueDTO> DTOList = pageObject.getContent().stream().map(tuple -> {
+            CouponIssue couponIssue = tuple.get(0, CouponIssue.class);
+            Coupon coupon = tuple.get(1, Coupon.class);
+            String uid = tuple.get(2, String.class);
+
+            String couponName = coupon.getCouponName().split("/")[0];
+            coupon.setCouponName(couponName);
+            CouponIssueDTO couponIssueDTO = modelMapper.map(couponIssue, CouponIssueDTO.class);
+            CouponDTO couponDTO = modelMapper.map(coupon, CouponDTO.class);
+            couponIssueDTO.setCoupon(couponDTO);
+            couponIssueDTO.setUid(uid);
+            return couponIssueDTO;
+        }).toList();
+
+        int total = (int) pageObject.getTotalElements();
+
+        log.info("total: {}", total);
+        log.info("DTOList: {}", pageObject);
+
+        return PageResponseDTO.<CouponIssueDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(DTOList)
+                .total(total)
+                .build();
+    }
+
+    // 발급된 쿠폰 삭제하기
+    public void ExpiryCouponIssue(Long issueNo) {
+        Optional<CouponIssue>  couponIssueOpt = couponIssueRepository.findById(issueNo);
+        if(couponIssueOpt.isPresent()){
+            CouponIssue couponIssue = couponIssueOpt.get();
+            couponIssue.setState("중단");
+            couponIssue.setUsedDate(LocalDate.now());
+            couponIssueRepository.save(couponIssue);
         }
     }
 }
