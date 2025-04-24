@@ -86,6 +86,27 @@
             }
         });
 
+        const bestGrid = document.querySelector('.best-grid');
+
+        if (bestGrid) {
+            bestGrid.addEventListener('click', function (e) {
+                // 찜/장바구니, 별점, 리뷰 클릭 시 무시
+                if (
+                    e.target.closest('.icons') ||
+                    e.target.closest('.star') ||
+                    e.target.closest('.review')
+                ) return;
+
+                const bestCard = e.target.closest('.best-card');
+                const prodNo = bestCard?.dataset.prodno;
+
+                if (prodNo) {
+                    console.log("이동할 상품 번호:", prodNo);
+                    location.href = `/product/view/${prodNo}`;
+                }
+            });
+        }
+
     });
 </script>
 
@@ -204,7 +225,9 @@
 
                 <h2>카테고리 베스트 상품</h2>
                 <div class="best-grid">
-                    <div class="best-card" th:each="product, stat : ${productDTOList}">
+                    <div class="best-card"
+                         th:each="product, stat : ${productDTOList}"
+                         th:attr="data-prodno=${product.prodNo}">
                         <p class="rank" th:text="${stat.count}">1</p>
                         <img class="product-img" th:src="${product.thumb}" alt="상품 이미지" />
                         <div class="vendor-row">
@@ -216,7 +239,7 @@
                         </div>
                         <p class="name">
                             <span class="brand" th:text="${product.prodBrand}"></span>
-                            <span th:text="${product.prodName}">상품명</span>
+                            <span class="product-name" th:text="${product.prodName}">상품명</span>
                         </p>
                         <p class="price">
                             <span class="discount" th:text="${product.prodDiscount + '%'}">10%</span>
@@ -267,14 +290,14 @@
                         <div class="product-item" th:each="product : ${pageResponseDTO.dtoList}">
                             <img th:src="${product.thumb}" alt="상품 썸네일">
                             <div class="product-info">
-                                <span class="vendor-name" th:text="${product.company}">판매자명</span><br>
-                                <span class="brand" th:text="${product.prodBrand}">브랜드</span>
-                                <span class="pname" th:text="${product.prodName}">상품명</span>
-                                <div class="meta">
-                                    <span th:text="'★ ' + ${product.ratingAvg}">★ 4.8</span>&nbsp;|&nbsp;리뷰 <span th:text="${product.reviewCount}">0</span>
-                                </div>
-                                <span class="badge-free" th:if="${product.prodDeliveryFee == 0}">무료배송</span>
-                                <span class="badge-fee" th:if="${product.prodDeliveryFee != 0}" th:text="${#numbers.formatInteger(product.prodDeliveryFee, 3, 'COMMA') + '원'}">배송비</span>
+                                    <span class="vendor-name" th:text="${product.company}">판매자명</span><br>
+                                    <span class="brand" th:text="${product.prodBrand}">브랜드</span>
+                                    <span class="pname" th:text="${product.prodName}">상품명</span>
+                                    <div class="meta">
+                                        <span th:text="'★ ' + ${product.ratingAvg}">★ 4.8</span>&nbsp;|&nbsp;리뷰 <span th:text="${product.reviewCount}">0</span>
+                                    </div>
+                                    <span class="badge-free" th:if="${product.prodDeliveryFee == 0}">무료배송</span>
+                                    <span class="badge-fee" th:if="${product.prodDeliveryFee != 0}" th:text="${#numbers.formatInteger(product.prodDeliveryFee, 3, 'COMMA') + '원'}">배송비</span>
                             </div>
                             <div class="product-price">
                                 <del th:text="${#numbers.formatInteger(product.prodPrice, 3, 'COMMA')} + '원'">정가</del><br>

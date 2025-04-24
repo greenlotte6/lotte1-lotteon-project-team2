@@ -31,7 +31,7 @@ public class PageRequestDTO {
     private int subCateNo; // 하위 카테고리
     private String period; // 판매 많은 순, 후기 많은 순
 
-    // 추가 필드 (글 번호)
+    // 추가 필드 (상품 보기)
     private String prodNo;
 
     public Pageable getPageable(String sort){
