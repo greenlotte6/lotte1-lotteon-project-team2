@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import kr.co.lotteon.entity.user.User;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -21,7 +22,7 @@ public class Coupon {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int cno;
+    private long cno;
 
     @ManyToOne
     @JoinColumn(name="uid")
@@ -32,14 +33,22 @@ public class Coupon {
     private String couponName; //쿠폰 이름
     private String benefit; //혜택 (2,000 할인, 15% 할인 등)
 
-    private LocalDateTime validFrom; //사용기간 시작일
-    private LocalDateTime validTo; //사용기간 만료일
-    private LocalDateTime validDaysAfterIssue; //발급일로부터 ~일 이내
+    private LocalDate validFrom; //사용기간 시작일
+    private LocalDate  validTo; //사용기간 만료일
+    private int validDaysAfterIssue; //발급일로부터 ~일 이내
 
     private String caution; // 유의사항
     private String state; // 상태(발급중, 종료)
 
     private int usedCount; // 사용한 횟수
     private int issueCount; // 발급한 쿠폰수
+
+    @PrePersist
+    public void prePersist() {
+        if (this.state == null) {
+            this.state = "발급중";
+        }
+
+    }
 
 }

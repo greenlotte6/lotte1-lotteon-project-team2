@@ -10,6 +10,32 @@
 
     <!-- 사이드바-->
     <script src="/js/admin/sidebar.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function (){
+
+        var no = [[${noticeDTO.no}]];
+
+        document.getElementById("list").addEventListener("click", function () {
+          window.location.href = "/admin/cs/notice/list";
+        });
+
+        document.getElementById("modify").addEventListener("click", function () {
+          window.location.href = `/admin/cs/notice/modify?no=${no}`;
+        });
+
+        document.getElementById("delete").addEventListener("click", function () {
+          if (confirm("정말 삭제하시겠습니까?")) {
+            window.location.href = `/admin/cs/notice/delete?no=${no}`;
+          }
+        });
+
+
+
+
+      });
+
+    </script>
   </head>
   <body>
     <div id="wrapper">
@@ -39,28 +65,27 @@
               <tbody>
                 <tr>
                   <td class="label">유형</td>
-                  <td>고객서비스</td>
+                  <td>[[${noticeDTO.cate}]]</td>
                 </tr>
 
                 <tr>
                   <td class="label">제목</td>
-                  <td>[안내] 해외결제 사칭 문자 주의</td>
+                  <td>[[${noticeDTO.title}]]</td>
                 </tr>
 
                 <tr>
                   <td class="label">내용</td>
                   <td>
-                    안녕하세요 롯데 ON입니다 롯데 ON 해외직구를 사칭하는 문자가
-                    최근 다시 신고되어 조심하세여
+                    [[${noticeDTO.content}]]
                   </td>
                 </tr>
               </tbody>
             </table>
 
             <div class="button_group">
-              <button type="button" class="delete_button">삭제</button>
-              <button type="button" class="modify_button">수정</button>
-              <button type="button" class="list_button">목록</button>
+              <button type="button" class="delete_button" id="delete">삭제</button>
+              <button type="button" class="modify_button" id="modify">수정</button>
+              <button type="button" class="list_button" id="list">목록</button>
             </div>
           </article>
         </section>

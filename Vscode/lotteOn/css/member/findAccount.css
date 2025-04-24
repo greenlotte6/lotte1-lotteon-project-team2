@@ -139,6 +139,21 @@ main {
   background-color: white;
   margin-top: 10px;
   color: #333;
-
+  font-size: 16px;
   cursor: pointer;
+
+  /* 🔽 정렬 관련 추가 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* 아이콘과 텍스트 간격 */
+}
+
+.auth-btn:hover {
+  background-color: #f5f5f5;
+}
+
+.btn-icon {
+  width: 24px;
+  height: 24px;
 }

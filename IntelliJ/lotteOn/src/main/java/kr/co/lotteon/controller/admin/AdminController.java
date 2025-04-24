@@ -1,8 +1,11 @@
 package kr.co.lotteon.controller.admin;
 
 import jakarta.servlet.http.HttpServletRequest;
+import kr.co.lotteon.dto.article.InquiryDTO;
+import kr.co.lotteon.dto.article.NoticeDTO;
 import kr.co.lotteon.dto.config.TermsDTO;
 import kr.co.lotteon.dto.config.VersionDTO;
+import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
@@ -12,6 +15,7 @@ import kr.co.lotteon.dto.seller.SellerDTO;
 import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.service.admin.adminService;
+import kr.co.lotteon.service.article.CsService;
 import kr.co.lotteon.service.config.ConfigService;
 import kr.co.lotteon.service.product.ImageService;
 import kr.co.lotteon.service.product.ProductService;
@@ -38,6 +42,7 @@ public class AdminController {
     private final ConfigService configService;
     private final ProductService productService;
     private final adminService adminService;
+    private final CsService csService;
 
     // 관리자 메인
     @GetMapping
@@ -79,8 +84,6 @@ public class AdminController {
 
         configService.modify(cate, content);
 
-        System.out.println("cate = " + cate);
-        System.out.println("content = " + content);
     }
 
 
@@ -99,7 +102,6 @@ public class AdminController {
         PageResponseDTO pageResponseDTO = configService.selectAll(pageRequestDTO);
         model.addAttribute("verions",pageResponseDTO);
 
-        System.out.println(pageResponseDTO);
         return "/admin/config/version";
     }
 
@@ -183,10 +185,6 @@ public class AdminController {
     @GetMapping("/product/delete")
     public String productDelete(@RequestParam("no") String no){
 
-        System.out.println(no);
-        System.out.println(no);
-        System.out.println(no);
-        System.out.println(no);
         adminService.deleteProduct(no);
         return "redirect:/admin/product/list";
     }
@@ -237,10 +235,21 @@ public class AdminController {
         return "/admin/coupon/list";
     }
 
-    //쿠폰목록
+    //쿠폰발급목록
     @GetMapping("/coupon/issued")
     public String issued(){
         return "/admin/coupon/issued";
+    }
+
+    //쿠폰등록
+    @PostMapping("/coupon/register")
+    public String reigster(CouponDTO couponDTO, @AuthenticationPrincipal UserDetails userDetails){
+
+        System.out.println(couponDTO);
+        System.out.println(couponDTO);
+        adminService.saveCoupon(couponDTO,userDetails);
+
+        return "redirect:/admin/coupon/list";
     }
 
     /*
@@ -249,9 +258,66 @@ public class AdminController {
 
     //공지사항
     @GetMapping("/cs/notice/list")
-    public String noticeList(){
+    public String noticeList(PageRequestDTO pageRequestDTO, Model model){
+        PageResponseDTO pageResponseDTO = adminService.findAllNotice(pageRequestDTO);
+        model.addAttribute(pageResponseDTO);
+
         return "/admin/notice/list";
     }
+
+    @GetMapping("/cs/notice/write")
+    public String noticeWrite(){
+        return "/admin/notice/write";
+    }
+
+    @PostMapping("/cs/notice/write")
+    public String  noticeWrite(NoticeDTO noticeDTO,
+                               @AuthenticationPrincipal UserDetails userDetails,
+                               HttpServletRequest req){
+
+        noticeDTO.setRegip(req.getRemoteAddr());
+        adminService.saveNotice(noticeDTO ,userDetails);
+
+        return "redirect:/admin/cs/notice/list";
+    }
+
+    @GetMapping("/cs/notice/view")
+    public String noticeView(Model model, @RequestParam("no") String no){
+        NoticeDTO noticeDTO = adminService.findNoticeByNo(no);
+        model.addAttribute(noticeDTO);
+        return "/admin/notice/view";
+    }
+
+    @GetMapping("/cs/notice/modify")
+    public String noticeModify(@RequestParam("no") String no, Model model){
+
+        NoticeDTO noticeDTO =  adminService.findNoticeByNo(no);
+        model.addAttribute(noticeDTO);
+        return "/admin/notice/modify";
+    }
+
+    @PostMapping("/cs/notice/modify")
+    public String  noticeModify(NoticeDTO noticeDTO){
+        System.out.println(noticeDTO);
+        System.out.println(noticeDTO);
+        System.out.println(noticeDTO);
+        adminService.modify(noticeDTO);
+        return "redirect:/admin/cs/notice/list";
+    }
+
+
+    @GetMapping("/cs/notice/delete")
+    public String noticeDelete(@RequestParam("no") String no){
+        adminService.deleteNoticeByNo(no);
+        return "redirect:/admin/cs/notice/list";
+    }
+
+    @GetMapping("/cs/notice/deleteList")
+    public String noticeDeleteList(@RequestParam("deleteNo") List<Integer> deleteNos) {
+        adminService.deleteNoticeByList(deleteNos);
+        return "redirect:/admin/cs/notice/list";
+    }
+
 
     //자주묻는질문
     @GetMapping("/cs/faq/list")
@@ -261,7 +327,12 @@ public class AdminController {
 
     //문의하기 목록
     @GetMapping("/cs/qna/list")
-    public String qnaList(){
+    public String qnaList(Model model, PageRequestDTO pageRequestDTO){
+
+        PageResponseDTO<InquiryDTO> responseDTO = csService.adminFindAll(pageRequestDTO);
+
+        model.addAttribute("responseDTO", responseDTO);
+
         return "/admin/qna/list";
     }
 

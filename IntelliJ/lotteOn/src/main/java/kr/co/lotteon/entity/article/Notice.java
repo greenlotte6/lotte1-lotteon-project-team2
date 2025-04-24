@@ -3,6 +3,7 @@ package kr.co.lotteon.entity.article;
 import jakarta.persistence.*;
 import kr.co.lotteon.entity.user.User;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -33,6 +34,8 @@ public class Notice {
     private String title; //제목
     private String content; //내용
     private int hit;
+
+    @CreationTimestamp
     private LocalDateTime wdate; // 등록일
     private String regip;  // 컴퓨터IP
 
