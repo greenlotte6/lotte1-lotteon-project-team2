@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>로그인/비밀번호 찾기</title>
     <link rel="stylesheet" href="/lotteOn/css/member/findAccount.css" />
-    <script src="/lotteOn/js/member/tab.js"></script>
+    <script defer src="/lotteOn/js/member/tab.js"></script>
   </head>
   <body>
     <div class="wrapper">
@@ -28,6 +28,7 @@
             </div>
 
             <div class="tab-content">
+              <!-- 아이디 찾기 탭 -->
               <div id="id" class="tab-form active">
                 <div class="member-type">
                   <button
@@ -42,16 +43,12 @@
                   </button>
                 </div>
 
-                <!-- 공통 안내 문구 -->
-
-                <!-- 인증 방식 - 일반회원용 -->
                 <div class="auth-method user-form active">
                   <div class="auth_select_text">인증방법을 선택해주세요</div>
                   <button class="auth-btn">
                     <img
                       src="/lotteOn/images/member/phone_icon.png"
                       class="btn-icon"
-                      style="width: 28px; height: 28px"
                     />
                     휴대폰 번호 인증
                   </button>
@@ -59,31 +56,88 @@
                     <img
                       src="/lotteOn/images/member/email_icon.png"
                       class="btn-icon"
-                      style="width: 28px; height: 28px"
                     />
                     이메일 인증
                   </button>
+                  <span class="notice-text"
+                    >소셜 간편회원은 비밀번호 설정이 제공되지 않습니다. 각 소셜
+                    서비스를 통해 확인 부탁드립니다.</span
+                  >
                 </div>
 
-                <!-- 인증 방식 - 판매회원용 -->
                 <div class="auth-method seller-form">
-                  <span>사업자 등록번호</span>
+                  <span class="seller-num">사업자 등록번호</span>
                   <input
                     type="text"
                     name="seller-form"
                     placeholder="-포함 12자리"
                   />
                   <button type="submit">확인</button>
-                  ::before
-                  <span
+                  <span class="notice-text"
                     >소셜 간편회원은 비밀번호 설정이 제공되지 않습니다. 각 소셜
                     서비스를 통해 확인 부탁드립니다.</span
                   >
                 </div>
               </div>
+
+              <!-- 비밀번호 찾기 탭 -->
               <div id="pw" class="tab-form">
-                <!-- 비밀번호 찾기 폼 -->
-                <p>비밀번호 찾기 폼 내용</p>
+                <div class="member-type">
+                  <button
+                    type="button"
+                    class="member-btn active"
+                    data-type="user"
+                  >
+                    일반회원
+                  </button>
+                  <button type="button" class="member-btn" data-type="seller">
+                    판매회원
+                  </button>
+                </div>
+
+                <div class="auth-method user-form active">
+                  <div class="auth_select_text">
+                    비밀번호 재설정을 위해<br />아이디를 입력해주세요
+                  </div>
+                  <span>아이디</span>
+                  <input
+                    type="text"
+                    placeholder="lotteOn 아이디를 입력해주세요"
+                  />
+                  <div class="empty_box"></div>
+                  <div class="auth_select_text">인증방법을 선택해주세요</div>
+                  <button class="auth-btn">
+                    <img
+                      src="/lotteOn/images/member/phone_icon.png"
+                      class="btn-icon"
+                    />휴대폰 인증
+                  </button>
+                  <button class="auth-btn">
+                    <img
+                      src="/lotteOn/images/member/email_icon.png"
+                      class="btn-icon"
+                    />이메일 인증
+                  </button>
+                  <span class="notice-text"
+                    >소셜 간편회원은 비밀번호 설정이 제공되지 않습니다. 각 소셜
+                    서비스를 통해 확인 부탁드립니다.</span
+                  >
+                </div>
+
+                <div class="auth-method seller-form">
+                  <div class="auth_select_text">
+                    비밀번호 재설정을 위해<br />사업자등록번호를 입력해주세요
+                  </div>
+                  <span>회사명</span>
+                  <input type="text" placeholder="회사명을 입력해주세요" />
+                  <span>사업자등록번호</span>
+                  <input type="text" placeholder="-포함 12자리" />
+                  <button type="submit">확인</button>
+                  <span class="notice-text"
+                    >소셜 간편회원은 비밀번호 설정이 제공되지 않습니다. 각 소셜
+                    서비스를 통해 확인 부탁드립니다.</span
+                  >
+                </div>
               </div>
             </div>
           </article>

@@ -1,0 +1,42 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh; /* 전체 화면 높이 */
+  display: flex;
+  justify-content: center; /* 가로 가운데 */
+}
+
+.container {
+  width: 400px;
+  padding: 40px;
+}
+
+header img {
+  width: 122px;
+  height: 35px;
+}
+
+.container section {
+  display: flex;
+  flex-direction: column; /* 한 줄씩 정렬 */
+  gap: 16px; /* 요소 사이 여백 */
+  margin-top: 40px;
+}
+
+.container input[type="text"] {
+  padding: 20px 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px; /* 모서리 둥글게 */
+  font-size: 16px;
+}
+
+.container button {
+  padding: 20px 14px;
+  background-color: #ff3b30;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
