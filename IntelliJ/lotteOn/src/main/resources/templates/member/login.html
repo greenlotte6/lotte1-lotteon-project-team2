@@ -62,7 +62,10 @@
               <!-- 옵션 줄 -->
               <div class="login-options">
                 <label><input type="checkbox" /> 자동 로그인</label>
-                <span>| 아이디찾기 | 비밀번호 찾기 | 회원가입</span>
+                <span>
+                    | <a th:href="@{/user/member/findAccount}">아이디/비밀번호 찾기</a>
+                    | <a th:href="@{/user/member/join}">회원가입</a>
+                </span>
               </div>
 
               <!-- SNS 로그인 아이콘 -->

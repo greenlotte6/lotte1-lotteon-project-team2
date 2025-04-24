@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" th:href="@{/css/member/resetPass.css}" />
+  <script th:src="@{/js/member/resetPass.js}" defer></script>
+  <title>비밀번호 초기화 폼</title>
+</head>
+<body>
+<div class="container">
+  <header>
+    <img th:src="@{/images/logo.png}" alt="롯데온 로고" />
+    <h2>아이디/비밀번호 찾기</h2>
+  </header>
+  <section>
+    <div>
+      <span class="result-title">비밀번호 재설정</span>
+      <span class="result-desc">새로운 비밀번호를 설정해 주세요</span>
+    </div>
+
+    <form action="#" method="post">
+      <div class="password-box">
+        <label for="new-password">새 비밀번호</label>
+        <div class="input-wrap">
+          <input
+                  type="password"
+                  id="new-password"
+                  name="newPassword"
+                  placeholder="새 비밀번호를 입력해 주세요."
+          />
+          <button type="button" class="eye-btn">👀</button>
+        </div>
+        <span class="error-msg" id="pwd-error"></span>
+
+        <label for="confirm-password">새 비밀번호 확인</label>
+        <div class="input-wrap">
+          <input
+                  type="password"
+                  id="confirm-password"
+                  name="confirmPassword"
+                  placeholder="새 비밀번호를 다시 입력해 주세요."
+          />
+          <button type="button" class="eye-btn">👀</button>
+        </div>
+        <span class="error-msg" id="confirm-error"></span>
+      </div>
+
+      <div class="btn-box">
+        <button type="submit" class="btn-reset">비밀번호 재설정</button>
+        <button
+                type="button"
+                class="btn-login"
+                th:onclick="|location.href='@{/member/login}'|"
+        >
+          로그인 하기
+        </button>
+      </div>
+    </form>
+  </section>
+</div>
+</body>
+</html>

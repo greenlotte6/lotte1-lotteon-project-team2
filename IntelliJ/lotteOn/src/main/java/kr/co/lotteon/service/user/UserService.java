@@ -54,7 +54,9 @@ public class UserService {
         return null;
     }
 
-
+    public Optional<User> findByNameAndHp(String name, String hp) {
+        return userRepository.findByNameAndHp(name, hp);
+    }
 
 
 }

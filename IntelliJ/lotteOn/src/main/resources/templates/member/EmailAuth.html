@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>이메일 인증 폼</title>
+  <link rel="stylesheet" th:href="@{/css/member/phoneAuth.css}" />
+</head>
+<body>
+<div class="container">
+  <header>
+    <img th:src="@{/images/logo.png}" alt="LotteOn 로고" />
+  </header>
+
+  <section>
+    <h2><strong>이메일</strong>을 <br />입력해주세요</h2>
+
+    <form action="#" method="post">
+      <input
+              type="email"
+              name="email"
+              placeholder="이메일을 입력해주세요"
+              required
+      />
+      <button type="submit">다음</button>
+    </form>
+  </section>
+</div>
+</body>
+</html>

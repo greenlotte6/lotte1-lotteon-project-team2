@@ -1,0 +1,66 @@
+/* 전체 화면 정렬 */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* 컨테이너 영역 */
+.container {
+  width: 400px;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+/* 헤더 로고 */
+header img {
+  width: 122px;
+  height: 35px;
+}
+
+/* 섹션 내부 form을 기준으로 정렬 */
+.container section form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+/* input 스타일 */
+.container input[type="text"] {
+  padding: 20px 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.container input[type="email"] {
+  padding: 20px 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* 버튼 스타일 */
+.container button {
+  padding: 20px 14px;
+  background-color: #ff3b30;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.container button:hover {
+  background-color: #e22d24;
+}
