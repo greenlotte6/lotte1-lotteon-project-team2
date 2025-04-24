@@ -30,10 +30,16 @@
                 if (checked.length === 0) {
                     e.preventDefault();
                     alert('삭제할 항목을 선택해주세요.');
+                }else{
+                    if (!confirm("정말 삭제하시겠습니까?")) {
+                        e.preventDefault(); // 링크 이동 막기
+                    }
                 }
             });
+
         });
     </script>
+
 
 </head>
 <body>
