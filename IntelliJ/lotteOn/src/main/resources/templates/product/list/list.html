@@ -86,26 +86,29 @@
             }
         });
 
-        const bestGrid = document.querySelector('.best-grid');
+        function attachProductClickHandler(containerSelector, cardSelector) {
+            const container = document.querySelector(containerSelector);
 
-        if (bestGrid) {
-            bestGrid.addEventListener('click', function (e) {
-                // 찜/장바구니, 별점, 리뷰 클릭 시 무시
+            if (!container) return;
+
+            container.addEventListener('click', function (e) {
                 if (
                     e.target.closest('.icons') ||
                     e.target.closest('.star') ||
                     e.target.closest('.review')
                 ) return;
 
-                const bestCard = e.target.closest('.best-card');
-                const prodNo = bestCard?.dataset.prodno;
+                const card = e.target.closest(cardSelector);
+                const prodNo = card?.dataset.prodno;
 
                 if (prodNo) {
-                    console.log("이동할 상품 번호:", prodNo);
-                    location.href = `/product/view/${prodNo}`;
+                    location.href = `/product/view?prodNo=${prodNo}`;
                 }
             });
         }
+
+        attachProductClickHandler('.best-grid', '.best-card');
+        attachProductClickHandler('#productWrapper', '.product-item');
 
     });
 </script>
@@ -229,7 +232,7 @@
                          th:each="product, stat : ${productDTOList}"
                          th:attr="data-prodno=${product.prodNo}">
                         <p class="rank" th:text="${stat.count}">1</p>
-                        <img class="product-img" th:src="${product.thumb}" alt="상품 이미지" />
+                        <img class="product-img" th:src="${product.sNameList}" alt="상품 이미지" />
                         <div class="vendor-row">
                             <span class="vendor-name" th:text="${product.company}">판매자명</span>
                             <div class="icons">
@@ -287,8 +290,8 @@
 
                 <div id="productWrapper" class="product-wrapper list">
                     <div class="product-list">
-                        <div class="product-item" th:each="product : ${pageResponseDTO.dtoList}">
-                            <img th:src="${product.thumb}" alt="상품 썸네일">
+                        <div class="product-item" th:each="product : ${pageResponseDTO.dtoList}" th:attr="data-prodno=${product.prodNo}">
+                            <img th:src="${product.sNameList}" alt="상품 썸네일">
                             <div class="product-info">
                                     <span class="vendor-name" th:text="${product.company}">판매자명</span><br>
                                     <span class="brand" th:text="${product.prodBrand}">브랜드</span>

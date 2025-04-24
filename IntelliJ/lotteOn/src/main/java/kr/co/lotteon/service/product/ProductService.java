@@ -1,6 +1,7 @@
 package kr.co.lotteon.service.product;
 
 import jakarta.transaction.Transactional;
+import kr.co.lotteon.dao.ProductMapper;
 import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
@@ -26,6 +27,7 @@ import java.util.Optional;
 @Service
 public class ProductService {
 
+    private final ProductMapper productMapper;
     private final ProductRepository productRepository;
     private final ProductDetailService productDetailService;
     private final ReviewService reviewService;
@@ -35,33 +37,28 @@ public class ProductService {
 
     // 상품 view 한번에 묶기
     public PageViewDTO getPageViewDTO(PageRequestDTO pageRequestDTO) {
-        ProductDTO productDTO = findByProdNo(pageRequestDTO);
+        String prodNo = pageRequestDTO.getProdNo();
+        // 상품 + 상품이미지
+        ProductDTO productDTO = productMapper.selectProductByProdNo(prodNo);
+        // 쿠폰
         List<CouponDTO> couponDTOList = couponService.findAllByCompany(productDTO.getCompany());
+        // 상품 상세
         ProductDetailDTO productDetailDTO = productDetailService.findByProdNo(pageRequestDTO);
+        // 리뷰
         PageResponseDTO reviewPageResponseDTO = reviewService.selectAllForList(pageRequestDTO);
-        PageResponseDTO inquiryPageResponseDTO = inquiryService.selectAllForList(pageRequestDTO);
+        //PageResponseDTO inquiryPageResponseDTO = inquiryService.selectAllForList(pageRequestDTO);
+
+        log.info("reviewPageResponseDTO: {}", reviewPageResponseDTO);
 
         return new PageViewDTO(
                 productDTO,
                 couponDTOList,
                 productDetailDTO,
-                reviewPageResponseDTO,
-                inquiryPageResponseDTO
+                reviewPageResponseDTO
+                //inquiryPageResponseDTO
         );
     }
 
-    // 상품 + 판매자 + 쿠폰 + 배너
-    public ProductDTO findByProdNo(PageRequestDTO pageRequestDTO) {
-        String prodNo = pageRequestDTO.getProdNo();
-        Optional<Product> optProduct = productRepository.findByProdNo(prodNo);
-
-        if(optProduct.isPresent()) {
-            Product product = optProduct.get();
-            ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
-            return productDTO;
-        }
-        return null;
-    }
 
     // 글 조회수
     @Transactional

@@ -88,10 +88,19 @@ aside {
     margin-top: 20px;
 }
 
-.product_page > img {
+.product_page > div:nth-of-type(1)  {
     float: left;
     width: 500px;
     height: 500px;
+}
+
+.product_page > div > img {
+    margin: 0 100px;
+    width: 300px;
+    height: 300px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    box-sizing: border-box;
 }
 
 table {

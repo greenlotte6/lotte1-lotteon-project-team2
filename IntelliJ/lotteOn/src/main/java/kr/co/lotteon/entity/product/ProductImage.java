@@ -20,8 +20,7 @@ public class ProductImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ino; // 기본 키
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "prodNo", nullable = false) // 상품 번호 외래키
     private Product product;
 
