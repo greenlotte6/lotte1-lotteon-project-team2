@@ -52,4 +52,10 @@ public class PageResponseDTO<T> {
         this.next = total > this.end * this.size;
     }
 
+
+    public int size() {
+        return dtoList != null ? dtoList.size() : 0;
+    }
+
+
 }

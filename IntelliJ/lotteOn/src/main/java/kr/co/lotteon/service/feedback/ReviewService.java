@@ -24,7 +24,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final ModelMapper modelMapper;
 
-    // 리뷰 + 유저
+    // 리뷰 + 유저 + 상품
     public PageResponseDTO selectAllForList(PageRequestDTO pageRequestDTO) {
         Pageable pageable = pageRequestDTO.getPageable("prodNo");
 
@@ -32,9 +32,11 @@ public class ReviewService {
 
         List<ReviewDTO> reviewDTOList = pageReview.getContent().stream().map(tuple -> {
             Review review = tuple.get(0, Review.class);
-            String uid = tuple.get(1,  String.class);
+            String company = tuple.get(1, String.class);
+            String uid = tuple.get(2,  String.class);
 
             ReviewDTO reviewDTO = modelMapper.map(review, ReviewDTO.class);
+            reviewDTO.setCompany(company);
             reviewDTO.setUid(uid);
 
             return reviewDTO;

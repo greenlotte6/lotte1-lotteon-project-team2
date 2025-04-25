@@ -39,4 +39,10 @@ public class Review {
 
     private BigDecimal rating; // 평점
 
+    private String sNameImage1;
+    private String oNameImage1;
+    private String SNameImage2;
+    private String oNameImage2;
+
+
 }

@@ -15,14 +15,17 @@ import java.util.List;
 public class PageViewDTO {
 
     // 상품
-    ProductDTO productDTO;
-    // 쿠폰
-    List<CouponDTO> couponDTOList;
-    // 상품 상세
-    ProductDetailDTO productDetailDTO;
-    // 리뷰
-    PageResponseDTO reviewPageResponseDTO;
-    // qna
-    //PageResponseDTO inquiryPageResponseDTO ;
+    private ProductDTO productDTO;
 
+    // 쿠폰
+    private List<CouponDTO> couponDTOList;
+
+    // 상품 상세
+    private ProductDetailDTO productDetailDTO;
+
+    // 리뷰
+    private PageResponseDTO reviewPageResponseDTO;
+
+    // QnA
+    // private PageResponseDTO inquiryPageResponseDTO;
 }

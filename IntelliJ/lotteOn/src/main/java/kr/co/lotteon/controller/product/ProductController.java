@@ -20,7 +20,7 @@ public class ProductController {
     // 상세보기
     @GetMapping("/product/view")
     public String productView(PageRequestDTO pageRequestDTO, Model model) {
-        log.info("PageRequestDTO: {}", pageRequestDTO);
+        pageRequestDTO.setSize(5);
         PageViewDTO pageViewDTO = productService.getPageViewDTO(pageRequestDTO);
         model.addAttribute("pageView", pageViewDTO);
 
