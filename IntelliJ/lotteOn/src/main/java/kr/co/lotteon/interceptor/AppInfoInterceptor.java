@@ -34,6 +34,7 @@ public class AppInfoInterceptor implements HandlerInterceptor {
         // 컨트롤러 수행 후 실행
         if(modelAndView != null){
             // 모든 컨트롤러 요청 후 appInfo 모델 참조
+            appInfo.chageVersion();
             modelAndView.addObject(appInfo);
         }
     }
