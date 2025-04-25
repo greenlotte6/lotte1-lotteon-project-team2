@@ -27,21 +27,13 @@
                         <h2>공지사항</h2>
                         <div class="notice-view">
                             <div class="notice-header">
-                            <div class="notice-title">제목<br><span class="notice-date">2025.00.00</span></div>
+                            <div class="notice-title">
+                                [[${noticeDTO.title}]]</br>
+                                <span th:text="${#temporals.format(noticeDTO.wdate, 'yyyy-MM-dd')}"></span>
+                            </div>
                             </div>
                             <div class="notice-content">
-                                <p>
-                                    내용<br>
-                                    test<br>
-                                    내용<br>
-                                    test<br>
-                                    내용<br>
-                                    test<br>
-                                    내용<br>
-                                    test<br>
-                                    내용<br>
-                                    test<br>
-                                </p>
+                                <p>[[${noticeDTO.content}]]</p>
                             </div>
                         
                             <div class="notice-footer">
