@@ -199,36 +199,36 @@
                 </div>
                 <div class="product_page">
                     <div>
-                        <img th:src="@{${pageView.productDTO.sNameThumb3}}" alt="상품 이미지">
+                        <img th:src="@{${productDTO.sNameThumb3}}" alt="상품 이미지">
                     </div>
                     <form action="#">
                         <table>
-                            <tr><td colspan="2" th:text="'상품번호 : ' + ${pageView.productDTO.prodNo}"></td></tr>
+                            <tr><td colspan="2" th:text="'상품번호 : ' + ${productDTO.prodNo}"></td></tr>
                             <tr>
                                 <td colspan="2">
-                                    <span class="department" th:text="${pageView.productDTO.company}">회사명</span>
-                                    <span class="brand" th:text="' ' + ${pageView.productDTO.prodBrand} + ' >'">브랜드명 ></span>
+                                    <span class="department" th:text="${productDTO.company}">회사명</span>
+                                    <span class="brand" th:text="' ' + ${productDTO.prodBrand} + ' >'">브랜드명 ></span>
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2" class="product_name" th:text="${pageView.productDTO.prodName}">상품명</td>
+                                <td colspan="2" class="product_name" th:text="${productDTO.prodName}">상품명</td>
                             </tr>
                             <tr>
                                 <td colspan="2">
                                     <a href="#">
-                                        <span>★&nbsp;<span th:text="${pageView.productDTO.ratingAvg}">0.0</span></span>
-                                        <span>&nbsp;<span th:text="${pageView.productDTO.reviewCount}">0</span>건</span>
+                                        <span>★&nbsp;<span th:text="${productDTO.ratingAvg}">0.0</span></span>
+                                        <span>&nbsp;<span th:text="${productDTO.reviewCount}">0</span>건</span>
                                     </a>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <span class="sale" th:text="|${pageView.productDTO.prodDiscount}%|">5%</span>
+                                    <span class="sale" th:text="|${productDTO.prodDiscount}%|">5%</span>
                                     <span class="price_current"
-                                          th:text="|${T(java.lang.String).format('%,d원', (pageView.productDTO.prodPrice * (100 - pageView.productDTO.prodDiscount)) / 100)}|">
+                                          th:text="|${T(java.lang.String).format('%,d원', (productDTO.prodPrice * (100 - productDTO.prodDiscount)) / 100)}|">
                                         </span>
                                     <span class="price_original"
-                                          th:text="|${T(java.lang.String).format('%,d원', pageView.productDTO.prodPrice)}|">
+                                          th:text="|${T(java.lang.String).format('%,d원', productDTO.prodPrice)}|">
                                         </span>
                                 </td>
                             </tr>
@@ -243,9 +243,9 @@
                                 <td>배송정보</td>
                                 <td>
                                     <span id="arrivalDate"></span> 이내 도착확률 92%<br>
-                                    <span th:if="${pageView.productDTO.prodDeliveryFee == 0}">배송비 무료</span>
-                                    <span th:if="${pageView.productDTO.prodDeliveryFee != 0}"
-                                          th:text="|배송비 ${#numbers.formatInteger(pageView.productDTO.prodDeliveryFee, 0)}원|">
+                                    <span th:if="${productDTO.prodDeliveryFee == 0}">배송비 무료</span>
+                                    <span th:if="${productDTO.prodDeliveryFee != 0}"
+                                          th:text="|배송비 ${#numbers.formatInteger(productDTO.prodDeliveryFee, 0)}원|">
                                         </span>
                                 </td>
                             </tr>
@@ -267,9 +267,9 @@
                                     </div>
                                 </td>
                                 <td>
-                                        <span class="price_total"
-                                              th:text="|${T(java.lang.String).format('%,d원', (pageView.productDTO.prodPrice * (100 - pageView.productDTO.prodDiscount)) / 100)}|">
-                                        </span>
+                                    <span class="price_total"
+                                          th:text="|${T(java.lang.String).format('%,d원', (productDTO.prodPrice * (100 - productDTO.prodDiscount)) / 100)}|">
+                                    </span>
                                 </td>
                             </tr>
                             <tr>
@@ -288,7 +288,7 @@
                     <div class="tabs">
                         <ul class="tab-menu">
                             <li class="active" data-tab="detail">상세정보</li>
-                            <li data-tab="review">리뷰(439)</li>
+                            <li th:attr="data-tab='review'" th:text="'리뷰(' + ${reviewPageResponseDTO.total} + ')'"></li>
                             <li data-tab="qna">Q&A(239)</li>
                             <li data-tab="exchange">교환/반품 안내</li>
                         </ul>
@@ -318,6 +318,5 @@
     <!-- 푸터 끝 -->
 
 </div>
-
 </body>
 </html>

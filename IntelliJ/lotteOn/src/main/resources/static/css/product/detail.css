@@ -111,8 +111,9 @@ table {
 }
 
 .department {
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 18px;
+    font-weight: 500;
+    margin-right: 5px;
 }
 
 .brand {
@@ -121,7 +122,7 @@ table {
 
 .product_name {
     font-weight: 500;
-    font-size: 20px;   
+    font-size: 25px;
 }
 
 tr:nth-child(4) span {
@@ -457,7 +458,7 @@ tr:nth-child(9) {
 }
 
 .reviews > div:nth-of-type(1) > div {
-    margin-left: 660px;
+    margin-left: 700px;
     color: #666;
 }
 
@@ -497,7 +498,7 @@ tr:nth-child(9) {
 .reviews_page {
     display: flex;
     gap: 10px;
-    margin: 40px 0 0 300px;
+    margin: 40px 0 0 450px;
 }
 
 .reviews_page > a {
