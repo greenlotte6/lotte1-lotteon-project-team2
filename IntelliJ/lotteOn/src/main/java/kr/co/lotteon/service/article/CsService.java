@@ -1,12 +1,15 @@
 package kr.co.lotteon.service.article;
 
 import com.querydsl.core.Tuple;
+import kr.co.lotteon.dto.article.FaqDTO;
 import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.article.NoticeDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
+import kr.co.lotteon.entity.article.Faq;
 import kr.co.lotteon.entity.article.Inquiry;
 import kr.co.lotteon.entity.article.Notice;
+import kr.co.lotteon.repository.article.FaqRepository;
 import kr.co.lotteon.repository.article.InquiryRepository;
 import kr.co.lotteon.repository.article.NoticeRepository;
 import kr.co.lotteon.service.category.CategoryService;
@@ -30,6 +33,7 @@ public class CsService {
     private final ModelMapper modelMapper;
     private final NoticeRepository noticeRepository;
     private final CategoryService categoryService;
+    private final FaqRepository faqRepository;
 
     public void register(InquiryDTO inquiryDTO) {
 
@@ -91,6 +95,33 @@ public class CsService {
         return PageResponseDTO.<NoticeDTO>builder()  // 제네릭 타입 변경
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(noticeDTOList)
+                .total(total)
+                .build();
+    }
+
+    public PageResponseDTO<FaqDTO> faqFindAll(PageRequestDTO pageRequestDTO, String cateV1) {
+
+        pageRequestDTO.setSize(10);
+        Pageable pageable = pageRequestDTO.getPageable("no");
+        Page<Faq> pageFaq;  // 변수명 변경
+
+        if(cateV1 != null && !cateV1.isEmpty()){
+            // 카테고리로 검색
+            pageFaq = faqRepository.findByCateV1(pageable, cateV1);
+        }else{
+            pageFaq = faqRepository.findAll(pageable);
+        }
+
+        List<FaqDTO> faqDTOList = pageFaq.getContent().stream()
+                .map(faq -> modelMapper.map(faq, FaqDTO.class))
+                .collect(Collectors.toList());
+
+        int total = (int) pageFaq.getTotalElements();
+
+
+        return PageResponseDTO.<FaqDTO>builder()  // 제네릭 타입 변경
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(faqDTOList)
                 .total(total)
                 .build();
     }
