@@ -1,6 +1,7 @@
 package kr.co.lotteon.controller.article;
 
 import jakarta.servlet.http.HttpServletRequest;
+import kr.co.lotteon.dto.article.FaqDTO;
 import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.article.NoticeDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
@@ -15,6 +16,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -72,7 +76,15 @@ public class CsController {
 
 
     @GetMapping("/cs/faq/list")
-    public String faqList() {
+    public String faqList(Model model, PageRequestDTO pageRequestDTO, @RequestParam("cateV1") String cateV1) {
+
+        log.info("cateV1: {}", cateV1);
+
+        PageResponseDTO<FaqDTO> responseDTO = csService.faqFindAll(pageRequestDTO, cateV1);
+        model.addAttribute("responseDTO", responseDTO);
+
+        log.info("responseDTO: {}", responseDTO);
+
         return "/cs/faq/list";
     }
 
@@ -184,24 +196,21 @@ public class CsController {
 
     // 문의하기 작성
     @PostMapping("/cs/qna/write")
-    public String qnaWrite(InquiryDTO inquiryDTO, HttpServletRequest request, @RequestParam("writer") String uid, @RequestParam("cateV1") String cateV1){
+    public String qnaWrite(InquiryDTO inquiryDTO, HttpServletRequest request, @RequestParam("writer") String uid, @RequestParam("cateV1") String cateV1) throws UnsupportedEncodingException {
 
         String regip = request.getRemoteAddr();
         inquiryDTO.setRegip(regip);
 
         // UserDTO 조회
         UserDTO user = userService.findById(uid);
-
         inquiryDTO.setUser(user);
-
 
         csService.register(inquiryDTO);
 
         log.info("cateV1: {}", cateV1);
 
-
-
-        return null;
+        // 한글 파라미터 인코딩
+        return "redirect:/cs/qna/list?cateV1=" + URLEncoder.encode(cateV1, "UTF-8");
     }
 
 

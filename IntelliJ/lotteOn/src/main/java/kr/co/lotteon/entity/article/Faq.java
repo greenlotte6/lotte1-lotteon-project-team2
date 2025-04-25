@@ -29,6 +29,5 @@ public class Faq {
 
     @CreationTimestamp
     private LocalDateTime wdate; // 등록일
-    private String regip;        // 컴퓨터IP
 
 }

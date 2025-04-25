@@ -66,6 +66,10 @@ public class Inquiry {
         if(this.state == null){
             this.state = "검토중";
         }
+
+        if(this.password==0){
+            this.password = 777;
+        }
     }
 
 

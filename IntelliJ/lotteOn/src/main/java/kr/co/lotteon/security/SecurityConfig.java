@@ -42,6 +42,13 @@ public class SecurityConfig {
                         .userService(oauth2UserService)) // 사용자 정보 후처리 서비스
                 .defaultSuccessUrl("/") // OAuth2 로그인 성공 시 이동 경로 (선택)
         );
+        
+        
+        // 인가 설정
+        http.authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/").permitAll()
+                .requestMatchers("/cs/*").hasAnyRole("USER", "SELLER", "ADMIN")
+                .anyRequest().permitAll());
 
         // 기타 보안 설정
         http.csrf(AbstractHttpConfigurer::disable);
