@@ -42,7 +42,13 @@ public class CsController {
     }
 
     @GetMapping("/cs/notice/view")
-    public String noticeView() {
+    public String noticeView(Model model, @RequestParam("no") int no) {
+
+        NoticeDTO noticeDTO = csService.noticeFindById(no);
+
+        model.addAttribute("noticeDTO", noticeDTO);
+
+
         return "/cs/notice/view";
     }
 

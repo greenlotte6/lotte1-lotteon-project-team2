@@ -122,9 +122,6 @@ public class CsService {
     }
 
 
-
-
-
     public InquiryDTO findById(int no){
 
         Optional<Inquiry> optInquiry = inquiryRepository.findById(no);
@@ -139,7 +136,22 @@ public class CsService {
         }
 
         return null;
+    }
 
+    public NoticeDTO noticeFindById(int no){
+
+        Optional<Notice> optNotice = noticeRepository.findById(no);
+
+        if(optNotice.isPresent()){
+
+            Notice notice = optNotice.get();
+            NoticeDTO noticeDTO = modelMapper.map(notice, NoticeDTO.class);
+
+            return noticeDTO;
+
+        }
+
+        return null;
     }
 
 
