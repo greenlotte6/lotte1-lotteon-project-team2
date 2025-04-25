@@ -10,53 +10,53 @@
 </head>
 
 <body>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-          const parents = document.querySelectorAll(".category .parent");
-      
-          parents.forEach(parent => {
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const parents = document.querySelectorAll(".category .parent");
+
+        parents.forEach(parent => {
             parent.style.cursor = "pointer";
-      
+
             parent.addEventListener("click", () => {
-              const currentChildren = parent.nextElementSibling;
-      
-              document.querySelectorAll(".category .children").forEach(children => {
-                if (children !== currentChildren) {
-                  children.style.display = "none";
+                const currentChildren = parent.nextElementSibling;
+
+                document.querySelectorAll(".category .children").forEach(children => {
+                    if (children !== currentChildren) {
+                        children.style.display = "none";
+                    }
+                });
+
+                if (currentChildren && currentChildren.classList.contains("children")) {
+                    const isVisible = currentChildren.style.display === "block";
+                    currentChildren.style.display = isVisible ? "none" : "block";
                 }
-              });
-      
-              if (currentChildren && currentChildren.classList.contains("children")) {
-                const isVisible = currentChildren.style.display === "block";
-                currentChildren.style.display = isVisible ? "none" : "block";
-              }
             });
-          });
-          
-          const plusBtns = document.querySelectorAll('.btn-plus');
-            const minusBtns = document.querySelectorAll('.btn-minus');
-            const quantityEls = document.querySelectorAll('#quantity');
-            const priceTotals = document.querySelectorAll('.price_total');
+        });
 
-            const unitPrices = Array.from(priceTotals).map((el, i) => {
-                const priceText = el.textContent.replace(/[^0-9]/g, '');
-                const initialCount = parseInt(quantityEls[i].textContent);
-                return parseInt(priceText) / initialCount;
-            });
+        const plusBtns = document.querySelectorAll('.btn-plus');
+        const minusBtns = document.querySelectorAll('.btn-minus');
+        const quantityEls = document.querySelectorAll('#quantity');
+        const priceTotals = document.querySelectorAll('.price_total');
 
-            plusBtns.forEach((btn, index) => {
-                btn.addEventListener('click', () => {
+        const unitPrices = Array.from(priceTotals).map((el, i) => {
+            const priceText = el.textContent.replace(/[^0-9]/g, '');
+            const initialCount = parseInt(quantityEls[i].textContent);
+            return parseInt(priceText) / initialCount;
+        });
+
+        plusBtns.forEach((btn, index) => {
+            btn.addEventListener('click', () => {
                 let count = parseInt(quantityEls[index].textContent);
                 count++;
                 quantityEls[index].textContent = count;
 
                 const totalPrice = unitPrices[index] * count;
                 priceTotals[index].textContent = totalPrice.toLocaleString() + '원';
-                });
             });
+        });
 
-            minusBtns.forEach((btn, index) => {
-                btn.addEventListener('click', () => {
+        minusBtns.forEach((btn, index) => {
+            btn.addEventListener('click', () => {
                 let count = parseInt(quantityEls[index].textContent);
                 if (count > 1) {
                     count--;
@@ -65,715 +65,259 @@
                     const totalPrice = unitPrices[index] * count;
                     priceTotals[index].textContent = totalPrice.toLocaleString() + '원';
                 }
-                });
             });
+        });
 
-            const tabs = document.querySelectorAll('.tab-menu li');
-            const panes = document.querySelectorAll('.tab-pane');
+        const tabs = document.querySelectorAll('.tab-menu li');
+        const panes = document.querySelectorAll('.tab-pane');
 
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
                 tabs.forEach(t => t.classList.remove('active'));
                 panes.forEach(p => p.classList.remove('active'));
 
                 tab.classList.add('active');
                 const target = tab.getAttribute('data-tab');
                 document.getElementById(target).classList.add('active');
-                });
             });
-
-            const arrivalSpan = document.getElementById("arrivalDate");
-            const today = new Date();
-            today.setDate(today.getDate() + 3);
-
-            const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
-            const formatted = `${today.getMonth() + 1}/${today.getDate()}(${weekdays[today.getDay()]})`;
-            arrivalSpan.textContent = formatted;
         });
-      </script>
-      
-    <div id="wrapper">
-        <!-- 헤더 시작 -->
-        <th:block th:include="/common/header.html"/>
-        <!-- 헤더 끝 -->
 
-        <!-- 메인 내용 시작 -->
-        <main>
-            <section class="content">
-                <!-- 사이드바-->
-                <aside>
-                    <div class="category">
-                        <p>카테고리</p>
-                        <div class="category-item">
+        const arrivalSpan = document.getElementById("arrivalDate");
+        const today = new Date();
+        today.setDate(today.getDate() + 3);
+
+        const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
+        const formatted = `${today.getMonth() + 1}/${today.getDate()}(${weekdays[today.getDay()]})`;
+        arrivalSpan.textContent = formatted;
+    });
+</script>
+
+<div id="wrapper">
+    <!-- 헤더 시작 -->
+    <th:block th:include="/common/header.html"/>
+    <!-- 헤더 끝 -->
+
+    <!-- 메인 내용 시작 -->
+    <main>
+        <section class="content">
+            <!-- 사이드바-->
+            <aside>
+                <div class="category">
+                    <p>카테고리</p>
+                    <div class="category-item">
                         <div class="parent">뷰티</div>
                         <div class="children">
                             <a href="/view/product/beauty/skincare/skincare.html">스킨케어</a>
                             <a href="/view/product/beauty/makeup">메이크업</a>
                             <a href="/view/product/beauty/perfume">향수</a>
                         </div>
-                        </div>
-                    
-                        <div class="category-item">
+                    </div>
+
+                    <div class="category-item">
                         <div class="parent">럭셔리</div>
                         <div class="children">
                             <a href="/view/product/luxury/bag">가방</a>
                             <a href="/view/product/luxury/watch">시계</a>
                             <a href="/view/product/luxury/shoes">신발</a>
                         </div>
-                        </div>
-                    
-                        <div class="category-item">
+                    </div>
+
+                    <div class="category-item">
                         <div class="parent">여성패션</div>
                         <div class="children">
                             <a href="/view/product/wfashion/onepiece">원피스</a>
                             <a href="/view/product/wfashion/blouse">블라우스</a>
                             <a href="/view/product/wfashion/pants">팬츠</a>
                         </div>
-                        </div>
-                    
-                        <div class="category-item">
+                    </div>
+
+                    <div class="category-item">
                         <div class="parent">남성패션</div>
                         <div class="children">
                             <a href="/view/product/mfashion/shirt">셔츠</a>
                             <a href="/view/product/mfashion/slacks">슬랙스</a>
                             <a href="/view/product/mfashion/jacket">자켓</a>
                         </div>
-                        </div>
-                    
-                        <div class="category-item">
+                    </div>
+
+                    <div class="category-item">
                         <div class="parent">가전</div>
                         <div class="children">
                             <a href="/view/product/electronics/computer">컴퓨터</a>
                             <a href="/view/product/electronics/game">게임</a>
                             <a href="/view/product/electronics/tv">티비</a>
                         </div>
-                        </div>
-                    
-                        <div class="category-item">
+                    </div>
+
+                    <div class="category-item">
                         <div class="parent">가구</div>
                         <div class="children">
                             <a href="/view/product/furniture/sofa">쇼파</a>
                             <a href="/view/product/furniture/bed">침구</a>
                             <a href="/view/product/furniture/wardrobe">옷장</a>
                         </div>
-                        </div>
-                    
-                        <div class="category-item">
+                    </div>
+
+                    <div class="category-item">
                         <div class="parent">반려동물</div>
                         <div class="children">
                             <a href="/view/product/pet/dog">강아지</a>
                             <a href="/view/product/pet/cat">고양이</a>
                             <a href="/view/product/pet/parrot">앵무새</a>
                         </div>
-                        </div>
-                    
-                        <div class="category-item">
+                    </div>
+
+                    <div class="category-item">
                         <div class="parent">취미</div>
                         <div class="children">
                             <a href="/view/product/hobby/knitting">뜨개</a>
                             <a href="/view/product/hobby/badminton">배드민턴</a>
                             <a href="/view/product/hobby/poldance">폴댄스</a>
                         </div>
-                        </div>
-                    
-                        <div class="category-item">
+                    </div>
+
+                    <div class="category-item">
                         <div class="parent">여행</div>
                         <div class="children">
                             <a href="/view/product/travel/asia">아시아</a>
                             <a href="/view/product/travel/europe">유럽</a>
                             <a href="/view/product/travel/northamerica">북미</a>
                         </div>
-                        </div>
                     </div>
-                </aside>
-                <!-- 사이드 바 끝 -->
-                 
-                <!-- 메인 시작 -->
-                <div class="product">
-                    <div class="bar">
-                        <div>
-                            <a href="#">HOME</a>&nbsp;&nbsp;>&nbsp;&nbsp;
-                            <a href="#">뷰티</a>&nbsp;&nbsp;>&nbsp;&nbsp;
-                            <a href="#">향수</a>
-                        </div>
+                </div>
+            </aside>
+            <!-- 사이드 바 끝 -->
+
+            <!-- 메인 시작 -->
+            <div class="product">
+                <div class="bar">
+                    <div>
+                        <a href="#">HOME</a>&nbsp;&nbsp;>&nbsp;&nbsp;
+                        <a href="#">뷰티</a>&nbsp;&nbsp;>&nbsp;&nbsp;
+                        <a href="#">향수</a>
                     </div>
-                    <div class="product_page">
-                        <div>
-                            <img th:src="@{${pageView.productDTO.sNameThumb3}}" alt="상품 이미지">
-                        </div>
-                        <form action="#">
-                            <table>
-                                <tr><td colspan="2" th:text="'상품번호 : ' + ${pageView.productDTO.prodNo}"></td></tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <span class="department" th:text="${pageView.productDTO.company}">회사명</span>
-                                        <span class="brand" th:text="' ' + ${pageView.productDTO.prodBrand} + ' >'">브랜드명 ></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" class="product_name" th:text="${pageView.productDTO.prodName}">상품명</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2"> 
-                                        <a href="#">
-                                            <span>★&nbsp;<span th:text="${pageView.productDTO.ratingAvg}">0.0</span></span>
-                                            <span>&nbsp;<span th:text="${pageView.productDTO.reviewCount}">0</span>건</span>
-                                        </a>
-                                    </td> 
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <span class="sale" th:text="|${pageView.productDTO.prodDiscount}%|">5%</span>
-                                        <span class="price_current"
-                                              th:text="|${T(java.lang.String).format('%,d원', (pageView.productDTO.prodPrice * (100 - pageView.productDTO.prodDiscount)) / 100)}|">
+                </div>
+                <div class="product_page">
+                    <div>
+                        <img th:src="@{${pageView.productDTO.sNameThumb3}}" alt="상품 이미지">
+                    </div>
+                    <form action="#">
+                        <table>
+                            <tr><td colspan="2" th:text="'상품번호 : ' + ${pageView.productDTO.prodNo}"></td></tr>
+                            <tr>
+                                <td colspan="2">
+                                    <span class="department" th:text="${pageView.productDTO.company}">회사명</span>
+                                    <span class="brand" th:text="' ' + ${pageView.productDTO.prodBrand} + ' >'">브랜드명 ></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="product_name" th:text="${pageView.productDTO.prodName}">상품명</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <a href="#">
+                                        <span>★&nbsp;<span th:text="${pageView.productDTO.ratingAvg}">0.0</span></span>
+                                        <span>&nbsp;<span th:text="${pageView.productDTO.reviewCount}">0</span>건</span>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <span class="sale" th:text="|${pageView.productDTO.prodDiscount}%|">5%</span>
+                                    <span class="price_current"
+                                          th:text="|${T(java.lang.String).format('%,d원', (pageView.productDTO.prodPrice * (100 - pageView.productDTO.prodDiscount)) / 100)}|">
                                         </span>
-                                        <span class="price_original"
-                                              th:text="|${T(java.lang.String).format('%,d원', pageView.productDTO.prodPrice)}|">
+                                    <span class="price_original"
+                                          th:text="|${T(java.lang.String).format('%,d원', pageView.productDTO.prodPrice)}|">
                                         </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <button type="button" class="coupon">
-                                            주문 시 적용되는 할인 확인하기
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="deliver">
-                                    <td>배송정보</td>
-                                    <td>
-                                        <span id="arrivalDate"></span> 이내 도착확률 92%<br>
-                                        <span th:if="${pageView.productDTO.prodDeliveryFee == 0}">배송비 무료</span>
-                                        <span th:if="${pageView.productDTO.prodDeliveryFee != 0}"
-                                              th:text="|배송비 ${#numbers.formatInteger(pageView.productDTO.prodDeliveryFee, 0)}원|">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button type="button" class="coupon">
+                                        주문 시 적용되는 할인 확인하기
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="deliver">
+                                <td>배송정보</td>
+                                <td>
+                                    <span id="arrivalDate"></span> 이내 도착확률 92%<br>
+                                    <span th:if="${pageView.productDTO.prodDeliveryFee == 0}">배송비 무료</span>
+                                    <span th:if="${pageView.productDTO.prodDeliveryFee != 0}"
+                                          th:text="|배송비 ${#numbers.formatInteger(pageView.productDTO.prodDeliveryFee, 0)}원|">
                                         </span>
-                                    </td>
-                                </tr>
-                                <tr class="choice">
-                                    <td>옵션선택</td>
-                                    <td>
-                                        <select>
-                                            <option>선택하기</option>
-                                            <option>딥디크: 오드퍼퓸 플레르드뽀</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="quantity-box">
-                                            <button type="button" class="btn-minus">-</button>
-                                            <span id="quantity">1</span>
-                                            <button type="button" class="btn-plus">+</button>
-                                        </div>
-                                    </td>
-                                    <td>
+                                </td>
+                            </tr>
+                            <tr class="choice">
+                                <td>옵션선택</td>
+                                <td>
+                                    <select>
+                                        <option>선택하기</option>
+                                        <option>딥디크: 오드퍼퓸 플레르드뽀</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="quantity-box">
+                                        <button type="button" class="btn-minus">-</button>
+                                        <span id="quantity">1</span>
+                                        <button type="button" class="btn-plus">+</button>
+                                    </div>
+                                </td>
+                                <td>
                                         <span class="price_total"
                                               th:text="|${T(java.lang.String).format('%,d원', (pageView.productDTO.prodPrice * (100 - pageView.productDTO.prodDiscount)) / 100)}|">
                                         </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <button type="button" class="cart">장바구니 담기</button>
-                                        <button type="submit" class="buy">바로 구매하기</button>
-                                    </td>
-                                </tr>
-                                <tr class="product_banner">
-                                    <td colspan="2">
-                                        <img src="/images/product/product_banner.png" class="product_banner">
-                                    </td>
-                                </tr>
-                            </table>
-                        </form>
-                        <div class="tabs">
-                            <ul class="tab-menu">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button type="button" class="cart">장바구니 담기</button>
+                                    <button type="submit" class="buy">바로 구매하기</button>
+                                </td>
+                            </tr>
+                            <tr class="product_banner">
+                                <td colspan="2">
+                                    <img src="/images/product/product_banner.png" class="product_banner">
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                    <div class="tabs">
+                        <ul class="tab-menu">
                             <li class="active" data-tab="detail">상세정보</li>
                             <li data-tab="review">리뷰(439)</li>
                             <li data-tab="qna">Q&A(239)</li>
                             <li data-tab="exchange">교환/반품 안내</li>
-                            </ul>
-                            <div class="tab-content">
-                                <div id="detail" class="tab-pane active">
-                                    <table class="product_info">
-                                        <tr>
-                                            <td>상품 디테일 번호</td>
-                                            <td th:text="${pageView.productDetailDTO.no}"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>영수증 유형</td>
-                                            <td th:text="${pageView.productDetailDTO.receiptType}"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>상품 상태</td>
-                                            <td th:text="${pageView.productDetailDTO.prodState}"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>면세 여부</td>
-                                            <td th:text="${pageView.productDetailDTO.taxFree}"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>사업자 유형</td>
-                                            <td th:text="${pageView.productDetailDTO.bizType}"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>원산지</td>
-                                            <td th:text="${pageView.productDetailDTO.origin}"></td>
-                                        </tr>
-                                    </table>
-                                    <img src="/images/product/lotteimage.png">
-                                    <p>MD 공지사항</p>
-                                    <img src="/images/product/beautyfesta.jpeg">
-                                    <p>[딥티크] ; 플레르 드 뽀 오 드 퍼퓸 75ml</p>
-                                    <p>
-                                        딥티크에 있어서 향수는 예술이고 예술은 곧 여행입니다. 아직 잘 알려지지 않은 후각의 세계를 통해 색다른 어코드(조합)를 찾아 떠나는 상상여행.<br>
-                                        창조의 시간 속에서 결함을 통해 얻어지는 새로운 아이디어와 이야기가 가득한 그 어딘가를 향해 떠나는 여행.<br>
-                                        딥티크는 이렇게 ‘다양한 장르나 문화의 경계를 자유롭게 넘나들며 시각, 후각, 촉각을 통해 향수의 경이로움으로 세계를 끊임없이 재현한다’는<br>
-                                        한결같은 의지를 항상 꿈과 현실의 두 세계 사이에서 공존합니다.
-                                    </p>
-                                    <p>플레르 드 뽀(Fleur de Peau)는 계열/피부의 꽃, 은은한 머스크와 아이리스가 구성하는 살결의 감각적인 향. 플레르 드 뽀는 불어로 ‘피부의 꽃’이라는 뜻입니다.<br>
-                                        고대 그리스 신화 중 가장 정열적이고 관능적인 묘사였던 에로스의 사랑 이야기를 자연스럽고 살 내음을 연상시키는 향으로 표현하였습니다.<br>
-                                        신화만큼이나 신비로운 머스크 향은 관능적이고 지속적인 잔향으로 피부를 정화해줍니다.<br>
-                                        숨처럼 흡수하고 숨처럼 보드랍고 파우더리한 아이리스와 앰버, 프루티한 앰브레트 시드로 강조되는 머스크향은 촉각적인 차원에서 그 진가를 발휘합니다.<br>
-                                        핑크 페퍼콘은 머스크의 부드러움과 확연한 대조를 이루게 됩니다.<br>
-                                    </p>
-                                    <p>상품필수정보</p>
-                                    <table class="product_assential">
-                                        <tr><th>원산지</th>  <td th:text="${pageView.productDetailDTO.origin}"></td></tr>
-                                        <tr><th>모델명</th>  <td th:text="${pageView.productDTO.prodName}"></td></tr>
-                                        <tr><th>상품번호</th>  <td th:text="${pageView.productDTO.prodNo}"></td></tr>
-                                        <tr><th>상품상태</th><td>새상품</td></tr>
-                                        <tr><th>브랜드</th>  <td th:text="${pageView.productDTO.prodBrand}"></td></tr>
-                                        <tr><th>내용물의 용량 또는 중량</th><td>75ml</td></tr>
-                                        <tr><th>제품 주요 사양</th><td>모든 피부 타입</td></tr>
-                                        <tr><th>사용기한 또는 개봉 후 사용기간</th>
-                                        <td>개봉 후 36개월 / 제조년월일부터 10개월 이내 상품을 발송합니다. (제품별로 상이하므로 고객센터 문의: 02-772-3225)</td>
-                                        </tr>
-                                        <tr><th>사용방법</th><td>맥박이 뛰는 부위, 옷깃이 스치는 곳에 분사하여 사용합니다.</td></tr>
-                                        <tr><th>화장품제조업자 및 화장품책임판매업자</th>
-                                        <td>제조자: 씨씨아이알엔디 / 제조판매업자: 씨씨인터내셔널</td>
-                                        </tr>
-                                        <tr><th>제조국</th><td>프랑스</td></tr>
-                                        <tr><th>전성분</th>
-                                        <td>
-                                            변성알코올, 향료, 정제수, 에칠헥실메톡시신나메이트, 에칠헥실살리실레이트, 부틸메톡시디벤조일메탄,<br>
-                                            비에이치티, 리모넨, 리날룰, 알파-아이소메틸아이오논, 파네솔, 제라니올, 시트랄, 시트로넬롤
-                                        </td>
-                                        </tr>
-                                        <tr><th>기능성 여부</th><td>해당없음</td></tr>
-                                        <tr><th>사용할 때 주의사항</th>
-                                        <td>
-                                            1. 화장품 사용 중 붉은 반점, 부어오름, 가려움증 등의 이상이 있을 경우 사용 중지<br>
-                                            2. 상처가 있는 부위에는 사용을 자제할 것<br>
-                                            3. 보관 및 취급 시의 주의사항: 어린이 손에 닿지 않는 곳에 보관할 것, 고온 또는 저온의 장소 및 직사광선을 피해 보관할 것
-                                        </td>
-                                        </tr>
-                                        <tr><th>품질보증기준</th><td>관련법 및 소비자분쟁해결기준에 따름</td></tr>
-                                        <tr><th>소비자상담 관련 전화번호</th><td>딥티크 담당자 / 1644-4490</td></tr>
-                                    </table>
-                                </div> 
-                                <div id="review" class="tab-pane">
-                                    <p>리뷰 4.8 / 5</p>
-                                    <div class="review_pick">
-                                      <p class="title">리뷰 PICK ★</p>
-                                      <div class="review_slider">
-                                        <div class="review_card">
-                                          <div class="review_img">
-                                            <img src="/images/product/review_diptique_flerdefeau.jpg" alt="리뷰 이미지">
-                                          </div>
-                                          <div class="review_content">
-                                            <div class="stars">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <p>5</p>
-                                            </div>
-                                            <p class="nickname">wis*** · 2024.06.03</p>
-                                            <p class="review_text">
-                                              일단 택배 받자마자 꼼꼼한 포장에 만족했고요<br>
-                                              내용물 보니 무려 딥로 시코스 오드 뚜왈렛을 증정품
-                                            </p>
-                                          </div>
-                                        </div>
-                                        <div class="review_card">
-                                          <div class="review_img">
-                                            <img src="/images/product/review_diptique_flerdefeau.jpg" alt="리뷰 이미지">
-                                          </div>
-                                          <div class="review_content">
-                                            <div class="stars">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <p>5</p>
-                                            </div>
-                                            <p class="nickname">wis*** · 2024.06.03</p>
-                                            <p class="review_text">
-                                              일단 택배 받자마자 꼼꼼한 포장에 만족했고요<br>
-                                              내용물 보니 무려 딥로 시코스 오드 뚜왈렛을 증정품
-                                            </p>
-                                          </div>
-                                        </div>
-                                        <div class="review_card">
-                                          <div class="review_img">
-                                            <img src="/images/product/review_diptique_flerdefeau.jpg" alt="리뷰 이미지">
-                                          </div>
-                                          <div class="review_content">
-                                            <div class="stars">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <p>5</p>
-                                            </div>
-                                            <p class="nickname">wis*** · 2024.06.03</p>
-                                            <p class="review_text">
-                                              일단 택배 받자마자 꼼꼼한 포장에 만족했고요<br>
-                                              내용물 보니 무려 딥로 시코스 오드 뚜왈렛을 증정품
-                                            </p>
-                                          </div>
-                                        </div>
-                                        <div class="review_card">
-                                          <div class="review_img">
-                                            <img src="/images/product/review_diptique_flerdefeau.jpg" alt="리뷰 이미지">
-                                          </div>
-                                          <div class="review_content">
-                                            <div class="stars">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <p>5</p>
-                                            </div>
-                                            <p class="nickname">wis*** · 2024.06.03</p>
-                                            <p class="review_text">
-                                              일단 택배 받자마자 꼼꼼한 포장에 만족했고요<br>
-                                              내용물 보니 무려 딥로 시코스 오드 뚜왈렛을 증정품
-                                            </p>
-                                          </div>
-                                        </div>
-                                        <div class="review_card">
-                                          <div class="review_img">
-                                            <img src="/images/product/review_diptique_flerdefeau.jpg" alt="리뷰 이미지">
-                                          </div>
-                                          <div class="review_content">
-                                            <div class="stars">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <img src="/images/product/full_star.png" alt="★">
-                                              <p>5</p>
-                                            </div>
-                                            <p class="nickname">wis*** · 2024.06.03</p>
-                                            <p class="review_text">
-                                              일단 택배 받자마자 꼼꼼한 포장에 만족했고요<br>
-                                              내용물 보니 무려 딥로 시코스 오드 뚜왈렛을 증정품
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </div> 
-                                    </div> 
-                                    <div class="reviews">
-                                      <div>
-                                        <p>총 439건</p>
-                                        <div>
-                                          <a href="#">도움돼요순</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                                          <a href="#">랭킹순</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                                          <a href="#">최신순</a>
-                                        </div>
-                                      </div>
-                                      <div class="reviews_content">
-                                        <p>nickname</p>
-                                        <div class="stars">
-                                          <img src="/images/product/full_star.png">
-                                          <img src="/images/product/full_star.png">
-                                          <img src="/images/product/full_star.png">
-                                          <img src="/images/product/full_star.png">
-                                          <img src="/images/product/full_star.png">
-                                          <p>5</p>
-                                        </div>
-                                        <p>판매자 : 롯데백화점 본점</p>
-                                        <p>
-                                          딥디크 유명한 향중에 하나라 플뽀는 구하기 힘들대서 품절되기 전에 구매해놨어요
-                                          집에 도착하자마자 뿌려보고 싶은 마음을 향수와 같이 안정화 시키고 일주일 뒤는 오늘 뿌렸는데 이게 후추향인가?라고 계속 흡흡 하는데 옛날에 맡던 향 엄마 화장서 나던향이라 그런가 공감이 되더라고요
-                                          살짝씩 향이 스치니 지금보다 날씨가 좀 쌀쌀해지면 더 좋을거 같은 느낌이네요
-                                          지금은 여름향수 샘플링 쓰다가 가을되면 본격적으로 착석 해야겠어요~
-                                        </p>
-                                        <img src="/images/product/review_diptique_flerdefeau.jpg">
-                                      </div>
-                                      <div class="reviews_content">
-                                        <p>nickname</p>
-                                        <div class="stars">
-                                          <img src="/images/product/full_star.png">
-                                          <img src="/images/product/full_star.png">
-                                          <img src="/images/product/full_star.png">
-                                          <img src="/images/product/full_star.png">
-                                          <img src="/images/product/full_star.png">
-                                          <p>5</p>
-                                        </div>
-                                        <p>판매자 : 롯데백화점 본점</p>
-                                        <p>
-                                          딥디크 유명한 향중에 하나라 플뽀는 구하기 힘들대서 품절되기 전에 구매해놨어요
-                                          집에 도착하자마자 뿌려보고 싶은 마음을 향수와 같이 안정화 시키고 일주일 뒤는 오늘 뿌렸는데 이게 후추향인가?라고 계속 흡흡 하는데 옛날에 맡던 향 엄마 화장서 나던향이라 그런가 공감이 되더라고요
-                                          살짝씩 향이 스치니 지금보다 날씨가 좀 쌀쌀해지면 더 좋을거 같은 느낌이네요
-                                          지금은 여름향수 샘플링 쓰다가 가을되면 본격적으로 착석 해야겠어요~
-                                        </p>
-                                      </div>
-                                      <div class="reviews_content">
-                                        <p>nickname</p>
-                                        <div class="stars">
-                                          <img src="/images/product/full_star.png">
-                                          <img src="/images/product/full_star.png">
-                                          <img src="/images/product/full_star.png">
-                                          <img src="/images/product/full_star.png">
-                                          <img src="/images/product/full_star.png">
-                                          <p>5</p>
-                                        </div>
-                                        <p>판매자 : 롯데백화점 본점</p>
-                                        <p>
-                                          딥디크 유명한 향중에 하나라 플뽀는 구하기 힘들대서 품절되기 전에 구매해놨어요
-                                          집에 도착하자마자 뿌려보고 싶은 마음을 향수와 같이 안정화 시키고 일주일 뒤는 오늘 뿌렸는데 이게 후추향인가?라고 계속 흡흡 하는데 옛날에 맡던 향 엄마 화장서 나던향이라 그런가 공감이 되더라고요
-                                          살짝씩 향이 스치니 지금보다 날씨가 좀 쌀쌀해지면 더 좋을거 같은 느낌이네요
-                                          지금은 여름향수 샘플링 쓰다가 가을되면 본격적으로 착석 해야겠어요~
-                                        </p>
-                                        <img src="/images/product/review_diptique_flerdefeau.jpg">
-                                      </div>
-                                      <div class="reviews_content">
-                                        <p>nickname</p>
-                                        <div class="stars">
-                                          <img src="/images/product/full_star.png">
-                                          <img src="/images/product/full_star.png">
-                                          <img src="/images/product/full_star.png">
-                                          <img src="/images/product/full_star.png">
-                                          <img src="/images/product/full_star.png">
-                                          <p>5</p>
-                                        </div>
-                                        <p>판매자 : 롯데백화점 본점</p>
-                                        <p>
-                                          딥디크 유명한 향중에 하나라 플뽀는 구하기 힘들대서 품절되기 전에 구매해놨어요
-                                          집에 도착하자마자 뿌려보고 싶은 마음을 향수와 같이 안정화 시키고 일주일 뒤는 오늘 뿌렸는데 이게 후추향인가?라고 계속 흡흡 하는데 옛날에 맡던 향 엄마 화장서 나던향이라 그런가 공감이 되더라고요
-                                          살짝씩 향이 스치니 지금보다 날씨가 좀 쌀쌀해지면 더 좋을거 같은 느낌이네요
-                                          지금은 여름향수 샘플링 쓰다가 가을되면 본격적으로 착석 해야겠어요~
-                                        </p>
-                                      </div>
-                                      <div class="reviews_content">
-                                        <p>nickname</p>
-                                        <div class="stars">
-                                          <img src="/images/product/full_star.png">
-                                          <img src="/images/product/full_star.png">
-                                          <img src="/images/product/full_star.png">
-                                          <img src="/images/product/full_star.png">
-                                          <img src="/images/product/full_star.png">
-                                          <p>5</p>
-                                        </div>
-                                        <p>판매자 : 롯데백화점 본점</p>
-                                        <p>
-                                          딥디크 유명한 향중에 하나라 플뽀는 구하기 힘들대서 품절되기 전에 구매해놨어요
-                                          집에 도착하자마자 뿌려보고 싶은 마음을 향수와 같이 안정화 시키고 일주일 뒤는 오늘 뿌렸는데 이게 후추향인가?라고 계속 흡흡 하는데 옛날에 맡던 향 엄마 화장서 나던향이라 그런가 공감이 되더라고요
-                                          살짝씩 향이 스치니 지금보다 날씨가 좀 쌀쌀해지면 더 좋을거 같은 느낌이네요
-                                          지금은 여름향수 샘플링 쓰다가 가을되면 본격적으로 착석 해야겠어요~
-                                        </p>
-                                        <img src="/images/product/review_diptique_flerdefeau.jpg">
-                                      </div>
-                                      <div class="reviews_page">
-                                        <a href="#"><</a>
-                                        <a href="#">1</a>
-                                        <a href="#">2</a>
-                                        <a href="#">3</a>
-                                        <a href="#">4</a>
-                                        <a href="#">5</a>
-                                        <a href="#">6</a>
-                                        <a href="#">></a>
-                                      </div>
-                                    </div> 
-                                  </div> 
-                                <div id="qna" class="tab-pane">
-                                    <p>Q&A (238)</p>
-                                    <div>
-                                        <p>
-                                            답변은 <span>마이롯데>나의문의내역</span>에서 확인하실 수 있습니다.<br>
-                                            처음 확인 시, 필터가 적용된 상태로 <span>비밀글 제외한 Q&A</span>가 노출됩니다.
-                                        </p>
-                                        <button type="button">문의하기</button>
-                                    </div>
-                                    <div class="qna_content">
-                                        <p>상품정보</p>
-                                        <p>선물포장해서 에코백과 봉투까지 함께 오나요?? 샘플 향수도 혹시 주시는지!</p>
-                                        <div class="answer">
-                                            <p>
-                                                안녕하세요 고객님 현재 온라인 구매 시 리본포장 및 쇼핑백은 증정되지 않고 있으며, 매장 방문시에도 별도의 선물포장 서비스 및 쇼핑백 제공이 불가능한 점 양해 부탁드립니다.
-                                                현재 문의주신 상품 구매시 별도의 사은품 증정 프로모션은 진행하고 있지 않는 부분 쇼핑에 참고 부탁드립니다.
-                                            </p>
-                                            <p>롯데쇼핑(주)본점<span>판매자</span></p>
-                                        </div>
-                                        <div>
-                                            <a href="#">답변달기</a>
-                                            <p>2025.03.05</p>
-                                        </div>
-                                    </div>
-                                    <div class="qna_content">
-                                        <p>상품정보</p>
-                                        <p>선물포장해서 에코백과 봉투까지 함께 오나요?? 샘플 향수도 혹시 주시는지!</p>
-                                        <div class="answer">
-                                            <p>
-                                                안녕하세요 고객님 현재 온라인 구매 시 리본포장 및 쇼핑백은 증정되지 않고 있으며, 매장 방문시에도 별도의 선물포장 서비스 및 쇼핑백 제공이 불가능한 점 양해 부탁드립니다.
-                                                현재 문의주신 상품 구매시 별도의 사은품 증정 프로모션은 진행하고 있지 않는 부분 쇼핑에 참고 부탁드립니다.
-                                            </p>
-                                            <p>롯데쇼핑(주)본점<span>판매자</span></p>
-                                        </div>
-                                        <div>
-                                            <a href="#">답변달기</a>
-                                            <p>2025.03.05</p>
-                                        </div>
-                                    </div>
-                                    <div class="qna_content">
-                                        <p>상품정보</p>
-                                        <p>선물포장해서 에코백과 봉투까지 함께 오나요?? 샘플 향수도 혹시 주시는지!</p>
-                                        <div class="answer">
-                                            <p>
-                                                안녕하세요 고객님 현재 온라인 구매 시 리본포장 및 쇼핑백은 증정되지 않고 있으며, 매장 방문시에도 별도의 선물포장 서비스 및 쇼핑백 제공이 불가능한 점 양해 부탁드립니다.
-                                                현재 문의주신 상품 구매시 별도의 사은품 증정 프로모션은 진행하고 있지 않는 부분 쇼핑에 참고 부탁드립니다.
-                                            </p>
-                                            <p>롯데쇼핑(주)본점<span>판매자</span></p>
-                                        </div>
-                                        <div>
-                                            <a href="#">답변달기</a>
-                                            <p>2025.03.05</p>
-                                        </div>
-                                    </div>
-                                    <div class="qna_content">
-                                        <p>상품정보</p>
-                                        <p>선물포장해서 에코백과 봉투까지 함께 오나요?? 샘플 향수도 혹시 주시는지!</p>
-                                        <div class="answer">
-                                            <p>
-                                                안녕하세요 고객님 현재 온라인 구매 시 리본포장 및 쇼핑백은 증정되지 않고 있으며, 매장 방문시에도 별도의 선물포장 서비스 및 쇼핑백 제공이 불가능한 점 양해 부탁드립니다.
-                                                현재 문의주신 상품 구매시 별도의 사은품 증정 프로모션은 진행하고 있지 않는 부분 쇼핑에 참고 부탁드립니다.
-                                            </p>
-                                            <p>롯데쇼핑(주)본점<span>판매자</span></p>
-                                        </div>
-                                        <div>
-                                            <a href="#">답변달기</a>
-                                            <p>2025.03.05</p>
-                                        </div>
-                                    </div>
-                                    <div class="qna_content">
-                                        <p>상품정보</p>
-                                        <p>선물포장해서 에코백과 봉투까지 함께 오나요?? 샘플 향수도 혹시 주시는지!</p>
-                                        <div class="answer">
-                                            <p>
-                                                안녕하세요 고객님 현재 온라인 구매 시 리본포장 및 쇼핑백은 증정되지 않고 있으며, 매장 방문시에도 별도의 선물포장 서비스 및 쇼핑백 제공이 불가능한 점 양해 부탁드립니다.
-                                                현재 문의주신 상품 구매시 별도의 사은품 증정 프로모션은 진행하고 있지 않는 부분 쇼핑에 참고 부탁드립니다.
-                                            </p>
-                                            <p>롯데쇼핑(주)본점<span>판매자</span></p>
-                                        </div>
-                                        <div>
-                                            <a href="#">답변달기</a>
-                                            <p>2025.03.05</p>
-                                        </div>
-                                    </div>
-                                    <div class="reviews_page">
-                                        <a href="#"><</a>
-                                        <a href="#">1</a>
-                                        <a href="#">2</a>
-                                        <a href="#">3</a>
-                                        <a href="#">4</a>
-                                        <a href="#">5</a>
-                                        <a href="#">6</a>
-                                        <a href="#">></a>
-                                    </div>
-                                </div>
-                                <div id="exchange" class="tab-pane">
-                                    <section class="exchange-info">
-                                      <h3>교환/반품 안내</h3>
-                                      <h2>위탁판매자정보</h2>
-                                      <table class="seller-info">
-                                        <tr><th>업체명</th><td>롯데쇼핑(주)본점</td></tr>
-                                        <tr><th>통신판매업신고번호</th><td>중구01243</td></tr>
-                                        <tr><th>e-mail</th><td>lotteon@lotte.net</td></tr>
-                                        <tr><th>사업장소재지</th><td>(04533) 서울 중구 남대문로</td></tr>
-                                      </table>
-                                      <p>상품정보에 <span>오류 또는 문의</span>가 있을 경우, <span>롯데ON 고객센터(1899-7000)</span>로 연락주시면 즉시 조치하도록 하겠습니다.</p>
-                                  
-                                      <h2>교환/반품 접수안내</h2>
-                                      <ol>
-                                        <li>1. 마이롯데 &gt; 주문/배송조회로 이동</li>
-                                        <li>2. 주문건에서 '교환/반품접수' 버튼 선택</li>
-                                      </ol>
-                                      <a href="#"><button type="button">주문배송조회 바로가기</button></a>
-                                      <p>마이롯데에서 접수가 어려우신 경우 롯데ON 고객센터(1899-7000)으로 문의하여 주시기 바랍니다.</p>
-                                  
-                                      <h2>교환/반품 비용</h2>
-                                      <table class="exchange-fee-table">
-                                        <tr>
-                                          <th rowspan="5">교환/반품 비용</th>
-                                          <td>반품비 : 3,000원</td>
-                                        </tr>
-                                        <tr>
-                                          <td>교환비 : 6,000원</td>
-                                        </tr>
-                                        <tr>
-                                          <td>(상품 1개씩 각각 반품/교환 시 발생하는 비용)</td>
-                                        </tr>
-                                        <tr>
-                                          <td>정확한 반품/교환비는 MY Lotte에서 반품/교환 접수 시 또는 고객센터로 문의 시 확인 가능합니다.</td>
-                                        </tr>
-                                        <tr>
-                                          <td>
-                                            단, 고객의 단순 변심에 의한 경우 발생하여 부분반품 시 배송조건에 따라 일부 반품 비용이 부과될 수 있습니다.<br><br>
-                                            무료배송 상품을 반품하시는 경우 반품비에 초기배송비가 포함되어 청구될 수 있습니다.<br>
-                                            전자상거래법 기준에 따라 환불이 지연되었을 경우 판매자에게 환불지연배상금(연이자 15%를 일할 계산) 지급을 요청하실 수 있습니다.
-                                          </td>
-                                        </tr>
-                                      </table>
-                                    </section>
-                                    <section class="exchange-policy">
-                                      <h2>교환/반품 규정 안내</h2>
-                                      <table class="exchange-policy-table">
-                                        <tr>
-                                          <th>교환/반품 기간</th>
-                                          <td>
-                                            교환/반품은 구매확정 전까지 가능합니다. (상품을 받으신 날로부터 7일 경과 시 자동 구매확정이 됩니다.)<br><br>
-                                            구매확정이 된 이후에는 고객센터나 판매자를 통해서 교환/반품 가능여부를 확인할 수 있습니다.<br><br>
-                                            주문제작, 설치 상품 등 일부 상품은 교환/반품 기준이 상이할 수 있습니다.<br><br>
-                                            스마트픽 배송상품군은 스마트픽 지정 매장에 상품도착일로부터 5일까지 반품 가능합니다. 반입가능일 경과 시 자동으로 반품되며 반품배송비가 차감 후 환불되거나, 필요시 고객센터를 통해서 반품비에 대한 결제 안내를 받으시게 됩니다.
-                                          </td>
-                                        </tr>
-                                        <tr>
-                                          <th>교환/반품 불가 사유</th>
-                                          <td>
-                                            - 구매자의 단순변심으로 인한 교환/반품 요청이 상품 등을 수령한 날로부터 7일을 경과한 경우<br>
-                                            - 구매자의 귀책사유로 말미암아 상품이 멸실·훼손된 경우<br>
-                                            - 구매자의 사용 또는 일부 소비에 의하여 상품의 가치가 현저히 감소한 경우<br>
-                                            - 신선식품 등 상품의 특성상 회복이 시작된 경우<br>
-                                            - 시간의 경과에 의하여 재판매가 곤란한 정도로 상품의 가치가 현저히 감소한 경우<br>
-                                            - 배송된 상품이 하자없음을 확인한 후 설치가 완료된 상품의 경우<br>
-                                            - 복제가 가능한 상품의 포장을 훼손한 경우<br>
-                                            - 주문에 따라 개별적으로 생산되는 물품 등 회복이 불가능한 경우<br>
-                                            - 구성품 일부가 훼손되거나 누락된 경우<br>
-                                            - 기타 관련법령이 정하는 청약철회 제한사유에 해당되는 경우
-                                          </td>
-                                        </tr>
-                                      </table>
-                                    </section>
-                                  </div>
-                                </div>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="detail" class="tab-pane active">
+                                <th:block th:include="/product/beauty/perfume/detail.html"/>
+                            </div>
+                            <div id="review" class="tab-pane">
+                                <th:block th:include="/product/beauty/perfume/review.html"/>
+                            </div>
+                            <div id="qna" class="tab-pane">
+                                <th:block th:include="/product/beauty/perfume/qna.html"/>
+                            </div>
+                            <div id="exchange" class="tab-pane">
+                                <th:block th:include="/product/beauty/perfume/exchange.html"/>
                             </div>
                         </div>
                     </div>
-            </section>
-        </main>
-        <!-- 메인 내용 끝 -->
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- 메인 내용 끝 -->
 
-        <!-- 푸터 시작 -->
-        <th:block th:include="/common/footer.html"/>
-        <!-- 푸터 끝 -->
+    <!-- 푸터 시작 -->
+    <th:block th:include="/common/footer.html"/>
+    <!-- 푸터 끝 -->
 
-    </div>
+</div>
 
 </body>
 </html>

@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Builder
 public class ReviewDTO {
 
@@ -20,7 +21,17 @@ public class ReviewDTO {
     private LocalDateTime wdate;  // 작성일
     private BigDecimal rating;    // 평점
 
+    private String sNameImage1;
+    private String oNameImage1;
+    private String SNameImage2;
+    private String oNameImage2;
+
+    // 추가 필드
+    private String company;
+
     // 선택적으로 사용자명, 상품명, 상품 이미지 같은 것도 추가 가능
     private String writerName;
     private String productName;
+
+
 }
