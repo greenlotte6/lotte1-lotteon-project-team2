@@ -34,7 +34,16 @@ public class AppInfo {
         }else {
             appVersion = version.getVersion();
         }
+    }
 
+    public void chageVersion(){
+        Version version = versionRepository.findTopByOrderByWdateDesc();
+
+        if(version == null){
+            appVersion = appVersionSub;
+        }else {
+            appVersion = version.getVersion();
+        }
     }
 
 }
