@@ -10,6 +10,8 @@
 
     <!-- 사이드바-->
     <script src="/js/admin/sidebar.js"></script>
+
+
 </head>
 <body>
 <div id="wrapper">
@@ -92,8 +94,18 @@
 
                     <div style="margin-top: 20px; overflow: hidden;">
                         <button type="submit" class="delete_btn">선택삭제</button>
-                        <button class="register_btn">상품등록</button>
+                        <button type="button" class="register_btn" id="register_btn">상품등록</button>
                     </div>
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function (){
+
+                            document.getElementById("register_btn").addEventListener("click", function () {
+                                window.location.href = "/admin/product/register";
+                            });
+                        });
+                    </script>
+
                 </form>
 
                 <!-- 페이징 -->

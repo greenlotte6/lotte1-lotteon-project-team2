@@ -173,7 +173,6 @@ public class AdminController {
     @GetMapping("/product/list")
     public String productList(PageRequestDTO pageRequestDTO, Model model){
         PageResponseDTO pageResponseDTO = adminService.selectAllForList(pageRequestDTO);
-
         model.addAttribute(pageResponseDTO);
         return "/admin/product/list";
     }

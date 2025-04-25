@@ -70,6 +70,7 @@ public class adminService {
         // 판매자, 서브카테고리 호출
         Seller seller = sellerRepository.findByCompany(productDTO.getCompany());
         SubCategory subCategory = subCategoryRepository.findById(productDTO.getSubCateNo()).get();
+        productDTO.setCompany(seller.getCompany());
 
         Product product = modelMapper.map(productDTO, Product.class);
 
