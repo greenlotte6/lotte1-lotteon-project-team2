@@ -1,5 +1,5 @@
+<p th:text="'리뷰 ' + ${reviewPageResponseDTO.avgRate} + ' / 5'"></p>
 
-<p>리뷰 4.8 / 5</p>
 <div class="review_pick">
   <p class="title">리뷰 PICK ★</p>
   <div class="review_slider">
@@ -107,15 +107,15 @@
 </div>
 <div class="reviews">
   <div>
-    <p>총 439건</p>
+    <p th:text="'총 ' + ${reviewPageResponseDTO.total} + '건'"></p>
     <div>
-      <a href="#">평점 높은 순</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-      <a href="#">평점 낮은 순</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-      <a href="#">최신순</a>
+      <a th:href="@{/product/review(prodNo=${productDTO.prodNo}, period='highestRate')}">평점 높은 순</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+      <a th:href="@{/product/review(prodNo=${productDTO.prodNo}, period='lowestRate')}">평점 낮은 순</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+      <a th:href="@{/product/review(prodNo=${productDTO.prodNo}, period='latest')}">최신순</a>
     </div>
   </div>
-  <div th:each="review : ${pageView.reviewPageResponseDTO.dtoList}" class="reviews_content">
-    <p th:text="${review.uid}">uid</p>
+  <div th:each="review : ${reviewPageResponseDTO.dtoList}" class="reviews_content">
+    <p th:text="${#strings.substring(review.uid, 0, 4) + '***'}"></p>
 
     <div class="stars">
       <img src="/images/product/full_star.png"
@@ -135,14 +135,19 @@
   </div>
 
   <div class="reviews_page">
-    <a href="#"><</a>
-    <a href="#">1</a>
-    <a href="#">2</a>
-    <a href="#">3</a>
-    <a href="#">4</a>
-    <a href="#">5</a>
-    <a href="#">6</a>
-    <a href="#">></a>
+    <th:block th:if="${reviewPageResponseDTO.prev}">
+      <a th:href="@{/product/view(pg=${pageResponseDTO.start - 1}, prodNo=${productDTO.prodNo})}" class="prev">&lt;</a>
+    </th:block>
+    <th:block th:each="num : ${#numbers.sequence(reviewPageResponseDTO.start, reviewPageResponseDTO.end)}">
+      <a th:href="@{/product/view(pg=${num}, prodNo=${productDTO.prodNo})}"
+         th:class="${num == reviewPageResponseDTO.pg} ? 'current' : 'num'">
+        [[${num}]]
+      </a>
+    </th:block>
+    <th:block th:if="${reviewPageResponseDTO.next}">
+      <a th:href="@{/product/view(pg=${reviewPageResponseDTO.end + 1}, prodNo=${productDTO.prdoNo})}" class="next">&gt;</a>
+    </th:block>
   </div>
+
 </div>
 

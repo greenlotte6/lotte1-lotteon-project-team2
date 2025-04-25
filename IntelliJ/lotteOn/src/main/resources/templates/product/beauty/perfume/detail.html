@@ -2,23 +2,23 @@
 <table class="product_info">
     <tr>
         <td>영수증 유형</td>
-        <td th:text="${pageView.productDetailDTO.receiptType}"></td>
+        <td th:text="${productDetailDTO.receiptType}"></td>
     </tr>
     <tr>
         <td>상품 상태</td>
-        <td th:text="${pageView.productDetailDTO.prodState}"></td>
+        <td th:text="${productDetailDTO.prodState}"></td>
     </tr>
     <tr>
         <td>면세 여부</td>
-        <td th:text="${pageView.productDetailDTO.taxFree}"></td>
+        <td th:text="${productDetailDTO.taxFree}"></td>
     </tr>
     <tr>
         <td>사업자 유형</td>
-        <td th:text="${pageView.productDetailDTO.bizType}"></td>
+        <td th:text="${productDetailDTO.bizType}"></td>
     </tr>
     <tr>
         <td>원산지</td>
-        <td th:text="${pageView.productDetailDTO.origin}"></td>
+        <td th:text="${productDetailDTO.origin}"></td>
     </tr>
 </table>
 <img src="/images/product/lotteimage.png">
@@ -39,11 +39,11 @@
 </p>
 <p>상품필수정보</p>
 <table class="product_assential">
-    <tr><th>원산지</th>  <td th:text="${pageView.productDetailDTO.origin}"></td></tr>
-    <tr><th>모델명</th>  <td th:text="${pageView.productDTO.prodName}"></td></tr>
-    <tr><th>상품번호</th>  <td th:text="${pageView.productDTO.prodNo}"></td></tr>
+    <tr><th>원산지</th>  <td th:text="${productDetailDTO.origin}"></td></tr>
+    <tr><th>모델명</th>  <td th:text="${productDTO.prodName}"></td></tr>
+    <tr><th>상품번호</th>  <td th:text="${productDTO.prodNo}"></td></tr>
     <tr><th>상품상태</th><td>새상품</td></tr>
-    <tr><th>브랜드</th>  <td th:text="${pageView.productDTO.prodBrand}"></td></tr>
+    <tr><th>브랜드</th>  <td th:text="${productDTO.prodBrand}"></td></tr>
     <tr><th>내용물의 용량 또는 중량</th><td>75ml</td></tr>
     <tr><th>제품 주요 사양</th><td>모든 피부 타입</td></tr>
     <tr><th>사용기한 또는 개봉 후 사용기간</th>

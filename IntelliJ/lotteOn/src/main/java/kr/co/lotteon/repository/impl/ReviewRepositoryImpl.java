@@ -1,6 +1,7 @@
 package kr.co.lotteon.repository.impl;
 
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import kr.co.lotteon.dto.page.PageRequestDTO;
@@ -27,35 +28,55 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
     private final JPAQueryFactory queryFactory;
     private final QProduct qProduct = QProduct.product;
     private final QReview qReview = QReview.review;
-    private final QSeller qSeller = QSeller.seller;
     private final QUser qUser = QUser.user;
 
     @Override
     public Page<Tuple> selectAllForList(PageRequestDTO pageRequestDTO, Pageable pageable) {
-
         String prodNo = pageRequestDTO.getProdNo();
-        BooleanExpression expression = prodNo != null ? qReview.product.prodNo.eq(prodNo) : null;
+        String sortType = pageRequestDTO.getSortType();
+
+        if (sortType == null) {
+            sortType = "latest";
+        }
+
+        OrderSpecifier<?> orderSpecifier = null;
+        switch (sortType) {
+            case "highestRate":
+                orderSpecifier = qReview.rating.desc();
+                break;
+            case "lowestRate":
+                orderSpecifier = qReview.rating.asc();
+                break;
+            case "latest":
+                orderSpecifier = qReview.wdate.desc();
+                break;
+        }
+
+        BooleanExpression whereExpr = null;
+        if (prodNo != null && !prodNo.isEmpty()) {
+            whereExpr = qReview.product.prodNo.eq(prodNo);
+        }
 
         List<Tuple> tupleList = queryFactory
-                .select(qReview, qSeller.company, qUser.uid)
+                .select(qReview, qUser.uid)
                 .from(qReview)
                 .join(qReview.writer, qUser)
                 .leftJoin(qProduct).on(qReview.product.prodNo.eq(qProduct.prodNo))
-                .where(expression)
+                .where(whereExpr)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .orderBy(qReview.rno.desc())
+                .orderBy(orderSpecifier)
                 .fetch();
 
-        long total = queryFactory
+        // 전체 개수 조회
+        Long total = queryFactory
                 .select(qReview.count())
                 .from(qReview)
-                .where(expression)
+                .where(whereExpr)
                 .fetchOne();
 
-        return new PageImpl<>(tupleList, pageable, total);
+        return new PageImpl<>(tupleList, pageable, total != null ? total : 0);
     }
-
 
 
 

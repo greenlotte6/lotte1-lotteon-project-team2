@@ -28,6 +28,8 @@ public class PageResponseDTO<T> {
     private String searchType;
     private String keyword;
 
+    private double avgRate;
+
     @Builder
     public PageResponseDTO(PageRequestDTO pageRequestDTO, List<T> dtoList, int total) {
         this.subCateNo = pageRequestDTO.getSubCateNo();

@@ -32,11 +32,9 @@ public class ReviewService {
 
         List<ReviewDTO> reviewDTOList = pageReview.getContent().stream().map(tuple -> {
             Review review = tuple.get(0, Review.class);
-            String company = tuple.get(1, String.class);
-            String uid = tuple.get(2,  String.class);
+            String uid = tuple.get(1, String.class);
 
             ReviewDTO reviewDTO = modelMapper.map(review, ReviewDTO.class);
-            reviewDTO.setCompany(company);
             reviewDTO.setUid(uid);
 
             return reviewDTO;
@@ -44,16 +42,31 @@ public class ReviewService {
 
         int total = (int) pageReview.getTotalElements();
 
-        return PageResponseDTO.<ReviewDTO>builder()
+        double setAvgRate = calculateAvgRate(new PageResponseDTO<>(pageRequestDTO, reviewDTOList, total));
+
+        PageResponseDTO<ReviewDTO> responseDTO = PageResponseDTO.<ReviewDTO>builder()
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(reviewDTOList)
                 .total(total)
                 .build();
+
+        // 평균 평점도 반환하거나 다른 곳에 사용
+        responseDTO.setAvgRate(setAvgRate);
+
+        return responseDTO;
     }
 
-
-
-
-
+    // 리뷰 평점 계산
+    public double calculateAvgRate(PageResponseDTO reviewPageResponseDTO) {
+        if (reviewPageResponseDTO != null && reviewPageResponseDTO.getDtoList() != null && !reviewPageResponseDTO.getDtoList().isEmpty()) {
+            double avgRating = 0;
+            List<ReviewDTO> dtoList = reviewPageResponseDTO.getDtoList();
+            for (ReviewDTO review : dtoList) {
+                avgRating += review.getRating().doubleValue();
+            }
+            return avgRating / dtoList.size();
+        }
+        return 0.0; // 리뷰가 없으면 0 반환
+    }
 
 }

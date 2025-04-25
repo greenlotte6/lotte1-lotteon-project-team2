@@ -33,5 +33,4 @@ public class ReviewDTO {
     private String writerName;
     private String productName;
 
-
 }
