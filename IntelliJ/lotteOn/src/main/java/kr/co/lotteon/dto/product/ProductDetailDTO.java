@@ -4,10 +4,10 @@ import lombok.*;
 
 @Getter
 @Setter
+@Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@Builder
 public class ProductDetailDTO {
 
     private int no;

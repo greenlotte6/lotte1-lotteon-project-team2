@@ -4,10 +4,10 @@ import lombok.*;
 
 @Getter
 @Setter
+@Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@Builder
 public class OrderItemDTO {
 
     private int itemNo;       // 주문 상세 번호

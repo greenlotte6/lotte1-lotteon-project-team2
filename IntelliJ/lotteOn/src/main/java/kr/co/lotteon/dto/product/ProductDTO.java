@@ -8,10 +8,10 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@Builder
 public class ProductDTO {
 
     private String prodNo;
@@ -45,6 +45,7 @@ public class ProductDTO {
     // 관련DTO
     private SellerDTO seller;
     private SubCategoryDTO subCategory;
-    private ProductImageDTO productImageDTO;
+    private ProductImageDTO productImage;
+    private ProductDetailDTO productDetail;
 
 }

@@ -152,24 +152,60 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     @Override
     public Page<Tuple> selectAllForListByRole(PageRequestDTO pageRequestDTO, Pageable pageable) {
 
-        List<Tuple> tupleList = queryFactory
-                .select(qProduct, qSeller.company, qProductImage)
-                .from(qProduct)
-                .join(qSeller).on(qProduct.seller.sno.eq(qSeller.sno))
-                .leftJoin(qProductImage).on(qProductImage.product.eq(qProduct))
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .orderBy(qProduct.regDate.asc()) // 정렬 조건
-                .fetch();
+        String cate = pageRequestDTO.getSearchType();
+        String keyword = pageRequestDTO.getKeyword();
 
-        long total = queryFactory
-                .select(qProduct.count())
-                .from(qProduct)
-                .join(qSeller).on(qProduct.seller.sno.eq(qSeller.sno))
-                .leftJoin(qProductImage).on(qProductImage.product.eq(qProduct))
-                .fetchOne();
+        if(cate == null || cate.equals("")) {
+            List<Tuple> tupleList = queryFactory
+                    .select(qProduct, qSeller.company, qProductImage)
+                    .from(qProduct)
+                    .join(qSeller).on(qProduct.seller.sno.eq(qSeller.sno))
+                    .leftJoin(qProductImage).on(qProductImage.product.eq(qProduct))
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .orderBy(qProduct.regDate.desc()) // 정렬 조건
+                    .fetch();
 
-        return new PageImpl<>(tupleList, pageable, total);
+            long total = queryFactory
+                    .select(qProduct.count())
+                    .from(qProduct)
+                    .join(qSeller).on(qProduct.seller.sno.eq(qSeller.sno))
+                    .leftJoin(qProductImage).on(qProductImage.product.eq(qProduct))
+                    .fetchOne();
+
+            return new PageImpl<>(tupleList, pageable, total);
+        }else{
+
+            BooleanExpression expression = switch (cate) {
+                case "상품명" -> qProduct.prodName.contains(keyword);
+                case "상품번호" -> qProduct.prodNo.contains(keyword);
+                case "판매자" -> qProduct.company.contains(keyword);
+                default -> null;
+            };
+
+            List<Tuple> tupleList = queryFactory
+                    .select(qProduct, qSeller.company, qProductImage)
+                    .from(qProduct)
+                    .join(qSeller).on(qProduct.seller.sno.eq(qSeller.sno))
+                    .leftJoin(qProductImage).on(qProductImage.product.eq(qProduct))
+                    .where(expression)
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .orderBy(qProduct.regDate.desc()) // 정렬 조건
+                    .fetch();
+
+            long total = queryFactory
+                    .select(qProduct.count())
+                    .from(qProduct)
+                    .join(qSeller).on(qProduct.seller.sno.eq(qSeller.sno))
+                    .leftJoin(qProductImage).on(qProductImage.product.eq(qProduct))
+                    .where(expression)
+                    .fetchOne();
+
+            return new PageImpl<>(tupleList, pageable, total);
+        }
+
+
     }
 
 }

@@ -4,6 +4,7 @@ import ch.qos.logback.core.model.Model;
 import com.querydsl.core.Tuple;
 import jakarta.transaction.Transactional;
 import kr.co.lotteon.dto.article.NoticeDTO;
+import kr.co.lotteon.dto.category.MainCategoryDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.coupon.CouponIssueDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
@@ -12,6 +13,7 @@ import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.dto.product.ProductDetailDTO;
 import kr.co.lotteon.dto.product.ProductImageDTO;
 import kr.co.lotteon.entity.article.Notice;
+import kr.co.lotteon.entity.category.MainCategory;
 import kr.co.lotteon.entity.category.SubCategory;
 import kr.co.lotteon.entity.coupon.Coupon;
 import kr.co.lotteon.entity.coupon.CouponIssue;
@@ -21,6 +23,7 @@ import kr.co.lotteon.entity.product.ProductImage;
 import kr.co.lotteon.entity.seller.Seller;
 import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.article.NoticeRepository;
+import kr.co.lotteon.repository.category.MainCategoryRepository;
 import kr.co.lotteon.repository.category.SubCategoryRepository;
 import kr.co.lotteon.repository.coupon.CouponIssueRepository;
 import kr.co.lotteon.repository.coupon.CouponRepository;
@@ -40,6 +43,7 @@ import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,6 +64,7 @@ public class adminService {
     private final CouponIssueRepository couponIssueRepository;
 
     private final ModelMapper modelMapper;
+    private final MainCategoryRepository mainCategoryRepository;
 
 
     /*
@@ -107,8 +112,61 @@ public class adminService {
             }
         }
 
-
     }
+
+    // 상품 수정하기
+    public Product ModifyProduct(ProductDTO productDTO) {
+
+        String no = productDTO.getProdNo();
+        Product product = productRepository.findById(no).get();
+        SubCategory subCategory = subCategoryRepository.findById(productDTO.getSubCateNo()).get();
+
+        product.setSubCategory(subCategory);
+        product.setProdName(productDTO.getProdName());
+        product.setProdContent(productDTO.getProdContent());
+        product.setCompany(productDTO.getCompany());
+        product.setProdBrand(productDTO.getProdBrand());
+        product.setProdPrice(productDTO.getProdPrice());
+        product.setProdDiscount(productDTO.getProdDiscount());
+
+        // 재고 수량 체크
+        product.setProdStock(productDTO.getProdStock());
+        product.setProdDeliveryFee(productDTO.getProdDeliveryFee());
+
+        return productRepository.save(product);
+    }
+
+    // 상품 상세 정보 수정
+    public void modifyProductDetail(Product savedProduct, ProductDetailDTO productDetailDTO) {
+        Optional<ProductDetail> productDetailOpt = productDetailRepository.findByProduct_ProdNo(savedProduct.getProdNo());
+        if(productDetailOpt.isPresent()){
+            ProductDetail productDetail = productDetailOpt.get();
+
+            // 상품 선택정보 수정
+            productDetail.setOpt1(productDetailDTO.getOpt1());
+            productDetail.setOpt2(productDetailDTO.getOpt2());
+            productDetail.setOpt3(productDetailDTO.getOpt3());
+            productDetail.setOpt4(productDetailDTO.getOpt4());
+            productDetail.setOpt5(productDetailDTO.getOpt5());
+            productDetail.setOpt6(productDetailDTO.getOpt6());
+            productDetail.setOpt1Cont(productDetailDTO.getOpt1Cont());
+            productDetail.setOpt2Cont(productDetailDTO.getOpt2Cont());
+            productDetail.setOpt3Cont(productDetailDTO.getOpt3Cont());
+            productDetail.setOpt4Cont(productDetailDTO.getOpt4Cont());
+            productDetail.setOpt5Cont(productDetailDTO.getOpt5Cont());
+            productDetail.setOpt6Cont(productDetailDTO.getOpt6Cont());
+
+            //상품정보 제공고시 수정
+            productDetail.setProdState(productDetailDTO.getProdState());
+            productDetail.setTaxFree(productDetailDTO.getTaxFree());
+            productDetail.setReceiptType(productDetailDTO.getReceiptType());
+            productDetail.setBizType(productDetailDTO.getBizType());
+            productDetail.setOrigin(productDetailDTO.getOrigin());
+            productDetailRepository.save(productDetail);
+        }
+    }
+
+
 
     /*
      * 제품 상세 정보 저장 메서드
@@ -138,7 +196,7 @@ public class adminService {
 
             if(productImage!=null){
                 ProductImageDTO productImageDTO = modelMapper.map(productImage, ProductImageDTO.class);
-                productDTO.setProductImageDTO(productImageDTO);
+                productDTO.setProductImage(productImageDTO);
             }
 
             return productDTO;
@@ -389,4 +447,29 @@ public class adminService {
             couponIssueRepository.save(couponIssue);
         }
     }
+
+    // 상품 수정을 위한 상품번호에 따른 값 찾기
+    public ProductDTO findProductByNo(String no) {
+        Optional<Product> productOpt = productRepository.findById(no);
+
+        if(productOpt.isPresent()){
+            Product product = productOpt.get();
+            ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+            return productDTO;
+        }
+
+        return null;
+    }
+
+    public List<MainCategoryDTO> findAllMainCategory() {
+        List<MainCategory> list = mainCategoryRepository.findAll();
+        List<MainCategoryDTO> mainCategoryDTOS = new ArrayList<>();
+        for (MainCategory mainCategory : list) {
+            MainCategoryDTO mainCategoryDTO = modelMapper.map(mainCategory, MainCategoryDTO.class);
+            mainCategoryDTOS.add(mainCategoryDTO);
+        }
+        return mainCategoryDTOS;
+    }
+
+
 }

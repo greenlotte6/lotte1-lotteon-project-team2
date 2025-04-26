@@ -7,15 +7,16 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@Builder
 public class ProductImageDTO {
 
     private int ino;
 
-    private ProductDTO prodNo;  // 상품 번호 (Product FK)
+    private ProductDTO productDTO;
+    private String productNo; // 상품 번호 (Product FK)
 
     // 목록용 이미지
     private String oNameList;
