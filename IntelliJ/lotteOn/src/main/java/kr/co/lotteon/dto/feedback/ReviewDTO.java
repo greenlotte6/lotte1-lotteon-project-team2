@@ -6,10 +6,10 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@Builder
 public class ReviewDTO {
 
     private int rno;              // 리뷰 번호

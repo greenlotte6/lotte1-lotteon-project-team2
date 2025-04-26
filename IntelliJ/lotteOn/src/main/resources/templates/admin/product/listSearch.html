@@ -89,7 +89,7 @@
                                 <option value="상품번호">상품번호</option>
                                 <option value="판매자">판매자</option>
                             </select>
-                            <input type="text" name="keyword" class="search_text" placeholder="키워드 입력">
+                            <input type="text" name="keyword" class="search_text" th:value="${pageResponseDTO.keyword}" placeholder="키워드 입력">
                             <input type="submit" class="search_btn" value="검색">
                         </form>
                     </div>
@@ -147,15 +147,15 @@
                 <!-- 페이징 -->
                 <div class="page">
                     <th:block th:if="${pageResponseDTO.prev}">
-                        <a th:href="@{/admin/product/list(pg=${pageResponseDTO.start-1})}" class="prev">이전</a>
+                        <a th:href="@{/admin/product/search(pg=${pageResponseDTO.start-1}, searchType=${pageResponseDTO.searchType} , keyword=${pageResponseDTO.keyword})}" class="prev">이전</a>
                     </th:block>
 
                     <th:block th:each="num:${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end)}">
-                        <a th:href="@{/admin/product/list(pg=${num})}" th:class="${num == pageResponseDTO.pg} ? 'current' : 'num'">[[${num}]]</a>
+                        <a th:href="@{/admin/product/search(pg=${num} , searchType=${pageResponseDTO.searchType} , keyword=${pageResponseDTO.keyword})}" th:class="${num == pageResponseDTO.pg} ? 'current' : 'num'">[[${num}]]</a>
                     </th:block>
 
                     <th:block th:if="${pageResponseDTO.next}">
-                        <a th:href="@{/admin/product/list(pg=${pageResponseDTO.end+1})}" class="next">다음</a>
+                        <a th:href="@{/admin/product/search(pg=${pageResponseDTO.end+1} , searchType=${pageResponseDTO.searchType} , keyword=${pageResponseDTO.keyword} )}" class="next">다음</a>
                     </th:block>
                 </div>
 

@@ -6,10 +6,10 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Data
-@ToString
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class PointDTO {
 
     // 포인트 기록 DTO

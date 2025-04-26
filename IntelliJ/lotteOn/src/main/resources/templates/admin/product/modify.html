@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 상품수정 : 롯데On</title>
+    <title>관리자 상품등록 : 롯데On</title>
     <link rel="stylesheet" href="/css/admin/admin.css">
     <link rel="stylesheet" href="/css/admin/product.css">
     <link rel="stylesheet" href="/css/layout/layout.css">
@@ -65,14 +65,16 @@
                 <article class="main_content_side">
                     <!-- 여기부터 글 작성 -->
                     <div class="main_head">
-                        <p class="main_head_title">상품등록</p>
+                        <p class="main_head_title">상품수정</p>
                         <div style="float: right;">
-                            <p style="font-size: 16px;">Home > 상품관리 ><span> 상품등록</span></p>
+                            <p style="font-size: 16px;">Home > 상품관리 ><span> 상품수정</span></p>
                         </div>
                     </div>
 
-                    <form th:action="@{/admin/product/register}" method="post" enctype="multipart/form-data">
+                    <form th:action="@{/admin/product/modify}" method="post" enctype="multipart/form-data">
                         <!-- 상품 분류 -->
+                        <input type="hidden" name="prodNo" th:value="${product.prodNo}">
+
                         <p class="title">상품분류</p>
                         <div class="text_div">
                             <p>1차, 2차 카테고리 기본분류는 반드시 선택하셔야 합니다.</p>
@@ -85,7 +87,8 @@
                                     <select name="MainCateNo">
                                         <th:block th:each="cate : ${categoryDTOS}">
                                             <option th:value="${cate.mainCateNo}"
-                                                    th:text="${cate.mainCategoryName}">
+                                                    th:text="${cate.mainCategoryName}"
+                                                    th:selected="${cate.mainCategoryName == product.mainCategoryName}">
                                             </option>
                                         </th:block>
                                     </select>
@@ -95,7 +98,8 @@
                                 <td>2차 분류</td>
                                 <td>
                                     <select name="subCateNo">
-                                        <option>2차 카테고리</option>
+                                        <option th:value="${product.subCategory.subCateNo}"
+                                                th:text="${product.subCategory.subCategoryName}"></option>
                                     </select>
                                 </td>
                             </tr>
@@ -109,52 +113,52 @@
                         <table class="basic">
                             <tr>
                                 <td>상품명</td>
-                                <td><input type="text" name="prodName"></td>
+                                <td><input type="text" name="prodName" th:value="${product.prodName}"></td>
                             </tr>
                             <tr>
                                 <td>기본설명</td>
-                                <td><input type="text" name="prodContent"></td>
+                                <td><input type="text" name="prodContent" th:value="${product.prodContent}"></td>
                             </tr>
                             <tr>
                                 <td>제조사</td>
-                                <td><input type="text" name="company" value="패밀리상사"></td>
+                                <td><input type="text" name="company" th:value="${product.company}" ></td>
                             </tr>
                             <tr>
                                 <td>브랜드명</td>
-                                <td><input type="text" name="prodBrand"></td>
+                                <td><input type="text" name="prodBrand" th:value="${product.prodBrand}"></td>
                             </tr>
                             <tr>
                                 <td>상품금액</td>
-                                <td><input type="text" name="prodPrice" id="prodPrice">원</td>
+                                <td><input type="text" name="prodPrice" id="prodPrice" th:value="${product.prodPrice}">원</td>
                             </tr>
                             <tr>
                                 <td>할인율</td>
-                                <td><input type="text" name="prodDiscount">%</td>
+                                <td><input type="text" name="prodDiscount" th:value="${product.prodDiscount}">%</td>
                             </tr>
                             <tr>
                                 <td>포인트</td>
-                                <td><input type="text" name="prodPoint" id="prodPoint" readonly>원</td>
+                                <td><input type="text" name="prodPoint" id="prodPoint" th:value="${product.prodPoint}" readonly>원</td>
                             </tr>
                             <tr>
                                 <td>재고수량</td>
-                                <td><input type="text" name="prodStock">개</td>
+                                <td><input type="text" name="prodStock" th:value="${product.prodStock}">개</td>
                             </tr>
                             <tr>
                                 <td>배송비</td>
-                                <td><input type="text" name="prodDeliveryFee">원</td>
+                                <td><input type="text" name="prodDeliveryFee" th:value="${product.prodDeliveryFee}">원</td>
                             </tr>
                             <tr style="height: 120px;">
                                 <td>상품 이미지</td>
                                 <td>
-                                    <input type="file" name="file1"> <span>크기 190 x 190, 상품 목록에 출력 될 이미지 입니다.</span> <br>
-                                    <input type="file" name="file2"> <span>크기 230 x 230, 상품 메인에 출력 될 이미지 입니다.</span> <br>
-                                    <input type="file" name="file3"> <span>크기 456 x 456, 상품 상세에 출력 될 이미지 입니다.</span>
+                                    <input type="file" name="file1" th:value="${product.productImage.oNameList}"> <span>크기 190 x 190(상품 목록) : [[${product.productImage.oNameList}]] </span> <br>
+                                    <input type="file" name="file2"> <span>크기 230 x 230(상품 메인) : [[${product.productImage.oNameMain}]] </span> <br>
+                                    <input type="file" name="file3"> <span>크기 456 x 456(상품 상세) : [[${product.productImage.oNameThumb3}]]</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>상품 상세정보</td>
                                 <td>
-                                    <input type="file" name="file4"> <span>크기 940px, 높이 제약없음, 크기 최대 1MB</span>
+                                    <input type="file" name="file4"> <span>크기 940px, 높이 제약없음, 크기 최대 1MB : [[${product.productImage.oNameDetail}]]</span>
                                 </td>
                             </tr>
                         </table>
@@ -170,27 +174,42 @@
                         <table class="option" id="optionTable">
                             <tr>
                                 <td>옵션1</td>
-                                <td><input type="text" name="opt1"></td>
+                                <td><input type="text" name="opt1" th:value="${product.productDetail.opt1}" ></td>
                                 <td>옵션1 항목</td>
-                                <td><input type="text" name="opt1Cont"></td>
+                                <td><input type="text" name="opt1Cont" th:value="${product.productDetail.opt1Cont}"></td>
                             </tr>
                             <tr>
                                 <td>옵션2</td>
-                                <td><input type="text" name="opt2"></td>
+                                <td><input type="text" name="opt2" th:value="${product.productDetail.opt2}"></td>
                                 <td>옵션2 항목</td>
-                                <td><input type="text" name="opt2Cont"></td>
+                                <td><input type="text" name="opt2Cont" th:value="${product.productDetail.opt2Cont}"></td>
                             </tr>
                             <tr>
                                 <td>옵션3</td>
-                                <td><input type="text" name="opt3"></td>
+                                <td><input type="text" name="opt3" th:value="${product.productDetail.opt3}"></td>
                                 <td>옵션3 항목</td>
-                                <td><input type="text" name="opt3Cont"></td>
+                                <td><input type="text" name="opt3Cont" th:value="${product.productDetail.opt3Cont}"></td>
+                            </tr>
+                            <tr>
+                                <td>옵션4</td>
+                                <td><input type="text" name="opt4" th:value="${product.productDetail.opt4}"></td>
+                                <td>옵션3 항목</td>
+                                <td><input type="text" name="opt4Cont" th:value="${product.productDetail.opt4Cont}"></td>
+                            </tr>
+                            <tr>
+                                <td>옵션5</td>
+                                <td><input type="text" name="opt5" th:value="${product.productDetail.opt5}"></td>
+                                <td>옵션3 항목</td>
+                                <td><input type="text" name="opt5Cont" th:value="${product.productDetail.opt5Cont}"></td>
+                            </tr>
+                            <tr>
+                                <td>옵션6</td>
+                                <td><input type="text" name="opt6" th:value="${product.productDetail.opt6}"></td>
+                                <td>옵션3 항목</td>
+                                <td><input type="text" name="opt6Cont" th:value="${product.productDetail.opt6Cont}"></td>
                             </tr>
                         </table>
 
-                        <button type="button" class="register_btn" id="addOptionBtn">옵션 추가</button>
-
-                        
                         <script>
                             document.getElementById('addOptionBtn').addEventListener('click', function() {
                                 const table = document.getElementById('optionTable');
@@ -233,23 +252,23 @@
                         <table class="basic">
                             <tr>
                                 <td>상품상태</td>
-                                <td><input type="text" name="prodState" placeholder="새상품" value="새상품" ></td>
+                                <td><input type="text" name="prodState" placeholder="새상품" th:value="${product.productDetail.prodState}" ></td>
                             </tr>
                             <tr>
                                 <td>과세상품</td>
-                                <td><input type="text" name="taxFree" placeholder="과세상품" value="과세상품" ></td>
+                                <td><input type="text" name="taxFree" placeholder="과세상품" th:value="${product.productDetail.taxFree}" ></td>
                             </tr>
                             <tr>
                                 <td>영수증 발행</td>
-                                <td><input type="text" name="receiptType" placeholder="발행가능 - 신용카드전표, 온라인현금영수증" value="발행가능 - 신용카드전표, 온라인현금영수증" style="width: 60%;"></td>
+                                <td><input type="text" name="receiptType" placeholder="발행가능 - 신용카드전표, 온라인현금영수증" th:value="${product.productDetail.receiptType}" style="width: 60%;"></td>
                             </tr>
                             <tr>
                                 <td>사업자구분</td>
-                                <td><input type="text" name="bizType" placeholder="사업자판매자" value="사업자판매자" style="width: 60%;"></td>
+                                <td><input type="text" name="bizType" placeholder="사업자판매자" th:value="${product.productDetail.bizType}" style="width: 60%;"></td>
                             </tr>
                             <tr>
                                 <td>원산지</td>
-                                <td><input type="text" name="origin" placeholder="국내산" value="국내산"></td>
+                                <td><input type="text" name="origin" placeholder="국내산" th:value="${product.productDetail.origin}"></td>
                             </tr>
                         </table>
 

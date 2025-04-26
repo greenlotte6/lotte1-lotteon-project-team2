@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO{

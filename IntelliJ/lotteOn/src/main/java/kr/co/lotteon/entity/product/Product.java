@@ -2,6 +2,7 @@ package kr.co.lotteon.entity.product;
 
 
 import jakarta.persistence.*;
+import kr.co.lotteon.dto.product.ProductImageDTO;
 import kr.co.lotteon.entity.category.MainCategory;
 import kr.co.lotteon.entity.category.SubCategory;
 import kr.co.lotteon.entity.seller.Seller;
@@ -49,6 +50,12 @@ public class Product {
     private double ratingTotal; // 상품 리뷰 총 점
     private int reviewCount;    // 상품 리뷰 총 수
     private double ratingAvg;   // 상품 리뷰 평균
+
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private ProductDetail productDetail;
+
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private ProductImage productImage;
 
 
 

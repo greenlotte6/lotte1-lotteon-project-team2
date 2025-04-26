@@ -5,10 +5,10 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@Builder
 public class OrderDTO {
 
     private int orderNo;           // 주문 번호

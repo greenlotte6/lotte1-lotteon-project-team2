@@ -3,6 +3,7 @@ package kr.co.lotteon.controller.admin;
 import jakarta.servlet.http.HttpServletRequest;
 import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.article.NoticeDTO;
+import kr.co.lotteon.dto.category.MainCategoryDTO;
 import kr.co.lotteon.dto.config.TermsDTO;
 import kr.co.lotteon.dto.config.VersionDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
@@ -177,18 +178,40 @@ public class AdminController {
         return "/admin/product/list";
     }
 
+    @GetMapping("/product/search")
+    public String productSearch(PageRequestDTO pageRequestDTO, Model model){
+        PageResponseDTO pageResponseDTO = adminService.selectAllForList(pageRequestDTO);
+        model.addAttribute(pageResponseDTO);
+        return "/admin/product/listSearch";
+    }
+
+
+    // 상품 삭제
     @GetMapping("/product/delete")
     public String productDelete(@RequestParam("no") String no){
-
         adminService.deleteProduct(no);
         return "redirect:/admin/product/list";
     }
 
+    // 상품 전체 삭제
+    @GetMapping("/product/delete/all")
+    public String deleteProducts(@RequestParam("deleteNo") List<String> deleteNos) {
+        // configService.deleteVersions(deleteVnos);
+        for(String prodNo : deleteNos){
+            adminService.deleteProduct(prodNo);
+        }
+        return "redirect:/admin/product/list";
+    }
+
+    // 상품 등록 페이지 이동
     @GetMapping("/product/register")
-    public String productRegister(){
+    public String productRegister(Model model){
+        List<MainCategoryDTO> categoryDTOS = adminService.findAllMainCategory();
+        model.addAttribute("categoryDTOS", categoryDTOS);
         return "/admin/product/register";
     }
 
+    // 상품 등록(기능)
     @PostMapping("/product/register")
     public String productRegister(ProductDTO productDTO, ProductDetailDTO productDetailDTO, ProductImageDTO productImageDTO){
 
@@ -202,6 +225,35 @@ public class AdminController {
         adminService.saveProductDetail(productDetailDTO, savedProduct);
 
         return "redirect:/admin/product/register";
+    }
+
+    // 상품 수정 페이지
+    @GetMapping("/product/modify")
+    public String productModify(@RequestParam("no") String no, Model model){
+        ProductDTO productDTO = adminService.findProductByNo(no);
+        List<MainCategoryDTO> categoryDTOS = adminService.findAllMainCategory();
+
+        model.addAttribute("categoryDTOS", categoryDTOS);
+        model.addAttribute("product", productDTO);
+
+        System.out.println(productDTO);
+        return "redirect:/admin/product/list";
+    }
+
+    // 상품 수정 기능
+    @PostMapping("/product/modify")
+    public String productModify(ProductDTO productDTO, ProductDetailDTO productDetailDTO, ProductImageDTO productImageDTO){
+
+        //상품 저장
+        Product savedProduct = adminService.ModifyProduct(productDTO);
+
+        // 이미지 저장
+        imageService.modifyImage(productImageDTO, savedProduct);
+
+        //상품 상세 정보 저장
+        adminService.modifyProductDetail(savedProduct, productDetailDTO);
+
+        return "redirect:/admin/product/list";
     }
 
     /*

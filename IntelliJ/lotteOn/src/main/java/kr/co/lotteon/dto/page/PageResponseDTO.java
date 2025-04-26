@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class PageResponseDTO<T> {
 
     private List<T> dtoList;

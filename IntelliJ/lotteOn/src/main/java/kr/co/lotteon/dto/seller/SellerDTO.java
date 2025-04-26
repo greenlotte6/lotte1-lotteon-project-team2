@@ -5,9 +5,10 @@ import lombok.*;
 
 @Getter
 @Setter
+@Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class SellerDTO {
 
     private int sno;          // 판매자 번호 (PK)
