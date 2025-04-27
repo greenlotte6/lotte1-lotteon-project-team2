@@ -53,7 +53,6 @@ public class Coupon {
         if (this.state == null) {
             this.state = "발급중";
         }
-
     }
 
 }

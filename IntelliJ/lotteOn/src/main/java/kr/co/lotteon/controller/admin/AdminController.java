@@ -3,6 +3,7 @@ package kr.co.lotteon.controller.admin;
 import jakarta.servlet.http.HttpServletRequest;
 import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.article.NoticeDTO;
+import kr.co.lotteon.dto.article.RecruitDTO;
 import kr.co.lotteon.dto.category.MainCategoryDTO;
 import kr.co.lotteon.dto.config.TermsDTO;
 import kr.co.lotteon.dto.config.VersionDTO;
@@ -401,24 +402,40 @@ public class AdminController {
     //문의하기 목록
     @GetMapping("/cs/qna/list")
     public String qnaList(Model model, PageRequestDTO pageRequestDTO){
-
         PageResponseDTO<InquiryDTO> responseDTO = csService.adminFindAll(pageRequestDTO);
-
         model.addAttribute("responseDTO", responseDTO);
-
         return "/admin/qna/list";
     }
 
     //채용하기 목록
     @GetMapping("/cs/recruit/list")
-    public String recruitList(){
+    public String recruitList(Model model, PageRequestDTO pageRequestDTO){
+        PageResponseDTO pageResponseDTO = adminService.findAllRecruit(pageRequestDTO);
+        model.addAttribute(pageResponseDTO);
         return "/admin/recruit/list";
     }
 
+    //채용하기 검색
+    @GetMapping("/cs/recruit/search")
+    public String recruitSearch(Model model, PageRequestDTO pageRequestDTO){
+        PageResponseDTO pageResponseDTO = adminService.findAllRecruit(pageRequestDTO);
+        model.addAttribute(pageResponseDTO);
+        return "/admin/recruit/listSearch";
+    }
 
+    //채용하기 등록
+    @PostMapping("/cs/recruit/register")
+    public String recruitRegister(RecruitDTO recruitDTO, @AuthenticationPrincipal UserDetails userDetails){
+        adminService.saveRecruit(recruitDTO, userDetails);
+        return "redirect:/admin/cs/recruit/list";
+    }
 
-
-
+    //채용하기 삭제
+    @GetMapping("/cs/recruit/delete")
+    public String recruitDeleteList(@RequestParam("deleteNo") List<Integer> deleteNos) {
+        adminService.deleteRecruitByList(deleteNos);
+        return "redirect:/admin/cs/recruit/list";
+    }
 
 
 

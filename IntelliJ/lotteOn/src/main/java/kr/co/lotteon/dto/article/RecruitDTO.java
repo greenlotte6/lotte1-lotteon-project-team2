@@ -3,6 +3,7 @@ package kr.co.lotteon.dto.article;
 import kr.co.lotteon.dto.user.UserDTO;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -24,8 +25,8 @@ public class RecruitDTO {
     private String employmentType; // 채용형태(정규직, 계약직)
     private String content; //내용
     private LocalDateTime wdate; // 등록일
-    private LocalDateTime startDate; //채용 시작일
-    private LocalDateTime endDate;   //채용 마감일
+    private LocalDate startDate; //채용 시작일
+    private LocalDate endDate;   //채용 마감일
 
     /*
      * 상태에 대한 컬럼을 지워질 수 있음.
