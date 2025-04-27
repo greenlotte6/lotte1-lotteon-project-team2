@@ -301,3 +301,30 @@ footer > .footer_version {
   width: 100%;
   height: 100px;
 }
+
+.view_title{
+  font-size: 18px;
+  line-height: 32px;
+  margin: 0px;
+  font-weight: bold;
+  margin-top: 40px;
+}
+
+.view_content{
+  font-size: 18px;
+  line-height: 32px;
+  margin: 0px;
+}
+
+.btn{
+  float: right;
+  font-weight: 700;
+  color: white;
+  font-size: 18px;
+  width: 132px;
+  height: 48px;
+  background: red;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
