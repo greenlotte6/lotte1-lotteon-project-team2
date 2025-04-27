@@ -89,6 +89,103 @@
         const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
         const formatted = `${today.getMonth() + 1}/${today.getDate()}(${weekdays[today.getDay()]})`;
         arrivalSpan.textContent = formatted;
+
+        const reviewsContainer = document.querySelector('.reviews'); // 리뷰 목록을 감싸는 부모 요소
+        const reviewPickContainer = document.querySelector('.review_pick'); // 리뷰 PICK 영역
+
+        function updateReviewListUI(reviewData) {
+            // 기존 리뷰 내용만 비우기
+            const existingReviewsContent = reviewsContainer.querySelectorAll('.reviews_content');
+            existingReviewsContent.forEach(review => review.remove());
+
+            // 새로운 리뷰 데이터 추가
+            reviewData.dtoList.forEach(review => {
+                const reviewContent = document.createElement('div');
+                reviewContent.classList.add('reviews_content');
+                let starsHTML = '';
+                for (let i = 0; i < Math.floor(review.rating); i++) {
+                    starsHTML += '<img src="/images/product/full_star.png" alt="★">';
+                }
+                reviewContent.innerHTML = `
+            <p>${review.uid.substring(0, 4)}***</p>
+            <div class="stars">
+                ${starsHTML}
+                <p>${review.rating}</p>
+            </div>
+            <p>판매자 : ${review.company || '정보 없음'}</p>
+            <p>${review.content.replace(/\n/g, '<br>')}</p>
+            ${review.sNameImage1 ? `<img src="${review.sNameImage1}" alt="리뷰 이미지">` : ''}
+            ${review.sNameImage2 ? `<img src="${review.sNameImage2}" alt="리뷰 이미지">` : ''}
+        `;
+                reviewsContainer.appendChild(reviewContent);
+            });
+
+            // 페이지네이션 업데이트
+            let reviewsPage = reviewsContainer.querySelector('.reviews_page');
+            if (!reviewsPage) {
+                reviewsPage = document.createElement('div');
+                reviewsPage.classList.add('reviews_page');
+            }
+            reviewsPage.innerHTML = ''; // 기존 페이지 링크 비우기
+
+            let paginationHTML = '';
+            if (reviewData.prev) {
+                paginationHTML += `<a href="#" class="prev" data-page="${reviewData.start - 1}">&lt;</a>`;
+            }
+            for (let i = reviewData.start; i <= reviewData.end; i++) {
+                const currentClass = i === reviewData.pg ? 'current' : 'num';
+                paginationHTML += `<a href="#" class="${currentClass}" data-page="${i}">${i}</a>`;
+            }
+            if (reviewData.next) {
+                paginationHTML += `<a href="#" class="next" data-page="${reviewData.end + 1}">&gt;</a>`;
+            }
+            reviewsPage.innerHTML = paginationHTML;
+
+            // 페이지네이션 요소를 reviews 컨테이너의 맨 마지막에 추가 (항상 같은 위치에 있도록)
+            reviewsContainer.appendChild(reviewsPage);
+        }
+
+        function fetchReviews(page, prodNo, period, sortType) {
+            let requestUrl = `/product/reviewList?pg=${page}&prodNo=${prodNo}`;
+            if (sortType) {
+                requestUrl += `&sortType=${sortType}`;
+            }
+            console.log('AJAX 요청 URL:', requestUrl);
+
+            fetch(requestUrl)
+                .then(response => response.json())
+                .then(data => {
+                    updateReviewListUI(data);
+                })
+                .catch(error => {
+                    console.error('리뷰 목록을 가져오는 데 실패했습니다:', error);
+                });
+        }
+
+        function handlePaginationClick(event) {
+            if (event.target.matches('.reviews_page a')) {
+                event.preventDefault();
+                const pageNumber = parseInt(event.target.getAttribute('data-page'));
+                if (!isNaN(pageNumber) && pageNumber > 0) {
+                    fetchReviews(pageNumber, document.getElementById('prodNo').value, null, null);
+                }
+            }
+        }
+
+        function handleSortClick(event) {
+            if (event.target.matches('.sort-link')) {
+                event.preventDefault();
+                const sortType = event.target.getAttribute('data-sort-type');
+                fetchReviews(1, document.getElementById('prodNo').value, null, sortType);
+            }
+        }
+
+        // 초기 로딩 시 첫 페이지 리뷰 로드
+        fetchReviews(1, document.getElementById('prodNo').value, null, null);
+
+        // 이벤트 리스너 등록 (DOMContentLoaded 내에서 한 번만)
+        reviewsContainer.addEventListener('click', handlePaginationClick);
+        reviewsContainer.addEventListener('click', handleSortClick);
     });
 </script>
 
@@ -297,6 +394,7 @@
                                 <th:block th:include="/product/beauty/perfume/detail.html"/>
                             </div>
                             <div id="review" class="tab-pane">
+                                <input type="hidden" id="prodNo" th:value="${productDTO.prodNo}">
                                 <th:block th:include="/product/beauty/perfume/review.html"/>
                             </div>
                             <div id="qna" class="tab-pane">

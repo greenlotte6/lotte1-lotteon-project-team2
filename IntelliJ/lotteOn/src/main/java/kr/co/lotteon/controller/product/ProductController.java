@@ -16,6 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -30,7 +32,7 @@ public class ProductController {
     private final InquiryService inquiryService;
     private final CouponService couponService;
 
-    // 상세보기
+    // 상품 보기 - 첫 페이지 진입용
     @GetMapping("/product/view")
     public String view(PageRequestDTO pageRequestDTO, Model model) {
         pageRequestDTO.setSize(5);
@@ -50,10 +52,28 @@ public class ProductController {
         model.addAttribute(productDetailDTO);
         model.addAttribute("reviewPageResponseDTO", reviewPageResponseDTO);
 
-        log.info("reviewPageResponseDTO:{}", reviewPageResponseDTO);
         return "/product/beauty/perfume/view";
     }
+    @GetMapping("/product/reviewList")
+    @ResponseBody
+    public PageResponseDTO getReviews(
+            @RequestParam(defaultValue = "1") int pg,
+            @RequestParam String prodNo,
+            @RequestParam(value = "sortType", required = false) String sortType) { // sortType 파라미터 사용
 
+        PageRequestDTO pageRequestDTO = new PageRequestDTO();
+        pageRequestDTO.setPg(pg);
+        pageRequestDTO.setProdNo(prodNo);
+        pageRequestDTO.setSize(5);
+        pageRequestDTO.setSortType(sortType); // sortType 설정
+
+        PageResponseDTO pageResponseDTO = reviewService.selectAllForList(pageRequestDTO);
+
+        log.info("pageRequestDTO:{}", pageRequestDTO);
+        log.info("pageResponseDTO:{}", pageResponseDTO);
+
+        return pageResponseDTO;
+    }
 
     // 주문하기
     @GetMapping("/product/order")
