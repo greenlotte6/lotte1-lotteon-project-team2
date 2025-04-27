@@ -40,65 +40,35 @@
           </div>
           
           <ul class="recruit-list">
-            <li>
-              <a href="#" class="recruit-item">
+            <li th:each="item : ${pageResponseDTO.dtoList}">
+              <a th:href="@{/company/recruit/view(no=${item.no})}" class="recruit-item">
                 <div class="recruit-info">
-                  <strong class="job-title">모집공고 제목<span class="badge2">모집종료</span></strong>
+                  <strong class="job-title">[[${item.title}]]
+                    <span th:if="${item.endDate.isBefore(T(java.time.LocalDate).now())}"  class="badge2">모집종료</span>
+                    <span th:unless="${item.endDate.isBefore(T(java.time.LocalDate).now())}"  class="badge">모집중</span>
+                  </strong>
                   <div class="job-meta">
-                    채용부서 / 경력 / 채용형태
+                    [[${item.department}]]/ [[${item.career}]] / [[${item.employmentType}]]
                   </div>
                 </div>
-                <div class="job-status">2025.01.01~2025.01.02</div>
-              </a>
-            </li>
-          
-            <li>
-              <a href="#" class="recruit-item">
-                <div class="recruit-info">
-                  <strong class="job-title">모집공고 제목<span class="badge">모집중</span></strong>
-                  <div class="job-meta">
-                    모션인터렉션디자인팀 / 경력 5 ~ 10년 / 정규직
-                  </div>
-                </div>
-                <div class="job-status">상시모집</div>
+                <div class="job-status">[[${item.startDate}]]~[[${item.endDate}]]</div>
               </a>
             </li>
 
-            <li>
-              <a href="#" class="recruit-item">
-                <div class="recruit-info">
-                  <strong class="job-title">모집공고 제목<span class="badge3">모집대기</span></strong>
-                  <div class="job-meta">
-                    모션인터렉션디자인팀 / 경력 5 ~ 10년 / 정규직
-                  </div>
-                </div>
-                <div class="job-status">2026.01.01~</div>
-              </a>
-            </li>
-
-            <li>
-              <a href="#" class="recruit-item">
-                <div class="recruit-info">
-                  <strong class="job-title">모집공고 제목<span class="badge">모집중</span></strong>
-                  <div class="job-meta">
-                    모션인터렉션디자인팀 / 경력 5 ~ 10년 / 정규직
-                  </div>
-                </div>
-                <div class="job-status">상시모집</div>
-              </a>
-            </li>
           </ul>
           <div class="notice-footer">
               <div class="pagination">
-                  <a href="#" class="active">1</a>
-                  <a href="#">2</a>
-                  <a href="#">3</a>
-                  <a href="#">4</a>
-                  <a href="#">5</a>
-                  <a href="#">6</a>
-                  <span>...</span>
-                  <a href="#">11</a>
-                  <a href="#">❯</a>
+                <th:block th:if="${pageResponseDTO.prev}">
+                  <a th:href="@{/company/recruit(pg=${pageResponseDTO.start-1})}" class="prev">이전</a>
+                </th:block>
+
+                <th:block th:each="num:${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end)}">
+                  <a th:href="@{/company/recruit(pg=${num})}" th:class="${num == pageResponseDTO.pg} ? 'current' : 'num'">[[${num}]]</a>
+                </th:block>
+
+                <th:block th:if="${pageResponseDTO.next}">
+                  <a th:href="@{/company/recruit(pg=${pageResponseDTO.end+1})}" class="next">다음</a>
+                </th:block>
               </div>
           </div>
       </div>
