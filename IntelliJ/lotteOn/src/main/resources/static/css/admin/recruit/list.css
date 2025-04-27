@@ -70,6 +70,10 @@
   width: 70px;
 }
 
+.modal_member select{
+  width: 100px;
+}
+
 .member_list_form a {
   display: inline-block;
   padding: 2px;
@@ -180,3 +184,5 @@
 .point_list_form table thead th:nth-child(8) {
   width: 200px;
 }
+
+

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>관리자 채용하기목록 : 롯데On</title>
+  <link rel="stylesheet" href="/css/admin/admin.css" />
+  <link rel="stylesheet" href="/css/admin/recruit/list.css" />
+  <link rel="stylesheet" href="/css/layout/layout.css" />
+
+  <!-- 사이드바-->
+  <script src="/js/admin/sidebar.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function (){
+
+      // 전체 체크박스
+      const deleteAllCheckbox = document.getElementById('deleteAll');
+
+      // 개별 체크박스
+      const deleteCheckboxes = document.querySelectorAll('input[name="deleteNo"]');
+
+      deleteAllCheckbox.addEventListener('change', function () {
+        const isChecked = this.checked;
+        deleteCheckboxes.forEach(cb => cb.checked = isChecked);
+      });
+
+      // 선택삭제 버튼 validation
+      document.querySelector('.member_list_form').addEventListener('submit', function(e) {
+        const checked = document.querySelectorAll('input[name="deleteNo"]:checked');
+        if (checked.length === 0) {
+          e.preventDefault();
+          alert('삭제할 항목을 선택해주세요.');
+        } else {
+          const confirmDelete = confirm('선택한 항목을 정말 삭제하시겠습니까?');
+          if (!confirmDelete) {
+            e.preventDefault();
+          }
+        }
+      });
+
+    });
+
+  </script>
+</head>
+<body>
+<div id="wrapper">
+  <!-- 헤더 시작 -->
+  <th:block th:include="/admin/inc/header.html"/>
+  <!-- 헤더 끝 -->
+  <main>
+    <section class="content">
+      <!-- 왼쪽 사이드바 -->
+      <th:block th:include="/admin/inc/sidebar.html"/>
+
+      <!-- 사이드바 끝-->
+      <!-- 오른쪽 글 -->
+      <article class="main_content_side">
+        <!-- 여기부터 글 작성 -->
+        <div class="main_head">
+          <p class="main_head_title">채용하기 목록</p>
+          <div style="float: right">
+            <p style="font-size: 16px">
+              Home > 고객센터 ><span> 채용하기</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="select_div">
+          <div class="select_box">
+            <form th:action="@{/admin/cs/recruit/search}" >
+              <select name="searchType" th:field="*{pageResponseDTO.searchType}">
+                <option value="번호">번호</option>
+                <option value="채용부서">채용부서</option>
+                <option value="채용형태">채용형태</option>
+                <option value="제목">제목</option>
+              </select>
+              <input
+                      type="text"
+                      name="keyword"
+                      class="search_text"
+                      placeholder="검색어 입력"
+              />
+              <input type="submit" class="search_btn" value="검색" />
+            </form>
+          </div>
+        </div>
+
+        <form th:action="@{/admin/cs/recruit/delete}" class="member_list_form">
+          <table>
+            <thead>
+            <th><input type="checkbox" id="deleteAll" /></th>
+            <th>번호</th>
+            <th>채용부서</th>
+            <th>경력사항</th>
+            <th>채용형태</th>
+            <th style="width: 150px;">제목</th>
+            <th style="width: 60px;">작성자</th>
+            <th style="width: 60px;">상태</th>
+            <th>모집기간</th>
+            <th>작성일</th>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${pageResponseDTO.dtoList}">
+              <td>
+                <input type="checkbox" name="deleteNo" th:value="${item.no}" />
+              </td>
+              <td>[[${item.no}]]</td>
+              <td>[[${item.department}]]</td>
+              <td>[[${item.career}]]</td>
+              <td>[[${item.employmentType}]]</td>
+              <td>[[${item.title}]]</td>
+              <td>[[${item.user.name}]]</td>
+              <td>
+                <span th:if="${item.endDate.isBefore(T(java.time.LocalDate).now())}" style="color: red;">마감</span>
+                <span th:unless="${item.endDate.isBefore(T(java.time.LocalDate).now())}" style="color: green;">모집중</span>
+              </td>
+              <td>[[${item.startDate}]] ~ [[${item.endDate}]]</td>
+              <td th:text="${#temporals.format(item.wdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            </tr>
+            </tbody>
+          </table>
+
+          <div style="margin-top: 20px">
+            <button type="submit" class="delete_btn">선택삭제</button>
+            <button type="button" class="register_btn" id="modal_register">
+              채용등록
+            </button>
+          </div>
+        </form>
+
+        <!-- 페이징 -->
+        <div class="page">
+          <th:block th:if="${pageResponseDTO.prev}">
+            <a th:href="@{/admin/cs/recruit/search(pg=${pageResponseDTO.start-1}, searchType=${pageResponseDTO.searchType} , keyword=${pageResponseDTO.keyword})}" class="prev">이전</a>
+          </th:block>
+
+          <th:block th:each="num:${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end)}">
+            <a th:href="@{/admin/cs/recruit/search(pg=${num} , searchType=${pageResponseDTO.searchType} , keyword=${pageResponseDTO.keyword})}" th:class="${num == pageResponseDTO.pg} ? 'current' : 'num'">[[${num}]]</a>
+          </th:block>
+
+          <th:block th:if="${pageResponseDTO.next}">
+            <a th:href="@{/admin/cs/recruit/search(pg=${pageResponseDTO.end+1} , searchType=${pageResponseDTO.searchType} , keyword=${pageResponseDTO.keyword} )}" class="next">다음</a>
+          </th:block>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <!-- 푸터 시작 -->
+  <th:block th:include="/admin/inc/footer.html"/>
+  <!-- 푸터 끝 -->
+</div>
+
+<!-- 모달 -->
+<th:block th:include="/admin/inc/modal/recruitModal.html"/>
+</body>
+</html>

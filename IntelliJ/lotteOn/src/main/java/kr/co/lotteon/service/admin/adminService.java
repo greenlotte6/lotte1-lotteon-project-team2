@@ -1,9 +1,9 @@
 package kr.co.lotteon.service.admin;
 
-import ch.qos.logback.core.model.Model;
 import com.querydsl.core.Tuple;
 import jakarta.transaction.Transactional;
 import kr.co.lotteon.dto.article.NoticeDTO;
+import kr.co.lotteon.dto.article.RecruitDTO;
 import kr.co.lotteon.dto.category.MainCategoryDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.coupon.CouponIssueDTO;
@@ -13,6 +13,7 @@ import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.dto.product.ProductDetailDTO;
 import kr.co.lotteon.dto.product.ProductImageDTO;
 import kr.co.lotteon.entity.article.Notice;
+import kr.co.lotteon.entity.article.Recruit;
 import kr.co.lotteon.entity.category.MainCategory;
 import kr.co.lotteon.entity.category.SubCategory;
 import kr.co.lotteon.entity.coupon.Coupon;
@@ -23,6 +24,7 @@ import kr.co.lotteon.entity.product.ProductImage;
 import kr.co.lotteon.entity.seller.Seller;
 import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.article.NoticeRepository;
+import kr.co.lotteon.repository.article.RecruitRepository;
 import kr.co.lotteon.repository.category.MainCategoryRepository;
 import kr.co.lotteon.repository.category.SubCategoryRepository;
 import kr.co.lotteon.repository.coupon.CouponIssueRepository;
@@ -41,7 +43,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +63,7 @@ public class adminService {
     private final UserRepository userRepository;
     private final CouponRepository couponRepository;
     private final CouponIssueRepository couponIssueRepository;
+    private final RecruitRepository recruitRepository;
 
     private final ModelMapper modelMapper;
     private final MainCategoryRepository mainCategoryRepository;
@@ -472,4 +474,46 @@ public class adminService {
     }
 
 
+    // 채용하기
+    public void saveRecruit(RecruitDTO recruitDTO, UserDetails userDetails) {
+        Recruit recruit = modelMapper.map(recruitDTO, Recruit.class);
+        User user = User.builder()
+                .uid(userDetails.getUsername())
+                .build();
+
+        recruit.setUser(user);
+        recruitRepository.save(recruit);
+    }
+
+
+    public PageResponseDTO findAllRecruit(PageRequestDTO pageRequestDTO) {
+
+        pageRequestDTO.setSize(10);
+
+        Pageable pageable = pageRequestDTO.getPageable("no");
+        Page<Tuple> pageObject = recruitRepository.selectAllRecruit(pageRequestDTO, pageable);
+
+        List<RecruitDTO> DTOList = pageObject.getContent().stream().map(tuple -> {
+            Recruit recruit = tuple.get(0, Recruit.class);
+            return modelMapper.map(recruit, RecruitDTO.class);
+        }).toList();
+
+        int total = (int) pageObject.getTotalElements();
+
+        log.info("total: {}", total);
+        log.info("recruitDTOList: {}", pageObject);
+
+        return PageResponseDTO.<RecruitDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(DTOList)
+                .total(total)
+                .build();
+
+    }
+
+    public void deleteRecruitByList(List<Integer> deleteNos) {
+        for(int i : deleteNos){
+            recruitRepository.deleteById(i);
+        }
+    }
 }
