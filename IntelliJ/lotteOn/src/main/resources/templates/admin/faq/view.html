@@ -10,6 +10,34 @@
 
     <!-- 사이드바-->
     <script src="/js/admin/sidebar.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function (){
+
+        // 삭제 기능
+        // 개별 삭제 링크에 confirm 추가
+        document.querySelectorAll('.delete_button').forEach(function(link) {
+          link.addEventListener('click', function(e) {
+            if (!confirm("정말 삭제하시겠습니까?")) {
+              e.preventDefault(); // 링크 이동 막기
+            }
+          });
+        });
+
+        document.getElementById("modify").addEventListener("click", function () {
+          window.location.href = "/admin/cs/faq/write";
+        });
+
+        document.getElementById("list").addEventListener("click", function () {
+          window.location.href = "/admin/cs/faq/list";
+        });
+
+
+
+
+      });
+
+    </script>
   </head>
   <body>
     <div id="wrapper">
@@ -36,34 +64,33 @@
 
             <div class="Blank_box"></div>
 
-            <form action="#" class="reply_list_form">
+            <form th:action="@{/admin/cs/faq/delete}" class="reply_list_form">
+              <input type="hidden" name="deleteNo" th:value="${faqDTO.no}">
               <table>
                 <tbody>
                   <tr>
                     <td class="label">유형</td>
-                    <td>회원 - 가입</td>
+                    <td>[[${faqDTO.cateV2}]]</td>
                   </tr>
 
                   <tr>
                     <td class="label">제목</td>
-                    <td>개인회원과 법인회원의 차이가 있나요?</td>
+                    <td>[[${faqDTO.title}]]</td>
                   </tr>
 
                   <tr>
                     <td class="label">내용</td>
                     <td>
-                      개인회원하고 법인회원하고 차이를 알고 싶어요. 그리고
-                      법인회원으로 가입하면 혜택이 있나요? 마지막으로
-                      법인가입하려면 어떻게 해야하죠? 알려주세요
+                      [[${faqDTO.content}]]
                     </td>
                   </tr>
                 </tbody>
               </table>
 
               <div class="button_group">
-                <button type="button" class="delete_button">삭제</button>
-                <button type="submit" class="modify_button">수정</button>
-                <button type="button" class="list_button">목록</button>
+                <button type="submit" class="delete_button">삭제</button>
+                <button type="button" id="modify" class="modify_button">수정</button>
+                <button type="button" id="list" class="list_button">목록</button>
               </div>
             </form>
           </article>

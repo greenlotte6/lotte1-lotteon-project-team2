@@ -2,6 +2,7 @@ package kr.co.lotteon.service.admin;
 
 import com.querydsl.core.Tuple;
 import jakarta.transaction.Transactional;
+import kr.co.lotteon.dto.article.FaqDTO;
 import kr.co.lotteon.dto.article.NoticeDTO;
 import kr.co.lotteon.dto.article.RecruitDTO;
 import kr.co.lotteon.dto.category.MainCategoryDTO;
@@ -12,6 +13,7 @@ import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.dto.product.ProductDetailDTO;
 import kr.co.lotteon.dto.product.ProductImageDTO;
+import kr.co.lotteon.entity.article.Faq;
 import kr.co.lotteon.entity.article.Notice;
 import kr.co.lotteon.entity.article.Recruit;
 import kr.co.lotteon.entity.category.MainCategory;
@@ -23,6 +25,7 @@ import kr.co.lotteon.entity.product.ProductDetail;
 import kr.co.lotteon.entity.product.ProductImage;
 import kr.co.lotteon.entity.seller.Seller;
 import kr.co.lotteon.entity.user.User;
+import kr.co.lotteon.repository.article.FaqRepository;
 import kr.co.lotteon.repository.article.NoticeRepository;
 import kr.co.lotteon.repository.article.RecruitRepository;
 import kr.co.lotteon.repository.category.MainCategoryRepository;
@@ -64,6 +67,7 @@ public class adminService {
     private final CouponRepository couponRepository;
     private final CouponIssueRepository couponIssueRepository;
     private final RecruitRepository recruitRepository;
+    private final FaqRepository faqRepository;
 
     private final ModelMapper modelMapper;
     private final MainCategoryRepository mainCategoryRepository;
@@ -515,5 +519,98 @@ public class adminService {
         for(int i : deleteNos){
             recruitRepository.deleteById(i);
         }
+    }
+
+    // 자주묻는질문 저장
+    public void saveFaq(FaqDTO faqDTO) {
+        Faq faq = modelMapper.map(faqDTO, Faq.class);
+        faqRepository.save(faq);
+    }
+
+    // 작성을 위한 10개 제한(자주묻는 질문)
+    public Boolean limitFaq(FaqDTO faqDTO) {
+        int count = faqRepository.countByCateV2(faqDTO.getCateV2());
+
+        if(count >= 10){
+            return false;
+        }
+
+        return true;
+    }
+
+    // 자주묻는질문 리스트 출력
+    public PageResponseDTO findAllFaq(PageRequestDTO pageRequestDTO) {
+        pageRequestDTO.setSize(10);
+        Pageable pageable = pageRequestDTO.getPageable("no");
+        Page<Tuple> pageObject = faqRepository.selectAllFaq(pageRequestDTO, pageable);
+
+        List<FaqDTO> DTOList = pageObject.getContent().stream().map(tuple -> {
+            Faq faq = tuple.get(0, Faq.class);
+            return modelMapper.map(faq, FaqDTO.class);
+        }).toList();
+
+        int total = (int) pageObject.getTotalElements();
+
+        log.info("total: {}", total);
+        log.info("faqDTOList: {}", pageObject);
+
+        return PageResponseDTO.<FaqDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(DTOList)
+                .total(total)
+                .build();
+        
+    }
+
+    // 자주묻는 질문 삭제
+    public void deleteFaq(List<Integer> deleteNos) {
+        for(int i : deleteNos){
+            faqRepository.deleteById(i);
+        }
+    }
+
+    // 자주묻는 질문 찾기
+    public FaqDTO findFaqByNo(int no) {
+        Optional<Faq> faqOpt = faqRepository.findById(no);
+        if(faqOpt.isPresent()){
+            Faq faq = faqOpt.get();
+            return modelMapper.map(faq, FaqDTO.class);
+        }
+        return null;
+    }
+
+    public void modifyFaq(FaqDTO faqDTO) {
+        Optional<Faq> faqOpt = faqRepository.findById(faqDTO.getNo());
+        if(faqOpt.isPresent()){
+            Faq faq = faqOpt.get();
+            faq.setTitle(faqDTO.getTitle());
+            faq.setContent(faqDTO.getContent());
+            faq.setCateV1(faqDTO.getCateV1());
+            faq.setCateV2(faqDTO.getCateV2());
+            faqRepository.save(faq);
+        }
+    }
+
+    public PageResponseDTO findAllFaqByType(PageRequestDTO pageRequestDTO) {
+
+        pageRequestDTO.setSize(10);
+        Pageable pageable = pageRequestDTO.getPageable("no");
+        Page<Tuple> pageObject = faqRepository.selectAllFaqByType(pageRequestDTO, pageable);
+
+        List<FaqDTO> DTOList = pageObject.getContent().stream().map(tuple -> {
+            Faq faq = tuple.get(0, Faq.class);
+            return modelMapper.map(faq, FaqDTO.class);
+        }).toList();
+
+        int total = (int) pageObject.getTotalElements();
+
+        log.info("total: {}", total);
+        log.info("faqDTOList: {}", pageObject);
+
+        return PageResponseDTO.<FaqDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(DTOList)
+                .total(total)
+                .build();
     }
 }
