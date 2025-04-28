@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -32,18 +35,46 @@ public class CsController {
 
 
     @GetMapping("/cs/index")
-    public String index() {
+    public String index(PageRequestDTO pageRequestDTO, Model model) {
+
+        pageRequestDTO.setSize(5);
+        // 공지사항 리스트 출력
+        PageResponseDTO<NoticeDTO> noticeResponseDTO = csService.noticeFindAll(pageRequestDTO);
+
+        model.addAttribute("noticeResponseDTO", noticeResponseDTO);
+
+        // 문의하기 리스트 출력
+        PageResponseDTO<InquiryDTO> inquiryResponseDTO = csService.inquiryFindAll(pageRequestDTO);
+        pageRequestDTO.setSize(5);
+
+        model.addAttribute("inquiryResponseDTO", inquiryResponseDTO);
         return "/cs/index";
     }
 
     @GetMapping("/cs/notice/list")
-    public String noticeList(Model model, PageRequestDTO pageRequestDTO, String cate) {
+    public String noticeList(Model model, PageRequestDTO pageRequestDTO, @RequestParam("cate") String cate) {
 
         PageResponseDTO<NoticeDTO> responseDTO = csService.noticeFindAll(pageRequestDTO, cate);
         model.addAttribute("responseDTO", responseDTO);
+        model.addAttribute("cate", cate);
+
 
         return "/cs/notice/list";
     }
+
+    @GetMapping("/cs/notice/listAll")
+    public String noticeListAll(Model model, PageRequestDTO pageRequestDTO) {
+
+        pageRequestDTO.setSize(10);
+
+        PageResponseDTO<NoticeDTO> responseDTO = csService.noticeFindAll(pageRequestDTO);
+
+
+        model.addAttribute("responseDTO", responseDTO);
+
+        return "/cs/notice/listAll";
+    }
+
 
     @GetMapping("/cs/notice/view")
     public String noticeView(Model model, @RequestParam("no") int no) {
@@ -79,11 +110,29 @@ public class CsController {
     public String faqList(Model model, PageRequestDTO pageRequestDTO, @RequestParam("cateV1") String cateV1) {
 
         log.info("cateV1: {}", cateV1);
+        model.addAttribute("cateV1", cateV1);
 
         PageResponseDTO<FaqDTO> responseDTO = csService.faqFindAll(pageRequestDTO, cateV1);
         model.addAttribute("responseDTO", responseDTO);
 
         log.info("responseDTO: {}", responseDTO);
+
+        // 2차 카테고리 목록 조회
+        List<String> cateV2List = csService.findCateV2ListByCateV1(cateV1);
+        model.addAttribute("cateV2List", cateV2List);
+
+        log.info("cateV2List: {}", cateV2List);
+
+        // 2차 카테고리별 리스트 조회
+        Map<String, List<FaqDTO>> cateV2FaqMap = new LinkedHashMap<>();
+        for(String cateV2 : cateV2List) {
+            List<FaqDTO> faqDTOList = csService.faqFindAllByCateV1AndCateV2(cateV1, cateV2);
+            cateV2FaqMap.put(cateV2, faqDTOList);
+        }
+        model.addAttribute("cateV2FaqMap", cateV2FaqMap);
+
+        log.info("cateV2FaqMap: {}", cateV2FaqMap);
+
 
         return "/cs/faq/list";
     }
@@ -128,7 +177,7 @@ public class CsController {
     @GetMapping("/cs/qna/list")
     public String qnaList(@RequestParam("cateV1") String cateV1, Model model, PageRequestDTO pageRequestDTO) {
 
-        PageResponseDTO<InquiryDTO> responseDTO = csService.findAll(pageRequestDTO, cateV1);
+        PageResponseDTO<InquiryDTO> responseDTO = csService.findCateV1All(pageRequestDTO, cateV1);
         model.addAttribute("cateV1", cateV1);
         model.addAttribute("responseDTO", responseDTO);
         return "/cs/qna/list";
@@ -147,7 +196,7 @@ public class CsController {
     @GetMapping("/cs/qna/coupon")
     public String qnaCoupon(@RequestParam("cateV1") String cateV1,Model model, PageRequestDTO pageRequestDTO) {
 
-        PageResponseDTO<InquiryDTO> responseDTO = csService.findAll(pageRequestDTO, cateV1);
+        PageResponseDTO<InquiryDTO> responseDTO = csService.findCateV1All(pageRequestDTO, cateV1);
         model.addAttribute("cateV1", cateV1);
         model.addAttribute("responseDTO", responseDTO);
 
@@ -162,7 +211,7 @@ public class CsController {
     @GetMapping("/cs/qna/delivery")
     public String qnaDelivery(@RequestParam("cateV1") String cateV1,Model model, PageRequestDTO pageRequestDTO) {
 
-        PageResponseDTO<InquiryDTO> responseDTO = csService.findAll(pageRequestDTO, cateV1);
+        PageResponseDTO<InquiryDTO> responseDTO = csService.findCateV1All(pageRequestDTO, cateV1);
         model.addAttribute("cateV1", cateV1);
         model.addAttribute("responseDTO", responseDTO);
 
@@ -182,7 +231,7 @@ public class CsController {
     @GetMapping("/cs/qna/safeDeal")
     public String qnaSafeDeal(@RequestParam("cateV1") String cateV1,Model model, PageRequestDTO pageRequestDTO) {
 
-        PageResponseDTO<InquiryDTO> responseDTO = csService.findAll(pageRequestDTO, cateV1);
+        PageResponseDTO<InquiryDTO> responseDTO = csService.findCateV1All(pageRequestDTO, cateV1);
         model.addAttribute("cateV1", cateV1);
         model.addAttribute("responseDTO", responseDTO);
 

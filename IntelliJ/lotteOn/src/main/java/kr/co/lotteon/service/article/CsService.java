@@ -1,6 +1,5 @@
 package kr.co.lotteon.service.article;
 
-import com.querydsl.core.Tuple;
 import kr.co.lotteon.dto.article.FaqDTO;
 import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.article.NoticeDTO;
@@ -44,23 +43,13 @@ public class CsService {
 
     }
 
-    public PageResponseDTO<InquiryDTO> findAll(PageRequestDTO pageRequestDTO, String cateV1) {
+    public PageResponseDTO<InquiryDTO> inquiryFindAll(PageRequestDTO pageRequestDTO){
 
-        pageRequestDTO.setSize(10);
+        pageRequestDTO.setSize(5);
         Pageable pageable = pageRequestDTO.getPageable("no");
-        Page<Inquiry> pageInquiry;
-
-        if(cateV1 != null && !cateV1.isEmpty()){
-            // 카테고리로 검색
-            pageInquiry = inquiryRepository.findByCateV1(cateV1, pageable);
-        }else{
-            pageInquiry = inquiryRepository.findAll(pageable);
-        }
-
-
-
+        Page<Inquiry> pageInquiry = inquiryRepository.findAll(pageable);
         List<InquiryDTO> inquiryDTOList = pageInquiry.getContent().stream()
-                .map(inquiry -> modelMapper.map(inquiry, InquiryDTO.class)) // ModelMapper 사용
+                .map(inquiry -> modelMapper.map(inquiry, InquiryDTO.class))
                 .collect(Collectors.toList());
 
         int total = (int) pageInquiry.getTotalElements();
@@ -70,7 +59,29 @@ public class CsService {
                 .dtoList(inquiryDTOList)
                 .total(total)
                 .build();
+
     }
+
+    public PageResponseDTO<NoticeDTO> noticeFindAll(PageRequestDTO pageRequestDTO){
+
+
+        Pageable pageable = pageRequestDTO.getPageable("no");
+        Page<Notice> pageNotice = noticeRepository.findAll(pageable);
+        List<NoticeDTO> noticeDTOList = pageNotice.getContent().stream()
+                .map(notice -> modelMapper.map(notice, NoticeDTO.class))
+                .collect(Collectors.toList());
+
+        int total = (int) pageNotice.getTotalElements();
+
+        return PageResponseDTO.<NoticeDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(noticeDTOList)
+                .total(total)
+                .build();
+
+    }
+
+
 
     public PageResponseDTO<NoticeDTO> noticeFindAll(PageRequestDTO pageRequestDTO, String cate) {
 
@@ -95,6 +106,34 @@ public class CsService {
         return PageResponseDTO.<NoticeDTO>builder()  // 제네릭 타입 변경
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(noticeDTOList)
+                .total(total)
+                .build();
+    }
+
+    public PageResponseDTO<InquiryDTO> findCateV1All(PageRequestDTO pageRequestDTO, String cateV1) {
+
+        pageRequestDTO.setSize(10);
+        Pageable pageable = pageRequestDTO.getPageable("no");
+        Page<Inquiry> pageInquiry;
+
+        if(cateV1 != null && !cateV1.isEmpty()){
+            // 카테고리로 검색
+            pageInquiry = inquiryRepository.findByCateV1(cateV1, pageable);
+        }else{
+            pageInquiry = inquiryRepository.findAll(pageable);
+        }
+
+
+
+        List<InquiryDTO> inquiryDTOList = pageInquiry.getContent().stream()
+                .map(inquiry -> modelMapper.map(inquiry, InquiryDTO.class)) // ModelMapper 사용
+                .collect(Collectors.toList());
+
+        int total = (int) pageInquiry.getTotalElements();
+
+        return PageResponseDTO.<InquiryDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(inquiryDTOList)
                 .total(total)
                 .build();
     }
@@ -127,16 +166,17 @@ public class CsService {
     }
 
 
+
+
+
+
     public PageResponseDTO<InquiryDTO> adminFindAll(PageRequestDTO pageRequestDTO) {
 
         pageRequestDTO.setSize(10);
         Pageable pageable = pageRequestDTO.getPageable("no");
         Page<Inquiry> pageInquiry;
 
-
         pageInquiry = inquiryRepository.findAll(pageable);
-
-
 
 
         List<InquiryDTO> inquiryDTOList = pageInquiry.getContent().stream()
@@ -184,6 +224,23 @@ public class CsService {
 
         return null;
     }
+
+    // 2차 카테고리 목록 조회
+    public List<String> findCateV2ListByCateV1(String cateV1){
+        return faqRepository.findDistinctCateV2ByCateV1(cateV1);
+    }
+
+    // 2차 카테고리별 리스트 조회
+    public List<FaqDTO> faqFindAllByCateV1AndCateV2(String cateV1, String cateV2){
+        List<Faq> faqList = faqRepository.findByCateV1AndCateV2(cateV1, cateV2);
+
+        // Faq 엔티티를 FaqDTO로 변환
+        return faqList.stream()
+                .map(faq -> modelMapper.map(faq, FaqDTO.class))
+                .collect(Collectors.toList());
+    }
+
+
 
 
 }

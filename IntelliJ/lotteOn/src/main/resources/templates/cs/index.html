@@ -8,6 +8,47 @@
     <link rel="stylesheet" href="/css/cs/index.css">
     <link rel="stylesheet" href="/css/common/header.css">
     <script src="/js/headerMenu.js"></script>
+
+    <style>
+        .notice-list, .qna-list{
+            width: 100%;
+        }
+
+        .notice-list, .qna-list tbody tr td{
+            font-size: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+            padding-top: 8px;
+        }
+
+        .notice-list td{
+            font-size: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+            padding-top: 8px;
+        }
+
+        .qna-list tbody tr td a{
+            font-size: 15px;
+        }
+
+        .qna-list tbody tr td:nth-child(2){
+            width: 100px;
+        }
+
+        .qna-list tbody tr td:nth-child(3){
+            width: 80px;
+        }
+
+        .notice-list tbody tr td:nth-child(2){
+            width: 80px;
+        }
+
+        .notice-list tr td a{
+            font-size: 15px;
+        }
+
+    </style>
 </head>
 <body>
     <div id="wrapper">
@@ -21,14 +62,13 @@
                 <article class="cs-main_content">
                     <div class="cs-title"><span>롯데 ON</span>이 도와드릴게요!</div>
                     <div class="cs-section">
-                        <h2>공지사항 <a th:href="@{/cs/notice/list}" class="more-link">전체보기</a></h2>
-                        <ul class="notice-list">
-                            <li>[안내] 해외결제사 창 문자주의 <span class="date">22.10.31</span></li>
-                            <li>[안내] 해외결제사 창 문자주의 <span class="date">22.10.31</span></li>
-                            <li>[안내] 해외결제사 창 문자주의 <span class="date">22.10.31</span></li>
-                            <li>[안내] 해외결제사 창 문자주의 <span class="date">22.10.31</span></li>
-                            <li>[안내] 해외결제사 창 문자주의 <span class="date">22.10.31</span></li>
-                        </ul>
+                        <h2>공지사항 <a th:href="@{/cs/notice/listAll}" class="more-link">전체보기</a></h2>
+                        <table class="notice-list">
+                            <tr th:each="notice, i : ${noticeResponseDTO.dtoList}">
+                                <td><a th:href="@{/cs/notice/view(no=${notice.no})}">[[${'[' + notice.cate + ']'}]] [[${notice.title}]]</a></td>
+                                <td th:text="${#temporals.format(notice.wdate, 'yyyy-MM-dd')}"></td>
+                            </tr>
+                        </table>
                     </div>
                     
                     <div class="cs-section">
@@ -41,61 +81,46 @@
                                 </a>
                             </div>
                             <div class="faq-icon">
-                                <a href="#">
+                                <a th:href="@{/cs/faq/list(cateV1=쿠폰-이벤트)}">
                                     <img src="/images/cs/coupon.png" alt="쿠폰/이벤트">
                                     <span>쿠폰/이벤트</span>
                                 </a>
                             </div>
                             <div class="faq-icon">
-                                <a href="#">
+                                <a th:href="@{/cs/faq/list(cateV1=주문-결제)}">
                                     <img src="/images/cs/clipboard.png" alt="주문/결제">
                                     <span>주문/결제</span>
                                 </a>
                             </div>
                             <div class="faq-icon">
-                                <a href="#">
+                                <a th:href="@{/cs/faq/list(cateV1=배송)}">
                                     <img src="/images/cs/delivery.png" alt="배송">
                                     <span>배송</span>
                                 </a>
                             </div>
                             <div class="faq-icon">
-                                <a href="#">
-                                    <img src="/images/cs/refund.png" alt="취소/반품">
-                                    <span>취소/반품</span>
+                                <a th:href="@{/cs/faq/list(cateV1=취소-반품-교환)}">
+                                    <img src="/images/cs/refund.png" alt="취소/반품/교환">
+                                    <span>취소/반품/교환</span>
                                 </a>
                             </div>
                             <div class="faq-icon">
-                                <a href="#">
-                                    <img src="/images/cs/cash.PNG" alt="안전결제">
-                                    <span>안전결제</span>
+                                <a th:href="@{/cs/faq/list(cateV1=안전거래)}">
+                                    <img src="/images/cs/cash.PNG" alt="안전거래">
+                                    <span>안전거래</span>
                                 </a>
                             </div>
                         </div>
                     </div>
                     <div class="cs-section">
                         <h2>문의하기 <a th:href="@{/cs/qna/list(cateV1=회원)}" class="more-link">전체보기</a></h2>
-                        <ul class="qna-list">
-                            <li>
-                                [회원] 개인회원과 법인회원의 차이가 있나요?
-                                <span class="qna-user">chh** · 22.10.31</span>
-                            </li>
-                            <li>
-                                [쿠폰/이벤트] 스마트포인트는 어디에서 사용하나요?
-                                <span class="qna-user">chh** · 22.10.31</span>
-                            </li>
-                            <li>
-                                [배송] 주문한 상품은 언제 배송되나요?
-                                <span class="qna-user">chh** · 22.10.31</span>
-                            </li>
-                            <li>
-                                [주문/결제] 신용카드 결제 중 오류가 난 경우 어떻게 해야하나요?
-                                <span class="qna-user">chh** · 22.10.31</span>
-                            </li>
-                            <li>
-                                [취소/반품/교환] 주문을 취소하고 싶어요.
-                                <span class="qna-user">chh** · 22.10.31</span>
-                            </li>
-                        </ul>
+                        <table class="qna-list">
+                            <tr th:each="inquiry, i : ${inquiryResponseDTO.dtoList}">
+                                <td><a th:href="@{/cs/qna/view(no=${inquiry.no})}">[[${'[' + inquiry.cateV1 + ']'}]] [[${inquiry.title}]]</a></td>
+                                <td th:text="${inquiry.user.name}"></td>
+                                <td th:text="${#temporals.format(inquiry.wdate, 'yyyy-MM-dd')}"></td>
+                            </tr>
+                        </table>
                         <a th:href="@{/cs/qna/write}" class="write-inquiry">문의하기 작성</a>
                     </div>
                     
