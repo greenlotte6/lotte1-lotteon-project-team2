@@ -41,7 +41,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         BooleanExpression expression = qProduct.subCategory.subCateNo.eq(subCateNo);
 
         List<Tuple> tupleList = queryFactory
-                .select(qProduct, qSeller.company, qProductImage.sNameList)
+                .select(qProduct, qSeller.company, qSeller.rank, qProductImage.sNameList)
                 .from(qProduct)
                 .join(qSeller).on(qProduct.seller.sno.eq(qSeller.sno))
                 .leftJoin(qProductImage).on(qProductImage.product.prodNo.eq(qProduct.prodNo))
@@ -59,9 +59,6 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 .where(expression)
                 .fetchOne();
 
-        log.info("total: {}", total);
-        log.info("tupleList: {}", tupleList);
-
         return new PageImpl<>(tupleList, pageable, total);
     }
 
@@ -77,7 +74,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         BooleanExpression recentProduct = qProduct.regDate.after(threeMonthsAgo);
 
         List<Tuple> tupleList = queryFactory
-                .select(qProduct, qSeller.company, qSeller.rank, qProductImage.sNameList)
+                .select(qProduct, qSeller.company, qProductImage.sNameList)
                 .from(qProduct)
                 .join(qSeller).on(qProduct.seller.sno.eq(qSeller.sno))
                 .leftJoin(qProductImage).on(qProductImage.product.eq(qProduct))
@@ -97,7 +94,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         String sortType = pageRequestDTO.getSortType();
         String period = pageRequestDTO.getPeriod();
 
-        OrderSpecifier<?> orderSpecifier = null;
+        OrderSpecifier<?> orderSpecifier = qProduct.regDate.desc(); // 기본 정렬: 최신 등록순 (sortType이 null일 경우)
 
         NumberExpression<Integer> discountedPrice = qProduct.prodPrice
                 .multiply(
@@ -110,18 +107,20 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 .floor()
                 .castToNum(Integer.class);
 
-        switch (sortType) {
-            case "mostSales" -> orderSpecifier = qProduct.prodSold.desc();
-            case "lowPrice" -> orderSpecifier = discountedPrice.asc();
-            case "highPrice" -> orderSpecifier =  discountedPrice.desc();
-            case "highRating" -> orderSpecifier = qProduct.ratingAvg.desc();
-            case "manyReviews" -> orderSpecifier = qProduct.reviewCount.desc();
-            case "latest" -> orderSpecifier = qProduct.regDate.desc();
+        if (sortType != null) {
+            switch (sortType) {
+                case "mostSales" -> orderSpecifier = qProduct.prodSold.desc();
+                case "lowPrice" -> orderSpecifier = discountedPrice.asc();
+                case "highPrice" -> orderSpecifier =  discountedPrice.desc();
+                case "highRating" -> orderSpecifier = qProduct.ratingAvg.desc();
+                case "manyReviews" -> orderSpecifier = qProduct.reviewCount.desc();
+                case "latest" -> orderSpecifier = qProduct.regDate.desc();
+            }
         }
 
         BooleanExpression expression = qProduct.subCategory.subCateNo.eq(subCateNo);
 
-        if ((sortType.equals("mostSales") || sortType.equals("manyReviews")) && period != null) {
+        if ((sortType != null && (sortType.equals("mostSales") || sortType.equals("manyReviews"))) && period != null) {
             LocalDate now = LocalDate.now();
             LocalDate startDate = switch (period) {
                 case "1year" -> now.minusYears(1);
@@ -153,10 +152,6 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 .leftJoin(qProductImage).on(qProductImage.product.eq(qProduct))
                 .where(expression)
                 .fetchOne();
-
-
-        log.info("total: " + total);
-        log.info("tupleList: {} ", tupleList);
 
         return new PageImpl<>(tupleList, pageable, total);
     }

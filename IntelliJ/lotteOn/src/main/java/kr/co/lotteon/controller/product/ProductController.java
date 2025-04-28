@@ -13,6 +13,7 @@ import kr.co.lotteon.service.feedback.ReviewService;
 import kr.co.lotteon.service.product.ProductDetailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,22 +62,9 @@ public class ProductController {
     // 리뷰 목록 데이터 (Ajax 요청 처리)
     @GetMapping("/product/reviewList")
     @ResponseBody
-    public PageResponseDTO getReviews(
-            @RequestParam(defaultValue = "1") int pg,
-            @RequestParam String prodNo,
-            @RequestParam(value = "sortType", required = false) String sortType) { // sortType 파라미터 사용
-
-        PageRequestDTO pageRequestDTO = new PageRequestDTO();
-        pageRequestDTO.setPg(pg);
-        pageRequestDTO.setProdNo(prodNo);
+    public PageResponseDTO getReviews(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setSize(5);
-        pageRequestDTO.setSortType(sortType); // sortType 설정
-
         PageResponseDTO pageResponseDTO = reviewService.selectAllForList(pageRequestDTO);
-
-        log.info("pageRequestDTO:{}", pageRequestDTO);
-        log.info("pageResponseDTO:{}", pageResponseDTO);
-
         return pageResponseDTO;
     }
 

@@ -17,6 +17,7 @@ public class PageResponseDTO<T> {
     private int subCateNo;
     private String sortType;
     private String period;
+    private String view;
 
     private int pg;
     private int size;
