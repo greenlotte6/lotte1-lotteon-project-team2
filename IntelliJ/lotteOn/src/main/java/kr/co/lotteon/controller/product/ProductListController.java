@@ -30,7 +30,6 @@ public class ProductListController {
         List<ProductDTO> productList = productListService.selectBestAllForList(pageRequestDTO.getSubCateNo());
         model.addAttribute(pageResponseDTO);
         model.addAttribute(productList);
-        log.info("pageResponseDTO:{}", pageResponseDTO);
         return "/product/list/list";
     }
 
