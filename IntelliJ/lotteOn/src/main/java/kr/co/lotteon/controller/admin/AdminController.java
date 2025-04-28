@@ -396,13 +396,13 @@ public class AdminController {
         return "/admin/faq/list";
     }
 
-
     //자주묻는질문 검색
     @GetMapping("/cs/faq/search")
     public String faqSearch(Model model, PageRequestDTO pageRequestDTO){
         PageResponseDTO pageResponseDTO = adminService.findAllFaqByType(pageRequestDTO);
+        pageResponseDTO.setSortType(pageRequestDTO.getSortType());
         model.addAttribute(pageResponseDTO);
-        return "/admin/faq/list";
+        return "/admin/faq/listSearch";
     }
 
     //자주묻는질문 글작성(페이지)

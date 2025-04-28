@@ -13,6 +13,8 @@
     <script>
       document.addEventListener('DOMContentLoaded', function (){
 
+        updateSubCategory();
+
         // 삭제 기능
         // 개별 삭제 링크에 confirm 추가
         document.querySelectorAll('.delete-link').forEach(function(link) {
@@ -133,7 +135,7 @@
                     <option value="여행-숙박-항공">여행-숙박-항공</option>
                     <option value="안전거래">안전거래</option>
                   </select>
-                  <select id="subCategory" name="searchType" style="width: 150px">
+                  <select id="subCategory" name="searchType" style="width: 150px" th:field="*{pageResponseDTO.searchType}">
                     <option value="가입">가입</option>
                     <option value="탈퇴">탈퇴</option>
                     <option value="회원정보">회원정보</option>
