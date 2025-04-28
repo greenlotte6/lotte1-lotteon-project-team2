@@ -12,6 +12,7 @@ import kr.co.lotteon.service.article.InquiryService;
 import kr.co.lotteon.service.coupon.CouponService;
 import kr.co.lotteon.service.feedback.ReviewService;
 import kr.co.lotteon.service.product.ProductDetailService;
+import kr.co.lotteon.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

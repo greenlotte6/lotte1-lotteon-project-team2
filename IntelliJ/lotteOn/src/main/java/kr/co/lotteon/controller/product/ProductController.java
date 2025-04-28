@@ -11,6 +11,7 @@ import kr.co.lotteon.service.article.InquiryService;
 import kr.co.lotteon.service.coupon.CouponService;
 import kr.co.lotteon.service.feedback.ReviewService;
 import kr.co.lotteon.service.product.ProductDetailService;
+import kr.co.lotteon.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -32,6 +33,7 @@ public class ProductController {
     private final ReviewService reviewService;
     private final InquiryService inquiryService;
     private final CouponService couponService;
+    private final ProductService productService;
 
     // 상품 보기 - 첫 페이지 진입용
     @GetMapping("/product/view")
@@ -40,6 +42,8 @@ public class ProductController {
         String prodNo = pageRequestDTO.getProdNo();
         // 상품 + 상품이미지
         ProductDTO productDTO = productMapper.selectProductByProdNo(prodNo);
+        // 상품 옵션 Split
+        productDTO = productService.OptionSplit(productDTO);
         // 쿠폰
         List<CouponDTO> couponDTOList = couponService.findAllByCompany(productDTO.getCompany());
         // 상품 상세
