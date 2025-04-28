@@ -92,11 +92,6 @@
         attachProductClickHandler('.best-grid', '.best-card');
         attachProductClickHandler('#productWrapper', '.product-item');
 
-
-
-
-
-
         const salesPeriodSelect = document.getElementById('salesPeriodSelect');
         const reviewPeriodSelect = document.getElementById('reviewPeriodSelect');
         const sortLinks = document.querySelectorAll('.nav a[data-sort]');
@@ -107,8 +102,41 @@
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
-                // 서버에서 받은 데이터(data)를 콘솔에 출력
-                    console.log('서버 응답 데이터:', data);
+                    const productListContainer = document.querySelector('#productWrapper .product-list');
+                    productListContainer.innerHTML = ''; // 기존 목록 초기화
+                    data.dtoList.forEach(product => {
+                        const productItem = document.createElement('div');
+                        productItem.classList.add('product-item');
+                        productItem.setAttribute('data-prodno', product.prodNo);
+                        productItem.innerHTML = `
+                            <img class="product-img" src="${product.snameList}" alt="${product.prodName}" />
+                            <div class="product-info">
+                                <span class="vendor-name">${product.company}</span> <span class="vendor-rank">${product.rank}</span><br>
+                                <span class="brand">${product.prodBrand}</span>
+                                <span class="pname">${product.prodName}</span>
+                                <div class="meta">
+                                    <span>★ ${product.ratingAvg !== null ? product.ratingAvg.toFixed(1) : 0}</span>&nbsp;|&nbsp;리뷰 <span>${product.reviewCount}</span>
+                                </div>
+                                ${product.prodDeliveryFee === 0 ? '<span class="badge-free">무료배송</span>' : `<span>${formatNumber(product.prodDeliveryFee)}원</span>`}
+                            </div>
+                            <div class="product-price">
+                                <del>${formatNumber(product.prodPrice)}원</del><br>
+                                <span class="discount">${product.prodDiscount}%</span>
+                                <span>${formatNumber(product.prodPrice * (100 - product.prodDiscount) / 100)}원</span>
+                                <div class="icons">
+                                    <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                                    <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
+                                </div>
+                            </div>
+                        `;
+                        productListContainer.appendChild(productItem);
+                    });
+
+                    // 페이지네이션 업데이트 (data 활용)
+                    updatePagination(data);
+
+                    // Ajax로 새로 그려진 상품 아이템에 이벤트 리스너 다시 부착
+                    attachProductClickHandler('#productWrapper', '.product-item');
                 })
                 .catch(error => {
                     console.error('Ajax 요청 실패:', error);
@@ -123,13 +151,17 @@
         // 판매 기간 선택 이벤트
         salesPeriodSelect.addEventListener('change', function() {
             const period = this.value;
-            loadProducts(`&sortType=salesCount&period=${period}`); // 판매 많은 순은 별도의 sortType으로 처리
+            loadProducts(`&sortType=mostSales&period=${period}`);
+            // 다른 정렬 옵션 초기화
+            resetOtherSortOptions('mostSales');
         });
 
         // 후기 기간 선택 이벤트
         reviewPeriodSelect.addEventListener('change', function() {
             const period = this.value;
-            loadProducts(`&sortType=reviewCount&period=${period}`); // 후기 많은 순은 별도의 sortType으로 처리
+            loadProducts(`&sortType=manyReviews&period=${period}`);
+            // 다른 정렬 옵션 초기화
+            resetOtherSortOptions('manyReviews');
         });
 
         // 정렬 링크 클릭 이벤트
@@ -139,65 +171,40 @@
                 const sortType = this.getAttribute('data-sort');
                 let period = '';
                 if (sortType === 'lowPrice' || sortType === 'highPrice') {
-                    period = salesPeriodSelect.value; // 가격순은 판매 기간 기준? 필요에 따라 수정
+                    period = salesPeriodSelect.value;
+                    // 후기 기간 셀렉트 박스 초기화
+                    reviewPeriodSelect.selectedIndex = 0;
                 } else if (sortType === 'highRating') {
-                    period = reviewPeriodSelect.value; // 평점순은 후기 기간 기준? 필요에 따라 수정
+                    period = reviewPeriodSelect.value;
+                    // 판매 기간 셀렉트 박스 초기화
+                    salesPeriodSelect.selectedIndex = 0;
                 } else if (sortType === 'latest') {
-                    period = ''; // 최근 등록순은 기간 필터링 없음? 필요에 따라 수정
+                    period = '';
+                    // 판매 기간, 후기 기간 셀렉트 박스 초기화
+                    salesPeriodSelect.selectedIndex = 0;
+                    reviewPeriodSelect.selectedIndex = 0;
                 }
                 loadProducts(`&sortType=${sortType}&period=${period}`);
             });
         });
 
-        // 초기 상품 목록 로드 (기본 정렬: 판매 많은 순, 기본 기간: 전체)
-        loadProducts(`&sortType=salesCount&period=`);
-
-        function loadProducts(params) {
-            const url = `/product/ajaxList?subCateNo=3&view=${getView()}&pg=1${params}`;
-
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    const productListContainer = document.querySelector('#productWrapper .product-list');
-                    productListContainer.innerHTML = ''; // 기존 목록 초기화
-
-                    data.dtoList.forEach(product => {
-                        const productItem = document.createElement('div');
-                        productItem.classList.add('product-item');
-                        productItem.setAttribute('data-prodno', product.prodNo);
-                        productItem.innerHTML = `
-                    <img class="product-img" src="${product.sNameList}" alt="${product.prodName}" />
-                    <div class="product-info">
-                        <span class="vendor-name">${product.company}</span> <span class="vendor-rank">${product.rank}</span><br>
-                        <span class="brand">${product.prodBrand}</span>
-                        <span class="pname">${product.prodName}</span>
-                        <div class="meta">
-                            <span>★ ${product.ratingAvg !== null ? product.ratingAvg.toFixed(1) : 0}</span>&nbsp;|&nbsp;리뷰 <span>${product.reviewCount}</span>
-                        </div>
-                        ${product.prodDeliveryFee === 0 ? '<span class="badge-free">무료배송</span>' : `<span>${formatNumber(product.prodDeliveryFee)}원</span>`}
-                    </div>
-                    <div class="product-price">
-                        <del>${formatNumber(product.prodPrice)}원</del><br>
-                        <span class="discount">${product.prodDiscount}%</span>
-                        <span>${formatNumber(product.prodPrice * (100 - product.prodDiscount) / 100)}원</span>
-                        <div class="icons">
-                            <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
-                            <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
-                        </div>
-                    </div>
-                `;
-                        productListContainer.appendChild(productItem);
-                    });
-
-                    // 페이지네이션 업데이트 (data 활용)
-                    updatePagination(data);
-
-                    // Ajax로 새로 그려진 상품 아이템에 이벤트 리스너 다시 부착
-                    attachProductClickHandler('#productWrapper', '.product-item');
-                })
-                .catch(error => {
-                    console.error('Ajax 요청 실패:', error);
-                });
+        function resetOtherSortOptions(currentSortType) {
+            if (currentSortType === 'mostSales') {
+                salesPeriodSelect.selectedIndex = 0; // 판매 많은 순 초기화
+                reviewPeriodSelect.selectedIndex = 0; // 후기 기간 초기화
+            } else if (currentSortType === 'manyReviews') {
+                salesPeriodSelect.selectedIndex = 0; // 판매 많은 순 초기화
+                reviewPeriodSelect.selectedIndex = 0; // 후기 기간 초기화
+            } else if (currentSortType === 'lowPrice' || currentSortType === 'highPrice') {
+                salesPeriodSelect.selectedIndex = 0; // 판매 많은 순 초기화
+                reviewPeriodSelect.selectedIndex = 0; // 후기 기간 초기화
+            } else if (currentSortType === 'highRating') {
+                salesPeriodSelect.selectedIndex = 0; // 판매 많은 순 초기화
+                reviewPeriodSelect.selectedIndex = 0; // 후기 기간 초기화
+            } else if (currentSortType === 'latest') {
+                salesPeriodSelect.selectedIndex = 0; // 판매 많은 순 초기화
+                reviewPeriodSelect.selectedIndex = 0; // 후기 기간 초기화
+            }
         }
 
         function updatePagination(data) {
@@ -251,6 +258,9 @@
         function formatNumber(number) {
             return number.toLocaleString();
         }
+
+        // 초기 상품 목록 로드 (기본 정렬: 판매 많은 순, 기본 기간: 전체)
+        loadProducts(`&sortType=salesCount&period=`);
 
     });
 </script>
@@ -363,10 +373,10 @@
                     <div class="best-card"
                          th:each="product, stat : ${productDTOList}"
                          th:attr="data-prodno=${product.prodNo}">
-                        <p class="rank" th:text="${stat.count}">1</p>
+                        <p class="rank" th:text="${stat.count}"></p>
                         <img class="product-img" th:src="${product.sNameList}" alt="상품 이미지" />
                         <div class="vendor-row">
-                            <span class="vendor-name" th:text="${product.company}">판매자명</span>
+                            <span class="vendor-name" th:text="${product.company}"></span>
                             <div class="icons">
                                 <button><img th:src="@{/images/product/icon_favorite.png}" alt="찜"></button>
                                 <button><img th:src="@{/images/product/icon_cart.png}" alt="장바구니"></button>
@@ -374,15 +384,15 @@
                         </div>
                         <p class="name">
                             <span class="brand" th:text="${product.prodBrand}"></span>
-                            <span class="product-name" th:text="${product.prodName}">상품명</span>
+                            <span class="product-name" th:text="${product.prodName}"></span>
                         </p>
                         <p class="price">
-                            <span class="discount" th:text="${product.prodDiscount + '%'}">10%</span>
-                            <span th:text="${#numbers.formatInteger(product.prodPrice, 3, 'COMMA')} + '원'">155,800원</span>
+                            <span class="discount" th:text="${product.prodDiscount + '%'}"></span>
+                            <span th:text="${#numbers.formatInteger(product.prodPrice, 3, 'COMMA')} + '원'"></span>
                         </p>
                         <p class="review">
-                            <span class="star" th:text="'★ ' + ${product.ratingTotal}">★ 4.8</span>
-                            &nbsp;&nbsp;|&nbsp;&nbsp;리뷰 <span th:text="${product.reviewCount}">123</span>
+                            <span class="star" th:text="'★ ' + ${product.ratingTotal}"></span>
+                            &nbsp;&nbsp;|&nbsp;&nbsp;리뷰 <span th:text="${product.reviewCount}"></span>
                         </p>
                     </div>
                 </div>
@@ -420,7 +430,7 @@
                 <div id="productWrapper" class="product-wrapper list">
                     <div class="product-list">
                         <div class="product-item" th:each="product : ${pageResponseDTO.dtoList}" th:attr="data-prodno=${product.prodNo}">
-                            <img class="product-img" th:src="${product.productImage?.sNameList ?: '/images/no-image.jpg'}" alt="${product.prodName}" />
+                            <img class="product-img" th:src="${product.sNameList}" alt="${product.prodName}" />
                             <div class="product-info">
                                 <span class="vendor-name" th:text="${product.company}">판매자명</span><span class="vendor-rank" th:text="${product.rank}">판매자등급</span><br>
                                 <span class="brand" th:text="${product.prodBrand}">브랜드</span>

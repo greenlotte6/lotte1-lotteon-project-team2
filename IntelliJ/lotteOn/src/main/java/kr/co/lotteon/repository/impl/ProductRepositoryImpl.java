@@ -20,6 +20,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Slf4j
@@ -86,13 +87,14 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         return new PageImpl<>(tupleList);
     }
 
-
     // 상품 목록 정렬
     @Override
     public Page<Tuple> sortedProducts(PageRequestDTO pageRequestDTO, Pageable pageable) {
         int subCateNo = pageRequestDTO.getSubCateNo();
         String sortType = pageRequestDTO.getSortType();
         String period = pageRequestDTO.getPeriod();
+
+        log.info("pageRequestDTO:{}", pageRequestDTO);
 
         OrderSpecifier<?> orderSpecifier = qProduct.regDate.desc(); // 기본 정렬: 최신 등록순 (sortType이 null일 경우)
 
@@ -121,7 +123,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         BooleanExpression expression = qProduct.subCategory.subCateNo.eq(subCateNo);
 
         if ((sortType != null && (sortType.equals("mostSales") || sortType.equals("manyReviews"))) && period != null) {
-            LocalDate now = LocalDate.now();
+            LocalDate now = LocalDate.now(ZoneId.of("Asia/Seoul"));
             LocalDate startDate = switch (period) {
                 case "1year" -> now.minusYears(1);
                 case "6month" -> now.minusMonths(6);
@@ -152,6 +154,9 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 .leftJoin(qProductImage).on(qProductImage.product.eq(qProduct))
                 .where(expression)
                 .fetchOne();
+
+        log.info("tupleList:{}", tupleList);
+        log.info("total:{}", total);
 
         return new PageImpl<>(tupleList, pageable, total);
     }
