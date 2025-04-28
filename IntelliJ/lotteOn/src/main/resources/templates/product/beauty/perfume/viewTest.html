@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/layout/layout.css">
+    <link rel="stylesheet" href="/css/product/product_header.css">
+    <link rel="stylesheet" href="/css/product/detail.css">
+    <title>상품상세보기 : 롯데On</title>
+</head>
+
+<body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const parents = document.querySelectorAll(".category .parent");
+
+        parents.forEach(parent => {
+            parent.style.cursor = "pointer";
+
+            parent.addEventListener("click", () => {
+                const currentChildren = parent.nextElementSibling;
+
+                document.querySelectorAll(".category .children").forEach(children => {
+                    if (children !== currentChildren) {
+                        children.style.display = "none";
+                    }
+                });
+
+                if (currentChildren && currentChildren.classList.contains("children")) {
+                    const isVisible = currentChildren.style.display === "block";
+                    currentChildren.style.display = isVisible ? "none" : "block";
+                }
+            });
+        });
+
+        const plusBtns = document.querySelectorAll('.btn-plus');
+        const minusBtns = document.querySelectorAll('.btn-minus');
+        const quantityEls = document.querySelectorAll('#quantity');
+        const priceTotals = document.querySelectorAll('.price_total');
+
+        const unitPrices = Array.from(priceTotals).map((el, i) => {
+            const priceText = el.textContent.replace(/[^0-9]/g, '');
+            const initialCount = parseInt(quantityEls[i].textContent);
+            return parseInt(priceText) / initialCount;
+        });
+
+        plusBtns.forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                let count = parseInt(quantityEls[index].textContent);
+                count++;
+                quantityEls[index].textContent = count;
+
+                const totalPrice = unitPrices[index] * count;
+                priceTotals[index].textContent = totalPrice.toLocaleString() + '원';
+            });
+        });
+
+        minusBtns.forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                let count = parseInt(quantityEls[index].textContent);
+                if (count > 1) {
+                    count--;
+                    quantityEls[index].textContent = count;
+
+                    const totalPrice = unitPrices[index] * count;
+                    priceTotals[index].textContent = totalPrice.toLocaleString() + '원';
+                }
+            });
+        });
+
+        const tabs = document.querySelectorAll('.tab-menu li');
+        const panes = document.querySelectorAll('.tab-pane');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                panes.forEach(p => p.classList.remove('active'));
+
+                tab.classList.add('active');
+                const target = tab.getAttribute('data-tab');
+                document.getElementById(target).classList.add('active');
+            });
+        });
+
+        const arrivalSpan = document.getElementById("arrivalDate");
+        const today = new Date();
+        today.setDate(today.getDate() + 3);
+
+        const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
+        const formatted = `${today.getMonth() + 1}/${today.getDate()}(${weekdays[today.getDay()]})`;
+        arrivalSpan.textContent = formatted;
+
+        const reviewsContainer = document.querySelector('.reviews'); // 리뷰 목록을 감싸는 부모 요소
+        const reviewPickContainer = document.querySelector('.review_pick'); // 리뷰 PICK 영역
+
+        function updateReviewListUI(reviewData) {
+            // 기존 리뷰 내용만 비우기
+            const existingReviewsContent = reviewsContainer.querySelectorAll('.reviews_content');
+            existingReviewsContent.forEach(review => review.remove());
+
+            // 새로운 리뷰 데이터 추가
+            reviewData.dtoList.forEach(review => {
+                const reviewContent = document.createElement('div');
+                reviewContent.classList.add('reviews_content');
+                let starsHTML = '';
+                for (let i = 0; i < Math.floor(review.rating); i++) {
+                    starsHTML += '<img src="/images/product/full_star.png" alt="★">';
+                }
+                reviewContent.innerHTML = `
+            <p>${review.uid.substring(0, 4)}***</p>
+            <div class="stars">
+                ${starsHTML}
+                <p>${review.rating}</p>
+            </div>
+            <p>판매자 : ${review.company || '정보 없음'}</p>
+            <p>${review.content.replace(/\n/g, '<br>')}</p>
+            ${review.sNameImage1 ? `<img src="${review.sNameImage1}" alt="리뷰 이미지">` : ''}
+            ${review.sNameImage2 ? `<img src="${review.sNameImage2}" alt="리뷰 이미지">` : ''}
+        `;
+                reviewsContainer.appendChild(reviewContent);
+            });
+
+            // 페이지네이션 업데이트
+            let reviewsPage = reviewsContainer.querySelector('.reviews_page');
+            if (!reviewsPage) {
+                reviewsPage = document.createElement('div');
+                reviewsPage.classList.add('reviews_page');
+            }
+            reviewsPage.innerHTML = ''; // 기존 페이지 링크 비우기
+
+            let paginationHTML = '';
+            if (reviewData.prev) {
+                paginationHTML += `<a href="#" class="prev" data-page="${reviewData.start - 1}">&lt;</a>`;
+            }
+            for (let i = reviewData.start; i <= reviewData.end; i++) {
+                const currentClass = i === reviewData.pg ? 'current' : 'num';
+                paginationHTML += `<a href="#" class="${currentClass}" data-page="${i}">${i}</a>`;
+            }
+            if (reviewData.next) {
+                paginationHTML += `<a href="#" class="next" data-page="${reviewData.end + 1}">&gt;</a>`;
+            }
+            reviewsPage.innerHTML = paginationHTML;
+
+            // 페이지네이션 요소를 reviews 컨테이너의 맨 마지막에 추가 (항상 같은 위치에 있도록)
+            reviewsContainer.appendChild(reviewsPage);
+        }
+
+        function fetchReviews(page, prodNo, period, sortType) {
+            let requestUrl = `/product/reviewList?pg=${page}&prodNo=${prodNo}`;
+            if (sortType) {
+                requestUrl += `&sortType=${sortType}`;
+            }
+            console.log('AJAX 요청 URL:', requestUrl);
+
+            fetch(requestUrl)
+                .then(response => response.json())
+                .then(data => {
+                    updateReviewListUI(data);
+                })
+                .catch(error => {
+                    console.error('리뷰 목록을 가져오는 데 실패했습니다:', error);
+                });
+        }
+
+        function handlePaginationClick(event) {
+            if (event.target.matches('.reviews_page a')) {
+                event.preventDefault();
+                const pageNumber = parseInt(event.target.getAttribute('data-page'));
+                if (!isNaN(pageNumber) && pageNumber > 0) {
+                    fetchReviews(pageNumber, document.getElementById('prodNo').value, null, null);
+                }
+            }
+        }
+
+        function handleSortClick(event) {
+            if (event.target.matches('.sort-link')) {
+                event.preventDefault();
+                const sortType = event.target.getAttribute('data-sort-type');
+                fetchReviews(1, document.getElementById('prodNo').value, null, sortType);
+            }
+        }
+
+        // 초기 로딩 시 첫 페이지 리뷰 로드
+        fetchReviews(1, document.getElementById('prodNo').value, null, null);
+
+        // 이벤트 리스너 등록 (DOMContentLoaded 내에서 한 번만)
+        reviewsContainer.addEventListener('click', handlePaginationClick);
+        reviewsContainer.addEventListener('click', handleSortClick);
+    });
+</script>
+
+<div id="wrapper">
+    <!-- 헤더 시작 -->
+    <th:block th:include="/common/header.html"/>
+    <!-- 헤더 끝 -->
+
+    <!-- 메인 내용 시작 -->
+    <main>
+        <section class="content">
+            <!-- 사이드바-->
+            <aside>
+                <div class="category">
+                    <p>카테고리</p>
+                    <div class="category-item">
+                        <div class="parent">뷰티</div>
+                        <div class="children">
+                            <a href="/view/product/beauty/skincare/skincare.html">스킨케어</a>
+                            <a href="/view/product/beauty/makeup">메이크업</a>
+                            <a href="/view/product/beauty/perfume">향수</a>
+                        </div>
+                    </div>
+
+                    <div class="category-item">
+                        <div class="parent">럭셔리</div>
+                        <div class="children">
+                            <a href="/view/product/luxury/bag">가방</a>
+                            <a href="/view/product/luxury/watch">시계</a>
+                            <a href="/view/product/luxury/shoes">신발</a>
+                        </div>
+                    </div>
+
+                    <div class="category-item">
+                        <div class="parent">여성패션</div>
+                        <div class="children">
+                            <a href="/view/product/wfashion/onepiece">원피스</a>
+                            <a href="/view/product/wfashion/blouse">블라우스</a>
+                            <a href="/view/product/wfashion/pants">팬츠</a>
+                        </div>
+                    </div>
+
+                    <div class="category-item">
+                        <div class="parent">남성패션</div>
+                        <div class="children">
+                            <a href="/view/product/mfashion/shirt">셔츠</a>
+                            <a href="/view/product/mfashion/slacks">슬랙스</a>
+                            <a href="/view/product/mfashion/jacket">자켓</a>
+                        </div>
+                    </div>
+
+                    <div class="category-item">
+                        <div class="parent">가전</div>
+                        <div class="children">
+                            <a href="/view/product/electronics/computer">컴퓨터</a>
+                            <a href="/view/product/electronics/game">게임</a>
+                            <a href="/view/product/electronics/tv">티비</a>
+                        </div>
+                    </div>
+
+                    <div class="category-item">
+                        <div class="parent">가구</div>
+                        <div class="children">
+                            <a href="/view/product/furniture/sofa">쇼파</a>
+                            <a href="/view/product/furniture/bed">침구</a>
+                            <a href="/view/product/furniture/wardrobe">옷장</a>
+                        </div>
+                    </div>
+
+                    <div class="category-item">
+                        <div class="parent">반려동물</div>
+                        <div class="children">
+                            <a href="/view/product/pet/dog">강아지</a>
+                            <a href="/view/product/pet/cat">고양이</a>
+                            <a href="/view/product/pet/parrot">앵무새</a>
+                        </div>
+                    </div>
+
+                    <div class="category-item">
+                        <div class="parent">취미</div>
+                        <div class="children">
+                            <a href="/view/product/hobby/knitting">뜨개</a>
+                            <a href="/view/product/hobby/badminton">배드민턴</a>
+                            <a href="/view/product/hobby/poldance">폴댄스</a>
+                        </div>
+                    </div>
+
+                    <div class="category-item">
+                        <div class="parent">여행</div>
+                        <div class="children">
+                            <a href="/view/product/travel/asia">아시아</a>
+                            <a href="/view/product/travel/europe">유럽</a>
+                            <a href="/view/product/travel/northamerica">북미</a>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <!-- 사이드 바 끝 -->
+
+            <!-- 메인 시작 -->
+            <div class="product">
+                <div class="bar">
+                    <div>
+                        <a href="#">HOME</a>&nbsp;&nbsp;>&nbsp;&nbsp;
+                        <a href="#">뷰티</a>&nbsp;&nbsp;>&nbsp;&nbsp;
+                        <a href="#">향수</a>
+                    </div>
+                </div>
+                <div class="product_page">
+                    <div>
+                        <img th:src="@{${productDTO.sNameThumb3}}" alt="상품 이미지">
+                    </div>
+                    <form action="#">
+                        <table>
+                            <tr><td colspan="2" th:text="'상품번호 : ' + ${productDTO.prodNo}"></td></tr>
+                            <tr>
+                                <td colspan="2">
+                                    <span class="department" th:text="${productDTO.company}">회사명</span>
+                                    <span class="brand" th:text="' ' + ${productDTO.prodBrand} + ' >'">브랜드명 ></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="product_name" th:text="${productDTO.prodName}">상품명</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <a href="#">
+                                        <span>★&nbsp;<span th:text="${productDTO.ratingAvg}">0.0</span></span>
+                                        <span>&nbsp;<span th:text="${productDTO.reviewCount}">0</span>건</span>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <span class="sale" th:text="|${productDTO.prodDiscount}%|">5%</span>
+                                    <span class="price_current"
+                                          th:text="|${T(java.lang.String).format('%,d원', (productDTO.prodPrice * (100 - productDTO.prodDiscount)) / 100)}|">
+                                        </span>
+                                    <span class="price_original"
+                                          th:text="|${T(java.lang.String).format('%,d원', productDTO.prodPrice)}|">
+                                        </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button type="button" class="coupon">
+                                        주문 시 적용되는 할인 확인하기
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="deliver">
+                                <td>배송정보</td>
+                                <td>
+                                    <span id="arrivalDate"></span> 이내 도착확률 92%<br>
+                                    <span th:if="${productDTO.prodDeliveryFee == 0}">배송비 무료</span>
+                                    <span th:if="${productDTO.prodDeliveryFee != 0}"
+                                          th:text="|배송비 ${#numbers.formatInteger(productDTO.prodDeliveryFee, 0)}원|">
+                                        </span>
+                                </td>
+                            </tr>
+
+                            <th:block th:each="i : ${#numbers.sequence(0, 5)}">
+                                <tr class="choice" th:if="${productDTO.option[i] != null and productDTO.option[i].length() > 0}">
+                                    <td>[[${productDTO.option[i]}]]</td>  <!-- option 배열의 i번째 값 -->
+                                    <td>
+                                        <select>
+                                            <!-- options[i]는 해당 색상 또는 사이즈의 상세 옵션들을 나타냄 -->
+                                            <th:block th:each="opt : ${productDTO.options[i]}" th:if="${opt != null and opt != ''}">
+                                                <!-- 상세 옵션이 null이 아니면 출력 -->
+                                                <option th:text="${opt}"></option>
+                                            </th:block>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </th:block>
+                            <tr>
+                                <td>
+                                    <div class="quantity-box">
+                                        <button type="button" class="btn-minus">-</button>
+                                        <span id="quantity">1</span>
+                                        <button type="button" class="btn-plus">+</button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="price_total"
+                                          th:text="|${T(java.lang.String).format('%,d원', (productDTO.prodPrice * (100 - productDTO.prodDiscount)) / 100)}|">
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button type="button" class="cart">장바구니 담기</button>
+                                    <button type="submit" class="buy">바로 구매하기</button>
+                                </td>
+                            </tr>
+                            <tr class="product_banner">
+                                <td colspan="2">
+                                    <img src="/images/product/product_banner.png" class="product_banner">
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                    <div class="tabs">
+                        <ul class="tab-menu">
+                            <li class="active" data-tab="detail">상세정보</li>
+                            <li th:attr="data-tab='review'" th:text="'리뷰(' + ${reviewPageResponseDTO.total} + ')'"></li>
+                            <li data-tab="qna">Q&A(239)</li>
+                            <li data-tab="exchange">교환/반품 안내</li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="detail" class="tab-pane active">
+                                <th:block th:include="/product/beauty/perfume/detail.html"/>
+                            </div>
+                            <div id="review" class="tab-pane">
+                                <input type="hidden" id="prodNo" th:value="${productDTO.prodNo}">
+                                <th:block th:include="/product/beauty/perfume/review.html"/>
+                            </div>
+                            <div id="qna" class="tab-pane">
+                                <th:block th:include="/product/beauty/perfume/qna.html"/>
+                            </div>
+                            <div id="exchange" class="tab-pane">
+                                <th:block th:include="/product/beauty/perfume/exchange.html"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- 메인 내용 끝 -->
+
+    <!-- 푸터 시작 -->
+    <th:block th:include="/common/footer.html"/>
+    <!-- 푸터 끝 -->
+
+</div>
+</body>
+</html>

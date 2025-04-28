@@ -10,6 +10,56 @@
 
     <!-- 사이드바-->
     <script src="/js/admin/sidebar.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function (){
+
+        // 삭제 기능
+        // 개별 삭제 링크에 confirm 추가
+        document.querySelectorAll('.delete-link').forEach(function(link) {
+          link.addEventListener('click', function(e) {
+            if (!confirm("정말 삭제하시겠습니까?")) {
+              e.preventDefault(); // 링크 이동 막기
+            }
+          });
+        });
+
+        document.getElementById("write").addEventListener("click", function () {
+          window.location.href = "/admin/cs/faq/write";
+        });
+
+        // 전체 체크박스
+        const deleteAllCheckbox = document.getElementById('deleteAll');
+
+        // 개별 체크박스
+        const deleteCheckboxes = document.querySelectorAll('input[name="deleteNo"]');
+
+        deleteAllCheckbox.addEventListener('change', function () {
+          const isChecked = this.checked;
+          deleteCheckboxes.forEach(cb => cb.checked = isChecked);
+        });
+
+        // 선택삭제 버튼 validation
+        document.querySelector('.member_list_form').addEventListener('submit', function(e) {
+          const checked = document.querySelectorAll('input[name="deleteNo"]:checked');
+          if (checked.length === 0) {
+            e.preventDefault();
+            alert('삭제할 항목을 선택해주세요.');
+          } else {
+            const confirmDelete = confirm('선택한 항목을 정말 삭제하시겠습니까?');
+            if (!confirmDelete) {
+              e.preventDefault();
+            }
+          }
+        });
+
+        document.querySelector('#cate').addEventListener('change',function(e){
+          this.form.submit();
+        })
+
+
+      });
+
+    </script>
 
   </head>
   <body>
@@ -38,11 +88,11 @@
             <div class="select_div">
               <div class="select_box">
                 <form action="#">
-                  <select name="brand" style="width: 100px">
+                  <select name="searchType" style="width: 100px">
                     <option value="1차유형">1차유형&emsp;&emsp;▼</option>
                     <option value="1차유형">1차유형&emsp;&emsp;▼</option>
                   </select>
-                  <select name="brand" style="width: 100px">
+                  <select name="sortType" style="width: 100px">
                     <option value="2차유형">2차유형&emsp;&emsp;▼</option>
                     <option value="2차유형">2차유형&emsp;&emsp;▼</option>
                   </select>
@@ -53,7 +103,7 @@
             <form action="#" class="member_list_form">
               <table>
                 <thead>
-                  <th><input type="checkbox" /></th>
+                  <th><input type="checkbox" id="deleteAll" /></th>
                   <th>번호</th>
                   <th>1차유형</th>
                   <th>2차유형</th>
@@ -63,22 +113,10 @@
                   <th>관리</th>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>
-                      <input type="checkbox" />
-                    </td>
-                    <td>10</td>
-                    <td>회원</td>
-                    <td>가입</td>
-                    <td>개인회원과 법인회원에 차이가 있나요 ?</td>
-                    <td>120</td>
-                    <td>00.00.00</td>
-                    <td>[삭제]<br />[수정]</td>
-                  </tr>
 
                   <tr>
                     <td>
-                      <input type="checkbox" />
+                      <input type="checkbox" name="deleteNo" />
                     </td>
                     <td>10</td>
                     <td>회원</td>
@@ -86,14 +124,17 @@
                     <td>개인회원과 법인회원에 차이가 있나요 ?</td>
                     <td>120</td>
                     <td>00.00.00</td>
-                    <td>[삭제]<br />[수정]</td>
+                    <td>
+                      <a th:href="@{/admin/cs/faq/delete}" class="delete-link">[ 삭제 ]</a><br />
+                      <a th:href="@{/admin/cs/faq/modify}">[ 수정 ]</a>
+                    </td>
                   </tr>
                 </tbody>
               </table>
 
               <div style="margin-top: 20px">
                 <button type="submit" class="delete_btn">선택삭제</button>
-                <button type="submit" class="register_btn">작성하기</button>
+                <button type="button" id="write" class="register_btn">작성하기</button>
                 <!--작성하기 버튼-->
               </div>
             </form>

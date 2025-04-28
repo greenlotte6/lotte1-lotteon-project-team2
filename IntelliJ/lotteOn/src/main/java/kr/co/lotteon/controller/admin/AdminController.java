@@ -399,6 +399,19 @@ public class AdminController {
         return "/admin/faq/list";
     }
 
+    //자주묻는질문 글작성
+    @GetMapping("/cs/faq/write")
+    public String faqWrite(){
+        return "/admin/faq/write";
+    }
+    
+    //자주묻는질문 삭제
+    @GetMapping("/cs/faq/delete")
+    public String faqDelete(@RequestParam("deleteNo") List<Integer> deleteNos) {
+        System.out.println("삭제");
+        return "redirect:/admin/faq/list";
+    }
+
     //문의하기 목록
     @GetMapping("/cs/qna/list")
     public String qnaList(Model model, PageRequestDTO pageRequestDTO){

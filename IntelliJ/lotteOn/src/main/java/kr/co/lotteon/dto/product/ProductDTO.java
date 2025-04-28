@@ -48,4 +48,7 @@ public class ProductDTO {
     private ProductImageDTO productImage;
     private ProductDetailDTO productDetail;
 
+    private String[] option;
+    private String[][] options;
+
 }
