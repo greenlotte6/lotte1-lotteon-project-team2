@@ -1,6 +1,7 @@
 package kr.co.lotteon.controller.admin;
 
 import jakarta.servlet.http.HttpServletRequest;
+import kr.co.lotteon.dto.article.FaqDTO;
 import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.article.NoticeDTO;
 import kr.co.lotteon.dto.article.RecruitDTO;
@@ -348,10 +349,8 @@ public class AdminController {
     public String  noticeWrite(NoticeDTO noticeDTO,
                                @AuthenticationPrincipal UserDetails userDetails,
                                HttpServletRequest req){
-
         noticeDTO.setRegip(req.getRemoteAddr());
         adminService.saveNotice(noticeDTO ,userDetails);
-
         return "redirect:/admin/cs/notice/list";
     }
 
@@ -364,7 +363,6 @@ public class AdminController {
 
     @GetMapping("/cs/notice/modify")
     public String noticeModify(@RequestParam("no") String no, Model model){
-
         NoticeDTO noticeDTO =  adminService.findNoticeByNo(no);
         model.addAttribute(noticeDTO);
         return "/admin/notice/modify";
@@ -372,9 +370,6 @@ public class AdminController {
 
     @PostMapping("/cs/notice/modify")
     public String  noticeModify(NoticeDTO noticeDTO){
-        System.out.println(noticeDTO);
-        System.out.println(noticeDTO);
-        System.out.println(noticeDTO);
         adminService.modify(noticeDTO);
         return "redirect:/admin/cs/notice/list";
     }
@@ -395,22 +390,73 @@ public class AdminController {
 
     //자주묻는질문
     @GetMapping("/cs/faq/list")
-    public String faqList(){
+    public String faqList(Model model, PageRequestDTO pageRequestDTO){
+        PageResponseDTO pageResponseDTO = adminService.findAllFaq(pageRequestDTO);
+        model.addAttribute(pageResponseDTO);
         return "/admin/faq/list";
     }
 
-    //자주묻는질문 글작성
+
+    //자주묻는질문 검색
+    @GetMapping("/cs/faq/search")
+    public String faqSearch(Model model, PageRequestDTO pageRequestDTO){
+        PageResponseDTO pageResponseDTO = adminService.findAllFaqByType(pageRequestDTO);
+        model.addAttribute(pageResponseDTO);
+        return "/admin/faq/list";
+    }
+
+    //자주묻는질문 글작성(페이지)
     @GetMapping("/cs/faq/write")
     public String faqWrite(){
         return "/admin/faq/write";
+    }
+
+    //자주묻는질문 글작성(기능)
+    @PostMapping("/cs/faq/write")
+    public String faqWrite(FaqDTO faqDTO, Model model){
+
+        // 카테고리 별 10개 제한 테스트
+        Boolean count = adminService.limitFaq(faqDTO);
+
+        if(!count){
+            model.addAttribute("result", 100);
+            return "/admin/faq/write";
+        }
+
+        adminService.saveFaq(faqDTO);
+        return "redirect:/admin/cs/faq/list";
     }
     
     //자주묻는질문 삭제
     @GetMapping("/cs/faq/delete")
     public String faqDelete(@RequestParam("deleteNo") List<Integer> deleteNos) {
-        System.out.println("삭제");
-        return "redirect:/admin/faq/list";
+        adminService.deleteFaq(deleteNos);
+        return "redirect:/admin/cs/faq/list";
     }
+
+    //자주묻는질문 보기
+    @GetMapping("/cs/faq/view")
+    public String faqView(Model model, @RequestParam("no") int no){
+        FaqDTO faqDTO = adminService.findFaqByNo(no);
+        model.addAttribute(faqDTO);
+        return "/admin/faq/view";
+    }
+
+    //자주묻는질문 수정
+    @GetMapping("/cs/faq/modify")
+    public String faqModify(@RequestParam("no") int no, Model model){
+        FaqDTO faqDTO = adminService.findFaqByNo(no);
+        model.addAttribute(faqDTO);
+        return "/admin/faq/modify";
+    }
+
+    //자주묻는질문 수정(기능)
+    @PostMapping("/cs/faq/modify")
+    public String faqModify(FaqDTO faqDTO){
+        adminService.modifyFaq(faqDTO);
+        return "redirect:/admin/cs/faq/list";
+    }
+
 
     //문의하기 목록
     @GetMapping("/cs/qna/list")
