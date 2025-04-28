@@ -57,10 +57,12 @@ public class ProductListService {
         List<ProductDTO> productDTOList = pageProduct.getContent().stream().map(tuple -> {
             Product product = tuple.get(0, Product.class);
             String company = tuple.get(1, String.class);
-            String sNameList = tuple.get(2, String.class);
+            String rank = tuple.get(2, String.class);
+            String sNameList = tuple.get(3, String.class);
 
             ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
             productDTO.setCompany(company);
+            productDTO.setRank(rank);
             productDTO.setSNameList(sNameList);
 
             return productDTO;
@@ -80,10 +82,12 @@ public class ProductListService {
         List<ProductDTO> productDTOList = pageProduct.getContent().stream().map(tuple -> {
             Product product = tuple.get(0, Product.class);
             String company = tuple.get(1, String.class);
-            String sNameList = tuple.get(2, String.class);
+            String rank = tuple.get(2, String.class);
+            String sNameList = tuple.get(3, String.class);
 
             ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
             productDTO.setCompany(company);
+            productDTO.setRank(rank);
             productDTO.setSNameList(sNameList);
 
             return productDTO;

@@ -10,7 +10,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "product")
 @Builder
 @Entity
 @Table(name = "ProductDetails")

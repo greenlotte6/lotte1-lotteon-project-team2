@@ -92,6 +92,7 @@
 
         const reviewsContainer = document.querySelector('.reviews'); // 리뷰 목록을 감싸는 부모 요소
         const reviewPickContainer = document.querySelector('.review_pick'); // 리뷰 PICK 영역
+        let currentSortType = null; // 현재 정렬 방식을 저장하는 변수
 
         function updateReviewListUI(reviewData) {
             // 기존 리뷰 내용만 비우기
@@ -107,16 +108,16 @@
                     starsHTML += '<img src="/images/product/full_star.png" alt="★">';
                 }
                 reviewContent.innerHTML = `
-            <p>${review.uid.substring(0, 4)}***</p>
-            <div class="stars">
-                ${starsHTML}
-                <p>${review.rating}</p>
-            </div>
-            <p>판매자 : ${review.company || '정보 없음'}</p>
-            <p>${review.content.replace(/\n/g, '<br>')}</p>
-            ${review.sNameImage1 ? `<img src="${review.sNameImage1}" alt="리뷰 이미지">` : ''}
-            ${review.sNameImage2 ? `<img src="${review.sNameImage2}" alt="리뷰 이미지">` : ''}
-        `;
+                    <p>${review.uid.substring(0, 4)}***</p>
+                    <div class="stars">
+                        ${starsHTML}
+                        <p>${review.rating}</p>
+                    </div>
+                    <p>판매자 : ${review.company || '정보 없음'}</p>
+                    <p>${review.content.replace(/\n/g, '<br>')}</p>
+                    ${review.sNameImage1 ? `<img src="${review.sNameImage1}" alt="리뷰 이미지">` : ''}
+                    ${review.sNameImage2 ? `<img src="${review.sNameImage2}" alt="리뷰 이미지">` : ''}
+                `;
                 reviewsContainer.appendChild(reviewContent);
             });
 
@@ -145,7 +146,7 @@
             reviewsContainer.appendChild(reviewsPage);
         }
 
-        function fetchReviews(page, prodNo, period, sortType) {
+        function fetchReviews(page, prodNo, sortType) { // period 제거
             let requestUrl = `/product/reviewList?pg=${page}&prodNo=${prodNo}`;
             if (sortType) {
                 requestUrl += `&sortType=${sortType}`;
@@ -167,7 +168,7 @@
                 event.preventDefault();
                 const pageNumber = parseInt(event.target.getAttribute('data-page'));
                 if (!isNaN(pageNumber) && pageNumber > 0) {
-                    fetchReviews(pageNumber, document.getElementById('prodNo').value, null, null);
+                    fetchReviews(pageNumber, document.getElementById('prodNo').value, currentSortType); // 현재 정렬 방식 유지
                 }
             }
         }
@@ -176,16 +177,30 @@
             if (event.target.matches('.sort-link')) {
                 event.preventDefault();
                 const sortType = event.target.getAttribute('data-sort-type');
-                fetchReviews(1, document.getElementById('prodNo').value, null, sortType);
+                currentSortType = sortType; // 현재 정렬 방식 업데이트
+                fetchReviews(1, document.getElementById('prodNo').value, currentSortType); // 정렬 후 첫 페이지 로드
             }
         }
 
         // 초기 로딩 시 첫 페이지 리뷰 로드
-        fetchReviews(1, document.getElementById('prodNo').value, null, null);
+        fetchReviews(1, document.getElementById('prodNo').value, currentSortType);
 
         // 이벤트 리스너 등록 (DOMContentLoaded 내에서 한 번만)
         reviewsContainer.addEventListener('click', handlePaginationClick);
         reviewsContainer.addEventListener('click', handleSortClick);
+
+        document.querySelector('.coupon').addEventListener('click', function() {
+            fetch('/product/view/coupon.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('wrapper').insertAdjacentHTML('beforeend', data);
+                    const couponModalElement = document.getElementById('couponModal');
+                    const couponModal = new bootstrap.Modal(couponModalElement);
+                    couponModal.show();
+                })
+                .catch(error => console.error('쿠폰 불러오기 실패:', error));
+        });
+
     });
 </script>
 
@@ -331,9 +346,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <button type="button" class="coupon">
-                                        주문 시 적용되는 할인 확인하기
-                                    </button>
+                                    <button type="button" class="coupon">주문 시 적용되는 할인 확인하기</button>
                                 </td>
                             </tr>
                             <tr class="deliver">
@@ -386,22 +399,22 @@
                         <ul class="tab-menu">
                             <li class="active" data-tab="detail">상세정보</li>
                             <li th:attr="data-tab='review'" th:text="'리뷰(' + ${reviewPageResponseDTO.total} + ')'"></li>
-                            <li data-tab="qna">Q&A(239)</li>
+                            <li th:attr="data-tab='qna'" th:text="'Q&A(' + ${inquiryPageResponseDTO.total} + ')'"></li>
                             <li data-tab="exchange">교환/반품 안내</li>
                         </ul>
                         <div class="tab-content">
+                            <input type="hidden" id="prodNo" th:value="${productDTO.prodNo}">
                             <div id="detail" class="tab-pane active">
-                                <th:block th:include="/product/beauty/perfume/detail.html"/>
+                                <th:block th:include="/product/view/detail.html"/>
                             </div>
                             <div id="review" class="tab-pane">
-                                <input type="hidden" id="prodNo" th:value="${productDTO.prodNo}">
-                                <th:block th:include="/product/beauty/perfume/review.html"/>
+                                <th:block th:include="/product/view/review.html"/>
                             </div>
                             <div id="qna" class="tab-pane">
-                                <th:block th:include="/product/beauty/perfume/qna.html"/>
+                                <th:block th:include="/product/view/qna.html"/>
                             </div>
                             <div id="exchange" class="tab-pane">
-                                <th:block th:include="/product/beauty/perfume/exchange.html"/>
+                                <th:block th:include="/product/view/exchange.html"/>
                             </div>
                         </div>
                     </div>
