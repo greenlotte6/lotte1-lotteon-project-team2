@@ -1,109 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>관리자 문의하기목록 : 롯데On</title>
-    <link rel="stylesheet" href="/css/admin/admin.css" />
-    <link rel="stylesheet" href="/css/admin/qna/list.css" />
-    <link rel="stylesheet" href="/css/layout/layout.css" />
-    <script src="/js/common/state.js"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>관리자 문의하기목록 : 롯데On</title>
+  <link rel="stylesheet" href="/css/admin/admin.css" />
+  <link rel="stylesheet" href="/css/admin/qna/list.css" />
+  <link rel="stylesheet" href="/css/layout/layout.css" />
+  <script src="/js/common/state.js"></script>
 
-    <!-- 사이드바-->
-    <script src="/js/admin/sidebar.js"></script>
-  </head>
-  <body>
-    <div id="wrapper">
-      <!-- 헤더 시작 -->
-      <th:block th:include="/admin/inc/header.html"/>
-      <!-- 헤더 끝 -->
-      <main>
-        <section class="content">
-          <!-- 왼쪽 사이드바 -->
-          <th:block th:include="/admin/inc/sidebar.html"/>
+  <!-- 사이드바-->
+  <script src="/js/admin/sidebar.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function (){
 
-          <!-- 사이드바 끝-->
-          <!-- 오른쪽 글 -->
-          <article class="main_content_side">
-            <!-- 여기부터 글 작성 -->
-            <div class="main_head">
-              <p class="main_head_title">문의하기 목록</p>
-              <div style="float: right">
-                <p style="font-size: 16px">
-                  Home > 고객센터 ><span>문의하기</span>
-                </p>
-              </div>
-            </div>
+      // 전체 체크박스
+      const deleteAllCheckbox = document.getElementById('deleteAll');
 
-            <div class="select_div">
-              <div class="select_box">
-                <form action="#">
-                  <select name="brand" style="width: 100px">
-                    <option value="1차유형">1차유형&emsp;&emsp;▼</option>
-                    <option value="1차유형">1차유형&emsp;&emsp;▼</option>
-                  </select>
-                  <select name="brand" style="width: 100px">
-                    <option value="2차유형">2차유형&emsp;&emsp;▼</option>
-                    <option value="2차유형">2차유형&emsp;&emsp;▼</option>
-                  </select>
-                </form>
-              </div>
-            </div>
+      // 개별 체크박스
+      const deleteCheckboxes = document.querySelectorAll('input[name="deleteNo"]');
 
-            <form action="#" class="member_list_form">
-              <table>
-                <tr>
-                  <th><input type="checkbox" /></th>
-                  <th>번호</th>
-                  <th>1차유형</th>
-                  <th>2차유형</th>
-                  <th>제목</th>
-                  <th>작성자</th>
-                  <th>작성일</th>
-                  <th>상태</th>
-                </tr>
-                <tr th:each="inquiry, i : ${responseDTO.dtoList}">
-                  <td>
-                    <input type="checkbox" />
-                  </td>
-                  <td th:text="${responseDTO.startNo - i.index}"></td>
-                  <td th:text="${inquiry.cateV1}"></td>
-                  <td th:text="${inquiry.cateV2}"></td>
-                  <td><a th:href="@{/cs/qna/view(no=${inquiry.no})}">[[${inquiry.title}]]</a></td>
-                  <td th:text="${inquiry.user.name}"></td>
-                  <td th:text="${#temporals.format(inquiry.wdate, 'yyyy-MM-dd')}"></td>
-                  <td class="state" th:text="${inquiry.state}"></td>
-                </tr>
+      deleteAllCheckbox.addEventListener('change', function () {
+        const isChecked = this.checked;
+        deleteCheckboxes.forEach(cb => cb.checked = isChecked);
+      });
 
-              </table>
+      // 선택삭제 버튼 validation
+      document.querySelector('.member_list_form').addEventListener('submit', function(e) {
+        const checked = document.querySelectorAll('input[name="deleteNo"]:checked');
+        if (checked.length === 0) {
+          e.preventDefault();
+          alert('삭제할 항목을 선택해주세요.');
+        } else {
+          const confirmDelete = confirm('선택한 항목을 정말 삭제하시겠습니까?');
+          if (!confirmDelete) {
+            e.preventDefault();
+          }
+        }
+      });
 
-              <div style="margin-top: 20px">
-                <button type="submit" class="delete_btn">선택삭제</button>
-              </div>
+      const subCategory = document.querySelector('#subCategory');
+
+      subCategory.addEventListener('change', function() {
+        this.form.submit(); // 값이 바뀌면 바로 submit
+      });
+
+    });
+
+    function updateSubCategory() {
+      var category = document.getElementById('sortType').value;
+      var subCategory = document.getElementById('subCategory');
+
+      // 서브 카테고리 초기화
+      subCategory.innerHTML = '';
+
+      var subCategories = [];
+
+      // 선택된 카테고리에 맞는 서브 항목 설정
+      if (category === '회원') {
+        subCategories = ['유형선택','가입', '탈퇴', '회원정보', '로그인'];
+      } else if (category === '쿠폰-혜택-이벤트') {
+        subCategories = ['유형선택','쿠폰-할인혜택', '포인트', '제휴', '이벤트'];
+      } else if (category === '주문-결제') {
+        subCategories = ['유형선택','상품', '결제', '구매내역', '영수증-증빙'];
+      } else if (category === '배송') {
+        subCategories = ['유형선택','배송상태-기간', '배송정보확인/변경', '해외배송', '당일배송', '해외직구'];
+      } else if (category === '취소-반품-교환') {
+        subCategories = ['유형선택','반품신청-철회', '반품정보확인-변경', '교환 AS신청-철회', '교환정보확인-변경', '취소신청-철회', '취소확인-환불정보'];
+      } else if (category === '여행-숙박-항공') {
+        subCategories = ['유형선택','여행-숙박', '항공'];
+      } else if (category === '안전거래') {
+        subCategories = ['유형선택','서비스 이용규칙 위반', '지식재산권침해', '법령 및 정책위반 상품', '게시물 정책위반', '직거래-외부거래유도', '표시광고', '청소년 위해상품-이미지'];
+      }
+
+      // 서브 카테고리 항목을 추가
+      subCategories.forEach(function(subCat) {
+        var option = document.createElement('option');
+        option.value = subCat;
+        option.textContent = subCat;
+        subCategory.appendChild(option);
+      });
+    }
+
+  </script>
+</head>
+<body>
+<div id="wrapper">
+  <!-- 헤더 시작 -->
+  <th:block th:include="/admin/inc/header.html"/>
+  <!-- 헤더 끝 -->
+  <main>
+    <section class="content">
+      <!-- 왼쪽 사이드바 -->
+      <th:block th:include="/admin/inc/sidebar.html"/>
+
+      <!-- 사이드바 끝-->
+      <!-- 오른쪽 글 -->
+      <article class="main_content_side">
+        <!-- 여기부터 글 작성 -->
+        <div class="main_head">
+          <p class="main_head_title">문의하기 목록</p>
+          <div style="float: right">
+            <p style="font-size: 16px">
+              Home > 고객센터 ><span>문의하기</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="select_div">
+          <div class="select_box">
+            <form th:action="@{/admin/cs/faq/search}" id="cate">
+              <select id="sortType" name="sortType"  onchange="updateSubCategory()" style="width: 150px">
+                <option value="회원">회원</option>
+                <option value="쿠폰-혜택-이벤트">쿠폰-혜택-이벤트</option>
+                <option value="주문-결제">주문-결제</option>
+                <option value="배송">배송</option>
+                <option value="취소-반품-교환">취소-반품-교환</option>
+                <option value="여행-숙박-항공">여행-숙박-항공</option>
+                <option value="안전거래">안전거래</option>
+              </select>
+              <select id="subCategory" name="searchType" style="width: 150px">
+                <option value="유형선택">유형선택</option>
+                <option value="가입">가입</option>
+                <option value="탈퇴">탈퇴</option>
+                <option value="회원정보">회원정보</option>
+                <option value="로그인">로그인</option>
+              </select>
             </form>
+          </div>
+        </div>
 
-            <!-- 페이징 -->
-            <div class="notice-footer">
-              <div class="page">
-                <th:block th:if="${responseDTO.prev}">
-                  <a th:href="@{/admin/cs/qna/list(pg=${responseDTO.start - 1}, size=${responseDTO.size})}" class="prev">이전</a>
-                </th:block>
-                <th:block th:each="i: ${#numbers.sequence(responseDTO.start, responseDTO.end)}">
-                  <a th:href="@{/admin/cs/qna/list(cateV1='회원', pg=${i}, size=${responseDTO.size})}" th:text="${i}" th:class="${i == responseDTO.pg ? 'active' : ''}"></a>
-                </th:block>
+        <form th:action="@{/admin/cs/qna/delete}" class="member_list_form">
+          <table>
+            <tr>
+              <th><input type="checkbox" id="deleteAll" name="deleteNo" /></th>
+              <th>번호</th>
+              <th>1차유형</th>
+              <th>2차유형</th>
+              <th>제목</th>
+              <th>작성자</th>
+              <th>작성일</th>
+              <th>상태</th>
+            </tr>
+            <tr th:each="inquiry, i : ${responseDTO.dtoList}">
+              <td>
+                <input type="checkbox" name="deleteNo" th:value="${inquiry.no}" />
+              </td>
+              <td th:text="${responseDTO.startNo - i.index}"></td>
+              <td th:text="${inquiry.cateV1}"></td>
+              <td th:text="${inquiry.cateV2}"></td>
+              <td><a th:href="@{/cs/qna/view(no=${inquiry.no})}">[[${inquiry.title}]]</a></td>
+              <td th:text="${inquiry.user.name}"></td>
+              <td th:text="${#temporals.format(inquiry.wdate, 'yyyy-MM-dd')}"></td>
+              <td class="state" th:text="${inquiry.state}"></td>
+            </tr>
 
-                <th:block th:if="${responseDTO.next}">
-                  <a th:href="@{/admin/cs/qna/list(pg=${responseDTO.end + 1}, size=${responseDTO.size})}" class="next">다음</a>
-                </th:block>
-              </div>
-            </div>
-          </article>
-        </section>
-      </main>
+          </table>
 
-      <!-- 푸터 시작 -->
-      <th:block th:include="/admin/inc/footer.html"/>
-      <!-- 푸터 끝 -->
-    </div>
-  </body>
+          <div style="margin-top: 20px">
+            <button type="submit" class="delete_btn">선택삭제</button>
+          </div>
+        </form>
+
+        <!-- 페이징 -->
+
+          <div class="page">
+            <th:block th:if="${responseDTO.prev}">
+              <a th:href="@{/admin/cs/qna/list(pg=${responseDTO.start - 1})}" class="prev">이전</a>
+            </th:block>
+            <th:block th:each="i: ${#numbers.sequence(responseDTO.start, responseDTO.end)}">
+              <a th:href="@{/admin/cs/qna/list(cateV1='회원', pg=${i}, size=${responseDTO.size})}" th:text="${i}" th:class="${i == responseDTO.pg ? 'current' : ''}"></a>
+            </th:block>
+
+            <th:block th:if="${responseDTO.next}">
+              <a th:href="@{/admin/cs/qna/list(pg=${responseDTO.end + 1}, size=${responseDTO.size})}" class="next">다음</a>
+            </th:block>
+          </div>
+
+      </article>
+    </section>
+  </main>
+
+  <!-- 푸터 시작 -->
+  <th:block th:include="/admin/inc/footer.html"/>
+  <!-- 푸터 끝 -->
+</div>
+</body>
 </html>

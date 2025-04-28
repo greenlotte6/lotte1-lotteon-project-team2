@@ -71,19 +71,19 @@
 
         // 선택된 카테고리에 맞는 서브 항목 설정
         if (category === '회원') {
-          subCategories = ['가입', '탈퇴', '회원정보', '로그인'];
+          subCategories = ['유형선택','가입', '탈퇴', '회원정보', '로그인'];
         } else if (category === '쿠폰-혜택-이벤트') {
-          subCategories = ['쿠폰-할인혜택', '포인트', '제휴', '이벤트'];
+          subCategories = ['유형선택','쿠폰-할인혜택', '포인트', '제휴', '이벤트'];
         } else if (category === '주문-결제') {
-          subCategories = ['상품', '결제', '구매내역', '영수증-증빙'];
+          subCategories = ['유형선택','상품', '결제', '구매내역', '영수증-증빙'];
         } else if (category === '배송') {
-          subCategories = ['배송상태-기간', '배송정보확인/변경', '해외배송', '당일배송', '해외직구'];
+          subCategories = ['유형선택','배송상태-기간', '배송정보확인/변경', '해외배송', '당일배송', '해외직구'];
         } else if (category === '취소-반품-교환') {
-          subCategories = ['반품신청-철회', '반품정보확인-변경', '교환 AS신청-철회', '교환정보확인-변경', '취소신청-철회', '취소확인-환불정보'];
+          subCategories = ['유형선택','반품신청-철회', '반품정보확인-변경', '교환 AS신청-철회', '교환정보확인-변경', '취소신청-철회', '취소확인-환불정보'];
         } else if (category === '여행-숙박-항공') {
-          subCategories = ['여행-숙박', '항공'];
+          subCategories = ['유형선택','여행-숙박', '항공'];
         } else if (category === '안전거래') {
-          subCategories = ['서비스 이용규칙 위반', '지식재산권침해', '법령 및 정책위반 상품', '게시물 정책위반', '직거래-외부거래유도', '표시광고', '청소년 위해상품-이미지'];
+          subCategories = ['유형선택','서비스 이용규칙 위반', '지식재산권침해', '법령 및 정책위반 상품', '게시물 정책위반', '직거래-외부거래유도', '표시광고', '청소년 위해상품-이미지'];
         }
 
         // 서브 카테고리 항목을 추가
@@ -134,6 +134,7 @@
                     <option value="안전거래">안전거래</option>
                   </select>
                   <select id="subCategory" name="searchType" style="width: 150px">
+                    <option value="유형선택">유형선택</option>
                     <option value="가입">가입</option>
                     <option value="탈퇴">탈퇴</option>
                     <option value="회원정보">회원정보</option>

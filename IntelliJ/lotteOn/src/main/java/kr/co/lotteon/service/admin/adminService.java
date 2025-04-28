@@ -26,6 +26,7 @@ import kr.co.lotteon.entity.product.ProductImage;
 import kr.co.lotteon.entity.seller.Seller;
 import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.article.FaqRepository;
+import kr.co.lotteon.repository.article.InquiryRepository;
 import kr.co.lotteon.repository.article.NoticeRepository;
 import kr.co.lotteon.repository.article.RecruitRepository;
 import kr.co.lotteon.repository.category.MainCategoryRepository;
@@ -56,23 +57,34 @@ import java.util.Optional;
 @Service
 public class adminService {
 
+    private final ModelMapper modelMapper;
+
+    // 판매자, 유저
+    private final UserRepository userRepository;
     private final SellerRepository sellerRepository;
+
+    // 상품
     private final ProductRepository productRepository;
     private final ProductDetailRepository productDetailRepository;
-    private final SubCategoryRepository subCategoryRepository;
     private final ProductImageRepository productImageRepository;
-    private final CartRepository cartRepository;
-    private final NoticeRepository noticeRepository;
-    private final UserRepository userRepository;
+
+    // 카테고리
+    private final MainCategoryRepository mainCategoryRepository;
+    private final SubCategoryRepository subCategoryRepository;
+
+    //쿠폰
     private final CouponRepository couponRepository;
     private final CouponIssueRepository couponIssueRepository;
+
+    //장바구니
+    private final CartRepository cartRepository;
+    
+    // 게시판
+    private final NoticeRepository noticeRepository;
     private final RecruitRepository recruitRepository;
     private final FaqRepository faqRepository;
-
-    private final ModelMapper modelMapper;
-    private final MainCategoryRepository mainCategoryRepository;
-
-
+    private final InquiryRepository inquiryRepository;
+    
     /*
      * 관리자 페이지 (상품 등록 메서드)
      * */
@@ -612,5 +624,12 @@ public class adminService {
                 .dtoList(DTOList)
                 .total(total)
                 .build();
+    }
+
+    // 문의하기
+    public void deleteQnaByList(List<Integer> deleteNos) {
+        for(int i : deleteNos){
+            inquiryRepository.deleteById(i);
+        }
     }
 }

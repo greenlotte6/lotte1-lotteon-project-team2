@@ -466,6 +466,13 @@ public class AdminController {
         return "/admin/qna/list";
     }
 
+    //문의하기 삭제
+    @GetMapping("/cs/qna/delete")
+    public String qnaDeleteList(@RequestParam("deleteNo") List<Integer> deleteNos) {
+        adminService.deleteQnaByList(deleteNos);
+        return "redirect:/admin/cs/qna/list";
+    }
+
     //채용하기 목록
     @GetMapping("/cs/recruit/list")
     public String recruitList(Model model, PageRequestDTO pageRequestDTO){
