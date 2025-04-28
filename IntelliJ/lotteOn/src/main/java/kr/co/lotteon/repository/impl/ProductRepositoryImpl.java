@@ -3,6 +3,8 @@ package kr.co.lotteon.repository.impl;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.entity.product.QProduct;
@@ -75,7 +77,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         BooleanExpression recentProduct = qProduct.regDate.after(threeMonthsAgo);
 
         List<Tuple> tupleList = queryFactory
-                .select(qProduct, qSeller.company, qProductImage.sNameList)
+                .select(qProduct, qSeller.company, qSeller.rank, qProductImage.sNameList)
                 .from(qProduct)
                 .join(qSeller).on(qProduct.seller.sno.eq(qSeller.sno))
                 .leftJoin(qProductImage).on(qProductImage.product.eq(qProduct))
@@ -97,10 +99,21 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
         OrderSpecifier<?> orderSpecifier = null;
 
+        NumberExpression<Integer> discountedPrice = qProduct.prodPrice
+                .multiply(
+                        Expressions
+                                .asNumber(1)
+                                .subtract(
+                                        qProduct.prodDiscount.divide(100)
+                                )
+                )
+                .floor()
+                .castToNum(Integer.class);
+
         switch (sortType) {
             case "mostSales" -> orderSpecifier = qProduct.prodSold.desc();
-            case "lowPrice" -> orderSpecifier = qProduct.prodPrice.asc();
-            case "highPrice" -> orderSpecifier = qProduct.prodPrice.desc();
+            case "lowPrice" -> orderSpecifier = discountedPrice.asc();
+            case "highPrice" -> orderSpecifier =  discountedPrice.desc();
             case "highRating" -> orderSpecifier = qProduct.ratingAvg.desc();
             case "manyReviews" -> orderSpecifier = qProduct.reviewCount.desc();
             case "latest" -> orderSpecifier = qProduct.regDate.desc();
@@ -123,7 +136,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         }
 
         List<Tuple> tupleList = queryFactory
-                .select(qProduct, qSeller.company, qProductImage.sNameList)
+                .select(qProduct, qSeller.company, qSeller.rank, qProductImage.sNameList)
                 .from(qProduct)
                 .join(qSeller).on(qProduct.seller.sno.eq(qSeller.sno))
                 .leftJoin(qProductImage).on(qProductImage.product.eq(qProduct))

@@ -41,6 +41,7 @@ public class ProductListController {
         pageResponseDTO.setPeriod(pageRequestDTO.getPeriod());
         model.addAttribute(pageResponseDTO);
         model.addAttribute(productList);
+        log.info("pageRequestDTO:{}", pageRequestDTO);
         return "/product/list/lowPrice";
     }
 

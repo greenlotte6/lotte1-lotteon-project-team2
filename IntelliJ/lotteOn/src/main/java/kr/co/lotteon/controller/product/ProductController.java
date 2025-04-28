@@ -46,14 +46,19 @@ public class ProductController {
         // 리뷰
         PageResponseDTO reviewPageResponseDTO = reviewService.selectAllForList(pageRequestDTO);
         // qna
-        //PageResponseDTO inquiryPageResponseDTO = inquiryService.selectAllForList(pageRequestDTO);
+        PageResponseDTO inquiryPageResponseDTO = inquiryService.selectAllForList(pageRequestDTO);
         model.addAttribute(productDTO);
         model.addAttribute(couponDTOList);
         model.addAttribute(productDetailDTO);
         model.addAttribute("reviewPageResponseDTO", reviewPageResponseDTO);
+        model.addAttribute("inquiryPageResponseDTO", inquiryPageResponseDTO);
 
-        return "/product/beauty/perfume/view";
+        log.info("inquiryPageResponseDTO: {}", inquiryPageResponseDTO);
+
+        return "/product/view/view";
     }
+
+    // 리뷰 목록 데이터 (Ajax 요청 처리)
     @GetMapping("/product/reviewList")
     @ResponseBody
     public PageResponseDTO getReviews(
@@ -74,6 +79,8 @@ public class ProductController {
 
         return pageResponseDTO;
     }
+
+    // 문의 Ajax
 
     // 주문하기
     @GetMapping("/product/order")

@@ -26,7 +26,6 @@
         slides.style.transform = `translateX(-${index * 100}%)`;
     }
 
-    // 리스트 / 그리드 뷰 전환 함수
     function toggleView(view) {
         const wrapper = document.getElementById('productWrapper');
         const toGridBtn = document.getElementById('toGrid');
@@ -35,7 +34,6 @@
         wrapper.classList.remove('list', 'grid');
         wrapper.classList.add(view);
 
-        // 버튼 상태도 같이 바꾸기
         if (view === 'grid') {
             toGridBtn.style.display = 'none';
             toListBtn.style.display = 'inline-block';
@@ -43,6 +41,11 @@
             toGridBtn.style.display = 'inline-block';
             toListBtn.style.display = 'none';
         }
+
+        // 현재 URL에 'view' 파라미터 추가/수정
+        const currentUrl = new URL(window.location.href);
+        currentUrl.searchParams.set('view', view);
+        history.replaceState(null, null, currentUrl); // 페이지 리로드 없이 URL 업데이트
     }
 
     // DOM 로드 후 실행
@@ -72,19 +75,23 @@
         document.getElementById('salesPeriodSelect').addEventListener('change', function () {
             const period = this.value;
             const subCateNo = '[[${pageResponseDTO.subCateNo}]]';
-
-            if (period !== "") {
-                location.href = `/product/list/mostSales${period}?sortType=mostSales&period=${period}&subCateNo=${subCateNo}`;
+            const currentView = new URLSearchParams(window.location.search).get('view');
+            let targetUrl = `/product/list/mostSales${period}?sortType=mostSales&period=${period}&subCateNo=${subCateNo}`;
+            if (currentView) {
+                targetUrl += `&view=${currentView}`;
             }
+            window.location.href = targetUrl;
         });
 
         document.getElementById('reviewPeriodSelect').addEventListener('change', function () {
             const period = this.value;
             const subCateNo = '[[${pageResponseDTO.subCateNo}]]';
-
-            if (period !== "") {
-                location.href = `/product/list/manyReviews${period}?sortType=manyReviews&period=${period}&subCateNo=${subCateNo}`;
+            const currentView = new URLSearchParams(window.location.search).get('view');
+            let targetUrl = `/product/list/manyReviews${period}?sortType=manyReviews&period=${period}&subCateNo=${subCateNo}`;
+            if (currentView) {
+                targetUrl += `&view=${currentView}`;
             }
+            window.location.href = targetUrl;
         });
 
         function attachProductClickHandler(containerSelector, cardSelector) {
@@ -111,6 +118,56 @@
         attachProductClickHandler('.best-grid', '.best-card');
         attachProductClickHandler('#productWrapper', '.product-item');
 
+        const toGridBtn = document.getElementById('toGrid');
+        const toListBtn = document.getElementById('toList');
+        const productWrapper = document.getElementById('productWrapper');
+
+        // 이벤트 리스너 연결
+        toGridBtn.addEventListener('click', () => toggleView('grid'));
+        toListBtn.addEventListener('click', () => toggleView('list'));
+
+        // 페이지 로드 시 URL 파라미터에서 보기 상태를 확인하고 적용
+        const urlParams = new URLSearchParams(window.location.search);
+        const storedView = urlParams.get('view') || 'list';
+        const initialWrapperClass = `product-wrapper ${storedView}`;
+        productWrapper.className = initialWrapperClass;
+        if (storedView === 'grid') {
+            toGridBtn.style.display = 'none';
+            toListBtn.style.display = 'inline-block';
+        } else {
+            toGridBtn.style.display = 'inline-block';
+            toListBtn.style.display = 'none';
+        }
+
+        // 정렬 링크 이벤트 리스너 수정
+        const sortLinks = document.querySelectorAll('.nav a');
+        sortLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const href = this.getAttribute('href');
+                const currentView = new URLSearchParams(window.location.search).get('view');
+                const newUrl = new URL(href, window.location.origin);
+                if (currentView) {
+                    newUrl.searchParams.set('view', currentView);
+                }
+                window.location.href = newUrl.toString();
+            });
+        });
+
+        // 페이지 링크 클릭 이벤트 리스너 수정
+        const pageLinks = document.querySelectorAll('.page a');
+        pageLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const href = this.getAttribute('href');
+                const currentView = new URLSearchParams(window.location.search).get('view');
+                const newUrl = new URL(href, window.location.origin);
+                if (currentView) {
+                    newUrl.searchParams.set('view', currentView);
+                }
+                window.location.href = newUrl.toString();
+            });
+        });
     });
 </script>
 
@@ -294,14 +351,14 @@
                         <div class="product-item" th:each="product : ${pageResponseDTO.dtoList}" th:attr="data-prodno=${product.prodNo}">
                             <img th:src="${product.sNameList}" alt="상품 썸네일">
                             <div class="product-info">
-                                    <span class="vendor-name" th:text="${product.company}">판매자명</span><br>
-                                    <span class="brand" th:text="${product.prodBrand}">브랜드</span>
-                                    <span class="pname" th:text="${product.prodName}">상품명</span>
-                                    <div class="meta">
-                                        <span th:text="'★ ' + ${product.ratingAvg}">★ 4.8</span>&nbsp;|&nbsp;리뷰 <span th:text="${product.reviewCount}">0</span>
-                                    </div>
-                                    <span class="badge-free" th:if="${product.prodDeliveryFee == 0}">무료배송</span>
-                                    <span class="badge-fee" th:if="${product.prodDeliveryFee != 0}" th:text="${#numbers.formatInteger(product.prodDeliveryFee, 3, 'COMMA') + '원'}">배송비</span>
+                                <span class="vendor-name" th:text="${product.company}">판매자명</span><br>
+                                <span class="brand" th:text="${product.prodBrand}">브랜드</span>
+                                <span class="pname" th:text="${product.prodName}">상품명</span>
+                                <div class="meta">
+                                    <span th:text="'★ ' + ${product.ratingAvg}">★ 4.8</span>&nbsp;|&nbsp;리뷰 <span th:text="${product.reviewCount}">0</span>
+                                </div>
+                                <span class="badge-free" th:if="${product.prodDeliveryFee == 0}">무료배송</span>
+                                <span class="badge-fee" th:if="${product.prodDeliveryFee != 0}" th:text="${#numbers.formatInteger(product.prodDeliveryFee, 3, 'COMMA') + '원'}">배송비</span>
                             </div>
                             <div class="product-price">
                                 <del th:text="${#numbers.formatInteger(product.prodPrice, 3, 'COMMA')} + '원'">정가</del><br>
