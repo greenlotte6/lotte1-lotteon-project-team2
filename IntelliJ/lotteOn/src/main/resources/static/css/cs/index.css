@@ -86,10 +86,6 @@
     justify-content: space-between;
 }
 
-.cs-section a {
-    font-size: 18px;
-}
-
 
 .more-link {
     font-size: 15px;
@@ -243,3 +239,7 @@
     margin-bottom: 50px;
 }
 
+.qna-list tbody{
+
+    font-size: 15px;
+}
