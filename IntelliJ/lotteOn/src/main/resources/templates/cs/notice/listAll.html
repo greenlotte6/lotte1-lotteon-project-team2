@@ -67,11 +67,11 @@
 
                         <div class="notice-footer">
                             <div class="pagination">
-                                <a class="prev" th:if="${responseDTO.prev}" th:href="@{/cs/notice/listAll, pg=${responseDTO.start - 1}, size=${responseDTO.size})}">이전</a>
+                                <a class="prev" th:if="${responseDTO.prev}" th:href="@{/cs/notice/listAll(pg=${responseDTO.start - 1}, size=${responseDTO.size})}">이전</a>
                                 <th:block th:each="i: ${#numbers.sequence(responseDTO.start, responseDTO.end)}">
                                     <a th:href="@{/cs/notice/listAll(pg=${i}, size=${responseDTO.size})}" th:text="${i}" th:class="${i == responseDTO.pg ? 'active' : ''}"></a>
                                 </th:block>
-                                <a class="next" th:if="${responseDTO.next}" th:href="@{/cs/notice/listAll, pg=${responseDTO.end + 1}, size=${responseDTO.size})}">다음</a>
+                                <a class="next" th:if="${responseDTO.next}" th:href="@{/cs/notice/listAll(pg=${responseDTO.end + 1}, size=${responseDTO.size})}">다음</a>
                             </div>
                         </div>
                     </div>

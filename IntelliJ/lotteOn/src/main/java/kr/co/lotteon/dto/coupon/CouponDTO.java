@@ -38,6 +38,8 @@ public class CouponDTO {
     private int usedCount; // 사용한 횟수
     private int issueCount; // 발급한 쿠폰수
 
+    private int minPrice; // 최소 금액 조건
+
     // 목록 출력용 변수
     private String uid;
 }

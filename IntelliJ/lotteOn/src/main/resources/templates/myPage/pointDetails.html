@@ -75,11 +75,11 @@
                                 <input type="radio" name="choice" value="3">
                                 <span>직접입력</span>
                             </label>
-                            <form class="search_form" action="#">
-                                <input type="date" class="datepicker" id="startDate">
+                            <form th:action="@{/my/point}" class="search_form">
+                                <input type="date" class="datepicker" id="startDate" th:field="*{pointDTO.startDate}">
                                 ~
-                                <input type="date" class="datepicker" id="endDate">
-                                <select name="" id="">
+                                <input type="date" class="datepicker" id="endDate" th:field="*{pointDTO.endDate}">
+                                <select th:field="*{pointDTO.searchType}">
                                     <option value="">전체</option>
                                     <option value="">입금대기</option>
                                     <option value="">결제완료</option>
@@ -92,7 +92,7 @@
                                     <option value="">교환</option>
                                     <option value="">반품</option>
                                 </select>
-                                <input type="search" placeholder="검색어를 입력하세요">
+                                <input type="search" name="searchType" placeholder="검색어를 입력하세요">
                                 <button>검색</button>
                             </form>
                         </div>
@@ -102,53 +102,37 @@
                                     <tr>
                                         <th>날짜</th>
                                         <th>구분</th>
-                                        <th>주문번호</th>
                                         <th>적립금액</th>
                                         <th>비고</th>
                                         <th>유효기간</th>
                                     </tr>
                                 </tbody>
                                 <tbody>
-                                <tr th:each="point, i : ${pointDTO.dtoList}">
-                                    <td>수정예정</td>
-                                    <th:block th:if="${point.point > 0}">
-                                        <td>적립</td>
-                                    </th:block>
-                                    <th:block th:if="${point.point < 0}">
-                                        <td>사용</td>
-                                    </th:block>
-                                    <td th:text="${point.pointNo}"></td>
-                                    <td th:text="${point.point}"></td>
-                                    <td th:text="${point.pointDesc}"></td>
-                                    <td th:text="${#temporals.format(point.expiryDate, 'yyyy-MM-dd')}"></td>
-                                </tr>
+                                    <tr th:each="point, i : ${pointDTO.dtoList}">
+                                        <td th:text="${#temporals.format(point.pointDate, 'yyyy-MM-dd')}"></td>
+                                        <th:block th:if="${point.point > 0}">
+                                            <td>적립</td>
+                                        </th:block>
+                                        <th:block th:if="${point.point < 0}">
+                                            <td>사용</td>
+                                        </th:block>
+                                        <td th:text="${point.point}"></td>
+                                        <td th:text="${point.pointDesc}"></td>
+                                        <td th:text="${#temporals.format(point.expiryDate, 'yyyy-MM-dd')}"></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="pagination">
-                        <button>
-                          <a href="#"> << </a>
-                        </button>
-                        <button class="prev">
-                          <a href="#"> < </a>
-                        </button>
-                        <button>
-                          <a href="#"> 1 </a>
-                        </button>
-                        <button>
-                          <a href="#"> 2 </a>
-                        </button>
-                        <button>
-                          <a href="#"> 3 </a>
-                        </button>
-                        <button class="next">
-                          <a href="#"> > </a>
-                        </button>
-                        <button>
-                          <a href="#">>></a>
-                        </button>
-                      </div>
+                    <div class="notice-footer">
+                        <div class="pagination">
+                            <a class="prev" th:if="${pointDTO.prev}" th:href="@{/my/point(pg=${pointDTO.start - 1}, size=${pointDTO.size})}">이전</a>
+                            <th:block th:each="i: ${#numbers.sequence(pointDTO.start, pointDTO.end)}">
+                                <a th:href="@{/my/point(pg=${i}, size=${pointDTO.size})}" th:text="${i}" th:class="${i == pointDTO.pg ? 'active' : ''}"></a>
+                            </th:block>
+                            <a class="next" th:if="${pointDTO.next}" th:href="@{/my/point(pg=${pointDTO.end + 1}, size=${pointDTO.size})}">다음</a>
+                        </div>
+                    </div>
                 </article>
             </section>
         </main>

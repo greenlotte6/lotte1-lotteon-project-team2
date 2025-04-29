@@ -60,7 +60,7 @@
                             <tbody>
                                 <tr>
                                     <td>사용자 ID</td>
-                                    <td>abc123</td>
+                                    <td th:text="${userDTO.uid}"></td>
                                 </tr>
                                 <tr>
                                     <td>비밀번호</td>
@@ -70,11 +70,11 @@
                                 </tr>
                                 <tr>
                                     <td>이름</td>
-                                    <td>홍*동</td>
+                                    <td th:text="${userDTO.name}"></td>
                                 </tr>
                                 <tr>
                                     <td>생년월일</td>
-                                    <td>1990년 12월 31일</td>
+                                    <td th:text="${}">1990년 12월 31일</td>
                                 </tr>
                                 <tr>
                                     <td>Email</td>

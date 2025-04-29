@@ -173,45 +173,53 @@
                                     <tr>
                                         <th>날짜</th>
                                         <th>상품명</th>
-                                        <th>주문번호</th>
                                         <th>적립금액</th>
                                         <th>비고</th>
                                         <th>유효기간</th>
                                     </tr>
                                 </tbody>
                                 <tbody>
-                                    <tr>
-                                        <td>2022-12-13</td>
-                                        <td>구분</td>
-                                        <td>2022121001</td>
-                                        <td>340</td>
-                                        <td>상품 구매확정</td>
-                                        <td>2024-12-10</td>
+                                    <tr th:each="point, i : ${pointDTO.dtoList}">
+                                        <td th:text="${#temporals.format(point.pointDate, 'yyyy-MM-dd')}"></td>
+                                        <th:block th:if="${point.point > 0}">
+                                            <td>적립</td>
+                                        </th:block>
+                                        <th:block th:if="${point.point < 0}">
+                                            <td>사용</td>
+                                        </th:block>
+                                        <td th:text="${point.point} + '원'"></td>
+                                        <td th:text="${point.pointDesc}"></td>
+                                        <td th:text="${#temporals.format(point.expiryDate, 'yyyy-MM-dd')}"></td>
                                     </tr>
-                                    <tr>
-                                        <td>2022-12-13</td>
-                                        <td>구분</td>
-                                        <td>2022121001</td>
-                                        <td>340</td>
-                                        <td>상품 구매확정</td>
-                                        <td>2024-12-10</td>
-                                    </tr>                                
-                                    <tr>
-                                        <td>2022-12-13</td>
-                                        <td>구분</td>
-                                        <td>2022121001</td>
-                                        <td>340</td>
-                                        <td>상품 구매확정</td>
-                                        <td>2024-12-10</td>
-                                    </tr>                                
-                                    <tr>
-                                        <td>2022-12-13</td>
-                                        <td>구분</td>
-                                        <td>2022121001</td>
-                                        <td>340</td>
-                                        <td>상품 구매확정</td>
-                                        <td>2024-12-10</td>
-                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="order-details">
+                        <div class="title-area">
+                            <h1>쿠폰내역</h1>
+                        </div>
+                        <div class="order-details-table">
+                            <table class="table-main">
+                                <tbody>
+                                <tr>
+                                    <th>쿠폰번호</th>
+                                    <th>할인금액</th>
+                                    <th>쿠폰명</th>
+                                    <th>상태</th>
+                                    <th>최소주문금액</th>
+                                    <th>유효기간</th>
+                                </tr>
+                                </tbody>
+                                <tbody>
+                                <tr th:each="coupon, i : ${couponDTO.dtoList}">
+                                    <td th:text="${coupon.cno}"></td>
+                                    <td th:text="${coupon.benefit}"></td>
+                                    <td th:text="${coupon.couponName}"></td>
+                                    <td th:text="${coupon.state}"></td>
+                                    <td th:text="${coupon.minPrice} + 원"></td>
+                                    <td th:text="${#temporals.format(coupon.validTo, 'yyyy-MM-dd')}"></td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -233,85 +241,12 @@
                                     </tr>
                                 </tbody>
                                 <tbody>
-                                    <tr>
+                                    <tr th:each="review, i : ${reviewDTO.dtoList}">
                                         <td>1</td>
-                                        <td>상품번호 / 상품명</td>
-                                        <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                        <td>
-                                            <div class="myPage-rating">
-                                                <span class="star"></span>
-                                                <span class="star"></span>
-                                                <span class="star"></span>
-                                                <span class="star"></span>
-                                                <span class="star"></span>
-                                                <span class="myPage-score">(4.5)</span>
-                                              </div>
-                                        </td>
-                                        <td>2024-12-10</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>상품번호 / 상품명</td>
-                                        <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                        <td>
-                                            <div class="myPage-rating">
-                                                <span class="star"></span>
-                                                <span class="star"></span>
-                                                <span class="star"></span>
-                                                <span class="star"></span>
-                                                <span class="star"></span>
-                                                <span class="myPage-score">(4.5)</span>
-                                              </div>
-                                        </td>
-                                        <td>2024-12-10</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>상품번호 / 상품명</td>
-                                        <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                        <td>
-                                            <div class="myPage-rating">
-                                                <span class="star"></span>
-                                                <span class="star"></span>
-                                                <span class="star"></span>
-                                                <span class="star"></span>
-                                                <span class="star"></span>
-                                                <span class="myPage-score">(4.5)</span>
-                                              </div>
-                                        </td>
-                                        <td>2024-12-10</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>상품번호 / 상품명</td>
-                                        <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                        <td>
-                                            <div class="myPage-rating">
-                                                <span class="star"></span>
-                                                <span class="star"></span>
-                                                <span class="star"></span>
-                                                <span class="star"></span>
-                                                <span class="star"></span>
-                                                <span class="myPage-score">(4.5)</span>
-                                              </div>
-                                        </td>
-                                        <td>2024-12-10</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>상품번호 / 상품명</td>
-                                        <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                        <td>
-                                            <div class="myPage-rating">
-                                                <span class="star"></span>
-                                                <span class="star"></span>
-                                                <span class="star"></span>
-                                                <span class="star"></span>
-                                                <span class="star"></span>
-                                                <span class="myPage-score">(4.5)</span>
-                                              </div>
-                                        </td>
-                                        <td>2024-12-10</td>
+                                        <td th:text="${review.product.prodNo} + '/' + ${review.product.prodName}"></td>
+                                        <td th:text="${review.content}"></td>
+                                        <td th:text="${review.rating}"></td>
+                                        <td th:text="${#temporals.format(review.wdate, 'yyyy-MM-dd')}"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -340,7 +275,6 @@
                                         <td th:text="${inquiry.channel}"></td>
                                         <td th:text="${inquiry.cateV1}"></td>
                                         <td><a th:href="@{/cs/qna/view(no=${inquiry.no})}">[[${inquiry.title}]]</a></td>
-                                        <td th:text="${inquiry.user.name} + 삭제예정"></td>
                                         <td th:text="${#temporals.format(inquiry.wdate, 'yyyy-MM-dd')}"></td>
                                         <td class="state" th:text="${inquiry.state}"></td>
                                     </tr>
