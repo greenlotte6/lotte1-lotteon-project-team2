@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,8 +30,13 @@ public class CouponService {
 
     public List<CouponDTO> findAllByCompany(String company) {
         List<Coupon> couponList = couponRepository.findAllByIssuedBy(company);
+        LocalDate today = LocalDate.now();
 
-        List<CouponDTO> couponDTOList = couponList.stream()
+        List<Coupon> validCouponList = couponList.stream()
+                .filter(coupon -> coupon.getValidTo().isAfter(today) || coupon.getValidTo().isEqual(today))
+                .collect(Collectors.toList());
+
+        List<CouponDTO> couponDTOList = validCouponList.stream()
                 .map(coupon -> modelMapper.map(coupon, CouponDTO.class))
                 .collect(Collectors.toList());
 

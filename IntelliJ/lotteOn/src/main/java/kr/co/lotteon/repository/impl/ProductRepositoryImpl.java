@@ -94,8 +94,6 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         String sortType = pageRequestDTO.getSortType();
         String period = pageRequestDTO.getPeriod();
 
-        log.info("pageRequestDTO:{}", pageRequestDTO);
-
         OrderSpecifier<?> orderSpecifier = qProduct.regDate.desc(); // 기본 정렬: 최신 등록순 (sortType이 null일 경우)
 
         NumberExpression<Integer> discountedPrice = qProduct.prodPrice
@@ -154,9 +152,6 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 .leftJoin(qProductImage).on(qProductImage.product.eq(qProduct))
                 .where(expression)
                 .fetchOne();
-
-        log.info("tupleList:{}", tupleList);
-        log.info("total:{}", total);
 
         return new PageImpl<>(tupleList, pageable, total);
     }

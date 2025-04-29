@@ -48,6 +48,7 @@ public class InquiryRepositoryImpl implements InquiryRepositoryCustom {
                 .where(expression)
                 .fetchOne();
 
+
         return new PageImpl<>(tupleList, pageable, total);
     }
 
