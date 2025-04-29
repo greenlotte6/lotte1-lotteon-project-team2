@@ -7,26 +7,9 @@
     <button type="button">문의하기</button>
 </div>
 
-<div class="qna_content">
-    <p>상품정보</p>
-    <p>선물포장해서 에코백과 봉투까지 함께 오나요?? 샘플 향수도 혹시 주시는지!</p>
-    <div class="answer">
-        <p>
-            안녕하세요 고객님 현재 온라인 구매 시 리본포장 및 쇼핑백은 증정되지 않고 있으며, 매장 방문시에도 별도의 선물포장 서비스 및 쇼핑백 제공이 불가능한 점 양해 부탁드립니다.
-            현재 문의주신 상품 구매시 별도의 사은품 증정 프로모션은 진행하고 있지 않는 부분 쇼핑에 참고 부탁드립니다.
-        </p>
-        <p>롯데쇼핑(주)본점<span>판매자</span></p>
-    </div>
-    <div>
-        <a href="#">답변달기</a>
-        <p>2025.03.05</p>
-    </div>
-</div>
-
 <th:block th:each="inquiry : ${inquiryPageResponseDTO.dtoList}">
     <div class="qna_content">
         <p th:text="${inquiry.cateV1} + ' > ' + ${inquiry.cateV2}"></p>
-        <p th:text="${inquiry.title}"></p>
         <p th:text="${inquiry.content}"></p>
         <div class="answer" th:if="${inquiry.answer != null}">
             <p th:text="${inquiry.answer}"></p>
@@ -42,13 +25,20 @@
     </div>
 </th:block>
 
-<div class="reviews_page">
-    <a href="#"><</a>
-    <a href="#">1</a>
-    <a href="#">2</a>
-    <a href="#">3</a>
-    <a href="#">4</a>
-    <a href="#">5</a>
-    <a href="#">6</a>
-    <a href="#">></a>
+<div id="qnaModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h3>문의 내용</h3>
+        <p id="modalInquiryContent"></p>
+        <h3>답변</h3>
+        <div id="modalAnswerContent"></div>
+    </div>
+</div>
+
+<div class="qna_page">
+    <a href="#" th:if="${inquiryPageResponseDTO.prev}" th:attr="data-page=${inquiryPageResponseDTO.start - 1}">&lt;</a>
+    <th:block th:each="num : ${#numbers.sequence(inquiryPageResponseDTO.start, inquiryPageResponseDTO.end)}">
+        <a href="#" th:attr="data-page=${num}" th:class="${num == inquiryPageResponseDTO.pg ? 'current' : 'num'}" th:text="${num}">1</a>
+    </th:block>
+    <a href="#" th:if="${inquiryPageResponseDTO.next}" th:attr="data-page=${inquiryPageResponseDTO.end + 1}">&gt;</a>
 </div>

@@ -44,8 +44,6 @@ public class ProductController {
         ProductDTO productDTO = productMapper.selectProductByProdNo(prodNo);
         // 상품 옵션 Split
         productDTO = productService.OptionSplit(productDTO);
-        // 쿠폰
-        List<CouponDTO> couponDTOList = couponService.findAllByCompany(productDTO.getCompany());
         // 상품 상세
         ProductDetailDTO productDetailDTO = productDetailService.findByProdNo(pageRequestDTO);
         // 리뷰
@@ -53,7 +51,6 @@ public class ProductController {
         // qna
         PageResponseDTO inquiryPageResponseDTO = inquiryService.selectAllForList(pageRequestDTO);
         model.addAttribute(productDTO);
-        model.addAttribute(couponDTOList);
         model.addAttribute(productDetailDTO);
         model.addAttribute("reviewPageResponseDTO", reviewPageResponseDTO);
         model.addAttribute("inquiryPageResponseDTO", inquiryPageResponseDTO);
@@ -73,6 +70,25 @@ public class ProductController {
     }
 
     // 문의 Ajax
+    @GetMapping("/product/qnaList")
+    @ResponseBody
+    public PageResponseDTO getQna(PageRequestDTO pageRequestDTO) {
+        pageRequestDTO.setSize(5);
+        log.info("pageRequestDTO: {}", pageRequestDTO);
+        PageResponseDTO pageResponseDTO = inquiryService.selectAllForList(pageRequestDTO);
+        log.info("pageResponseDTO: {}", pageResponseDTO);
+        return pageResponseDTO;
+    }
+
+    // 쿠폰
+    @GetMapping("/product/coupon")
+    @ResponseBody
+    public List<CouponDTO> coupon(@RequestParam String company) {
+        log.info("company: " + company);
+        List<CouponDTO> couponDTOList = couponService.findAllByCompany(company);
+        log.info("couponDTOList: " + couponDTOList);
+       return couponDTOList;
+    }
 
     // 주문하기
     @GetMapping("/product/order")

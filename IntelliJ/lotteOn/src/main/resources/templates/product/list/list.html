@@ -151,16 +151,24 @@
         // 판매 기간 선택 이벤트
         salesPeriodSelect.addEventListener('change', function() {
             const period = this.value;
-            loadProducts(`&sortType=mostSales&period=${period}`);
-            // 다른 정렬 옵션 초기화
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set('sortType', 'mostSales');
+            currentUrl.searchParams.set('period', period);
+            currentUrl.searchParams.set('pg', '1');
+            history.pushState(null, null, currentUrl);
+            loadProducts('');
             resetOtherSortOptions('mostSales');
         });
 
         // 후기 기간 선택 이벤트
         reviewPeriodSelect.addEventListener('change', function() {
             const period = this.value;
-            loadProducts(`&sortType=manyReviews&period=${period}`);
-            // 다른 정렬 옵션 초기화
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set('sortType', 'manyReviews');
+            currentUrl.searchParams.set('period', period);
+            currentUrl.searchParams.set('pg', '1');
+            history.pushState(null, null, currentUrl);
+            loadProducts('');
             resetOtherSortOptions('manyReviews');
         });
 
@@ -184,7 +192,21 @@
                     salesPeriodSelect.selectedIndex = 0;
                     reviewPeriodSelect.selectedIndex = 0;
                 }
-                loadProducts(`&sortType=${sortType}&period=${period}`);
+
+                // 현재 URL 가져오기
+                const currentUrl = new URL(window.location.href);
+                // sortType 파라미터 설정
+                currentUrl.searchParams.set('sortType', sortType);
+                // period 파라미터 설정
+                currentUrl.searchParams.set('period', period);
+                // 페이지 번호는 1로 초기화 (새로운 정렬이므로 첫 페이지부터 보여주는 것이 일반적)
+                currentUrl.searchParams.set('pg', '1');
+
+                // history.pushState를 사용하여 URL 업데이트 (페이지 리로드 없이)
+                history.pushState(null, null, currentUrl);
+
+                // 변경된 URL의 파라미터를 기반으로 상품 목록 로드
+                loadProducts('');
             });
         });
 
@@ -261,6 +283,55 @@
 
         // 초기 상품 목록 로드 (기본 정렬: 판매 많은 순, 기본 기간: 전체)
         loadProducts(`&sortType=salesCount&period=`);
+
+        function loadProducts(params) {
+            const currentUrl = new URL(window.location.href);
+            const sortTypeParam = currentUrl.searchParams.get('sortType') || 'salesCount';
+            const periodParam = currentUrl.searchParams.get('period') || '';
+            const pgParam = new URLSearchParams(params).get('pg') || '1';
+
+            const url = `/product/ajaxList?subCateNo=3&view=${getView()}&pg=${pgParam}&sortType=${sortTypeParam}&period=${periodParam}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const productListContainer = document.querySelector('#productWrapper .product-list');
+                    productListContainer.innerHTML = ''; // 기존 목록 초기화
+                    data.dtoList.forEach(product => {
+                        const productItem = document.createElement('div');
+                        productItem.classList.add('product-item');
+                        productItem.setAttribute('data-prodno', product.prodNo);
+                        productItem.innerHTML = `
+                    <img class="product-img" src="${product.snameList}" alt="${product.prodName}" />
+                    <div class="product-info">
+                        <span class="vendor-name">${product.company}</span> <span class="vendor-rank">${product.rank}</span><br>
+                        <span class="brand">${product.prodBrand}</span>
+                        <span class="pname">${product.prodName}</span>
+                        <div class="meta">
+                            <span>★ ${product.ratingAvg !== null ? product.ratingAvg.toFixed(1) : 0}</span>&nbsp;|&nbsp;리뷰 <span>${product.reviewCount}</span>
+                        </div>
+                        ${product.prodDeliveryFee === 0 ? '<span class="badge-free">무료배송</span>' : `<span>${formatNumber(product.prodDeliveryFee)}원</span>`}
+                    </div>
+                    <div class="product-price">
+                        <del>${formatNumber(product.prodPrice)}원</del><br>
+                        <span class="discount">${product.prodDiscount}%</span>
+                        <span>${formatNumber(product.prodPrice * (100 - product.prodDiscount) / 100)}원</span>
+                        <div class="icons">
+                            <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                            <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
+                        </div>
+                    </div>
+                `;
+                        productListContainer.appendChild(productItem);
+                    });
+                    updatePagination(data);
+                    attachProductClickHandler('#productWrapper', '.product-item');
+                })
+                .catch(error => {
+                    console.error('Ajax 요청 실패:', error);
+                });
+        }
+
 
     });
 </script>
@@ -456,16 +527,16 @@
 
                 <div class="page">
                     <th:block th:if="${pageResponseDTO.prev}">
-                        <a th:href="@{/product/list(pg=${pageResponseDTO.start - 1}, subCateNo=${pageResponseDTO.subCateNo})}" class="prev">&lt;</a>
+                        <a th:href="@{/product/list(pg=${pageResponseDTO.start - 1}, subCateNo=${pageResponseDTO.subCateNo}, sortType=${pageResponseDTO.sortType}, period=${pageResponseDTO.period})}" class="prev">&lt;</a>
                     </th:block>
                     <th:block th:each="num : ${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end)}">
-                        <a th:href="@{/product/list(pg=${num}, subCateNo=${pageResponseDTO.subCateNo})}"
+                        <a th:href="@{/product/list(pg=${num}, subCateNo=${pageResponseDTO.subCateNo}, sortType=${pageResponseDTO.sortType}, period=${pageResponseDTO.period})}"
                            th:class="${num == pageResponseDTO.pg} ? 'current' : 'num'">
                             [[${num}]]
                         </a>
                     </th:block>
                     <th:block th:if="${pageResponseDTO.next}">
-                        <a th:href="@{/product/list(pg=${pageResponseDTO.end + 1}, subCateNo=${pageResponseDTO.subCateNo})}" class="next">&gt;</a>
+                        <a th:href="@{/product/list(pg=${pageResponseDTO.end + 1}, subCateNo=${pageResponseDTO.subCateNo}, sortType=${pageResponseDTO.sortType}, period=${pageResponseDTO.period})}" class="next">&gt;</a>
                     </th:block>
                 </div>
             </div>
