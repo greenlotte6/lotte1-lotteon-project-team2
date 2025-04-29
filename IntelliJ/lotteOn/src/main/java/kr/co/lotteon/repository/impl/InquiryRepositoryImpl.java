@@ -51,7 +51,36 @@ public class InquiryRepositoryImpl implements InquiryRepositoryCustom {
         return new PageImpl<>(tupleList, pageable, total);
     }
 
+    @Override
+    public Page<Tuple> selectAllQnaByType(PageRequestDTO pageRequestDTO, Pageable pageable) {
+        String type = pageRequestDTO.getSearchType();
+        String CateV1 = pageRequestDTO.getSortType();
+        BooleanExpression expression = qInquiry.cateV2.eq(type).and(qInquiry.cateV1.eq(CateV1));
 
+        List<Tuple> tupleList = queryFactory
+                .select(qInquiry, qUser)
+                .from(qInquiry)
+                .join(qInquiry.user, qUser)
+                .on(qInquiry.user.uid.eq(qUser.uid))
+                .where(expression)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(qInquiry.no.desc())
+                .fetch();
+
+        long total = queryFactory
+                .select(qInquiry.count())
+                .from(qInquiry)
+                .join(qInquiry.user, qUser)
+                .on(qInquiry.user.uid.eq(qUser.uid))
+                .where(expression)
+                .fetchOne();
+
+        log.info("total: {}", total);
+        log.info("tupleList: {}", tupleList);
+
+        return new PageImpl<>(tupleList, pageable, total);
+    }
 
 
 }

@@ -14,6 +14,8 @@
   <script>
     document.addEventListener('DOMContentLoaded', function (){
 
+      updateSubCategory();
+
       // 전체 체크박스
       const deleteAllCheckbox = document.getElementById('deleteAll');
 
@@ -109,8 +111,8 @@
 
         <div class="select_div">
           <div class="select_box">
-            <form th:action="@{/admin/cs/qna/search}" id="cate">
-              <select id="sortType" name="sortType"  onchange="updateSubCategory()" style="width: 150px">
+            <form th:action="@{/admin/cs/qna/search}" id="cate" >
+              <select id="sortType" name="sortType"  onchange="updateSubCategory()" th:field="*{pageResponseDTO.sortType}" style="width: 150px">
                 <option value="회원">회원</option>
                 <option value="쿠폰-혜택-이벤트">쿠폰-혜택-이벤트</option>
                 <option value="주문-결제">주문-결제</option>
@@ -142,11 +144,11 @@
               <th>작성일</th>
               <th>상태</th>
             </tr>
-            <tr th:each="inquiry, i : ${responseDTO.dtoList}">
+            <tr th:each="inquiry, i : ${pageResponseDTO.dtoList}">
               <td>
                 <input type="checkbox" name="deleteNo" th:value="${inquiry.no}" />
               </td>
-              <td th:text="${responseDTO.startNo - i.index}"></td>
+              <td th:text="${pageResponseDTO.startNo - i.index}"></td>
               <td th:text="${inquiry.cateV1}"></td>
               <td th:text="${inquiry.cateV2}"></td>
               <td><a th:href="@{/admin/cs/qna/view(no=${inquiry.no})}">[[${inquiry.title}]]</a></td>
@@ -163,19 +165,19 @@
         </form>
 
         <!-- 페이징 -->
+        <div class="page">
+          <th:block th:if="${pageResponseDTO.prev}">
+            <a th:href="@{/admin/cs/qna/search(pg=${pageResponseDTO.start-1}, searchType=${pageResponseDTO.searchType}), sortType=${pageResponseDTO.sortType}" class="prev">이전</a>
+          </th:block>
 
-          <div class="page">
-            <th:block th:if="${responseDTO.prev}">
-              <a th:href="@{/admin/cs/qna/list(pg=${responseDTO.start - 1})}" class="prev">이전</a>
-            </th:block>
-            <th:block th:each="i: ${#numbers.sequence(responseDTO.start, responseDTO.end)}">
-              <a th:href="@{/admin/cs/qna/list( pg=${i}, size=${responseDTO.size})}" th:text="${i}" th:class="${i == responseDTO.pg ? 'current' : ''}"></a>
-            </th:block>
+          <th:block th:each="num:${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end)}">
+            <a th:href="@{/admin/cs/qna/search(pg=${num} , searchType=${pageResponseDTO.searchType} , sortType=${pageResponseDTO.sortType})}" th:class="${num == pageResponseDTO.pg} ? 'current' : 'num'">[[${num}]]</a>
+          </th:block>
 
-            <th:block th:if="${responseDTO.next}">
-              <a th:href="@{/admin/cs/qna/list(pg=${responseDTO.end + 1}, size=${responseDTO.size})}" class="next">다음</a>
-            </th:block>
-          </div>
+          <th:block th:if="${pageResponseDTO.next}">
+            <a th:href="@{/admin/cs/qna/search(pg=${pageResponseDTO.end+1} , searchType=${pageResponseDTO.searchType} , sortType=${pageResponseDTO.sortType})}" class="next">다음</a>
+          </th:block>
+        </div>
 
       </article>
     </section>

@@ -3,6 +3,7 @@ package kr.co.lotteon.service.admin;
 import com.querydsl.core.Tuple;
 import jakarta.transaction.Transactional;
 import kr.co.lotteon.dto.article.FaqDTO;
+import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.article.NoticeDTO;
 import kr.co.lotteon.dto.article.RecruitDTO;
 import kr.co.lotteon.dto.category.MainCategoryDTO;
@@ -13,7 +14,9 @@ import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.dto.product.ProductDetailDTO;
 import kr.co.lotteon.dto.product.ProductImageDTO;
+import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.entity.article.Faq;
+import kr.co.lotteon.entity.article.Inquiry;
 import kr.co.lotteon.entity.article.Notice;
 import kr.co.lotteon.entity.article.Recruit;
 import kr.co.lotteon.entity.category.MainCategory;
@@ -626,10 +629,57 @@ public class adminService {
                 .build();
     }
 
-    // 문의하기
+    // 문의하기(삭제)
     public void deleteQnaByList(List<Integer> deleteNos) {
         for(int i : deleteNos){
             inquiryRepository.deleteById(i);
         }
+    }
+
+    // 문의하기 뷰
+    public InquiryDTO findInquiryByNo(int no) {
+        Optional<Inquiry> inquiryOpt = inquiryRepository.findById(no);
+        if(inquiryOpt.isPresent()){
+            Inquiry inquiry = inquiryOpt.get();
+            return modelMapper.map(inquiry, InquiryDTO.class);
+        }
+        return null;
+    }
+
+    // 문의하기 응답
+    public void replyQna(int no, String answer) {
+        Optional<Inquiry> inquiryOpt = inquiryRepository.findById(no);
+        if(inquiryOpt.isPresent()){
+            Inquiry inquiry = inquiryOpt.get();
+            inquiry.setAnswer(answer);
+            inquiry.setState("답변완료");
+            inquiryRepository.save(inquiry);
+        }
+    }
+
+    public PageResponseDTO findAllQnaByType(PageRequestDTO pageRequestDTO) {
+        pageRequestDTO.setSize(10);
+        Pageable pageable = pageRequestDTO.getPageable("no");
+        Page<Tuple> pageObject = inquiryRepository.selectAllQnaByType(pageRequestDTO, pageable);
+
+        List<InquiryDTO> DTOList = pageObject.getContent().stream().map(tuple -> {
+            Inquiry inquiry = tuple.get(0, Inquiry.class);
+            User user = tuple.get(1, User.class);
+            InquiryDTO inquiryDTO = modelMapper.map(inquiry, InquiryDTO.class);
+            UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+            inquiryDTO.setUser(userDTO);
+            return inquiryDTO;
+        }).toList();
+
+        int total = (int) pageObject.getTotalElements();
+
+        log.info("total: {}", total);
+        log.info("faqDTOList: {}", pageObject);
+
+        return PageResponseDTO.<InquiryDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(DTOList)
+                .total(total)
+                .build();
     }
 }
