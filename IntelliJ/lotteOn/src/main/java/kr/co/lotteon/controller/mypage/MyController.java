@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.feedback.ReviewDTO;
+import kr.co.lotteon.dto.order.OrderDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.point.PointDTO;
@@ -56,11 +57,14 @@ public class MyController {
         // 로그인한 유저의 쿠폰 조회
         PageResponseDTO<CouponDTO> couponDTO = myPageService.couponFindAll(userDTO, pageRequestDTO);
 
+        // 로그인한 유저의 주문내역 조회
+        //PageResponseDTO<OrderDTO> orderDTO = myPageService.orderFindAll(userDTO, pageRequestDTO);
 
         model.addAttribute("pointDTO", pointDTO);
         model.addAttribute("inquiryDTO", inquiryDTO);
         model.addAttribute("reviewDTO", reviewDTO);
         model.addAttribute("couponDTO", couponDTO);
+        //model.addAttribute("orderDTO", orderDTO);
 
         return "/myPage/myPageMain";
     }
@@ -150,7 +154,7 @@ public class MyController {
         UserDTO userDTO = myPageService.findByUid(uid);
 
         model.addAttribute("userDTO", userDTO);
-        
+
         return "/myPage/mySetting";
     }
 }

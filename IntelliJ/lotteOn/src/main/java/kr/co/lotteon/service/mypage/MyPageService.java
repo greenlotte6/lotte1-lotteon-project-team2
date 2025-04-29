@@ -3,6 +3,7 @@ package kr.co.lotteon.service.mypage;
 import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.feedback.ReviewDTO;
+import kr.co.lotteon.dto.order.OrderDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.point.PointDTO;
@@ -10,11 +11,13 @@ import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.entity.article.Inquiry;
 import kr.co.lotteon.entity.coupon.Coupon;
 import kr.co.lotteon.entity.feedback.Review;
+import kr.co.lotteon.entity.order.Order;
 import kr.co.lotteon.entity.point.Point;
 import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.article.InquiryRepository;
 import kr.co.lotteon.repository.coupon.CouponRepository;
 import kr.co.lotteon.repository.feedback.ReviewRepository;
+import kr.co.lotteon.repository.order.OrderRepository;
 import kr.co.lotteon.repository.point.PointRepository;
 import kr.co.lotteon.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +39,7 @@ public class MyPageService {
     private final InquiryRepository inquiryRepository;
     private final ReviewRepository reviewRepository;
     private final PointRepository pointRepository;
+    private final OrderRepository orderRepository;
     private final CouponRepository couponRepository;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
@@ -155,6 +159,27 @@ public class MyPageService {
                 .build();
     }
 
+    public PageResponseDTO<OrderDTO> orderFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO){
+
+        User user = modelMapper.map(userDTO, User.class);
+
+        Pageable pageable = pageRequestDTO.getPageable("orderNo");
+
+        Page<Order> pageOrder = orderRepository.findAllByUser(user, pageable);
+
+        List<OrderDTO> orderDTOList = pageOrder.getContent().stream()
+                .map(order -> modelMapper.map(order, OrderDTO.class))
+                .collect(Collectors.toList());
+
+        int total = (int) pageOrder.getTotalElements();
+
+        return PageResponseDTO.<OrderDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(orderDTOList)
+                .total(total)
+                .build();
+
+    }
 
 
 
