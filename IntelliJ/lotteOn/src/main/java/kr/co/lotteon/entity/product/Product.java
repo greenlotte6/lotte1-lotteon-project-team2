@@ -29,7 +29,7 @@ public class Product {
     private SubCategory subCategory;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sellor") // seller 외래키
+    @JoinColumn(name = "seller") // seller 외래키
     private Seller seller;
 
     private String prodName; // 상품명
