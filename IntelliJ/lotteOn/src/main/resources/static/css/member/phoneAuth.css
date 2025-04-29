@@ -64,3 +64,49 @@ header img {
 .container button:hover {
   background-color: #e22d24;
 }
+
+
+/* Email 인증 코드 인증확인 디자인 */
+
+/* 인증번호 입력 input */
+#codeBox input[type="text"] {
+  width: 100%;
+  padding: 20px 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  box-sizing: border-box; /* padding 포함 */
+}
+
+/* 인증 확인 버튼 */
+#btnVerifyCode {
+  margin-top: 10px;
+  width: 100%;
+  padding: 20px 14px;
+  background-color: #ff3b30;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#btnVerifyCode:hover {
+  background-color: #e6362d;
+}
+
+/* 인증번호 받기 다음  인증확인 버튼 감추기 */
+#btnSendEmail {
+  display: none;
+}
+
+#nextBtn {
+  display: none;
+}
+
+#btnSendEmail,
+#btnVerifyCode,
+#nextBtn {
+  display: none;
+}

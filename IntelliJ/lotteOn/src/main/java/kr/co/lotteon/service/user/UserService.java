@@ -58,5 +58,11 @@ public class UserService {
         return userRepository.findByNameAndHp(name, hp);
     }
 
+// UserService.java
+
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
 
 }

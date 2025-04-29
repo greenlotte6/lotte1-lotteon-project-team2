@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>휴대폰 인증</title>
   <link rel="stylesheet" th:href="@{/css/member/phoneAuth.css}" />
+
+  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
   <script>
@@ -19,14 +21,16 @@
     };
     firebase.initializeApp(firebaseConfig);
   </script>
+  <script th:src="@{/js/member/phoneAuth.js}"></script>
 </head>
 <body>
 <div class="container">
   <header>
     <img th:src="@{/images/logo.png}" alt="LotteOn 로고" />
   </header>
+
   <section>
-    <form th:action="@{/user/member/findIdResult}" method="post" onsubmit="return validateAuth()">
+    <form th:action="@{/user/member/findIdResult/phone}" method="post" id="phoneForm" onsubmit="return validateAuth()">
       <h2><strong>정보</strong>를 <br />입력해주세요</h2>
 
       <!-- 이름 -->
@@ -35,51 +39,29 @@
       <!-- 전화번호 -->
       <input type="text" id="phone" name="hp" placeholder="+821012345678 형식" required />
 
-      <!-- recaptcha 영역 -->
-      <div id="recaptcha-container"></div>
-      <button type="button" onclick="sendCode()">인증번호 받기</button>
+      <!-- 인증번호 받기 버튼 (초기 숨김) -->
+      <button type="button" id="btnSendCode" style="display: none;">인증번호 받기</button>
 
-      <!-- 인증번호 입력 -->
-      <input type="text" id="code" name="authCode" placeholder="인증번호 입력" required />
-      <button type="button" onclick="verifyCode()">인증 확인</button>
+      <!-- 인증번호 입력칸 (초기 숨김) -->
+      <div id="codeBox" style="display: none; margin-top: 20px;">
+        <input type="text" id="code" name="authCode" placeholder="인증번호 입력" required />
+        <button type="button" id="btnVerifyCode" style="display: none;">인증 확인</button>
 
+        <!-- ⏱️ 타이머 영역 추가 -->
+        <div id="timerBox" style="margin-top: 10px; color: red; font-weight: bold;"></div>
+      </div>
+
+
+
+      <!-- 다음 버튼 (초기 비활성화) -->
       <button type="submit" id="nextBtn" disabled>다음</button>
+
+      <!-- reCAPTCHA -->
+      <div id="recaptcha-container"></div>
     </form>
   </section>
 </div>
 
-<script>
-  let confirmationResult = null;
 
-  function sendCode() {
-    const phoneNumber = document.getElementById("phone").value;
-    const appVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-      size: 'invisible'
-    });
-
-    firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
-            .then((result) => {
-              confirmationResult = result;
-              alert("인증번호를 전송했습니다.");
-            }).catch((error) => {
-      alert("인증 실패: " + error.message);
-    });
-  }
-
-  function verifyCode() {
-    const code = document.getElementById("code").value;
-    confirmationResult.confirm(code)
-            .then((result) => {
-              alert("인증 성공!");
-              document.getElementById("nextBtn").disabled = false;
-            }).catch((error) => {
-      alert("인증 실패: " + error.message);
-    });
-  }
-
-  function validateAuth() {
-    return !document.getElementById("nextBtn").disabled;
-  }
-</script>
 </body>
 </html>
