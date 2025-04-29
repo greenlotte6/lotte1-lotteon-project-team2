@@ -1,6 +1,7 @@
 package kr.co.lotteon.dto.config;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @Builder
@@ -40,5 +41,9 @@ public class ConfigDTO {
     private String email; //이메일
     private String efinDispute; //전자금융거래 분쟁담당
     private String copyright; // 카피라이트(푸터에 노출되는 카피라이트 정보)
+
+    private MultipartFile file1;
+    private MultipartFile file2;
+    private MultipartFile file3;
 
 }

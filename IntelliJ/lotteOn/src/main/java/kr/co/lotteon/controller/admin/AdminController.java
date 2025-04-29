@@ -75,26 +75,34 @@ public class AdminController {
         return "redirect:/admin/config/basic";
     }
 
-    // 사이즈 설정 카피라이트 변경
+    // 사이트 설정 카피라이트 변경
     @PostMapping("/config/copyright/modify")
     public String modifyConfig(@RequestParam("copyright") String copyright) {
         configService.modifyCopyright(copyright);
         return "redirect:/admin/config/basic";
     }
 
-    // 사이즈 설정 회사 변경
+    // 사이트 설정 회사 변경
     @PostMapping("/config/company/modify")
     public String modifyCompany(ConfigDTO configDTO) {
         configService.modifyCompany(configDTO);
         return "redirect:/admin/config/basic";
     }
 
-    // 사이즈 설정 고객센터 변경
+    // 사이트 설정 고객센터 변경
     @PostMapping("/config/customer/modify")
     public String modifyCustomer(ConfigDTO configDTO) {
         configService.modifyCustomer(configDTO);
         return "redirect:/admin/config/basic";
     }
+
+    // 사이트 헤더, 푸터, 파비콘 이미지 변경
+    @PostMapping("/config/image/modify")
+    public String modifyImage(ConfigDTO configDTO) {
+        imageService.modifyConfigImage(configDTO);
+        return "redirect:/admin/config/basic";
+    }
+
 
     //배너설정
     @GetMapping("/config/banner")

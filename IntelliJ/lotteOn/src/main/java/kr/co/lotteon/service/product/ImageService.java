@@ -1,8 +1,11 @@
 package kr.co.lotteon.service.product;
 
+import kr.co.lotteon.dto.config.ConfigDTO;
 import kr.co.lotteon.dto.product.ProductImageDTO;
+import kr.co.lotteon.entity.config.Config;
 import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.entity.product.ProductImage;
+import kr.co.lotteon.repository.config.ConfigRepository;
 import kr.co.lotteon.repository.product.ProductImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +25,7 @@ import java.util.UUID;
 public class ImageService {
 
     private final ProductImageRepository productImageRepository;
+    private final ConfigRepository configRepository;
     private final ModelMapper modelMapper;
 
     @Value("${spring.servlet.multipart.location}")
@@ -173,6 +177,67 @@ public class ImageService {
             }
 
             productImageRepository.save(productImage);
+        }
+    }
+
+    public void modifyConfigImage(ConfigDTO configDTO) {
+
+        Optional<Config> configImageOpt = configRepository.findById(1);
+
+        if(configImageOpt.isPresent()) {
+            Config config = configImageOpt.get();
+
+            String oName;
+
+            // 헤더 이미지
+            if (configDTO.getFile1() != null && !configDTO.getFile1().isEmpty()) {
+                oName = configDTO.getFile1().getOriginalFilename();
+
+                if(config.getHeaderLogo() == null){
+                    config.setHeaderLogo(oName);
+                    uploadImage(configDTO.getFile1(), oName);
+                }else{
+                    if (!oName.equals(config.getHeaderLogo())) {
+                        deleteImage(config.getHeaderLogo());
+                        config.setHeaderLogo(oName);
+                        uploadImage(configDTO.getFile1(), oName);
+                    }
+                }
+            }
+
+            // 푸터 이미지
+            if (configDTO.getFile2() != null && !configDTO.getFile2().isEmpty()) {
+                oName = configDTO.getFile2().getOriginalFilename();
+
+                if(config.getFooterLogo() == null){
+                    config.setFooterLogo(oName);
+                    uploadImage(configDTO.getFile2(), oName);
+                }else{
+                    if (!oName.equals(config.getFooterLogo())) {
+                        deleteImage(config.getFooterLogo());
+                        config.setFooterLogo(oName);
+                        uploadImage(configDTO.getFile2(), oName);
+                    }
+                }
+            }
+
+            // 푸터 이미지
+            if (configDTO.getFile3() != null && !configDTO.getFile3().isEmpty()) {
+                oName = configDTO.getFile3().getOriginalFilename();
+
+                if(config.getFavicon() == null){
+                    config.setFavicon(oName);
+                    uploadImage(configDTO.getFile3(), oName);
+                }else{
+                    if (!oName.equals(config.getFavicon())) {
+                        deleteImage(config.getFavicon());
+                        config.setFavicon(oName);
+                        uploadImage(configDTO.getFile3(), oName);
+                    }
+                }
+            }
+
+            configRepository.save(config);
         }
     }
 }

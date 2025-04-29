@@ -1,4 +1,5 @@
 <html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
 <script src="/js/aside.js"></script>
 <header>
     <div class="advertisement">광고</div>
@@ -22,7 +23,7 @@
         </div>
         <div class="logo">
             <a th:href="@{/}">
-                <img src="/images/logo.png" alt="lotteOn">
+                <img th:src="@{/upload/{file}(file=${appInfo.headerLogo})}" alt="lotteOn">
             </a>
             <div class="search">
                 <form action="#">
