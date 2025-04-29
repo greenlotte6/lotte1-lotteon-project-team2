@@ -67,54 +67,26 @@
                                     </tr>
                                 </tbody>
                                 <tbody>
-                                    <tr>
+                                    <tr th:each="review, i : ${reviewDTO.dtoList}">
                                         <td>1</td>
-                                        <td>상품번호<span>/</span>상품명</td>
-                                        <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                        <td>☆☆☆☆☆</td>
-                                        <td>2022-12-10</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>상품번호<span>/</span>상품명</td>
-                                        <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                        <td>☆☆☆☆☆</td>
-                                        <td>2022-12-10</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>상품번호<span>/</span>상품명</td>
-                                        <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                        <td>☆☆☆☆☆</td>
-                                        <td>2022-12-10</td>
+                                        <td th:text="${review.product.prodNo} + '/' + ${review.product.prodName}"></td>
+                                        <td th:text="${review.content}"></td>
+                                        <td th:text="${review.rating}"></td>
+                                        <td th:text="${#temporals.format(review.wdate, 'yyyy-MM-dd')}"></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="pagination">
-                        <button>
-                          <a href="#"> << </a>
-                        </button>
-                        <button class="prev">
-                          <a href="#"> < </a>
-                        </button>
-                        <button>
-                          <a href="#"> 1 </a>
-                        </button>
-                        <button>
-                          <a href="#"> 2 </a>
-                        </button>
-                        <button>
-                          <a href="#"> 3 </a>
-                        </button>
-                        <button class="next">
-                          <a href="#"> > </a>
-                        </button>
-                        <button>
-                          <a href="#">>></a>
-                        </button>
-                      </div>
+                    <div class="notice-footer">
+                        <div class="pagination">
+                            <a class="prev" th:if="${reviewDTO.prev}" th:href="@{/cs/my/review(pg=${reviewDTO.start - 1}, size=${reviewDTO.size})}">이전</a>
+                            <th:block th:each="i: ${#numbers.sequence(reviewDTO.start, reviewDTO.end)}">
+                                <a th:href="@{/cs/my/review(pg=${i}, size=${reviewDTO.size})}" th:text="${i}" th:class="${i == reviewDTO.pg ? 'active' : ''}"></a>
+                            </th:block>
+                            <a class="next" th:if="${reviewDTO.next}" th:href="@{/cs/my/review(pg=${reviewDTO.end + 1}, size=${reviewDTO.size})}">다음</a>
+                        </div>
+                    </div>
                 </article>
             </section>
         </main>

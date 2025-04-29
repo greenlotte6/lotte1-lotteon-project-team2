@@ -1,5 +1,6 @@
 package kr.co.lotteon.repository.article;
 
+import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.entity.article.Inquiry;
 import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.custom.InquiryRepositoryCustom;

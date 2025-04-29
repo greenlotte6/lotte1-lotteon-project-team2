@@ -48,6 +48,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/cs/*").hasAnyRole("USER", "SELLER", "ADMIN")
+                .requestMatchers("/my/*").hasAnyRole("USER", "SELLER", "ADMIN")
                 .anyRequest().permitAll());
 
         // 기타 보안 설정

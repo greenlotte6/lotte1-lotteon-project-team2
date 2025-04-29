@@ -38,6 +38,7 @@ public class CsController {
     public String index(PageRequestDTO pageRequestDTO, Model model) {
 
         pageRequestDTO.setSize(5);
+
         // 공지사항 리스트 출력
         PageResponseDTO<NoticeDTO> noticeResponseDTO = csService.noticeFindAll(pageRequestDTO);
 
@@ -45,7 +46,6 @@ public class CsController {
 
         // 문의하기 리스트 출력
         PageResponseDTO<InquiryDTO> inquiryResponseDTO = csService.inquiryFindAll(pageRequestDTO);
-        pageRequestDTO.setSize(5);
 
         model.addAttribute("inquiryResponseDTO", inquiryResponseDTO);
         return "/cs/index";
