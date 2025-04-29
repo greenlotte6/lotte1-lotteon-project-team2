@@ -23,6 +23,7 @@ public class UserDTO{
     private String addr2;   // 자세한 주소
     private String regip;   // IP주소
     private String state;   // 상태(정상,중지,휴먼,탈퇴)
+    private String ssn;
 
     private LocalDateTime regDate;     // 가입일자
     private LocalDateTime leaveDate;   // 탈퇴일자
@@ -31,4 +32,6 @@ public class UserDTO{
     // OAuth 인증 업체 정보
     private String provider;
 
+    // 관리자 (관리) 중단, 재개, 승인
+    private String manage;
 }

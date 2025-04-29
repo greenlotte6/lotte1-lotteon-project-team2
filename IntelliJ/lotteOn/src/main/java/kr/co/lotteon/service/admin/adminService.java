@@ -14,6 +14,7 @@ import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.dto.product.ProductDetailDTO;
 import kr.co.lotteon.dto.product.ProductImageDTO;
+import kr.co.lotteon.dto.seller.SellerDTO;
 import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.entity.article.Faq;
 import kr.co.lotteon.entity.article.Inquiry;
@@ -674,9 +675,107 @@ public class adminService {
         int total = (int) pageObject.getTotalElements();
 
         log.info("total: {}", total);
-        log.info("faqDTOList: {}", pageObject);
+        log.info("qnaDTOList: {}", pageObject);
 
         return PageResponseDTO.<InquiryDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(DTOList)
+                .total(total)
+                .build();
+    }
+
+    /*
+    * 관리자 상점목록
+    * */
+
+    public PageResponseDTO selectAllForSeller(PageRequestDTO pageRequestDTO) {
+
+        pageRequestDTO.setSize(10);
+        Pageable pageable = pageRequestDTO.getPageable("no");
+        Page<Tuple> pageObject = sellerRepository.selectAllSellerByType(pageRequestDTO, pageable);
+
+        List<SellerDTO> DTOList = pageObject.getContent().stream().map(tuple -> {
+            Seller seller = tuple.get(0, Seller.class);
+            User user = tuple.get(1, User.class);
+
+            SellerDTO sellerDTO = modelMapper.map(seller, SellerDTO.class);
+
+            UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+            String state = userDTO.getState();
+            String manage;
+            if(state.equals("정상") || state.equals("운영")){
+                manage = "중단";
+            }else if(state.equals("중단")){
+                manage = "재개";
+            }else{
+                manage = "승인";
+            }
+            userDTO.setManage(manage);
+            sellerDTO.setUser(userDTO);
+            return sellerDTO;
+        }).toList();
+
+        int total = (int) pageObject.getTotalElements();
+
+        log.info("total: {}", total);
+        log.info("sellerDTOList: {}", pageObject);
+
+        return PageResponseDTO.<SellerDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(DTOList)
+                .total(total)
+                .build();
+    }
+
+
+    public void modifySellerState(String uid, String state) {
+        Optional<User> userOpt = userRepository.findById(uid);
+        if(userOpt.isPresent()){
+            User user = userOpt.get();
+            String manage = user.getState();
+            if(manage.equals("정상")){
+                user.setState("중단");
+            }else if(manage.equals("중단")){
+                user.setState("재개");
+            }else {
+                user.setState("정상");
+            }
+            userRepository.save(user);
+        }
+    }
+
+    public PageResponseDTO searchAllForSeller(PageRequestDTO pageRequestDTO) {
+        pageRequestDTO.setSize(10);
+        Pageable pageable = pageRequestDTO.getPageable("no");
+        Page<Tuple> pageObject = sellerRepository.selectAllSellerByTypeAndKeyword(pageRequestDTO, pageable);
+
+        List<SellerDTO> DTOList = pageObject.getContent().stream().map(tuple -> {
+            Seller seller = tuple.get(0, Seller.class);
+            User user = tuple.get(1, User.class);
+
+            SellerDTO sellerDTO = modelMapper.map(seller, SellerDTO.class);
+
+            UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+            String state = userDTO.getState();
+            String manage;
+            if(state.equals("정상") || state.equals("운영")){
+                manage = "중단";
+            }else if(state.equals("중단")){
+                manage = "재개";
+            }else{
+                manage = "승인";
+            }
+            userDTO.setManage(manage);
+            sellerDTO.setUser(userDTO);
+            return sellerDTO;
+        }).toList();
+
+        int total = (int) pageObject.getTotalElements();
+
+        log.info("total: {}", total);
+        log.info("sellerDTOList: {}", pageObject);
+
+        return PageResponseDTO.<SellerDTO>builder()
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(DTOList)
                 .total(total)
