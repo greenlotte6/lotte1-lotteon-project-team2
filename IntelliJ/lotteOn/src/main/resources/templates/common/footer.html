@@ -9,14 +9,15 @@
     </div>
     <div class="footer_content">
         <div class="footer_content_detail">
-            <img src="/images/footer_logo.png" alt="">
+            <img th:src="@{/upload/{file}(file=${appInfo.footerLogo})}" alt="" style="width: 155px; height: 35px;">
             <div>
-                <p class="footer_title">LotteOn Project</p>
+                <p class="footer_title">[[${appInfo.companyName}]]</p>
                 <p>
-                    개발자 : 우상호, 최명기, 김소현, 오재영, 홍준혁 <br>
-                    주소 : 부산광역시 부산진구 부전동 266-2 그린컴퓨터아카데미 <br><br>
-                    사업자등록번호 : 529-85-00774(롯데쇼핑(주) e커머스사업부) <br>
-                    통신판매업 신고 : 2024-서울강남-04439 사업자 정보 확인 <br>
+                    개발자 : 우상호, 최명기, 김소현, 오재영 <br>
+                    대표이사 : [[${appInfo.ceoName}]] <br>
+                    주소 : [[${appInfo.addr1}]] [[${appInfo.addr2}]] <br>
+                    사업자등록번호 : [[${appInfo.businessNumber}]] <br>
+                    통신판매업 신고 : [[${appInfo.onlineSalesNumber}]] 사업자 정보 확인 <br>
                     호스팅 서비스사업자 : 롯데쇼핑(주) e커머스사업부 <br>
                 </p>
 
@@ -29,8 +30,9 @@
             <div>
                 <p class="footer_sub_title">고객센터</p>
                 <p>
-                    전화번호 : 1899-7000(유료) <br>
-                    E-mail : lotteon@lotte.net <br>
+                    전화번호 : [[${appInfo.hp}]](유료) <br>
+                    E-mail : [[${appInfo.email}]]  <br>
+                    엄무 시간 : [[${appInfo.workingHours}]] <br>
                     <a href="#" class="a_deco">분쟁해결기준</a><br> <!-- 정적 페이지 이동 (연결 할 페이지 없으면 삭제 예정)-->
                     <a href="#" class="footer_btn">
                         FAQ 보기
@@ -48,8 +50,9 @@
 
                 <p class="footer_sub_title">전자금융거래 분쟁 담당</p>
                 <p>
-                    Tel : 1899-7000(유료)
-                    E-mail : lotteon@lotte.net
+                    Tel : [[${appInfo.hp}]](유료) <br>
+                    E-mail : [[${appInfo.email}]]
+                    분쟁담당 : [[${appInfo.efinDispute}]]
                 </p>
                 <a href="#" class="a_deco">안전거래센터</a>
             </div>

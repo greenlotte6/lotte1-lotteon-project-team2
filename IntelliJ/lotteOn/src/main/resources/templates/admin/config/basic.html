@@ -79,27 +79,27 @@
                         <p>브라우저 탭, 헤더 및 푸터 노출 로고입니다.</p>
                     </div>
                     
-                    <form action="#" enctype="multipart/form-data"  class="m-50">
+                    <form th:action="@{/admin/config/image/modify}" enctype="multipart/form-data" method="post"  class="m-50">
                         <table class="version_table">
                             <tr>
                                 <td>헤더 로고</td>
                                 <td>
-                                    <input type="file" name="headerLogo">
-                                    <span>크기 370 x 76 권장</span>
+                                    <input type="file" name="file1">
+                                    <span>크기 370 x 76 권장 : [[${config.headerLogo}]]</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>푸터 로고</td>
                                 <td>
-                                    <input type="file" name="footerLogo">
-                                    <span>크기 155 x 36 권장</span>
+                                    <input type="file" name="file2">
+                                    <span>크기 155 x 36 권장 : [[${config.footerLogo}]]</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>파비콘</td>
                                 <td>
-                                    <input type="file" name="favicon">
-                                    <span>크기 32 x 32 권장</span>
+                                    <input type="file" name="file3">
+                                    <span>크기 32 x 32 권장 : [[${config.favicon}]]</span>
                                 </td>
                             </tr>
                         </table>
@@ -160,30 +160,30 @@
                         <p>푸터에 노출되는 고객센터 정보 입니다.</p>
                     </div>
 
-                    <form action="#" class="m-50">
+                    <form th:action="@{/admin/config/customer/modify}" method="post" class="m-50">
                         <table class="version_table">
                             <tr>
                                 <td>전화번호</td>
                                 <td>
-                                    <input type="text" value="02-1234-5678" name="hp">
+                                    <input type="text" th:value="${config.hp}" name="hp">
                                 </td>
                             </tr>
                             <tr>
                                 <td>업무시간</td>
                                 <td>
-                                    <input type="text" value="평일 09:00 ~ 18:00" name="time">
+                                    <input type="text" th:value="${config.workingHours}" name="workingHours">
                                 </td>
                             </tr>
                             <tr>
                                 <td>이메일</td>
                                 <td>
-                                    <input type="text" value="lotteon@lotte.net" name="email">
+                                    <input type="text" th:value="${config.email}" name="email">
                                 </td>
                             </tr>
                             <tr>
                                 <td>전자금융거래 분쟁담당</td>
                                 <td>
-                                    <input type="text" value="1234-1234" name="dispute">
+                                    <input type="text" th:value="${config.efinDispute}" name="efinDispute">
                                 </td>
                             </tr>
                         </table>

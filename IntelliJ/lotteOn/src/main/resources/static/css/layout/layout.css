@@ -188,6 +188,11 @@ footer > .footer_content{
     color: #757575;
 }
 
+.footer_content_detail img{
+    width: 155px;
+    height: 35px;
+}
+
 .a_deco{
     text-decoration: underline;
     color: #757575;
