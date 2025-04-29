@@ -1,5 +1,7 @@
 package kr.co.lotteon.dto.feedback;
 
+import kr.co.lotteon.dto.product.ProductDTO;
+import kr.co.lotteon.dto.user.UserDTO;
 import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -13,6 +15,9 @@ import java.time.LocalDateTime;
 public class ReviewDTO {
 
     private int rno;              // 리뷰 번호
+
+    private UserDTO writer;
+    private ProductDTO product;
 
     private String uid;           // 작성자 아이디 (User.uid)
     private int prodNo;           // 상품 번호 (Product.prodNo)

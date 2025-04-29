@@ -109,21 +109,19 @@
                                     </tr>
                                 </tbody>
                                 <tbody>
-                                    <tr>
-                                        <td>2022-12-13</td>
+                                <tr th:each="point, i : ${pointDTO.dtoList}">
+                                    <td>수정예정</td>
+                                    <th:block th:if="${point.point > 0}">
                                         <td>적립</td>
-                                        <td>202212101</td>
-                                        <td>340원</td>
-                                        <td>상품구매확정</td>
-                                        <td>2024-12-10</td>
-                                    </tr>
-                                        <td>2022-12-13</td>
-                                        <td>적립</td>
-                                        <td>202212101</td>
-                                        <td>340원</td>
-                                        <td>상품구매확정</td>
-                                        <td>2024-12-10</td>
-                                    </tr>
+                                    </th:block>
+                                    <th:block th:if="${point.point < 0}">
+                                        <td>사용</td>
+                                    </th:block>
+                                    <td th:text="${point.pointNo}"></td>
+                                    <td th:text="${point.point}"></td>
+                                    <td th:text="${point.pointDesc}"></td>
+                                    <td th:text="${#temporals.format(point.expiryDate, 'yyyy-MM-dd')}"></td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>

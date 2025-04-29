@@ -10,6 +10,7 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 public interface InquiryRepositoryCustom {
 
+
     public Page<Tuple> selectAllForList(PageRequestDTO pageRequestDTO, Pageable pageable);
 
 }

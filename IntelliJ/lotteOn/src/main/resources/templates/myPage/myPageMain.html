@@ -335,45 +335,14 @@
                                     </tr>
                                 </tbody>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>고객센터</td>
-                                        <td>주문 / 결제</td>
-                                        <td>신용카드 결제 중 오류난 경우 어떻게 하나요?</td>
-                                        <td>2022-12-12</td>
-                                        <td class="state">검토중</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>고객센터</td>
-                                        <td>주문 / 결제</td>
-                                        <td>신용카드 결제 중 오류난 경우 어떻게 하나요?</td>
-                                        <td>2022-12-12</td>
-                                        <td class="state">답변완료</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>고객센터</td>
-                                        <td>주문 / 결제</td>
-                                        <td>신용카드 결제 중 오류난 경우 어떻게 하나요?</td>
-                                        <td>2022-12-12</td>
-                                        <td class="state">답변완료</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>판매자 게시판</td>
-                                        <td>배송</td>
-                                        <td>신용카드 결제 중 오류난 경우 어떻게 하나요?</td>
-                                        <td>2022-12-12</td>
-                                        <td class="state">답변완료</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>고객센터</td>
-                                        <td>주문 / 결제</td>
-                                        <td>신용카드 결제 중 오류난 경우 어떻게 하나요?</td>
-                                        <td>2022-12-12</td>
-                                        <td class="state">답변완료</td>
+                                    <tr th:each="inquiry, i : ${inquiryDTO.dtoList}">
+                                        <td th:text="${inquiryDTO.startNo - i.index}"></td>
+                                        <td th:text="${inquiry.channel}"></td>
+                                        <td th:text="${inquiry.cateV1}"></td>
+                                        <td><a th:href="@{/cs/qna/view(no=${inquiry.no})}">[[${inquiry.title}]]</a></td>
+                                        <td th:text="${inquiry.user.name} + 삭제예정"></td>
+                                        <td th:text="${#temporals.format(inquiry.wdate, 'yyyy-MM-dd')}"></td>
+                                        <td class="state" th:text="${inquiry.state}"></td>
                                     </tr>
                                 </tbody>
                             </table>
