@@ -10,6 +10,24 @@
 
     <!-- 사이드바-->
     <script src="/js/admin/sidebar.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function (){
+        document.getElementById("list").addEventListener("click", function () {
+          window.location.href = "/admin/cs/qna/list";
+        });
+
+        const no = document.getElementById("no").value;
+
+        document.getElementById("delete").addEventListener("click", function () {
+          window.location.href = "/admin/cs/qna/delete?deleteNo=" + no;
+        });
+
+        document.getElementById("reply").addEventListener("click", function () {
+          window.location.href = "/admin/cs/qna/reply?no=" + no;
+        });
+      })
+    </script>
   </head>
   <body>
     <div id="wrapper">
@@ -37,41 +55,38 @@
             <div class="Blank_box"></div>
 
             <table class="reply_list_form">
+              <input type="hidden" id="no" th:value="${inquiryDTO.no}" >
               <tbody>
                 <tr>
                   <td class="label">유형</td>
-                  <td>회원 - 가입</td>
+                  <td>[[${inquiryDTO.cateV1}]] - [[${inquiryDTO.cateV2}]] </td>
                 </tr>
 
                 <tr>
                   <td class="label">제목</td>
-                  <td>개인회원과 법인회원의 차이가 있나요?</td>
+                  <td>[[${inquiryDTO.title}]]</td>
                 </tr>
 
                 <tr>
                   <td class="label">내용</td>
-                  <td>
-                    개인회원하고 법인회원하고 차이를 알고 싶어요. 그리고
-                    법인회원으로 가입하면 혜택이 있나요? 마지막으로
-                    법인가입하려면 어떻게 해야하죠? 알려주세요
+                  <td style="min-height: 60px; height: auto;">
+                    [[${inquiryDTO.content}]]
                   </td>
                 </tr>
 
                 <tr>
                   <td class="label">답변</td>
                   <td>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Veniam magni dolores debitis! Sapiente voluptatibus id fuga
-                    totam! Labore totam laudantium accusamus reiciendis dicta
-                    adipisci fugit aliquam maxime facere recusandae? Natus.
+                    [[${inquiryDTO.answer}]]
                   </td>
                 </tr>
               </tbody>
             </table>
 
             <div class="button_group">
-              <button type="button" class="delete_button">삭제</button>
-              <button type="button" class="list_button">목록</button>
+              <button type="button" class="delete_button" id="delete">삭제</button>
+              <button type="button" class="delete_button" id="reply" style="background-color: #57C479">답변</button>
+              <button type="button" class="list_button" id="list">목록</button>
             </div>
           </article>
         </section>

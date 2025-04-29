@@ -27,36 +27,36 @@
   border-bottom: 1px solid #dddddd;
 }
 
-.member_list_form table thead th:nth-child(1) {
+.member_list_form table th:nth-child(1) {
   width: 20px;
 }
 
-.member_list_form table thead th:nth-child(2) {
+.member_list_form table th:nth-child(2) {
   width: 38px;
 }
 
-.member_list_form table thead th:nth-child(3) {
-  width: 58px;
+.member_list_form table th:nth-child(3) {
+  width: 80px;
 }
 
-.member_list_form table thead th:nth-child(4) {
-  width: 58px;
+.member_list_form table th:nth-child(4) {
+  width: 80px;
 }
 
-.member_list_form table thead th:nth-child(5) {
-  width: 38px;
+.member_list_form table th:nth-child(5) {
+  width: 150px;
 }
 
-.member_list_form table thead th:nth-child(6) {
-  width: 100px;
-}
-
-.member_list_form table thead th:nth-child(7) {
+.member_list_form table th:nth-child(6) {
   width: 60px;
 }
 
-.member_list_form table thead th:nth-child(8) {
-  width: 140px;
+.member_list_form table th:nth-child(7) {
+  width: 80px;
+}
+
+.member_list_form table th:nth-child(8) {
+  width: 80px;
 }
 
 .member_list_form table thead th:nth-child(9) {

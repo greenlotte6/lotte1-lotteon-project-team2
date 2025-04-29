@@ -466,11 +466,44 @@ public class AdminController {
         return "/admin/qna/list";
     }
 
+    //문의하기 보기
+    @GetMapping("/cs/qna/view")
+    public String qnaView(@RequestParam("no") int no, Model model){
+        InquiryDTO inquiryDTO = adminService.findInquiryByNo(no);
+        model.addAttribute(inquiryDTO);
+        return "/admin/qna/view";
+    }
+
+    //문의하기 답변
+    @GetMapping("/cs/qna/reply")
+    public String qnaReply(@RequestParam("no") int no, Model model){
+        InquiryDTO inquiryDTO = adminService.findInquiryByNo(no);
+        model.addAttribute(inquiryDTO);
+        return "/admin/qna/reply";
+    }
+
     //문의하기 삭제
     @GetMapping("/cs/qna/delete")
     public String qnaDeleteList(@RequestParam("deleteNo") List<Integer> deleteNos) {
         adminService.deleteQnaByList(deleteNos);
         return "redirect:/admin/cs/qna/list";
+    }
+
+    //문의하기 답변
+    @PostMapping("/cs/qna/reply")
+    public String qnaReply(@RequestParam("no") int no, @RequestParam("answer") String answer){
+        adminService.replyQna(no,answer);
+        return "redirect:/admin/cs/qna/view?no=" + no;
+    }
+    
+    //문의하기 검색
+    @GetMapping("/cs/qna/search")
+    public String qnaSearch(Model model, PageRequestDTO pageRequestDTO){
+        PageResponseDTO pageResponseDTO = adminService.findAllQnaByType(pageRequestDTO);
+        System.out.println(pageResponseDTO);
+        pageResponseDTO.setSortType(pageRequestDTO.getSortType());
+        model.addAttribute(pageResponseDTO);
+        return "/admin/qna/listSearch";
     }
 
     //채용하기 목록

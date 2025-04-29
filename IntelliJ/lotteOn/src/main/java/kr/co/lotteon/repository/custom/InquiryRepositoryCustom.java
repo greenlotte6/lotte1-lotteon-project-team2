@@ -12,4 +12,5 @@ public interface InquiryRepositoryCustom {
 
     public Page<Tuple> selectAllForList(PageRequestDTO pageRequestDTO, Pageable pageable);
 
+    Page<Tuple> selectAllQnaByType(PageRequestDTO pageRequestDTO, Pageable pageable);
 }
