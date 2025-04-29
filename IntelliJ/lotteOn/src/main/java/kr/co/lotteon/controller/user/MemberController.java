@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import kr.co.lotteon.dto.seller.SellerDTO;
 import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.entity.config.Terms;
+import kr.co.lotteon.entity.seller.Seller;
 import kr.co.lotteon.service.seller.SellerService;
 import kr.co.lotteon.service.user.EmailService;
 import kr.co.lotteon.service.user.TermsService;
@@ -170,6 +171,26 @@ public class MemberController {
     public String findIdByEmail(Model model) {
 
         return "/member/findIdResult";
+    }
+
+
+    // 판매회원 - 사업자등록번호로 아이디 찾기
+    @PostMapping("/member/findIdResult/seller")
+    public String findSellerIdByBizNo(@RequestParam("bizNum") String bizNum,
+                                      Model model) {
+        Optional<Seller> sellerOpt = sellerService.findByBizRegNo(bizNum);
+        if (sellerOpt.isPresent()) {
+            Seller seller = sellerOpt.get();
+            User user = seller.getUser(); // Seller 엔티티에 매핑된 User 엔티티를 가져온다.
+
+            model.addAttribute("name", user.getName());
+            model.addAttribute("uid", user.getUid());
+            model.addAttribute("regDate", user.getRegDate());
+            return "/member/findIdResult";  // 성공 시 아이디 결과 페이지로 이동
+        } else {
+            model.addAttribute("error", "일치하는 판매회원이 없습니다.");
+            return "/member/findAccount"; // 실패 시 다시 찾기 페이지로
+        }
     }
 
 
