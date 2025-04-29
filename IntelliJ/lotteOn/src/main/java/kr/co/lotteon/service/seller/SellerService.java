@@ -12,6 +12,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Slf4j
 @Service
@@ -21,10 +23,10 @@ public class SellerService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
-    
+
     /*
-    * 판매자 등록
-    * */
+     * 판매자 등록
+     * */
     public void saveSeller(UserDTO userDTO, SellerDTO sellerDTO) {
 
         userDTO.setName(sellerDTO.getCompany());
@@ -46,5 +48,10 @@ public class SellerService {
         Seller seller = modelMapper.map(sellerDTO, Seller.class);
         sellerRepository.save(seller);
 
+    }
+
+
+    public Optional<Seller> findByBizRegNo(String bizRegNo) {
+        return sellerRepository.findByBizRegNo(bizRegNo);
     }
 }
