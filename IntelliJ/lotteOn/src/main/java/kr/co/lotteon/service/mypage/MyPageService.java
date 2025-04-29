@@ -1,16 +1,19 @@
 package kr.co.lotteon.service.mypage;
 
 import kr.co.lotteon.dto.article.InquiryDTO;
+import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.feedback.ReviewDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.point.PointDTO;
 import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.entity.article.Inquiry;
+import kr.co.lotteon.entity.coupon.Coupon;
 import kr.co.lotteon.entity.feedback.Review;
 import kr.co.lotteon.entity.point.Point;
 import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.article.InquiryRepository;
+import kr.co.lotteon.repository.coupon.CouponRepository;
 import kr.co.lotteon.repository.feedback.ReviewRepository;
 import kr.co.lotteon.repository.point.PointRepository;
 import kr.co.lotteon.repository.user.UserRepository;
@@ -33,6 +36,7 @@ public class MyPageService {
     private final InquiryRepository inquiryRepository;
     private final ReviewRepository reviewRepository;
     private final PointRepository pointRepository;
+    private final CouponRepository couponRepository;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
 
@@ -61,6 +65,28 @@ public class MyPageService {
                 .dtoList(inquiryDTOList)
                 .total(total)
                 .build();
+    }
+
+    public PageResponseDTO<CouponDTO> couponFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO){
+
+        User user = modelMapper.map(userDTO, User.class);
+
+        Pageable pageable = pageRequestDTO.getPageable("cno");
+
+        Page<Coupon> pageCoupon = couponRepository.findAllByUser(user, pageable);
+
+        List<CouponDTO> couponDTOList = pageCoupon.getContent().stream()
+                .map(coupon -> modelMapper.map(coupon, CouponDTO.class))
+                .collect(Collectors.toList());
+
+        int total = (int) pageCoupon.getTotalElements();
+
+        return PageResponseDTO.<CouponDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(couponDTOList)
+                .total(total)
+                .build();
+
     }
 
 
@@ -106,25 +132,27 @@ public class MyPageService {
                 .dtoList(pointDTOList)
                 .total(total)
                 .build();
-        /*
+    }
+
+    public PageResponseDTO<PointDTO> searchPoint(UserDTO userDTO, PageRequestDTO pageRequestDTO, String startDate, String endDate, String search){
+
         User user = modelMapper.map(userDTO, User.class);
 
         Pageable pageable = pageRequestDTO.getPageable("pointNo");
 
-        Page<Point> pagePoint = pointRepository.findAllByUid(user, pageable);
+        Page<Point> pagePoint = pointRepository.searchPoints(user, search, startDate, endDate, pageable);
 
-        List<PointDTO> pointList = pagePoint.getContent().stream()
-                .map(point ->modelMapper.map(point, PointDTO.class))
+        List<PointDTO> pointDTOList = pagePoint.getContent().stream()
+                .map(point -> modelMapper.map(point, PointDTO.class))
                 .collect(Collectors.toList());
 
         int total = (int) pagePoint.getTotalElements();
 
         return PageResponseDTO.<PointDTO>builder()
                 .pageRequestDTO(pageRequestDTO)
-                .dtoList(pointList)
+                .dtoList(pointDTOList)
                 .total(total)
                 .build();
-*/
     }
 
 

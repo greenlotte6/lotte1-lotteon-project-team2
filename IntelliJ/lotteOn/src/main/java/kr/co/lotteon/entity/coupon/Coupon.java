@@ -47,7 +47,9 @@ public class Coupon {
 
     private int usedCount; // 사용한 횟수
     private int issueCount; // 발급한 쿠폰수
-
+    
+    private int minPrice; // 최소 금액 조건
+    
     @PrePersist
     public void prePersist() {
         if (this.state == null) {

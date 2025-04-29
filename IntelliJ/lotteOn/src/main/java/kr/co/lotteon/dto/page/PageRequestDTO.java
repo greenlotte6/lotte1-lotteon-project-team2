@@ -23,8 +23,13 @@ public class PageRequestDTO {
     @Builder.Default
     private int size = 12;
 
+
+    // 추가 필드 (검색)
     private String searchType;
     private String keyword;
+
+    private String startDate;
+    private String endDate;
 
     // 추가 필드 (상품 목록 정렬용)
     private String sortType;

@@ -29,6 +29,10 @@ public class PageResponseDTO<T> {
     private String searchType;
     private String keyword;
 
+    private String startDate;
+    private String endDate;
+
+
     private double avgRate;
 
     @Builder
@@ -41,6 +45,9 @@ public class PageResponseDTO<T> {
 
         this.searchType = pageRequestDTO.getSearchType();
         this.keyword = pageRequestDTO.getKeyword();
+
+        this.startDate = pageRequestDTO.getStartDate();
+        this.endDate = pageRequestDTO.getEndDate();
 
         this.startNo = total - ((pg - 1) * size);
 
