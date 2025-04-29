@@ -21,6 +21,7 @@ public class OrderDTO {
     private LocalDateTime orderDate; // 주문 일자
     private String orderSender;    // 보내는 사람
     private String senderHp;       // 보내는 사람 연락처
+
     private String orderReceiver;  // 받는 사람
     private String receiverHp;     // 받는 사람 연락처
     private String orderContent;   // 배송 요청사항
