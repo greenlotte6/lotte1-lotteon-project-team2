@@ -11,51 +11,6 @@
     <!-- 사이드바-->
     <script src="/js/admin/sidebar.js"></script>
 
-    <!-- 차트 -->
-    <!-- 차트 스크립트 하나로 통합 -->
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-  google.charts.load('current', {'packages':['bar', 'corechart']});
-  google.charts.setOnLoadCallback(drawAllCharts);
-
-  function drawAllCharts() {
-    drawBarChart();
-    drawPieChart();
-  }
-
-  function drawBarChart() {
-    var data = google.visualization.arrayToDataTable([
-      ['day', '주문', '결제', '취소'],
-      ['10-10', 1000, 400, 200],
-      ['10-11', 1170, 460, 250],
-      ['10-12', 660, 1120, 300],
-      ['10-13', 1030, 540, 350],
-      ['10-14', 1030, 540, 350]
-    ]);
-
-    var options = { chart: {} };
-
-    var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
-    chart.draw(data, google.charts.Bar.convertOptions(options));
-  }
-
-  function drawPieChart() {
-    var data = google.visualization.arrayToDataTable([
-      ['Task', 'Hours per Day'],
-      ['가전',  8],
-      ['식품',  4],
-      ['의류',  2],
-      ['기타',  2],
-    ]);
-
-    var options = {
-      title: '주요매출'
-    };
-
-    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-    chart.draw(data, options);
-  }
-</script>
 
     
 </head>
@@ -89,7 +44,7 @@
                     <table class="version_table" style="margin-bottom: 50px;">
                         <tr>
                             <td>사이드 버전</td>
-                            <td>1.0.1-RELEASE</td>
+                            <td>[[${appInfo.appVersion}]]</td>
                         </tr>
                     </table>
 
@@ -99,18 +54,18 @@
                         <p>브라우저 탭, 헤더 및 푸터 노출 정보입니다.</p>
                     </div>
 
-                    <form action="#" class="m-50">
+                    <form th:action="@{/admin/config/site/modify}" method="post" class="m-50">
                         <table class="version_table">
                             <tr>
                                 <td>제목</td>
                                 <td>
-                                    <input type="text" value="롯데 ON" name="title">
+                                    <input type="text" name="title" th:value="${config.title}">
                                 </td>
                             </tr>
                             <tr>
                                 <td>부재</td>
                                 <td>
-                                    <input type="text" value="더나은쇼핑을위한선택" name="sub_title">
+                                    <input type="text" name="subTitle" th:value="${config.subTitle}">
                                 </td>
                             </tr>
                         </table>
@@ -157,42 +112,42 @@
                         <p>푸터에 노출되는 기업 정보 입니다.</p>
                     </div>
 
-                    <form action="#" class="m-50">
+                    <form th:action="@{/admin/config/company/modify}" method="post"  class="m-50">
                         <table class="version_table">
                             <tr>
                                 <td>상호명</td>
                                 <td>
-                                    <input type="text" value="롯데쇼핑주식회사" name="businessName">
+                                    <input type="text" th:value="${config.companyName}" name="companyName">
                                 </td>
                             </tr>
                             <tr>
                                 <td>대표이사</td>
                                 <td>
-                                    <input type="text" value="홍길동" name="ceo">
+                                    <input type="text" th:value="${config.ceoName}" name="ceoName">
                                 </td>
                             </tr>
                             <tr>
                                 <td>사업자등록번호</td>
                                 <td>
-                                    <input type="text" value="123-12-12345" name="bizNumber">
+                                    <input type="text" th:value="${config.businessNumber}" name="businessNumber">
                                 </td>
                             </tr>
                             <tr>
                                 <td>통신판매업신고</td>
                                 <td>
-                                    <input type="text" value="2024-서울강남-1234" name="mailOrderNumber">
+                                    <input type="text" th:value="${config.onlineSalesNumber}" name="onlineSalesNumber">
                                 </td>
                             </tr>
                             <tr>
                                 <td>기본주소</td>
                                 <td>
-                                    <input type="text" value="서울특별시강남구테헤란로 507" name="addr1">
+                                    <input type="text" th:value="${config.addr1}" name="addr1">
                                 </td>
                             </tr>
                             <tr>
                                 <td>상세주소</td>
                                 <td>
-                                    <input type="text" value="(삼성동 , WeWork 빌딩) 7층" name="addr2">
+                                    <input type="text" th:value="${config.addr2}" name="addr2">
                                 </td>
                             </tr>
                         </table>
@@ -241,12 +196,12 @@
                         <p>푸터에 노출되는 카피라이트 정보 입니다.</p>
                     </div>
 
-                    <form action="#" class="m-50">
+                    <form th:action="@{/admin/config/copyright/modify}" method="post" class="m-50">
                         <table class="version_table">
                             <tr>
                                 <td>카피라이트</td>
                                 <td>
-                                    <input type="text" value="Copyright@LotteOn. All rights reserved" name="Copyright">
+                                    <input type="text" th:value="${config.copyright}" name="copyright">
                                 </td>
                             </tr>
                         </table>

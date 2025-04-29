@@ -6,11 +6,13 @@ import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.article.NoticeDTO;
 import kr.co.lotteon.dto.article.RecruitDTO;
 import kr.co.lotteon.dto.category.MainCategoryDTO;
+import kr.co.lotteon.dto.config.ConfigDTO;
 import kr.co.lotteon.dto.config.TermsDTO;
 import kr.co.lotteon.dto.config.VersionDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
+import kr.co.lotteon.dto.point.PointDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.dto.product.ProductDetailDTO;
 import kr.co.lotteon.dto.product.ProductImageDTO;
@@ -59,8 +61,36 @@ public class AdminController {
 
     //기본설정
     @GetMapping("/config/basic")
-    public String config() {
+    public String config(Model model) {
+        ConfigDTO configDTO = configService.findSite();
+        model.addAttribute("config", configDTO);
         return "/admin/config/basic";
+    }
+
+    // 사이트 설정 정보 변경(제목, 소제목)
+    @PostMapping("/config/site/modify")
+    public String modifyConfig(@RequestParam("title") String title
+                            , @RequestParam("subTitle") String subTitle) {
+        configService.modifyTitleAndSubTitle(title, subTitle);
+        return "redirect:/admin/config/basic";
+    }
+
+    @PostMapping("/config/copyright/modify")
+    public String modifyConfig(@RequestParam("copyright") String copyright) {
+        configService.modifyCopyright(copyright);
+        return "redirect:/admin/config/basic";
+    }
+
+    @PostMapping("/config/company/modify")
+    public String modifyCompany(ConfigDTO configDTO) {
+        configService.modifyCompany(configDTO);
+        return "redirect:/admin/config/basic";
+    }
+
+    @PostMapping("/config/customer/modify")
+    public String modifyCustomer(ConfigDTO configDTO) {
+        configService.modifyCustomer(configDTO);
+        return "redirect:/admin/config/basic";
     }
 
     //배너설정
@@ -84,13 +114,9 @@ public class AdminController {
     public void modifyTerms(@RequestBody Map<String, String> payload) {
         String cate = payload.get("cate");
         String content = payload.get("content");
-
         configService.modify(cate, content);
 
     }
-
-
-
 
     // 카테고리 (미완성)
     @GetMapping("/config/category")
@@ -131,9 +157,13 @@ public class AdminController {
 
     //상점 목록
     @GetMapping("/shop/list")
-    public String shopList(){
+    public String shopList(PageRequestDTO pageRequestDTO, Model model){
+        PageResponseDTO pageResponseDTO = adminService.selectAllForSeller(pageRequestDTO);
+        model.addAttribute(pageResponseDTO);
         return "/admin/shop/list";
     }
+
+    //상점 변경하기
 
     //관리자 매출현황
     @GetMapping("/shop/sales")
@@ -149,7 +179,23 @@ public class AdminController {
         userDTO.setRegip(regip);
         sellerService.saveSeller(userDTO, sellerDTO);
 
-        return "/admin/main";
+        return "redirect:/admin/shop/list";
+    }
+
+    //판매자 등급 변경
+    @GetMapping("/shop/modify")
+    public String modify(@RequestParam("uid") String uid,
+                         @RequestParam("state") String state){
+        adminService.modifySellerState(uid, state);
+        return "redirect:/admin/shop/list";
+    }
+
+    //판매자 검색
+    @GetMapping("/shop/search")
+    public String shopSearch(PageRequestDTO pageRequestDTO, Model model){
+        PageResponseDTO pageResponseDTO = adminService.searchAllForSeller(pageRequestDTO);
+        model.addAttribute(pageResponseDTO);
+        return "/admin/shop/listSearch";
     }
 
     /*
@@ -177,7 +223,7 @@ public class AdminController {
     public String productList(PageRequestDTO pageRequestDTO, Model model){
         PageResponseDTO pageResponseDTO = adminService.selectAllForList(pageRequestDTO);
         model.addAttribute(pageResponseDTO);
-        return "/admin/product/list";
+     return "/admin/product/list";
     }
 
     @GetMapping("/product/search")
@@ -238,8 +284,7 @@ public class AdminController {
         model.addAttribute("categoryDTOS", categoryDTOS);
         model.addAttribute("product", productDTO);
 
-        System.out.println(productDTO);
-        return "redirect:/admin/product/list";
+        return "/admin/product/modify";
     }
 
     // 상품 수정 기능
@@ -251,6 +296,8 @@ public class AdminController {
 
         // 이미지 저장
         imageService.modifyImage(productImageDTO, savedProduct);
+
+        PointDTO pointDTO = new PointDTO();
 
         //상품 상세 정보 저장
         adminService.modifyProductDetail(savedProduct, productDetailDTO);

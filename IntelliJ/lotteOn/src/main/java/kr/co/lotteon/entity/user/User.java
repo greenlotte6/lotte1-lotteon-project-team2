@@ -27,6 +27,7 @@ public class User {
     private String addr2;   // 자세한 주소
     private String regip;   // IP주소
     private String state;   // 상태(정상,중지,휴먼,탈퇴)
+    private String ssn; // 주민번호
 
     @CreationTimestamp
     private LocalDateTime regDate;     // 가입일자
