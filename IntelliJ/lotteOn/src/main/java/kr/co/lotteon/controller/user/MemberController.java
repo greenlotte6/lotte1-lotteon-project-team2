@@ -5,6 +5,7 @@ import kr.co.lotteon.dto.seller.SellerDTO;
 import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.entity.config.Terms;
 import kr.co.lotteon.service.seller.SellerService;
+import kr.co.lotteon.service.user.EmailService;
 import kr.co.lotteon.service.user.TermsService;
 import kr.co.lotteon.service.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -26,6 +29,7 @@ public class MemberController {
     private final UserService userService;
     private final TermsService termsService;
     private final SellerService sellerService;
+    private final EmailService emailService;
 
 
 
@@ -112,6 +116,26 @@ public class MemberController {
         return "/member/EmailAuth";
     }
 
+    @PostMapping("/member/EmailAuth")
+    public String emailAuthSubmit(@RequestParam String email,
+                                  @RequestParam String authCode,
+                                  Model model) {
+        // 1. 서버에서 email, authCode 검증하는 로직 (필요하면)
+
+        // 2. 검증 완료 → DB에서 email로 회원 찾기
+        Optional<User> userOpt = userService.findByEmail(email);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            model.addAttribute("name", user.getName());
+            model.addAttribute("uid", user.getUid());
+            model.addAttribute("regDate", user.getRegDate());
+            return "/member/findIdResult"; // 결과 뷰로 이동
+        } else {
+            model.addAttribute("error", "일치하는 회원이 없습니다.");
+            return "/member/EmailAuth"; // 다시 이메일 입력 페이지
+        }
+    }
+
     @GetMapping("/member/findAccount")
     public String findAccount() {
         return "/member/findAccount";
@@ -123,7 +147,8 @@ public class MemberController {
     }
 
 
-    @PostMapping("/member/findIdResult")
+    // 폰인증
+    @PostMapping("/member/findIdResult/phone")
     public String findUserId(@RequestParam String name,
                              @RequestParam String hp,
                              Model model) {
@@ -139,6 +164,15 @@ public class MemberController {
             return "/member/phoneAuth";
         }
     }
+
+    //이메일 인증
+    @PostMapping("/member/findIdResult/email")
+    public String findIdByEmail(Model model) {
+
+        return "/member/findIdResult";
+    }
+
+
     @GetMapping("/member/phoneAuth")
     public String phoneAuth() {
         return "/member/phoneAuth";
@@ -147,6 +181,24 @@ public class MemberController {
     @GetMapping("/member/resetPass")
     public String resetPass() {
         return "/member/resetPass";
+    }
+
+    @PostMapping("/member/sendEmailAuth")
+    @ResponseBody
+    public Map<String, Object> sendEmailAuth(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+
+        String authCode = emailService.sendAuthCode(email);
+
+        Map<String, Object> result = new HashMap<>();
+        if (authCode != null) {
+            result.put("status", "success");
+            result.put("authCode", authCode);
+        } else {
+            result.put("status", "fail");
+            result.put("message", "이메일 발송 실패");
+        }
+        return result;
     }
 
 

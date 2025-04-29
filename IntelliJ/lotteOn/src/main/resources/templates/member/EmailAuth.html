@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>이메일 인증 폼</title>
   <link rel="stylesheet" th:href="@{/css/member/phoneAuth.css}" />
+  <script defer th:src="@{/js/member/emailAuth.js}"></script>
 </head>
 <body>
 <div class="container">
@@ -13,16 +14,26 @@
   </header>
 
   <section>
-    <h2><strong>이메일</strong>을 <br />입력해주세요</h2>
+    <form th:action="@{/user/member/EmailAuth}" method="post" id="emailForm">
+      <h2><strong>이메일</strong>을 <br />입력해주세요</h2>
 
-    <form action="#" method="post">
-      <input
-              type="email"
-              name="email"
-              placeholder="이메일을 입력해주세요"
-              required
-      />
-      <button type="submit">다음</button>
+      <!-- 이메일 입력 -->
+      <input type="email" id="email" name="email" placeholder="이메일 입력" required />
+
+      <!-- 인증번호 요청 버튼 -->
+      <button type="button" id="btnSendEmail">인증번호 받기</button>
+
+      <!-- 인증번호 입력칸 (초기 숨김) -->
+      <div id="codeBox" style="display: none; margin-top: 20px;">
+        <input type="text" id="authCode" name="authCode" placeholder="인증번호 입력" required />
+        <button type="button" id="btnVerifyCode">인증 확인</button>
+      </div>
+
+      <!-- ⏱ 타이머 박스 추가 -->
+      <div id="timerBox" style="margin-top:10px; font-weight:bold; color:red;"></div>
+
+      <!-- 다음 버튼 (초기 비활성화) -->
+      <button type="submit" id="nextBtn" disabled>다음</button>
     </form>
   </section>
 </div>
