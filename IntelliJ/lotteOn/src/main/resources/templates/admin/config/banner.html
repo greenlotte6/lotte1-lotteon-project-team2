@@ -88,104 +88,12 @@
 
                         <div style="margin-top: 20px;">
                             <button type="submit" class="config_btn" style="background-color: #BFBFBF; float: left;">선택삭제</button>
-                            <button id="banner_register" class="config_btn" style="float: right;">배너등록</button>
+                            <button type="button" id="banner_register" class="config_btn" style="float: right;">배너등록</button>
                         </div>
                         
                     </form>
-                    
-                    <!-- 배너 등록 모달 -->
-                    <div class="modal">
-                        <div class="modal_popup">
-                            <div class="modal_head">
-                                <span class="modal_title">배너등록</span>
-                                <button type="button" class="close_btn">X</button>
-                            </div>
 
-                            <div class="modal_main">
-                                <form action="">
-                                    <table class="modal_banner">
-                                        <tr>
-                                            <td>배너이름</td>
-                                            <td>
-                                                <input type="text" placeholder="배너명입력">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>배너크기입력</td>
-                                            <td>
-                                                <input type="text" placeholder="배너크기입력">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>배너배경색입력</td>
-                                            <td>
-                                                <input type="text" placeholder="배너배경색입력">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>배너링크입력</td>
-                                            <td>
-                                                <input type="text" placeholder="배너링크입력">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>배너위치</td>
-                                            <td>
-                                                <select name="location">
-                                                    <option value="선택">선택</option>
-                                                    <option value="헤더">헤더</option>
-                                                    <option value="메인">메인</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>노출날짜</td>
-                                            <td>
-                                                <div style="float: left;">
-                                                    <input type="date"> ~ <input type="date">
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>노출시간</td>
-                                            <td>
-                                                <div style="float: left;">
-                                                    <input type="time"> ~ <input type="time">
-                                                </div>
-                                                
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>배너링크입력</td>
-                                            <td>
-                                                <input type="file"> <span>노출 위치에 맞는 크기 권장</span>
-                                            </td>
-                                        </tr>
-                                    </table>
-
-                                    <button type="submit" class="modal_btn">등록하기</button>
-                                </form>
-                                
-                            </div>
-                        </div>
-                    </div>
-
-                    <script>
-                        const modal = document.querySelector('.modal');
-                        const modalOpen = document.querySelector('#banner_register');
-                        const modalClose = document.querySelector('.close_btn');
-
-                        //열기 버튼을 눌렀을 때 모달팝업이 열림
-                        modalOpen.addEventListener('click',function(){
-                            //'on' class 추가
-                            modal.classList.add('on');
-                        });
-                        //닫기 버튼을 눌렀을 때 모달팝업이 닫힘
-                        modalClose.addEventListener('click',function(){
-                            //'on' class 제거
-                            modal.classList.remove('on');
-                        });
-                    </script>
+                    <th:block th:include="/admin/inc/modal/bannerModel"/>
                 
 
                 </article>
