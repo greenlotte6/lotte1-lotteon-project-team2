@@ -24,17 +24,17 @@
 
       <div class="result-box-item">
         <span class="label">이름</span>
-        <span class="value" th:text="${name}">홍길동</span>
+        <span class="value" th:text="${name}"></span>
       </div>
 
       <div class="result-box-item">
         <span class="label">아이디</span>
-        <span class="value" th:text="${uid}">hong123</span>
+        <span class="value" th:text="${uid}"></span>
       </div>
 
       <div class="result-box-item">
         <span class="label">가입일자</span>
-        <span class="value" th:text="${regDate}">2024-01-15</span>
+        <span class="value" th:text="${#temporals.format(regDate, 'yyyy-MM-dd')}"></span>
       </div>
     </div>
 

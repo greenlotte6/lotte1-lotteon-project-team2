@@ -1,6 +1,9 @@
 package kr.co.lotteon.security;
 
+import jakarta.servlet.http.Cookie;
 import kr.co.lotteon.oauth2.Oauth2UserService;
+import kr.co.lotteon.repository.user.UserRepository;
+import kr.co.lotteon.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +13,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @RequiredArgsConstructor
 @EnableMethodSecurity(prePostEnabled = true)
@@ -17,6 +21,8 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private final Oauth2UserService oauth2UserService;
+    private final UserRepository userRepository;
+    private final CustomLoginSuccessHandler customLoginSuccessHandler;
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
@@ -27,13 +33,28 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/")
                 .failureUrl("/user/member/login?code=100")
                 .usernameParameter("uid")
-                .passwordParameter("pass"));
+                .passwordParameter("pass")
+                .successHandler(customLoginSuccessHandler)
+        );
 
         // 로그아웃 설정
         http.logout(logout -> logout
                 .logoutUrl("/user/logout")
+                .logoutSuccessHandler((request, response, authentication) -> {
+                    // ✅ 쿠키 삭제
+                    Cookie cookie = new Cookie("autoLogin", null);
+                    cookie.setPath("/");
+                    cookie.setMaxAge(0); // 즉시 만료
+                    response.addCookie(cookie);
+
+                    // 세션 무효화
+                    request.getSession().invalidate();
+
+                    // 리다이렉트
+                    response.sendRedirect("/user/member/login?code=101");
+                })
                 .invalidateHttpSession(true)
-                .logoutSuccessUrl("/user/member/login?code=101"));
+        );
 
         // ✅ OAuth2 로그인 설정
         http.oauth2Login(oauth2 -> oauth2
@@ -51,6 +72,10 @@ public class SecurityConfig {
                 .requestMatchers("/my/*").hasAnyRole("USER", "SELLER", "ADMIN")
                 .anyRequest().permitAll());
 
+
+        // ✅ 자동 로그인 필터 등록
+        http.addFilterBefore(autoLoginFilter(), UsernamePasswordAuthenticationFilter.class);
+
         // 기타 보안 설정
         http.csrf(AbstractHttpConfigurer::disable);
 
@@ -61,6 +86,11 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder(){
         // Security 암호화 인코더 설정
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AutoLoginFilter autoLoginFilter() {
+        return new AutoLoginFilter(userRepository); // 필요하다면 생성자에 UserService 등 주입
     }
 
 }
