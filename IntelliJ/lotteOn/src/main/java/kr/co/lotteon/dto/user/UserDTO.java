@@ -26,6 +26,7 @@ public class UserDTO{
     private String ssn;
 
     private LocalDateTime regDate;     // 가입일자
+    private LocalDateTime updateDate;  // 변경날짜(마이페이지)
     private LocalDateTime leaveDate;   // 탈퇴일자
     private LocalDateTime lastLoginAt; // 최근 로그인 날짜
 

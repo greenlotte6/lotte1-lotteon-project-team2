@@ -31,6 +31,9 @@ public class User {
 
     @CreationTimestamp
     private LocalDateTime regDate;     // 가입일자
+
+    @CreationTimestamp
+    private LocalDateTime updateDate;  // 변경 날짜(마이페이지)
     private LocalDateTime leaveDate;   // 탈퇴일자
     private LocalDateTime lastLoginAt; // 최근 로그인 날짜
 
