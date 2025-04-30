@@ -7,14 +7,10 @@ import kr.co.lotteon.dto.config.TermsDTO;
 import kr.co.lotteon.dto.config.VersionDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
-import kr.co.lotteon.dto.product.ProductDTO;
-import kr.co.lotteon.dto.product.ProductImageDTO;
 import kr.co.lotteon.entity.config.Banner;
 import kr.co.lotteon.entity.config.Config;
 import kr.co.lotteon.entity.config.Terms;
 import kr.co.lotteon.entity.config.Version;
-import kr.co.lotteon.entity.product.Product;
-import kr.co.lotteon.entity.product.ProductImage;
 import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.config.BannerRepository;
 import kr.co.lotteon.repository.config.ConfigRepository;
@@ -30,8 +26,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -248,6 +242,33 @@ public class ConfigService {
             return "회원로그인 상단배너";
         }else{
             return "마이페이지";
+        }
+    }
+
+    // 배너 상태 변경하기(활성/비활성)
+    public void changeBanner(int bno, String state) {
+        Optional<Banner> bannerOpt = bannerRepository.findById(bno);
+        if(bannerOpt.isPresent()){
+            Banner banner = bannerOpt.get();
+            banner.setState(state);
+            bannerRepository.save(banner);
+        }
+    }
+
+    // 배너 지우기
+    public void deleteBanner(List<Integer> deleteVnos) {
+        for(int num : deleteVnos){
+            bannerRepository.deleteById(num);
+        }
+    }
+
+    public BannerDTO findBanner(String cate) {
+
+        List<Banner> bannerList = bannerRepository.findBannerByCate(cate);
+        if(bannerList.isEmpty()){
+            return null;
+        }else{
+            return modelMapper.map(bannerList.get(0), BannerDTO.class);
         }
     }
 }

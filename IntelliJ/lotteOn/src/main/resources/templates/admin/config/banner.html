@@ -11,8 +11,53 @@
     <!-- 사이드바-->
     <script src="/js/admin/sidebar.js"></script>
 
-    
-    
+
+    <style>
+        .operation{
+            color: #36B04B;
+        }
+
+        .stop{
+            color: #F40000;
+        }
+
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function (){
+
+            // 전체 체크박스
+            const deleteAllCheckbox = document.getElementById('deleteAll');
+
+            // 개별 체크박스
+            const deleteCheckboxes = document.querySelectorAll('input[name="deleteNo"]');
+
+            deleteAllCheckbox.addEventListener('change', function () {
+                const isChecked = this.checked;
+                deleteCheckboxes.forEach(cb => cb.checked = isChecked);
+            });
+
+            // 선택삭제 버튼 validation
+            document.querySelector('.banner_form').addEventListener('submit', function(e) {
+                const checked = document.querySelectorAll('input[name="deleteNo"]:checked');
+                if (checked.length === 0) {
+                    e.preventDefault();
+                    alert('삭제할 항목을 선택해주세요.');
+                } else {
+                    const confirmDelete = confirm('선택한 항목을 정말 삭제하시겠습니까?');
+                    if (!confirmDelete) {
+                        e.preventDefault();
+                    }
+                }
+            });
+
+
+        });
+
+    </script>
+
+
+
 </head>
 <body>
     <div id="wrapper">
@@ -46,10 +91,10 @@
                     </div>
                     <p class="title">[[${title}]]</p>
 
-                    <form action="#" class="banner_form">
+                    <form th:action="@{/admin/config/banner/delete}" class="banner_form">
                         <table class="banner_table">
                             <thead>
-                                <th><input type="checkbox"></th>
+                                <th><input type="checkbox" id="deleteAll"></th>
                                 <th>번호</th>
                                 <th>이미지</th>
                                 <th>배너정보</th>
@@ -64,7 +109,7 @@
                             <tbody>
                                 <tr th:each="banner : ${bannerDTOS}">
                                     <td>
-                                        <input type="checkbox" th:value="${banner.bno}">
+                                        <input type="checkbox" th:value="${banner.bno}" name="deleteNo">
                                     </td>
                                     <td>[[${banner.bno}]]</td>
                                     <td><img th:src="@{/upload/{version}(version=${banner.SName})}" alt=""></td>
@@ -79,10 +124,10 @@
                                     <td>[[${banner.endDay}]]</td>
                                     <td>[[${banner.startTime}]]</td>
                                     <td>[[${banner.endTime}]]</td>
-                                    <td>[[${banner.state}]]</td>
+                                    <td th:class="${banner.state == '활성'} ? 'operation' : 'stop'">[[${banner.state}]]</td>
                                     <td>
-                                        <a th:href="@{/admin/config/banner/change(bno=${banner.bno}, cate=${banner.cate})}">[활성화]</a><br>
-                                        <a th:href="@{/admin/config/banner/change(bno=${banner.bno})}">[비활성]</a>
+                                        <a th:href="@{/admin/config/banner/change(bno=${banner.bno}, cate=${banner.cate}, state='활성' )}">[활성화]</a><br>
+                                        <a th:href="@{/admin/config/banner/change(bno=${banner.bno}, cate=${banner.cate}, state='비활성')}">[비활성]</a>
                                     </td>
                                 </tr>
                             </tbody>

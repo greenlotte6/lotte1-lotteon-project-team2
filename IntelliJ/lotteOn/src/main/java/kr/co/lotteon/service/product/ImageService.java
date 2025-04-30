@@ -3,9 +3,11 @@ package kr.co.lotteon.service.product;
 import kr.co.lotteon.dto.config.BannerDTO;
 import kr.co.lotteon.dto.config.ConfigDTO;
 import kr.co.lotteon.dto.product.ProductImageDTO;
+import kr.co.lotteon.entity.config.Banner;
 import kr.co.lotteon.entity.config.Config;
 import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.entity.product.ProductImage;
+import kr.co.lotteon.repository.config.BannerRepository;
 import kr.co.lotteon.repository.config.ConfigRepository;
 import kr.co.lotteon.repository.product.ProductImageRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.swing.text.html.Option;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -26,6 +29,7 @@ import java.util.UUID;
 public class ImageService {
 
     private final ProductImageRepository productImageRepository;
+    private final BannerRepository bannerRepository;
     private final ConfigRepository configRepository;
     private final ModelMapper modelMapper;
 
@@ -252,5 +256,15 @@ public class ImageService {
         bannerDTO.setSName(sName);
         uploadImage(bannerDTO.getFile(), sName);
         return bannerDTO;
+    }
+
+    public void deleteBanner(List<Integer> deleteVnos) {
+        for(int num : deleteVnos){
+            Optional<Banner> bannerOpt = bannerRepository.findById(num);
+            if(bannerOpt.isPresent()){
+                Banner banner = bannerOpt.get();
+                deleteImage(banner.getSName());
+            }
+        }
     }
 }

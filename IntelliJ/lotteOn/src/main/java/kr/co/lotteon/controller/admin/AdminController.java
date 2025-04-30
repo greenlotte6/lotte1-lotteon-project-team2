@@ -104,6 +104,9 @@ public class AdminController {
         return "redirect:/admin/config/basic";
     }
 
+    /*
+    * 배너
+    * */
 
     //배너설정
     @GetMapping("/config/banner")
@@ -124,17 +127,36 @@ public class AdminController {
         // 이미지 저장 메서드
         BannerDTO newBannerDTO = imageService.saveBanner(bannerDTO);
         configService.saveBanner(bannerDTO);
-        System.out.println("bannerDTO = " + bannerDTO);
         return "redirect:/admin/config/banner";
     }
 
+    // 배너 변경하기(활성/비활성)
     @GetMapping("/config/banner/change")
-    public String bannerChange(@RequestParam("bno") String bno
-                                , @RequestParam("cate") String cate) {
-        System.out.println("bno = " + bno);
-        System.out.println("cate = " + cate);
+    public String bannerChange(@RequestParam("bno") int bno
+                                , @RequestParam("cate") String cate
+                                , @RequestParam("state") String state) {
+        configService.changeBanner(bno, state);
         return "redirect:/admin/config/banner?cate=" + cate;
     }
+
+    // 배너 삭제하기
+    // 버전삭제
+    @GetMapping("/config/banner/delete")
+    public String deleteBanners(@RequestParam("deleteNo") List<Integer> deleteVnos) {
+
+        //배너 이미지 지우기
+        imageService.deleteBanner(deleteVnos);
+
+        //배너 지우고
+        configService.deleteBanner(deleteVnos);
+        return "redirect:/admin/config/banner";
+    }
+
+
+
+    /*
+    * 약관
+    * */
 
     //약관관리
     @GetMapping("/config/policy")
