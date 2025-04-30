@@ -152,14 +152,12 @@
             if (sortType) {
                 requestUrl += `&sortType=${sortType}`;
             }
-            console.log('AJAX 요청 URL:', requestUrl);
             fetch(requestUrl)
                 .then(response => response.json())
                 .then(data => {
                     updateReviewListUI(data);
                 })
                 .catch(error => {
-                    console.error('리뷰 목록을 가져오는 데 실패했습니다:', error);
                 });
         }
         function handlePaginationClick(event) {
@@ -190,79 +188,185 @@
         const couponModal = document.getElementById('couponModal');
         const couponListDiv = document.getElementById('couponList');
         const companySpan = document.querySelector('.department');
-        if (couponButton && couponModal && couponListDiv && companySpan) {
-            couponButton.addEventListener('click', function() {
+        const selectedCoupons = new Map(); // 선택된 쿠폰 저장 (couponId: element)
+        const applyCouponButton = couponModal ? couponModal.querySelector('.modal-buttons button') : null;
+
+        if (couponButton && couponModal && couponListDiv && companySpan && applyCouponButton) {
+            couponButton.addEventListener('click', function () {
                 const companyName = companySpan.textContent.trim();
                 const couponUrl = `/product/coupon?company=${companyName}`;
-                fetch(couponUrl)
+
+
+                fetch(couponUrl, {
+                    method: 'GET',
+                    credentials: 'include'
+                })
                     .then(response => {
                         console.log('AJAX 응답:', response);
+
+                        // ✅ 로그인 리다이렉트 여부 확인
+                        if (response.redirected) {
+                            const currentUrl = window.location.href;
+                            const prod = currentUrl.split("=")[1];
+                            window.location.href = "/product/ViewLoginCheck?prodNo=" + prod;
+                            return;
+                        }
+
                         if (!response.ok) {
                             throw new Error(`HTTP error! status: ${response.status}`);
                         }
+
                         return response.json();
                     })
                     .then(coupons => {
-                        console.log('받은 쿠폰 데이터:', coupons);
-                        couponListDiv.innerHTML = ''; // 기존 내용 비우기
-                        const currentDate = new Date();
-                        const oneDay = 24 * 60 * 60 * 1000; // 밀리초 단위의 하루
+                        if (!coupons) return;
 
-                        if (Array.isArray(coupons) && coupons.length > 0) {
-                            coupons.forEach(coupon => {
-                                const couponItem = document.createElement('div');
-                                couponItem.classList.add('coupon-item');
-                                couponItem.innerHTML = `
-                        <p>${coupon.benefit}</p>
-                        <p>${coupon.couponName}</p>
-                        <p>쿠폰 종류: ${coupon.couponType}</p>
-                    `;
-                                const validToDate = new Date(coupon.validTo);
-                                const timeDiff = validToDate.getTime() - currentDate.getTime();
-                                const daysLeft = Math.ceil(timeDiff / oneDay);
-                                if (daysLeft < 7 && daysLeft >= 0) {
-                                    const tooltip = document.createElement('span');
-                                    tooltip.classList.add('coupon-expiry');
-                                    tooltip.textContent = `${daysLeft}일 남음`;
-                                    couponItem.appendChild(tooltip);
-                                }
-                                couponListDiv.appendChild(couponItem);
-                            });
-                        } else if (coupons) { // 단일 CouponDTO 처리 (배열이 아닐 경우)
+                        // --- 기존 쿠폰 처리 및 모달 표시 로직 ---
+                        couponListDiv.innerHTML = '';
+                        const currentDate = new Date();
+                        const oneDay = 24 * 60 * 60 * 1000;
+
+                        const handleCouponClick = function (couponData, element) {
+                            const couponId = couponData.cno;
+                            const validTo = couponData.validTo;
+                            if (selectedCoupons.has(couponId)) {
+                                element.style.border = '';
+                                selectedCoupons.delete(couponId);
+                                console.log('Coupon Deselected:', { cno: couponId, validTo: validTo });
+                            } else {
+                                element.style.border = '2px solid red';
+                                selectedCoupons.set(couponId, element);
+                                console.log('Coupon Selected:', { cno: couponId, validTo: validTo });
+                            }
+                        };
+
+                        const renderCouponItem = (coupon) => {
                             const couponItem = document.createElement('div');
                             couponItem.classList.add('coupon-item');
                             couponItem.innerHTML = `
-                        <p>${coupons.benefit}</p>
-                        <p>${coupons.couponName}</p>
-                        <p>쿠폰 종류: ${coupons.couponType}</p>
+                        <p>${coupon.benefit}</p>
+                        <p>${coupon.couponName}</p>
+                        <p>쿠폰 종류: ${coupon.couponType} (${coupon.minPrice} 이상 구매 시 사용 가능)</p>
+                        <input type="hidden" class="coupon-id" value="${coupon.cno}">
                     `;
-                            const validToDate = new Date(coupons.validTo);
+                            couponItem.dataset.cno = coupon.cno;
+                            couponItem.dataset.validto = coupon.validTo;
+
+                            const validToDate = new Date(coupon.validTo);
                             const timeDiff = validToDate.getTime() - currentDate.getTime();
                             const daysLeft = Math.ceil(timeDiff / oneDay);
+
                             if (daysLeft < 7 && daysLeft >= 0) {
                                 const tooltip = document.createElement('span');
                                 tooltip.classList.add('coupon-expiry');
                                 tooltip.textContent = `${daysLeft}일 남음`;
                                 couponItem.appendChild(tooltip);
                             }
+                            couponItem.addEventListener('click', function () {
+                                handleCouponClick(coupon, this);
+                            });
                             couponListDiv.appendChild(couponItem);
-                        } else {
+                        };
+
+                        if (!coupons || (Array.isArray(coupons) && coupons.length === 0) || (typeof coupons === 'object' && !coupons.cno && !Array.isArray(coupons)) ) {
                             couponListDiv.innerHTML = '<p>현재 적용 가능한 쿠폰이 없습니다.</p>';
+                        } else if (Array.isArray(coupons)) {
+                            coupons.forEach(renderCouponItem);
+                        } else if (coupons && typeof coupons === 'object' && coupons.cno) {
+                            renderCouponItem(coupons);
                         }
+
                         couponModal.style.display = 'block';
+                        selectedCoupons.clear();
+
                     })
+                    .catch(error => {
+                        console.error('Error fetching or processing coupons:', error);
+                        couponListDiv.innerHTML = '<p>쿠폰 정보를 불러오는 중 오류가 발생했습니다.</p>';
+                        couponModal.style.display = 'block';
+                    });
             });
+
+            // --- 모달 닫기 및 적용 버튼 로직 ---
             const couponCloseButton = couponModal.querySelector('.close-button');
             if (couponCloseButton) {
-                couponCloseButton.addEventListener('click', function() {
+                couponCloseButton.addEventListener('click', function () {
                     couponModal.style.display = 'none';
                 });
             }
-            window.addEventListener('click', function(event) {
+
+            window.addEventListener('click', function (event) {
                 if (event.target == couponModal) {
                     couponModal.style.display = 'none';
                 }
             });
+
+            if (applyCouponButton) {
+                applyCouponButton.addEventListener('click', function () {
+                    if (selectedCoupons.size > 0) {
+                        const companyName = companySpan.textContent.trim();
+                        applyCouponButton.disabled = true;
+                        applyCouponButton.textContent = '요청 중...';
+
+                        const requests = [];
+
+                        selectedCoupons.forEach((couponElement, cnoKey) => {
+                            const couponCno = couponElement.dataset.cno;
+                            const couponValidTo = couponElement.dataset.validto;
+
+                            const singleCouponPayload = {
+                                issuedBy: companyName,
+                                cno: couponCno,
+                                validTo: couponValidTo
+                            };
+
+                            const request = fetch('/product/couponIssue', {
+                                method: 'POST',
+                                credentials: 'include',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(singleCouponPayload)
+                            })
+                                .then(response => response.text())
+                                .then(message => {
+                                    console.log(`[응답 메시지] ${couponCno}: ${message}`);
+                                    return message;
+                                })
+                                .catch(error => {
+                                    console.error(`Coupon CNO: ${couponCno} - Error:`, error);
+                                    return `쿠폰 ${couponCno} 발급 실패`;
+                                });
+
+                            requests.push(request);
+                        });
+
+                        Promise.all(requests).then(results => {
+                            // 모든 요청 완료 후 처리
+                            const successCount = results.filter(msg => msg.includes('발급되었습니다')).length;
+                            const failCount = results.length - successCount;
+
+                            if (successCount > 0) {
+                                alert(`쿠폰 ${successCount}개가 발급되었습니다.`);
+                            }
+                            if (failCount > 0) {
+                                alert(`쿠폰 ${failCount}개는 이미 발급받았거나 오류가 발생했습니다.`);
+                            }
+
+                            applyCouponButton.disabled = false;
+                            applyCouponButton.textContent = '할인 혜택 받기';
+                            couponModal.style.display = 'none';
+                            selectedCoupons.clear();
+                            couponListDiv.querySelectorAll('.coupon-item').forEach(item => item.style.border = '');
+                        });
+
+                    } else {
+                        alert('적용할 쿠폰을 선택해주세요.');
+                    }
+                });
+            }
+
+
+        } else {
+            console.warn('Coupon modal functionality requires .coupon button, #couponModal, #couponList, .department span, and apply button inside modal.');
         }
 
 
@@ -318,7 +422,6 @@
                 }
                 qnaContainer.appendChild(qnaPagination);
             } else {
-                console.error('유효하지 않은 Q&A 데이터:', qnaData);
             }
         }
         function fetchQnaList(page, prodNo) {
@@ -334,7 +437,6 @@
                     updateQnaListUI(data);
                 })
                 .catch(error => {
-                    console.error('Q&A 목록을 가져오는 데 실패했습니다:', error);
                 });
         }
         if (prodNoElement) {
@@ -355,7 +457,6 @@
         // Qna 모달 창 (이벤트 위임 방식)
         document.addEventListener('click', function(event) {
             if (event.target.classList.contains('qna_content')) {
-                console.log('qna_content 클릭 감지 (이벤트 위임)!');
 
                 var qnaModal = document.getElementById("qnaModal");
                 var modalInquiryContent = document.getElementById("modalInquiryContent");

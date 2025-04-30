@@ -3,6 +3,7 @@ package kr.co.lotteon.controller.product;
 
 import kr.co.lotteon.dao.ProductMapper;
 import kr.co.lotteon.dto.coupon.CouponDTO;
+import kr.co.lotteon.dto.coupon.CouponIssueDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
@@ -15,13 +16,16 @@ import kr.co.lotteon.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -32,8 +36,8 @@ public class ProductController {
     private final ProductDetailService productDetailService;
     private final ReviewService reviewService;
     private final InquiryService inquiryService;
-    private final CouponService couponService;
     private final ProductService productService;
+    private final CouponService couponService;
 
     // 상품 보기 - 첫 페이지 진입용
     @GetMapping("/product/view")
@@ -42,20 +46,21 @@ public class ProductController {
         String prodNo = pageRequestDTO.getProdNo();
         // 상품 + 상품이미지
         ProductDTO productDTO = productMapper.selectProductByProdNo(prodNo);
+
         // 상품 옵션 Split
         productDTO = productService.OptionSplit(productDTO);
+
         // 상품 상세
         ProductDetailDTO productDetailDTO = productDetailService.findByProdNo(pageRequestDTO);
         // 리뷰
         PageResponseDTO reviewPageResponseDTO = reviewService.selectAllForList(pageRequestDTO);
         // qna
         PageResponseDTO inquiryPageResponseDTO = inquiryService.selectAllForList(pageRequestDTO);
+
         model.addAttribute(productDTO);
         model.addAttribute(productDetailDTO);
         model.addAttribute("reviewPageResponseDTO", reviewPageResponseDTO);
         model.addAttribute("inquiryPageResponseDTO", inquiryPageResponseDTO);
-
-        log.info("inquiryPageResponseDTO: {}", inquiryPageResponseDTO);
 
         return "/product/view/view";
     }
@@ -74,21 +79,46 @@ public class ProductController {
     @ResponseBody
     public PageResponseDTO getQna(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setSize(5);
-        log.info("pageRequestDTO: {}", pageRequestDTO);
         PageResponseDTO pageResponseDTO = inquiryService.selectAllForList(pageRequestDTO);
-        log.info("pageResponseDTO: {}", pageResponseDTO);
         return pageResponseDTO;
     }
+
 
     // 쿠폰
     @GetMapping("/product/coupon")
     @ResponseBody
     public List<CouponDTO> coupon(@RequestParam String company) {
-        log.info("company: " + company);
         List<CouponDTO> couponDTOList = couponService.findAllByCompany(company);
-        log.info("couponDTOList: " + couponDTOList);
-       return couponDTOList;
+        return couponDTOList;
     }
+
+
+    // 쿠폰 - 인가 처리 리다이렉트
+    @GetMapping("/product/ViewLoginCheck")
+    public String viewLoginCheck(@RequestParam("prodNo") String prodNo) {
+        log.info("##### /product/ViewLoginCheck 진입. prodNo: {}", prodNo);
+        return "redirect:/product/view?prodNo=" + prodNo;
+    }
+
+
+    // 쿠폰 발급받기
+    @PostMapping("/product/couponIssue")
+    @ResponseBody
+    public ResponseEntity<String> couponIssue(@RequestBody CouponIssueDTO couponIssueDTO,
+                                              @AuthenticationPrincipal UserDetails userDetails) {
+
+        log.info("couponIssueDTO: " + couponIssueDTO);
+
+        //서비스 자리
+        int result = couponService.couponIssue(couponIssueDTO, userDetails);
+        if (result == 1) {
+            return ResponseEntity.ok("쿠폰이 발급되었습니다.");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("쿠폰 발급 중 오류가 발생했습니다.");
+        }
+    }
+
 
     // 주문하기
     @GetMapping("/product/order")

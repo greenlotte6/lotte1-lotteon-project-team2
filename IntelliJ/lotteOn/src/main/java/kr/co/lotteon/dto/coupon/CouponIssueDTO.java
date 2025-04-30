@@ -26,12 +26,16 @@ public class CouponIssueDTO {
 
     private LocalDate usedDate; //사용일
     private LocalDate regDate;  //등록일
-    private LocalDateTime endDate; //만료일
+
+    private String validTo; // 쿠폰 마감일
 
     private String issuedBy; // 발급자
 
+    private String cno;
+
     // 목록용 변수
     private String uid;
+
 
 }
 
