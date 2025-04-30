@@ -38,7 +38,7 @@
           <!-- 왼쪽 로그인 영역 -->
           <div class="login-left">
 
-            <form method="post">
+            <form method="post" th:action="@{/user/member/login}">
               <div class="login-main-row">
                 <!-- 입력 필드 -->
                 <div class="login-rows">
@@ -61,7 +61,7 @@
 
               <!-- 옵션 줄 -->
               <div class="login-options">
-                <label><input type="checkbox" /> 자동 로그인</label>
+                <label> <input type="checkbox" name="autoLogin" value="true" /> 자동 로그인</label>
                 <span>
                     | <a th:href="@{/user/member/findAccount}">아이디/비밀번호 찾기</a>
                     | <a th:href="@{/user/member/join}">회원가입</a>
@@ -85,7 +85,9 @@
 
           <!-- 오른쪽 배너 -->
           <div class="login-banner">
-            <div class="banner">420 × 260 배너 광고</div>
+            <div class="banner">
+              <img th:src="@{/images/member/banner.png}" alt="배너 광고" width="420" height="260" />
+            </div>
           </div>
         </div>
 

@@ -1,6 +1,9 @@
 package kr.co.lotteon.controller.user;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import kr.co.lotteon.dto.seller.SellerDTO;
 import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.entity.config.Terms;
@@ -38,6 +41,61 @@ public class MemberController {
     public String login() {
         return "/member/login";
     }
+
+    @PostMapping("/member/login")
+    public String login(@RequestParam String uid,
+                        @RequestParam String pass,
+                        @RequestParam(required = false) String autoLogin,
+                        HttpServletResponse response,
+                        HttpSession session,
+                        Model model) {
+
+        log.info("▶ [로그인 시도] uid: {}", uid);
+        log.info("▶ [전송된 autoLogin 값] = {}", autoLogin);
+
+        Optional<User> userOpt = userService.findByUidAndPass(uid, pass);
+
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            session.setAttribute("sessUser", user);
+            log.info("✅ 로그인 성공 - uid: {}", uid);
+
+            if (autoLogin != null) {
+                if ("true".equals(autoLogin)) {
+                    log.info("✅ 자동 로그인 활성화됨 - 쿠키 생성 시작");
+                    Cookie cookie = new Cookie("autoLogin", user.getUid());
+                    cookie.setMaxAge(60 * 60 * 24 * 7); // 7일 유지
+                    cookie.setPath("/");
+                    response.addCookie(cookie);
+                    log.info("✅ 자동 로그인 쿠키 생성 완료 (uid: {})", user.getUid());
+                } else {
+                    log.info("❕ autoLogin 값이 'true'가 아님 → 쿠키 생성 안함 (현재 값: {})", autoLogin);
+                }
+            } else {
+                log.info("❌ autoLogin 파라미터가 전송되지 않음 (체크박스 미선택)");
+            }
+
+            return "redirect:/"; // 메인으로 이동
+        } else {
+            log.warn("❌ 로그인 실패 - 아이디 또는 비밀번호 불일치: uid={}", uid);
+            model.addAttribute("error", "아이디 또는 비밀번호가 일치하지 않습니다.");
+            return "/member/login";
+        }
+    }
+
+    // 로그아웃 처리 - 자동 로그인 쿠키 제거
+    @GetMapping("/member/logout")
+    public String logout(HttpSession session, HttpServletResponse response) {
+        session.invalidate();
+
+        Cookie cookie = new Cookie("autoLogin", null);
+        cookie.setMaxAge(0); // 즉시 만료
+        cookie.setPath("/");
+        response.addCookie(cookie);
+
+        return "redirect:/";
+    }
+
 
     @GetMapping("/member/join")
     public String join() {
@@ -120,20 +178,59 @@ public class MemberController {
     @PostMapping("/member/EmailAuth")
     public String emailAuthSubmit(@RequestParam String email,
                                   @RequestParam String authCode,
+                                  HttpSession session,
                                   Model model) {
-        // 1. 서버에서 email, authCode 검증하는 로직 (필요하면)
 
-        // 2. 검증 완료 → DB에서 email로 회원 찾기
+        log.info("▶ 이메일 인증 요청: {}", email);
+        log.info("▶ 인증코드: {}", authCode);
+        String resetEmail = (String) session.getAttribute("resetEmail");
+
+        log.info("▶ 세션 저장된 인증 이메일: {}", resetEmail);
+
+        // ✅ [1] 비밀번호 재설정 흐름인 경우
+        if (resetEmail != null && resetEmail.equals(email)) {
+            if (session.getAttribute("resetUid") != null) {
+                session.setAttribute("findUid", session.getAttribute("resetUid"));
+                session.removeAttribute("resetUid");
+                session.removeAttribute("resetEmail");
+                log.info("✅ 비밀번호 재설정 요청 - resetPass로 이동");
+                return "redirect:/user/member/resetPass";
+            }
+        }
+
+        // ✅ [2] 일반적인 아이디 찾기 흐름 (resetEmail 없어도 실행)
         Optional<User> userOpt = userService.findByEmail(email);
+        log.info("▶ 유저 존재 여부: {}", userOpt.isPresent());
+
         if (userOpt.isPresent()) {
             User user = userOpt.get();
             model.addAttribute("name", user.getName());
             model.addAttribute("uid", user.getUid());
             model.addAttribute("regDate", user.getRegDate());
-            return "/member/findIdResult"; // 결과 뷰로 이동
+
+            log.info("✅ 일반 아이디 찾기 - findIdResult로 이동");
+            return "/member/findIdResult";
+        }
+
+        log.warn("❌ 인증 실패 또는 이메일이 존재하지 않음");
+        model.addAttribute("error", "인증에 실패했거나 존재하지 않는 이메일입니다.");
+        return "/member/EmailAuth";
+    }
+
+    @PostMapping("/member/password/emailAuth")
+    public String passwordEmailAuth(@RequestParam("uid") String uid,
+                                    HttpSession session,
+                                    Model model) {
+        Optional<User> userOpt = userService.findByUid(uid);
+
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            session.setAttribute("resetUid", user.getUid());    // UID 저장
+            session.setAttribute("resetEmail", user.getEmail()); // 이메일 저장
+            return "redirect:/user/member/EmailAuth";
         } else {
-            model.addAttribute("error", "일치하는 회원이 없습니다.");
-            return "/member/EmailAuth"; // 다시 이메일 입력 페이지
+            model.addAttribute("error", "존재하지 않는 아이디입니다.");
+            return "/member/findAccount";
         }
     }
 
@@ -194,6 +291,27 @@ public class MemberController {
     }
 
 
+    // 판매회원 - 비밀번호 재설정 단계
+    @PostMapping("/member/resetPass/seller")
+    public String resetSellerPass(@RequestParam String company,
+                                  @RequestParam String bizRegNo,
+                                  HttpSession session,
+                                  Model model) {
+        Optional<Seller> sellerOpt = sellerService.findByCompanyAndBizRegNo(company, bizRegNo);
+
+        if (sellerOpt.isPresent()) {
+            Seller seller = sellerOpt.get();
+            User user = seller.getUser();
+
+            session.setAttribute("findUid", user.getUid()); // UID 세션 저장
+            return "redirect:/user/member/resetPass";
+        } else {
+            model.addAttribute("error", "일치하는 판매자 정보가 없습니다.");
+            return "/member/findAccount";
+        }
+    }
+
+
     @GetMapping("/member/phoneAuth")
     public String phoneAuth() {
         return "/member/phoneAuth";
@@ -203,6 +321,25 @@ public class MemberController {
     public String resetPass() {
         return "/member/resetPass";
     }
+
+    @PostMapping("/member/resetPass")
+    public String updateSellerPassword(@RequestParam("newPassword") String newPassword,
+                                       HttpSession session,
+                                       Model model) {
+        String uid = (String) session.getAttribute("findUid");
+        if (uid == null) {
+            model.addAttribute("error", "인증된 사용자가 없습니다.");
+            return "/member/resetPass";
+        }
+
+        sellerService.updateSellerPassword(uid, newPassword);
+        session.removeAttribute("findUid");
+
+        return "redirect:/user/member/login";
+    }
+
+
+
 
     @PostMapping("/member/sendEmailAuth")
     @ResponseBody
