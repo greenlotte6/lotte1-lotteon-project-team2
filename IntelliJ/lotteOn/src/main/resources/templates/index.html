@@ -13,7 +13,8 @@
 </head>
 <body>
     <div id="wrapper">
-      <div class="advertisement">
+      <div class="advertisement"
+           th:style="'background-color:' + ${banner.color} +';'">
         <a th:href="${banner.link}">
           <img th:src="@{/upload/{image}(image=${banner.sName})}"
                th:style="'width:' + ${banner.width} + 'px;'
