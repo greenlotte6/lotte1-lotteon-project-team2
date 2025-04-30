@@ -35,4 +35,11 @@ public class Banner {
     private LocalDate endDay;    //노출날짜 끝
     private String state; // 활성/비활성
 
+    @PrePersist
+    public void prePersist() {
+        if (this.state == null) {
+            this.state = "활성";
+        }
+    }
+
 }
