@@ -14,15 +14,17 @@
     <div class="header_main">
       <div class="user_menu">
         <div>
-          <a href="#">로그인 |</a>
-          <a href="#">회원가입 |</a>
-          <a href="#">마이페이지 |</a>
-          <a href="#">장바구니</a>
+          <a th:href="@{/}">HOME |</a>
+          <a th:href="@{/user/member/login}">로그인 |</a>
+          <a th:href="@{/user/member/join}">회원가입 </a>
+
         </div>
       </div>
 
       <div class="logo">
+        <a href="/">
         <img th:src="@{/images/logo.png}" alt="lotteOn" />
+        </a>
       </div>
     </div>
   </header>
