@@ -126,7 +126,8 @@ footer > .footer_content{
 
 footer > .footer_version{
     padding: 10px;
-    height: 40px;
+    min-height: 40px;
+    height: auto;
     width: 100%;
     color: #757575;
     text-align: center;
