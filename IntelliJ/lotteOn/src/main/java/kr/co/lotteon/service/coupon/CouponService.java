@@ -2,6 +2,7 @@ package kr.co.lotteon.service.coupon;
 
 import jakarta.transaction.Transactional;
 import kr.co.lotteon.dto.coupon.CouponDTO;
+import kr.co.lotteon.dto.coupon.CouponIssueDTO;
 import kr.co.lotteon.entity.coupon.Coupon;
 import kr.co.lotteon.entity.coupon.CouponIssue;
 import kr.co.lotteon.entity.user.User;
@@ -41,6 +42,35 @@ public class CouponService {
                 .collect(Collectors.toList());
 
         return couponDTOList;
+    }
+
+    public int  couponIssue(CouponIssueDTO couponIssueDTO, UserDetails userDetails) {
+
+        User user = User.builder()
+                .uid(userDetails.getUsername())
+                .build();
+
+        Coupon coupon = Coupon.builder()
+                .cno(Long.parseLong(couponIssueDTO.getCno()))
+                .build();
+
+        CouponIssue couponIssue = modelMapper.map(couponIssueDTO, CouponIssue.class);
+
+        couponIssue.setUser(user);
+        couponIssue.setCoupon(coupon);
+
+        log.info("couponIssue: " + couponIssue);
+
+        Boolean exist = couponIssueRepository.existsByUserAndCoupon(user, coupon);
+
+        try {
+            if(!exist){
+                couponIssueRepository.save(couponIssue);
+            }
+            return 1;
+        }catch (Exception e) {
+            return 0;
+        }
     }
 
 
