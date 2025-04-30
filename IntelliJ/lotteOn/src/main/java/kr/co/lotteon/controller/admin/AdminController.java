@@ -6,6 +6,7 @@ import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.article.NoticeDTO;
 import kr.co.lotteon.dto.article.RecruitDTO;
 import kr.co.lotteon.dto.category.MainCategoryDTO;
+import kr.co.lotteon.dto.config.BannerDTO;
 import kr.co.lotteon.dto.config.ConfigDTO;
 import kr.co.lotteon.dto.config.TermsDTO;
 import kr.co.lotteon.dto.config.VersionDTO;
@@ -108,6 +109,14 @@ public class AdminController {
     @GetMapping("/config/banner")
     public String banner() {
         return "/admin/config/banner";
+    }
+    
+    
+    //배너 설정하기
+    @PostMapping("/config/banner/register")
+    public String bannerRegister(BannerDTO bannerDTO) {
+        System.out.println("bannerDTO = " + bannerDTO);
+        return "redirect:/admin/config/banner";
     }
 
     //약관관리
