@@ -13,6 +13,15 @@
 </head>
 <body>
     <div id="wrapper">
+      <div class="advertisement">
+        <a th:href="${banner.link}">
+          <img th:src="@{/upload/{image}(image=${banner.sName})}"
+               th:style="'width:' + ${banner.width} + 'px;'
+               +'height:' + ${banner.height} + 'px;'
+                "
+               alt="lotteOn">
+        </a>
+      </div>
       <th:block th:include="/common/header.html"/>
         <main>
             <div class="main-container">
