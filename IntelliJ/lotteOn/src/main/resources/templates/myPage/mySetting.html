@@ -13,6 +13,22 @@
     <script src="/js/myPage/postcode.js"></script>
     <script src="/js/myPage/mySetting.js"></script>
     <script src="/js/headerMenu.js"></script>
+
+    <style>
+        .readonly-style {
+            background-color: #f5f5f5;
+            border: none;
+            color: gray;
+        }
+
+        .editing {
+            background-color: white;
+            border: 1px solid #ccc;
+            color: black;
+        }
+
+    </style>
+
 </head>
 <body>
     <div id="wrapper">
@@ -55,7 +71,7 @@
                     <div class="title-area">
                         <h1>나의설정</h1>
                     </div>
-                    <div class="seller-info table-mySetting">
+                    <form class="seller-info table-mySetting" th:action="@{/my/info}" method="post">
                         <table>
                             <tbody>
                                 <tr>
@@ -74,54 +90,77 @@
                                 </tr>
                                 <tr>
                                     <td>생년월일</td>
-                                    <td th:text="${}">1990년 12월 31일</td>
+                                    <td>1990년 12월 31일(수정예정)</td>
                                 </tr>
                                 <tr>
                                     <td>Email</td>
                                     <td>
-                                        <input type="text" class="email-input">
+                                        <input th:value="${#strings.substring(userDTO.email, 0, userDTO.email.indexOf('@'))}"
+                                               name="email1"
+                                               type="text"
+                                               class="email-input readonly-style"
+                                               readonly>
                                         @
-                                        <input type="text" class="email-input" id="email-2nd">
+                                        <input th:value="${#strings.substring(userDTO.email, userDTO.email.indexOf('@') + 1)}"
+                                               name="email2"
+                                               type="text"
+                                               class="email-input readonly-style"
+                                               id="email-2nd"
+                                               readonly>
                                         <select name="" id="email-select">
                                             <option value="custom">직접입력</option>
                                             <option value="naver.com">naver.com</option>
                                             <option value="daum.net">daum.net</option>
                                             <option value="google.com">google.com</option>
                                         </select>
-                                        <button>수정</button>
+                                        <button class="editBtn" type="button">수정</button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>휴대폰</td>
                                     <td>
-                                        <input type="text" class="phone-input">
-                                        -
-                                        <input type="text" class="phone-input">
-                                        -
-                                        <input type="text" class="phone-input">
-                                        <button>수정</button>
+                                        <input type="text"
+                                               class="phone-input readonly-style"
+                                               th:value="${userDTO.phonePart1}"
+                                               name="phonePart1"
+                                               readonly> -
+                                        <input type="text"
+                                               class="phone-input readonly-style"
+                                               th:value="${userDTO.phonePart2}"
+                                               name="phonePart2"
+                                               readonly> -
+                                        <input type="text"
+                                               class="phone-input readonly-style"
+                                               th:value="${userDTO.phonePart3}"
+                                               name="phonePart3"
+                                               readonly>
+                                        <button class="editBtn" type="button">수정</button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>주소</td>
                                     <td>
-                                        <input type="text" id="zip" name="zip" placeholder="우편번호">
-                                        <button onclick="postcode()">우편번호검색</button><br>
-                                        <input type="text" id="address" name="address" placeholder="주소 검색" style="width: 600px;"><br>
-                                        <input type="text" id="address_detail" name="address_detail" placeholder="상세주소 입력" style="width: 600px;">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>탈퇴</td>
-                                    <td class="delete-btn">
-                                        <button>탈퇴하기</button>
+                                        <input th:value="${userDTO.zip}" type="text" id="zip" name="zip" placeholder="우편번호">
+                                        <button onclick="postcode()" type="button">우편번호검색</button>
+                                        <input th:value="${userDTO.addr1}" type="text" id="address" name="addr1" placeholder="주소 검색" style="width: 600px;"><br>
+                                        <input th:value="${userDTO.addr2}" type="text" id="address_detail" name="addr2" placeholder="상세주소 입력" style="width: 600px;">
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                         <div class="modify-btn">
-                            <button>수정하기</button>
+                            <button type="submit">수정하기</button>
                         </div>
+                    </form>
+                    <div class="delete-btn">
+                        <form th:action="@{/my/withdraw}" method="post" id="withdrawForm" onsubmit="return confirmWithdrawal()">
+                            <button type="submit">탈퇴하기</button>
+                        </form>
+                        <script>
+                            function confirmWithdrawal() {
+                                return confirm('정말로 탈퇴하시겠습니까? 탈퇴 시 계정이 비활성화됩니다.');
+                            }
+                        </script>
                     </div>
                 </article>
             </section>
