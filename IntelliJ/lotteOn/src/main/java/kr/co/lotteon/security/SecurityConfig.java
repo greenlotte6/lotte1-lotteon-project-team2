@@ -60,7 +60,7 @@ public class SecurityConfig {
         http.oauth2Login(oauth2 -> oauth2
                 .loginPage("/user/member/login") // OAuth2 로그인도 동일한 로그인 폼 사용
                 .userInfoEndpoint(userInfo -> userInfo
-                        .userService(oauth2UserService)) // 사용자 정보 후처리 서비스
+                .userService(oauth2UserService)) // 사용자 정보 후처리 서비스
                 .defaultSuccessUrl("/") // OAuth2 로그인 성공 시 이동 경로 (선택)
         );
         

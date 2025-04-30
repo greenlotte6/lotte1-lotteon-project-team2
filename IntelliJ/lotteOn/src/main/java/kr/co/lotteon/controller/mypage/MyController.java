@@ -42,8 +42,6 @@ public class MyController {
         // 세션 정보 가져오기
         String writer = userDetails.getUsername();
 
-        log.info("writer : " + writer);
-        
         // 로그인 유저 조회
         UserDTO userDTO = myPageService.findByUid(writer);
 
@@ -149,23 +147,7 @@ public class MyController {
         return "/myPage/myInquiry";
     }
 
-    @GetMapping("/my/info")
-    public String info(Model model, @AuthenticationPrincipal UserDetails userDetails) {
 
-        String uid = userDetails.getUsername();
-
-        UserDTO userDTO = myPageService.findByUid(uid);
-
-        myPageService.splitPhone(userDTO);
-
-        String formattedPhone = myPageService.joinPhone(userDTO);
-
-        userDTO.setHp(formattedPhone);
-
-        model.addAttribute("userDTO", userDTO);
-
-        return "/myPage/mySetting";
-    }
 
     // 나의 정보 수정
     @PostMapping("/my/info")
@@ -215,5 +197,25 @@ public class MyController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/my/info")
+    public String info(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+
+        String uid = userDetails.getUsername();
+
+        UserDTO userDTO = myPageService.findByUid(uid);
+
+        myPageService.splitPhone(userDTO);
+
+        String formattedPhone = myPageService.joinPhone(userDTO);
+
+        userDTO.setHp(formattedPhone);
+
+        model.addAttribute("userDTO", userDTO);
+
+
+        return "/myPage/mySetting";
+    }
+
 
 }

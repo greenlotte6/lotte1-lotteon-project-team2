@@ -76,7 +76,8 @@
                             <tbody>
                                 <tr>
                                     <td>사용자 ID</td>
-                                    <td th:text="${userDTO.uid}"></td>
+                                    <td th:if="${#strings.isEmpty(userDTO.provider)}" th:text="${userDTO.uid}"></td>
+                                    <td th:if="${not #strings.isEmpty(userDTO.provider)}" th:text="${userDTO.provider} + ' 로그인'"></td>
                                 </tr>
                                 <tr>
                                     <td>비밀번호</td>

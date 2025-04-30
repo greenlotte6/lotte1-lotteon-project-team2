@@ -1,0 +1,108 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* 전체 화면 높이 */
+    display: flex;
+    justify-content: center; /* 가로 가운데 */
+  }
+  
+  .container {
+    width: 442px;
+    padding: 40px;
+  }
+  
+  header img {
+    width: 122px;
+  }
+  
+  h2 {
+    font-size: 36px;
+  }
+  
+  .result-title,
+  .result-desc {
+    display: block;
+    margin-bottom: 40px; /* 줄 간격 여유 */
+  }
+  
+  .result-title {
+    font-size: 24px;
+  }
+  
+  .result-desc {
+    color: gray;
+  }
+  
+  
+  .result-box {
+    border: 1px solid #ddd;
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+    margin-top: 40px;
+    border-radius: 5px;
+  }
+  
+  .result-box-title {
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .result-box-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+  }
+  
+  .result-box-item input{
+    width: 100%;
+    height: 30px;
+    font-weight: 600;
+    color: #333;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  .label {
+    font-weight: 500;
+    color: #888;
+  }
+  
+  .value {
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .btn-box {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .btn-box button {
+    flex: 1;
+    height: 48px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .btn-reset {
+    background-color: white;
+    border: 1px solid #ccc;
+    color: #000;
+  }
+  
+  .btn-login {
+    background-color: #f44336;
+    color: white;
+    border: none;
+  }
+  
