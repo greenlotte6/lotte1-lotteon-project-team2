@@ -95,7 +95,7 @@ public class CouponService {
 
             // 쿠폰이 있을때만 등록
             if(!exist){
-                couponIssue.setEndDate(LocalDateTime.now().plusDays(coupon.getValidDaysAfterIssue()));
+                // couponIssue.setEndDate(LocalDateTime.now().plusDays(coupon.getValidDaysAfterIssue()));
                 couponIssueRepository.save(couponIssue);
             }
 

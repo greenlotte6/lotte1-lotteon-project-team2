@@ -111,7 +111,7 @@ public class AdminController {
 
         String title = configService.SelectTitle(cate);
         List<BannerDTO> bannerDTOS = configService.findBannerByCate(cate);
-        model.addAttribute(title);
+        model.addAttribute("title",title);
         model.addAttribute("bannerDTOS", bannerDTOS);
         return "/admin/config/banner";
     }
@@ -126,6 +126,14 @@ public class AdminController {
         configService.saveBanner(bannerDTO);
         System.out.println("bannerDTO = " + bannerDTO);
         return "redirect:/admin/config/banner";
+    }
+
+    @GetMapping("/config/banner/change")
+    public String bannerChange(@RequestParam("bno") String bno
+                                , @RequestParam("cate") String cate) {
+        System.out.println("bno = " + bno);
+        System.out.println("cate = " + cate);
+        return "redirect:/admin/config/banner?cate=" + cate;
     }
 
     //약관관리
