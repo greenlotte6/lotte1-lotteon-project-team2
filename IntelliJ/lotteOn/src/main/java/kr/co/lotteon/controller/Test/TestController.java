@@ -33,7 +33,6 @@ public class TestController {
     private final CouponService couponService;
     private final TestService testService;
 
-
     @GetMapping("/productTest/view")
     public String view(PageRequestDTO pageRequestDTO, Model model) {
         pageRequestDTO.setSize(5);
