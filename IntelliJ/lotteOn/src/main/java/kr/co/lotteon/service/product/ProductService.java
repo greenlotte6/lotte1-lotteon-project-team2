@@ -32,7 +32,6 @@ public class ProductService {
         Product product = productRepository.findById(prodNo).orElse(null);
 
         ProductDTO productDTO1 = modelMapper.map(product, ProductDTO.class);
-        System.out.println(productDTO1);
 
         String[] option = new String[6];
         String[][] str = new String[6][10];
