@@ -27,6 +27,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -44,7 +45,7 @@ public class MyPageService {
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
 
-    public PageResponseDTO<InquiryDTO> inquiryFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO){
+    public PageResponseDTO<InquiryDTO> inquiryFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO) {
 
         // 1. UserDTO → User Entity 변환
         User user = modelMapper.map(userDTO, User.class);
@@ -71,7 +72,7 @@ public class MyPageService {
                 .build();
     }
 
-    public PageResponseDTO<CouponDTO> couponFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO){
+    public PageResponseDTO<CouponDTO> couponFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO) {
 
         User user = modelMapper.map(userDTO, User.class);
 
@@ -94,7 +95,7 @@ public class MyPageService {
     }
 
 
-    public PageResponseDTO<ReviewDTO> reviewFindAll(String writer, PageRequestDTO pageRequestDTO){
+    public PageResponseDTO<ReviewDTO> reviewFindAll(String writer, PageRequestDTO pageRequestDTO) {
 
         Optional<User> optUser = userRepository.findByUid(writer);
         User user = optUser.get();
@@ -104,7 +105,7 @@ public class MyPageService {
         Page<Review> pageReview = reviewRepository.findAllByWriter(user, pageable);
 
         List<ReviewDTO> reviewList = pageReview.getContent().stream()
-                .map(review ->modelMapper.map(review, ReviewDTO.class))
+                .map(review -> modelMapper.map(review, ReviewDTO.class))
                 .collect(Collectors.toList());
 
         int total = (int) pageReview.getTotalElements();
@@ -117,7 +118,7 @@ public class MyPageService {
 
     }
 
-    public PageResponseDTO<PointDTO> pointFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO){
+    public PageResponseDTO<PointDTO> pointFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO) {
 
         User user = modelMapper.map(userDTO, User.class);
 
@@ -138,7 +139,7 @@ public class MyPageService {
                 .build();
     }
 
-    public PageResponseDTO<PointDTO> searchPoint(UserDTO userDTO, PageRequestDTO pageRequestDTO, String startDate, String endDate, String search){
+    public PageResponseDTO<PointDTO> searchPoint(UserDTO userDTO, PageRequestDTO pageRequestDTO, String startDate, String endDate, String search) {
 
         User user = modelMapper.map(userDTO, User.class);
 
@@ -159,7 +160,7 @@ public class MyPageService {
                 .build();
     }
 
-    public PageResponseDTO<OrderDTO> orderFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO){
+    public PageResponseDTO<OrderDTO> orderFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO) {
 
         User user = modelMapper.map(userDTO, User.class);
 
@@ -182,12 +183,11 @@ public class MyPageService {
     }
 
 
-
-    public UserDTO findByUid(String uid){
+    public UserDTO findByUid(String uid) {
 
         Optional<User> optUser = userRepository.findByUid(uid);
 
-        if(optUser.isPresent()){
+        if (optUser.isPresent()) {
             User user = optUser.get();
             UserDTO userDTO = modelMapper.map(user, UserDTO.class);
 
@@ -198,5 +198,88 @@ public class MyPageService {
 
     }
 
+    public void modify(UserDTO userDTO) {
+
+        boolean exists = userRepository.existsByUid(userDTO.getUid());
+
+        if(exists){
+            User user = modelMapper.map(userDTO, User.class);
+
+            userRepository.save(user);
+        }
+
+    }
+
+    public void withdraw(UserDTO userDTO){
+
+        User user = userRepository.findByUid(userDTO.getUid())
+                .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다."));
+        user.setLeaveDate(LocalDateTime.now()); // JPA 사용 시
+        userRepository.save(user);
+
+    }
+
+
+
+    // 전화번호를 3등분하여 DTO에 세팅
+    public void splitPhone(UserDTO userDTO) {
+        String phone = userDTO.getHp();
+
+        if (phone == null || phone.isBlank()) {
+            userDTO.setPhonePart1("");
+            userDTO.setPhonePart2("");
+            userDTO.setPhonePart3("");
+            return;
+        }
+
+        if (phone.startsWith("+")) {
+            // 국제번호 처리
+            String number = phone.replaceAll("[^0-9]", ""); // +821012345678 → 821012345678
+
+            if (number.startsWith("82")) {
+                number = "0" + number.substring(2); // 한국
+            } else if (number.startsWith("1")) {
+                number = number.substring(1); // 미국
+            }
+
+            if (number.length() >= 10) {
+                userDTO.setPhonePart1(number.substring(0, 3));
+                userDTO.setPhonePart2(number.substring(3, 7));
+                userDTO.setPhonePart3(number.substring(7));
+            }
+
+        } else if (phone.contains("-")) {
+            // 지역번호 형식
+            String[] parts = phone.split("-");
+            userDTO.setPhonePart1(parts.length > 0 ? parts[0] : "");
+            userDTO.setPhonePart2(parts.length > 1 ? parts[1] : "");
+            userDTO.setPhonePart3(parts.length > 2 ? parts[2] : "");
+        } else {
+            // fallback
+            userDTO.setPhonePart1("");
+            userDTO.setPhonePart2("");
+            userDTO.setPhonePart3("");
+        }
+
+
+    }
+
+
+    // 3등분된 번호를 하나로 합쳐 저장용 포맷으로 변환
+    public String joinPhone(UserDTO userDTO) {
+        String p1 = userDTO.getPhonePart1();
+        String p2 = userDTO.getPhonePart2();
+        String p3 = userDTO.getPhonePart3();
+
+        if (p1.startsWith("0")) {
+            // 한국 휴대폰: 010 → +82
+            return "+82" + p1.substring(1) + p2 + p3;
+        } else if (p1.length() == 3 && p2.length() > 0 && p3.length() > 0) {
+            // 지역번호 그대로 저장
+            return p1 + "-" + p2 + "-" + p3;
+        } else {
+            return "";
+        }
+    }
 
 }

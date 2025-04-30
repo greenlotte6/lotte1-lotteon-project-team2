@@ -20,6 +20,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
@@ -59,6 +61,7 @@ public class MyController {
 
         // 로그인한 유저의 주문내역 조회
         //PageResponseDTO<OrderDTO> orderDTO = myPageService.orderFindAll(userDTO, pageRequestDTO);
+
 
         model.addAttribute("pointDTO", pointDTO);
         model.addAttribute("inquiryDTO", inquiryDTO);
@@ -153,8 +156,64 @@ public class MyController {
 
         UserDTO userDTO = myPageService.findByUid(uid);
 
+        myPageService.splitPhone(userDTO);
+
+        String formattedPhone = myPageService.joinPhone(userDTO);
+
+        userDTO.setHp(formattedPhone);
+
         model.addAttribute("userDTO", userDTO);
 
         return "/myPage/mySetting";
     }
+
+    // 나의 정보 수정
+    @PostMapping("/my/info")
+    public String modify(@AuthenticationPrincipal UserDetails userDetails,
+                         @RequestParam String email1,
+                         @RequestParam String email2,
+                         @RequestParam String phonePart1,
+                         @RequestParam String phonePart2,
+                         @RequestParam String phonePart3,
+                         @RequestParam String zip,
+                         @RequestParam String addr1,
+                         @RequestParam String addr2){
+
+        String uid = userDetails.getUsername();
+
+        UserDTO user = myPageService.findByUid(uid);
+
+        // 이메일
+        String email = email1 + "@" + email2;
+        user.setEmail(email);
+
+
+        // 휴대폰
+        String hp = phonePart1 + "-" + phonePart2 + "-" + phonePart3;
+        user.setHp(hp);
+
+        user.setZip(zip);
+        user.setAddr1(addr1);
+        user.setAddr2(addr2);
+
+        log.info("user : " + user);
+
+        myPageService.modify(user);
+
+
+        return "redirect:/my/home";
+    }
+
+    @PostMapping("/my/withdraw")
+    public String withdraw(@AuthenticationPrincipal UserDetails userDetails){
+
+        String uid = userDetails.getUsername();
+
+        UserDTO user = myPageService.findByUid(uid);
+
+        myPageService.withdraw(user);
+
+        return "redirect:/";
+    }
+
 }

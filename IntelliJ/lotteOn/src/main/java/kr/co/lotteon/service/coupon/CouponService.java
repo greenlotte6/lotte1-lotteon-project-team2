@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -94,6 +95,7 @@ public class CouponService {
 
             // 쿠폰이 있을때만 등록
             if(!exist){
+                couponIssue.setEndDate(LocalDateTime.now().plusDays(coupon.getValidDaysAfterIssue()));
                 couponIssueRepository.save(couponIssue);
             }
 

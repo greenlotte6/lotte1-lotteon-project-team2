@@ -1,5 +1,6 @@
 package kr.co.lotteon.service.product;
 
+import kr.co.lotteon.dto.config.BannerDTO;
 import kr.co.lotteon.dto.config.ConfigDTO;
 import kr.co.lotteon.dto.product.ProductImageDTO;
 import kr.co.lotteon.entity.config.Config;
@@ -239,5 +240,17 @@ public class ImageService {
 
             configRepository.save(config);
         }
+    }
+
+    public BannerDTO saveBanner(BannerDTO bannerDTO) {
+
+        // 리스트 출력 이미지 변환
+        String oName = bannerDTO.getFile().getOriginalFilename();
+        String ext = oName.substring(oName.lastIndexOf("."));
+        String sName = UUID.randomUUID().toString() + ext;
+        bannerDTO.setOName(oName);
+        bannerDTO.setSName(sName);
+        uploadImage(bannerDTO.getFile(), sName);
+        return bannerDTO;
     }
 }

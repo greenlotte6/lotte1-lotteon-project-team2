@@ -64,5 +64,15 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+    public Optional<User> findByUid(String uid) {
+        return userRepository.findByUid(uid);
+    }
+
+    public Optional<User> findByUidAndPass(String uid, String pass) {
+        return userRepository.findByUidAndPass(uid, pass);
+    }
+
+
+
 
 }
