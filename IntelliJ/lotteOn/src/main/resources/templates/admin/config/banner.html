@@ -37,14 +37,14 @@
                     <!-- 버전 정보 -->
                     <div class="banner">
                         <ul>
-                            <a href=""><li>메인상단배너</li></a>
-                            <a href=""><li>메인슬라이더배너</li></a>
-                            <a href=""><li>상품 상세보기 배너</li></a>
-                            <a href=""><li>회원로그인 배너</li></a>
-                            <a href=""><li>마이페이지 배너</li></a>
+                            <a th:href="@{/admin/config/banner}"><li>메인상단배너</li></a>
+                            <a th:href="@{/admin/config/banner(cate=MAIN2)}"><li>메인슬라이더배너</li></a>
+                            <a th:href="@{/admin/config/banner(cate=PRODUCT1)}"><li>상품 상세보기 배너</li></a>
+                            <a th:href="@{/admin/config/banner(cate=MEMBER1)}"><li>회원로그인 배너</li></a>
+                            <a th:href="@{/admin/config/banner(cate=MY1)}"><li>마이페이지 배너</li></a>
                         </ul>
                     </div>
-                    <p class="title">메인 상단 배너</p>
+                    <p class="title">[[${title}]]</p>
 
                     <form action="#" class="banner_form">
                         <table class="banner_table">

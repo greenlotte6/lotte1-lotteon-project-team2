@@ -1,6 +1,7 @@
 package kr.co.lotteon.service.config;
 
 import com.querydsl.core.Tuple;
+import kr.co.lotteon.dto.config.BannerDTO;
 import kr.co.lotteon.dto.config.ConfigDTO;
 import kr.co.lotteon.dto.config.TermsDTO;
 import kr.co.lotteon.dto.config.VersionDTO;
@@ -8,12 +9,14 @@ import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.dto.product.ProductImageDTO;
+import kr.co.lotteon.entity.config.Banner;
 import kr.co.lotteon.entity.config.Config;
 import kr.co.lotteon.entity.config.Terms;
 import kr.co.lotteon.entity.config.Version;
 import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.entity.product.ProductImage;
 import kr.co.lotteon.entity.user.User;
+import kr.co.lotteon.repository.config.BannerRepository;
 import kr.co.lotteon.repository.config.ConfigRepository;
 import kr.co.lotteon.repository.config.TermsRepository;
 import kr.co.lotteon.repository.config.VersionRepository;
@@ -26,8 +29,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +46,7 @@ public class ConfigService {
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     private final ConfigRepository configRepository;
+    private final BannerRepository bannerRepository;
 
     public TermsDTO findTerms() {
         Terms terms = termsRepository.findById(1).get();
@@ -208,5 +214,40 @@ public class ConfigService {
 
 
 
+    }
+
+    // 배너 저장
+    public void saveBanner(BannerDTO bannerDTO) {
+        Banner banner = modelMapper.map(bannerDTO, Banner.class);
+        bannerRepository.save(banner);
+    }
+
+    public List<BannerDTO> findBannerByCate(String cate) {
+        if(cate == null){
+            cate = "MAIN1";
+        }
+
+        List<Banner> bannerList = bannerRepository.findByCateAndEndDayGreaterThan( cate, LocalDate.now());
+        List<BannerDTO> bannerDTOList = new ArrayList<>();
+
+        for(Banner banner : bannerList){
+            bannerDTOList.add(modelMapper.map(banner, BannerDTO.class));
+        }
+
+        return bannerDTOList;
+    }
+
+    public String SelectTitle(String cate) {
+        if(cate == null || cate.equals("MAIN1")){
+            return "메인 상단배너";
+        }else if(cate.equals("MAIN2")){
+            return "메인슬라이더 배너";
+        }else if(cate.equals("PRODUCT1")){
+            return "상품상세보기 상단배너";
+        }else if(cate.equals("MEMBER1")){
+            return "회원로그인 상단배너";
+        }else{
+            return "마이페이지";
+        }
     }
 }

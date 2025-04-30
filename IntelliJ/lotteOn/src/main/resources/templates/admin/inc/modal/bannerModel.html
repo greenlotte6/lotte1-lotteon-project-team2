@@ -12,27 +12,26 @@
                     <tr>
                         <td>배너이름</td>
                         <td>
-                            <input type="text" name="bannerName" placeholder="배너명입력">
+                            <input type="text" name="bannerName" placeholder="배너명입력" required>
                         </td>
                     </tr>
                     <tr>
                         <td>배너크기입력</td>
                         <td>
-                            <input type="text" name="width" placeholder="가로 크기입력" style="width: 120px; margin-right: 10px;">
-                            <input type="text" name="height" placeholder="세로 크기입력" style="width: 120px;">
-
+                            <input type="text" name="width" placeholder="가로 크기입력(예):120)" required style="width: 150px; margin-right: 10px;">
+                            <input type="text" name="height" placeholder="세로 크기입력(예):80" required  style="width: 150px;">
                         </td>
                     </tr>
                     <tr>
                         <td>배너배경색입력</td>
                         <td>
-                            <input type="text" name="color" placeholder="배너배경색입력">
+                            <input type="text" name="color" placeholder="배너배경색입력" required>
                         </td>
                     </tr>
                     <tr>
                         <td>배너링크입력</td>
                         <td>
-                            <input type="text" name="link" placeholder="배너링크입력">
+                            <input type="text" name="link" placeholder="배너링크입력" required>
                         </td>
                     </tr>
                     <tr>
@@ -51,7 +50,7 @@
                         <td>노출날짜</td>
                         <td>
                             <div style="float: left;">
-                                <input type="date" name="startDay"> ~ <input type="date" name="endDay">
+                                <input type="date" name="startDay" required> ~ <input type="date" name="endDay" required>
                             </div>
                         </td>
                     </tr>
@@ -59,14 +58,14 @@
                         <td>노출시간</td>
                         <td>
                             <div style="float: left;">
-                                <input type="time" name="startTime"> ~ <input type="time" name="endTime">
+                                <input type="time" name="startTime" required> ~ <input type="time" name="endTime" required>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td>배너링크입력</td>
+                        <td>배너파일</td>
                         <td>
-                            <input type="file" name="file"> <span>노출 위치에 맞는 크기 권장</span>
+                            <input type="file" name="file" required> <span>노출 위치에 맞는 크기 권장</span>
                         </td>
                     </tr>
                 </table>

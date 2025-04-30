@@ -107,7 +107,12 @@ public class AdminController {
 
     //배너설정
     @GetMapping("/config/banner")
-    public String banner() {
+    public String banner(@RequestParam(value = "cate", required = false) String cate, Model model) {
+
+        String title = configService.SelectTitle(cate);
+        List<BannerDTO> bannerDTOS = configService.findBannerByCate(cate);
+        model.addAttribute(title);
+        model.addAttribute("bannerDTOS", bannerDTOS);
         return "/admin/config/banner";
     }
     
@@ -115,6 +120,10 @@ public class AdminController {
     //배너 설정하기
     @PostMapping("/config/banner/register")
     public String bannerRegister(BannerDTO bannerDTO) {
+
+        // 이미지 저장 메서드
+        BannerDTO newBannerDTO = imageService.saveBanner(bannerDTO);
+        configService.saveBanner(bannerDTO);
         System.out.println("bannerDTO = " + bannerDTO);
         return "redirect:/admin/config/banner";
     }
@@ -122,7 +131,6 @@ public class AdminController {
     //약관관리
     @GetMapping("/config/policy")
     public String policy(Model model) {
-
         TermsDTO termsDTO = configService.findTerms();
         model.addAttribute("terms", termsDTO);
         return "/admin/config/policy";
