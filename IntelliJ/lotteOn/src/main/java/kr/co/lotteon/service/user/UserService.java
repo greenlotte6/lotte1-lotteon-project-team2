@@ -68,8 +68,16 @@ public class UserService {
         return userRepository.findByUid(uid);
     }
 
-    public Optional<User> findByUidAndPass(String uid, String pass) {
-        return userRepository.findByUidAndPass(uid, pass);
+    public Optional<User> findByUidAndPass(String uid, String rawPass) {
+        Optional<User> optUser = userRepository.findById(uid);
+
+        if (optUser.isPresent()) {
+            User user = optUser.get();
+            if (passwordEncoder.matches(rawPass, user.getPass())) {
+                return optUser;
+            }
+        }
+        return Optional.empty();
     }
 
 

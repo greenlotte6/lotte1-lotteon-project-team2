@@ -17,6 +17,8 @@ mybatis:
 server:
   port: 8080
   servlet:
+    session:
+      timeout: 2m
     context-path: /
 spring:
   servlet:
