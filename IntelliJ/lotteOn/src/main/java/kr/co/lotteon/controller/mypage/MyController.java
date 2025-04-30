@@ -217,33 +217,5 @@ public class MyController {
         return "/myPage/mySetting";
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////
-    // 2차 로그인 체크
-    @GetMapping("/my/checkAuth")
-    public String checkAuth(@AuthenticationPrincipal UserDetails userDetails) {
-        UserDTO userDTO = myPageService.findByUid(userDetails.getUsername());
-
-        String provider = userDTO.getProvider();
-
-        if (provider.equals("google")) {
-            return "redirect:/reauth/google";
-        } else if (provider.equals("kakao")) {
-            return "redirect:/reauth/kakao";
-        } else if (provider.equals("naver")) {
-            return "redirect:/reauth/naver";
-        } else {
-            return "redirect:/myPage/checkPassword";
-        }
-    }
-
-    // 구글 콜백엔드포인트
-    @GetMapping("/login/oauth2/code/google")
-    public String googleCallback(@RequestParam String code) {
-        // 1. code로 토큰 요청
-        // 2. 토큰으로 사용자 정보 조회 및 세션 갱신
-        // 3. 인증 성공 시 설정 페이지로 이동
-        return "redirect:/my/info";
-    }
-/// //////////////////////////////////////////////////////////////////
 
 }
