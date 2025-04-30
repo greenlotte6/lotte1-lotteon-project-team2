@@ -54,4 +54,18 @@ public class SellerService {
     public Optional<Seller> findByBizRegNo(String bizRegNo) {
         return sellerRepository.findByBizRegNo(bizRegNo);
     }
+
+
+    public Optional<Seller> findByCompanyAndBizRegNo(String company, String bizRegNo) {
+        return sellerRepository.findByCompanyAndBizRegNo(company, bizRegNo);
+    }
+
+    public void updateSellerPassword(String uid, String newPassword) {
+        Optional<User> userOpt = userRepository.findByUid(uid);
+        userOpt.ifPresent(user -> {
+            user.setPass(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
+        });
+    }
+
 }
