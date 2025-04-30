@@ -63,7 +63,7 @@ header{
     float: left;
 }
 
-.logo > img{
+.logo > a > img{
     width: 200px;
     height: 40px;
     float: left;
