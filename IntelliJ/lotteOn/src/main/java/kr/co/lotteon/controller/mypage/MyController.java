@@ -6,6 +6,7 @@ import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.feedback.ReviewDTO;
 import kr.co.lotteon.dto.order.OrderDTO;
+import kr.co.lotteon.dto.order.OrderItemDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.point.PointDTO;
@@ -45,7 +46,10 @@ public class MyController {
         // 로그인 유저 조회
         UserDTO userDTO = myPageService.findByUid(writer);
 
-        // 로그인한 유저의 포인트 조회
+        // 로그인한 유저의 쿠폰 개수 조회
+        //PageResponseDTO<CouponDTO> countCoupon = myPageService.
+
+        // 로그인한 유저의 포인트 목록 조회
         PageResponseDTO<PointDTO> pointDTO = myPageService.pointFindAll(userDTO, pageRequestDTO);
 
         // 로그인한 유저의 문의하기 조회
@@ -59,6 +63,11 @@ public class MyController {
 
         // 로그인한 유저의 주문내역 조회
         //PageResponseDTO<OrderDTO> orderDTO = myPageService.orderFindAll(userDTO, pageRequestDTO);
+        
+        // 로그인한 유저의 정보 조회
+        myPageService.splitPhone(userDTO);
+        String formattedPhone = myPageService.joinPhone(userDTO);
+        userDTO.setHp(formattedPhone);
 
 
         model.addAttribute("pointDTO", pointDTO);
@@ -66,13 +75,31 @@ public class MyController {
         model.addAttribute("reviewDTO", reviewDTO);
         model.addAttribute("couponDTO", couponDTO);
         //model.addAttribute("orderDTO", orderDTO);
+        model.addAttribute("userDTO", userDTO);
 
         return "/myPage/myPageMain";
     }
 
     @GetMapping("/my/order")
-    public String order() {
+    public String order(@AuthenticationPrincipal UserDetails userDetails, PageRequestDTO pageRequestDTO, Model model) {
+
+        /*
+        String uid = userDetails.getUsername();
+
+        UserDTO userDTO = myPageService.findByUid(uid);
+
+        PageResponseDTO<OrderDTO> orderDTO = myPageService.orderFindAll(userDTO, pageRequestDTO);
+        PageResponseDTO<OrderItemDTO> orderItemDTO = myPageService.orderItemFindAll(userDTO, pageRequestDTO);
+
+
+        model.addAttribute("orderDTO", orderDTO);
+        model.addAttribute("orderItemDTO", orderItemDTO);
+
+        */
+
         return "/myPage/orderDetails";
+
+
     }
 
     @GetMapping("/my/point")
