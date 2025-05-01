@@ -1,6 +1,7 @@
 package kr.co.lotteon.service.product;
 
 import jakarta.transaction.Transactional;
+import kr.co.lotteon.dto.page.ItemRequestDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.entity.product.Product;
@@ -9,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -26,6 +29,7 @@ public class ProductService {
                 .orElseThrow(() -> new RuntimeException("해당 게시글이 존재하지 않습니다."));
         product.setHit(product.getHit() + 1);
     }
+
 
     public ProductDTO OptionSplit(ProductDTO productDTO) {
         String prodNo = productDTO.getProdNo();

@@ -1,14 +1,17 @@
 
 package kr.co.lotteon.controller.product;
 
+import jakarta.mail.FetchProfile;
 import kr.co.lotteon.dao.ProductMapper;
 import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.coupon.CouponIssueDTO;
+import kr.co.lotteon.dto.page.ItemRequestDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.dto.product.ProductDetailDTO;
 import kr.co.lotteon.service.article.InquiryService;
+import kr.co.lotteon.service.cart.CartService;
 import kr.co.lotteon.service.coupon.CouponService;
 import kr.co.lotteon.service.feedback.ReviewService;
 import kr.co.lotteon.service.product.ProductDetailService;
@@ -38,6 +41,7 @@ public class ProductController {
     private final InquiryService inquiryService;
     private final ProductService productService;
     private final CouponService couponService;
+    private final CartService cartService;
 
     // 상품 보기 - 첫 페이지 진입용
     @GetMapping("/product/view")
@@ -46,10 +50,8 @@ public class ProductController {
         String prodNo = pageRequestDTO.getProdNo();
         // 상품 + 상품이미지
         ProductDTO productDTO = productMapper.selectProductByProdNo(prodNo);
-
         // 상품 옵션 Split
         productDTO = productService.OptionSplit(productDTO);
-
         // 상품 상세
         ProductDetailDTO productDetailDTO = productDetailService.findByProdNo(pageRequestDTO);
         // 리뷰
@@ -96,7 +98,6 @@ public class ProductController {
     // 쿠폰 - 인가 처리 리다이렉트
     @GetMapping("/product/ViewLoginCheck")
     public String viewLoginCheck(@RequestParam("prodNo") String prodNo) {
-        log.info("##### /product/ViewLoginCheck 진입. prodNo: {}", prodNo);
         return "redirect:/product/view?prodNo=" + prodNo;
     }
 
@@ -106,10 +107,6 @@ public class ProductController {
     @ResponseBody
     public ResponseEntity<String> couponIssue(@RequestBody CouponIssueDTO couponIssueDTO,
                                               @AuthenticationPrincipal UserDetails userDetails) {
-
-        log.info("couponIssueDTO: " + couponIssueDTO);
-
-        //서비스 자리
         int result = couponService.couponIssue(couponIssueDTO, userDetails);
         if (result == 1) {
             return ResponseEntity.ok("쿠폰이 발급되었습니다.");
@@ -117,6 +114,20 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("쿠폰 발급 중 오류가 발생했습니다.");
         }
+    }
+
+
+    // 장바구니
+    @PostMapping("/product/cart")
+    @ResponseBody
+    public int cart(@RequestBody ItemRequestDTO itemRequestDTO, @AuthenticationPrincipal UserDetails userDetails) {
+
+        log.info("itemRequestDTO=" + itemRequestDTO);
+        log.info("userDetails=" + userDetails);
+        int result = cartService.addToCart(itemRequestDTO, userDetails);
+        log.info("result: " + result);
+
+        return result;
     }
 
 
