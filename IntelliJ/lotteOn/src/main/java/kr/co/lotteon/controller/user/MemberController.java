@@ -47,46 +47,7 @@ public class MemberController {
         return "/member/login";
     }
 
-//    @PostMapping("/member/login")
-//    public String login(@RequestParam String uid,
-//                        @RequestParam String pass,
-//                        @RequestParam(required = false) String autoLogin,
-//                        HttpServletResponse response,
-//                        HttpSession session,
-//                        Model model) {
-//
-//        log.info("▶ [로그인 시도] uid: {}", uid);
-//        log.info("▶ [전송된 autoLogin 값] = {}", autoLogin);
-//
-//        Optional<User> userOpt = userService.findByUidAndPass(uid, pass);
-//
-//        if (userOpt.isPresent()) {
-//            User user = userOpt.get();
-//            session.setAttribute("sessUser", user);
-//            log.info("✅ 로그인 성공 - uid: {}", uid);
-//
-//            if (autoLogin != null) {
-//                if ("true".equals(autoLogin)) {
-//                    log.info("✅ 자동 로그인 활성화됨 - 쿠키 생성 시작");
-//                    Cookie cookie = new Cookie("autoLogin", user.getUid());
-//                    cookie.setMaxAge(60 * 60 * 24 * 7); // 7일 유지
-//                    cookie.setPath("/");
-//                    response.addCookie(cookie);
-//                    log.info("✅ 자동 로그인 쿠키 생성 완료 (uid: {})", user.getUid());
-//                } else {
-//                    log.info("❕ autoLogin 값이 'true'가 아님 → 쿠키 생성 안함 (현재 값: {})", autoLogin);
-//                }
-//            } else {
-//                log.info("❌ autoLogin 파라미터가 전송되지 않음 (체크박스 미선택)");
-//            }
-//
-//            return "redirect:/"; // 메인으로 이동
-//        } else {
-//            log.warn("❌ 로그인 실패 - 아이디 또는 비밀번호 불일치: uid={}", uid);
-//            model.addAttribute("error", "아이디 또는 비밀번호가 일치하지 않습니다.");
-//            return "/member/login";
-//        }
-//    }
+
 
     // 로그아웃 처리 - 자동 로그인 쿠키 제거
     @GetMapping("/member/logout")
@@ -364,5 +325,40 @@ public class MemberController {
         return result;
     }
 
+
+
+    /**
+     * 사업자등록번호 중복 확인
+     * @param bizRegNo 확인할 사업자등록번호
+     * @return 사용 가능하면 true, 중복이면 false
+     */
+    @PostMapping("/member/checkBizRegNo")
+    @ResponseBody
+    public Map<String, Boolean> checkBizRegNo(@RequestBody Map<String, String> request) {
+        String bizRegNo = request.get("bizRegNo");
+
+        // 사업자등록번호 유효성 검사
+        if (!isValidBizRegNo(bizRegNo)) {
+            Map<String, Boolean> response = new HashMap<>();
+            response.put("available", false);
+            return response;
+        }
+
+        // 서비스를 통해 DB에서 중복 확인
+        boolean isAvailable = sellerService.checkBizRegNoAvailable(bizRegNo);
+
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("available", isAvailable);
+
+        return response;
+    }
+
+    /**
+     * 사업자등록번호 유효성 검사 메소드
+     */
+    private boolean isValidBizRegNo(String bizRegNo) {
+        // ###-##-##### 형식 체크
+        return bizRegNo != null && bizRegNo.matches("^[0-9]{3}-[0-9]{2}-[0-9]{5}$");
+    }
 
 }
