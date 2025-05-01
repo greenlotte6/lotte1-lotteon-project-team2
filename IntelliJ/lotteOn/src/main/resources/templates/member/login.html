@@ -88,7 +88,12 @@
           <!-- 오른쪽 배너 -->
           <div class="login-banner">
             <div class="banner">
-              <img th:src="@{/images/member/banner.png}" alt="배너 광고" width="420" height="260" />
+              <img th:src="@{/upload/{image}(image=${banner.sName})}"
+                   th:style="'width:' + ${banner.width} + 'px;'
+               +'height:' + ${banner.height} + 'px;'"
+                   onerror="this.src='/images/member/banner.png';"
+                   th:attr="onclick=|location.href='${banner.link}'|"
+                   alt="lotteOn">
             </div>
           </div>
         </div>

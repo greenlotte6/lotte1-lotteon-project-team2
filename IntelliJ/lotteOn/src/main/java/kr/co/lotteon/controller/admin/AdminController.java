@@ -114,7 +114,7 @@ public class AdminController {
 
         configService.deleteBannerTimeout();
         String title = configService.SelectTitle(cate);
-        List<BannerDTO> bannerDTOS = configService.findBannerByCate(cate);
+        List<BannerDTO> bannerDTOS = configService.findConfigBannerByCate(cate);
         model.addAttribute("title",title);
         model.addAttribute("bannerDTOS", bannerDTOS);
         return "/admin/config/banner";

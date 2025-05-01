@@ -4,10 +4,12 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import kr.co.lotteon.dto.config.BannerDTO;
 import kr.co.lotteon.dto.seller.SellerDTO;
 import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.entity.config.Terms;
 import kr.co.lotteon.entity.seller.Seller;
+import kr.co.lotteon.service.config.ConfigService;
 import kr.co.lotteon.service.seller.SellerService;
 import kr.co.lotteon.service.user.EmailService;
 import kr.co.lotteon.service.user.TermsService;
@@ -34,11 +36,14 @@ public class MemberController {
     private final TermsService termsService;
     private final SellerService sellerService;
     private final EmailService emailService;
+    private final ConfigService configService;
 
 
 
     @GetMapping("/member/login")
-    public String login() {
+    public String login(Model model) {
+        BannerDTO banner = configService.findBanner("MEMBER1");
+        model.addAttribute("banner", banner);
         return "/member/login";
     }
 
