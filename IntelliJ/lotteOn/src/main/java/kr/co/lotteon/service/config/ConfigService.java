@@ -221,11 +221,15 @@ public class ConfigService {
             cate = "MAIN1";
         }
 
-        List<Banner> bannerList = bannerRepository.findByCateAndEndDayGreaterThan( cate, LocalDate.now());
+        List<Banner> bannerList = bannerRepository.findByCateAndEndDayGreaterThanOrderByBnoDesc( cate, LocalDate.now());
         List<BannerDTO> bannerDTOList = new ArrayList<>();
 
         for(Banner banner : bannerList){
             bannerDTOList.add(modelMapper.map(banner, BannerDTO.class));
+
+            if(bannerDTOList.size() == 5){
+                break;
+            }
         }
 
         return bannerDTOList;
@@ -273,8 +277,21 @@ public class ConfigService {
     }
 
     public void deleteBannerTimeout() {
-
-
         bannerRepository.deleteExpiredBanners(LocalDate.now());
+    }
+
+    public List<BannerDTO> findConfigBannerByCate(String cate) {
+        if(cate == null){
+            cate = "MAIN1";
+        }
+
+        List<Banner> bannerList = bannerRepository.findByCateAndEndDay(cate);
+        List<BannerDTO> bannerDTOList = new ArrayList<>();
+
+        for(Banner banner : bannerList){
+            bannerDTOList.add(modelMapper.map(banner, BannerDTO.class));
+        }
+
+        return bannerDTOList;
     }
 }

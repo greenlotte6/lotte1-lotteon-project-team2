@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Slf4j
 @Controller
@@ -19,7 +21,11 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model){
         BannerDTO banner = configService.findBanner("MAIN1");
+        List<BannerDTO> bannerDTOS = configService.findBannerByCate("MAIN2");
+
         model.addAttribute("banner", banner);
+        model.addAttribute("bannerDTOS", bannerDTOS);
+
         return "/index";
     }
 

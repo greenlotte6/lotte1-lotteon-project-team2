@@ -74,8 +74,13 @@
               <tr>
                 <td>사업자등록번호</td>
                 <td>
-                  <input type="text" name="bizRegNo" placeholder="사업자등록번호입력" />
-                  <span class="description">- 포함 12 자리 입력</span>
+                <div style="position: relative">
+                    <input type="text" name="bizRegNo" id="bizRegNo" placeholder="사업자등록번호입력" />
+                    <button type="button" style="position: absolute; right: 0; top: 0" id="btnCheckBizRegNo" class="btn btn-small btn-auth" >중복확인</button>
+                </div>
+
+                  <span id="bizRegNoMessage" class="error-message"></span>
+                  <span class="description">- 포함 12 자리 입력 (예: 123-45-67890)</span>
                 </td>
               </tr>
               <tr>

@@ -114,7 +114,7 @@ public class AdminController {
 
         configService.deleteBannerTimeout();
         String title = configService.SelectTitle(cate);
-        List<BannerDTO> bannerDTOS = configService.findBannerByCate(cate);
+        List<BannerDTO> bannerDTOS = configService.findConfigBannerByCate(cate);
         model.addAttribute("title",title);
         model.addAttribute("bannerDTOS", bannerDTOS);
         return "/admin/config/banner";
@@ -127,6 +127,8 @@ public class AdminController {
 
         // 이미지 저장 메서드
         BannerDTO newBannerDTO = imageService.saveBanner(bannerDTO);
+        
+        // 배너 저장 메서드
         configService.saveBanner(bannerDTO);
         return "redirect:/admin/config/banner";
     }

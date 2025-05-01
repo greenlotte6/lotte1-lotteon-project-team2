@@ -3,6 +3,7 @@ package kr.co.lotteon.controller.product;
 
 import jakarta.mail.FetchProfile;
 import kr.co.lotteon.dao.ProductMapper;
+import kr.co.lotteon.dto.cart.CartDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.coupon.CouponIssueDTO;
 import kr.co.lotteon.dto.page.ItemRequestDTO;
@@ -117,17 +118,22 @@ public class ProductController {
     }
 
 
-    // 장바구니
-    @PostMapping("/product/cart")
+    // 장바구니 상품 담기
+    @PostMapping("/product/addCart")
     @ResponseBody
     public int cart(@RequestBody ItemRequestDTO itemRequestDTO, @AuthenticationPrincipal UserDetails userDetails) {
-
-        log.info("itemRequestDTO=" + itemRequestDTO);
-        log.info("userDetails=" + userDetails);
         int result = cartService.addToCart(itemRequestDTO, userDetails);
-        log.info("result: " + result);
-
         return result;
+    }
+
+
+    // 장바구니 View
+    @GetMapping("/product/cart")
+    public String cart(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        List<CartDTO> cartDTOList = cartService.findAllByUid(userDetails);
+        model.addAttribute(cartDTOList);
+        log.info("cartDTOList: {}", cartDTOList);
+        return "/product/cart";
     }
 
 

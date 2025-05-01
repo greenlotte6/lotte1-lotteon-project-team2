@@ -22,7 +22,9 @@
         </div>
         <div class="logo">
             <a th:href="@{/}">
-                <img th:src="@{/upload/{file}(file=${appInfo.headerLogo})}" alt="lotteOn">
+                <img th:src="@{/upload/{file}(file=${appInfo.headerLogo})}"
+                     onerror="this.src='/images/logo.png';"
+                     alt="lotteOn">
             </a>
             <div class="search">
                 <form action="#">

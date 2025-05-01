@@ -68,4 +68,9 @@ public class SellerService {
         });
     }
 
+    public boolean checkBizRegNoAvailable(String bizRegNo) {
+        // Repository를 통해 DB에서 사업자등록번호 조회
+        return !sellerRepository.existsByBizRegNo(bizRegNo);
+    }
+
 }

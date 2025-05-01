@@ -33,4 +33,24 @@ public interface BannerRepository extends JpaRepository<Banner,Integer> {
     @Transactional
     @Query("DELETE FROM Banner b WHERE b.endDay < :today")
     void deleteExpiredBanners(@Param("today") LocalDate today);
+
+    @Query("""
+    SELECT b FROM Banner b 
+    WHERE b.state = '활성' 
+      AND b.cate = :cate 
+      AND (CURRENT_DATE > b.startDay OR (CURRENT_DATE = b.startDay AND CURRENT_TIME >= b.startTime)) 
+      AND (CURRENT_DATE < b.endDay OR (CURRENT_DATE = b.endDay AND CURRENT_TIME <= b.endTime)) 
+    ORDER BY b.bno DESC
+    """)
+    List<Banner> findByCateAndEndDayGreaterThanOrderByBnoDesc(String cate, LocalDate now);
+
+    @Query("""
+    SELECT b FROM Banner b 
+    WHERE b.cate = :cate 
+      AND (CURRENT_DATE > b.startDay OR (CURRENT_DATE = b.startDay AND CURRENT_TIME >= b.startTime)) 
+      AND (CURRENT_DATE < b.endDay OR (CURRENT_DATE = b.endDay AND CURRENT_TIME <= b.endTime)) 
+    ORDER BY b.bno DESC
+    """)
+    List<Banner> findByCateAndEndDay(String cate);
+
 }
