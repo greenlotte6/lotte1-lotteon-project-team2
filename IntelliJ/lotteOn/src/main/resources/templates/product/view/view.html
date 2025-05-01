@@ -478,12 +478,12 @@
 
 
 
-
         const cartButton = document.querySelector('form table button.cart');
 
         if (cartButton) {
             cartButton.addEventListener('click', (event) => {
-                // --- 1. 데이터 수집 (기존과 동일) ---
+                event.preventDefault();
+
                 const productNoInput = document.getElementById('productNo');
                 const productNo = productNoInput ? productNoInput.value : null;
 
@@ -497,7 +497,7 @@
                     const optionTypeElement = row.querySelector('td:first-child');
                     const selectElement = row.querySelector('td:nth-child(2) select');
 
-                    if (optionTypeElement && selectElement) {
+                    if (optionTypeElement && selectElement && selectElement.value) {
                         const optKey = `opt${index + 1}`;
                         const optContKey = `opt${index + 1}cont`;
                         optionData[optKey] = optionTypeElement.textContent.trim();
@@ -505,61 +505,59 @@
                     }
                 });
 
-                // 로그인 상태 체크
+                const cartItemData = {
+                    prodNo: productNo,
+                    quantity: quantity,
+                    options: optionData
+                };
+                console.log("장바구니 데이터 전송 시도:", cartItemData);
+
                 fetch('/product/cart', {
                     method: 'POST',
-                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(cartItemData),
+                    credentials: 'include'
                 })
                     .then(response => {
                         if (response.redirected) {
-                            // 로그인되지 않은 경우, 로그인 페이지로 리다이렉트
+                            console.log('서버로부터 리다이렉트 응답 받음. 로그인 페이지로 이동합니다.');
                             const currentUrl = window.location.href;
-                            const prod = currentUrl.split("=")[1];
-                            window.location.href = "/product/ViewLoginCheck?prodNo=" + prod;
-                            return;
+                            let loginRedirectUrl = '/product/ViewLoginCheck';
+                            if (productNo) {
+                                loginRedirectUrl += '?prodNo=' + productNo;
+                            }
+                            window.location.href = loginRedirectUrl;
+                            return null;
                         }
                         if (!response.ok) {
-                            throw new Error(`로그인 상태 확인 오류: ${response.status}`);
+                            return response.json()
+                                .catch(() => {
+                                    throw new Error(`서버 응답 오류: ${response.status}`);
+                                })
+                                .then(errorBody => {
+                                    const message = errorBody?.message || `서버 응답 오류: ${response.status}`;
+                                    throw new Error(message);
+                                });
                         }
                         return response.json();
                     })
-
-                    .then(() => {
-                        // 로그인 되었을 경우, 장바구니 데이터 전송
-                        const cartItemData = {
-                            prodNo: productNo,
-                            quantity: quantity,
-                            options: optionData
-                        };
-                        console.log("장바구니 데이터 전송:", cartItemData);
-
-                        // CSRF 토큰 가져오기
-                        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-
-                        // 실제 장바구니 추가 POST 요청
-                        return fetch('/product/cart', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': csrfToken,  // CSRF 토큰 추가
-                            },
-                            body: JSON.stringify(cartItemData),
-                            credentials: 'include'  // 세션 유지를 위해 포함
-                        });
-                    })
-                    .then(response => response.json())
                     .then(result => {
-                        console.log('장바구니 추가 성공', result);
+                        if (result === null) {
+                            return;
+                        }
+                        console.log('장바구니 추가 성공:', result);
+                        alert('장바구니에 상품을 담았습니다.');
                     })
                     .catch(error => {
-                        console.error('장바구니 추가 실패', error);
+                        console.error('장바구니 추가 실패:', error);
+                        alert(`오류가 발생했습니다: ${error.message}`);
                     });
             });
+        } else {
+            console.error('장바구니 버튼(form table button.cart)을 찾을 수 없습니다.');
         }
-
-
-
-
 
 
 
