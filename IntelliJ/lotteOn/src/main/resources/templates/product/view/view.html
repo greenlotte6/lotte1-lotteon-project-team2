@@ -476,8 +476,7 @@
 
 
 
-
-
+        // 장바구니
         const cartButton = document.querySelector('form table button.cart');
 
         if (cartButton) {
@@ -512,7 +511,7 @@
                 };
                 console.log("장바구니 데이터 전송 시도:", cartItemData);
 
-                fetch('/product/cart', {
+                fetch('/product/addCart', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -547,8 +546,17 @@
                         if (result === null) {
                             return;
                         }
-                        console.log('장바구니 추가 성공:', result);
-                        alert('장바구니에 상품을 담았습니다.');
+                        console.log('장바구니 추가 처리 결과:', result);
+                        if (result === 1) {
+                            if (confirm('장바구니에 상품을 담았습니다. 장바구니로 이동하시겠습니까?')) {
+                                window.location.href = '/product/cart';
+                            } else {
+                                console.log('장바구니 이동 취소');
+                            }
+                        } else {
+                            alert('장바구니 요청이 처리되었으나, 추가되지 않았을 수 있습니다. (결과: ' + result + ')');
+                            console.warn('장바구니 추가 결과가 1이 아님:', result);
+                        }
                     })
                     .catch(error => {
                         console.error('장바구니 추가 실패:', error);

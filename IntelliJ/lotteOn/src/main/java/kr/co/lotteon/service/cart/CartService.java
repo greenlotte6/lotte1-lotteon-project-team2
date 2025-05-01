@@ -1,5 +1,6 @@
 package kr.co.lotteon.service.cart;
 
+import kr.co.lotteon.dto.cart.CartDTO;
 import kr.co.lotteon.dto.page.ItemRequestDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.entity.cart.Cart;
@@ -13,8 +14,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -85,5 +88,27 @@ public class CartService {
                 .opt6Cont(options.getOrDefault("opt6cont", null))
                 .build();
     }
+
+    // 장바구니 View
+    public List<CartDTO> findAllByUid(UserDetails userDetails) {
+
+        User user = User.builder()
+                .uid(userDetails.getUsername())
+                .build();
+
+        List<Cart> items = cartRepository.findAllByUser(user);
+
+        List<CartDTO> cartDTOList = items.stream()
+                .map(item -> {
+                    CartDTO dto = modelMapper.map(item, CartDTO.class);
+                    dto.setUid(userDetails.getUsername());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
+
+        return cartDTOList;
+    }
+
 
 }
