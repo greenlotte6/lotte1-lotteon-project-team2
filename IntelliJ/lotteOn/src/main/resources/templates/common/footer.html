@@ -9,7 +9,9 @@
     </div>
     <div class="footer_content">
         <div class="footer_content_detail">
-            <img th:src="@{/upload/{file}(file=${appInfo.footerLogo})}" alt="" style="width: 155px; height: 35px;">
+            <img th:src="@{/upload/{file}(file=${appInfo.footerLogo})}"
+                 onerror="this.src='/images/footer_logo.png';"
+                 alt="푸터로고" style="width: 155px; height: 35px;">
             <div>
                 <p class="footer_title">[[${appInfo.companyName}]]</p>
                 <p>
