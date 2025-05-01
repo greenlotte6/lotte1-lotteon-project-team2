@@ -778,7 +778,12 @@
                             </tr>
                             <tr class="product_banner">
                                 <td colspan="2">
-                                    <img src="/images/product/product_banner.png" class="product_banner">
+                                    <img th:src="@{/upload/{image}(image=${banner.sName})}"
+                                         th:style="'width:' + ${banner.width} + 'px;'
+                                            +'height:' + ${banner.height} + 'px;'"
+                                         onerror="this.src='/images/member/banner.png';"
+                                         th:attr="onclick=|location.href='${banner.link}'|"
+                                         alt="lotteOn">
                                 </td>
                             </tr>
                         </table>
