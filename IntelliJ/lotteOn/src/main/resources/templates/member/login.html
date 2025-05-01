@@ -40,6 +40,13 @@
           <!-- 왼쪽 로그인 영역 -->
           <div class="login-left">
 
+            <!-- 에러 메시지 영역 추가 -->
+            <div class="login-error" th:if="${param.code != null}">
+              <span th:if="${param.code == '100'}" class="error-text">아이디 또는 비밀번호가 일치하지 않습니다.</span>
+              <span th:if="${param.code == '101'}" class="notice-text">로그아웃 되었습니다.</span>
+              <span th:if="${param.code == '102'}" class="error-text">탈퇴한 회원입니다. 다시 가입해주세요.</span>
+            </div>
+
             <form method="post" th:action="@{/user/member/login}">
               <div class="login-main-row">
                 <!-- 입력 필드 -->
