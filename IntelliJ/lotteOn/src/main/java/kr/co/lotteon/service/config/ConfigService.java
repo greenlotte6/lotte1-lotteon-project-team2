@@ -271,4 +271,10 @@ public class ConfigService {
             return modelMapper.map(bannerList.get(0), BannerDTO.class);
         }
     }
+
+    public void deleteBannerTimeout() {
+
+
+        bannerRepository.deleteExpiredBanners(LocalDate.now());
+    }
 }

@@ -36,6 +36,8 @@ public class QCouponIssue extends EntityPathBase<CouponIssue> {
 
     public final kr.co.lotteon.entity.user.QUser user;
 
+    public final StringPath validTo = createString("validTo");
+
     public QCouponIssue(String variable) {
         this(CouponIssue.class, forVariable(variable), INITS);
     }

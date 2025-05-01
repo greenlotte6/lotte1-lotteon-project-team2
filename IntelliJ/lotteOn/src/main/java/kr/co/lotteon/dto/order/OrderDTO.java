@@ -1,7 +1,10 @@
 package kr.co.lotteon.dto.order;
 
+import kr.co.lotteon.dto.product.ProductDTO;
+import kr.co.lotteon.entity.order.OrderItem;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -26,9 +29,12 @@ public class OrderDTO {
     private String receiverHp;     // 받는 사람 연락처
     private String orderContent;   // 배송 요청사항
     private String payment;        // 결제 수단
-    private String paymentCont;    // 결제 상세 정보
+    private String paymentContent;    // 결제 상세 정보
 
     private String color; // 상품 색상
     private int size;  // 상품
+
+    // 상품 정보
+    private List<OrderItemDTO> orderItems;
 
 }

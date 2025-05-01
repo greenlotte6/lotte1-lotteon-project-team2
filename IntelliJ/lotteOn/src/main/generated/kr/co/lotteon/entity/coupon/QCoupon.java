@@ -36,6 +36,8 @@ public class QCoupon extends EntityPathBase<Coupon> {
 
     public final StringPath issuedBy = createString("issuedBy");
 
+    public final NumberPath<Integer> minPrice = createNumber("minPrice", Integer.class);
+
     public final DatePath<java.time.LocalDate> regDate = createDate("regDate", java.time.LocalDate.class);
 
     public final StringPath state = createString("state");

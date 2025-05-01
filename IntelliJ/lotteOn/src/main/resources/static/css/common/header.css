@@ -10,8 +10,11 @@ header {
 
 .header_main, .advertisement {
     width: 100%;
-    max-width: 1200px;
     margin: 0 auto;
+}
+
+.header_main{
+    max-width: 1200px;
 }
 
 .user_menu {
@@ -109,6 +112,7 @@ header {
     font-size: 38px;
     text-align: center;
     line-height: 80px;
+    width: 100%;
 }
 
 .user-icons {

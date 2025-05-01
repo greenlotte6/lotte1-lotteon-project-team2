@@ -112,6 +112,7 @@ public class AdminController {
     @GetMapping("/config/banner")
     public String banner(@RequestParam(value = "cate", required = false) String cate, Model model) {
 
+        configService.deleteBannerTimeout();
         String title = configService.SelectTitle(cate);
         List<BannerDTO> bannerDTOS = configService.findBannerByCate(cate);
         model.addAttribute("title",title);

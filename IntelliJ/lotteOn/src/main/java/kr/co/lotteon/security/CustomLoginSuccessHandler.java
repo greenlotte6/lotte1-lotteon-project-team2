@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -17,6 +19,8 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+
+    private final RequestCache requestCache = new HttpSessionRequestCache();
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
@@ -45,8 +49,16 @@ public class CustomLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             log.info("❌ 자동 로그인 아님 → 세션 쿠키 설정 완료");
         }
 
-        // 기본 성공 경로로 이동
-        super.onAuthenticationSuccess(request, response, authentication);
+        // ✅ 이전 요청 저장된 URL로 리다이렉트
+        var savedRequest = requestCache.getRequest(request, response);
+        if (savedRequest != null) {
+            String targetUrl = savedRequest.getRedirectUrl();
+            log.info("🔁 원래 요청한 URL로 리다이렉트: {}", targetUrl);
+            getRedirectStrategy().sendRedirect(request, response, targetUrl);
+        } else {
+            super.onAuthenticationSuccess(request, response, authentication);
+        }
+
     }
 
 

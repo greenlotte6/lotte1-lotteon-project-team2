@@ -39,17 +39,10 @@ public class ProductListController {
     @ResponseBody
     public PageResponseDTO ajaxList(PageRequestDTO pageRequestDTO, Model model,
             @RequestParam(value = "view", defaultValue = "list") String view) {
-
-        log.info("pageRequestDTO:{}", pageRequestDTO);
-
         PageResponseDTO pageResponseDTO = productListService.sortedProducts(pageRequestDTO);
-
         pageResponseDTO.setSortType(pageRequestDTO.getSortType());
         pageResponseDTO.setPeriod(pageRequestDTO.getPeriod());
         pageResponseDTO.setView(view);
-
-        log.info("pageResponseDTO:{}", pageResponseDTO);
-
         return pageResponseDTO;
     }
 
