@@ -96,3 +96,34 @@
   background-color: #5b8ad6;
   color: white;
 }
+
+/* 테이블 셀 내부의 input과 button 배치 스타일 */
+td input[type="text"] + button,
+td input[type="password"] + button {
+  display: inline-block;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* 사업자등록번호 input 너비 제한 */
+#bizRegNo {
+  width: calc(100% - 100px); /* 버튼 크기 및 여백을 고려한 너비 */
+  display: inline-block;
+}
+
+/* 중복확인 버튼 스타일 */
+#btnCheckBizRegNo {
+  width: 90px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* 에러 메시지는 아래에 위치하도록 설정 */
+.error-message {
+  display: block;
+  color: #e74c3c;
+  font-size: 13px;
+  margin-top: 5px;
+  width: 100%;
+}
+
