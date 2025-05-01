@@ -3,8 +3,6 @@ package kr.co.lotteon.service.mypage;
 import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.feedback.ReviewDTO;
-import kr.co.lotteon.dto.order.OrderDTO;
-import kr.co.lotteon.dto.order.OrderItemDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.point.PointDTO;
@@ -12,8 +10,6 @@ import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.entity.article.Inquiry;
 import kr.co.lotteon.entity.coupon.Coupon;
 import kr.co.lotteon.entity.feedback.Review;
-import kr.co.lotteon.entity.order.Order;
-import kr.co.lotteon.entity.order.OrderItem;
 import kr.co.lotteon.entity.point.Point;
 import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.article.InquiryRepository;
@@ -30,10 +26,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -69,12 +65,38 @@ public class MyPageService {
         // 5. 전체 데이터 개수 구하기
         int total = (int) pageInquiry.getTotalElements();
 
+
         // 6. PageResponseDTO 객체 생성 및 반환
         return PageResponseDTO.<InquiryDTO>builder()
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(inquiryDTOList)
                 .total(total)
                 .build();
+    }
+
+    public long getPendingInquiryCount(UserDTO userDTO) {
+        User user = modelMapper.map(userDTO, User.class);
+        return inquiryRepository.countByUserAndState(user, "검토중");
+    }
+
+    public long getCouponCount(UserDTO userDTO) {
+        User user = modelMapper.map(userDTO, User.class);
+
+        LocalDate today = LocalDate.now();
+
+        return couponRepository.countByUserAndValidToAfter(user, today);
+    }
+
+    public String getPoint(UserDTO userDTO) {
+        User user = modelMapper.map(userDTO, User.class);
+
+        LocalDateTime now = LocalDateTime.now();
+
+        long point = pointRepository.getSumPointByUserAndExpiryDateAfter(user, now);
+
+        // 1,000 단위로 콤마 추가
+        NumberFormat numberFormat = NumberFormat.getInstance(Locale.KOREA);
+        return numberFormat.format(point);
     }
 
     public PageResponseDTO<CouponDTO> couponFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO) {
@@ -84,10 +106,10 @@ public class MyPageService {
         Pageable pageable = pageRequestDTO.getPageable("cno");
 
         // 오늘 날짜
-        //LocalDateTime today = LocalDateTime.now();
+        LocalDate today = LocalDate.now();
 
         // 유효기간이 오늘 이후인 데이터만 조회
-        Page<Coupon> pageCoupon = couponRepository.findAllByUser(user, pageable);
+        Page<Coupon> pageCoupon = couponRepository.findAllByUserAndValidToAfter(user, today, pageable);
 
         List<CouponDTO> couponDTOList = pageCoupon.getContent().stream()
                 .map(coupon -> modelMapper.map(coupon, CouponDTO.class))
@@ -104,10 +126,9 @@ public class MyPageService {
     }
 
 
-    public PageResponseDTO<ReviewDTO> reviewFindAll(String writer, PageRequestDTO pageRequestDTO) {
+    public PageResponseDTO<ReviewDTO> reviewFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO) {
 
-        Optional<User> optUser = userRepository.findByUid(writer);
-        User user = optUser.get();
+        User user = modelMapper.map(userDTO, User.class);
 
         Pageable pageable = pageRequestDTO.getPageable("rno");
 

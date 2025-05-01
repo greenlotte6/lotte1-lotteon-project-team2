@@ -32,6 +32,7 @@ public class PageResponseDTO<T> {
     private String startDate;
     private String endDate;
 
+    private long pendingCount;
 
     private double avgRate;
 
@@ -60,6 +61,8 @@ public class PageResponseDTO<T> {
 
         this.prev = this.start > 1;
         this.next = total > this.end * this.size;
+
+
     }
 
 

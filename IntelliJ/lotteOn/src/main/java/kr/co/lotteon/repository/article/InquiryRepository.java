@@ -14,4 +14,6 @@ public interface InquiryRepository extends JpaRepository<Inquiry,Integer>, Inqui
     Page<Inquiry> findByCateV1(String cateV1, Pageable pageable);
 
     Page<Inquiry> findAllByUser(User user, Pageable pageable);
+
+    long countByUserAndState(User user, String state);
 }

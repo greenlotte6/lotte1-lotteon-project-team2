@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -47,7 +48,13 @@ public class MyController {
         UserDTO userDTO = myPageService.findByUid(writer);
 
         // 로그인한 유저의 쿠폰 개수 조회
-        //PageResponseDTO<CouponDTO> countCoupon = myPageService.
+        long getCouponCount = myPageService.getCouponCount(userDTO);
+
+        // 로그인한 유저의 검토중 문의 개수 조회
+        long pendingInquiryCount = myPageService.getPendingInquiryCount(userDTO);
+
+        // 로그인한 유저의 포인트 조회
+        String point = myPageService.getPoint(userDTO);
 
         // 로그인한 유저의 포인트 목록 조회
         PageResponseDTO<PointDTO> pointDTO = myPageService.pointFindAll(userDTO, pageRequestDTO);
@@ -56,7 +63,7 @@ public class MyController {
         PageResponseDTO<InquiryDTO> inquiryDTO = myPageService.inquiryFindAll(userDTO, pageRequestDTO);
 
         // 로그인한 유저의 리뷰 조회
-        PageResponseDTO<ReviewDTO> reviewDTO = myPageService.reviewFindAll(writer, pageRequestDTO);
+        PageResponseDTO<ReviewDTO> reviewDTO = myPageService.reviewFindAll(userDTO, pageRequestDTO);
 
         // 로그인한 유저의 쿠폰 조회
         PageResponseDTO<CouponDTO> couponDTO = myPageService.couponFindAll(userDTO, pageRequestDTO);
@@ -76,6 +83,10 @@ public class MyController {
         model.addAttribute("couponDTO", couponDTO);
         //model.addAttribute("orderDTO", orderDTO);
         model.addAttribute("userDTO", userDTO);
+        model.addAttribute("pendingInquiryCount", pendingInquiryCount);
+        model.addAttribute("getCouponCount", getCouponCount);
+        model.addAttribute("point", point);
+
 
         return "/myPage/myPageMain";
     }
@@ -110,20 +121,29 @@ public class MyController {
                         @RequestParam(value = "search", required = false, defaultValue = "") String search,
                         @AuthenticationPrincipal UserDetails userDetails) {
 
-        log.info("startDate : " + startDate);
-        log.info("endDate : " + endDate);
-        log.info("endDate : " + search);
 
         String uid = userDetails.getUsername();
 
         UserDTO userDTO = myPageService.findByUid(uid);
 
+        // 로그인한 유저의 쿠폰 개수 조회
+        long getCouponCount = myPageService.getCouponCount(userDTO);
+
+        // 로그인한 유저의 검토중 문의 개수 조회
+        long pendingInquiryCount = myPageService.getPendingInquiryCount(userDTO);
+
+        // 로그인한 유저의 포인트 조회
+        String point = myPageService.getPoint(userDTO);
 
         //PageResponseDTO<PointDTO> pointDTO = myPageService.searchPoint(userDTO, pageRequestDTO , startDate, endDate, search);
 
         PageResponseDTO<PointDTO> pointDTO = myPageService.pointFindAll(userDTO, pageRequestDTO);
 
+        model.addAttribute("userDTO", userDTO);
         model.addAttribute("pointDTO", pointDTO);
+        model.addAttribute("getCouponCount", getCouponCount);
+        model.addAttribute("pendingInquiryCount", pendingInquiryCount);
+        model.addAttribute("point", point);
 
         return "/myPage/pointDetails";
     }
@@ -135,9 +155,22 @@ public class MyController {
 
         UserDTO userDTO = myPageService.findByUid(uid);
 
+        // 로그인한 유저의 쿠폰 개수 조회
+        long getCouponCount = myPageService.getCouponCount(userDTO);
+
+        // 로그인한 유저의 검토중 문의 개수 조회
+        long pendingInquiryCount = myPageService.getPendingInquiryCount(userDTO);
+
+        // 로그인한 유저의 포인트 조회
+        String point = myPageService.getPoint(userDTO);
+
         PageResponseDTO<CouponDTO> couponDTO = myPageService.couponFindAll(userDTO, pageRequestDTO);
 
+        model.addAttribute("userDTO", userDTO);
         model.addAttribute("couponDTO", couponDTO);
+        model.addAttribute("getCouponCount", getCouponCount);
+        model.addAttribute("pendingInquiryCount", pendingInquiryCount);
+        model.addAttribute("point", point);
 
         return "/myPage/couponDetails";
     }
@@ -147,13 +180,27 @@ public class MyController {
 
 
         // 세션 정보 가져오기
-        String writer = userDetails.getUsername();
+        String uid = userDetails.getUsername();
+
+        UserDTO userDTO = myPageService.findByUid(uid);
 
         // 로그인한 유저의 문의글만 조회
-        PageResponseDTO<ReviewDTO> reviewDTO = myPageService.reviewFindAll(writer, pageRequestDTO);
+        PageResponseDTO<ReviewDTO> reviewDTO = myPageService.reviewFindAll(userDTO, pageRequestDTO);
 
+        // 로그인한 유저의 쿠폰 개수 조회
+        long getCouponCount = myPageService.getCouponCount(userDTO);
 
+        // 로그인한 유저의 검토중 문의 개수 조회
+        long pendingInquiryCount = myPageService.getPendingInquiryCount(userDTO);
+
+        // 로그인한 유저의 포인트 조회
+        String point = myPageService.getPoint(userDTO);
+
+        model.addAttribute("userDTO", userDTO);
         model.addAttribute("reviewDTO", reviewDTO);
+        model.addAttribute("getCouponCount", getCouponCount);
+        model.addAttribute("pendingInquiryCount", pendingInquiryCount);
+        model.addAttribute("point", point);
 
         return "/myPage/myReview";
     }
@@ -163,13 +210,25 @@ public class MyController {
 
         String writer = userDetails.getUsername();
 
-
-
         UserDTO userDTO = myPageService.findByUid(writer);
+
+        // 로그인한 유저의 쿠폰 개수 조회
+        long getCouponCount = myPageService.getCouponCount(userDTO);
+
+        // 로그인한 유저의 검토중 문의 개수 조회
+        long pendingInquiryCount = myPageService.getPendingInquiryCount(userDTO);
+
+        // 로그인한 유저의 포인트 조회
+        String point = myPageService.getPoint(userDTO);
 
         PageResponseDTO<InquiryDTO> inquiryDTO = myPageService.inquiryFindAll(userDTO, pageRequestDTO);
 
+        model.addAttribute("userDTO", userDTO);
         model.addAttribute("inquiryDTO", inquiryDTO);
+        model.addAttribute("getCouponCount", getCouponCount);
+        model.addAttribute("pendingInquiryCount", pendingInquiryCount);
+        model.addAttribute("point", point);
+
 
         return "/myPage/myInquiry";
     }
@@ -186,28 +245,23 @@ public class MyController {
                          @RequestParam String phonePart3,
                          @RequestParam String zip,
                          @RequestParam String addr1,
-                         @RequestParam String addr2){
+                         @RequestParam String addr2, Model model){
 
         String uid = userDetails.getUsername();
 
-        UserDTO user = myPageService.findByUid(uid);
+        UserDTO userDTO = myPageService.findByUid(uid);
+
 
         // 이메일
         String email = email1 + "@" + email2;
-        user.setEmail(email);
+        userDTO.setEmail(email);
+        userDTO.setZip(zip);
+        userDTO.setAddr1(addr1);
+        userDTO.setAddr2(addr2);
+        userDTO.setUpdateDate(LocalDateTime.now());
 
 
-        // 휴대폰
-        String hp = phonePart1 + "-" + phonePart2 + "-" + phonePart3;
-        user.setHp(hp);
-
-        user.setZip(zip);
-        user.setAddr1(addr1);
-        user.setAddr2(addr2);
-
-        log.info("user : " + user);
-
-        myPageService.modify(user);
+        myPageService.modify(userDTO);
 
 
         return "redirect:/my/home";
@@ -232,6 +286,15 @@ public class MyController {
 
         UserDTO userDTO = myPageService.findByUid(uid);
 
+        // 로그인한 유저의 쿠폰 개수 조회
+        long getCouponCount = myPageService.getCouponCount(userDTO);
+
+        // 로그인한 유저의 검토중 문의 개수 조회
+        long pendingInquiryCount = myPageService.getPendingInquiryCount(userDTO);
+
+        // 로그인한 유저의 포인트 조회
+        String point = myPageService.getPoint(userDTO);
+
         myPageService.splitPhone(userDTO);
 
         String formattedPhone = myPageService.joinPhone(userDTO);
@@ -239,6 +302,10 @@ public class MyController {
         userDTO.setHp(formattedPhone);
 
         model.addAttribute("userDTO", userDTO);
+        model.addAttribute("userDTO", userDTO);
+        model.addAttribute("getCouponCount", getCouponCount);
+        model.addAttribute("pendingInquiryCount", pendingInquiryCount);
+        model.addAttribute("point", point);
 
 
         return "/myPage/mySetting";

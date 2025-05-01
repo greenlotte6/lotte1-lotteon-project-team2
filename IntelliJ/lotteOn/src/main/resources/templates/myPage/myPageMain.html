@@ -24,27 +24,7 @@
         <!-- 헤더 끝 -->
         <!-- 메인 시작 -->
         <main>
-            <div class="shop_header">
-                <div style="float: left;">
-                    <p class="shop_header_txt">[[${userDTO.name}]]님의 쇼핑정보</p>
-                </div>
-                <div style="float: right; padding-top: 5px; width: 250px;">
-                    <table class="header_table">
-                        <tr>
-                            <td>주문</td>
-                            <td>쿠폰</td>
-                            <td>포인트</td>
-                            <td>문의</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>1</td>
-                            <td>1,000</td>
-                            <td>1</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
+            <th:block th:insert="/myPage/inc/myShoppingInfo.html"></th:block>
             <section class="content">
                 <!-- 왼쪽 사이드바 -->
                 <th:block th:include="/myPage/inc/sidebar.html"/>
@@ -56,7 +36,7 @@
                     </div>
                     <div class="order-details">
                         <div class="title-area">
-                            <h1>최근주문내역</h1>
+                            <h1>최근주문내역(구현예정)</h1>
                             <a th:href="@{/my/order}">더보기 ></a>
                         </div>
                         <div class="order-details-table">
@@ -172,7 +152,7 @@
                                 <tbody>
                                     <tr>
                                         <th>날짜</th>
-                                        <th>상품명</th>
+                                        <th>구분</th>
                                         <th>적립금액</th>
                                         <th>비고</th>
                                         <th>유효기간</th>
@@ -198,6 +178,7 @@
                     <div class="order-details">
                         <div class="title-area">
                             <h1>쿠폰내역</h1>
+                            <a th:href="@{/my/coupon}">더보기 ></a>
                         </div>
                         <div class="order-details-table">
                             <table class="table-main">
@@ -297,7 +278,7 @@
                             <div >
                                 <h1>Email 설정<a th:href="@{/my/info}">변경</a></h1>
                                 <h2>
-                                    [[${#strings.substring(userDTO.email, 0, 6)}]]*****
+                                    [[${#strings.substring(userDTO.email, 0, 4)}]]*****
                                 </h2>
                             </div>
                             <div>
