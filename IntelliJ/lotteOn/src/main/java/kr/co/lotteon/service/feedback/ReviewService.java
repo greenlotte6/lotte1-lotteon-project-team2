@@ -64,9 +64,11 @@ public class ReviewService {
             for (ReviewDTO review : dtoList) {
                 avgRating += review.getRating().doubleValue();
             }
-            return avgRating / dtoList.size();
+            double average = avgRating / dtoList.size();
+            return Math.round(average * 10) / 10.0; // 소수점 첫째 자리까지 반올림
         }
-        return 0.0; // 리뷰가 없으면 0 반환
+        return 0.0;
     }
+
 
 }
