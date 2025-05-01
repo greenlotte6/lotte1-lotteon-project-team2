@@ -92,7 +92,11 @@ public class MyPageService {
 
         LocalDateTime now = LocalDateTime.now();
 
-        long point = pointRepository.getSumPointByUserAndExpiryDateAfter(user, now);
+        Long point = pointRepository.getSumPointByUserAndExpiryDateAfter(user, now);
+
+        if(point == null) {
+            point = 0L;
+        }
 
         // 1,000 단위로 콤마 추가
         NumberFormat numberFormat = NumberFormat.getInstance(Locale.KOREA);
