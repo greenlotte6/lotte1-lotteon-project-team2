@@ -75,7 +75,51 @@
                 });
 
                 const orderAmount = originalTotalAmount - discountTotal;
-                const shippingCost = (totalCount > 0 && orderAmount < freeShippingLimit) ? uniqueVendors.size * deliveryFeePerVendor : 0;
+
+                const vendorDeliveryMap = new Map();
+
+                itemCheckboxes.forEach((cb) => {
+                    if (cb.checked) {
+                        const cartContent = cb.closest('.cart_content');
+                        const deliveryFeeEl = cartContent.querySelector('.price_delivery');
+                        const vendorNameEl = cartContent.querySelector('.vendor-name');
+                        const vendor = vendorNameEl ? vendorNameEl.textContent.trim() : '';
+
+                        const rawDeliveryFee = deliveryFeeEl?.dataset.deliveryFee;
+                        console.log('Vendor:', vendor, 'Raw data-delivery-fee:', rawDeliveryFee);
+
+                        const deliveryFee = parseInt(rawDeliveryFee || '0'); // || '0'은 유지
+
+                        if (isNaN(deliveryFee)) {
+                            console.error('배송비가 NaN입니다. 확인해주세요. Raw value:', rawDeliveryFee, 'Element:', deliveryFeeEl);
+                        }
+
+                        if (vendor) {
+                            const currentMax = vendorDeliveryMap.get(vendor) || 0;
+                            // NaN이 아닐 경우에만 유효한 값으로 처리 (선택적 안전장치)
+                            if (!isNaN(deliveryFee)) {
+                                vendorDeliveryMap.set(vendor, Math.max(currentMax, deliveryFee));
+                            } else {
+                                // NaN인 경우 기본값(0) 또는 다른 로직 처리 가능
+                                vendorDeliveryMap.set(vendor, Math.max(currentMax, 0));
+                                console.warn(`Vendor ${vendor}의 배송비를 0으로 처리합니다 (NaN 발생).`);
+                            }
+                        }
+                    }
+                });
+
+                let shippingCost = 0;
+
+                vendorDeliveryMap.forEach((fee) => {
+                    if (fee > 0) {
+                        shippingCost += deliveryFeePerVendor;  // 2,500원씩 추가
+                    }
+                });
+
+                if (totalCount === 0 || orderAmount >= freeShippingLimit) {
+                    shippingCost = 0;  // 무료배송
+                }
+
                 const finalTotal = orderAmount + shippingCost;
 
                 const shippingText =
@@ -106,7 +150,7 @@
                 const unitOriginal = parseInt(priceOriginalEl.dataset.unit);
                 const unitTotal = parseInt(priceTotalEl.dataset.unit);
 
-                // 💡 수량 반영하여 원가, 총가 동시 업데이트
+
                 priceOriginalEl.textContent = (unitOriginal * count).toLocaleString() + '원';
                 priceTotalEl.textContent = (unitTotal * count).toLocaleString() + '원';
 
@@ -128,7 +172,6 @@
                     const unitOriginal = parseInt(priceOriginalEl.dataset.unit);
                     const unitTotal = parseInt(priceTotalEl.dataset.unit);
 
-                    // 💡 수량 반영하여 원가, 총가 동시 업데이트
                     priceOriginalEl.textContent = (unitOriginal * count).toLocaleString() + '원';
                     priceTotalEl.textContent = (unitTotal * count).toLocaleString() + '원';
 
@@ -147,10 +190,31 @@
 
             itemCheckboxes.forEach(cb => cb.checked = false);
             updateSummary();
+
+
+
+            const cartItems = Array.from(document.querySelectorAll('.cart_content'));
+            const sellerGroups = {};
+            cartItems.forEach(item => {
+                const seller = item.querySelector('.vendor-name').textContent.trim();
+                if (!sellerGroups[seller]) {
+                    sellerGroups[seller] = [];
+                }
+                sellerGroups[seller].push(item);
+            });
+            const sortedSellerKeys = Object.keys(sellerGroups).sort();
+            const parent = cartItems[0].parentNode;
+            sortedSellerKeys.forEach(seller => {
+                const group = sellerGroups[seller];
+                group.forEach(item => {
+                    parent.appendChild(item);
+                });
             });
 
-      
-      </script>
+
+        });
+
+    </script>
       
     <div id="wrapper">
         <!-- 헤더 시작 -->
@@ -167,7 +231,7 @@
                         <div class="category-item">
                         <div class="parent">뷰티</div>
                         <div class="children">
-                            <a href="/view/product/beauty/skincare/skincare.html">스킨케어</a>
+                            <a href="/view/product/beauty/skincare">스킨케어</a>
                             <a href="/view/product/beauty/makeup">메이크업</a>
                             <a href="/view/product/beauty/perfume">향수</a>
                         </div>
@@ -241,41 +305,8 @@
                         <div class="children">
                             <a href="/view/product/travel/asia">아시아</a>
                             <a href="/view/product/travel/europe">유럽</a>
-                            <a href="/view/product/travel/northamerica">북미</a>
+                            <a href="/view/product/travel/northAmerica">북미</a>
                         </div>
-                        </div>
-                    </div>
-                    <div class="best">
-                        <p>베스트 상품</p>
-                        <div>
-                            <div class="img-wrap">
-                                <img src="/images/product/Diptyque_FleurdePeau.jpg"><br>
-                                <span class="rank">1</span>
-                            </div>
-                            <a href="#">딥디크 오드퍼퓸 플레르드뽀 75ml</a><br>
-                            <span class="price_current">27,000원</span><br>
-                            <span class="price_origin">3,000원</span>
-                            <span class="sale">10%↓</span><br>
-                        </div>
-                        <div>
-                            <div class="img-wrap">
-                                <img src="/images/product/lelabo_another.jpg"><br>
-                                <span class="rank">2</span>
-                            </div>
-                            <a href="#">르라보 어나더 13 75ml</a>
-                            <span class="price_current">27,000원</span><br>
-                            <span class="price_origin">3,000원</span>
-                            <span class="sale">10%↓</span><br>
-                        </div>
-                        <div>
-                            <div class="img-wrap">
-                                <img src="/images/product/loewe_sutileze.jpg"><br>
-                                <span class="rank">3</span>
-                            </div>
-                            <a href="#">로에베 아이레 수틸레사 오 드 뚜알렛 50ml</a>
-                            <span class="price_current">27,000원</span><br>
-                            <span class="price_origin">3,000원</span>
-                            <span class="sale">10%↓</span><br>
                         </div>
                     </div>
                 </aside>
@@ -291,80 +322,75 @@
                                 <label for="check-all">전체선택(3)</label>
                                 <button type="button">선택삭제</button>
                             </div>
-                            <div class="cart_content" data-point="1">
-                                <div><label><input type="checkbox">롯데마트</label></div>
+
+                            <div th:each="cart : ${cartDTOList}" class="cart_content" data-point="1">
                                 <div>
-                                  <div class="cart_product">
-                                    <div><img src="/images/product/Diptyque_FleurdePeau.jpg"></div>
-                                    <div>
-                                      <p class="vendor-name">롯데마트</p>
-                                      <p><span>딥디크 </span>오드퍼퓸 75ml</p>
-                                      <p>단일상품</p>
-                                      <p>4/17 도착 예정</p>
-                                    </div>
-                                  </div>
-                                  <div class="quantity-box">
-                                    <button class="btn-minus">-</button>
-                                    <span class="quantity">1</span>
-                                    <button class="btn-plus">+</button>
-                                  </div>
-                                  <div class="cart_price">
-                                    <p class="price_original" data-unit="300000">300,000원</p>
-                                    <p class="price_total" data-unit="200000">200,000원</p>
-                                    <p>혜택변경</p>
-                                  </div>
+                                    <label>
+                                        <input type="checkbox" name="cartNo" th:value="${cart.cartNo}"/>
+                                        [[${cart.product.seller.company}]]
+                                    </label>
                                 </div>
-                            </div>
-                        
-                            <div class="cart_content" data-point="1">
-                                <div><label><input type="checkbox">롯데백화점</label></div>
                                 <div>
-                                  <div class="cart_product">
-                                    <div><img src="/images/product/Diptyque_FleurdePeau.jpg"></div>
-                                    <div>
-                                      <p class="vendor-name">롯데백화점</p>
-                                      <p><span>딥디크 </span>오드퍼퓸 75ml</p>
-                                      <p>단일상품</p>
-                                      <p>4/17 도착 예정</p>
+                                    <div class="cart_product">
+                                        <div>
+                                            <img th:src="${cart.product.productImage.sNameList}" alt="상품 이미지">
+                                        </div>
+                                        <div>
+                                            <p class="vendor-name">[[${cart.product.seller.company}]]</p>
+                                            <p>
+                                                <span>[[${cart.product.prodBrand}]] </span><br>
+                                                [[${cart.product.prodName}]]
+                                            </p>
+                                            <p class="price_delivery" th:attr="data-delivery-fee=${cart.product.prodDeliveryFee}">
+                                                <span th:if="${cart.product.prodDeliveryFee == 0}">무료배송</span>
+                                                <span th:if="${cart.product.prodDeliveryFee != 0}">
+                                                    배송비: [[${#numbers.formatInteger(cart.product.prodDeliveryFee, 3, 'COMMA')}]]원
+                                                </span>
+                                            </p>
+                                            <span>도착예정</span>
+                                        </div>
                                     </div>
-                                  </div>
-                                  <div class="quantity-box">
-                                    <button class="btn-minus">-</button>
-                                    <span class="quantity">1</span>
-                                    <button class="btn-plus">+</button>
-                                  </div>
-                                  <div class="cart_price">
-                                    <p class="price_original" data-unit="400000">400,000원</p>
-                                    <p class="price_total" data-unit="300000">300,000원</p>
-                                    <p>혜택변경</p>
-                                  </div>
+                                    <div>
+                                        <div th:if="${cart.opt1Cont != null}">
+                                            <p th:text="${cart.opt1 + ': ' + cart.opt1Cont}"></p>
+                                        </div>
+                                        <div th:if="${cart.opt2Cont != null}">
+                                            <p th:text="${cart.opt2 + ': ' + cart.opt2Cont}"></p>
+                                        </div>
+                                        <div th:if="${cart.opt3Cont != null}">
+                                            <p th:text="${cart.opt3 + ': ' + cart.opt3Cont}"></p>
+                                        </div>
+                                        <div th:if="${cart.opt4Cont != null}">
+                                            <p th:text="${cart.opt4 + ': ' + cart.opt4Cont}"></p>
+                                        </div>
+                                        <div th:if="${cart.opt5Cont != null}">
+                                            <p th:text="${cart.opt5 + ': ' + cart.opt5Cont}"></p>
+                                        </div>
+                                        <div th:if="${cart.opt6Cont != null}">
+                                            <p th:text="${cart.opt6 + ': ' + cart.opt6Cont}"></p>
+                                        </div>
+                                    </div>
+                                    <div class="quantity-box">
+                                        <button class="btn-minus">-</button>
+                                        <span class="quantity">[[${cart.cartProdCount}]]</span>
+                                        <button class="btn-plus">+</button>
+                                    </div>
+                                    <div class="cart_price">
+                                        <p class="price_original"
+                                           th:attr="data-unit=${cart.product.prodPrice}">
+                                            [[${#numbers.formatInteger(cart.product.prodPrice * cart.cartProdCount, 3, 'COMMA')}]]원
+                                        </p>
+                                        <p class="price_total"
+                                           th:attr="data-unit=${(cart.product.prodPrice * (100 - cart.product.prodDiscount) / 100)}">
+                                            [[${#numbers.formatInteger((cart.product.prodPrice * (100 - cart.product.prodDiscount) / 100) * cart.cartProdCount, 3, 'COMMA')}]]원
+                                        </p>
+                                        <p>혜택변경</p>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="cart_content" data-point="1">
-                                <div><label><input type="checkbox">롯데백화점</label></div>
-                                <div>
-                                  <div class="cart_product">
-                                    <div><img src="/images/product/Diptyque_FleurdePeau.jpg"></div>
-                                    <div>
-                                      <p class="vendor-name">롯데백화점</p>
-                                      <p><span>딥디크 </span>오드퍼퓸 75ml</p>
-                                      <p>단일상품</p>
-                                      <p>4/17 도착 예정</p>
-                                    </div>
-                                  </div>
-                                  <div class="quantity-box">
-                                    <button class="btn-minus">-</button>
-                                    <span class="quantity">1</span>
-                                    <button class="btn-plus">+</button>
-                                  </div>
-                                  <div class="cart_price">
-                                    <p class="price_original" data-unit="400000">400,000원</p>
-                                    <p class="price_total" data-unit="300000">300,000원</p>
-                                    <p>혜택변경</p>
-                                  </div>
-                                </div>
-                            </div>
+
+
                         </div>
                         <div class="cart_summary">
                             <p>결제예정금액</p>
@@ -387,70 +413,7 @@
         <!-- 메인 내용 끝 -->
 
         <!-- 푸터 시작 -->
-        <footer>
-            <div class="footer_info">
-                <div>
-                    <a href="#">회사소개</a>
-                    <a href="#">서비스이용약관</a>
-                    <a href="#">개인정보처리방침</a>
-                    <a href="#">전자금융거래약관</a>
-                </div>
-            </div>
-            <div class="footer_content">
-                <div class="footer_content_detail">
-                    <img src="/images/footer_logo.png" alt="">
-                    <div>
-                        <p class="footer_title">LotteOn Project</p>
-                        <p>
-                            개발자 : 우상호, 최명기, 김소현, 오재영, 홍준혁 <br>
-                            주소 : 부산광역시 부산진구 부전동 266-2 그린컴퓨터아카데미 <br><br>
-                            사업자등록번호 : 529-85-00774(롯데쇼핑(주) e커머스사업부) <br>
-                            통신판매업 신고 : 2024-서울강남-04439 사업자 정보 확인 <br>
-                            호스팅 서비스사업자 : 롯데쇼핑(주) e커머스사업부 <br>
-                        </p>
-
-                        <p class="footer_sub_title" style="margin-top: 10px;">롯데쇼핑 e커머스 사업부 에스크로</p>
-                        <p>
-                            고객님의 안전거래를 위해 현금 등으로 결제 시 결제금액 전액에 대해 <br>
-                            소비자 피해 방지 서비스를 이용합니다.
-                        </p>
-                    </div>
-                    <div>
-                        <p class="footer_sub_title">고객센터</p>
-                        <p>
-                            전화번호 : 1899-7000(유료) <br>
-                            E-mail : lotteon@lotte.net <br>
-                            <a href="#" class="a_deco">분쟁해결기준</a><br> <!-- 정적 페이지 이동 (연결 할 페이지 없으면 삭제 예정)-->
-                            <a href="#" class="footer_btn">
-                                FAQ 보기
-                            </a>
-                            <a href="#" class="footer_btn">
-                                1대1 문의하기
-                            </a>
-                            <a href="#" class="footer_btn">
-                                고객센터
-                            </a>
-                            <a href="#" class="footer_btn">
-                                공지사항
-                            </a>
-                        </p>
-
-                        <p class="footer_sub_title">전자금융거래 분쟁 담당</p>
-                        <p>
-                            Tel : 1899-7000(유료)
-                            E-mail : lotteon@lotte.net
-                        </p>
-                        <a href="#" class="a_deco">안전거래센터</a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer_version">
-                <p>
-                    롯데쇼핑(주)는 통신판매중개자이며 통신판매의 거래당사자가 아닙니다. 입점판매자가 등록한 상품정보 및 거래에 대해 롯데쇼핑(주)는 일체 책임을 지지 않습니다.
-                </p>
-                <p>Copyright © LOTTESHOPPING Co., LTD. All rights reserved.</p>
-            </div>
-        </footer>
+        <th:block th:include="/common/footer.html"/>
         <!-- 푸터 끝 -->
 
     </div>
