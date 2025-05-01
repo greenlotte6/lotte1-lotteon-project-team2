@@ -44,4 +44,13 @@ public interface BannerRepository extends JpaRepository<Banner,Integer> {
     """)
     List<Banner> findByCateAndEndDayGreaterThanOrderByBnoDesc(String cate, LocalDate now);
 
+    @Query("""
+    SELECT b FROM Banner b 
+    WHERE b.cate = :cate 
+      AND (CURRENT_DATE > b.startDay OR (CURRENT_DATE = b.startDay AND CURRENT_TIME >= b.startTime)) 
+      AND (CURRENT_DATE < b.endDay OR (CURRENT_DATE = b.endDay AND CURRENT_TIME <= b.endTime)) 
+    ORDER BY b.bno DESC
+    """)
+    List<Banner> findByCateAndEndDay(String cate);
+
 }

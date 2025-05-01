@@ -26,8 +26,6 @@ public class HomeController {
         model.addAttribute("banner", banner);
         model.addAttribute("bannerDTOS", bannerDTOS);
 
-        System.out.println(bannerDTOS);
-
         return "/index";
     }
 
