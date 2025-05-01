@@ -26,7 +26,7 @@
         <main>
             <div class="shop_header">
                 <div style="float: left;">
-                    <p class="shop_header_txt">나의쇼핑정보</p>
+                    <p class="shop_header_txt">[[${userDTO.name}]]님의 쇼핑정보</p>
                 </div>
                 <div style="float: right; padding-top: 5px; width: 250px;">
                     <table class="header_table">
@@ -285,29 +285,24 @@
                     <div class="mySetting">
                         <div class="title-area">
                             <h1>나의설정</h1>
+                            <div class="update">
+                                <h1>최종수정일 : [[${#strings.substring(userDTO.updateDate, 0, 10)}]]</h1>
+                            </div>
                         </div>
-                        <div class="mySetting-background">
-                            <div class="mySetting-margin">
-                                <div>
-                                    <h1>기본배송지설정<a th:href="@{/my/info}">변경</a></h1>
-                                    <h2>부산광역시  진구 대연동 120 한빛 빌딩 10층</h2>
-                                </div>
-                                <div >
-                                    <h1>Email 설정<a th:href="@{/my/info}">변경</a></h1>
-                                    <h2>
-                                        abc123@naver.com</br>
-                                        (최종수정일 2021-12-10)
-                                    </h2>
-                                </div>
-                                <div>
-                                    <h1>휴대폰 설정<a th:href="@{/my/info}">변경</a></h1>
-                                    <h2>
-                                        <h2>
-                                            010-1234-1001</br>
-                                            (최종수정일 2021-12-10)
-                                        </h2>
-                                    </h2>
-                                </div>
+                        <div class="mySetting-content">
+                            <div>
+                                <h1>기본배송지설정<a th:href="@{/my/info}">변경</a></h1>
+                                <h2>[ [[${userDTO.zip}]] ] [[${#strings.substring(userDTO.addr1, 0, 5)}]] *****</h2>
+                            </div>
+                            <div >
+                                <h1>Email 설정<a th:href="@{/my/info}">변경</a></h1>
+                                <h2>
+                                    [[${#strings.substring(userDTO.email, 0, 6)}]]*****
+                                </h2>
+                            </div>
+                            <div>
+                                <h1>휴대폰 설정<a th:href="@{/my/info}">변경</a></h1>
+                                <h2>[[${userDTO.phonePart1}]] - [[${#strings.substring(userDTO.phonePart2, 0, 1)}]] *** - ****</h2>
                             </div>
                         </div>
                     </div>

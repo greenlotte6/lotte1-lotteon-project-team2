@@ -4,6 +4,7 @@ import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.feedback.ReviewDTO;
 import kr.co.lotteon.dto.order.OrderDTO;
+import kr.co.lotteon.dto.order.OrderItemDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.point.PointDTO;
@@ -12,11 +13,13 @@ import kr.co.lotteon.entity.article.Inquiry;
 import kr.co.lotteon.entity.coupon.Coupon;
 import kr.co.lotteon.entity.feedback.Review;
 import kr.co.lotteon.entity.order.Order;
+import kr.co.lotteon.entity.order.OrderItem;
 import kr.co.lotteon.entity.point.Point;
 import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.article.InquiryRepository;
 import kr.co.lotteon.repository.coupon.CouponRepository;
 import kr.co.lotteon.repository.feedback.ReviewRepository;
+import kr.co.lotteon.repository.order.OrderItemRepository;
 import kr.co.lotteon.repository.order.OrderRepository;
 import kr.co.lotteon.repository.point.PointRepository;
 import kr.co.lotteon.repository.user.UserRepository;
@@ -27,6 +30,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +45,7 @@ public class MyPageService {
     private final ReviewRepository reviewRepository;
     private final PointRepository pointRepository;
     private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
     private final CouponRepository couponRepository;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
@@ -78,6 +83,10 @@ public class MyPageService {
 
         Pageable pageable = pageRequestDTO.getPageable("cno");
 
+        // 오늘 날짜
+        //LocalDateTime today = LocalDateTime.now();
+
+        // 유효기간이 오늘 이후인 데이터만 조회
         Page<Coupon> pageCoupon = couponRepository.findAllByUser(user, pageable);
 
         List<CouponDTO> couponDTOList = pageCoupon.getContent().stream()
@@ -119,11 +128,13 @@ public class MyPageService {
     }
 
     public PageResponseDTO<PointDTO> pointFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO) {
-
         User user = modelMapper.map(userDTO, User.class);
-
         Pageable pageable = pageRequestDTO.getPageable("pointNo");
 
+        // 오늘 날짜
+        //LocalDateTime today = LocalDateTime.now();
+
+        // 유효기간이 오늘 이후인 데이터만 조회
         Page<Point> pagePoint = pointRepository.findAllByUser(user, pageable);
 
         List<PointDTO> pointDTOList = pagePoint.getContent().stream()
@@ -159,7 +170,7 @@ public class MyPageService {
                 .total(total)
                 .build();
     }
-
+/*
     public PageResponseDTO<OrderDTO> orderFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO) {
 
         User user = modelMapper.map(userDTO, User.class);
@@ -182,6 +193,28 @@ public class MyPageService {
 
     }
 
+    public PageResponseDTO<OrderItemDTO> orderItemFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO) {
+
+        User user = modelMapper.map(userDTO, User.class);
+
+        Pageable pageable = pageRequestDTO.getPageable("itemNo");
+
+        Page<OrderItem> pageOrderItem = orderItemRepository.findAllByUser(user, pageable);
+
+        List<OrderItemDTO> orderItemDTOList = pageOrderItem.getContent().stream()
+                .map(orderItem -> modelMapper.map(orderItem, OrderItemDTO.class))
+                .collect(Collectors.toList());
+
+        int total = (int) pageOrderItem.getTotalElements();
+
+        return PageResponseDTO.<OrderItemDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(orderItemDTOList)
+                .total(total)
+                .build();
+
+    }
+*/
 
     public UserDTO findByUid(String uid) {
 
@@ -219,6 +252,19 @@ public class MyPageService {
 
     }
 
+    /*
+    public void countOrder(UserDTO userDTO){
+
+    }
+
+    public void countCoupon(UserDTO userDTO){
+
+    }
+
+    public void countInquiry(UserDTO userDTO){
+
+    }
+*/
 
 
     // 전화번호를 3등분하여 DTO에 세팅

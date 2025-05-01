@@ -8,9 +8,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-public interface PointRepository extends JpaRepository<Point, Integer> {
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-    Page<Point> findAllByUser(User user, Pageable pageable);
+public interface PointRepository extends JpaRepository<Point, Integer> {
 
     @Query("SELECT p FROM Point p " +
             "WHERE p.user = :user " +
@@ -23,4 +24,6 @@ public interface PointRepository extends JpaRepository<Point, Integer> {
             @Param("end") String endDate,
             Pageable pageable
     );
+    
+    Page<Point> findAllByUser(User user, Pageable pageable);
 }
