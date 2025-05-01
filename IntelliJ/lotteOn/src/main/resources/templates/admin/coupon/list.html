@@ -279,29 +279,33 @@
                         </tr>
                         <tr>
                             <td>쿠폰명</td>
-                            <td><input type="text" name="couponName"></td>
+                            <td><input type="text" name="couponName" value="할인쿠폰"></td>
+                        </tr>
+                        <tr>
+                            <td>최소요금</td>
+                            <td><input type="text" name="minPrice" value="0"></td>
                         </tr>
                         <tr>
                             <td style="height: 100px;">혜택</td>
                             <td>
                                 <div class="radio-group">
-                                    <label class="radio-option"><input type="radio" name="benefit" value="1,000 할인">1,000 할인</label>
-                                    <label class="radio-option"><input type="radio" name="benefit" value="2,000 할인">2,000 할인</label>
-                                    <label class="radio-option"><input type="radio" name="benefit" value="3,000 할인">3,000 할인</label>
-                                    <label class="radio-option"><input type="radio" name="benefit" value="4,000 할인">4,000 할인</label>
-                                    <label class="radio-option"><input type="radio" name="benefit" value="5,000 할인">5,000 할인</label>
+                                    <label class="radio-option"><input type="radio" name="benefit" value="1,000 할인" >1,000 할인</label>
+                                    <label class="radio-option"><input type="radio" name="benefit" value="2,000 할인" >2,000 할인</label>
+                                    <label class="radio-option"><input type="radio" name="benefit" value="3,000 할인" >3,000 할인</label>
+                                    <label class="radio-option"><input type="radio" name="benefit" value="4,000 할인" >4,000 할인</label>
+                                    <label class="radio-option"><input type="radio" name="benefit" value="5,000 할인" >5,000 할인</label>
                                 </div>
                                 
                                 <div class="radio-group">
-                                    <label class="radio-option"><input type="radio" name="benefit" value="10% 할인">10% 할인</label>
-                                    <label class="radio-option"><input type="radio" name="benefit" value="20% 할인">20% 할인</label>
-                                    <label class="radio-option"><input type="radio" name="benefit" value="30% 할인">30% 할인</label>
-                                    <label class="radio-option"><input type="radio" name="benefit" value="40% 할인">40% 할인</label>
-                                    <label class="radio-option"><input type="radio" name="benefit" value="50% 할인">50% 할인</label>
+                                    <label class="radio-option"><input type="radio" name="benefit" value="10% 할인" >10% 할인</label>
+                                    <label class="radio-option"><input type="radio" name="benefit" value="20% 할인" >20% 할인</label>
+                                    <label class="radio-option"><input type="radio" name="benefit" value="30% 할인" >30% 할인</label>
+                                    <label class="radio-option"><input type="radio" name="benefit" value="40% 할인" >40% 할인</label>
+                                    <label class="radio-option"><input type="radio" name="benefit" value="50% 할인" >50% 할인</label>
                                 </div>
                                 
                                 <div class="radio-group">
-                                    <label class="radio-option"><input type="radio" name="benefit" value="배송비 무료" >배송비 무료</label>
+                                    <label class="radio-option"><input type="radio" name="benefit" value="배송비 무료" required>배송비 무료</label>
                                 </div>
                                 
                             </td>
@@ -309,16 +313,18 @@
                         <tr>
                             <td style="height: 80px;">사용기간</td>
                             <td>
-                                <input type="date" name="validFrom"> ~ <input type="date" name="validTo">
+                                <input type="date" name="validFrom" required> ~ <input type="date" name="validTo" required>
                                 <br><br>
-                                또는 발급일로부터 <input type="text" name="validDaysAfterIssue" style="width: 50px; height: 20px;">일 이내
-
-                                
+                                또는 발급일로부터 <input type="text" name="validDaysAfterIssue" style="width: 50px; height: 20px;" value="20">일 이내
                             </td>
                         </tr>
                         <tr>
                             <td style="height: 100px;">유의사항</td>
-                            <td><textarea name="caution"></textarea></td>
+                            <td>
+                                <textarea name="caution">쿠폰 중복 사용 여부를 반드시 확인하세요.
+동일한 주문에 다른 쿠폰이나 프로모션과 동시에 사용할 수 있도록 설정할지 여부를 명확히 지정해야 합니다. 중복 사용 허용 시 예상보다 큰 할인이 적용될 수 있으니 주의가 필요합니다.
+                                </textarea>
+                            </td>
                         </tr>
                     </table>
                     <div class="recruit_btn_box">

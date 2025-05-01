@@ -1,10 +1,12 @@
 package kr.co.lotteon.entity.order;
 
 import jakarta.persistence.*;
+import kr.co.lotteon.dto.order.OrderItemDTO;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import kr.co.lotteon.entity.user.User;
 
@@ -15,7 +17,7 @@ import kr.co.lotteon.entity.user.User;
 @ToString(exclude = "user")
 @Builder
 @Entity
-@Table(name = "Order")
+@Table(name = "`Order`")
 public class Order {
 
     @Id
@@ -26,11 +28,14 @@ public class Order {
     @JoinColumn(name = "uid", nullable = false)
     private User user; // 주문자 정보
 
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> orderItems; // 주문 상세 (OrderItem)
+
     private int orderTotalPrice; // 총 주문 금액
 
     private String orderAddr; // 배송 주소
 
-    private String orderStatus = "결제대기"; // 주문 상태
+    private String orderStatus; // 주문 상태
 
     @CreationTimestamp
     private LocalDateTime orderDate; // 주문 일자
@@ -44,8 +49,16 @@ public class Order {
     private String orderContent; // 배송 요청사항 등
 
     private String payment;       // 결제 수단
-    private String paymentCont;   // 결제 상세 정보
+    private String paymentContent;   // 결제 상세 정보
 
     private String color; // 상품 색상
     private int size;  // 상품
+
+    @PrePersist
+    public void prePersist() {
+        if (this.orderStatus == null) {
+            this.orderStatus = "결제대기";
+        }
+    }
+
 }
