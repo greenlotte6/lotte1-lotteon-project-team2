@@ -22,28 +22,7 @@
         <!-- 헤더 끝 -->
         <!-- 메인 시작 -->
         <main>
-            <div class="shop_header">
-                <div style="float: left;">
-                    <p class="shop_header_txt">나의쇼핑정보</p>
-                </div>
-                <div style="float: right; padding-top: 5px; width: 250px;">
-                    <table class="header_table">
-                        <tr>
-                            <td>주문</td>
-                            <td>쿠폰</td>
-                            <td>포인트</td>
-                            <td>문의</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>1</td>
-                            <td>1,000</td>
-                            <td>1</td>
-                        </tr>
-                    </table>
-                </div>
-                
-            </div>
+            <th:block th:insert="/myPage/inc/myShoppingInfo.html"></th:block>
             <section class="content">
                 <!-- 왼쪽 사이드바 -->
                 <th:block th:include="/myPage/inc/sidebar.html"/>

@@ -1,6 +1,7 @@
 package kr.co.lotteon.repository.user;
 
 
+import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -17,9 +18,6 @@ public interface UserRepository extends JpaRepository<User,String> {
     Optional<User> findByUid(String uid);
 
     Optional<User> findByEmail(String email);
-
-    Optional<User> findByUidAndPass(String uid, String pass); // ✅ 이거 추가
-
 
 
 }

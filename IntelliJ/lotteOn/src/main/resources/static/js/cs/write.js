@@ -2,11 +2,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // 1차 value와 2차 select 클래스 매핑
     const typeMap = {
         "회원": "memberSelect",
-        "쿠폰-이벤트": "couponSelect",
-        "주문/결제": "orderSelect",
+        "쿠폰-혜택-이벤트": "couponSelect",
+        "주문-결제": "orderSelect",
         "배송": "deliverySelect",
-        "취소/반품/환불": "cancelSelect",
-        "여행/숙박/항공": "travelSelect",
+        "취소-반품-환불": "cancelSelect",
+        "여행-숙박-항공": "travelSelect",
         "안전거래": "safeSelect"
     };
 
