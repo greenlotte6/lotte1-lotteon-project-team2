@@ -30,6 +30,8 @@ public class QOrder extends EntityPathBase<Order> {
 
     public final DateTimePath<java.time.LocalDateTime> orderDate = createDateTime("orderDate", java.time.LocalDateTime.class);
 
+    public final ListPath<OrderItem, QOrderItem> orderItems = this.<OrderItem, QOrderItem>createList("orderItems", OrderItem.class, QOrderItem.class, PathInits.DIRECT2);
+
     public final NumberPath<Integer> orderNo = createNumber("orderNo", Integer.class);
 
     public final StringPath orderReceiver = createString("orderReceiver");
@@ -42,7 +44,7 @@ public class QOrder extends EntityPathBase<Order> {
 
     public final StringPath payment = createString("payment");
 
-    public final StringPath paymentCont = createString("paymentCont");
+    public final StringPath paymentContent = createString("paymentContent");
 
     public final StringPath receiverHp = createString("receiverHp");
 

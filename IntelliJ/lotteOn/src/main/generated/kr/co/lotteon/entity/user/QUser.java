@@ -43,9 +43,13 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath role = createString("role");
 
+    public final StringPath ssn = createString("ssn");
+
     public final StringPath state = createString("state");
 
     public final StringPath uid = createString("uid");
+
+    public final DateTimePath<java.time.LocalDateTime> updateDate = createDateTime("updateDate", java.time.LocalDateTime.class);
 
     public final StringPath zip = createString("zip");
 
