@@ -127,6 +127,8 @@ public class AdminController {
 
         // 이미지 저장 메서드
         BannerDTO newBannerDTO = imageService.saveBanner(bannerDTO);
+        
+        // 배너 저장 메서드
         configService.saveBanner(bannerDTO);
         return "redirect:/admin/config/banner";
     }

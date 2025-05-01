@@ -8,8 +8,28 @@
     <link rel="stylesheet" href="/css/lotteon.css">
     <link rel="stylesheet" href="/css/common/header.css">
     <script src="/js/aside.js"></script>
-    <link rel="icon" th:href="@{/upload/{favicon}(favicon=${appInfo.favicon})}">
+    <link id="favicon" rel="icon" th:href="@{/upload/{favicon}(favicon=${appInfo.favicon})}">
     <!-- 헤더 푸터만 있습니다.(광고버전)-->
+
+  <!-- 파비콘 테스트 -->
+  <script>
+      window.onload = function() {
+        var favicon = document.getElementById('favicon');
+
+        // 파비콘 이미지가 존재하는지 확인
+        var img = new Image();
+        img.onload = function() {
+          // 이미지가 정상적으로 로드되면 아무 작업도 안 함
+        };
+        img.onerror = function() {
+          // 이미지 로드 실패 시 대체 파비콘을 설정
+          favicon.href = '/images/파비콘기초이미지.png';  // 대체 파비콘 경로
+        };
+
+        // 시도하려는 파비콘 이미지 URL
+        img.src = favicon.href;
+      };
+    </script>
 </head>
 <body>
     <div id="wrapper">
@@ -18,8 +38,8 @@
         <a th:href="${banner.link}">
           <img th:src="@{/upload/{image}(image=${banner.sName})}"
                th:style="'width:' + ${banner.width} + 'px;'
-               +'height:' + ${banner.height} + 'px;'
-                "
+               +'height:' + ${banner.height} + 'px;'"
+               onerror="this.src='/images/광고사진.jpeg';"
                alt="lotteOn">
         </a>
       </div>
@@ -31,26 +51,15 @@
                 <section class="main-banner">
                   <div class="swiper mySwiper">
                     <div class="swiper-wrapper">
-                      <div class="swiper-slide">
-                        <img th:src="@{/images/lotteon/배너이미지1.png}" alt="배너1"
-                             th:onclick="|location.href='@{/product/view}'|" style="cursor: pointer;"/>
+                      <div class="swiper-slide" th:each="banner : ${bannerDTOS}">
+                        <img th:src="@{/upload/{image}(image=${banner.sName})}"
+                             th:style="'width:' + ${banner.width} + 'px;' + 'height:' + ${banner.height} + 'px;'"
+                             th:attr="onclick=|location.href='${banner.link}'|"
+                             onerror="this.src='/images/lotteon/배너이미지1.png';"
+                             style="cursor: pointer;"
+                             alt="lotteOn">
                       </div>
-                      <div class="swiper-slide">
-                        <img th:src="@{/images/lotteon/배너이미지2.png}" alt="배너2"
-                             th:onclick="|location.href='@{/product/view}'|" style="cursor: pointer;"/>
-                      </div>
-                      <div class="swiper-slide">
-                        <img th:src="@{/images/lotteon/배너이미지3.png}" alt="배너3"
-                             th:onclick="|location.href='@{/product/view}'|" style="cursor: pointer;"/>
-                      </div>
-                      <div class="swiper-slide">
-                        <img th:src="@{/images/lotteon/배너이미지4.png}" alt="배너4"
-                             th:onclick="|location.href='@{/product/view}'|" style="cursor: pointer;"/>
-                      </div>
-                      <div class="swiper-slide">
-                        <img th:src="@{/images/lotteon/배너이미지5.png}" alt="배너5"
-                             th:onclick="|location.href='@{/product/view  }'|" style="cursor: pointer;"/>
-                      </div>
+
                     </div>
                     <div class="swiper-pagination"></div>
                     <div class="slide-area prev-area"></div>
