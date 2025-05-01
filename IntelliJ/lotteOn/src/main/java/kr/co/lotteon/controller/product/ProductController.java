@@ -3,6 +3,7 @@ package kr.co.lotteon.controller.product;
 
 import jakarta.mail.FetchProfile;
 import kr.co.lotteon.dao.ProductMapper;
+import kr.co.lotteon.dto.config.BannerDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.coupon.CouponIssueDTO;
 import kr.co.lotteon.dto.page.ItemRequestDTO;
@@ -12,6 +13,7 @@ import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.dto.product.ProductDetailDTO;
 import kr.co.lotteon.service.article.InquiryService;
 import kr.co.lotteon.service.cart.CartService;
+import kr.co.lotteon.service.config.ConfigService;
 import kr.co.lotteon.service.coupon.CouponService;
 import kr.co.lotteon.service.feedback.ReviewService;
 import kr.co.lotteon.service.product.ProductDetailService;
@@ -42,10 +44,16 @@ public class ProductController {
     private final ProductService productService;
     private final CouponService couponService;
     private final CartService cartService;
+    private final ConfigService configService;
 
     // 상품 보기 - 첫 페이지 진입용
     @GetMapping("/product/view")
     public String view(PageRequestDTO pageRequestDTO, Model model) {
+
+        // 상품 배너
+        BannerDTO banner = configService.findBanner("PRODUCT1");
+        model.addAttribute("banner", banner);
+
         pageRequestDTO.setSize(5);
         String prodNo = pageRequestDTO.getProdNo();
         // 상품 + 상품이미지
