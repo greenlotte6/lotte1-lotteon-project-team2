@@ -4,7 +4,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import kr.co.lotteon.config.AppInfo;
+import kr.co.lotteon.dto.config.BannerDTO;
 import kr.co.lotteon.repository.config.VersionRepository;
+import kr.co.lotteon.service.config.ConfigService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class AppInfoInterceptor implements HandlerInterceptor {
 
     private final AppInfo appInfo;
+    private final ConfigService configService;
 
     /*
         Interceptor
@@ -34,6 +37,15 @@ public class AppInfoInterceptor implements HandlerInterceptor {
         // 컨트롤러 수행 후 실행
         if(modelAndView != null){
             // 모든 컨트롤러 요청 후 appInfo 모델 참조
+
+            String requestURI = request.getRequestURI();
+
+            // 마이 페이지 배너
+            if(requestURI.contains("my")){
+                BannerDTO banner = configService.findBanner("MY1");
+                modelAndView.addObject("banner", banner);
+            }
+
             appInfo.chageVersion();
             modelAndView.addObject(appInfo);
         }

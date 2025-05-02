@@ -3,6 +3,7 @@ package kr.co.lotteon.controller.mypage;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import kr.co.lotteon.dto.article.InquiryDTO;
+import kr.co.lotteon.dto.config.BannerDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.feedback.ReviewDTO;
 import kr.co.lotteon.dto.order.OrderDTO;
@@ -13,6 +14,7 @@ import kr.co.lotteon.dto.point.PointDTO;
 import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.user.UserRepository;
+import kr.co.lotteon.service.config.ConfigService;
 import kr.co.lotteon.service.mypage.MyPageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,10 +36,14 @@ import java.time.LocalDateTime;
 public class MyController {
 
     private final MyPageService myPageService;
-
+    private final ConfigService configService;
 
     @GetMapping("/my/home")
     public String myHome(PageRequestDTO pageRequestDTO, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+
+        BannerDTO banner = configService.findBanner("MY1");
+        model.addAttribute("banner", banner);
+
         // 페이지 목록 5개로 제한
         pageRequestDTO.setSize(5);
         
