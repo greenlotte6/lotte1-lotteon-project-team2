@@ -7,7 +7,7 @@
   box-sizing: border-box;
   border-top: 1px solid black;
   border-bottom: 1px solid gray;
-  width: 800px;
+  width: 841px;
   margin: 0 auto;
   height: 40vh;
 }
@@ -106,7 +106,7 @@
   width: 100%;
   height: 260px;
   background-color: #eee;
-  border: 1px solid #ccc;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -119,7 +119,7 @@
   font-weight: bold;
   width: 100%;
   text-align: left;
-  margin-left: 85px;
+  margin-left: 60px;
   padding-left: 20px; /* 적당히 들여쓰기 */
   box-sizing: border-box;
 }
@@ -134,7 +134,7 @@
 }
 
 .award-logo img {
-  width: 180px;
+  width: 200px;
   height: 100px;
   margin-right: 8px;
 

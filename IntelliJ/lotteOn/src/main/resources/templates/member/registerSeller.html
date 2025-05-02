@@ -75,7 +75,7 @@
                 <td>사업자등록번호</td>
                 <td>
                 <div style="position: relative">
-                    <input type="text" name="bizRegNo" id="bizRegNo" placeholder="사업자등록번호입력" />
+                    <input type="text" name="bizRegNo" id="bizRegNo" placeholder="사업자등록번호입력" maxlength="12"/>
                     <button type="button" style="position: absolute; right: 0; top: 0" id="btnCheckBizRegNo" class="btn btn-small btn-auth" >중복확인</button>
                 </div>
 
@@ -85,8 +85,8 @@
               </tr>
               <tr>
                 <td>통신판매업번호</td>
-                <td><input type="text" name="commerceNo" placeholder="통신판매업번호입력" />
-                  <span class="description">- 포함 8 자리 입력</span>
+                <td><input type="text" name="commerceNo" placeholder="통신판매업번호입력" maxlength="9"/>
+                  <span class="description">- 포함 9 자리 입력</span>
                 </td>
               </tr>
               <tr>
