@@ -179,11 +179,25 @@ public class AdminController {
 
     }
 
-    // 카테고리 (미완성)
+    /*
+    * 카테고리
+    * */
+    
+    // 카테고리
     @GetMapping("/config/category")
-    public String category() {
+    public String category(Model model) {
+        List<MainCategoryDTO> categoryDTOS = configService.findAllCateGory();
+
+        System.out.println(categoryDTOS.size());
+        model.addAttribute("categoryDTOS", categoryDTOS);
         return "/admin/config/category";
     }
+    
+    
+    
+    
+    
+    
 
     // 버전관리
     @GetMapping("/config/version")
