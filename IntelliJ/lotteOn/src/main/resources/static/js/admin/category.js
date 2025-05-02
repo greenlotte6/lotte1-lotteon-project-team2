@@ -37,4 +37,21 @@ document.addEventListener('DOMContentLoaded', () => {
             container.insertBefore(draggable, afterElement);
         }
     });
+
+
+
+    const mainDivs = document.querySelectorAll(".Main_div > p");
+
+    mainDivs.forEach(function(pTag) {
+        pTag.addEventListener("click", function() {
+            const subDiv = this.parentElement.querySelector(".Sub_div");
+            if (subDiv) {
+                subDiv.style.display = subDiv.style.display === "none" || subDiv.style.display === "" ? "block" : "none";
+            }
+        });
+    });
+
+
+
+
 });

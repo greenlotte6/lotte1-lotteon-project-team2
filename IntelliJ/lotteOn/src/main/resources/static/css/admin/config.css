@@ -466,6 +466,7 @@
 
 .Sub_div{
     padding-left: 30px;
+    display: none;
 }
 
 .Sub_div p{
@@ -491,3 +492,18 @@
 .dragging {
     opacity: 0.5;
 }
+
+.category_add{
+    color: #BFBFBF;
+}
+
+.category_plus{
+    display: inline-block;
+    color: #BFBFBF;
+    padding: 2px;
+    border: 1px solid #BFBFBF;
+    width: 10px;
+    height: 10px;
+}
+
+
