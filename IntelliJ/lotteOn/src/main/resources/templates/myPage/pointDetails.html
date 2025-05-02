@@ -30,7 +30,12 @@
                 <!-- 오른쪽 글 -->
                 <article class="main_content_side">
                     <div class="ad">
-                        <!-- 광고 -->광고
+                        <img th:src="@{/upload/{image}(image=${banner.sName})}"
+                             th:style="'width:' + ${banner.width} + 'px;'
+                                            +'height:' + ${banner.height} + 'px;'"
+                             onerror="this.src='/images/가정의달.PNG';"
+                             th:attr="onclick=|location.href='${banner.link}'|"
+                             alt="lotteOn">
                     </div>
                     <div class="order-details">
                         <div class="title-area">
