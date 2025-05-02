@@ -138,10 +138,19 @@ public class ProductController {
     public String cart(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         List<CartDTO> cartDTOList = cartService.findAllByUid(userDetails);
         model.addAttribute(cartDTOList);
-        log.info("cartDTOList: {}", cartDTOList);
         return "/product/cart";
     }
 
+
+    // 장바구니 상품 삭제
+    @GetMapping("/product/removeItem")
+    @ResponseBody
+    public int removeItem(int cartNo){
+        log.info("removeItem cartNo: {}", cartNo);
+        int result = cartService.deleteByCartNo(cartNo);
+        log.info("removeItem result: {}", result);
+        return result;
+    }
 
     // 주문하기
     @GetMapping("/product/order")
