@@ -441,4 +441,53 @@
     box-sizing: border-box;
 }
 
+/* 카테고리 */
+#category_manage_div{
+    width: 300px;
+    height: auto;
+}
 
+.category_manage_div{
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px;
+    min-height: 60px;
+    border: 1px solid #CFCFCF;
+    border-bottom: none;
+}
+
+#category_manage_div .category_manage_div:nth-last-child(1){
+    border-bottom: 1px solid #CFCFCF;
+}
+
+.Main_div{
+    cursor: pointer;
+}
+
+.Sub_div{
+    padding-left: 30px;
+}
+
+.Sub_div p{
+    line-height: 30px;
+}
+
+
+.category_delete{
+    float: right;
+    padding: 2px;
+    color: red;
+    border: 1px solid red;
+}
+
+.subCategory_delete{
+    margin-left: 10px;
+    padding: 1px 3px 1px 2px;
+    color: red;
+    border: 1px solid red;
+
+}
+
+.dragging {
+    opacity: 0.5;
+}

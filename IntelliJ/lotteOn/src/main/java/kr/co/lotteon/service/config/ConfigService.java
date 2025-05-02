@@ -1,17 +1,23 @@
 package kr.co.lotteon.service.config;
 
 import com.querydsl.core.Tuple;
+import kr.co.lotteon.dto.category.MainCategoryDTO;
+import kr.co.lotteon.dto.category.SubCategoryDTO;
 import kr.co.lotteon.dto.config.BannerDTO;
 import kr.co.lotteon.dto.config.ConfigDTO;
 import kr.co.lotteon.dto.config.TermsDTO;
 import kr.co.lotteon.dto.config.VersionDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
+import kr.co.lotteon.entity.category.MainCategory;
+import kr.co.lotteon.entity.category.SubCategory;
 import kr.co.lotteon.entity.config.Banner;
 import kr.co.lotteon.entity.config.Config;
 import kr.co.lotteon.entity.config.Terms;
 import kr.co.lotteon.entity.config.Version;
 import kr.co.lotteon.entity.user.User;
+import kr.co.lotteon.repository.category.MainCategoryRepository;
+import kr.co.lotteon.repository.category.SubCategoryRepository;
 import kr.co.lotteon.repository.config.BannerRepository;
 import kr.co.lotteon.repository.config.ConfigRepository;
 import kr.co.lotteon.repository.config.TermsRepository;
@@ -41,6 +47,8 @@ public class ConfigService {
     private final UserRepository userRepository;
     private final ConfigRepository configRepository;
     private final BannerRepository bannerRepository;
+    private final MainCategoryRepository mainCategoryRepository;
+    private final SubCategoryRepository subCategoryRepository;
 
     public TermsDTO findTerms() {
         Terms terms = termsRepository.findById(1).get();
@@ -293,5 +301,26 @@ public class ConfigService {
         }
 
         return bannerDTOList;
+    }
+
+    public List<MainCategoryDTO> findAllCateGory() {
+
+        List<MainCategory> mainCategories = mainCategoryRepository.findAll();
+        List<MainCategoryDTO> mainCategoryDTOList = new ArrayList<>();
+        for(MainCategory mainCategory : mainCategories){
+            List<SubCategory> subCategories = subCategoryRepository.findByMainCategory(mainCategory);
+            List<SubCategoryDTO> subCategoryDTOList = new ArrayList<>();
+            if(!subCategories.isEmpty()){
+                for(SubCategory subCategory : subCategories){
+                    subCategoryDTOList.add(modelMapper.map(subCategory, SubCategoryDTO.class));
+                }
+            }
+
+            MainCategoryDTO mainCategoryDTO = modelMapper.map(mainCategory, MainCategoryDTO.class);
+            mainCategoryDTO.setSubCategories(subCategoryDTOList);
+            System.out.println(mainCategoryDTO);
+            mainCategoryDTOList.add(mainCategoryDTO);
+        }
+        return mainCategoryDTOList;
     }
 }

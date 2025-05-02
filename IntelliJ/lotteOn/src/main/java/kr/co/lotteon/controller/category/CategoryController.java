@@ -26,10 +26,9 @@ public class CategoryController {
     @ResponseBody
     @GetMapping("/subCategory/list")
     public List<SubCategoryDTO> subCategoryList(@RequestParam("MainCategory") String mainCategory){
-
         List<SubCategoryDTO> subCategoryDTOList = categoryService.findSubCateByMainCate(mainCategory);
         return subCategoryDTOList;
-
     }
+
 
 }
