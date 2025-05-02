@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -108,6 +109,18 @@ public class CartService {
 
 
         return cartDTOList;
+    }
+
+    // 장바구니 상품 삭제
+    @Transactional
+    public int deleteByCartNo(int cartNo) {
+        try {
+            cartRepository.deleteByCartNo(cartNo);
+            return 1;
+        } catch (Exception e) {
+            log.error("Cart 삭제 중 예외 발생. cartNo: {}", cartNo, e);
+            return 0;
+        }
     }
 
 
