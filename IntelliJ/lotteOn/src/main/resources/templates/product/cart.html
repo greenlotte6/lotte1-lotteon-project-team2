@@ -91,7 +91,6 @@
                         if (isNaN(deliveryFee)) {
                             console.error('배송비가 NaN입니다. 확인해주세요. Raw value:', rawDeliveryFee, 'Element:', deliveryFeeEl);
                         }
-
                         if (vendor) {
                             const currentMax = vendorDeliveryMap.get(vendor) || 0;
                             if (!isNaN(deliveryFee)) {
@@ -103,30 +102,22 @@
                         }
                     }
                 });
-
                 let shippingCost = 0;
-
                 vendorDeliveryMap.forEach((fee) => {
                     if (fee > 0) {
                         shippingCost += deliveryFeePerVendor;
                     }
                 });
-
                 if (totalCount === 0 || orderAmount >= freeShippingLimit) {
                     shippingCost = 0;
                 }
-
                 const finalTotal = orderAmount + shippingCost;
-
                 const shippingText =
                     totalCount === 0 ? '0'
                         : orderAmount >= freeShippingLimit ? '무료'
                             : shippingCost.toLocaleString() + '원';
-
                 const point = Math.floor(orderAmount * 0.01);
-
                 document.getElementById('summary-count').textContent = totalCount;
-
                 const checkAllLabel = document.querySelector('label[for="check-all"]');
                 if (checkAllLabel) {
                     checkAllLabel.textContent = `전체선택(${totalCount})`;
@@ -204,8 +195,8 @@
                 sellerGroups[seller].push(item);
             });
             const sortedSellerKeys = Object.keys(sellerGroups).sort();
-            const parent = cartItems[0]?.parentNode; // Add null check for parent
-            if (parent) { // Only proceed if parent exists
+            const parent = cartItems[0]?.parentNode;
+            if (parent) {
                 sortedSellerKeys.forEach(seller => {
                     const group = sellerGroups[seller];
                     group.forEach(item => {
@@ -215,11 +206,32 @@
             }
 
 
-            // --- 선택 삭제 로직 ---
+            // 선택 삭제 로직
             const deleteSelectedBtn = document.querySelector('.cart_header button[type="button"]');
 
             if (deleteSelectedBtn) {
-                deleteSelectedBtn.addEventListener('click', () => {
+
+                function clearSummary() {
+                    document.getElementById('summary-count').textContent = '0';
+                    document.getElementById('summary-amount').textContent = '0';
+                    document.getElementById('summary-discount').textContent = '0';
+                    document.getElementById('summary-shipping').textContent = '0';
+                    document.getElementById('summary-point').textContent = '0';
+                    document.getElementById('summary-total').textContent = '0원';
+
+                    const checkAllLabel = document.querySelector('label[for="check-all"]');
+                    const checkAll = document.getElementById('check-all');
+                    const remainingCheckboxes = document.querySelectorAll('.cart_content input[type="checkbox"]').length;
+
+                    if (checkAllLabel) {
+                        checkAllLabel.textContent = `전체선택(0)`;
+                    }
+                    if (checkAll) {
+                        checkAll.checked = false;
+                    }
+                }
+
+                deleteSelectedBtn.addEventListener('click', async () => {
                     const selectedCheckboxes = document.querySelectorAll('.cart_content input[type="checkbox"]:checked');
 
                     if (selectedCheckboxes.length === 0) {
@@ -227,45 +239,65 @@
                         return;
                     }
 
-                    if (!confirm(`${selectedCheckboxes.length}개의 상품을 삭제하시겠습니까?`)) {
+                    if (!confirm(`선택된 상품을 삭제하시겠습니까?`)) {
                         return;
                     }
+
+                    const deletePromises = [];
 
                     selectedCheckboxes.forEach(checkbox => {
                         const cartNo = checkbox.value;
                         const cartItemElement = checkbox.closest('.cart_content');
-
                         const deleteUrl = `/product/removeItem?cartNo=${cartNo}`;
 
-                        fetch(deleteUrl, {
+                        const deletePromise = fetch(deleteUrl, {
                             method: 'GET'
                         })
                             .then(response => {
                                 if (response.ok) {
-                                    return response.text().then(text => {
-                                        if (text === '1') {
-                                            if (cartItemElement) {
-                                                cartItemElement.remove();
-                                            }
-                                            updateSummary();
-                                        } else {
-                                            if (cartItemElement) {
-                                                cartItemElement.remove();
-                                            }
-                                            updateSummary();
-                                        }
-                                    });
+                                    return response.text().then(text => ({ success: text === '1', element: cartItemElement }));
                                 } else {
-                                    alert(`상품(번호: ${cartNo}) 삭제 중 오류가 발생했습니다.`);
+                                    alert(`상품(번호: ${cartNo}) 삭제 중 서버 오류 발생 (Status: ${response.status})`);
+                                    return { success: false, element: cartItemElement };
                                 }
                             })
                             .catch(error => {
-                                if (!error.message.startsWith('Server responded with status')) {
-                                }
+                                console.error('삭제 요청 실패:', error);
+                                alert(`상품(번호: ${cartNo}) 삭제 중 네트워크 오류 발생`);
+                                return { success: false, element: cartItemElement };
                             });
-                         });
+                        deletePromises.push(deletePromise);
                     });
-                }
+
+                    try {
+                        const results = await Promise.all(deletePromises);
+
+                        let deletedCount = 0;
+                        results.forEach(result => {
+                            if (result.success && result.element) {
+                                result.element.remove();
+                                deletedCount++;
+                            } else if (!result.success && result.element) {
+                                const failedCheckbox = result.element.querySelector('input[type="checkbox"]');
+                                if(failedCheckbox) failedCheckbox.checked = false;
+                            }
+                        });
+
+                        clearSummary();
+
+                        if (deletedCount > 0) {
+                        } else if (selectedCheckboxes.length > 0 && deletedCount === 0) {
+                            alert('상품 삭제에 실패했습니다. 다시 시도해주세요.');
+                        }
+
+                    } catch (error) {
+                        console.error("Promise.all 처리 중 오류:", error);
+                        alert("일부 상품 삭제 중 예기치 않은 오류가 발생했습니다.");
+                        clearSummary();
+                    }
+                });
+            }
+
 
             const arrivalSpans = document.querySelectorAll('.arrival-date');
             const arrivalDate = new Date();
@@ -281,6 +313,8 @@
             arrivalSpans.forEach(span => {
                 span.textContent = arrivalText;
             });
+
+
 
         });
     </script>
@@ -384,7 +418,7 @@
                 <!-- 메인 시작 -->
                 <div class="cart">
                     <h1>장바구니</h1>
-                    <div>
+                    <form id="order-form" action="/product/order">
                         <div>
                             <div class="cart_header">
                                 <input type="checkbox" id="check-all">
@@ -392,7 +426,7 @@
                                 <button type="button">선택삭제</button>
                             </div>
 
-                            <div th:each="cart : ${cartDTOList}" class="cart_content" data-point="1">
+                            <div th:each="cart : ${cartDTOList}" class="cart_content" th:attr="data-prod-no=${cart.product.prodNo}" data-point="1">
                                 <div>
                                     <label>
                                         <input type="checkbox" name="cartNo" th:value="${cart.cartNo}"/>
@@ -419,7 +453,7 @@
                                             <span class="arrival-date">도착예정</span>
                                         </div>
                                     </div>
-                                    <div>
+                                    <div class="options-container">
                                         <div th:if="${cart.opt1Cont != null}">
                                             <p th:text="${cart.opt1 + ': ' + cart.opt1Cont}"></p>
                                         </div>
@@ -440,9 +474,9 @@
                                         </div>
                                     </div>
                                     <div class="quantity-box">
-                                        <button class="btn-minus">-</button>
+                                        <button class="btn-minus" type="button">-</button>
                                         <span class="quantity">[[${cart.cartProdCount}]]</span>
-                                        <button class="btn-plus">+</button>
+                                        <button class="btn-plus" type="button">+</button>
                                     </div>
                                     <div class="cart_price">
                                         <p class="price_original"
@@ -457,9 +491,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
                         </div>
                         <div class="cart_summary">
                             <p>결제예정금액</p>
@@ -471,11 +502,11 @@
                                     <tr><th>배송비</th><td id="summary-shipping">0</td></tr>
                                     <tr><th>적립 포인트</th><td id="summary-point">0</td></tr>
                                     <tr class="total"><th>총</th><td id="summary-total">0</td></tr>
-                                    <tr><td colspan="2"><button type="submit">주문하기</button></td></tr>
+                                    <tr><td colspan="2"><button type="submit" id="order-button">주문하기</button></td></tr>
                                 </table>
                             </form>
-                          </div>
-                    </div>    
+                        </div>
+                    </form>
                 </div>
             </section>
         </main>

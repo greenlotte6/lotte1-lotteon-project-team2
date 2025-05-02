@@ -1,6 +1,5 @@
 package kr.co.lotteon.controller.product;
 
-import jakarta.mail.FetchProfile;
 import kr.co.lotteon.dao.ProductMapper;
 import kr.co.lotteon.dto.cart.CartDTO;
 import kr.co.lotteon.dto.config.BannerDTO;
@@ -16,11 +15,11 @@ import kr.co.lotteon.service.cart.CartService;
 import kr.co.lotteon.service.config.ConfigService;
 import kr.co.lotteon.service.coupon.CouponService;
 import kr.co.lotteon.service.feedback.ReviewService;
+import kr.co.lotteon.service.order.OrderService;
 import kr.co.lotteon.service.product.ProductDetailService;
 import kr.co.lotteon.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,8 +28,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -45,6 +44,7 @@ public class ProductController {
     private final CouponService couponService;
     private final CartService cartService;
     private final ConfigService configService;
+    private final OrderService orderService;
 
     // 상품 보기 - 첫 페이지 진입용
     @GetMapping("/product/view")
@@ -146,16 +146,28 @@ public class ProductController {
     @GetMapping("/product/removeItem")
     @ResponseBody
     public int removeItem(int cartNo){
-        log.info("removeItem cartNo: {}", cartNo);
         int result = cartService.deleteByCartNo(cartNo);
-        log.info("removeItem result: {}", result);
         return result;
     }
 
-    // 주문하기
+    // 주문하기 View
     @GetMapping("/product/order")
-    public String order() {
-        return "/product/order";
+    public String order(@RequestParam("cartNo") List<Integer> cartNos, Model model) {
+
+        log.info("cartNos: {}", cartNos);
+
+        List<CartDTO> cartDTOList = new ArrayList<>();
+
+        for(Integer cartNo : cartNos) {
+            CartDTO cartDTO = orderService.findByCartNo(cartNo);
+            cartDTOList.add(cartDTO);
+        }
+
+        model.addAttribute(cartDTOList);
+
+        log.info("cartDTOList: {}", cartDTOList);
+
+        return  "/product/order";
     }
 
     //주문완료

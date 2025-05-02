@@ -37,7 +37,6 @@ public class CartService {
         Optional<Product> optProduct = productRepository.findByProdNo(prodNo);
 
         if (optProduct.isPresent()) {
-
             Product product = optProduct.get();
             ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
             return productDTO;
@@ -122,6 +121,7 @@ public class CartService {
             return 0;
         }
     }
+
 
 
 }
