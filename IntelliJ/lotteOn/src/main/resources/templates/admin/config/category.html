@@ -41,7 +41,7 @@
                     </div>
 
                     <!-- 일단 대기 -->
-                    <form th:action="@{/admin/config/category}" method="post">
+                    <form th:action="@{/admin/config/category}" method="post" id="category_form">
                         <div id="category_manage_div">
                             <div class="category_manage_div draggable" th:each="Maincategory : ${categoryDTOS}" draggable="true">
                                 <div class="Main_div">
@@ -93,6 +93,51 @@
 
 
                     </form>
+
+                    <!-- 버퍼링 -->
+                    <!-- 로딩 오버레이 -->
+                    <div id="loading" class="loading-overlay">
+                        <div class="loading-content">
+                            <div class="spinner"></div>
+                            <div class="loading-text">⏳ 저장 중입니다...</div>
+                        </div>
+                    </div>
+
+                    <script>
+
+                        document.getElementById('category_form').addEventListener('submit', function(event) {
+
+
+
+                            event.preventDefault(); // 기본 form submit 막기
+                            const form = event.target;
+
+                            const formData = new FormData(form);
+
+                            // 로딩창 표시
+                            document.getElementById('loading').style.display = 'flex';
+
+                            
+                            fetch('/admin/config/category', {
+                                method: 'POST',
+                                body: formData
+                            })
+                                .then(response => {
+                                    if (response.redirected) {
+                                        // 로딩창 숨기고 리디렉트 처리
+                                        window.location.href = response.url;
+                                    } else {
+                                        return response.text();
+                                    }
+                                })
+                                .catch(err => {
+                                    alert('에러 발생: ' + err);
+                                })
+                                .finally(() => {
+
+                                });
+                        });
+                    </script>
 
 
                 </article>
