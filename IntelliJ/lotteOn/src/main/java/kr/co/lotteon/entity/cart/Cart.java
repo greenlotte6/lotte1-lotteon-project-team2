@@ -22,7 +22,6 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cartNo; // 장바구니 번호
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uid", nullable = false)
     private User user; // 회원 정보 외래키

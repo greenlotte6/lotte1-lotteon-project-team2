@@ -154,7 +154,6 @@ public class ProductController {
     @GetMapping("/product/order")
     public String order(@RequestParam("cartNo") List<Integer> cartNos, Model model) {
 
-        log.info("cartNos: {}", cartNos);
 
         List<CartDTO> cartDTOList = new ArrayList<>();
 

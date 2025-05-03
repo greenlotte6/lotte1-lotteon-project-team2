@@ -1,6 +1,7 @@
 package kr.co.lotteon.dto.cart;
 
 import kr.co.lotteon.dto.product.ProductDTO;
+import kr.co.lotteon.dto.user.UserDTO;
 import lombok.*;
 
 
@@ -17,6 +18,8 @@ public class CartDTO {
     private int cartNo;
 
     private String uid;
+
+    private UserDTO user;
 
     private ProductDTO product;
 
