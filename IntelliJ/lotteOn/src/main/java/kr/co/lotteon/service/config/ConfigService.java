@@ -1,6 +1,7 @@
 package kr.co.lotteon.service.config;
 
 import com.querydsl.core.Tuple;
+import jakarta.transaction.Transactional;
 import kr.co.lotteon.dto.category.MainCategoryDTO;
 import kr.co.lotteon.dto.category.SubCategoryDTO;
 import kr.co.lotteon.dto.config.BannerDTO;
@@ -15,6 +16,7 @@ import kr.co.lotteon.entity.config.Banner;
 import kr.co.lotteon.entity.config.Config;
 import kr.co.lotteon.entity.config.Terms;
 import kr.co.lotteon.entity.config.Version;
+import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.category.MainCategoryRepository;
 import kr.co.lotteon.repository.category.SubCategoryRepository;
@@ -22,6 +24,7 @@ import kr.co.lotteon.repository.config.BannerRepository;
 import kr.co.lotteon.repository.config.ConfigRepository;
 import kr.co.lotteon.repository.config.TermsRepository;
 import kr.co.lotteon.repository.config.VersionRepository;
+import kr.co.lotteon.repository.product.ProductRepository;
 import kr.co.lotteon.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +52,7 @@ public class ConfigService {
     private final BannerRepository bannerRepository;
     private final MainCategoryRepository mainCategoryRepository;
     private final SubCategoryRepository subCategoryRepository;
+    private final ProductRepository productRepository;
 
     public TermsDTO findTerms() {
         Terms terms = termsRepository.findById(1).get();
@@ -305,10 +309,10 @@ public class ConfigService {
 
     public List<MainCategoryDTO> findAllCateGory() {
 
-        List<MainCategory> mainCategories = mainCategoryRepository.findAll();
+        List<MainCategory> mainCategories = mainCategoryRepository.findByStateOrderByOrderIndexAsc("활성");
         List<MainCategoryDTO> mainCategoryDTOList = new ArrayList<>();
         for(MainCategory mainCategory : mainCategories){
-            List<SubCategory> subCategories = subCategoryRepository.findByMainCategory(mainCategory);
+            List<SubCategory> subCategories = subCategoryRepository.findByMainCategoryAndStateOrderByOrderIndexAsc(mainCategory,"활성");
             List<SubCategoryDTO> subCategoryDTOList = new ArrayList<>();
             if(!subCategories.isEmpty()){
                 for(SubCategory subCategory : subCategories){
@@ -318,9 +322,163 @@ public class ConfigService {
 
             MainCategoryDTO mainCategoryDTO = modelMapper.map(mainCategory, MainCategoryDTO.class);
             mainCategoryDTO.setSubCategories(subCategoryDTOList);
-            System.out.println(mainCategoryDTO);
             mainCategoryDTOList.add(mainCategoryDTO);
         }
         return mainCategoryDTOList;
+    }
+
+    // 순서 정렬하기(메인)
+    public int sortOrderMain(List<Integer> mainCateNo) {
+
+        int i = 1;
+        if(!mainCateNo.isEmpty()){
+            for(int cateNo : mainCateNo){
+                Optional<MainCategory>  mainCategoryOpt = mainCategoryRepository.findById(cateNo);
+                if(mainCategoryOpt.isPresent()){
+                    MainCategory mainCategory = mainCategoryOpt.get();
+                    mainCategory.setOrderIndex(i);
+                    mainCategoryRepository.save(mainCategory);
+                }
+                i++;
+            }
+        }
+        return i;
+    }
+
+    // 새로운 카테고리 저장하기
+    public void saveNewMain(List<String> newCateNos, int index) {
+        if(newCateNos != null){
+            for(String  cate : newCateNos){
+                MainCategory mainCategory = MainCategory.builder()
+                        .mainCategoryName(cate)
+                        .orderIndex(index)
+                        .build();
+
+                mainCategoryRepository.save(mainCategory);
+                index++;
+            }
+        }
+
+    }
+
+
+    /*
+    * 카테고리 판별
+    * 관련된 상품이 없을 경우 바로 삭제
+    * 관련된 상품이 있을 경우 상태를 비활성 처리
+    * */
+    @Transactional
+    public void deleteMainCategory(int mainCateNo) {
+
+        MainCategory mainCategory = MainCategory.builder()
+                .mainCateNo(mainCateNo)
+                .build();
+
+        List<SubCategory> existSubCategories = subCategoryRepository.findByMainCategory(mainCategory);
+
+        // 서브카테고리 존재 확인
+        if(existSubCategories.isEmpty()){
+            mainCategoryRepository.deleteById(mainCateNo);
+            return;
+        }
+
+        //상품 존재 확인
+        for(SubCategory subCategory : existSubCategories){
+            List<Product> existProducts = productRepository.findBySubCategory(subCategory);
+            if(!existProducts.isEmpty()){
+                MainCategory category= mainCategoryRepository.findById(mainCateNo).get();
+                category.setState("비활성");
+                mainCategoryRepository.save(category);
+                return;
+            }
+        }
+
+        // 서브 카테고리 삭제 후 메인 카테고리 삭제
+        subCategoryRepository.deleteByMainCategory(mainCategory);
+        mainCategoryRepository.deleteById(mainCateNo);
+
+
+    }
+
+    // 서브 카테고리 삭제
+    public void deleteSubCategory(int subCateNo) {
+        SubCategory subCategory = SubCategory.builder()
+                .subCateNo(subCateNo)
+                .build();
+        List<Product> products = productRepository.findBySubCategory(subCategory);
+        if(products.isEmpty()){
+            subCategoryRepository.deleteById(subCateNo);
+            return;
+        }
+
+        SubCategory category = subCategoryRepository.findById(subCateNo).get();
+        category.setState("비활성");
+        subCategoryRepository.save(category);
+
+    }
+
+    public int sortOrderSub(List<Integer> subCateNo) {
+        int i = 1;
+        if(!subCateNo.isEmpty()){
+            for(int cateNo : subCateNo){
+                Optional<SubCategory>  CategoryOpt = subCategoryRepository.findById(cateNo);
+                if(CategoryOpt.isPresent()){
+                    SubCategory category = CategoryOpt.get();
+                    category.setOrderIndex(i);
+                    subCategoryRepository.save(category);
+                }
+                i++;
+            }
+        }
+        return i;
+    }
+
+    // 새로운 서브 카테고리 추가
+    public int saveNewSub(List<String> newSubCateNos, int index) {
+        if(!newSubCateNos.isEmpty()){
+            for(String  cate : newSubCateNos){
+                int mainNo = Integer.parseInt(cate.split(":")[0]);
+                String name = cate.split(":")[1];
+
+                MainCategory mainCategory = MainCategory.builder()
+                        .mainCateNo(mainNo)
+                        .build();
+
+                SubCategory subCategory = SubCategory.builder()
+                        .subCategoryName(name)
+                        .mainCategory(mainCategory)
+                        .orderIndex(index)
+                        .build();
+
+                subCategoryRepository.save(subCategory);
+
+                index++;
+            }
+        }
+
+        return index;
+    }
+
+    public void saveNewSubV2(List<String> newSubCateNosV2, int index) {
+
+        if(!newSubCateNosV2.isEmpty()){
+            for(String  cate : newSubCateNosV2){
+                String mainName = cate.split(":")[0];
+                String subname = cate.split(":")[1];
+
+                // 동일 이름 대비
+                List<MainCategory> mainCategory = mainCategoryRepository.findByMainCategoryNameOrderByOrderIndexDesc(mainName);
+
+                SubCategory subCategory = SubCategory.builder()
+                        .subCategoryName(subname)
+                        .mainCategory(mainCategory.get(0))
+                        .orderIndex(index)
+                        .build();
+
+                subCategoryRepository.save(subCategory);
+
+                index++;
+            }
+        }
     }
 }

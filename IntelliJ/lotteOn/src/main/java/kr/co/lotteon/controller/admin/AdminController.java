@@ -186,13 +186,60 @@ public class AdminController {
     // 카테고리
     @GetMapping("/config/category")
     public String category(Model model) {
-        List<MainCategoryDTO> categoryDTOS = configService.findAllCateGory();
 
-        System.out.println(categoryDTOS.size());
+        List<MainCategoryDTO> categoryDTOS = configService.findAllCateGory();
         model.addAttribute("categoryDTOS", categoryDTOS);
         return "/admin/config/category";
     }
-    
+
+    // 메인 카테고리 등록
+    @PostMapping("/config/category")
+    public String category(@RequestParam("mainCateNo") List<Integer> mainCateNo,
+                           @RequestParam("subCateNo") List<Integer> subCateNo
+                        ,@RequestParam(value = "newCateNo", required = false) List<String> newCateNos
+                        ,@RequestParam(value = "newSubCateNo", required = false) List<String> newSubCateNos
+                        ,@RequestParam(value = "newSubCateNoV2", required = false) List<String> newSubCateNosV2) {
+
+        // 카테고리 정렬(메인)
+        int index = configService.sortOrderMain(mainCateNo);
+
+        // 카테고리 추가
+        configService.saveNewMain(newCateNos, index);
+
+        // 카테고리 정렬(서브)
+        index = configService.sortOrderSub(subCateNo);
+
+        // 카테고리 추가(서브)
+        if(newSubCateNos != null){
+            index = configService.saveNewSub(newSubCateNos, index);
+        }
+
+        // 신규 메인 카테고리에 신규 서브 카테고리 추가
+        if(newSubCateNosV2 != null){
+            configService.saveNewSubV2(newSubCateNosV2, index);
+        }
+        System.out.println(newSubCateNosV2);
+
+        return "redirect:/admin/config/category";
+
+    }
+
+    // 메인 카테고리 삭제
+    @PostMapping("/config/category/delete/main")
+    @ResponseBody
+    public String deleteMainCategory(@RequestParam("mainCateNo") int mainCateNo) {
+        configService.deleteMainCategory(mainCateNo);
+        return "ok";
+    }
+
+    // 서브 카테고리 삭제
+    @PostMapping("/config/category/delete/sub")
+    @ResponseBody
+    public String deleteSubCategory(@RequestParam("subCateNo") int subCateNo) {
+        configService.deleteSubCategory(subCateNo);
+        return"ok";
+    }
+
     
     
     

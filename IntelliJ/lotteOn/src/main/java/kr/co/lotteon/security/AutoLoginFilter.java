@@ -31,7 +31,7 @@ public class AutoLoginFilter extends OncePerRequestFilter {
                 for (Cookie cookie : cookies) {
                     if ("autoLogin".equals(cookie.getName())) {
                         String uid = cookie.getValue();
-                        log.info("✅ 자동 로그인 쿠키 발견: uid={}", uid);
+                        // log.info("✅ 자동 로그인 쿠키 발견: uid={}", uid);
 
                         Optional<User> optUser = userRepository.findById(uid);
                         if (optUser.isPresent()) {
@@ -45,7 +45,7 @@ public class AutoLoginFilter extends OncePerRequestFilter {
                                     new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
                             SecurityContextHolder.getContext().setAuthentication(authToken);
-                            log.info("✅ 자동 로그인 인증 완료 → SecurityContext 설정됨");
+                            // log.info("✅ 자동 로그인 인증 완료 → SecurityContext 설정됨");
                         }
 
                         break; // ✅ 쿠키 1개만 처리
