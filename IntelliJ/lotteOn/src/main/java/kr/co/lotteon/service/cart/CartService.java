@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -47,7 +48,6 @@ public class CartService {
 
     // 장바구니에 상품 추가
     public int addToCart(ItemRequestDTO itemRequestDTO, UserDetails userDetails) {
-
         Product product = Product.builder()
                 .prodNo(itemRequestDTO.getProdNo())
                 .build();
@@ -56,15 +56,47 @@ public class CartService {
                 .uid(userDetails.getUsername())
                 .build();
 
-        Cart cart = toCartEntity(itemRequestDTO, product, user);
+        Map<String, String> options = itemRequestDTO.getOptions();
+
+        // 옵션 개수 확인 및 동적 비교
+        String[] optParams = new String[6];
+        String[] optContParams = new String[6];
+
+        // 옵션 1~6에 대해 존재하는 값만 가져오기
+        for (int i = 0; i < 6; i++) {
+            optParams[i] = options.getOrDefault("opt" + (i + 1), "");
+            optContParams[i] = options.getOrDefault("opt" + (i + 1) + "cont", "");
+        }
+
+        // 장바구니에서 기존 상품 있는지 찾기
+        Optional<Cart> optCart = cartRepository.findByUserAndProductAndOptions(
+                user.getUid(),
+                product.getProdNo(),
+                optParams[0], optContParams[0],
+                optParams[1], optContParams[1],
+                optParams[2], optContParams[2],
+                optParams[3], optContParams[3],
+                optParams[4], optContParams[4],
+                optParams[5], optContParams[5]
+        );
 
         try {
-            cartRepository.save(cart);
+            if (optCart.isPresent()) {
+                // 이미 있는 상품: 수량만 증가
+                Cart cart = optCart.get();
+                cart.setCartProdCount(cart.getCartProdCount() + itemRequestDTO.getQuantity());
+                cartRepository.save(cart);
+            } else {
+                Cart cart = toCartEntity(itemRequestDTO, product, user);
+                cartRepository.save(cart);
+            }
             return 1;
         } catch (Exception e) {
             return 0;
         }
+
     }
+
 
     // itemRequestDTO -> Cart Entity 변환
     private Cart toCartEntity(ItemRequestDTO dto, Product product, User user) {
@@ -74,18 +106,18 @@ public class CartService {
                 .user(user)
                 .product(product)
                 .cartProdCount(dto.getQuantity())
-                .opt1(options.getOrDefault("opt1", null))
-                .opt1Cont(options.getOrDefault("opt1cont", null))
-                .opt2(options.getOrDefault("opt2", null))
-                .opt2Cont(options.getOrDefault("opt2cont", null))
-                .opt3(options.getOrDefault("opt3", null))
-                .opt3Cont(options.getOrDefault("opt3cont", null))
-                .opt4(options.getOrDefault("opt4", null))
-                .opt4Cont(options.getOrDefault("opt4cont", null))
-                .opt5(options.getOrDefault("opt5", null))
-                .opt5Cont(options.getOrDefault("opt5cont", null))
-                .opt6(options.getOrDefault("opt6", null))
-                .opt6Cont(options.getOrDefault("opt6cont", null))
+                .opt1(options.getOrDefault("opt1", ""))
+                .opt1Cont(options.getOrDefault("opt1cont", ""))
+                .opt2(options.getOrDefault("opt2", ""))
+                .opt2Cont(options.getOrDefault("opt2cont", ""))
+                .opt3(options.getOrDefault("opt3", ""))
+                .opt3Cont(options.getOrDefault("opt3cont", ""))
+                .opt4(options.getOrDefault("opt4", ""))
+                .opt4Cont(options.getOrDefault("opt4cont", ""))
+                .opt5(options.getOrDefault("opt5", ""))
+                .opt5Cont(options.getOrDefault("opt5cont", ""))
+                .opt6(options.getOrDefault("opt6", ""))
+                .opt6Cont(options.getOrDefault("opt6cont", ""))
                 .build();
     }
 

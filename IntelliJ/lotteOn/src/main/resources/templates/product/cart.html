@@ -454,22 +454,22 @@
                                         </div>
                                     </div>
                                     <div class="options-container">
-                                        <div th:if="${cart.opt1Cont != null}">
+                                        <div th:if="${not #strings.isEmpty(cart.opt1Cont)}">
                                             <p th:text="${cart.opt1 + ': ' + cart.opt1Cont}"></p>
                                         </div>
-                                        <div th:if="${cart.opt2Cont != null}">
+                                        <div th:if="${not #strings.isEmpty(cart.opt2Cont)}">
                                             <p th:text="${cart.opt2 + ': ' + cart.opt2Cont}"></p>
                                         </div>
-                                        <div th:if="${cart.opt3Cont != null}">
+                                        <div th:if="${not #strings.isEmpty(cart.opt3Cont)}">
                                             <p th:text="${cart.opt3 + ': ' + cart.opt3Cont}"></p>
                                         </div>
-                                        <div th:if="${cart.opt4Cont != null}">
+                                        <div th:if="${not #strings.isEmpty(cart.opt4Cont)}">
                                             <p th:text="${cart.opt4 + ': ' + cart.opt4Cont}"></p>
                                         </div>
-                                        <div th:if="${cart.opt5Cont != null}">
+                                        <div th:if="${not #strings.isEmpty(cart.opt5Cont)}">
                                             <p th:text="${cart.opt5 + ': ' + cart.opt5Cont}"></p>
                                         </div>
-                                        <div th:if="${cart.opt6Cont != null}">
+                                        <div th:if="${not #strings.isEmpty(cart.opt6Cont)}">
                                             <p th:text="${cart.opt6 + ': ' + cart.opt6Cont}"></p>
                                         </div>
                                     </div>

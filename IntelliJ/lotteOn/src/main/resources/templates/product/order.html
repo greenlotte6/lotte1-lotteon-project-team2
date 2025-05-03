@@ -31,59 +31,160 @@
         });
       });
 
+
+
+
+
+
       // ✅ 판매자별 테이블 접기
-      const tables = Array.from(document.querySelectorAll('.order_content'));
-      const container = document.getElementById('tables-container');
-      const vendorGroups = {};
+          console.log('[Debug] DOMContentLoaded 이벤트 발생. 스크립트 실행 시작.');
 
-      tables.forEach(table => {
-        const vendor = table.querySelector('.vendor-name')?.innerText.trim();
-        if (!vendor) return;
-        if (!vendorGroups[vendor]) vendorGroups[vendor] = [];
-        vendorGroups[vendor].push(table);
-      });
+          // ✅ 판매자별 테이블 접기
+          const container = document.getElementById('tables-container');
+          console.log('[Debug] tables-container 요소 찾기 시도:', container);
+          if (!container) {
+              console.error("[Debug] Error: 'tables-container' ID를 가진 요소를 찾을 수 없습니다. 스크립트를 중단합니다.");
+              return;
+          }
 
-      container.innerHTML = '';
+          // 원본 테이블 찾기
+          const tables = Array.from(container.querySelectorAll('.order_content'));
+          // Tip: 만약 container 안에 테이블이 없다면 document 에서 찾아볼 수도 있습니다.
+          // const tables = Array.from(document.querySelectorAll('.order_content'));
+          console.log(`[Debug] .order_content 클래스를 가진 테이블 ${tables.length}개 찾음:`, tables);
 
-      Object.entries(vendorGroups).forEach(([vendor, tables]) => {
-        const section = document.createElement('div');
-        section.className = 'vendor-section';
+          if (tables.length === 0) {
+              console.warn("[Debug] .order_content 테이블을 찾을 수 없어 그룹화를 진행할 수 없습니다.");
+              // 테이블이 없어도 초기화/클리어 로직은 진행될 수 있으니 여기서 멈추는게 좋을 수 있습니다.
+              // 필요에 따라 return; 주석 해제
+          }
 
-        const header = document.createElement('div');
-        header.className = 'vendor-header';
+          const vendorGroups = {};
+          console.log('[Debug] vendorGroups 객체 초기화:', vendorGroups);
 
-        const titleSpan = document.createElement('span');
-        titleSpan.className = 'vendor-title';
-        titleSpan.innerText = vendor;
+          // 1단계: 테이블 순회하며 공급업체별 그룹화
+          console.log('[Debug] 1단계: 각 테이블에서 공급업체 이름 추출 및 그룹화 시작...');
+          tables.forEach((table, index) => {
+              console.log(`[Debug]   테이블 ${index} 처리 중...`, table);
+              const vendorElement = table.querySelector('.vendor-name'); // 클래스로 p 태그 찾기
+              console.log(`[Debug]     테이블 ${index}에서 '.vendor-name' 요소 찾기 결과:`, vendorElement);
+              const vendor = vendorElement ? vendorElement.innerText.trim() : null; // 요소가 있으면 텍스트 추출, 없으면 null
+              console.log(`[Debug]     테이블 ${index}에서 추출된 공급업체 이름: '${vendor}'`);
 
-        const iconSpan = document.createElement('span');
-        iconSpan.className = 'vendor-toggle-icon';
-        iconSpan.innerText = '▼';
+              if (!vendor) {
+                  console.warn(`[Debug]     테이블 ${index}: 공급업체 이름('.vendor-name')을 찾을 수 없거나 비어있어 건너<0xEB><0x9B><0x8D>니다.`);
+                  return; // vendor 이름이 없으면 다음 테이블로 넘어감 (continue 역할)
+              }
 
-        header.appendChild(titleSpan);
-        header.appendChild(iconSpan);
-
-        const group = document.createElement('div');
-        group.className = 'vendor-group';
-
-        tables.forEach((table, i) => {
-          if (i !== 0) table.style.display = 'none';
-          group.appendChild(table);
-        });
-
-        header.addEventListener('click', () => {
-          const isOpen = header.classList.toggle('open');
-          const allTables = group.querySelectorAll('.order_content');
-          allTables.forEach((t, i) => {
-            if (i === 0) return;
-            t.style.display = isOpen ? 'table' : 'none';
+              // vendorGroups에 해당 vendor 키가 없으면 빈 배열로 초기화
+              if (!vendorGroups[vendor]) {
+                  vendorGroups[vendor] = [];
+                  console.log(`[Debug]     새로운 공급업체 그룹 '${vendor}' 생성됨.`);
+              }
+              // 해당 vendor 키의 배열에 현재 테이블 추가
+              vendorGroups[vendor].push(table);
+              console.log(`[Debug]     '${vendor}' 그룹에 테이블 ${index} 추가 완료.`);
           });
-        });
+          console.log('[Debug] 1단계: 그룹화 완료. 최종 vendorGroups:', vendorGroups);
 
-        section.appendChild(header);
-        section.appendChild(group);
-        container.appendChild(section);
-      });
+          // 2단계: 컨테이너 비우기
+          console.log('[Debug] 2단계: 컨테이너 비우기 실행 전. 현재 컨테이너 내용:', container.innerHTML);
+          // 주의: 이 시점 이후 문제가 발생하면 컨테이너는 비어있게 됩니다.
+          container.innerHTML = '';
+          console.log('[Debug] 2단계: 컨테이너 비우기 완료. container.innerHTML = "" 실행됨.');
+
+          // 3단계: 그룹화된 내용을 바탕으로 새로운 구조 생성 및 추가
+          console.log('[Debug] 3단계: 그룹별 섹션 생성 및 컨테이너에 추가 시작...');
+          Object.entries(vendorGroups).forEach(([vendor, vendorTables]) => {
+              console.log(`[Debug]   공급업체 '${vendor}' 처리 시작. 이 그룹의 테이블 개수: ${vendorTables.length}`);
+
+              // 섹션 생성
+              const section = document.createElement('div');
+              section.className = 'vendor-section';
+              console.log(`[Debug]     '${vendor}'용 vendor-section div 생성됨.`);
+
+              // 헤더 생성
+              const header = document.createElement('div');
+              header.className = 'vendor-header';
+              console.log(`[Debug]     '${vendor}'용 vendor-header div 생성됨.`);
+
+              const titleSpan = document.createElement('span');
+              titleSpan.className = 'vendor-title';
+              titleSpan.innerText = vendor;
+
+              const iconSpan = document.createElement('span');
+              iconSpan.className = 'vendor-toggle-icon';
+              iconSpan.innerText = '▼'; // 초기 아이콘
+
+              header.appendChild(titleSpan);
+              header.appendChild(iconSpan);
+              console.log(`[Debug]     '${vendor}'용 헤더에 제목과 아이콘 추가됨.`);
+
+              // 테이블 그룹 div 생성
+              const group = document.createElement('div');
+              group.className = 'vendor-group';
+              console.log(`[Debug]     '${vendor}'용 vendor-group div 생성됨.`);
+
+              // 테이블 그룹에 테이블 추가 및 첫 번째 외 숨김 처리
+              console.log(`[Debug]     '${vendor}' 그룹에 테이블 추가 및 숨김 처리 시작...`);
+              vendorTables.forEach((table, i) => {
+                  console.log(`[Debug]       '${vendor}' 그룹의 테이블 ${i} 추가 중...`, table);
+                  if (i !== 0) {
+                      // 첫 번째 테이블(i=0)이 아니면 숨김
+                      table.style.display = 'none';
+                      console.log(`[Debug]         테이블 ${i} 숨김 처리됨 (display: none).`);
+                  } else {
+                      // 첫번째 테이블은 기본 display 속성 유지 (보통 'table')
+                      // 명시적으로 설정해도 무방: table.style.display = 'table';
+                      console.log(`[Debug]         테이블 ${i} (첫 번째)는 숨기지 않음.`);
+                  }
+                  group.appendChild(table); // 테이블을 그룹 div에 추가
+              });
+              console.log(`[Debug]     '${vendor}' 그룹에 모든 테이블 추가 완료.`);
+
+              // 헤더 클릭 이벤트 리스너 추가
+              console.log(`[Debug]     '${vendor}' 헤더에 클릭 이벤트 리스너 추가 중...`);
+              header.addEventListener('click', () => {
+                  console.log(`[Event] '${vendor}' 헤더 클릭됨!`);
+                  const isOpen = header.classList.toggle('open');
+                  console.log(`[Event]   '${vendor}' 헤더 open 클래스 토글 결과: ${isOpen ? '열림 상태' : '닫힘 상태'}`);
+                  // 아이콘 변경 로직 추가하면 좋을 부분: iconSpan.innerText = isOpen ? '▲' : '▼';
+
+                  const allTablesInGroup = group.querySelectorAll('.order_content');
+                  console.log(`[Event]   '${vendor}' 그룹 내 테이블 ${allTablesInGroup.length}개 찾음.`);
+                  allTablesInGroup.forEach((t, i) => {
+                      if (i === 0) {
+                          console.log(`[Event]     그룹 내 테이블 ${i} (첫 번째)는 변경 안 함.`);
+                          return; // 첫 번째 테이블은 건너<0xEB><0x9B><0x8D>
+                      }
+                      // 토글 상태(isOpen)에 따라 두 번째 이후 테이블들의 display 속성 변경
+                      t.style.display = isOpen ? 'table' : 'none';
+                      console.log(`[Event]     그룹 내 테이블 ${i}의 display를 '${t.style.display}' (으)로 변경함.`);
+                  });
+              });
+              console.log(`[Debug]     '${vendor}' 헤더에 클릭 이벤트 리스너 추가 완료.`);
+
+              // 섹션에 헤더와 그룹 추가
+              section.appendChild(header);
+              section.appendChild(group);
+              console.log(`[Debug]     '${vendor}' 섹션에 헤더와 그룹 추가 완료.`);
+
+              // 최종: 컨테이너에 섹션 추가
+              console.log(`[Debug]     컨테이너에 '${vendor}' 섹션 추가 시도...`, section);
+              container.appendChild(section);
+              console.log(`[Debug]     컨테이너에 '${vendor}' 섹션 추가 완료.`);
+          });
+          console.log('[Debug] 3단계: 모든 그룹 처리 및 컨테이너에 추가 완료.');
+
+          console.log('[Debug] 스크립트 실행 종료.');
+
+
+
+
+
+
+
+
 
       // ✅ 각 상품 계산
       document.querySelectorAll('.order_content').forEach(table => {
@@ -337,10 +438,9 @@
                     <h1>주문하기</h1>
                     <form>
                         <div id="tables-container">
-                            <table class="order_content">
+                            <table class="order_content" th:each="cart : ${cartDTOList}">
                                 <tr>
-                                    <th></th>
-                                    <th>상품명</th>
+                                    <th></th> <th>상품명</th>
                                     <th>수량</th>
                                     <th>판매가</th>
                                     <th>할인</th>
@@ -349,168 +449,43 @@
                                     <th>총합</th>
                                 </tr>
                                 <tr>
-                                    <td><img src="/images/product/Diptyque_FleurdePeau.jpg"></td>
                                     <td>
-                                        <p class="vendor-name">롯데백화점</p><br>
-                                        <span>딥디크</span><br>
-                                        오드퍼퓸 플레르드뽀 75ml
-                                    </td>
-                                    <td class="quantity">2</td>
-                                    <td class="cart_price">
-                                        <p class="price_original" data-unit="300000">300,000</p>
-                                        <p class="price_total" data-unit="0">0</p>
-                                    </td>
-                                    <td class="discount-rate">10%</td>
-                                    <td class="point">0</td>
-                                    <td class="shipping">2,500</td>
-                                    <td class="total">0</td>
-                                </tr>
-                              </table>
-                              <table class="order_content">
-                                <tr>
-                                    <th></th>
-                                    <th>상품명</th>
-                                    <th>수량</th>
-                                    <th>판매가</th>
-                                    <th>할인</th>
-                                    <th>포인트</th>
-                                    <th>배송비</th>
-                                    <th>총합</th>
-                                </tr>
-                                <tr>
-                                    <td><img src="/images/product/Diptyque_FleurdePeau.jpg"></td>
+                                        <img th:src="@{${cart.product.productImage.sNameThumb3}}" alt="상품 이미지" style="width: 80px; height: auto;"> </td>
+
                                     <td>
-                                        <p class="vendor-name">롯데마트</p><br>
-                                        <span>딥디크</span><br>
-                                        오드퍼퓸 플레르드뽀 75ml
+                                        <p class="vendor-name" th:text="${cart.product.seller.company}">판매처 로딩중...</p><br>
+                                        <span th:text="${cart.product.prodBrand}">브랜드명 로딩중...</span><br>
+                                        <span th:text="${cart.product.prodName}">상품명 로딩중...</span>
                                     </td>
-                                    <td class="quantity">1</td>
+
+                                    <td class="quantity" th:text="${cart.cartProdCount}">1</td>
+
                                     <td class="cart_price">
-                                        <p class="price_original" data-unit="300000">300,000</p>
-                                        <p class="price_total" data-unit="0">0</p>
+                                        <p class="price_original"
+                                           th:data-unit="${cart.product.prodPrice}"
+                                           th:text="${#numbers.formatInteger(cart.product.prodPrice, 3, 'COMMA')}">300,000</p>
+                                        <p class="price_total"
+                                           th:with="discountedPrice=${cart.product.prodPrice * (100 - cart.product.prodDiscount) / 100}"
+                                           th:data-unit="${discountedPrice}"
+                                           th:text="${#numbers.formatInteger(discountedPrice, 3, 'COMMA')}">0</p>
                                     </td>
-                                    <td class="discount-rate">20%</td>
-                                    <td class="point">0</td>
-                                    <td class="shipping">2,500</td>
-                                    <td class="total">0</td>
+
+                                    <td class="discount-rate" th:text="${cart.product.prodDiscount + '%'}">0%</td>
+
+                                    <td class="point" th:text="${cart.product.prodPoint}">0</td>
+
+                                    <td class="shipping" th:text="${#numbers.formatInteger(cart.product.prodDeliveryFee, 3, 'COMMA')}">0</td>
+
+                                    <td class="total"
+                                        th:with="itemTotal=${(cart.product.prodPrice * (100 - cart.product.prodDiscount) / 100) * cart.cartProdCount + cart.product.prodDeliveryFee}"
+                                        th:text="${#numbers.formatInteger(itemTotal, 3, 'COMMA')}">0</td>
                                 </tr>
-                              </table>
-                              <table class="order_content">
-                                <tr>
-                                    <th></th>
-                                    <th>상품명</th>
-                                    <th>수량</th>
-                                    <th>판매가</th>
-                                    <th>할인</th>
-                                    <th>포인트</th>
-                                    <th>배송비</th>
-                                    <th>총합</th>
-                                </tr>
-                                <tr>
-                                    <td><img src="/images/product/Diptyque_FleurdePeau.jpg"></td>
-                                    <td>
-                                        <p class="vendor-name">롯데백화점</p><br>
-                                        <span>딥디크</span><br>
-                                        오드퍼퓸 플레르드뽀 75ml
-                                    </td>
-                                    <td class="quantity">1</td>
-                                    <td class="cart_price">
-                                        <p class="price_original" data-unit="400000">400,000</p>
-                                        <p class="price_total" data-unit="0">0</p>
-                                    </td>
-                                    <td class="discount-rate">10%</td>
-                                    <td class="point">0</td>
-                                    <td class="shipping">2,500</td>
-                                    <td class="total">0</td>
-                                </tr>
-                              </table>
-                              <table class="order_content">
-                                <tr>
-                                    <th></th>
-                                    <th>상품명</th>
-                                    <th>수량</th>
-                                    <th>판매가</th>
-                                    <th>할인</th>
-                                    <th>포인트</th>
-                                    <th>배송비</th>
-                                    <th>총합</th>
-                                </tr>
-                                <tr>
-                                    <td><img src="/images/product/Diptyque_FleurdePeau.jpg"></td>
-                                    <td>
-                                        <p class="vendor-name">롯데마트</p><br>
-                                        <span>딥디크</span><br>
-                                        오드퍼퓸 플레르드뽀 75ml
-                                    </td>
-                                    <td class="quantity">2</td>
-                                    <td class="cart_price">
-                                        <p class="price_original" data-unit="300000">300,000</p>
-                                        <p class="price_total" data-unit="0">0</p>
-                                    </td>
-                                    <td class="discount-rate">5%</td>
-                                    <td class="point">0</td>
-                                    <td class="shipping">2,500</td>
-                                    <td class="total">0</td>
-                                </tr>
-                              </table>
-                              <table class="order_content">
-                                <tr>
-                                    <th></th>
-                                    <th>상품명</th>
-                                    <th>수량</th>
-                                    <th>판매가</th>
-                                    <th>할인</th>
-                                    <th>포인트</th>
-                                    <th>배송비</th>
-                                    <th>총합</th>
-                                </tr>
-                                <tr>
-                                    <td><img src="/images/product/Diptyque_FleurdePeau.jpg"></td>
-                                    <td>
-                                        <p class="vendor-name">롯데쇼핑</p><br>
-                                        <span>딥디크</span><br>
-                                        오드퍼퓸 플레르드뽀 75ml
-                                    </td>
-                                    <td class="quantity">1</td>
-                                    <td class="cart_price">
-                                        <p class="price_original" data-unit="400000">400,000</p>
-                                        <p class="price_total" data-unit="0">0</p>
-                                    </td>
-                                    <td class="discount-rate">10%</td>
-                                    <td class="point">0</td>
-                                    <td class="shipping">2,500</td>
-                                    <td class="total">0</td>
-                                </tr>
-                              </table>
-                              <table class="order_content">
-                                <tr>
-                                    <th></th>
-                                    <th>상품명</th>
-                                    <th>수량</th>
-                                    <th>판매가</th>
-                                    <th>할인</th>
-                                    <th>포인트</th>
-                                    <th>배송비</th>
-                                    <th>총합</th>
-                                </tr>
-                                <tr>
-                                    <td><img src="/images/product/Diptyque_FleurdePeau.jpg"></td>
-                                    <td>
-                                        <p class="vendor-name">롯데쇼핑</p><br>
-                                        <span>딥디크</span><br>
-                                        오드퍼퓸 플레르드뽀 75ml
-                                    </td>
-                                    <td class="quantity">2</td>
-                                    <td class="cart_price">
-                                        <p class="price_original" data-unit="300000">300,000</p>
-                                        <p class="price_total" data-unit="0">0</p>
-                                    </td>
-                                    <td class="discount-rate">5%</td>
-                                    <td class="point">0</td>
-                                    <td class="shipping">2,500</td>
-                                    <td class="total">0</td>
-                                </tr>
-                              </table>
+                            </table>
+
+                            <div th:if="${cartList == null or cartList.isEmpty()}">
+                                <p>장바구니에 담긴 상품이 없습니다.</p>
+                            </div>
+
                         </div>
                         <div class="order_info">
                             <div>
