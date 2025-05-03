@@ -493,17 +493,46 @@
     opacity: 0.5;
 }
 
-.category_add{
+.category_plus{
     color: #BFBFBF;
 }
 
-.category_plus{
-    display: inline-block;
-    color: #BFBFBF;
-    padding: 2px;
-    border: 1px solid #BFBFBF;
+.category_plus img{
     width: 10px;
     height: 10px;
 }
 
+#category_input_box input {
+    padding: 6px;
+    width: 100%;
+    margin-right: 6px;
+    color: #BFBFBF;
+}
 
+#category_input_box button {
+    padding: 6px 10px;
+    margin-right: 4px;
+}
+
+.sub_category_add a{
+    color: #BFBFBF;
+}
+
+.sub_category_add img{
+    width: 10px;
+    height: 10px;
+}
+
+.sub_input_box{
+    padding: 6px;
+    width: 100%;
+    margin-right: 6px;
+    color: #BFBFBF;
+}
+
+.new_sub_input{
+    padding: 6px;
+    width: 80%;
+    margin-right: 6px;
+    color: #BFBFBF;
+}
