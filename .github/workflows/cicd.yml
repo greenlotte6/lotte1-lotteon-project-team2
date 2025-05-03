@@ -68,7 +68,6 @@ jobs:
         run: |
           pwd
 
-
       # 이미지를 EC2로 전송 (uploads 디렉토리 복사)
       - name: Copy images (uploads) to EC2
         run: |
