@@ -70,7 +70,7 @@ jobs:
           scp -i private_key.pem \
             -o StrictHostKeyChecking=no \
             -r ./uploads/ \
-            ${{ secrets.AWS_EC2_USER }}@${{ secrets.AWS_EC2_HOST }}:/home/${{ secrets.AWS_EC2_USER }}/uploads/
+            ${{ secrets.AWS_EC2_USER }}@${{ secrets.AWS_EC2_HOST }}:/home/ec2-user/uploads/
 
 
       - name: Restart Spring Application on EC2
