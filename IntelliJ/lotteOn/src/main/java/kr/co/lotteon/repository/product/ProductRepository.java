@@ -1,5 +1,6 @@
 package kr.co.lotteon.repository.product;
 
+import kr.co.lotteon.entity.category.SubCategory;
 import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.repository.custom.ProductRepositoryCustom;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,5 +16,7 @@ public interface ProductRepository  extends JpaRepository<Product, String>, Prod
     List<Product> findByProdNoStartingWith(String select);
 
     Optional<Product> findByProdNo(String prodNo);
+
+    List<Product> findBySubCategory(SubCategory subCategory);
 
 }

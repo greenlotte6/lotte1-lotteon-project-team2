@@ -41,6 +41,10 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
       - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
@@ -59,6 +63,19 @@ jobs:
             -o StrictHostKeyChecking=no \
             $JAR_FILE \
             ${{ secrets.AWS_EC2_USER }}@${{ secrets.AWS_EC2_HOST }}:/home/${{ secrets.AWS_EC2_USER }}/
+
+      - name: Check current directory
+        run: |
+          pwd
+
+      # 이미지를 EC2로 전송 (uploads 디렉토리 복사)
+      - name: Copy images (uploads) to EC2
+        run: |
+          scp -i private_key.pem \
+            -o StrictHostKeyChecking=no \
+            -r IntelliJ/lotteOn/uploads/* \
+            ${{ secrets.AWS_EC2_USER }}@${{ secrets.AWS_EC2_HOST }}:/home/${{ secrets.AWS_EC2_USER }}/uploads/
+
 
       - name: Restart Spring Application on EC2
         run: |

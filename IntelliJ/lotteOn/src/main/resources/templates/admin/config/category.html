@@ -41,46 +41,101 @@
                     </div>
 
                     <!-- 일단 대기 -->
-                    <div id="category_manage_div">
-                        <div class="category_manage_div draggable" th:each="Maincategory : ${categoryDTOS}" draggable="true">
-                            <div class="Main_div">
-                                <p> ▼ [[${Maincategory.mainCategoryName}]]
-                                    <a href="#" class="category_delete">삭제</a>
-                                </p>
-                                <div class="Sub_div">
-                                    <th:block th:each="subCategory : ${Maincategory.subCategories}">
-                                        <p style="margin-bottom: 5px;">[[${subCategory.subCategoryName}]]
-                                            <a href="#" class="subCategory_delete">삭제</a>
+                    <form th:action="@{/admin/config/category}" method="post" id="category_form">
+                        <div id="category_manage_div">
+                            <div class="category_manage_div draggable" th:each="Maincategory : ${categoryDTOS}" draggable="true">
+                                <div class="Main_div">
+                                    <input type="hidden" name="mainCateNo" th:value="${Maincategory.mainCateNo}">
+                                    <p> ▼ [[${Maincategory.mainCategoryName}]]
+                                        <a href="#" class="category_delete" id="main_delete">삭제</a>
+                                    </p>
+                                    <div class="Sub_div">
+                                        <th:block th:each="subCategory : ${Maincategory.subCategories}">
+                                            <p style="margin-bottom: 5px;" draggable="true">[[${subCategory.subCategoryName}]]
+                                                <input type="hidden" name="subCateNo" th:value="${subCategory.subCateNo}">
+                                                <a href="#" class="subCategory_delete">삭제</a>
+                                            </p>
+                                        </th:block>
+                                        <p class="sub_category_add" style="width: 100%;">
+                                            <a href="#" class="sub_category_plus">
+                                                <img src="/images/admin/plus-math2.png" alt="클릭버튼">
+                                                2차 카테고리 추가
+                                            </a>
                                         </p>
-                                    </th:block>
+                                        <div class="sub_input_box" style="display: none; margin-top: 5px;">
+                                            <input type="text" class="new_sub_input" placeholder="2차 카테고리명을 입력 후 Enter">
+                                        </div>
+                                    </div>
+
+
                                 </div>
                             </div>
-                        </div>
-                        <div class="category_manage_div draggable" draggable="true">
-                            <p class="category_add">
-                                <a href="#" class="category_plus" style="display: inline-block">+</a>
-                                1차 카테고리 추가
-                                <a href="#" class="category_delete">삭제</a>
-                            </p>
+                            <div class="category_manage_div draggable" draggable="true" style="min-height: 20px;">
+                                <p class="category_add">
+                                    <a href="#" class="category_plus">
+                                        <img src="/images/admin/plus-math2.png" alt="클릭버튼">
+                                        1차 카테고리 추가
+                                    </a>
+                                </p>
+                            </div>
+                            <!-- 카테고리 추가 입력 폼 -->
+                            <div id="category_input_box" style="display: none; margin-top: 10px;">
+                                <input type="text" id="new_main_category" placeholder="1차 카테고리명을 입력 후 Enter">
+                            </div>
+
                         </div>
 
+
+                        <div class="text_div" style="background-color: #FEFFCA; margin-top: 10px;">
+                            <p>카테고리 메뉴 순서를 변경할 때 드래그 앤 드롭으로 1차, 2차 카테고리 메뉴 이동 후 수정하기를 클릭합니다.</p>
+                        </div>
+                        <button type="submit" class="register_btn">수정하기</button>
+
+
+                    </form>
+
+                    <!-- 버퍼링 -->
+                    <!-- 로딩 오버레이 -->
+                    <div id="loading" class="loading-overlay">
+                        <div class="loading-content">
+                            <div class="spinner"></div>
+                            <div class="loading-text">⏳ 저장 중입니다...</div>
+                        </div>
                     </div>
 
+                    <script>
 
+                        document.getElementById('category_form').addEventListener('submit', function(event) {
 
+                            event.preventDefault(); // 기본 form submit 막기
+                            const form = event.target;
 
-                    <div class="text_div" style="background-color: #FEFFCA; margin-top: 10px;">
-                        <p>카테고리 메뉴 순서를 변경할 때 드래그 앤 드롭으로 1차, 2차 카테고리 메뉴 이동 후 수정하기를 클릭합니다.</p>
-                    </div>
+                            const formData = new FormData(form);
 
+                            // 로딩창 표시
+                            document.getElementById('loading').style.display = 'flex';
 
+                            
+                            fetch('/admin/config/category', {
+                                method: 'POST',
+                                body: formData
+                            })
+                                .then(response => {
+                                    if (response.redirected) {
+                                        // 로딩창 숨기고 리디렉트 처리
+                                        window.location.href = response.url;
+                                    } else {
+                                        return response.text();
+                                    }
+                                })
+                                .catch(err => {
+                                    alert('에러 발생: ' + err);
+                                })
+                                .finally(() => {
 
-
-
-
-
-
-
+                                });
+                        });
+                    </script>
 
                 </article>
             </section>
@@ -90,5 +145,6 @@
         <th:block th:include="/admin/inc/footer.html"/>
         <!-- 푸터 끝 -->
     </div>
+
 </body>
 </html>

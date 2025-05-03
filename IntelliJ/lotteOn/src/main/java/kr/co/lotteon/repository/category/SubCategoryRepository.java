@@ -12,4 +12,7 @@ public interface SubCategoryRepository extends JpaRepository<SubCategory,Integer
 
     List<SubCategory> findByMainCategory(MainCategory main);
 
+    void deleteByMainCategory(MainCategory mainCategory);
+
+    List<SubCategory> findByMainCategoryAndStateOrderByOrderIndexAsc(MainCategory mainCategory, String 활성);
 }

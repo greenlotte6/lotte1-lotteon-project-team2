@@ -16,5 +16,14 @@ public class MainCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int mainCateNo;
     private String mainCategoryName;
+    private int orderIndex; // 순서
+    private String state;
+
+    @PrePersist
+    public void prePersist() {
+        if (this.state == null) {
+            this.state = "활성";
+        }
+    }
 
 }
