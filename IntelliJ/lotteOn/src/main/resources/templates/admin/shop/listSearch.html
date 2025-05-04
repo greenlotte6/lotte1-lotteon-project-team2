@@ -54,7 +54,7 @@
                     <div class="select_div">
                         <div class="select_box">
                             <form th:action="@{/admin/shop/search}">
-                                <select name="searchType" style="width: 120px;">
+                                <select name="searchType" style="width: 120px;" th:field="*{pageResponseDTO.searchType}">
                                     <option value="상호명">상호명</option>
                                     <option value="대표자">대표자</option>
                                     <option value="사업자등록번호">사업자등록번호</option>
@@ -71,7 +71,7 @@
                         </div>
                     </div>
 
-                    <form action="#" class="shop_list_form">
+                    <form th:action="@{/admin/shop/delete}" class="shop_list_form">
                         <table>
                             <thead>
                                 <th><input type="checkbox"></th>

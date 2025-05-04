@@ -52,6 +52,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -422,6 +423,14 @@ public class adminService {
             Coupon coupon = couponOpt.get();
             coupon.setState("종료");
             couponRepository.save(coupon);
+
+            List<CouponIssue> couponIssues = couponIssueRepository.findByCoupon(coupon);
+            if(!couponIssues.isEmpty()){
+                for(CouponIssue couponIssue : couponIssues){
+                    couponIssue.setState("중단");
+                    couponIssueRepository.save(couponIssue);
+                }
+            }
         }
     }
 
@@ -733,13 +742,18 @@ public class adminService {
         if(userOpt.isPresent()){
             User user = userOpt.get();
             String manage = user.getState();
+            LocalDateTime leave = null;
             if(manage.equals("정상")){
                 user.setState("중단");
+                leave = LocalDateTime.now();
             }else if(manage.equals("중단")){
                 user.setState("재개");
             }else {
                 user.setState("정상");
             }
+
+            user.setLeaveDate(leave);
+
             userRepository.save(user);
         }
     }
@@ -780,5 +794,22 @@ public class adminService {
                 .dtoList(DTOList)
                 .total(total)
                 .build();
+    }
+
+    // 판매자 상태를 중단으로 바꾸고
+    // 판매자 leaveDate에 값을 넣음으로서 로그인 불가능
+    public void deleteShop(List<Integer> deleteNos) {
+        if(!deleteNos.isEmpty()){
+            for(int sno : deleteNos){
+                Optional<Seller> sellerOpt = sellerRepository.findById(sno);
+                if(sellerOpt.isPresent()){
+                    Seller seller = sellerOpt.get();
+                    User user = seller.getUser();
+                    user.setState("중단");
+                    user.setLastLoginAt(LocalDateTime.now());
+                    userRepository.save(user);
+                }
+            }
+        }
     }
 }

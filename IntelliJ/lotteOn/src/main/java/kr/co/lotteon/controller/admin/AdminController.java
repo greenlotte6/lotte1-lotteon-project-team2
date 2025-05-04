@@ -320,6 +320,15 @@ public class AdminController {
         return "/admin/shop/listSearch";
     }
 
+
+
+    //판매자 삭제
+    @GetMapping("/shop/delete")
+    public String shopDelete(@RequestParam("deleteNo") List<Integer> deleteNos){
+        adminService.deleteShop(deleteNos);
+        return "redirect:/admin/shop/list";
+    }
+
     /*
      * 관리자 회원목록
      * */
