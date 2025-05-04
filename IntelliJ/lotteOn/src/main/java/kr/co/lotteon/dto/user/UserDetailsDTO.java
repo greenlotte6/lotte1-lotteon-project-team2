@@ -13,6 +13,8 @@ public class UserDetailsDTO {
 
     private int no;
     private int userPoint;
+
+    // VVIP, VIP, GOLD, SILVER, FAMILY
     private String rank;
     private String gender;
 

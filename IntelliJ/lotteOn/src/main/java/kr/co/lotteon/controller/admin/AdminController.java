@@ -335,7 +335,10 @@ public class AdminController {
 
     //회원목록
     @GetMapping("/member/list")
-    public String memberList(){
+    public String memberList(PageRequestDTO pageRequestDTO, Model model){
+        PageResponseDTO pageResponseDTO = adminService.selectMemberForList(pageRequestDTO);
+        System.out.println(pageResponseDTO);
+        model.addAttribute(pageResponseDTO);
         return "/admin/member/list";
     }
 
@@ -344,6 +347,11 @@ public class AdminController {
     public String memberPoint(){
         return "/admin/member/point";
     }
+
+
+
+
+
 
     /*
      * 관리자 상품 목록

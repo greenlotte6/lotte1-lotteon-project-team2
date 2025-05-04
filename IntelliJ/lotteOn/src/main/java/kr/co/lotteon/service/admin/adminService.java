@@ -16,6 +16,7 @@ import kr.co.lotteon.dto.product.ProductDetailDTO;
 import kr.co.lotteon.dto.product.ProductImageDTO;
 import kr.co.lotteon.dto.seller.SellerDTO;
 import kr.co.lotteon.dto.user.UserDTO;
+import kr.co.lotteon.dto.user.UserDetailsDTO;
 import kr.co.lotteon.entity.article.Faq;
 import kr.co.lotteon.entity.article.Inquiry;
 import kr.co.lotteon.entity.article.Notice;
@@ -811,5 +812,36 @@ public class adminService {
                 }
             }
         }
+    }
+
+    /*
+    * 회원목록
+    * */
+    public PageResponseDTO selectMemberForList(PageRequestDTO pageRequestDTO) {
+        pageRequestDTO.setSize(10);
+
+        Pageable pageable = pageRequestDTO.getPageable("no");
+        Page<Tuple> pageObject = userRepository.selectAllUser(pageRequestDTO, pageable);
+
+        List<UserDTO> DTOList = pageObject.getContent().stream().map(tuple -> {
+            User user = tuple.get(0, User.class);
+            UserDTO userDTO  = modelMapper.map(user, UserDTO.class);
+            kr.co.lotteon.entity.user.UserDetails userDetails = tuple.get(1, kr.co.lotteon.entity.user.UserDetails.class);
+            UserDetailsDTO userDetailsDTO = modelMapper.map(userDetails, UserDetailsDTO.class);
+            userDTO.setUserDetails(userDetailsDTO);
+            return userDTO;
+        }).toList();
+
+        int total = (int) pageObject.getTotalElements();
+
+        log.info("total: {}", total);
+        log.info("productDTOList: {}", pageObject);
+
+        return PageResponseDTO.<UserDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(DTOList)
+                .total(total)
+                .build();
+
     }
 }
