@@ -320,8 +320,6 @@ public class AdminController {
         return "/admin/shop/listSearch";
     }
 
-
-
     //판매자 삭제
     @GetMapping("/shop/delete")
     public String shopDelete(@RequestParam("deleteNo") List<Integer> deleteNos){
@@ -347,11 +345,7 @@ public class AdminController {
     public String memberPoint(){
         return "/admin/member/point";
     }
-
-
-
-
-
+    
 
     /*
      * 관리자 상품 목록
