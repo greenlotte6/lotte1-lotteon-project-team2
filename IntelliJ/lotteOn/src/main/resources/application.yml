@@ -16,7 +16,7 @@ mybatis:
   mapper-locations: classpath:mappers/**/*.xml
 
 server:
-  port: 80
+  port: 8080
   servlet:
     session:
       timeout: 2m
