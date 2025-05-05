@@ -14,6 +14,53 @@
     <!-- 사이드바-->
     <script src="/js/admin/sidebar.js"></script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function (){
+
+            // 삭제 기능
+            // 개별 삭제 링크에 confirm 추가
+            document.querySelectorAll('.delete-link').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    if (!confirm("정말 삭제하시겠습니까?")) {
+                        e.preventDefault(); // 링크 이동 막기
+                    }
+                });
+            });
+
+            // 전체 체크박스
+            const deleteAllCheckbox = document.getElementById('deleteAll');
+
+            // 개별 체크박스
+            const deleteCheckboxes = document.querySelectorAll('input[name="deleteNo"]');
+
+            deleteAllCheckbox.addEventListener('change', function () {
+                const isChecked = this.checked;
+                deleteCheckboxes.forEach(cb => cb.checked = isChecked);
+            });
+
+            // 선택삭제 버튼 validation
+            document.querySelector('.member_list_form').addEventListener('submit', function(e) {
+                const checked = document.querySelectorAll('input[name="deleteNo"]:checked');
+                if (checked.length === 0) {
+                    e.preventDefault();
+                    alert('삭제할 항목을 선택해주세요.');
+                } else {
+                    const confirmDelete = confirm('선택한 항목을 정말 삭제하시겠습니까?');
+                    if (!confirmDelete) {
+                        e.preventDefault();
+                    }
+                }
+            });
+
+            document.querySelector('#cate').addEventListener('change',function(e){
+                this.form.submit();
+            })
+
+
+        });
+
+    </script>
+
     
     
 </head>
@@ -40,7 +87,7 @@
                     <div class="select_div">
                         <div class="select_box">
                             <form action="#">
-                                <select name="brand">
+                                <select name="searchType">
                                     <option value="아이디">아이디</option>
                                     <option value="이름">이름</option>
                                     <option value="이메일">이메일</option>
@@ -55,7 +102,7 @@
                     <form action="#" class="member_list_form">
                         <table>
                             <thead>
-                                <th><input type="checkbox"></th>
+                                <th><input type="checkbox" id="deleteAll"></th>
                                 <th>번호</th>
                                 <th>아이디</th>
                                 <th>이름</th>
@@ -66,31 +113,31 @@
                                 <th>휴대폰</th>
                                 <th>가입일</th>
                                 <th>상태</th>
-                                <th>관리</th>
+                                <th style="width: 50px;">관리</th>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr th:each="item, i : ${pageResponseDTO.dtoList}">
                                     <td>
-                                        <input type="checkbox">
+                                        <input type="checkbox" name="deleteNo" th:value="${item.uid}" >
                                     </td>
-                                    <td>5</td>
-                                    <td>아이디</td>
-                                    <td>정우성</td>
-                                    <td>M</td>
+                                    <td>[[${pageResponseDTO.startNo - i.index}]]</td>
+                                    <td>[[${item.uid}]]</td>
+                                    <td>[[${item.name}]]</td>
+                                    <td>[[${item.userDetails.gender}]]</td>
                                     <td>
                                         <select name="rank">
-                                            <option value="VVIP">VVIP</option>
-                                            <option value="VIP">VIP</option>
-                                            <option value="GOLD">GOLD</option>
-                                            <option value="SILVER">SILVER</option>
-                                            <option value="FAMILY">FAMILY</option>
+                                            <option value="VVIP" th:selected="${item.userDetails.rank == 'VVIP'}">VVIP</option>
+                                            <option value="VIP" th:selected="${item.userDetails.rank == 'VIP'}">VIP</option>
+                                            <option value="GOLD" th:selected="${item.userDetails.rank == 'GOLD'}">GOLD</option>
+                                            <option value="SILVER" th:selected="${item.userDetails.rank == 'SILVER'}">SILVER</option>
+                                            <option value="FAMILY" th:selected="${item.userDetails.rank == 'FAMILY'}">FAMILY</option>
                                         </select>
                                     </td>
-                                    <td>1,5000</td>
-                                    <td>xxxx@naver.com</td>
-                                    <td>010-1234-5678</td>
-                                    <td>0000-00-00 00:00:00</td>
-                                    <td style="color: green;">정상</td>
+                                    <td>[[${item.userDetails.userPoint}]]</td>
+                                    <td>[[${item.email}]]</td>
+                                    <td>[[${item.hp}]]</td>
+                                    <td th:text="${#temporals.format(item.lastLoginAt, 'yyyy.MM.dd HH:mm:ss')}"></td>
+                                    <td style="color: green;">[[${item.state}]]</td>
                                     <td>
                                         <a href="#" id="modal_modify">[ 수정 ]</a><br>
                                         <a href="#">[ 중지 ]</a>
@@ -105,9 +152,19 @@
                         </div>
                     </form>
                     <!-- 페이징 -->
-                    <p style="text-align: center; margin-top: 10px;">
-                        이전 1 2 3 4 5 다음
-                    </p>
+                    <div class="page">
+                        <th:block th:if="${pageResponseDTO.prev}">
+                            <a th:href="@{/admin/member/list(pg=${pageResponseDTO.start-1})" class="prev">이전</a>
+                        </th:block>
+
+                        <th:block th:each="num:${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end)}">
+                            <a th:href="@{/admin/member/list(pg=${num})}" th:class="${num == pageResponseDTO.pg} ? 'current' : 'num'">[[${num}]]</a>
+                        </th:block>
+
+                        <th:block th:if="${pageResponseDTO.next}">
+                            <a th:href="@{/admin/member/list(pg=${pageResponseDTO.end+1})}" class="next">다음</a>
+                        </th:block>
+                    </div>
                     
                 </article>
             </section>

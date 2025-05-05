@@ -35,6 +35,8 @@ public class User {
     @CreationTimestamp
     private LocalDateTime updateDate;  // 변경 날짜(마이페이지)
     private LocalDateTime leaveDate;   // 탈퇴일자
+
+    @CreationTimestamp
     private LocalDateTime lastLoginAt; // 최근 로그인 날짜
 
     // OAuth 인증 업체 정보

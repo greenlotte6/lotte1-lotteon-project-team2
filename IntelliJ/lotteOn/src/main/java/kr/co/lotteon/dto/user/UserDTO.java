@@ -40,4 +40,7 @@ public class UserDTO{
 
     // 관리자 (관리) 중단, 재개, 승인
     private String manage;
+
+    // 유저 상세 정보
+    private UserDetailsDTO userDetails;
 }
