@@ -11,6 +11,7 @@ import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.coupon.CouponIssueDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
+import kr.co.lotteon.dto.point.PointDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.dto.product.ProductDetailDTO;
 import kr.co.lotteon.dto.product.ProductImageDTO;
@@ -25,6 +26,7 @@ import kr.co.lotteon.entity.category.MainCategory;
 import kr.co.lotteon.entity.category.SubCategory;
 import kr.co.lotteon.entity.coupon.Coupon;
 import kr.co.lotteon.entity.coupon.CouponIssue;
+import kr.co.lotteon.entity.point.Point;
 import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.entity.product.ProductDetail;
 import kr.co.lotteon.entity.product.ProductImage;
@@ -38,11 +40,13 @@ import kr.co.lotteon.repository.category.MainCategoryRepository;
 import kr.co.lotteon.repository.category.SubCategoryRepository;
 import kr.co.lotteon.repository.coupon.CouponIssueRepository;
 import kr.co.lotteon.repository.coupon.CouponRepository;
+import kr.co.lotteon.repository.point.PointRepository;
 import kr.co.lotteon.repository.product.CartRepository;
 import kr.co.lotteon.repository.product.ProductDetailRepository;
 import kr.co.lotteon.repository.product.ProductImageRepository;
 import kr.co.lotteon.repository.product.ProductRepository;
 import kr.co.lotteon.repository.seller.SellerRepository;
+import kr.co.lotteon.repository.user.UserDetailsRepository;
 import kr.co.lotteon.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -68,6 +72,7 @@ public class adminService {
     // 판매자, 유저
     private final UserRepository userRepository;
     private final SellerRepository sellerRepository;
+    private final UserDetailsRepository userDetailsRepository;
 
     // 상품
     private final ProductRepository productRepository;
@@ -90,6 +95,9 @@ public class adminService {
     private final RecruitRepository recruitRepository;
     private final FaqRepository faqRepository;
     private final InquiryRepository inquiryRepository;
+
+    // 포인트
+    private final PointRepository pointRepository;
     
     /*
      * 관리자 페이지 (상품 등록 메서드)
@@ -843,5 +851,61 @@ public class adminService {
                 .total(total)
                 .build();
 
+    }
+    
+    // 포인트 목록
+    public PageResponseDTO selectPointForList(PageRequestDTO pageRequestDTO) {
+        pageRequestDTO.setSize(10);
+
+        Pageable pageable = pageRequestDTO.getPageable("no");
+        Page<Tuple> pageObject = userRepository.selectAllPoint(pageRequestDTO, pageable);
+
+        List<PointDTO> DTOList = pageObject.getContent().stream().map(tuple -> {
+            User user = tuple.get(0, User.class);
+            UserDTO userDTO  = modelMapper.map(user, UserDTO.class);
+            Point point = tuple.get(1, Point.class);
+            PointDTO pointDTO = modelMapper.map(point, PointDTO.class);
+
+            Integer sum =  pointRepository.findSumOfFuturePoints(user.getUid(), pointDTO.getPointNo());
+            Integer userSum = pointRepository.findTotalPointByUid(user.getUid());
+
+            if(sum == null){
+                sum = 0;
+            }
+
+            pointDTO.setPointTotal(userSum - sum);
+
+            pointDTO.setUser(userDTO);
+            return pointDTO;
+        }).toList();
+
+        int total = (int) pageObject.getTotalElements();
+
+        log.info("total: {}", total);
+        log.info("productDTOList: {}", pageObject);
+
+        return PageResponseDTO.<PointDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(DTOList)
+                .total(total)
+                .build();
+    }
+
+    // 포인트 삭제
+    @Transactional
+    public void deletePoint(List<Integer> deleteNos) {
+        for(int no : deleteNos){
+            Point point = pointRepository.findById(no).get();
+
+            int pointNum = point.getPoint();
+            
+            // 유저 포인트 총량 계산
+            kr.co.lotteon.entity.user.UserDetails userDetails = userDetailsRepository.findByUser(point.getUser());
+            int userPoint = userDetails.getUserPoint() - pointNum;
+            userDetails.setUserPoint(userPoint);
+            userDetailsRepository.save(userDetails);
+            
+            pointRepository.deleteById(no);
+        }
     }
 }
