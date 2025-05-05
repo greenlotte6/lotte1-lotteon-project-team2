@@ -22,6 +22,8 @@ public class OrderItemDTO {
 
     private ProductDTO product;
 
+    private String category;
+
     // 옵션 1
     private String opt1;
     private String opt1Cont;

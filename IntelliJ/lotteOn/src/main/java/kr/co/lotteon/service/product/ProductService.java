@@ -103,5 +103,14 @@ public class ProductService {
 
         return productDTO;
     }
+
+    public void hitCountUp(String prodNo) {
+        Optional<Product> productOptional = productRepository.findByProdNo(prodNo);
+        if(productOptional.isPresent()) {
+            Product product = productOptional.get();
+            product.setHit(product.getHit() + 1);
+            productRepository.save(product);
+        }
+    }
 }
 
