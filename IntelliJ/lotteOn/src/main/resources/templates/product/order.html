@@ -10,593 +10,583 @@
 </head>
 
 <body>
-<script>
-    // 롯데On 주문 페이지 전체 스크립트
-    document.addEventListener("DOMContentLoaded", function () {
+    <script>
+      // 롯데On 주문 페이지 전체 스크립트
+      document.addEventListener("DOMContentLoaded", function () {
 
-        // ✅ 카테고리 아코디언
-        document.querySelectorAll(".category .parent").forEach(parent => {
-            parent.style.cursor = "pointer";
-            parent.addEventListener("click", () => {
-                const currentChildren = parent.nextElementSibling;
-                document.querySelectorAll(".category .children").forEach(children => {
-                    if (children !== currentChildren) {
-                        children.style.display = "none";
-                    }
-                });
-                if (currentChildren && currentChildren.classList.contains("children")) {
-                    const isVisible = currentChildren.style.display === "block";
-                    currentChildren.style.display = isVisible ? "none" : "block";
-                }
-            });
+      // ✅ 카테고리 아코디언
+      document.querySelectorAll(".category .parent").forEach(parent => {
+        parent.style.cursor = "pointer";
+        parent.addEventListener("click", () => {
+          const currentChildren = parent.nextElementSibling;
+          document.querySelectorAll(".category .children").forEach(children => {
+            if (children !== currentChildren) {
+              children.style.display = "none";
+            }
+          });
+          if (currentChildren && currentChildren.classList.contains("children")) {
+            const isVisible = currentChildren.style.display === "block";
+            currentChildren.style.display = isVisible ? "none" : "block";
+          }
         });
+      });
 
 
-        // ✅ 판매자별 테이블 접기
-        const container = document.getElementById('tables-container');
-        if (!container) return;
+      // ✅ 판매자별 테이블 접기
+          const container = document.getElementById('tables-container');
+          if (!container) return;
 
-        const tables = Array.from(container.querySelectorAll('.order_content'));
-        if (tables.length === 0) return;
+          const tables = Array.from(container.querySelectorAll('.order_content'));
+          if (tables.length === 0) return;
 
-        const vendorGroups = {};
+          const vendorGroups = {};
 
-        tables.forEach((table) => {
-            const vendorElement = table.querySelector('.vendor-name');
-            const vendor = vendorElement ? vendorElement.innerText.trim() : null;
-            if (!vendor) return;
-
-            if (!vendorGroups[vendor]) {
-                vendorGroups[vendor] = [];
-            }
-            vendorGroups[vendor].push(table);
-        });
-
-        container.innerHTML = '';
-
-        Object.entries(vendorGroups).forEach(([vendor, vendorTables]) => {
-            const section = document.createElement('div');
-            section.className = 'vendor-section';
-
-            const header = document.createElement('div');
-            header.className = 'vendor-header';
-
-            const titleSpan = document.createElement('span');
-            titleSpan.className = 'vendor-title';
-            titleSpan.innerText = vendor;
-
-            const iconSpan = document.createElement('span');
-            iconSpan.className = 'vendor-toggle-icon';
-            iconSpan.innerText = '▼';
-
-            header.appendChild(titleSpan);
-            header.appendChild(iconSpan);
-
-            const group = document.createElement('div');
-            group.className = 'vendor-group';
-
-            vendorTables.forEach((table, i) => {
-                if (i !== 0) {
-                    table.style.display = 'none';
-                }
-                group.appendChild(table);
-            });
-
-            header.addEventListener('click', () => {
-                const isOpen = header.classList.toggle('open');
-                iconSpan.innerText = isOpen ? '▲' : '▼';
-
-                const allTablesInGroup = group.querySelectorAll('.order_content');
-                allTablesInGroup.forEach((t, i) => {
-                    if (i === 0) return;
-                    t.style.display = isOpen ? 'table' : 'none';
-                });
-            });
-
-            section.appendChild(header);
-            section.appendChild(group);
-            container.appendChild(section);
-        });
-
-
-        // ✅ 각 상품 계산
-        document.querySelectorAll('.order_content').forEach(table => {
-            const row = table.querySelector('tr:nth-of-type(2)');
-            if (!row) return;
-
-            const originalEl = row.querySelector('.price_original');
-            const saleEl = row.querySelector('.price_total');
-            const discountEl = row.querySelector('.discount-rate');
-            const quantityEl = row.querySelector('.quantity');
-            const pointEl = row.querySelector('.point'); // 포인트 표시 요소
-
-            const quantity = parseInt(quantityEl?.innerText || '1', 10);
-            const originalUnit = parseInt(originalEl?.dataset.unit || '0', 10);
-            const discountRate = parseFloat((discountEl?.innerText || '0').replace('%', '')) || 0;
-
-            if (!isNaN(discountRate) && originalUnit > 0 && quantity > 0) {
-                // 원래 가격 계산 및 표시
-                const original = originalUnit * quantity;
-                originalEl.innerText = original.toLocaleString();
-
-                // 할인된 단가 계산
-                const discountedUnitPrice = originalUnit * (1 - discountRate / 100);
-
-                // 할인된 단가에서 소수점 내림 처리
-                const flooredDiscountedUnitPrice = Math.floor(discountedUnitPrice);
-
-                // 총 판매 가격 계산 및 표시
-                const sale = flooredDiscountedUnitPrice * quantity;
-                saleEl.dataset.unit = sale;
-                saleEl.innerText = sale.toLocaleString();
-
-                // 포인트 계산 로직
-                const discountedPriceForPoint = parseInt(saleEl?.dataset.unit || '0', 10);
-
-                if (!isNaN(discountedPriceForPoint) && quantity > 0 && pointEl) {
-                    // 사용자 등급별 포인트 적립률 설정 및 계산
-                    const userRank = '[[${userDetailsDTO.rank}]]';
-                    let pointRate = 0;
-
-                    switch (userRank) {
-                        case 'VVIP':
-                            pointRate = 0.05;
-                            break;
-                        case 'VIP':
-                            pointRate = 0.04;
-                            break;
-                        case 'GOLD':
-                            pointRate = 0.03;
-                            break;
-                        case 'SILVER':
-                            pointRate = 0.02;
-                            break;
-                        case 'FAMILY':
-                            pointRate = 0.01;
-                            break;
-                        default:
-                            pointRate = 0;
-                            break;
-                    }
-
-                    const point = Math.floor(discountedPriceForPoint * pointRate);
-                    pointEl.innerText = point.toLocaleString();
-                }
-            } else {
-                console.log('할인율, 원래 단가 또는 수량이 유효하지 않습니다.');
-            }
-        });
-
-
-        // ✅ 쿠폰 모달 창
-        const modal = document.getElementById("couponModal");
-        const showCouponModalButton = document.getElementById("showCouponModalButton");
-        const closeButton = modal?.querySelector(".close-button");
-
-        let selectedCouponBenefit = null;
-        let previouslySelectedItem = null;
-        let selectedCouponData = null;
-
-        // 모달 열기 버튼 클릭
-        if (showCouponModalButton && modal) {
-            showCouponModalButton.onclick = function () {
-                const vendorElements = document.querySelectorAll(".vendor-name");
-                const vendorSet = new Set();
-
-                vendorElements.forEach(el => {
-                    vendorSet.add(el.textContent.trim());
-                });
-
-                const couponItems = document.querySelectorAll(".coupon-item");
-
-                couponItems.forEach(item => {
-                    const issuedBy = item.getAttribute("data-issued-by")?.trim();
-                    const couponState = item.getAttribute("data-state")?.trim();
-
-                    item.style.display = vendorSet.has(issuedBy) && couponState === "미사용" ? "block" : "none";
-                    item.classList.remove("selected");
-                    item.style.border = "1px solid #ccc";
-
-                    // 쿠폰 아이템 클릭 이벤트 등록
-                    item.onclick = function () {
-                        if (previouslySelectedItem) {
-                            previouslySelectedItem.style.border = "1px solid #ccc";
-                            previouslySelectedItem.classList.remove("selected");
-                        }
-
-                        this.classList.add("selected");
-                        this.style.border = "2px solid red";
-
-                        selectedCouponBenefit = this.querySelector("p")?.innerText;
-                        previouslySelectedItem = this;
-
-                        // 선택된 쿠폰의 cno, issuedBy, benefit 값을 저장
-                        selectedCouponData = {
-                            cno: this.querySelector(".coupon-id")?.value,
-                            issuedBy: this.getAttribute("data-issued-by"),
-                            benefit: selectedCouponBenefit
-                        };
-                    };
-                });
-
-                // 모달 열릴 때마다 applyCouponButton을 다시 찾아서 이벤트 바인딩
-                const applyCouponButton = modal.querySelector(".modal-buttons button");
-                console.log("applyCouponButton:", applyCouponButton);
-
-                if (applyCouponButton) {
-                    applyCouponButton.onclick = function () {
-                        console.log('[쿠폰 적용] 버튼 클릭됨');
-
-                        if (selectedCouponData) {
-                            // 선택된 쿠폰 데이터 출력
-                            console.log('[쿠폰 적용] 선택된 쿠폰 데이터:', selectedCouponData);
-
-                            // 쿠폰 데이터 저장 (선택된 혜택 정보)
-                            selectedCouponBenefit = this.querySelector("p")?.innerText;
-                            previouslySelectedItem = this;
-
-                            const benefitToApply = selectedCouponData.benefit;
-                            const cnoToApply = selectedCouponData.cno; // 필요시 사용
-
-                            // 할인 금액 업데이트
-                            document.getElementById('summary-coupon-discount').innerText = '-' + selectedCouponData.benefit;
-
-                            // 주문 요약 업데이트
-                            updateOrderSummary();
-
-                            // 모달 닫기
-                            modal.style.display = "none";
-
-                            // 선택된 쿠폰 데이터 초기화
-                            selectedCouponBenefit = null;
-                            previouslySelectedItem = null;
-                            selectedCouponData = null;
-                        } else {
-                            alert("적용할 쿠폰을 선택해주세요.");
-                        }
-                    };
-                }
-
-                modal.style.display = "block"; // 모달 표시
-
-            };
-        }
-
-        // 모달 닫기 버튼
-        if (closeButton && modal) {
-            closeButton.onclick = function () {
-                modal.style.display = "none";
-                const couponItems = modal.querySelectorAll(".coupon-item");
-                couponItems.forEach(item => {
-                    item.classList.remove("selected");
-                    item.style.border = "1px solid #ccc";
-                });
-            };
-        }
-
-        // 모달 외부 클릭 시 닫기
-        window.onclick = function (event) {
-            if (event.target === modal) {
-                modal.style.display = "none";
-                const couponItems = modal.querySelectorAll(".coupon-item");
-                couponItems.forEach(item => {
-                    item.classList.remove("selected");
-                    item.style.border = "1px solid #ccc";
-                });
-            }
-        };
-
-
-        // ✅ 결제 요약 업데이트
-        function updateOrderSummary() {
-
-            let totalCount = 0;
-            let totalOriginal = 0;
-            let totalDiscount = 0;
-            let initialTotalShipping = 0;
-            const vendorShippingMap = {};
-            const vendorFreeShipping = {};
-
-            document.querySelectorAll('.order_content').forEach(table => {
-                const row = table.querySelector('tr:nth-of-type(2)');
-                if (!row) return;
-
-                const quantity = parseInt(row.querySelector('.quantity')?.innerText || '1', 10);
-                const originalUnit = parseInt(row.querySelector('.price_original')?.dataset.unit || '0', 10);
-                const discountRate = parseFloat((row.querySelector('.discount-rate')?.innerText || '0').replace('%', '')) || 0;
-                const shippingCost = parseInt(row.querySelector('.shipping')?.innerText.replace(/[^0-9]/g, '') || '0', 10);
-                const vendorName = row.querySelector('.vendor-name')?.innerText.trim();
-                const isFreeShipping = !!row.querySelector('.free-shipping');
-
-                const discountAmount = Math.floor(originalUnit * (discountRate / 100));
-
-                totalCount += quantity;
-                totalOriginal += originalUnit * quantity;
-                totalDiscount += discountAmount * quantity;
-
-                if (vendorName) {
-                    if (!(vendorName in vendorFreeShipping)) {
-                        vendorFreeShipping[vendorName] = true;
-                    }
-                    if (!isFreeShipping) {
-                        vendorFreeShipping[vendorName] = false;
-                    }
-
-                    if (!vendorFreeShipping[vendorName] && shippingCost > 0) {
-                        if (!vendorShippingMap[vendorName]) {
-                            vendorShippingMap[vendorName] = 0;
-                        }
-                        vendorShippingMap[vendorName] = Math.max(vendorShippingMap[vendorName], shippingCost);
-                    } else if (!vendorShippingMap[vendorName]) {
-                        vendorShippingMap[vendorName] = 0;
-                    }
-                }
-            });
-
-            initialTotalShipping = Object.values(vendorShippingMap).reduce((acc, shipping) => acc + shipping, 0);
-
-            const currentPointStr = '[[${userDetailsDTO.userPoint}]]';
-            const currentPoint = parseInt(currentPointStr, 10) || 0;
-            const pointInput = document.querySelector('.discount_info input');
-            const pointText = pointInput?.value.trim();
-            let pointDiscount = 0;
-
-            if (pointText !== '') {
-                const pointValue = parseInt(pointText, 10);
-                if (!isNaN(pointValue) && pointValue >= 5000 && pointValue <= currentPoint) {
-                    pointDiscount = pointValue;
-                }
-            }
-
-            const discountSubtotal = totalOriginal - totalDiscount;
-            let effectiveShipping = initialTotalShipping;
-
-            if (discountSubtotal >= 10000000) {
-                effectiveShipping = 0;
-            }
-
-            let couponDiscount = 0;
-            let finalShippingCost = effectiveShipping;
-
-            window.selectedCouponData = selectedCouponData;
-
-            if (window.selectedCouponData) {
-                const benefit = typeof window.selectedCouponData.benefit === 'string' ? window.selectedCouponData.benefit.trim() : '';
-
-                if (benefit.includes('원')) {
-                    couponDiscount = parseInt(benefit.replace(/[^0-9]/g, ''), 10) || 0;
-                } else if (benefit.includes('%')) {
-                    const rate = parseInt(benefit.replace(/[^0-9]/g, ''), 10) || 0;
-                    const baseAmount = discountSubtotal;
-                    if (rate > 0 && baseAmount > 0) {
-                        couponDiscount = Math.floor(baseAmount * (rate / 100));
-                    } else {
-                        couponDiscount = 0;
-                    }
-                } else if (benefit.includes('무료배송')) {
-                    couponDiscount = 0;
-                    finalShippingCost = 0;
-                } else {
-                    couponDiscount = 0;
-                }
-            } else {
-                couponDiscount = 0;
-            }
-
-            const finalTotal = discountSubtotal - pointDiscount - couponDiscount + finalShippingCost;
-
-            document.getElementById('summary-count').innerText = totalCount.toLocaleString();
-            document.getElementById('summary-amount').innerText = totalOriginal.toLocaleString();
-            document.getElementById('summary-discount').innerText = '-' + totalDiscount.toLocaleString();
-
-            const shippingText = finalShippingCost === 0 ? '무료' : finalShippingCost.toLocaleString();
-            document.getElementById('summary-shipping').innerText = shippingText;
-
-            document.getElementById('summary-point-discount').innerText = '-' + pointDiscount.toLocaleString();
-
-            const couponDiscountText = '-' + couponDiscount.toLocaleString();
-            document.getElementById('summary-coupon-discount').innerText = couponDiscountText;
-
-            const finalTotalText = finalTotal.toLocaleString();
-            document.getElementById('summary-total').innerText = finalTotalText;
-        }
-
-
-
-        // ✅ 포인트 버튼 클릭
-        document.querySelector('.discount_info button')?.addEventListener('click', () => {
-            const pointInput = document.querySelector('.discount_info input');
-            const currentPoint = '[[${userDetailsDTO.userPoint}]]';
-
-            console.log('currentPoint:', currentPoint);
-
-            const pointText = pointInput?.value.trim();
-
-            if (currentPoint < 5000) {
-                alert('포인트 5,000점 이상이면 현금처럼 사용가능');
-                pointInput.disabled = true;
-                return;
-            }
-
-            pointInput.disabled = false;
-
-            if (pointText === '') {
-                updateOrderSummary();
-                return;
-            }
-
-            const pointValue = parseInt(pointText, 10);
-
-            console.log('pointValue:', pointValue);
-
-            if (pointValue < 5000) {
-                alert('포인트는 5,000점 이상부터 사용 가능합니다.');
-                return;
-            }
-
-            if (pointValue > currentPoint) {
-                alert('보유 포인트를 초과했습니다.');
-                return;
-            }
-
-            updateOrderSummary();
-        });
-
-
-        // ✅ 배송 정보 자동 채움
-        const infoDiv = document.getElementById('order_info');
-
-        if (infoDiv) {
-            const orderInfo = {
-                name: infoDiv.getAttribute('attr-name') || '',
-                hp: infoDiv.getAttribute('attr-hp') || '',
-                zip: infoDiv.getAttribute('attr-zip') || '',
-                addr1: infoDiv.getAttribute('attr-addr1') || '',
-                addr2: infoDiv.getAttribute('attr-addr2') || ''
-            };
-
-
-            const checkbox = document.getElementById('sameAsOrderCheckbox');
-            const recipientNameInput = document.getElementById('recipientName');
-            const recipientHpInput = document.getElementById('recipientHp');
-            const recipientZipInput = document.getElementById('recipientZip');
-            const recipientAddr1Input = document.getElementById('recipientAddr1');
-            const recipientAddr2Input = document.getElementById('recipientAddr2');
-
-            if (checkbox) {
-                checkbox.addEventListener('change', function () {
-                    if (this.checked) {
-                        recipientNameInput.value = orderInfo.name;
-                        recipientHpInput.value = orderInfo.hp;
-                        recipientZipInput.value = orderInfo.zip;
-                        recipientAddr1Input.value = orderInfo.addr1;
-                        recipientAddr2Input.value = orderInfo.addr2;
-                    } else {
-                        recipientNameInput.value = '';
-                        recipientHpInput.value = '';
-                        recipientZipInput.value = '';
-                        recipientAddr1Input.value = '';
-                        recipientAddr2Input.value = '';
-                    }
-                });
-            }
-        }
-        updateOrderSummary();
-
-
-
-
-
-
-
-
-
-
-
-    });
-</script>
-<div id="wrapper">
-    <!-- 헤더 시작 -->
-    <th:block th:include="/common/header.html"/>
-    <!-- 헤더 끝 -->
-
-    <!-- 메인 내용 시작 -->
-    <main>
-        <section class="content">
-            <!-- 사이드바-->
-            <aside>
-                <div class="category">
-                    <p>카테고리</p>
-                    <div class="category-item">
+          tables.forEach((table) => {
+              const vendorElement = table.querySelector('.vendor-name');
+              const vendor = vendorElement ? vendorElement.innerText.trim() : null;
+              if (!vendor) return;
+
+              if (!vendorGroups[vendor]) {
+                  vendorGroups[vendor] = [];
+              }
+              vendorGroups[vendor].push(table);
+          });
+
+          container.innerHTML = '';
+
+          Object.entries(vendorGroups).forEach(([vendor, vendorTables]) => {
+              const section = document.createElement('div');
+              section.className = 'vendor-section';
+
+              const header = document.createElement('div');
+              header.className = 'vendor-header';
+
+              const titleSpan = document.createElement('span');
+              titleSpan.className = 'vendor-title';
+              titleSpan.innerText = vendor;
+
+              const iconSpan = document.createElement('span');
+              iconSpan.className = 'vendor-toggle-icon';
+              iconSpan.innerText = '▼';
+
+              header.appendChild(titleSpan);
+              header.appendChild(iconSpan);
+
+              const group = document.createElement('div');
+              group.className = 'vendor-group';
+
+              vendorTables.forEach((table, i) => {
+                  if (i !== 0) {
+                      table.style.display = 'none';
+                  }
+                  group.appendChild(table);
+              });
+
+              header.addEventListener('click', () => {
+                  const isOpen = header.classList.toggle('open');
+                  iconSpan.innerText = isOpen ? '▲' : '▼';
+
+                  const allTablesInGroup = group.querySelectorAll('.order_content');
+                  allTablesInGroup.forEach((t, i) => {
+                      if (i === 0) return;
+                      t.style.display = isOpen ? 'table' : 'none';
+                  });
+              });
+
+              section.appendChild(header);
+              section.appendChild(group);
+              container.appendChild(section);
+          });
+
+
+          // ✅ 각 상품 계산
+          document.querySelectorAll('.order_content').forEach(table => {
+              const row = table.querySelector('tr:nth-of-type(2)');
+              if (!row) return;
+
+              const originalEl = row.querySelector('.price_original');
+              const saleEl = row.querySelector('.price_total');
+              const discountEl = row.querySelector('.discount-rate');
+              const quantityEl = row.querySelector('.quantity');
+              const pointEl = row.querySelector('.point'); // 포인트 표시 요소
+
+              const quantity = parseInt(quantityEl?.innerText || '1', 10);
+              const originalUnit = parseInt(originalEl?.dataset.unit || '0', 10);
+              const discountRate = parseFloat((discountEl?.innerText || '0').replace('%', '')) || 0;
+
+              if (!isNaN(discountRate) && originalUnit > 0 && quantity > 0) {
+                  // 원래 가격 계산 및 표시
+                  const original = originalUnit * quantity;
+                  originalEl.innerText = original.toLocaleString();
+
+                  // 할인된 단가 계산
+                  const discountedUnitPrice = originalUnit * (1 - discountRate / 100);
+
+                  // 할인된 단가에서 소수점 내림 처리
+                  const flooredDiscountedUnitPrice = Math.floor(discountedUnitPrice);
+
+                  // 총 판매 가격 계산 및 표시
+                  const sale = flooredDiscountedUnitPrice * quantity;
+                  saleEl.dataset.unit = sale;
+                  saleEl.innerText = sale.toLocaleString();
+
+                  // 포인트 계산 로직
+                  const discountedPriceForPoint = parseInt(saleEl?.dataset.unit || '0', 10);
+
+                  if (!isNaN(discountedPriceForPoint) && quantity > 0 && pointEl) {
+                      // 사용자 등급별 포인트 적립률 설정 및 계산
+                      const userRank = '[[${userDetailsDTO.rank}]]';
+                      let pointRate = 0;
+
+                      switch (userRank) {
+                          case 'VVIP':
+                              pointRate = 0.05;
+                              break;
+                          case 'VIP':
+                              pointRate = 0.04;
+                              break;
+                          case 'GOLD':
+                              pointRate = 0.03;
+                              break;
+                          case 'SILVER':
+                              pointRate = 0.02;
+                              break;
+                          case 'FAMILY':
+                              pointRate = 0.01;
+                              break;
+                          default:
+                              pointRate = 0;
+                              break;
+                      }
+
+                      const point = Math.floor(discountedPriceForPoint * pointRate);
+                      pointEl.innerText = point.toLocaleString();
+                  }
+              } else {
+                  console.log('할인율, 원래 단가 또는 수량이 유효하지 않습니다.');
+              }
+          });
+
+
+          // ✅ 쿠폰 모달 창
+          const modal = document.getElementById("couponModal");
+          const showCouponModalButton = document.getElementById("showCouponModalButton");
+          const closeButton = modal?.querySelector(".close-button");
+
+          let selectedCouponBenefit = null;
+          let previouslySelectedItem = null;
+          let selectedCouponData = null;
+
+          // 모달 열기 버튼 클릭
+          if (showCouponModalButton && modal) {
+              showCouponModalButton.onclick = function () {
+                  const vendorElements = document.querySelectorAll(".vendor-name");
+                  const vendorSet = new Set();
+
+                  vendorElements.forEach(el => {
+                      vendorSet.add(el.textContent.trim());
+                  });
+
+                  const couponItems = document.querySelectorAll(".coupon-item");
+
+                  couponItems.forEach(item => {
+                      const issuedBy = item.getAttribute("data-issued-by")?.trim();
+                      const couponState = item.getAttribute("data-state")?.trim();
+
+                      item.style.display = vendorSet.has(issuedBy) && couponState === "미사용" ? "block" : "none";
+                      item.classList.remove("selected");
+                      item.style.border = "1px solid #ccc";
+
+                      // 쿠폰 아이템 클릭 이벤트 등록
+                      item.onclick = function () {
+                          if (previouslySelectedItem) {
+                              previouslySelectedItem.style.border = "1px solid #ccc";
+                              previouslySelectedItem.classList.remove("selected");
+                          }
+
+                          this.classList.add("selected");
+                          this.style.border = "2px solid red";
+
+                          selectedCouponBenefit = this.querySelector("p")?.innerText;
+                          previouslySelectedItem = this;
+
+                          // 선택된 쿠폰의 cno, issuedBy, benefit 값을 저장
+                          selectedCouponData = {
+                              cno: this.querySelector(".coupon-id")?.value,
+                              issuedBy: this.getAttribute("data-issued-by"),
+                              benefit: selectedCouponBenefit
+                          };
+                      };
+                  });
+
+                  // 모달 열릴 때마다 applyCouponButton을 다시 찾아서 이벤트 바인딩
+                  const applyCouponButton = modal.querySelector(".modal-buttons button");
+                  console.log("applyCouponButton:", applyCouponButton);
+
+                  if (applyCouponButton) {
+                      applyCouponButton.onclick = function () {
+
+                          if (selectedCouponData) {
+                              // 선택된 쿠폰 데이터 출력
+                              console.log('[쿠폰 적용] 선택된 쿠폰 데이터:', selectedCouponData);
+
+                              document.getElementById("couponData").value = selectedCouponData.cno;
+
+                              // 쿠폰 데이터 저장 (선택된 혜택 정보)
+                              selectedCouponBenefit = this.querySelector("p")?.innerText;
+                              previouslySelectedItem = this;
+
+                              // 할인 금액 업데이트
+                              document.getElementById('summary-coupon-discount').innerText = '-' + selectedCouponData.benefit;
+
+                              // 주문 요약 업데이트
+                              updateOrderSummary();
+
+                              // 모달 닫기
+                              modal.style.display = "none";
+
+                              // 선택된 쿠폰 데이터 초기화
+                              selectedCouponBenefit = null;
+                              previouslySelectedItem = null;
+                              selectedCouponData = null;
+                          } else {
+                              alert("적용할 쿠폰을 선택해주세요.");
+                          }
+                      };
+                  }
+                  modal.style.display = "block";
+              };
+          }
+
+          // 모달 닫기 버튼
+          if (closeButton && modal) {
+              closeButton.onclick = function () {
+                  modal.style.display = "none";
+                  const couponItems = modal.querySelectorAll(".coupon-item");
+                  couponItems.forEach(item => {
+                      item.classList.remove("selected");
+                      item.style.border = "1px solid #ccc";
+                  });
+              };
+          }
+
+          // 모달 외부 클릭 시 닫기
+          window.onclick = function (event) {
+              if (event.target === modal) {
+                  modal.style.display = "none";
+                  const couponItems = modal.querySelectorAll(".coupon-item");
+                  couponItems.forEach(item => {
+                      item.classList.remove("selected");
+                      item.style.border = "1px solid #ccc";
+                  });
+              }
+          };
+
+
+          // ✅ 결제 요약 업데이트
+          function updateOrderSummary() {
+
+              let totalCount = 0;
+              let totalOriginal = 0;
+              let totalDiscount = 0;
+              let initialTotalShipping = 0;
+              const vendorShippingMap = {};
+              const vendorFreeShipping = {};
+
+              document.querySelectorAll('.order_content').forEach(table => {
+                  const row = table.querySelector('tr:nth-of-type(2)');
+                  if (!row) return;
+
+                  const quantity = parseInt(row.querySelector('.quantity')?.innerText || '1', 10);
+                  const originalUnit = parseInt(row.querySelector('.price_original')?.dataset.unit || '0', 10);
+                  const discountRate = parseFloat((row.querySelector('.discount-rate')?.innerText || '0').replace('%', '')) || 0;
+                  const shippingCost = parseInt(row.querySelector('.shipping')?.innerText.replace(/[^0-9]/g, '') || '0', 10);
+                  const vendorName = row.querySelector('.vendor-name')?.innerText.trim();
+                  const isFreeShipping = !!row.querySelector('.free-shipping');
+
+                  const discountAmount = Math.floor(originalUnit * (discountRate / 100));
+
+                  totalCount += quantity;
+                  totalOriginal += originalUnit * quantity;
+                  totalDiscount += discountAmount * quantity;
+
+                  if (vendorName) {
+                      if (!(vendorName in vendorFreeShipping)) {
+                          vendorFreeShipping[vendorName] = true;
+                      }
+                      if (!isFreeShipping) {
+                          vendorFreeShipping[vendorName] = false;
+                      }
+
+                      if (!vendorFreeShipping[vendorName] && shippingCost > 0) {
+                          if (!vendorShippingMap[vendorName]) {
+                              vendorShippingMap[vendorName] = 0;
+                          }
+                          vendorShippingMap[vendorName] = Math.max(vendorShippingMap[vendorName], shippingCost);
+                      } else if (!vendorShippingMap[vendorName]) {
+                          vendorShippingMap[vendorName] = 0;
+                      }
+                  }
+              });
+
+              initialTotalShipping = Object.values(vendorShippingMap).reduce((acc, shipping) => acc + shipping, 0);
+
+              const currentPointStr = '[[${userDetailsDTO.userPoint}]]';
+              const currentPoint = parseInt(currentPointStr, 10) || 0;
+              const pointInput = document.querySelector('.discount_info input');
+              const pointText = pointInput?.value.trim();
+              let pointDiscount = 0;
+
+              if (pointText !== '') {
+                  const pointValue = parseInt(pointText, 10);
+                  if (!isNaN(pointValue) && pointValue >= 5000 && pointValue <= currentPoint) {
+                      pointDiscount = pointValue;
+                  }
+              }
+
+              const discountSubtotal = totalOriginal - totalDiscount;
+              let effectiveShipping = initialTotalShipping;
+
+              if (discountSubtotal >= 10000000) {
+                  effectiveShipping = 0;
+              }
+
+              let couponDiscount = 0;
+              let finalShippingCost = effectiveShipping;
+
+              window.selectedCouponData = selectedCouponData;
+
+              if (window.selectedCouponData) {
+                  const benefit = typeof window.selectedCouponData.benefit === 'string' ? window.selectedCouponData.benefit.trim() : '';
+
+                  if (benefit.includes('원')) {
+                      couponDiscount = parseInt(benefit.replace(/[^0-9]/g, ''), 10) || 0;
+                  } else if (benefit.includes('%')) {
+                      const rate = parseInt(benefit.replace(/[^0-9]/g, ''), 10) || 0;
+                      const baseAmount = discountSubtotal;
+                      if (rate > 0 && baseAmount > 0) {
+                          couponDiscount = Math.floor(baseAmount * (rate / 100));
+                      } else {
+                          couponDiscount = 0;
+                      }
+                  } else if (benefit.includes('무료배송')) {
+                      couponDiscount = 0;
+                      finalShippingCost = 0;
+                  } else {
+                      couponDiscount = 0;
+                  }
+              } else {
+                  couponDiscount = 0;
+              }
+
+              const finalTotal = discountSubtotal - pointDiscount - couponDiscount + finalShippingCost;
+
+              document.getElementById('summary-count').innerText = totalCount.toLocaleString();
+              document.getElementById('summary-amount').innerText = totalOriginal.toLocaleString();
+              document.getElementById('summary-discount').innerText = '-' + totalDiscount.toLocaleString();
+
+              const shippingText = finalShippingCost === 0 ? '무료' : finalShippingCost.toLocaleString();
+              document.getElementById('summary-shipping').innerText = shippingText;
+
+              document.getElementById('summary-point-discount').innerText = '-' + pointDiscount.toLocaleString();
+
+              const couponDiscountText = '-' + couponDiscount.toLocaleString();
+              document.getElementById('summary-coupon-discount').innerText = couponDiscountText;
+
+              const finalTotalText = finalTotal.toLocaleString();
+              document.getElementById('summary-total').innerText = finalTotalText;
+
+              document.querySelector('input[name="orderTotalPrice"]').value = finalTotal;
+          }
+
+
+
+          // ✅ 포인트 버튼 클릭
+          document.querySelector('.discount_info button')?.addEventListener('click', () => {
+              const pointInput = document.querySelector('.discount_info input');
+              const currentPoint = '[[${userDetailsDTO.userPoint}]]';
+
+              console.log('currentPoint:', currentPoint);
+
+              const pointText = pointInput?.value.trim();
+
+              if (currentPoint < 5000) {
+                  alert('포인트 5,000점 이상이면 현금처럼 사용가능');
+                  pointInput.disabled = true;
+                  return;
+              }
+
+              pointInput.disabled = false;
+
+              if (pointText === '') {
+                  updateOrderSummary();
+                  return;
+              }
+
+              const pointValue = parseInt(pointText, 10);
+
+              console.log('pointValue:', pointValue);
+
+              if (pointValue < 5000) {
+                  alert('포인트는 5,000점 이상부터 사용 가능합니다.');
+                  return;
+              }
+
+              if (pointValue > currentPoint) {
+                  alert('보유 포인트를 초과했습니다.');
+                  return;
+              }
+
+              updateOrderSummary();
+          });
+
+
+          // ✅ 배송 정보 자동 채움
+          const infoDiv = document.getElementById('order_info');
+
+          if (infoDiv) {
+              const orderInfo = {
+                  name: infoDiv.getAttribute('attr-name') || '',
+                  hp: infoDiv.getAttribute('attr-hp') || '',
+                  zip: infoDiv.getAttribute('attr-zip') || '',
+                  addr1: infoDiv.getAttribute('attr-addr1') || '',
+                  addr2: infoDiv.getAttribute('attr-addr2') || ''
+              };
+
+
+              const checkbox = document.getElementById('sameAsOrderCheckbox');
+              const recipientNameInput = document.getElementById('recipientName');
+              const recipientHpInput = document.getElementById('recipientHp');
+              const recipientZipInput = document.getElementById('recipientZip');
+              const recipientAddr1Input = document.getElementById('recipientAddr1');
+              const recipientAddr2Input = document.getElementById('recipientAddr2');
+
+              if (checkbox) {
+                  checkbox.addEventListener('change', function () {
+                      if (this.checked) {
+                          recipientNameInput.value = orderInfo.name;
+                          recipientHpInput.value = orderInfo.hp;
+                          recipientZipInput.value = orderInfo.zip;
+                          recipientAddr1Input.value = orderInfo.addr1;
+                          recipientAddr2Input.value = orderInfo.addr2;
+                      } else {
+                          recipientNameInput.value = '';
+                          recipientHpInput.value = '';
+                          recipientZipInput.value = '';
+                          recipientAddr1Input.value = '';
+                          recipientAddr2Input.value = '';
+                      }
+                  });
+              }
+          }
+          updateOrderSummary();
+
+
+      });
+  </script>
+    <div id="wrapper">
+        <!-- 헤더 시작 -->
+        <th:block th:include="/common/header.html"/>
+        <!-- 헤더 끝 -->
+
+        <!-- 메인 내용 시작 -->
+        <main>
+            <section class="content">
+                <!-- 사이드바-->
+                <aside>
+                    <div class="category">
+                        <p>카테고리</p>
+                        <div class="category-item">
                         <div class="parent">뷰티</div>
                         <div class="children">
                             <a href="/view/product/beauty/skincare/skincare.html">스킨케어</a>
                             <a href="/view/product/beauty/makeup">메이크업</a>
                             <a href="/view/product/beauty/perfume">향수</a>
                         </div>
-                    </div>
+                        </div>
 
-                    <div class="category-item">
+                        <div class="category-item">
                         <div class="parent">럭셔리</div>
                         <div class="children">
                             <a href="/view/product/luxury/bag">가방</a>
                             <a href="/view/product/luxury/watch">시계</a>
                             <a href="/view/product/luxury/shoes">신발</a>
                         </div>
-                    </div>
+                        </div>
 
-                    <div class="category-item">
+                        <div class="category-item">
                         <div class="parent">여성패션</div>
                         <div class="children">
                             <a href="/view/product/wfashion/onepiece">원피스</a>
                             <a href="/view/product/wfashion/blouse">블라우스</a>
                             <a href="/view/product/wfashion/pants">팬츠</a>
                         </div>
-                    </div>
+                        </div>
 
-                    <div class="category-item">
+                        <div class="category-item">
                         <div class="parent">남성패션</div>
                         <div class="children">
                             <a href="/view/product/mfashion/shirt">셔츠</a>
                             <a href="/view/product/mfashion/slacks">슬랙스</a>
                             <a href="/view/product/mfashion/jacket">자켓</a>
                         </div>
-                    </div>
+                        </div>
 
-                    <div class="category-item">
+                        <div class="category-item">
                         <div class="parent">가전</div>
                         <div class="children">
                             <a href="/view/product/electronics/computer">컴퓨터</a>
                             <a href="/view/product/electronics/game">게임</a>
                             <a href="/view/product/electronics/tv">티비</a>
                         </div>
-                    </div>
+                        </div>
 
-                    <div class="category-item">
+                        <div class="category-item">
                         <div class="parent">가구</div>
                         <div class="children">
                             <a href="/view/product/furniture/sofa">쇼파</a>
                             <a href="/view/product/furniture/bed">침구</a>
                             <a href="/view/product/furniture/wardrobe">옷장</a>
                         </div>
-                    </div>
+                        </div>
 
-                    <div class="category-item">
+                        <div class="category-item">
                         <div class="parent">반려동물</div>
                         <div class="children">
                             <a href="/view/product/pet/dog">강아지</a>
                             <a href="/view/product/pet/cat">고양이</a>
                             <a href="/view/product/pet/parrot">앵무새</a>
                         </div>
-                    </div>
+                        </div>
 
-                    <div class="category-item">
+                        <div class="category-item">
                         <div class="parent">취미</div>
                         <div class="children">
                             <a href="/view/product/hobby/knitting">뜨개</a>
                             <a href="/view/product/hobby/badminton">배드민턴</a>
                             <a href="/view/product/hobby/poldance">폴댄스</a>
                         </div>
-                    </div>
+                        </div>
 
-                    <div class="category-item">
+                        <div class="category-item">
                         <div class="parent">여행</div>
                         <div class="children">
                             <a href="/view/product/travel/asia">아시아</a>
                             <a href="/view/product/travel/europe">유럽</a>
                             <a href="/view/product/travel/northamerica">북미</a>
                         </div>
+                        </div>
                     </div>
-                </div>
-            </aside>
-            <!-- 사이드 바 끝 -->
+                </aside>
+                <!-- 사이드 바 끝 -->
 
-            <!-- 메인 시작 -->
-            <div class="order">
-                <h1>주문하기</h1>
-                <form action="/order/submit" method="post">
+                <!-- 메인 시작 -->
+                <div class="order">
+                    <h1>주문하기</h1>
+                    <form action="/order/submit" method="post">
                     <div id="tables-container">
                         <table class="order_content" th:each="cart : ${cartDTOList}">
+                            <input type="hidden" name="cartNo" th:value="${cart.cartNo}">
                             <tr>
                                 <th></th>
                                 <th>상품명</th>
@@ -643,199 +633,205 @@
                             <p>장바구니에 담긴 상품이 없습니다.</p>
                         </div>
 
-                    </div>
-                    <div id="order_info"
-                         data-th-attr-name="${cartDTOList[0].user.name}"
-                         data-th-attr-hp="${cartDTOList[0].user.hp}"
-                         data-th-attr-zip="${cartDTOList[0].user.zip}"
-                         data-th-attr-addr1="${cartDTOList[0].user.addr1}"
-                         data-th-attr-addr2="${cartDTOList[0].user.addr2}">
-                        <div>
-                            <p>배송정보</p>
-                            <input type="checkbox" id="sameAsOrderCheckbox"> 주문자와 동일
-                            <table>
-                                <tr>
-                                    <th>수령자</th>
-                                    <td><input type="text" name="orderReceiver" id="recipientName"></td>
-                                </tr>
-                                <tr>
-                                    <th>휴대폰</th>
-                                    <td><input type="text" name="receiverHp" id="recipientHp"></td>
-                                </tr>
-                                <tr>
-                                    <th>우편번호</th>
-                                    <td><input type="text" name="recipientZip" id="recipientZip"><button type="button">검색</button></td>
-                                </tr>
-                                <tr>
-                                    <th>기본주소</th>
-                                    <td><input type="text" name="recipientAddr1" id="recipientAddr1"></td>
-                                </tr>
-                                <tr>
-                                    <th>상세주소</th>
-                                    <td><input type="text" name="recipientAddr2" id="recipientAddr2"></td>
-                                </tr>
-                            </table>
-                            <p>할인정보</p>
-                            <div class="discount_info">
-                                <div>
-                                    현재포인트 : <span th:text="${userDetailsDTO.userPoint}"></span>점
-                                    <input type="text" name="point"><button type="button">사용하기</button><br>
-                                    <p>포인트 5,000점 이상이면 현금처럼 사용가능</p>
-                                </div>
-                                <div>
-                                    <span>쿠폰 적용 : </span>
-                                    <button type="button" id="showCouponModalButton">쿠폰 확인</button>
-                                    <div id="couponModal" class="modal" style="display: none;">
-                                        <div class="modal-content">
-                                            <span class="close-button">&times;</span>
-                                            <p><span>상품할인혜택</span>을 적용해 보세요!</p>
-                                            <div class="coupon-item"
-                                                 th:each="couponIssue : ${couponIssueDTOList}"
-                                                 th:attr="data-issued-by=${couponIssue.coupon.issuedBy}, data-state=${couponIssue.state}">
-                                                <p th:text="${couponIssue.coupon.benefit}"></p>
-                                                <p th:text="${couponIssue.coupon.couponName} + ' / ' + ${couponIssue.coupon.issuedBy}"></p>
-                                                <p th:text="|쿠폰 종류: ${couponIssue.coupon.couponType} (${couponIssue.coupon.minPrice} 이상 구매 시 사용 가능)|"></p>
-                                                <input type="hidden" class="coupon-id" th:value="${couponIssue.coupon.cno}">
-                                                <span class="coupon-expiry"
-                                                      th:if="${couponIssue.coupon.validTo != null and couponIssue.coupon.validTo.isBefore(T(java.time.LocalDate).now().plusDays(7))}"
-                                                      th:text="|${T(java.time.temporal.ChronoUnit).DAYS.between(T(java.time.LocalDate).now(), couponIssue.coupon.validTo)}일 남음|">
+                        </div>
+                        <div id="order_info"
+                             data-th-attr-name="${cartDTOList[0].user.name}"
+                             data-th-attr-hp="${cartDTOList[0].user.hp}"
+                             data-th-attr-zip="${cartDTOList[0].user.zip}"
+                             data-th-attr-addr1="${cartDTOList[0].user.addr1}"
+                             data-th-attr-addr2="${cartDTOList[0].user.addr2}">
+                            <div>
+                                <p>배송정보</p>
+                                <input type="checkbox" id="sameAsOrderCheckbox"> 주문자와 동일
+                                <table>
+                                    <tr>
+                                        <th>수령자</th>
+                                        <td><input type="text" name="orderReceiver" id="recipientName"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>휴대폰</th>
+                                        <td><input type="text" name="receiverHp" id="recipientHp"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>우편번호</th>
+                                        <td><input type="text" name="receiverZip" id="recipientZip"><button type="button">검색</button></td>
+                                    </tr>
+                                    <tr>
+                                        <th>기본주소</th>
+                                        <td><input type="text" name="receiverAddr1" id="recipientAddr1"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>상세주소</th>
+                                        <td><input type="text" name="receiverAddr2" id="recipientAddr2"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>요청사항</th>
+                                        <td><input type="text" name="orderContent" id="orderContent"></td>
+                                    </tr>
+                                </table>
+                                <p>할인정보</p>
+                                <div class="discount_info">
+                                    <div>
+                                        현재포인트 : <span th:text="${userDetailsDTO.userPoint}"></span>점
+                                        <input type="text" name="point"><button type="button">사용하기</button><br>
+                                        <p>포인트 5,000점 이상이면 현금처럼 사용가능</p>
+                                    </div>
+                                    <div>
+                                        <span>쿠폰 적용 : </span>
+                                        <button type="button" id="showCouponModalButton">쿠폰 확인</button>
+                                        <input type="hidden" name="couponNo" value="쿠폰없음" id="couponData">
+                                        <div id="couponModal" class="modal" style="display: none;">
+                                            <div class="modal-content">
+                                                <span class="close-button">&times;</span>
+                                                <p><span>상품할인혜택</span>을 적용해 보세요!</p>
+                                                <div class="coupon-item"
+                                                     th:each="couponIssue : ${couponIssueDTOList}"
+                                                     th:attr="data-issued-by=${couponIssue.coupon.issuedBy}, data-state=${couponIssue.state}">
+                                                    <p th:text="${couponIssue.coupon.benefit}"></p>
+                                                    <p th:text="${couponIssue.coupon.couponName} + ' / ' + ${couponIssue.coupon.issuedBy}"></p>
+                                                    <p th:text="|쿠폰 종류: ${couponIssue.coupon.couponType} (${couponIssue.coupon.minPrice} 이상 구매 시 사용 가능)|"></p>
+                                                    <input type="hidden" class="coupon-id" th:value="${couponIssue.coupon.cno}">
+                                                    <span class="coupon-expiry"
+                                                          th:if="${couponIssue.coupon.validTo != null and couponIssue.coupon.validTo.isBefore(T(java.time.LocalDate).now().plusDays(7))}"
+                                                          th:text="|${T(java.time.temporal.ChronoUnit).DAYS.between(T(java.time.LocalDate).now(), couponIssue.coupon.validTo)}일 남음|">
                                                     </span>
-                                            </div>
-                                            <div class="modal-buttons">
-                                                <button type="button">쿠폰 적용하기</button>
+                                                </div>
+                                                <div class="modal-buttons">
+                                                    <button type="button">쿠폰 적용하기</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <p>결제방법</p>
+                                <div class="payment-methods">
+                                    <label class="payment-option"><input type="radio" name="payment" value="신용카드">신용카드</label>
+                                    <label class="payment-option"><input type="radio" name="payment" value="체크카드">체크카드</label>
+                                    <label class="payment-option"><input type="radio" name="payment" value="계좌이체">계좌이체</label>
+                                    <label class="payment-option"><input type="radio" name="payment" value="토스">토스</label>
+                                    <label class="payment-option"><input type="radio" name="payment" value="네이버">네이버</label>
+                                    <label class="payment-option">
+                                        <input type="radio" name="payment" value="카카오페이">카카오페이
+                                        <span class="kakaopay-label">pay</span>
+                                    </label>
+                                </div>
                             </div>
-                            <p>결제방법</p>
-                            <div class="payment-methods">
-                                <label class="payment-option"><input type="radio" name="payment" value="신용카드">신용카드</label>
-                                <label class="payment-option"><input type="radio" name="payment" value="체크카드">체크카드</label>
-                                <label class="payment-option"><input type="radio" name="payment" value="계좌이체">계좌이체</label>
-                                <label class="payment-option"><input type="radio" name="payment" value="토스">토스</label>
-                                <label class="payment-option"><input type="radio" name="payment" value="네이버">네이버</label>
-                                <label class="payment-option">
-                                    <input type="radio" name="payment" value="카카오페이">카카오페이
-                                    <span class="kakaopay-label">pay</span>
-                                </label>
+                            <div class="cart_summary">
+                                <p>최종결제정보</p>
+                                <table>
+                                    <tr>
+                                        <th>상품수</th>
+                                        <td id="summary-count"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>상품금액</th>
+                                        <td id="summary-amount"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>할인금액</th>
+                                        <td id="summary-discount"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>배송비</th>
+                                        <td id="summary-shipping"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>포인트할인</th>
+                                        <td id="summary-point-discount"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>쿠폰할인</th>
+                                        <td id="summary-coupon-discount"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>적립 포인트</th>
+                                        <td id="summary-point"></td>
+                                    </tr>
+                                    <tr class="total">
+                                        <th>총</th>
+                                        <td id="summary-total"></td>
+                                        <input type="hidden" name="orderTotalPrice">
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><button type="submit">주문하기</button></td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
-                        <div class="cart_summary">
-                            <p>최종결제정보</p>
-                            <table>
-                                <tr>
-                                    <th>상품수</th>
-                                    <td id="summary-count"></td>
-                                </tr>
-                                <tr>
-                                    <th>상품금액</th>
-                                    <td id="summary-amount"></td>
-                                </tr>
-                                <tr>
-                                    <th>할인금액</th>
-                                    <td id="summary-discount"></td>
-                                </tr>
-                                <tr>
-                                    <th>배송비</th>
-                                    <td id="summary-shipping"></td>
-                                </tr>
-                                <tr>
-                                    <th>포인트할인</th>
-                                    <td id="summary-point-discount"></td>
-                                </tr>
-                                <tr>
-                                    <th>쿠폰할인</th>
-                                    <td id="summary-coupon-discount"></td>
-                                </tr>
-                                <tr>
-                                    <th>적립 포인트</th>
-                                    <td id="summary-point"></td>
-                                </tr>
-                                <tr class="total">
-                                    <th>총</th>
-                                    <td id="summary-total"></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2"><button type="submit">주문하기</button></td>
-                                </tr>
-                            </table>
-                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+        <!-- 메인 내용 끝 -->
+
+        <!-- 푸터 시작 -->
+        <footer>
+            <div class="footer_info">
+                <div>
+                    <a href="#">회사소개</a>
+                    <a href="#">서비스이용약관</a>
+                    <a href="#">개인정보처리방침</a>
+                    <a href="#">전자금융거래약관</a>
+                </div>
+            </div>
+            <div class="footer_content">
+                <div class="footer_content_detail">
+                    <img src="/images/footer_logo.png" alt="">
+                    <div>
+                        <p class="footer_title">LotteOn Project</p>
+                        <p>
+                            개발자 : 우상호, 최명기, 김소현, 오재영, 홍준혁 <br>
+                            주소 : 부산광역시 부산진구 부전동 266-2 그린컴퓨터아카데미 <br><br>
+                            사업자등록번호 : 529-85-00774(롯데쇼핑(주) e커머스사업부) <br>
+                            통신판매업 신고 : 2024-서울강남-04439 사업자 정보 확인 <br>
+                            호스팅 서비스사업자 : 롯데쇼핑(주) e커머스사업부 <br>
+                        </p>
+
+                        <p class="footer_sub_title" style="margin-top: 10px;">롯데쇼핑 e커머스 사업부 에스크로</p>
+                        <p>
+                            고객님의 안전거래를 위해 현금 등으로 결제 시 결제금액 전액에 대해 <br>
+                            소비자 피해 방지 서비스를 이용합니다.
+                        </p>
                     </div>
-                </form>
-            </div>
-        </section>
-    </main>
-    <!-- 메인 내용 끝 -->
+                    <div>
+                        <p class="footer_sub_title">고객센터</p>
+                        <p>
+                            전화번호 : 1899-7000(유료) <br>
+                            E-mail : lotteon@lotte.net <br>
+                            <a href="#" class="a_deco">분쟁해결기준</a><br> <!-- 정적 페이지 이동 (연결 할 페이지 없으면 삭제 예정)-->
+                            <a href="#" class="footer_btn">
+                                FAQ 보기
+                            </a>
+                            <a href="#" class="footer_btn">
+                                1대1 문의하기
+                            </a>
+                            <a href="#" class="footer_btn">
+                                고객센터
+                            </a>
+                            <a href="#" class="footer_btn">
+                                공지사항
+                            </a>
+                        </p>
 
-    <!-- 푸터 시작 -->
-    <footer>
-        <div class="footer_info">
-            <div>
-                <a href="#">회사소개</a>
-                <a href="#">서비스이용약관</a>
-                <a href="#">개인정보처리방침</a>
-                <a href="#">전자금융거래약관</a>
-            </div>
-        </div>
-        <div class="footer_content">
-            <div class="footer_content_detail">
-                <img src="/images/footer_logo.png" alt="">
-                <div>
-                    <p class="footer_title">LotteOn Project</p>
-                    <p>
-                        개발자 : 우상호, 최명기, 김소현, 오재영, 홍준혁 <br>
-                        주소 : 부산광역시 부산진구 부전동 266-2 그린컴퓨터아카데미 <br><br>
-                        사업자등록번호 : 529-85-00774(롯데쇼핑(주) e커머스사업부) <br>
-                        통신판매업 신고 : 2024-서울강남-04439 사업자 정보 확인 <br>
-                        호스팅 서비스사업자 : 롯데쇼핑(주) e커머스사업부 <br>
-                    </p>
-
-                    <p class="footer_sub_title" style="margin-top: 10px;">롯데쇼핑 e커머스 사업부 에스크로</p>
-                    <p>
-                        고객님의 안전거래를 위해 현금 등으로 결제 시 결제금액 전액에 대해 <br>
-                        소비자 피해 방지 서비스를 이용합니다.
-                    </p>
-                </div>
-                <div>
-                    <p class="footer_sub_title">고객센터</p>
-                    <p>
-                        전화번호 : 1899-7000(유료) <br>
-                        E-mail : lotteon@lotte.net <br>
-                        <a href="#" class="a_deco">분쟁해결기준</a><br> <!-- 정적 페이지 이동 (연결 할 페이지 없으면 삭제 예정)-->
-                        <a href="#" class="footer_btn">
-                            FAQ 보기
-                        </a>
-                        <a href="#" class="footer_btn">
-                            1대1 문의하기
-                        </a>
-                        <a href="#" class="footer_btn">
-                            고객센터
-                        </a>
-                        <a href="#" class="footer_btn">
-                            공지사항
-                        </a>
-                    </p>
-
-                    <p class="footer_sub_title">전자금융거래 분쟁 담당</p>
-                    <p>
-                        Tel : 1899-7000(유료)
-                        E-mail : lotteon@lotte.net
-                    </p>
-                    <a href="#" class="a_deco">안전거래센터</a>
+                        <p class="footer_sub_title">전자금융거래 분쟁 담당</p>
+                        <p>
+                            Tel : 1899-7000(유료)
+                            E-mail : lotteon@lotte.net
+                        </p>
+                        <a href="#" class="a_deco">안전거래센터</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="footer_version">
-            <p>
-                롯데쇼핑(주)는 통신판매중개자이며 통신판매의 거래당사자가 아닙니다. 입점판매자가 등록한 상품정보 및 거래에 대해 롯데쇼핑(주)는 일체 책임을 지지 않습니다.
-            </p>
-            <p>Copyright © LOTTESHOPPING Co., LTD. All rights reserved.</p>
-        </div>
-    </footer>
-    <!-- 푸터 끝 -->
+            <div class="footer_version">
+                <p>
+                    롯데쇼핑(주)는 통신판매중개자이며 통신판매의 거래당사자가 아닙니다. 입점판매자가 등록한 상품정보 및 거래에 대해 롯데쇼핑(주)는 일체 책임을 지지 않습니다.
+                </p>
+                <p>Copyright © LOTTESHOPPING Co., LTD. All rights reserved.</p>
+            </div>
+        </footer>
+        <!-- 푸터 끝 -->
 
-</div>
+    </div>
 
 </body>
 </html>
