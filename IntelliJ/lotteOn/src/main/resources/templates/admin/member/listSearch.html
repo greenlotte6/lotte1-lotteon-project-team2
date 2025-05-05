@@ -87,7 +87,7 @@
                     <div class="select_div">
                         <div class="select_box">
                             <form th:action="@{/admin/member/search}">
-                                <select name="searchType">
+                                <select name="searchType" th:field="*{pageResponseDTO.searchType}">
                                     <option value="아이디">아이디</option>
                                     <option value="이름">이름</option>
                                     <option value="이메일">이메일</option>
@@ -138,11 +138,9 @@
                                     <td>[[${item.hp}]]</td>
                                     <td th:text="${#temporals.format(item.lastLoginAt, 'yyyy.MM.dd HH:mm:ss')}"></td>
                                     <td style="color: green;">[[${item.state}]]</td>
-                                    <td style="width: 60px;">
+                                    <td>
                                         <a href="#" id="modal_modify">[ 수정 ]</a><br>
-                                        <a th:href="@{/admin/member/state(uid=${item.uid} , state='중지')}">[ 중지 ]</a>
-                                        <a th:href="@{/admin/member/state(uid=${item.uid} , state='재개')}">[ 재개 ]</a>
-                                        <a th:href="@{/admin/member/state(uid=${item.uid} , state='비활성')}">[ 비활성 ]</a>
+                                        <a href="#">[ 중지 ]</a>
                                     </td>
                                 </tr>
                                 
@@ -156,15 +154,15 @@
                     <!-- 페이징 -->
                     <div class="page">
                         <th:block th:if="${pageResponseDTO.prev}">
-                            <a th:href="@{/admin/member/list(pg=${pageResponseDTO.start-1})" class="prev">이전</a>
+                            <a th:href="@{/admin/member/search(pg=${pageResponseDTO.start-1}, searchType=${pageResponseDTO.searchType} , keyword=${pageResponseDTO.keyword})}" class="prev">이전</a>
                         </th:block>
 
                         <th:block th:each="num:${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end)}">
-                            <a th:href="@{/admin/member/list(pg=${num})}" th:class="${num == pageResponseDTO.pg} ? 'current' : 'num'">[[${num}]]</a>
+                            <a th:href="@{/admin/member/search(pg=${num} , searchType=${pageResponseDTO.searchType} , keyword=${pageResponseDTO.keyword})}" th:class="${num == pageResponseDTO.pg} ? 'current' : 'num'">[[${num}]]</a>
                         </th:block>
 
                         <th:block th:if="${pageResponseDTO.next}">
-                            <a th:href="@{/admin/member/list(pg=${pageResponseDTO.end+1})}" class="next">다음</a>
+                            <a th:href="@{/admin/member/search(pg=${pageResponseDTO.end+1} , searchType=${pageResponseDTO.searchType} , keyword=${pageResponseDTO.keyword} )}" class="next">다음</a>
                         </th:block>
                     </div>
                     

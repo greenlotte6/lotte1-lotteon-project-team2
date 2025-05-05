@@ -30,27 +30,70 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 
     @Override
     public Page<Tuple> selectAllUser(PageRequestDTO pageRequestDTO, Pageable pageable) {
-        List<Tuple> tupleList = queryFactory
-                .select(qUser, qUserDetails)
-                .from(qUserDetails)
-                .join(qUser)
-                .on(qUserDetails.user.uid.eq(qUser.uid))
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .orderBy(qUser.regDate.desc())
-                .fetch();
 
-        long total = queryFactory
-                .select(qUserDetails.count())
-                .from(qUserDetails)
-                .join(qUserDetails.user, qUser)
-                .on(qUserDetails.user.uid.eq(qUser.uid))
-                .fetchOne();
+        String searchType = pageRequestDTO.getSearchType();
+        String keyword = pageRequestDTO.getKeyword();
 
-        log.info("total: {}", total);
-        log.info("tupleList: {}", tupleList);
+        if(searchType == null) {
+            List<Tuple> tupleList = queryFactory
+                    .select(qUser, qUserDetails)
+                    .from(qUserDetails)
+                    .join(qUser)
+                    .on(qUserDetails.user.uid.eq(qUser.uid))
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .orderBy(qUser.regDate.desc())
+                    .fetch();
 
-        return new PageImpl<>(tupleList, pageable, total);
+            long total = queryFactory
+                    .select(qUserDetails.count())
+                    .from(qUserDetails)
+                    .join(qUserDetails.user, qUser)
+                    .on(qUserDetails.user.uid.eq(qUser.uid))
+                    .fetchOne();
+
+            log.info("total: {}", total);
+            log.info("tupleList: {}", tupleList);
+
+            return new PageImpl<>(tupleList, pageable, total);
+        }else{
+
+            BooleanExpression expression = switch (searchType) {
+                case "아이디" -> qUser.uid.contains(keyword);
+                case "이름" -> qUser.name.contains(keyword);
+                case "이메일" -> qUser.email.contains(keyword);
+                case "휴대폰" -> qUser.hp.contains(keyword);
+                default -> null;
+            };
+
+            List<Tuple> tupleList = queryFactory
+                    .select(qUser, qUserDetails)
+                    .from(qUserDetails)
+                    .join(qUser)
+                    .on(qUserDetails.user.uid.eq(qUser.uid))
+                    .where(expression)
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .orderBy(qUserDetails.no.desc())
+                    .fetch();
+
+            long total = queryFactory
+                    .select(qUserDetails.count())
+                    .from(qUserDetails)
+                    .join(qUserDetails.user, qUser)
+                    .on(qUserDetails.user.uid.eq(qUser.uid))
+                    .where(expression)
+                    .fetchOne();
+
+            log.info("total: {}", total);
+            log.info("tupleList: {}", tupleList);
+
+            return new PageImpl<>(tupleList, pageable, total);
+
+
+
+
+        }
     }
 
     @Override
