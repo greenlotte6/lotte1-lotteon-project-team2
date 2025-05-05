@@ -5,11 +5,15 @@ import kr.co.lotteon.dto.cart.CartDTO;
 import kr.co.lotteon.dto.config.BannerDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.coupon.CouponIssueDTO;
+import kr.co.lotteon.dto.order.OrderDTO;
+import kr.co.lotteon.dto.order.OrderItemDTO;
 import kr.co.lotteon.dto.page.ItemRequestDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
+import kr.co.lotteon.dto.point.PointDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.dto.product.ProductDetailDTO;
+import kr.co.lotteon.dto.user.UserDetailsDTO;
 import kr.co.lotteon.service.article.InquiryService;
 import kr.co.lotteon.service.cart.CartService;
 import kr.co.lotteon.service.config.ConfigService;
@@ -18,6 +22,7 @@ import kr.co.lotteon.service.feedback.ReviewService;
 import kr.co.lotteon.service.order.OrderService;
 import kr.co.lotteon.service.product.ProductDetailService;
 import kr.co.lotteon.service.product.ProductService;
+import kr.co.lotteon.service.user.UserDetailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -45,6 +50,7 @@ public class ProductController {
     private final CartService cartService;
     private final ConfigService configService;
     private final OrderService orderService;
+    private final UserDetailsService userDetailsService;
 
     // 상품 보기 - 첫 페이지 진입용
     @GetMapping("/product/view")
@@ -154,7 +160,6 @@ public class ProductController {
     @GetMapping("/product/order")
     public String order(@RequestParam("cartNo") List<Integer> cartNos, Model model) {
 
-
         List<CartDTO> cartDTOList = new ArrayList<>();
 
         for(Integer cartNo : cartNos) {
@@ -162,12 +167,18 @@ public class ProductController {
             cartDTOList.add(cartDTO);
         }
 
-        model.addAttribute(cartDTOList);
+        String uid = cartDTOList.get(0).getUser().getUid();
 
-        log.info("cartDTOList: {}", cartDTOList);
+        UserDetailsDTO userDetailsDTO = userDetailsService.findByUser(uid);
+        List<CouponIssueDTO> couponIssueDTOList = couponService.findAllByUser(uid);
+
+        model.addAttribute(cartDTOList);
+        model.addAttribute(couponIssueDTOList);
+        model.addAttribute(userDetailsDTO);
 
         return  "/product/order";
     }
+
 
     //주문완료
     @GetMapping("/product/complete")
