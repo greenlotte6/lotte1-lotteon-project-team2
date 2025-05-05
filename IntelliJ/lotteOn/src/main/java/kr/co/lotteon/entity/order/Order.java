@@ -56,7 +56,7 @@ public class Order {
     @PrePersist
     public void prePersist() {
         if (this.orderStatus == null) {
-            this.orderStatus = "결제대기";
+            this.orderStatus = "입금대기";
         }
     }
 

@@ -78,6 +78,8 @@ public class OrderService {
             Cart cart = cartRepository.findById(cartNo).get();
             Product product = cart.getProduct();
 
+            String category = product.getSubCategory().getMainCategory().getMainCategoryName();
+
             Order order = Order.builder()
                     .orderNo(orderNo)
                     .build();
@@ -94,6 +96,7 @@ public class OrderService {
                     .itemCount(cart.getCartProdCount())
                     .itemPrice(product.getProdPrice())
                     .itemDiscount(product.getProdDiscount())
+                    .category(category)
                     .build();
 
             orderItemRepository.save(orderItem);

@@ -61,6 +61,9 @@ public class ProductController {
 
         pageRequestDTO.setSize(5);
         String prodNo = pageRequestDTO.getProdNo();
+
+        // 상품 조회수 추가
+        productService.hitCountUp(prodNo);
         // 상품 + 상품이미지
         ProductDTO productDTO = productMapper.selectProductByProdNo(prodNo);
         // 상품 옵션 Split
