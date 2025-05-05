@@ -7,4 +7,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface UserRepositoryCustom {
     Page<Tuple> selectAllUser(PageRequestDTO pageRequestDTO, Pageable pageable);
+
+    Page<Tuple> selectAllPoint(PageRequestDTO pageRequestDTO, Pageable pageable);
 }

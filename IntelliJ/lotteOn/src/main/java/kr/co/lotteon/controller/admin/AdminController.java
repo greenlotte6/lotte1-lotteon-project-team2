@@ -342,10 +342,29 @@ public class AdminController {
 
     //포인트관리
     @GetMapping("/member/point")
-    public String memberPoint(){
+    public String memberPoint(PageRequestDTO pageRequestDTO, Model model){
+        PageResponseDTO pageResponseDTO = adminService.selectPointForList(pageRequestDTO);
+        model.addAttribute(pageResponseDTO);
         return "/admin/member/point";
     }
-    
+
+    //포인트 검색
+    @GetMapping("/member/point/search")
+    public String memberPointSearch(PageRequestDTO pageRequestDTO, Model model){
+        PageResponseDTO pageResponseDTO = adminService.selectPointForList(pageRequestDTO);
+        pageResponseDTO.setSortType(pageRequestDTO.getSortType());
+        model.addAttribute(pageResponseDTO);
+        return "/admin/member/pointSearch";
+    }
+
+    //포인트삭제
+    @GetMapping("/point/delete")
+    public String memberPointDelete(@RequestParam("deleteNo") List<Integer> deleteNos){
+        adminService.deletePoint(deleteNos);
+
+        return "redirect:/admin/member/point";
+    }
+
 
     /*
      * 관리자 상품 목록

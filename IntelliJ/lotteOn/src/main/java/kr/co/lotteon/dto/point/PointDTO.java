@@ -22,4 +22,7 @@ public class PointDTO {
     private LocalDateTime expiryDate; //만료날짜
 
     private UserDTO user;
+
+    private int pointTotal;
+
 }

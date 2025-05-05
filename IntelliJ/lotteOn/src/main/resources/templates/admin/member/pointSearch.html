@@ -80,7 +80,7 @@
                     <div class="select_div">
                         <div class="select_box">
                             <form th:action="@{/admin/member/point/search}">
-                                <select name="sortType">
+                                <select name="sortType" th:field="*{pageResponseDTO.sortType}">
                                     <option value="아이디">아이디</option>
                                     <option value="이름">이름</option>
                                     <option value="지급내용">지급내용</option>
@@ -124,15 +124,15 @@
                     <!-- 페이징 -->
                     <div class="page">
                         <th:block th:if="${pageResponseDTO.prev}">
-                            <a th:href="@{/admin/member/point(pg=${pageResponseDTO.start-1})" class="prev">이전</a>
+                            <a th:href="@{/admin/member/point/search(pg=${pageResponseDTO.start-1}, searchType=${pageResponseDTO.searchType} , keyword=${pageResponseDTO.keyword})}" class="prev">이전</a>
                         </th:block>
 
                         <th:block th:each="num:${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end)}">
-                            <a th:href="@{/admin/member/point(pg=${num})}" th:class="${num == pageResponseDTO.pg} ? 'current' : 'num'">[[${num}]]</a>
+                            <a th:href="@{/admin/member/point/search(pg=${num} , searchType=${pageResponseDTO.searchType} , keyword=${pageResponseDTO.keyword})}" th:class="${num == pageResponseDTO.pg} ? 'current' : 'num'">[[${num}]]</a>
                         </th:block>
 
                         <th:block th:if="${pageResponseDTO.next}">
-                            <a th:href="@{/admin/member/point(pg=${pageResponseDTO.end+1})}" class="next">다음</a>
+                            <a th:href="@{/admin/member/point/search(pg=${pageResponseDTO.end+1} , searchType=${pageResponseDTO.searchType} , keyword=${pageResponseDTO.keyword} )}" class="next">다음</a>
                         </th:block>
                     </div>
                     
