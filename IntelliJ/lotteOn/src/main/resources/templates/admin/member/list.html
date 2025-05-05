@@ -52,9 +52,45 @@
                 }
             });
 
-            document.querySelector('#cate').addEventListener('change',function(e){
-                this.form.submit();
-            })
+            document.querySelectorAll('.rank-select').forEach(function(select) {
+                select.addEventListener('change', function(e) {
+                    const selectedRank = e.target.value;
+                    const uid = e.target.dataset.uid;
+
+                    console.log(selectedRank);
+                    console.log(uid);
+
+                    if (!confirm("등급을 변경하시겠습니까?")) {
+                        // 사용자 취소 시 기존 값으로 복구하려면 필요
+                        window.location.reload(); // 혹은 원래 값으로 수동 복구
+                        return;
+                    }
+
+                    fetch('/admin/member/rank/modify', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            uid: uid,
+                            rank: selectedRank
+                        })
+                    })
+                        .then(response => {
+                            if (!response.ok) throw new Error('서버 오류');
+                            return response.text(); // 또는 response.json()
+                        })
+                        .then(data => {
+                            alert('등급이 변경되었습니다.');
+                        })
+                        .catch(error => {
+                            alert('등급 변경 중 오류가 발생했습니다.');
+                            console.error(error);
+                        });
+                });
+            });
+
+
 
 
         });
@@ -125,25 +161,30 @@
                                     <td>[[${item.name}]]</td>
                                     <td>[[${item.userDetails.gender}]]</td>
                                     <td>
-                                        <select name="rank">
-                                            <option value="VVIP" th:selected="${item.userDetails.rank == 'VVIP'}">VVIP</option>
-                                            <option value="VIP" th:selected="${item.userDetails.rank == 'VIP'}">VIP</option>
-                                            <option value="GOLD" th:selected="${item.userDetails.rank == 'GOLD'}">GOLD</option>
-                                            <option value="SILVER" th:selected="${item.userDetails.rank == 'SILVER'}">SILVER</option>
+                                        <select name="rank" class="rank-select" th:data-uid="${item.uid}">
                                             <option value="FAMILY" th:selected="${item.userDetails.rank == 'FAMILY'}">FAMILY</option>
+                                            <option value="SILVER" th:selected="${item.userDetails.rank == 'SILVER'}">SILVER</option>
+                                            <option value="GOLD" th:selected="${item.userDetails.rank == 'GOLD'}">GOLD</option>
+                                            <option value="VIP" th:selected="${item.userDetails.rank == 'VIP'}">VIP</option>
+                                            <option value="VVIP" th:selected="${item.userDetails.rank == 'VVIP'}">VVIP</option>
                                         </select>
                                     </td>
                                     <td>[[${item.userDetails.userPoint}]]</td>
                                     <td>[[${item.email}]]</td>
                                     <td>[[${item.hp}]]</td>
-                                    <td th:text="${#temporals.format(item.lastLoginAt, 'yyyy.MM.dd HH:mm:ss')}"></td>
+                                    <td th:text="${#temporals.format(item.regDate, 'yyyy.MM.dd HH:mm:ss')}"></td>
                                     <td style="color: green;">[[${item.state}]]</td>
                                     <td style="width: 60px;">
-                                        <a href="#" id="modal_modify">[ 수정 ]</a><br>
-                                        <a th:href="@{/admin/member/state(uid=${item.uid} , state='중지')}">[ 중지 ]</a>
-                                        <a th:href="@{/admin/member/state(uid=${item.uid} , state='재개')}">[ 재개 ]</a>
+                                        <a href="#" id="modal_modify" class="detail">[ &nbsp; 수정 &nbsp; ]</a><br>
+                                        <a th:href="@{/admin/member/state(uid=${item.uid} , state='중지')}">[ &nbsp; 중지 &nbsp; ]</a>
+                                        <a th:href="@{/admin/member/state(uid=${item.uid} , state='재개')}">[ &nbsp; 재개 &nbsp; ]</a>
                                         <a th:href="@{/admin/member/state(uid=${item.uid} , state='비활성')}">[ 비활성 ]</a>
                                     </td>
+                                    <input type="hidden" id="addr1V1" th:value="${item.addr1}">
+                                    <input type="hidden" id="addr2V1" th:value="${item.addr2}">
+                                    <input type="hidden" id="contentV1" th:value="${item.userDetails.content}">
+                                    <input type="hidden" id="lastLoginAtV1" th:value="${#temporals.format(item.lastLoginAt, 'yyyy.MM.dd HH:mm:ss')}">
+                                    <input type="hidden" id="zipV1" th:value="${item.zip}">
                                 </tr>
                                 
                             </tbody>
@@ -189,54 +230,55 @@
             </div>
 
             <div class="modal_main">
-                <form action="#" class="member">
+                <form th:action="@{/admin/member/modify}" class="member" method="post">
                     <table class="modal_member">
                         <tr>
                             <td>아이디</td>
                             <td>
-                                <input type="text" name="uid">
+                                <input type="text" name="uid" id="uid" readonly style="color: #a8a5a5">
                             </td>
                         </tr>
                         <tr>
                             <td>이름</td>
                             <td>
-                                <input type="text" name="name" placeholder="홍길동">
+                                <input type="text" name="name" placeholder="홍길동" id="name">
                             </td>
                         </tr>
                         <tr>
                             <td>성별</td>
                             <td>
-                                <input name="gender" type="radio" value="남">남
-                                <input name="gender" type="radio" value="여" style="margin-left: 10px;">여
+                                <input name="gender" type="radio" value="male" id="genderMale">남
+                                <input name="gender" type="radio" value="female" id="genderFemale" style="margin-left: 10px;">여
                             </td>
                         </tr>
                         <tr>
                             <td>등급</td>
                             <td>
-                                <input type="text" name="rank" readonly value="FAMILY"> 
+                                <input type="text" name="rank" readonly value="FAMILY" id="rank" style="color: #a8a5a5">
                                 <span style="margin-left: 10px;">등급 수정은 회원 목록에서 선택수정 가능</span>
                             </td>
                         </tr>
                         <tr>
                             <td>상태</td>
-                            <td style="color: #57C479;">정상</td>
+                            <td style="color: #57C479;" id="state">정상</td>
                         </tr>
                         <tr>
                             <td>EMAIL</td>
                             <td>
-                                <input type="text" name="email">
+                                <input type="text" name="email" id="email">
                             </td>
                         </tr>
                         <tr>
                             <td>휴대폰</td>
                             <td>
-                                <input type="text" name="hp">
+                                <input type="text" name="hp" id="hp">
                             </td>
                         </tr>
                         <tr>
                             <td>우편번호</td>
                             <td>
                                 <input type="text" name="zip" id="zip" placeholder="우편번호 선택"/>
+                                <button type="button" style="border: none;"  onclick="postcode()"><img th:src="@{/images/chk_post.gif}"  alt="우편번호찾기"/></button><br>
                             </td>
                         </tr>
                         <tr>
@@ -253,16 +295,16 @@
                         </tr>
                         <tr>
                             <td>가입일</td>
-                            <td>0000-00-00 00:00:00</td>
+                            <td id="regDate">0000-00-00 00:00:00</td>
                         </tr>
                         <tr>
                             <td>최근로그인날짜</td>
-                            <td>0000-00-00 00:00:00</td>
+                            <td id="lastLoginAt">0000-00-00 00:00:00</td>
                         </tr>
                         <tr>
                             <td>기타</td>
                             <td>
-                                <textarea name="content" placeholder="회원에대한기타정보입력"></textarea>
+                                <textarea name="content" placeholder="회원에대한기타정보입력" id="content"></textarea>
                             </td>
                         </tr>
                     </table>
@@ -276,22 +318,64 @@
 
     <script>
         const modal = document.querySelector('.modal');
-        const modalOpen = document.querySelector('#modal_modify');
+        const modalOpenBtns = document.querySelectorAll('.detail');
         const modalClose = document.querySelector('.close_btn');
 
+        const uid = document.getElementById("uid");
+        const name = document.getElementById("name");
+        const gender = document.getElementById("gender");
+        const rank = document.getElementById("rank");
+        const state = document.getElementById("state");
+        const email = document.getElementById("email");
+        const hp = document.getElementById("hp");
+        const zip = document.getElementById("zip");
+        const addr1 = document.getElementById("addr1");
+        const addr2 = document.getElementById("addr2");
+        const regDate = document.getElementById("regDate");
+        const lastLoginAt = document.getElementById("lastLoginAt");
+        const content = document.getElementById("content");
+
+
         //열기 버튼을 눌렀을 때 모달팝업이 열림
-        modalOpen.addEventListener('click',function(){
-            //'on' class 추가
-            modal.classList.add('on');
+        modalOpenBtns.forEach(btn => {
+            btn.addEventListener('click', function (e) {
+
+                //데이터 넣기
+                const data = btn.closest('tr');
+                uid.value = data.querySelector('td:nth-child(3)').textContent; // 아이디
+                name.value = data.querySelector('td:nth-child(4)').textContent; // 이름
+
+                const genderText = data.querySelector('td:nth-child(5)').textContent.trim();
+                if (genderText === 'M') {
+                    document.getElementById('genderMale').checked = true;
+                } else if (genderText === 'F') {
+                    document.getElementById('genderFemale').checked = true;
+                }
+
+                state.textContent = data.querySelector('td:nth-child(11)').textContent;
+                email.value = data.querySelector('td:nth-child(8)').textContent; // 이메일
+                hp.value = data.querySelector('td:nth-child(9)').textContent; // 휴대폰
+                regDate.textContent = data.querySelector('td:nth-child(10)').textContent;
+
+                addr1.value = data.querySelector('#addr1V1').value;
+                addr2.value = data.querySelector('#addr2V1').value;
+                zip.value = data.querySelector('#zipV1').value;
+                content.textContent = data.querySelector('#contentV1').value;
+                lastLoginAt.textContent = data.querySelector('#lastLoginAtV1').value;
+
+
+
+
+                //'on' class 추가
+                modal.classList.add('on');
+            });
         });
         //닫기 버튼을 눌렀을 때 모달팝업이 닫힘
-        modalClose.addEventListener('click',function(){
+        modalClose.addEventListener('click', function () {
             //'on' class 제거
             modal.classList.remove('on');
         });
     </script>
-
-
 
 
 </body>

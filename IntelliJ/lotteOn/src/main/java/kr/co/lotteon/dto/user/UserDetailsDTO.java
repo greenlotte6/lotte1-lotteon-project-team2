@@ -17,6 +17,7 @@ public class UserDetailsDTO {
     // VVIP, VIP, GOLD, SILVER, FAMILY
     private String rank;
     private String gender;
+    private String content; // 유저 기타 정보(관리자 페이지)
 
     private UserDTO user;
 }
