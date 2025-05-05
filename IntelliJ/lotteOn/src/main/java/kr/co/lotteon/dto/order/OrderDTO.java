@@ -17,6 +17,7 @@ public class OrderDTO {
     private String uid;            // 주문자 아이디 (User.uid)
 
     private int orderTotalPrice;   // 총 주문 금액
+    private String receiverZip;
     private String orderAddr;      // 배송 주소
     private String orderStatus;    // 주문 상태
     private LocalDateTime orderDate; // 주문 일자
@@ -29,8 +30,6 @@ public class OrderDTO {
     private String payment;        // 결제 수단
     private String paymentContent;    // 결제 상세 정보
 
-    private String color; // 상품 색상
-    private int size;  // 상품
 
     // 상품 정보
     private List<OrderItemDTO> orderItems;

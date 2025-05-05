@@ -33,6 +33,8 @@ public class Order {
 
     private int orderTotalPrice; // 총 주문 금액
 
+    private String receiverZip;
+
     private String orderAddr; // 배송 주소
 
     private String orderStatus; // 주문 상태
@@ -50,9 +52,6 @@ public class Order {
 
     private String payment;       // 결제 수단
     private String paymentContent;   // 결제 상세 정보
-
-    private String color; // 상품 색상
-    private int size;  // 상품
 
     @PrePersist
     public void prePersist() {
