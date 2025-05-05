@@ -33,7 +33,7 @@ public class Order {
 
     private int orderTotalPrice; // 총 주문 금액
 
-    private String receiverZip;
+    private String receiverZip; // 우편번호
 
     private String orderAddr; // 배송 주소
 
