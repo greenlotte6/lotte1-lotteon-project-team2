@@ -116,7 +116,6 @@
                     totalCount === 0 ? '0'
                         : orderAmount >= freeShippingLimit ? '무료'
                             : shippingCost.toLocaleString() + '원';
-                const point = Math.floor(orderAmount * 0.01);
                 document.getElementById('summary-count').textContent = totalCount;
                 const checkAllLabel = document.querySelector('label[for="check-all"]');
                 if (checkAllLabel) {
@@ -127,7 +126,6 @@
                 document.getElementById('summary-amount').textContent = originalTotalAmount.toLocaleString();
                 document.getElementById('summary-discount').textContent = '-' + discountTotal.toLocaleString();
                 document.getElementById('summary-shipping').textContent = shippingText;
-                document.getElementById('summary-point').textContent = point.toLocaleString();
                 document.getElementById('summary-total').textContent = finalTotal.toLocaleString() + '원';
             }
 
@@ -500,7 +498,6 @@
                                     <tr><th>상품금액</th><td id="summary-amount">0</td></tr>
                                     <tr><th>할인금액</th><td id="summary-discount">0</td></tr>
                                     <tr><th>배송비</th><td id="summary-shipping">0</td></tr>
-                                    <tr><th>적립 포인트</th><td id="summary-point">0</td></tr>
                                     <tr class="total"><th>총</th><td id="summary-total">0</td></tr>
                                     <tr><td colspan="2"><button type="submit" id="order-button">주문하기</button></td></tr>
                                 </table>

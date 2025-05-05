@@ -1,6 +1,5 @@
 package kr.co.lotteon.service.coupon;
 
-import jakarta.transaction.Transactional;
 import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.coupon.CouponIssueDTO;
 import kr.co.lotteon.entity.coupon.Coupon;
@@ -14,9 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,8 +27,9 @@ import java.util.stream.Collectors;
 public class CouponService {
 
     private final CouponRepository couponRepository;
-    private final ModelMapper modelMapper;
     private final CouponIssueRepository couponIssueRepository;
+    private final UserRepository userRepository;
+    private final ModelMapper modelMapper;
 
     public List<CouponDTO> findAllByCompany(String company) {
         List<Coupon> couponList = couponRepository.findAllByIssuedBy(company);
@@ -45,7 +46,27 @@ public class CouponService {
         return couponDTOList;
     }
 
-    public int  couponIssue(CouponIssueDTO couponIssueDTO, UserDetails userDetails) {
+    public List<CouponIssueDTO> findAllByUser(String uid) {
+        Optional<User> optUser = userRepository.findByUid(uid);
+        if (optUser.isEmpty()) {
+            return null;
+        }
+        User user = optUser.get();
+
+        List<CouponIssue> couponIssueList = couponIssueRepository.findAllByUser(user);
+
+        List<CouponIssueDTO> couponIssueDTOList = couponIssueList.stream()
+                .filter(couponIssue -> couponIssue.getValidTo() != null &&
+                        LocalDateTime.parse(couponIssue.getValidTo(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                                .isAfter(LocalDateTime.now()))
+                .map(couponIssue -> modelMapper.map(couponIssue, CouponIssueDTO.class))
+                .collect(Collectors.toList());
+
+        return couponIssueDTOList;
+    }
+
+
+    public int couponIssue(CouponIssueDTO couponIssueDTO, UserDetails userDetails) {
 
         User user = User.builder()
                 .uid(userDetails.getUsername())
@@ -59,8 +80,6 @@ public class CouponService {
 
         couponIssue.setUser(user);
         couponIssue.setCoupon(coupon);
-
-        log.info("couponIssue: " + couponIssue);
 
         Boolean exist = couponIssueRepository.existsByUserAndCoupon(user, coupon);
 

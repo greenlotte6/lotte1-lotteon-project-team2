@@ -16,4 +16,6 @@ public interface CouponIssueRepository extends JpaRepository<CouponIssue, Long> 
     List<CouponIssue> findByUserAndCoupon(User user, Coupon coupon);
 
     List<CouponIssue> findByCoupon(Coupon coupon);
+
+    List<CouponIssue> findAllByUser(User user);
 }

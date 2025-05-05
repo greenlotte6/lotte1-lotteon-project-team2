@@ -1,5 +1,6 @@
 package kr.co.lotteon.repository.point;
 
+import kr.co.lotteon.dto.point.PointDTO;
 import kr.co.lotteon.entity.point.Point;
 import kr.co.lotteon.entity.user.User;
 import org.apache.ibatis.annotations.Param;
@@ -10,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public interface PointRepository extends JpaRepository<Point, Integer> {
 
@@ -31,9 +33,12 @@ public interface PointRepository extends JpaRepository<Point, Integer> {
     @Query("SELECT SUM(p.point) FROM Point p WHERE p.user = :user AND p.expiryDate > :now")
     Long getSumPointByUserAndExpiryDateAfter(@Param("user") User user, @Param("now") LocalDateTime now);
 
+    Optional<Point> findByUser(User user);
+
     @Query("SELECT SUM(p.point) FROM Point p WHERE p.user.uid = :uid AND p.pointNo > :pointNo")
     Integer findSumOfFuturePoints(String uid, String pointNo);
 
     @Query("SELECT SUM(p.point) FROM Point p WHERE p.user.uid = :uid")
     Integer findTotalPointByUid(String uid);
+
 }
