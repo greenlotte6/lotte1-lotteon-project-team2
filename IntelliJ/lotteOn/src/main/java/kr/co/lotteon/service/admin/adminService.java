@@ -900,7 +900,7 @@ public class adminService {
             int pointNum = point.getPoint();
             
             // 유저 포인트 총량 계산
-            kr.co.lotteon.entity.user.UserDetails userDetails = userDetailsRepository.findByUser(point.getUser());
+            kr.co.lotteon.entity.user.UserDetails userDetails = userDetailsRepository.findByUser(point.getUser()).get();
             int userPoint = userDetails.getUserPoint() - pointNum;
             userDetails.setUserPoint(userPoint);
             userDetailsRepository.save(userDetails);
