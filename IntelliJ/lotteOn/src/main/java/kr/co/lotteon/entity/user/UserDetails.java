@@ -21,8 +21,16 @@ public class UserDetails {
     @Column(name = "`rank`")
     private String rank;
     private String gender;
+    private String content;
 
     @OneToOne
     @JoinColumn(name="uid")
     private User user;
+
+    @PrePersist
+    public void prePersist() {
+        if (this.content == null) {
+            this.content = "없음";
+        }
+    }
 }

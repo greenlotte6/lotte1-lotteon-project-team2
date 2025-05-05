@@ -836,7 +836,10 @@ public class adminService {
             UserDTO userDTO  = modelMapper.map(user, UserDTO.class);
             kr.co.lotteon.entity.user.UserDetails userDetails = tuple.get(1, kr.co.lotteon.entity.user.UserDetails.class);
             UserDetailsDTO userDetailsDTO = modelMapper.map(userDetails, UserDetailsDTO.class);
+            String gender = "male".equals(userDetailsDTO.getGender()) ? "M" : "F";
+            userDetailsDTO.setGender(gender);
             userDTO.setUserDetails(userDetailsDTO);
+
             return userDTO;
         }).toList();
 
@@ -906,6 +909,88 @@ public class adminService {
             userDetailsRepository.save(userDetails);
             
             pointRepository.deleteById(no);
+        }
+    }
+
+    // 회원 상태 변경
+    public void modifyMemberState(String uid, String state) {
+        Optional<User> userOpt = userRepository.findById(uid);
+        if(userOpt.isPresent()){
+            User user = userOpt.get();
+
+            switch (state){
+                case "중지" :{
+                    user.setState(state);
+                    user.setLeaveDate(LocalDateTime.now());
+                    userRepository.save(user);
+                    break;}
+                case "재개" : {
+                    user.setState("정상");
+                    user.setLeaveDate(null);
+                    userRepository.save(user);
+                    break;}
+                case "비활성" :{
+
+                    User deactivatedUser = User.builder()
+                            .uid(user.getUid())
+                            .state("비활성")
+                            .leaveDate(LocalDateTime.now())
+                            .build();
+
+                    kr.co.lotteon.entity.user.UserDetails userDetails = userDetailsRepository.findByUser(deactivatedUser).get();
+                    userDetails.setUserPoint(0);
+                    userDetails.setRank(null);
+                    userDetails.setGender(null);
+
+                    userRepository.save(deactivatedUser);
+                    userDetailsRepository.save(userDetails);
+                }
+
+
+            }
+        }
+
+    }
+
+    public boolean modifyUserRank(String uid, String rank) {
+
+        User user = User.builder()
+                .uid(uid)
+                .build();
+
+        Optional<kr.co.lotteon.entity.user.UserDetails> userOpt = userDetailsRepository.findByUser(user);
+        if(userOpt.isPresent()){
+            kr.co.lotteon.entity.user.UserDetails userDetails = userOpt.get();
+            userDetails.setRank(rank);
+            userDetailsRepository.save(userDetails);
+            return true;
+        }
+
+        return false;
+
+    }
+
+    // 유저 변경하기
+    public void modifyMember(UserDTO userDTO, UserDetailsDTO userDetailsDTO) {
+        String uid = userDTO.getUid();
+        Optional<User> userOpt = userRepository.findById(uid);
+        if(userOpt.isPresent()){
+            User user = userOpt.get();
+            user.setName(userDTO.getName());
+            user.setEmail(userDTO.getEmail());
+            user.setHp(userDTO.getHp());
+            user.setAddr1(userDTO.getAddr1());
+            user.setAddr2(userDTO.getAddr2());
+            user.setZip(userDTO.getZip());
+            userRepository.save(user);
+
+            Optional<kr.co.lotteon.entity.user.UserDetails>  userDetailsOpt = userDetailsRepository.findByUser(user);
+            if(userDetailsOpt.isPresent()){
+                kr.co.lotteon.entity.user.UserDetails userDetails = userDetailsOpt.get();
+                userDetails.setContent(userDetailsDTO.getContent());
+                userDetails.setGender(userDetailsDTO.getGender());
+                userDetailsRepository.save(userDetails);
+            }
         }
     }
 }

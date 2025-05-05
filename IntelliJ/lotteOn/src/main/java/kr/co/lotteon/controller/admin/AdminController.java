@@ -19,6 +19,7 @@ import kr.co.lotteon.dto.product.ProductDetailDTO;
 import kr.co.lotteon.dto.product.ProductImageDTO;
 import kr.co.lotteon.dto.seller.SellerDTO;
 import kr.co.lotteon.dto.user.UserDTO;
+import kr.co.lotteon.dto.user.UserDetailsDTO;
 import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.service.admin.adminService;
 import kr.co.lotteon.service.article.CsService;
@@ -347,10 +348,38 @@ public class AdminController {
         return "/admin/member/listSearch";
     }
 
+    // 회원 등급 변경
+    @PostMapping("/member/rank/modify")
+    @ResponseBody
+    public String memberRankModify(@RequestBody Map<String, String> data) {
+
+        String uid = data.get("uid");
+        String rank = data.get("rank");
+        Boolean success = adminService.modifyUserRank(uid, rank);
+
+        if(!success){
+            return "error";
+        }
+
+        return "ok"; // 이 값이 클라이언트로 그대로 응답됨
+    }
+
+    //회원 수정
+    @PostMapping("/member/modify")
+    public String memberModify(UserDTO userDTO, UserDetailsDTO userDetailsDTO){
+
+        adminService.modifyMember(userDTO, userDetailsDTO);
+        return "redirect:/admin/member/list";
+    }
+
+    /*
+    * 중지: 정지
+    * 재개: 재개
+    * 비활성: uid 제외 null
+    * */
     @GetMapping("/member/state")
     public String memberState(@RequestParam("uid")  String uid,@RequestParam("state") String state){
-        System.out.println(state);
-        System.out.println(uid);
+        adminService.modifyMemberState(uid,state);
         return "redirect:/admin/member/list";
     }
 
