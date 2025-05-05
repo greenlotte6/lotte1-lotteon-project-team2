@@ -12,6 +12,20 @@
 <body>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+
+            const orderForm = document.getElementById('order-form');
+            const orderButton = document.getElementById('order-button');
+
+            orderButton.addEventListener('click', function (e) {
+                const checkedItems = orderForm.querySelectorAll('input[name="cartNo"]:checked');
+
+                if (checkedItems.length === 0) {
+                    e.preventDefault(); // 폼 제출 막기
+                    alert('주문할 상품을 선택해주세요.');
+                }
+            });
+
+
             const parents = document.querySelectorAll(".category .parent");
 
             parents.forEach(parent => {

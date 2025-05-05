@@ -7,6 +7,39 @@
     <link rel="stylesheet" href="/css/product/product_header.css">
     <link rel="stylesheet" href="/css/product/order.css">
     <title>주문하기 : 롯데On</title>
+    <style>
+        .loading-overlay {
+            /* 처음에는 안 보이게만 설정 */
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: white;
+        }
+
+        .spinner {
+            border: 8px solid rgba(255, 255, 255, 0.3);
+            border-top: 8px solid #fff;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 
 <body>
@@ -583,7 +616,7 @@
                 <!-- 메인 시작 -->
                 <div class="order">
                     <h1>주문하기</h1>
-                    <form action="/order/submit" method="post">
+                    <form action="/order/submit" method="post" id="orderForm">
                     <div id="tables-container">
                         <table class="order_content" th:each="cart : ${cartDTOList}">
                             <input type="hidden" name="cartNo" th:value="${cart.cartNo}">
@@ -763,6 +796,52 @@
             </section>
         </main>
         <!-- 메인 내용 끝 -->
+
+        <!-- 버퍼링 -->
+        <!-- 로딩 오버레이 -->
+        <div id="loading" class="loading-overlay">
+            <div class="loading-content">
+                <div class="spinner"></div>
+                <div class="loading-text">⏳ 주문 중입니다...</div>
+            </div>
+        </div>
+
+        <script>
+
+            document.getElementById('orderForm').addEventListener('submit', function(event) {
+
+                event.preventDefault(); // 기본 form submit 막기
+                const form = event.target;
+
+                const formData = new FormData(form);
+
+                // 로딩창 표시
+                document.getElementById('loading').style.display = 'flex';
+
+
+                fetch('/order/submit', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => {
+                        if (response.redirected) {
+                            // 로딩창 숨기고 리디렉트 처리
+                            window.location.href = response.url;
+                        } else {
+                            return response.text();
+                        }
+                    })
+                    .catch(err => {
+                        alert('에러 발생: ' + err);
+                    })
+                    .finally(() => {
+
+                    });
+            });
+        </script>
+
+
+
 
         <!-- 푸터 시작 -->
         <footer>
