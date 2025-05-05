@@ -335,10 +335,25 @@ public class AdminController {
     @GetMapping("/member/list")
     public String memberList(PageRequestDTO pageRequestDTO, Model model){
         PageResponseDTO pageResponseDTO = adminService.selectMemberForList(pageRequestDTO);
-        System.out.println(pageResponseDTO);
         model.addAttribute(pageResponseDTO);
         return "/admin/member/list";
     }
+
+    // 회원검색
+    @GetMapping("/member/search")
+    public String memberSearchList(PageRequestDTO pageRequestDTO, Model model){
+        PageResponseDTO pageResponseDTO = adminService.selectMemberForList(pageRequestDTO);
+        model.addAttribute(pageResponseDTO);
+        return "/admin/member/listSearch";
+    }
+
+    @GetMapping("/member/state")
+    public String memberState(@RequestParam("uid")  String uid,@RequestParam("state") String state){
+        System.out.println(state);
+        System.out.println(uid);
+        return "redirect:/admin/member/list";
+    }
+
 
     //포인트관리
     @GetMapping("/member/point")
