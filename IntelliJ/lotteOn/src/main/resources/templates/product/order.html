@@ -225,18 +225,16 @@
 
                   if (applyCouponButton) {
                       applyCouponButton.onclick = function () {
-                          console.log('[쿠폰 적용] 버튼 클릭됨');
 
                           if (selectedCouponData) {
                               // 선택된 쿠폰 데이터 출력
                               console.log('[쿠폰 적용] 선택된 쿠폰 데이터:', selectedCouponData);
 
+                              document.getElementById("couponData").value = selectedCouponData.cno;
+
                               // 쿠폰 데이터 저장 (선택된 혜택 정보)
                               selectedCouponBenefit = this.querySelector("p")?.innerText;
                               previouslySelectedItem = this;
-
-                              const benefitToApply = selectedCouponData.benefit;
-                              const cnoToApply = selectedCouponData.cno; // 필요시 사용
 
                               // 할인 금액 업데이트
                               document.getElementById('summary-coupon-discount').innerText = '-' + selectedCouponData.benefit;
@@ -256,9 +254,7 @@
                           }
                       };
                   }
-
-                  modal.style.display = "block"; // 모달 표시
-
+                  modal.style.display = "block";
               };
           }
 
@@ -399,6 +395,8 @@
 
               const finalTotalText = finalTotal.toLocaleString();
               document.getElementById('summary-total').innerText = finalTotalText;
+
+              document.querySelector('input[name="orderTotalPrice"]').value = finalTotal;
           }
 
 
@@ -482,15 +480,6 @@
               }
           }
           updateOrderSummary();
-
-
-
-
-
-
-
-
-
 
 
       });
@@ -597,6 +586,7 @@
                     <form action="/order/submit" method="post">
                     <div id="tables-container">
                         <table class="order_content" th:each="cart : ${cartDTOList}">
+                            <input type="hidden" name="cartNo" th:value="${cart.cartNo}">
                             <tr>
                                 <th></th>
                                 <th>상품명</th>
@@ -664,15 +654,19 @@
                                     </tr>
                                     <tr>
                                         <th>우편번호</th>
-                                        <td><input type="text" name="recipientZip" id="recipientZip"><button type="button">검색</button></td>
+                                        <td><input type="text" name="receiverZip" id="recipientZip"><button type="button">검색</button></td>
                                     </tr>
                                     <tr>
                                         <th>기본주소</th>
-                                        <td><input type="text" name="recipientAddr1" id="recipientAddr1"></td>
+                                        <td><input type="text" name="receiverAddr1" id="recipientAddr1"></td>
                                     </tr>
                                     <tr>
                                         <th>상세주소</th>
-                                        <td><input type="text" name="recipientAddr2" id="recipientAddr2"></td>
+                                        <td><input type="text" name="receiverAddr2" id="recipientAddr2"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>요청사항</th>
+                                        <td><input type="text" name="orderContent" id="orderContent"></td>
                                     </tr>
                                 </table>
                                 <p>할인정보</p>
@@ -685,6 +679,7 @@
                                     <div>
                                         <span>쿠폰 적용 : </span>
                                         <button type="button" id="showCouponModalButton">쿠폰 확인</button>
+                                        <input type="hidden" name="couponNo" value="쿠폰없음" id="couponData">
                                         <div id="couponModal" class="modal" style="display: none;">
                                             <div class="modal-content">
                                                 <span class="close-button">&times;</span>
@@ -755,6 +750,7 @@
                                     <tr class="total">
                                         <th>총</th>
                                         <td id="summary-total"></td>
+                                        <input type="hidden" name="orderTotalPrice">
                                     </tr>
                                     <tr>
                                         <td colspan="2"><button type="submit">주문하기</button></td>
