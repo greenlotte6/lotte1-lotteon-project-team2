@@ -154,6 +154,14 @@ public class CartService {
         }
     }
 
+    @Transactional
+    public void deleteAllByCartNo(List<Integer> cartNos) {
+        for(Integer cartNo : cartNos) {
+            cartRepository.deleteByCartNo(cartNo);
+        }
+    }
+
+
 
 
 }

@@ -45,9 +45,7 @@ public class OrderService {
         return null;
     }
 
-    /*
-    * 주문 등록
-    * */
+    //주문 등록
     public int registerOrder(OrderDTO orderDTO) {
         String uid =  orderDTO.getUid();
         Optional<User> userOpt = userRepository.findByUid(uid);

@@ -4,13 +4,17 @@ import jakarta.transaction.Transactional;
 import kr.co.lotteon.dto.page.ItemRequestDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
+import kr.co.lotteon.entity.cart.Cart;
 import kr.co.lotteon.entity.product.Product;
+import kr.co.lotteon.repository.product.CartRepository;
 import kr.co.lotteon.repository.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -20,6 +24,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final ModelMapper modelMapper;
+    private final CartRepository cartRepository;
 
     // 글 조회수
     @Transactional
@@ -103,6 +108,36 @@ public class ProductService {
 
         return productDTO;
     }
+
+
+    public void changeSoldAndStock (List<Integer> cartNos) throws Exception {
+        for(Integer cartNo : cartNos) {
+
+            Optional<Cart> optCart = cartRepository.findById(cartNo);
+
+            if(optCart.isPresent()) {
+                Cart cart = optCart.get();
+                String prodNo = cart.getProduct().getProdNo();
+                int cartProdCount = cart.getCartProdCount();
+
+                Optional<Product> optProduct = productRepository.findByProdNo(prodNo);
+                if(optProduct.isPresent()) {
+                    Product product = optProduct.get();
+
+                    product.setProdSold(product.getProdSold() + cartProdCount);
+
+                    if (product.getProdStock() >= cartProdCount) {
+                        product.setProdStock(product.getProdStock() - cartProdCount);
+                    } else {
+                        throw new Exception("Insufficient stock for product: " + prodNo);
+                    }
+                    productRepository.save(product);
+                }
+            }
+        }
+    }
+
+
 
     public void hitCountUp(String prodNo) {
         Optional<Product> productOptional = productRepository.findByProdNo(prodNo);
