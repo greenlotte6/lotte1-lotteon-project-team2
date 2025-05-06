@@ -2,7 +2,11 @@ package kr.co.lotteon.controller.order;
 
 
 import kr.co.lotteon.dto.order.OrderDTO;
+import kr.co.lotteon.service.cart.CartService;
+import kr.co.lotteon.service.coupon.CouponService;
 import kr.co.lotteon.service.order.OrderService;
+import kr.co.lotteon.service.point.PointService;
+import kr.co.lotteon.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,11 +23,15 @@ import java.util.List;
 public class OrderController {
 
     private final OrderService orderService;
+    private final CartService cartService;
+    private final CouponService couponService;
+    private final PointService pointService;
+    private final ProductService productService;
 
     /*
     * 1. 주문
     * Order 테이블에 데이터 넣기
-    * OrderDetail 테이블에 데이터 넣기
+    * OrderItem 테이블에 데이터 넣기
     * */
 
     /*
@@ -54,20 +62,22 @@ public class OrderController {
     * 2. 결제 페이지 버퍼링 추가
     * 3. Order 테이블 데이터 넣기
     * 4. OrderItem 테이블 데이터 넣기
-    *
     * 5. 상품 View 조회 시 조회수 + 1
-    * 추가 사항: orderItem에 카테고리 추가햇어요.
-    * 관리자 페이지에서 카테고리 별로 매출 계산해야되서
+    *  6. 장바구니 지우기
+    *    추가 사항: orderItem에 카테고리 추가햇어요.
+    *    관리자 페이지에서 카테고리 별로 매출 계산해야되서
+    *
     * */
 
     @PostMapping("/order/submit")
     public String orderSubmit(OrderDTO orderDTO,
-                              @RequestParam int point,
+                              @RequestParam int usedPoint,
+                              @RequestParam int earnedPoint,
                               @RequestParam("cartNo") List<Integer> cartNos,
                               @RequestParam String receiverAddr1,
                               @RequestParam String receiverAddr2,
-                              @RequestParam(value = "couponNo", required = false) String couponNo,
-                              @AuthenticationPrincipal UserDetails userDetails) {
+                              @RequestParam(value = "issueNo", required = false) long issueNo,
+                              @AuthenticationPrincipal UserDetails userDetails) throws Exception {
 
         orderDTO.setUid(userDetails.getUsername());
         orderDTO.setOrderAddr(receiverAddr1 + " " + receiverAddr2);
@@ -80,15 +90,30 @@ public class OrderController {
         // Order 테이블 등록하기 -> 등록 후 orderItem을 등록하기 위한 order 출력
         int orderNo = orderService.registerOrder(orderDTO);
 
+        // 포인트량, 적립된 포인트량 기록
+        pointService.changePoint(usedPoint, earnedPoint, userDetails);
+
+        // 상품 재고, 판매량 계산
+        productService.changeSoldAndStock(cartNos);
+
         // 상세 주문 등록하기
         orderService.registerOrderItem(orderNo, cartNos);
+
+        // 쿠폰 사용상태로 바꾸기
+        couponService.changeState(issueNo);
+
+        // 장바구니 지우기
+        cartService.deleteAllByCartNo(cartNos);
+
+
         
         log.info("orderDTO = {}", orderDTO);
-        log.info("point = {}", point);
+        log.info("usedPoint = {}", usedPoint);
+        log.info("earnedPoint = {}", earnedPoint);
         log.info("cartNo = {}", cartNos);
-        log.info("couponNo = {}", couponNo);
+        log.info("issueNo = {}", issueNo);
         log.info("recipientAddr1 = {}", receiverAddr1);
-        log.info("recipientAddr2 = {}", receiverAddr2);
+        log.info("receiverAddr2 = {}", receiverAddr2);
 
 
         return "redirect:/";

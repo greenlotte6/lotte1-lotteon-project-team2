@@ -243,9 +243,9 @@
                           selectedCouponBenefit = this.querySelector("p")?.innerText;
                           previouslySelectedItem = this;
 
-                          // 선택된 쿠폰의 cno, issuedBy, benefit 값을 저장
+                          // 선택된 쿠폰의 issueNo, issuedBy, benefit 값을 저장
                           selectedCouponData = {
-                              cno: this.querySelector(".coupon-id")?.value,
+                              issueNo: this.dataset.issueNo,
                               issuedBy: this.getAttribute("data-issued-by"),
                               benefit: selectedCouponBenefit
                           };
@@ -263,7 +263,7 @@
                               // 선택된 쿠폰 데이터 출력
                               console.log('[쿠폰 적용] 선택된 쿠폰 데이터:', selectedCouponData);
 
-                              document.getElementById("couponData").value = selectedCouponData.cno;
+                              document.getElementById("couponData").value = selectedCouponData.issueNo;
 
                               // 쿠폰 데이터 저장 (선택된 혜택 정보)
                               selectedCouponBenefit = this.querySelector("p")?.innerText;
@@ -426,10 +426,39 @@
               const couponDiscountText = '-' + couponDiscount.toLocaleString();
               document.getElementById('summary-coupon-discount').innerText = couponDiscountText;
 
+
               const finalTotalText = finalTotal.toLocaleString();
               document.getElementById('summary-total').innerText = finalTotalText;
 
-              document.querySelector('input[name="orderTotalPrice"]').value = finalTotal;
+              document.querySelector('input[name="earnedPoint"]').value = finalTotal;
+
+              const userRank = '[[${userDetailsDTO.rank}]]';
+              let pointRate = 0;
+
+              switch (userRank) {
+                  case 'VVIP':
+                      pointRate = 0.05;
+                      break;
+                  case 'VIP':
+                      pointRate = 0.04;
+                      break;
+                  case 'GOLD':
+                      pointRate = 0.03;
+                      break;
+                  case 'SILVER':
+                      pointRate = 0.02;
+                      break;
+                  case 'FAMILY':
+                      pointRate = 0.01;
+                      break;
+                  default:
+                      pointRate = 0;
+                      break;
+              }
+
+              const earnedPoint = Math.floor(finalTotal * pointRate);
+              document.getElementById('summary-point').innerText = earnedPoint.toLocaleString();
+              document.querySelector('input[name="earnedPoint"]').value = earnedPoint;
           }
 
 
@@ -706,24 +735,25 @@
                                 <div class="discount_info">
                                     <div>
                                         현재포인트 : <span th:text="${userDetailsDTO.userPoint}"></span>점
-                                        <input type="text" name="point"><button type="button">사용하기</button><br>
+                                        <input type="text" name="usedPoint"><button type="button">사용하기</button><br>
                                         <p>포인트 5,000점 이상이면 현금처럼 사용가능</p>
                                     </div>
                                     <div>
                                         <span>쿠폰 적용 : </span>
                                         <button type="button" id="showCouponModalButton">쿠폰 확인</button>
-                                        <input type="hidden" name="couponNo" value="쿠폰없음" id="couponData">
+                                        <input type="hidden" name="issueNo" value="쿠폰없음" id="couponData">
                                         <div id="couponModal" class="modal" style="display: none;">
                                             <div class="modal-content">
                                                 <span class="close-button">&times;</span>
                                                 <p><span>상품할인혜택</span>을 적용해 보세요!</p>
                                                 <div class="coupon-item"
                                                      th:each="couponIssue : ${couponIssueDTOList}"
-                                                     th:attr="data-issued-by=${couponIssue.coupon.issuedBy}, data-state=${couponIssue.state}">
+                                                     th:attr="data-issue-no=${couponIssue.issueNo},
+                                                              data-issued-by=${couponIssue.coupon.issuedBy},
+                                                               data-state=${couponIssue.state}">
                                                     <p th:text="${couponIssue.coupon.benefit}"></p>
                                                     <p th:text="${couponIssue.coupon.couponName} + ' / ' + ${couponIssue.coupon.issuedBy}"></p>
                                                     <p th:text="|쿠폰 종류: ${couponIssue.coupon.couponType} (${couponIssue.coupon.minPrice} 이상 구매 시 사용 가능)|"></p>
-                                                    <input type="hidden" class="coupon-id" th:value="${couponIssue.coupon.cno}">
                                                     <span class="coupon-expiry"
                                                           th:if="${couponIssue.coupon.validTo != null and couponIssue.coupon.validTo.isBefore(T(java.time.LocalDate).now().plusDays(7))}"
                                                           th:text="|${T(java.time.temporal.ChronoUnit).DAYS.between(T(java.time.LocalDate).now(), couponIssue.coupon.validTo)}일 남음|">
@@ -779,6 +809,7 @@
                                     <tr>
                                         <th>적립 포인트</th>
                                         <td id="summary-point"></td>
+                                        <input type="hidden" name="earnedPoint">
                                     </tr>
                                     <tr class="total">
                                         <th>총</th>

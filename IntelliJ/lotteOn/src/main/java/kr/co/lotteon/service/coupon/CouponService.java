@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
+import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -93,6 +95,21 @@ public class CouponService {
         }
     }
 
+    public void changeState(long issueNo) {
+        Optional<CouponIssue> optCouponIssue = couponIssueRepository.findById(issueNo);
+
+        if(optCouponIssue.isPresent()) {
+            CouponIssue couponIssue = optCouponIssue.get();
+            couponIssue.setState("사용");
+            couponIssue.setUsedDate(LocalDate.now());
+            couponIssueRepository.save(couponIssue);
+        }
+        else {
+            log.error("Coupon not found for issueNo: {}", issueNo);
+        }
+
+    }
+
 
     public void IssueToUser(CouponDTO couponDTO, UserDetails userDetails) {
         User user = User.builder()
@@ -121,4 +138,5 @@ public class CouponService {
         }
 
     }
+
 }
