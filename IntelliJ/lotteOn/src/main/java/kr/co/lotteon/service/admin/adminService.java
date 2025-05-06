@@ -997,6 +997,7 @@ public class adminService {
         }
     }
 
+    // 매출
     public PageResponseDTO selectAllSales(PageRequestDTO pageRequestDTO) {
 
         pageRequestDTO.setSize(10);
@@ -1004,33 +1005,90 @@ public class adminService {
         Pageable pageable = pageRequestDTO.getPageable("no");
         Page<Tuple> pageObject = orderRepository.selectAllSales(pageRequestDTO, pageable);
 
+        String sort = pageRequestDTO.getSearchType();
+
         List<SalesDTO> DTOList = pageObject.getContent().stream().map(tuple -> {
 
             Seller seller = tuple.get(0, Seller.class);
-
-            List<Object[]> result  = orderRepository.findOrderStatusCountsBySeller(seller.getSno());
-
-            Map<String, Integer> countMap = new HashMap<>();
-            for (Object[] row : result) {
-                String status = (String) row[0];
-                Long count = (Long) row[1];
-                countMap.put(status, count.intValue());
+            Long orderTotal = tuple.get(1, Long.class);
+            if(orderTotal == null){
+                orderTotal = 0L;
             }
 
-            SalesDTO salesDTO = SalesDTO.builder()
-                    .company(seller.getCompany())
-                    .bizRegNo(seller.getBizRegNo())
-                    .orderCount(countMap.getOrDefault("입금대기", 0))
-                    .creditCount(countMap.getOrDefault("결제완료", 0))
-                    .shippingCount(countMap.getOrDefault("배송중", 0))
-                    .deliveryCount(countMap.getOrDefault("배송완료", 0))
-                    .build();
+            int sno = seller.getSno();
 
-            System.out.println(salesDTO);
 
-            return salesDTO;
-        }).toList
-                ();
+            if(sort == null || sort.equals("일별")){
+                List<Object[]> result  = orderRepository.findOrderStatusCountsBySeller(sno);
+
+                Map<String, Integer> countMap = new HashMap<>();
+
+                for (Object[] row : result) {
+                    String status = (String) row[0];
+                    Long count = (Long) row[1];
+                    countMap.put(status, count.intValue());
+                }
+
+                Long confirmTotal = orderRepository.findConfirmedSalesTotalBySeller(sno);
+
+                if(confirmTotal == null){
+                    confirmTotal = 0L;
+                }
+
+                SalesDTO salesDTO = SalesDTO.builder()
+                        .company(seller.getCompany())
+                        .bizRegNo(seller.getBizRegNo())
+                        .orderTotal(orderTotal)
+                        .orderCount(countMap.getOrDefault("입금대기", 0))
+                        .creditCount(countMap.getOrDefault("결제완료", 0))
+                        .shippingCount(countMap.getOrDefault("배송중", 0))
+                        .deliveryCount(countMap.getOrDefault("배송완료", 0))
+                        .confirmCount(countMap.getOrDefault("구매확정", 0))
+                        .total(confirmTotal)
+                        .build();
+
+                return salesDTO;
+            }else{
+
+                LocalDateTime term = LocalDateTime.now();
+                if(sort.equals("주간")){
+                    term = term.minusDays(7);
+                }else{
+                    term = term.minusMonths(1);
+                }
+                
+                List<Object[]> result  = orderRepository.findOrderStatusCountsBySellerAndDate(sno, term);
+
+                Map<String, Integer> countMap = new HashMap<>();
+
+                for (Object[] row : result) {
+                    String status = (String) row[0];
+                    Long count = (Long) row[1];
+                    countMap.put(status, count.intValue());
+                }
+
+                Long confirmTotal = orderRepository.findConfirmedSalesTotalBySellerAndDate(sno, term);
+
+                if(confirmTotal == null){
+                    confirmTotal = 0L;
+                }
+
+                SalesDTO salesDTO = SalesDTO.builder()
+                        .company(seller.getCompany())
+                        .bizRegNo(seller.getBizRegNo())
+                        .orderTotal(orderTotal)
+                        .orderCount(countMap.getOrDefault("입금대기", 0))
+                        .creditCount(countMap.getOrDefault("결제완료", 0))
+                        .shippingCount(countMap.getOrDefault("배송중", 0))
+                        .deliveryCount(countMap.getOrDefault("배송완료", 0))
+                        .confirmCount(countMap.getOrDefault("구매확정", 0))
+                        .total(confirmTotal)
+                        .build();
+
+                return salesDTO;
+            }
+
+        }).toList();
 
         int total = (int) pageObject.getTotalElements();
 

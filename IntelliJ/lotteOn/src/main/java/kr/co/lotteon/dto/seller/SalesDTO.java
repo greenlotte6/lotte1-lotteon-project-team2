@@ -18,10 +18,13 @@ public class SalesDTO {
     private int creditCount;
     // 배송중
     private int shippingCount;
-    // 배송 완료
+    // 배송완료
     private int deliveryCount;
+    // 구매확정
+    private int confirmCount;
     // 주문합계
-    private int orderTotal;
-    private int total;
+    private long orderTotal;
+    // 매출총합
+    private long total;
 }
 

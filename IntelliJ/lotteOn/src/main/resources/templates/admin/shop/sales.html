@@ -11,6 +11,15 @@
     <!-- 사이드바-->
     <script src="/js/admin/sidebar.js"></script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelector('#select').addEventListener('change',function(e){
+                this.form.submit();
+            })
+        });
+
+    </script>
+
 </head>
 <body>
     <div id="wrapper">
@@ -35,11 +44,13 @@
 
                     <div class="select_div">
                         <div class="select_box">
-                            <select name="term" style="width: 100px;">
-                                <option value="일별">일별</option>
-                                <option value="주간">주간</option>
-                                <option value="한달">한달</option>
-                            </select>
+                            <form th:action="@{/admin/shop/sales/search}" id="search_form">
+                                <select name="searchType" id="select" style="width: 100px;">
+                                    <option value="일별">일별</option>
+                                    <option value="주간">주간</option>
+                                    <option value="한달">한달</option>
+                                </select>
+                            </form>
                         </div>
                         
                     </div>
@@ -58,37 +69,35 @@
                             <th>매출합계</th>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>5</td>
-                                <td>(주)다나와</td>
-                                <td>112-12-12345</td>
-                                <td>103</td>
-                                <td>90</td>
-                                <td>56</td>
-                                <td>52</td>
-                                <td>50</td>
-                                <td>12,870,600</td>
-                                <td>10,870,600</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>(주)다나와</td>
-                                <td>112-12-12345</td>
-                                <td>103</td>
-                                <td>90</td>
-                                <td>56</td>
-                                <td>52</td>
-                                <td>50</td>
-                                <td>12,870,600</td>
-                                <td>10,870,600</td>
+                            <tr th:each="item, i : ${pageResponseDTO.dtoList}">
+                                <td>[[${pageResponseDTO.startNo - i.index}]]</td>
+                                <td>[[${item.company}]]</td>
+                                <td>[[${item.bizRegNo}]]</td>
+                                <td>[[${item.orderCount}]]</td>
+                                <td>[[${item.creditCount}]]</td>
+                                <td>[[${item.shippingCount}]]</td>
+                                <td>[[${item.deliveryCount}]]</td>
+                                <td>[[${item.confirmCount}]]</td>
+                                <td>[[${item.orderTotal}]]</td>
+                                <td>[[${item.total}]]</td>
                             </tr>
                         </tbody>
                     </table>
 
                     <!-- 페이징 -->
-                    <p style="text-align: center; margin-top: 10px;">
-                        이전 1 2 3 4 5 다음
-                    </p>
+                    <!-- 페이징 -->
+                    <div class="page">
+                        <th:block th:if="${pageResponseDTO.prev}">
+                            <a th:href="@{/admin/shop/sales(pg=${pageResponseDTO.start - 1})}" class="prev">이전</a>
+                        </th:block>
+                        <th:block th:each="i: ${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end)}">
+                            <a th:href="@{/admin/shop/sales( pg=${i}, size=${pageResponseDTO.size})}" th:text="${i}" th:class="${i == pageResponseDTO.pg ? 'current' : ''}"></a>
+                        </th:block>
+
+                        <th:block th:if="${pageResponseDTO.next}">
+                            <a th:href="@{/admin/shop/sales(pg=${pageResponseDTO.end + 1}, size=${pageResponseDTO.size})}" class="next">다음</a>
+                        </th:block>
+                    </div>
                     
                 </article>
             </section>
@@ -98,111 +107,6 @@
         <th:block th:include="/admin/inc/footer.html"/>
         <!-- 푸터 끝 -->
     </div>
-
-
-
-    <!-- 모달 -->
-    <!-- 배너 등록 모달 -->
-    <div class="modal">
-        <div class="modal_popup">
-            <div class="modal_head">
-                <span class="modal_title">상품등록</span>
-                <button type="button" class="close_btn">X</button>
-            </div>
-
-            <div class="modal_main">
-                <form action="#" class="shop">
-                    <table class="modal_shop" style="margin-bottom: 10px;">
-                        <tr>
-                            <td>아이디</td>
-                            <td>
-                                <input type="text" >
-                                <span>영문, 숫자 4~12 자 설정</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>비밀번호</td>
-                            <td>
-                                <input type="text">
-                                <span>영문, 숫자, 특수문자 8~12자 설정</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>비밀번호확인</td>
-                            <td>
-                                <input type="text">
-                            </td>
-                        </tr>
-                    </table>
-
-                    <table class="modal_shop">
-                        <tr>
-                            <td>상호명</td>
-                            <td>
-                                <input type="text" placeholder="상호명입력예 ) (주)">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>대표</td>
-                            <td>
-                                <input type="text" placeholder="이름입력">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>사업자등록번호</td>
-                            <td>
-                                <input type="text" placeholder="사업자등록번호입력">
-                                <span>-포함 12자리 입력</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>통신판매업번호</td>
-                            <td>
-                                <input type="text" placeholder="통신판매업번호입력">
-                                <span>-포함 12자리 입력</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>전화번호</td>
-                            <td><input type="text" placeholder="전화번호입력"></td>
-                        </tr>
-                        <tr>
-                            <td>팩스번호입력</td>
-                            <td><input type="text" placeholder="전화번호입력"></td>
-                        </tr>
-                        <tr style="height: 120px;">
-                            <td>주소</td>
-                            <td class="address_form">
-                                <input type="text" name="zip" id="zip" readonly placeholder="우편번호 선택"/> <br>
-                                <input class="inputs" type="text" name="addr1" id="addr1" readonly placeholder="기본주소 선택"/> <br>
-                                <input class="inputs"type="text" name="addr2" id="addr2" placeholder="상세주소 입력"/>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <button type="submit" class="modal_btn">등록하기</button>
-                </form>
-                
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const modal = document.querySelector('.modal');
-        const modalOpen = document.querySelector('#modal_register');
-        const modalClose = document.querySelector('.close_btn');
-
-        //열기 버튼을 눌렀을 때 모달팝업이 열림
-        modalOpen.addEventListener('click',function(){
-            //'on' class 추가
-            modal.classList.add('on');
-        });
-        //닫기 버튼을 눌렀을 때 모달팝업이 닫힘
-        modalClose.addEventListener('click',function(){
-            //'on' class 제거
-            modal.classList.remove('on');
-        });
-    </script>
 
 
 
