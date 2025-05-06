@@ -2,6 +2,7 @@ package kr.co.lotteon.repository.impl;
 
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import kr.co.lotteon.dto.page.PageRequestDTO;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -35,40 +37,85 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     public Page<Tuple> selectAllSales(PageRequestDTO pageRequestDTO, Pageable pageable) {
 
 
-        String searchType = pageRequestDTO.getSearchType();
-        String keyword = pageRequestDTO.getKeyword();
+        String sort = pageRequestDTO.getSearchType();
 
-        List<Tuple> tupleList = queryFactory
-                .select(qSeller, qOrderItem)
-                .from(qOrderItem)
-                .join(qOrderItem.order, qOrder)
-                .on(qOrder.orderNo.eq(qOrderItem.order.orderNo))
-                .join(qOrderItem.product, qProduct)
-                .on(qOrderItem.product.prodNo.eq(qProduct.prodNo))
-                .join(qProduct.seller, qSeller)
-                .on(qSeller.sno.eq(qProduct.seller.sno))
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .orderBy(qSeller.sno.desc())
-                .fetch();
+        if(sort == null || sort.equals("일별")){
+            List<Tuple> tupleList = queryFactory
+                    .select(qSeller, Expressions.numberTemplate(Long.class,
+                                    "sum(round({0} * (1 - ({1} / 100.0)) * {2}))",
+                                    qOrderItem.itemPrice, qOrderItem.itemDiscount, qOrderItem.itemCount
+                            ))
+                    .from(qOrderItem)
+                    .join(qOrderItem.order, qOrder)
+                    .join(qOrderItem.product, qProduct)
+                    .join(qProduct.seller, qSeller)
+                    .groupBy(qSeller.sno) // 판매자 기준으로 그룹핑
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .orderBy(qSeller.sno.desc())
+                    .fetch();
 
-        long total = queryFactory
-                .select(qOrderItem.count())
-                .from(qOrderItem)
-                .join(qOrderItem.order, qOrder)
-                .on(qOrder.orderNo.eq(qOrderItem.order.orderNo))
-                .join(qOrderItem.product, qProduct)
-                .on(qOrderItem.product.prodNo.eq(qProduct.prodNo))
-                .join(qProduct.seller, qSeller)
-                .on(qSeller.sno.eq(qProduct.seller.sno))
-                .fetchOne();
+            long total = queryFactory
+                    .select(qSeller.countDistinct())
+                    .from(qOrderItem)
+                    .join(qOrderItem.order, qOrder)
+                    .on(qOrder.orderNo.eq(qOrderItem.order.orderNo))
+                    .join(qOrderItem.product, qProduct)
+                    .on(qOrderItem.product.prodNo.eq(qProduct.prodNo))
+                    .join(qProduct.seller, qSeller)
+                    .on(qSeller.sno.eq(qProduct.seller.sno))
+                    .fetchOne();
 
-        log.info("total: {}", total);
-        log.info("tupleList: {}", tupleList);
+            log.info("total: {}", total);
+            log.info("tupleList: {}", tupleList);
 
-        return new PageImpl<>(tupleList, pageable, total);
+            return new PageImpl<>(tupleList, pageable, total);
 
-        // 판매자 회사 별 매출 정보
+        }else{
+
+            LocalDateTime term = LocalDateTime.now();
+            if(sort.equals("주간")){
+                term = term.minusDays(7);
+            }else{
+                term = term.minusMonths(1);
+            }
+
+            BooleanExpression expression = qOrder.orderDate.after(term);
+
+            List<Tuple> tupleList = queryFactory
+                    .select(qSeller, Expressions.numberTemplate(Long.class,
+                            "sum(round({0} * (1 - ({1} / 100.0)) * {2}))",
+                            qOrderItem.itemPrice, qOrderItem.itemDiscount, qOrderItem.itemCount
+                    ))
+                    .from(qOrderItem)
+                    .join(qOrderItem.order, qOrder)
+                    .join(qOrderItem.product, qProduct)
+                    .join(qProduct.seller, qSeller)
+                    .where(expression)
+                    .groupBy(qSeller.sno) // 판매자 기준으로 그룹핑
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .orderBy(qSeller.sno.desc())
+                    .fetch();
+
+            long total = queryFactory
+                    .select(qSeller.countDistinct())
+                    .from(qOrderItem)
+                    .join(qOrderItem.order, qOrder)
+                    .on(qOrder.orderNo.eq(qOrderItem.order.orderNo))
+                    .join(qOrderItem.product, qProduct)
+                    .on(qOrderItem.product.prodNo.eq(qProduct.prodNo))
+                    .join(qProduct.seller, qSeller)
+                    .on(qSeller.sno.eq(qProduct.seller.sno))
+                    .where(expression)
+                    .fetchOne();
+
+            log.info("total: {}", total);
+            log.info("tupleList: {}", tupleList);
+
+            return new PageImpl<>(tupleList, pageable, total);
+        }
+
 
 
     }
