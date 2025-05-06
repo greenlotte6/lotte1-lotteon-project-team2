@@ -290,8 +290,11 @@ public class AdminController {
 
     //관리자 매출현황
     @GetMapping("/shop/sales")
-    public String shopSales(){
+    public String shopSales(PageRequestDTO pageRequestDTO, Model model){
+
+        PageResponseDTO pageResponseDTO = adminService.selectAllSales(pageRequestDTO);
         return "/admin/shop/sales";
+
     }
 
     //판매자 등록/상점 등록

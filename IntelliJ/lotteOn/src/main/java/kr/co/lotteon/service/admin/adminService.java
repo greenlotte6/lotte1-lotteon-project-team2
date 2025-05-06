@@ -15,6 +15,7 @@ import kr.co.lotteon.dto.point.PointDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.dto.product.ProductDetailDTO;
 import kr.co.lotteon.dto.product.ProductImageDTO;
+import kr.co.lotteon.dto.seller.SalesDTO;
 import kr.co.lotteon.dto.seller.SellerDTO;
 import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.dto.user.UserDetailsDTO;
@@ -40,6 +41,7 @@ import kr.co.lotteon.repository.category.MainCategoryRepository;
 import kr.co.lotteon.repository.category.SubCategoryRepository;
 import kr.co.lotteon.repository.coupon.CouponIssueRepository;
 import kr.co.lotteon.repository.coupon.CouponRepository;
+import kr.co.lotteon.repository.order.OrderRepository;
 import kr.co.lotteon.repository.point.PointRepository;
 import kr.co.lotteon.repository.product.CartRepository;
 import kr.co.lotteon.repository.product.ProductDetailRepository;
@@ -58,9 +60,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -78,6 +78,9 @@ public class adminService {
     private final ProductRepository productRepository;
     private final ProductDetailRepository productDetailRepository;
     private final ProductImageRepository productImageRepository;
+
+    // 주문
+    private final OrderRepository orderRepository;
 
     // 카테고리
     private final MainCategoryRepository mainCategoryRepository;
@@ -992,5 +995,54 @@ public class adminService {
                 userDetailsRepository.save(userDetails);
             }
         }
+    }
+
+    public PageResponseDTO selectAllSales(PageRequestDTO pageRequestDTO) {
+
+        pageRequestDTO.setSize(10);
+
+        Pageable pageable = pageRequestDTO.getPageable("no");
+        Page<Tuple> pageObject = orderRepository.selectAllSales(pageRequestDTO, pageable);
+
+        List<SalesDTO> DTOList = pageObject.getContent().stream().map(tuple -> {
+
+            Seller seller = tuple.get(0, Seller.class);
+
+            List<Object[]> result  = orderRepository.findOrderStatusCountsBySeller(seller.getSno());
+
+            Map<String, Integer> countMap = new HashMap<>();
+            for (Object[] row : result) {
+                String status = (String) row[0];
+                Long count = (Long) row[1];
+                countMap.put(status, count.intValue());
+            }
+
+            SalesDTO salesDTO = SalesDTO.builder()
+                    .company(seller.getCompany())
+                    .bizRegNo(seller.getBizRegNo())
+                    .orderCount(countMap.getOrDefault("입금대기", 0))
+                    .creditCount(countMap.getOrDefault("결제완료", 0))
+                    .shippingCount(countMap.getOrDefault("배송중", 0))
+                    .deliveryCount(countMap.getOrDefault("배송완료", 0))
+                    .build();
+
+            System.out.println(salesDTO);
+
+            return salesDTO;
+        }).toList
+                ();
+
+        int total = (int) pageObject.getTotalElements();
+
+        log.info("total: {}", total);
+        log.info("productDTOList: {}", pageObject);
+
+        return PageResponseDTO.<SalesDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(DTOList)
+                .total(total)
+                .build();
+
+
     }
 }
