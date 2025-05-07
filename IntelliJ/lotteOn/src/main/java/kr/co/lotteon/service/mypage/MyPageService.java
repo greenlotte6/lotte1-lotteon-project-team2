@@ -3,6 +3,7 @@ package kr.co.lotteon.service.mypage;
 import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.feedback.ReviewDTO;
+import kr.co.lotteon.dto.order.OrderInfoDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.point.PointDTO;
@@ -15,8 +16,7 @@ import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.article.InquiryRepository;
 import kr.co.lotteon.repository.coupon.CouponRepository;
 import kr.co.lotteon.repository.feedback.ReviewRepository;
-import kr.co.lotteon.repository.order.OrderItemRepository;
-import kr.co.lotteon.repository.order.OrderRepository;
+import kr.co.lotteon.repository.order.OrderInfoRepository;
 import kr.co.lotteon.repository.point.PointRepository;
 import kr.co.lotteon.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,8 +40,7 @@ public class MyPageService {
     private final InquiryRepository inquiryRepository;
     private final ReviewRepository reviewRepository;
     private final PointRepository pointRepository;
-    private final OrderRepository orderRepository;
-    private final OrderItemRepository orderItemRepository;
+    private final OrderInfoRepository orderInfoRepository;
     private final CouponRepository couponRepository;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
@@ -351,6 +350,26 @@ public class MyPageService {
         } else {
             return "";
         }
+    }
+
+
+    public PageResponseDTO<OrderInfoDTO> orderInfoFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO) {
+
+        User user = modelMapper.map(userDTO, User.class);
+
+        String uid = user.getUid();
+
+        // 페이징 처리 (정렬 기준은 필요에 따라 조정)
+        Pageable pageable = pageRequestDTO.getPageable("itemNo");
+        Page<OrderInfoDTO> orderInfoPage = orderInfoRepository.findOrderInfoByUserId(uid, pageable);
+
+
+        return PageResponseDTO.<OrderInfoDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(orderInfoPage.getContent())
+                .total((int) orderInfoPage.getTotalElements())
+                .build();
+
     }
 
 

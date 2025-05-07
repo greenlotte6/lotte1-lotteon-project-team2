@@ -7,6 +7,7 @@ import kr.co.lotteon.dto.config.BannerDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.feedback.ReviewDTO;
 import kr.co.lotteon.dto.order.OrderDTO;
+import kr.co.lotteon.dto.order.OrderInfoDTO;
 import kr.co.lotteon.dto.order.OrderItemDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
@@ -100,19 +101,20 @@ public class MyController {
     @GetMapping("/my/order")
     public String order(@AuthenticationPrincipal UserDetails userDetails, PageRequestDTO pageRequestDTO, Model model) {
 
-        /*
         String uid = userDetails.getUsername();
 
         UserDTO userDTO = myPageService.findByUid(uid);
 
-        PageResponseDTO<OrderDTO> orderDTO = myPageService.orderFindAll(userDTO, pageRequestDTO);
-        PageResponseDTO<OrderItemDTO> orderItemDTO = myPageService.orderItemFindAll(userDTO, pageRequestDTO);
+        PageResponseDTO<OrderInfoDTO> orderInfoDTO = myPageService.orderInfoFindAll(userDTO, pageRequestDTO);
 
+        log.info("orderInfoDTO : " + orderInfoDTO);
+        log.info("orderInfoDTO : " + orderInfoDTO);
+        log.info("orderInfoDTO : " + orderInfoDTO);
+        log.info("orderInfoDTO : " + orderInfoDTO);
+        log.info("orderInfoDTO : " + orderInfoDTO);
+        log.info("orderInfoDTO : " + orderInfoDTO);
 
-        model.addAttribute("orderDTO", orderDTO);
-        model.addAttribute("orderItemDTO", orderItemDTO);
-
-        */
+        model.addAttribute("orderInfoDTO", orderInfoDTO);
 
         return "/myPage/orderDetails";
 
