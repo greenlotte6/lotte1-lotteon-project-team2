@@ -1177,19 +1177,19 @@ public class adminService {
     public OperationDTO countOrderDetail(OperationDTO operationDTO) {
 
         String state = "입금대기";
-        long ready = orderRepository.countByOrderStatus(state);
+        long ready = orderItemRepository.countByOrderStatus(state);
 
         state = "배송준비";
-        long delivery = orderRepository.countByOrderStatus(state);
+        long delivery = orderItemRepository.countByOrderStatus(state);
 
         state = "취소요청";
-        long cancel = orderRepository.countByOrderStatus(state);
+        long cancel = orderItemRepository.countByOrderStatus(state);
 
         state = "교환요청";
-        long exchange = orderRepository.countByOrderStatus(state);
+        long exchange = orderItemRepository.countByOrderStatus(state);
 
         state = "반품요청";
-        long returnCount = orderRepository.countByOrderStatus(state);
+        long returnCount = orderItemRepository.countByOrderStatus(state);
 
         operationDTO.setReadyTotal(ready);
         operationDTO.setDeliveryTotal(delivery);
@@ -1223,14 +1223,17 @@ public class adminService {
                 case 2: {
                     operationDTO.setSale2(category);
                     operationDTO.setSale2Total(totalPrice);
+                    break;
                 }
                 case 3: {
                     operationDTO.setSale3(category);
                     operationDTO.setSale3Total(totalPrice);
+                    break;
                 }
                 case 4: {
                     long total = operationDTO.getSale4Total() + totalPrice;
                     operationDTO.setSale4Total(total);
+                    break;
                 }
             }
 

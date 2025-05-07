@@ -127,7 +127,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         BooleanExpression booleanExpression = qOrder.user.uid.eq(uid);
 
         List<Tuple> tupleList = queryFactory
-                .select(qOrderItem, qOrder.orderNo, qOrder.orderDate, qOrder.orderStatus, qProductImage.sNameThumb3)
+                .select(qOrderItem, qOrder.orderNo, qOrder.orderDate, qOrderItem.orderStatus , qProductImage.sNameThumb3)
                 .from(qOrderItem)
                 .join(qOrderItem.order, qOrder)
                 .join(qOrderItem.product, qProduct)

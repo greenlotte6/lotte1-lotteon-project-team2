@@ -14,7 +14,7 @@
     <!-- 차트 -->
     <!-- 차트 스크립트 하나로 통합 -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
+    <script type="text/javascript" th:inline="javascript">
         google.charts.load('current', {'packages':['bar', 'corechart']});
         google.charts.setOnLoadCallback(drawAllCharts);
 
@@ -40,12 +40,25 @@
         }
 
         function drawPieChart() {
+
+            var articleObject = [[${operationDTO}]];
+
+            const sale1 = "[[${operationDTO.sale1} ?: '없음']]";
+            const sale1Total = [[${operationDTO.sale1Total} ?: 0]];
+            const sale2 = "[[${operationDTO.sale2} ?: '없음']]";
+            const sale2Total = [[${operationDTO.sale2Total} ?: 0]];
+            const sale3 = "[[${operationDTO.sale3} ?: '없음']]";
+            const sale3Total = [[${operationDTO.sale3Total} ?: 0]];
+            const sale4 = "[[${operationDTO.sale4} ?: '없음']]";
+            const sale4Total = [[${operationDTO.sale4Total} ?: 0]];
+
+
             var data = google.visualization.arrayToDataTable([
                 ['Task', 'Hours per Day'],
-                ['가전',  702999],
-                ['식품',  288000],
-                ['의류',  127680],
-                ['기타',  47680],
+                [sale1, sale1Total],
+                [sale2, sale2Total],
+                [sale3, sale3Total],
+                [sale4, sale4Total]
             ]);
 
             var options = {
