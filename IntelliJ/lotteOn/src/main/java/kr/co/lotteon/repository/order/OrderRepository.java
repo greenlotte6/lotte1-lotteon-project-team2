@@ -69,5 +69,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> , OrderRe
     """)
     Long findConfirmedSalesTotalBySellerAndDate(int sno, LocalDateTime term);
 
-
+    @Query("SELECT COUNT(o) FROM Order o WHERE o.orderDate BETWEEN :start AND :end")
+    long countByorderDateBetween(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 }

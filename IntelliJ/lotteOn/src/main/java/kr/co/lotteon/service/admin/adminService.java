@@ -9,6 +9,7 @@ import kr.co.lotteon.dto.article.RecruitDTO;
 import kr.co.lotteon.dto.category.MainCategoryDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.coupon.CouponIssueDTO;
+import kr.co.lotteon.dto.operation.OperationDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.point.PointDTO;
@@ -61,6 +62,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -92,7 +94,7 @@ public class adminService {
 
     //장바구니
     private final CartRepository cartRepository;
-    
+
     // 게시판
     private final NoticeRepository noticeRepository;
     private final RecruitRepository recruitRepository;
@@ -101,7 +103,7 @@ public class adminService {
 
     // 포인트
     private final PointRepository pointRepository;
-    
+
     /*
      * 관리자 페이지 (상품 등록 메서드)
      * */
@@ -275,11 +277,11 @@ public class adminService {
 
     }
 
-    
+
     /*
-    * 공지사항 부분
-    * */
-    
+     * 공지사항 부분
+     * */
+
     // 공지사항 저장
     public void saveNotice(NoticeDTO noticeDTO, UserDetails userDetails) {
 
@@ -366,8 +368,8 @@ public class adminService {
 
 
     /*
-    * 쿠폰
-    * */
+     * 쿠폰
+     * */
     // 쿠폰 등록
     public void saveCoupon(CouponDTO couponDTO, UserDetails userDetails) {
         Coupon coupon = modelMapper.map(couponDTO, Coupon.class);
@@ -393,8 +395,8 @@ public class adminService {
     }
 
     /*
-    * 쿠폰 리스트
-    * */
+     * 쿠폰 리스트
+     * */
     public PageResponseDTO selectAllForCoupon(PageRequestDTO pageRequestDTO) {
 
         pageRequestDTO.setSize(10);
@@ -425,7 +427,7 @@ public class adminService {
                 .dtoList(DTOList)
                 .total(total)
                 .build();
-        
+
     }
 
     // 쿠폰 만료
@@ -596,7 +598,7 @@ public class adminService {
                 .dtoList(DTOList)
                 .total(total)
                 .build();
-        
+
     }
 
     // 자주묻는 질문 삭제
@@ -706,8 +708,8 @@ public class adminService {
     }
 
     /*
-    * 관리자 상점목록
-    * */
+     * 관리자 상점목록
+     * */
 
     public PageResponseDTO selectAllForSeller(PageRequestDTO pageRequestDTO) {
 
@@ -826,8 +828,8 @@ public class adminService {
     }
 
     /*
-    * 회원목록
-    * */
+     * 회원목록
+     * */
     public PageResponseDTO selectMemberForList(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setSize(10);
 
@@ -858,7 +860,7 @@ public class adminService {
                 .build();
 
     }
-    
+
     // 포인트 목록
     public PageResponseDTO selectPointForList(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setSize(10);
@@ -904,13 +906,13 @@ public class adminService {
             Point point = pointRepository.findById(no).get();
 
             int pointNum = point.getPoint();
-            
+
             // 유저 포인트 총량 계산
             kr.co.lotteon.entity.user.UserDetails userDetails = userDetailsRepository.findByUser(point.getUser()).get();
             int userPoint = userDetails.getUserPoint() - pointNum;
             userDetails.setUserPoint(userPoint);
             userDetailsRepository.save(userDetails);
-            
+
             pointRepository.deleteById(no);
         }
     }
@@ -1056,7 +1058,7 @@ public class adminService {
                 }else{
                     term = term.minusMonths(1);
                 }
-                
+
                 List<Object[]> result  = orderRepository.findOrderStatusCountsBySellerAndDate(sno, term);
 
                 Map<String, Integer> countMap = new HashMap<>();
@@ -1102,5 +1104,67 @@ public class adminService {
                 .build();
 
 
+    }
+
+    // 관리자 메인 (공지사항 5개 출력)
+    public List<NoticeDTO> NoticeLimit5() {
+        List<NoticeDTO> noticeDTOS = noticeRepository.findTop5ByOrderByNoDesc()
+                .stream()
+                .map(notice -> modelMapper.map(notice, NoticeDTO.class))
+                .collect(Collectors.toList());
+        return noticeDTOS;
+    }
+
+    // 관리자 메인 (문의사항 5개 출력)
+    public List<InquiryDTO> InquiryLimit5() {
+        List<InquiryDTO> inquireDTOS = inquiryRepository.findTop5ByOrderByNoDesc()
+                .stream()
+                .map(inquire -> modelMapper.map(inquire, InquiryDTO.class))
+                .collect(Collectors.toList());
+        return inquireDTOS;
+    }
+
+    // 관리자 메인 문의사항 갯수 출력
+    public OperationDTO countInquiry(OperationDTO operationDTO) {
+
+        operationDTO.setInquiryCountTotal(inquiryRepository.count());
+
+        LocalDate now = LocalDate.now();
+        operationDTO.setInquiryCountToday(inquiryRepository.countByWdate(now));
+
+        LocalDate yesterday = now.minusDays(1);
+        operationDTO.setInquiryCountYesterday(inquiryRepository.countByWdate(yesterday));
+        return operationDTO;
+    }
+
+    public OperationDTO countMemberRegister(OperationDTO operationDTO) {
+
+        operationDTO.setMemberCountTotal(userRepository.count());
+
+        LocalDateTime startOfToday = LocalDate.now().atStartOfDay();
+        LocalDateTime startOfYesterDay = LocalDate.now().minusDays(1).atStartOfDay();
+        LocalDateTime startOfTomorrow = LocalDate.now().plusDays(1).atStartOfDay();
+
+        long todayJoinCount = userRepository.countByRegDateBetween(startOfToday, startOfTomorrow);
+        operationDTO.setMemberCountToday(todayJoinCount);
+
+        long yesterdayJoinCount = userRepository.countByRegDateBetween(startOfYesterDay, startOfToday);
+        operationDTO.setMemberCountYesterday(yesterdayJoinCount);
+
+        return operationDTO;
+    }
+
+    public OperationDTO countOrder(OperationDTO operationDTO) {
+
+        operationDTO.setOrderCountTotal(orderRepository.count());
+
+        LocalDateTime startOfToday = LocalDate.now().atStartOfDay();
+        LocalDateTime startOfYesterDay = LocalDate.now().minusDays(1).atStartOfDay();
+        LocalDateTime startOfTomorrow = LocalDate.now().plusDays(1).atStartOfDay();
+
+        operationDTO.setOrderCountToday(orderRepository.countByorderDateBetween(startOfToday, startOfTomorrow));
+        operationDTO.setOrderCountToday(orderRepository.countByorderDateBetween(startOfYesterDay, startOfToday));
+
+        return operationDTO;
     }
 }

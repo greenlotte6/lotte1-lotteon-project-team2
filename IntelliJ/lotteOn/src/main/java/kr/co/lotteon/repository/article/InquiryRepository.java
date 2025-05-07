@@ -9,6 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.util.Collection;
+
 @Repository
 public interface InquiryRepository extends JpaRepository<Inquiry,Integer>, InquiryRepositoryCustom {
     Page<Inquiry> findByCateV1(String cateV1, Pageable pageable);
@@ -16,4 +19,8 @@ public interface InquiryRepository extends JpaRepository<Inquiry,Integer>, Inqui
     Page<Inquiry> findAllByUser(User user, Pageable pageable);
 
     long countByUserAndState(User user, String state);
+
+    Collection<Object> findTop5ByOrderByNoDesc();
+
+    long countByWdate(LocalDate now);
 }
