@@ -1,9 +1,9 @@
 package kr.co.lotteon.service.order;
 
 import kr.co.lotteon.dto.cart.CartDTO;
+import kr.co.lotteon.dto.kakao.Amount;
 import kr.co.lotteon.dto.order.OrderDTO;
-import kr.co.lotteon.dto.page.ItemRequestDTO;
-import kr.co.lotteon.dto.product.ProductDTO;
+import kr.co.lotteon.dto.order.OrderItemDTO;
 import kr.co.lotteon.entity.cart.Cart;
 import kr.co.lotteon.entity.order.Order;
 import kr.co.lotteon.entity.order.OrderItem;
@@ -12,16 +12,16 @@ import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.order.OrderItemRepository;
 import kr.co.lotteon.repository.order.OrderRepository;
 import kr.co.lotteon.repository.product.CartRepository;
-import kr.co.lotteon.repository.product.ProductRepository;
 import kr.co.lotteon.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -64,12 +64,28 @@ public class OrderService {
 
             Order saveOrder = orderRepository.save(order);
             return saveOrder.getOrderNo();
-
         }
-
         return 0;
-
     }
+
+    public Amount getAmount(int orderNo, UserDetails userDetails, OrderDTO orderDTO) {
+        Amount amount = new Amount();
+        String customOrderNo = "상품" + orderNo;
+        amount.setItem_name(customOrderNo);
+        amount.setPartner_order_id(String.valueOf(orderNo));
+        amount.setPartner_user_id(userDetails.getUsername());
+        amount.setTotal(orderDTO.getOrderTotalPrice());
+        amount.setTax(orderDTO.getOrderTotalPrice() / 100 * 10);
+        return amount;
+    }
+
+    public OrderDTO findAllByOrderNo(Integer orderNo) {
+        Order order = orderRepository.findById(orderNo).get();
+        OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
+
+        return orderDTO;
+    }
+
 
     public void registerOrderItem(int orderNo, List<Integer> cartNos) {
         for (Integer cartNo : cartNos) {

@@ -1,19 +1,32 @@
 package kr.co.lotteon.controller.order;
 
 
+import jakarta.servlet.http.HttpSession;
+import kr.co.lotteon.dto.kakao.Amount;
+import kr.co.lotteon.dto.kakao.KakaoApproveResponse;
 import kr.co.lotteon.dto.order.OrderDTO;
+import kr.co.lotteon.dto.order.OrderItemDTO;
+import kr.co.lotteon.entity.order.Order;
 import kr.co.lotteon.service.cart.CartService;
 import kr.co.lotteon.service.coupon.CouponService;
+import kr.co.lotteon.service.kakao.KakaoPayService;
+import kr.co.lotteon.service.order.OrderItemService;
 import kr.co.lotteon.service.order.OrderService;
 import kr.co.lotteon.service.point.PointService;
 import kr.co.lotteon.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -27,6 +40,8 @@ public class OrderController {
     private final CouponService couponService;
     private final PointService pointService;
     private final ProductService productService;
+    private final KakaoPayService kakaoPayService;
+    private final OrderItemService orderItemService;
 
     /*
     * 1. 주문
@@ -63,14 +78,16 @@ public class OrderController {
     * 3. Order 테이블 데이터 넣기
     * 4. OrderItem 테이블 데이터 넣기
     * 5. 상품 View 조회 시 조회수 + 1
-    *  6. 장바구니 지우기
+    * 6. 장바구니 지우기
     *    추가 사항: orderItem에 카테고리 추가햇어요.
     *    관리자 페이지에서 카테고리 별로 매출 계산해야되서
     *
     * */
 
     @PostMapping("/order/submit")
-    public String orderSubmit(OrderDTO orderDTO,
+    public ResponseEntity orderSubmit(Amount amount,
+                              OrderDTO orderDTO,
+                              HttpSession session,
                               @RequestParam int usedPoint,
                               @RequestParam int earnedPoint,
                               @RequestParam("cartNo") List<Integer> cartNos,
@@ -79,44 +96,58 @@ public class OrderController {
                               @RequestParam(value = "issueNo", required = false) long issueNo,
                               @AuthenticationPrincipal UserDetails userDetails) throws Exception {
 
+
         orderDTO.setUid(userDetails.getUsername());
         orderDTO.setOrderAddr(receiverAddr1 + " " + receiverAddr2);
-
-        /*
-        * orderStatus, orderDate -> 둘 다 자동등록 따로 설정 x
-        * orderSender=null, senderHp=null -> User 조회해서 이름, hp 넣어줄 예정
-        * */
 
         // Order 테이블 등록하기 -> 등록 후 orderItem을 등록하기 위한 order 출력
         int orderNo = orderService.registerOrder(orderDTO);
 
-        // 포인트량, 적립된 포인트량 기록
+        // 상세 주문 등록하기
+        orderService.registerOrderItem(orderNo, cartNos);
+
+        // 포인트 사용 시 기록
         pointService.changePoint(usedPoint, earnedPoint, userDetails);
 
         // 상품 재고, 판매량 계산
         productService.changeSoldAndStock(cartNos);
 
-        // 상세 주문 등록하기
-        orderService.registerOrderItem(orderNo, cartNos);
-
         // 쿠폰 사용상태로 바꾸기
-        couponService.changeState(issueNo);
+        // couponService.changeState(issueNo);
 
         // 장바구니 지우기
-        cartService.deleteAllByCartNo(cartNos);
+        // cartService.deleteAllByCartNo(cartNos);
 
+        session.setAttribute("orderNo", orderNo);
 
-        
-        log.info("orderDTO = {}", orderDTO);
-        log.info("usedPoint = {}", usedPoint);
-        log.info("earnedPoint = {}", earnedPoint);
-        log.info("cartNo = {}", cartNos);
-        log.info("issueNo = {}", issueNo);
-        log.info("recipientAddr1 = {}", receiverAddr1);
-        log.info("receiverAddr2 = {}", receiverAddr2);
+        amount = orderService.getAmount(orderNo, userDetails, orderDTO);
 
-
-        return "redirect:/";
+        // 카카오페이 결제 요청
+        return kakaoPayService.kakaoPayReady(amount);
     }
+
+    // 결제 성공
+    @GetMapping("/payment/success")
+    public String afterPayRequest(@RequestParam("pg_token") String pgToken, HttpSession session, Model model) {
+
+        Integer orderNo = (Integer) session.getAttribute("orderNo");
+        OrderDTO orderDTO = orderService.findAllByOrderNo(orderNo);
+
+        KakaoApproveResponse kakaoApprove = kakaoPayService.approveResponse(pgToken);
+
+        log.info("orderDTO: {}", orderDTO);
+
+        model.addAttribute(orderDTO);
+
+        return "redirect:/product/order_completed";
+    }
+
+    @GetMapping("/product/order_completed")
+    public String orderCompleted() {
+        return "/product/order_completed";
+    }
+
+
+
 
 }

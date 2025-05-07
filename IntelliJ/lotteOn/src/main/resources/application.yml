@@ -132,3 +132,10 @@ redis:
       max-idle: 8
       min-idle: 0
       max-wait: -1ms
+
+# 카카오 페이
+kakao:
+  ADMIN_KEY: ENC("B1Z86r/1yxlU26PDaKqNXd4BEk9hEuZ+OyyiUzSdKXGb18iNSeQZHtHgwIaqu3QC")
+
+
+
