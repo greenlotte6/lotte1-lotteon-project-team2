@@ -128,22 +128,25 @@ public class OrderController {
 
     // 결제 성공
     @GetMapping("/payment/success")
-    public String afterPayRequest(@RequestParam("pg_token") String pgToken, HttpSession session, Model model) {
+    public String afterPayRequest(@RequestParam("pg_token") String pgToken, HttpSession session) {
 
         Integer orderNo = (Integer) session.getAttribute("orderNo");
         OrderDTO orderDTO = orderService.findAllByOrderNo(orderNo);
+        session.setAttribute("orderDTO", orderDTO);
 
-        KakaoApproveResponse kakaoApprove = kakaoPayService.approveResponse(pgToken);
+        kakaoPayService.approveResponse(pgToken);
 
         log.info("orderDTO: {}", orderDTO);
-
-        model.addAttribute(orderDTO);
 
         return "redirect:/product/order_completed";
     }
 
     @GetMapping("/product/order_completed")
-    public String orderCompleted() {
+    public String orderCompleted(HttpSession session, Model model) {
+
+        OrderDTO orderDTO = (OrderDTO) session.getAttribute("orderDTO");
+        model.addAttribute("orderDTO", orderDTO);
+
         return "/product/order_completed";
     }
 
