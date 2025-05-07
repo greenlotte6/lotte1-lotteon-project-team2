@@ -11,6 +11,7 @@ import kr.co.lotteon.dto.config.ConfigDTO;
 import kr.co.lotteon.dto.config.TermsDTO;
 import kr.co.lotteon.dto.config.VersionDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
+import kr.co.lotteon.dto.operation.OperationDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.point.PointDTO;
@@ -53,7 +54,29 @@ public class AdminController {
 
     // 관리자 메인
     @GetMapping
-    public String main() {
+    public String main(Model model) {
+
+        OperationDTO operationDTO = new OperationDTO();
+
+        // 공지사항 5개 출력
+        List<NoticeDTO> noticeDTOS =  adminService.NoticeLimit5();
+
+        // 문의 5개 출력
+        List<InquiryDTO> inquiryDTOS = adminService.InquiryLimit5();
+
+        // 문의 총 갯수
+        operationDTO = adminService.countInquiry(operationDTO);
+
+        // 회원 가입 수
+        operationDTO = adminService.countMemberRegister(operationDTO);
+
+        // 주문 수 계산
+        operationDTO = adminService.countOrder(operationDTO);
+
+        model.addAttribute("noticeDTOS", noticeDTOS);
+        model.addAttribute("inquiryDTOS", inquiryDTOS);
+        model.addAttribute("operationDTO", operationDTO);
+
         return "/admin/main";
     }
 

@@ -4,6 +4,7 @@ import kr.co.lotteon.dto.user.UserDTO;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -28,7 +29,7 @@ public class InquiryDTO {
     private String content; //내용
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime wdate; // 등록일
+    private LocalDate wdate; // 등록일
     private String state;  // (검토 중, 답변완료)
     private String regip;  // 컴퓨터IP
 

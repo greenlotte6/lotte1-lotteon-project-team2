@@ -5,6 +5,7 @@ import kr.co.lotteon.entity.user.User;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -34,7 +35,7 @@ public class Inquiry {
     private String content; //내용
 
     @CreationTimestamp
-    private LocalDateTime wdate; // 등록일
+    private LocalDate wdate; // 등록일
     private String state;  // (검토 중, 답변완료)
     private String regip;  // 컴퓨터IP
 
