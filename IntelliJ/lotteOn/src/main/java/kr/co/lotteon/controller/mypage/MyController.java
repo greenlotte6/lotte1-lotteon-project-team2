@@ -105,8 +105,10 @@ public class MyController {
 
         UserDTO userDTO = myPageService.findByUid(uid);
 
-        PageResponseDTO<OrderInfoDTO> orderInfoDTO = myPageService.orderInfoFindAll(userDTO, pageRequestDTO);
+        // PageResponseDTO<OrderInfoDTO> orderInfoDTO = myPageService.orderInfoFindAll(userDTO, pageRequestDTO);
 
+        PageResponseDTO pageResponseDTO = myPageService.orderInfoPaging(pageRequestDTO, uid);
+/*
         log.info("orderInfoDTO : " + orderInfoDTO);
         log.info("orderInfoDTO : " + orderInfoDTO);
         log.info("orderInfoDTO : " + orderInfoDTO);
@@ -115,7 +117,7 @@ public class MyController {
         log.info("orderInfoDTO : " + orderInfoDTO);
 
         model.addAttribute("orderInfoDTO", orderInfoDTO);
-
+*/
         return "/myPage/orderDetails";
 
 

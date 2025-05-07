@@ -264,12 +264,6 @@ public class AdminController {
         return"ok";
     }
 
-    
-    
-    
-    
-    
-
     // 버전관리
     @GetMapping("/config/version")
     public String version(PageRequestDTO pageRequestDTO, Model model) {

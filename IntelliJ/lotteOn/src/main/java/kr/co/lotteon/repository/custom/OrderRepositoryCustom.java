@@ -7,4 +7,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface OrderRepositoryCustom {
     Page<Tuple> selectAllSales(PageRequestDTO pageRequestDTO, Pageable pageable);
+
+    Page<Tuple> orderInfoPaging(PageRequestDTO pageRequestDTO, Pageable pageable, String uid);
 }

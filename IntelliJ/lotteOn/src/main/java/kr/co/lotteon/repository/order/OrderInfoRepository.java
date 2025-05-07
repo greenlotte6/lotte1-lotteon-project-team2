@@ -14,7 +14,7 @@ import java.util.List;
 
 @Repository
 public interface OrderInfoRepository extends JpaRepository<OrderItem, Integer> {
-
+/*
     @Query("SELECT new kr.co.lotteon.dto.order.OrderInfoDTO(" +
             "o.orderDate, o.orderNo, o.orderStatus, " +
             "p.prodName, s.company, oi.itemCount, oi.itemPrice, pi.oNameList) " +
@@ -25,4 +25,7 @@ public interface OrderInfoRepository extends JpaRepository<OrderItem, Integer> {
             "JOIN p.productImage pi " +
             "WHERE o.user.uid = :userId")
     Page<OrderInfoDTO> findOrderInfoByUserId(@Param("userId") String userId, Pageable pageable);
+
+
+*/
 }
