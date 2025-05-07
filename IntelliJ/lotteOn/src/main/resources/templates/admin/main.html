@@ -42,10 +42,10 @@
         function drawPieChart() {
             var data = google.visualization.arrayToDataTable([
                 ['Task', 'Hours per Day'],
-                ['가전',  8],
-                ['식품',  4],
-                ['의류',  2],
-                ['기타',  2],
+                ['가전',  702999],
+                ['식품',  288000],
+                ['의류',  127680],
+                ['기타',  47680],
             ]);
 
             var options = {
@@ -104,11 +104,11 @@
                             <th>반품요청</th>
                         </tr>
                         <tr>
-                            <td>101</td>
-                            <td>124</td>
-                            <td>14</td>
-                            <td>7</td>
-                            <td>24</td>
+                            <td>[[${operationDTO.readyTotal}]]</td>
+                            <td>[[${operationDTO.deliveryTotal}]]</td>
+                            <td>[[${operationDTO.cancelTotal}]]</td>
+                            <td>[[${operationDTO.exchangeTotal}]]</td>
+                            <td>[[${operationDTO.returnTotal}]]</td>
                         </tr>
                     </table>
 

@@ -20,18 +20,34 @@ public class OperationDTO {
 
     // 회원가입 총 갯수, 오늘 가입, 어제 가입
 
-    long memberCountTotal;
-    long memberCountToday;
-    long memberCountYesterday;
+    private long memberCountTotal;
+    private long memberCountToday;
+    private long memberCountYesterday;
 
     // 주문 총 갯수, 오늘 주문, 어제 주문
-    long orderCountTotal;
-    long orderCountToday;
-    long orderCountYesterday;
-    long orderPriceTotal;
-    long orderPriceToday;
-    long orderPriceYesterday;
-
+    private long orderCountTotal;
+    private long orderCountToday;
+    private long orderCountYesterday;
+    private long orderPriceTotal;
+    private long orderPriceToday;
+    private long orderPriceYesterday;
+    
+    // 입금대기, 배송준비, 취소요청, 교환요청, 반품요청
+    private long readyTotal;
+    private long deliveryTotal;
+    private long cancelTotal;
+    private long exchangeTotal;
+    private long returnTotal;
+    
+    // 매출
+    private String sale1; //1등 매출명
+    private long sale1Total; //1등 매출
+    private String sale2; //2등 매출명
+    private long sale2Total; //2등 매출
+    private String sale3; //2등 매출명
+    private long sale3Total; //3등 매출
+    private String sale4; //4등 매출명
+    private long sale4Total; //4등 매출
 
 
 }

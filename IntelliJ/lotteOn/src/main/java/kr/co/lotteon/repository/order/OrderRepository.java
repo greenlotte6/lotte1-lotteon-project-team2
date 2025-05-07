@@ -77,4 +77,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> , OrderRe
 
     @Query("SELECT SUM(o.orderTotalPrice) FROM Order o WHERE o.orderDate BETWEEN :start AND :end")
     long findTotalOrderPriceBetween(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+
+    long countByOrderStatus(String state);
 }
