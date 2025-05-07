@@ -5,8 +5,10 @@ import kr.co.lotteon.dto.product.ProductImageDTO;
 import kr.co.lotteon.dto.seller.SellerDTO;
 import lombok.*;
 
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Locale;
 
 @Getter
 @Setter
@@ -27,4 +29,5 @@ public class OrderInfoDTO {
     private int orderNo;
     private LocalDateTime orderDate;
     private String orderStatus;
+
 }

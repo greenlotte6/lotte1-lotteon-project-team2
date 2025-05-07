@@ -3,6 +3,7 @@ package kr.co.lotteon.service.mypage;
 import com.querydsl.core.Tuple;
 import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
+import kr.co.lotteon.dto.feedback.ReturnDTO;
 import kr.co.lotteon.dto.feedback.ReviewDTO;
 import kr.co.lotteon.dto.order.OrderDTO;
 import kr.co.lotteon.dto.order.OrderInfoDTO;
@@ -16,6 +17,7 @@ import kr.co.lotteon.dto.seller.SellerDTO;
 import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.entity.article.Inquiry;
 import kr.co.lotteon.entity.coupon.Coupon;
+import kr.co.lotteon.entity.feedback.Return;
 import kr.co.lotteon.entity.feedback.Review;
 import kr.co.lotteon.entity.order.Order;
 import kr.co.lotteon.entity.order.OrderItem;
@@ -26,6 +28,7 @@ import kr.co.lotteon.entity.seller.Seller;
 import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.article.InquiryRepository;
 import kr.co.lotteon.repository.coupon.CouponRepository;
+import kr.co.lotteon.repository.feedback.ReturnRepository;
 import kr.co.lotteon.repository.feedback.ReviewRepository;
 import kr.co.lotteon.repository.order.OrderInfoRepository;
 import kr.co.lotteon.repository.order.OrderRepository;
@@ -57,6 +60,8 @@ public class MyPageService {
     private final CouponRepository couponRepository;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
+    private final ReturnRepository returnRepository;
+
 
     public PageResponseDTO<InquiryDTO> inquiryFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO) {
 
@@ -387,9 +392,8 @@ public class MyPageService {
     }
 */
 
-    public PageResponseDTO orderInfoPaging(PageRequestDTO pageRequestDTO, String uid) {
+    public PageResponseDTO<OrderInfoDTO> orderInfoPaging(PageRequestDTO pageRequestDTO, String uid) {
 
-        pageRequestDTO.setSize(10);
         Pageable pageable = pageRequestDTO.getPageable("no");
         Page<Tuple> pageObject = orderRepository.orderInfoPaging(pageRequestDTO, pageable, uid);
 
@@ -439,6 +443,7 @@ public class MyPageService {
         log.info("total: {}", total);
         log.info("sellerDTOList: {}", pageObject);
 
+
         return PageResponseDTO.<OrderInfoDTO>builder()
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(DTOList)
@@ -446,4 +451,14 @@ public class MyPageService {
                 .build();
 
     }
+
+/*
+    public void returnRegister(UserDTO userDTO, ReturnDTO returnDTO){
+
+        User user = modelMapper.map(userDTO, User.class);
+
+    }
+*/
+
+
 }
