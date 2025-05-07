@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function(){
+
     const modal = document.querySelectorAll('.modal');
     const modalClose = document.querySelectorAll('.modalClose');
-
 
     const purchase_confirm_modal = document.querySelector('.purchase_confirm_modal');
     const product_review_modal = document.querySelector('.product_review_modal');
@@ -10,9 +10,6 @@ document.addEventListener('DOMContentLoaded', function(){
     const seller_info_modal = document.querySelector('.seller_info_modal');
     const order_details_modal = document.querySelector('.order_details_modal');
     const inquiry_modal = document.querySelector('.inquiry_modal');
-
-
-    
 
 
     const purchase_confirm_btn = document.querySelectorAll('.purchase_confirm_btn');
@@ -24,26 +21,98 @@ document.addEventListener('DOMContentLoaded', function(){
     const inquiry_btn = document.querySelectorAll('.inquiry_btn');
 
 
+    // 숫자 포맷 함수
+    function formatNumber(num) {
+        return Number(num).toLocaleString();
+    }
+
     purchase_confirm_btn.forEach(function(btn){
         btn.addEventListener('click', function(){
+
+            const orderStatus  = btn.getAttribute('data-orderstatus');
+
+            if(orderStatus === "구매확정"){
+                alert("이미 구매확정입니다.");
+                return;
+            }
+
             purchase_confirm_modal.style.display ='block';
         });
     });
 
     product_review_btn.forEach(function(btn){
         btn.addEventListener('click', function(){
+            const prodName = btn.getAttribute('data-prod-name');
+
+            document.getElementById('modalProdName').textContent = prodName;
+
             product_review_modal.style.display ='block';
         });
     });
     
     return_request_btn.forEach(function(btn){
         btn.addEventListener('click', function(){
+
+            const orderDate    = btn.getAttribute('data-orderdate');
+            const itemNo       = btn.getAttribute('data-itemno');
+            const prodName     = btn.getAttribute('data-prodname');
+            const company      = btn.getAttribute('data-company');
+            const itemCount    = btn.getAttribute('data-itemcount');
+            const itemPrice    = btn.getAttribute('data-itemprice');
+            const productImage = btn.getAttribute('data-productimage');
+            const itemDiscount = btn.getAttribute('data-itemdiscount');
+            const orderStatus  = btn.getAttribute('data-orderstatus');
+
+            const totalPrice = itemPrice - itemDiscount;
+
+            // 모달에 데이터 넣기
+            document.getElementById('returnModalOrderDate').textContent = orderDate;
+            document.getElementById('returnModalProductImage').src = productImage;
+            document.getElementById('returnModalOrderNo').textContent = '주문번호 : ' + itemNo;
+            document.getElementById('returnModalCompany').textContent = company;
+            document.getElementById('returnModalProdName').textContent = prodName;
+            document.getElementById('returnModalItemCount').textContent = '수량 : ' + itemCount + '개';
+            document.getElementById('returnModalSellPrice').textContent = '판매가 : ' + formatNumber(itemPrice) + '원';
+            document.getElementById('returnModalDiscount').textContent = '할인 : -' + formatNumber(itemDiscount) + '원';
+            document.getElementById('returnModalTotalPrice').textContent = '결제금액 : ' + formatNumber(totalPrice) + '원';
+            document.getElementById('returnModalOrderStatus').textContent = orderStatus;
+
+
+
             return_request_modal.style.display ='block';
         });
     });
 
     exchange_request_btn.forEach(function(btn){
         btn.addEventListener('click', function(){
+
+
+            const orderDate    = btn.getAttribute('data-orderdate');
+            const itemNo       = btn.getAttribute('data-itemno');
+            const prodName     = btn.getAttribute('data-prodname');
+            const company      = btn.getAttribute('data-company');
+            const itemCount    = btn.getAttribute('data-itemcount');
+            const itemPrice    = btn.getAttribute('data-itemprice');
+            const productImage = btn.getAttribute('data-productimage');
+            const itemDiscount = btn.getAttribute('data-itemdiscount');
+            const orderStatus  = btn.getAttribute('data-orderstatus');
+
+            // 계산
+            const totalPrice = itemPrice - itemDiscount;
+
+            // 모달에 데이터 넣기
+            document.getElementById('exchangeModalOrderDate').textContent = orderDate;
+            document.getElementById('modalProductImage').src = productImage;
+            document.getElementById('exchangeModalOrderNo').textContent = '주문번호 : ' + itemNo;
+            document.getElementById('exchangeModalCompany').textContent = company;
+            document.getElementById('exchangeModalProdName').textContent = prodName;
+            document.getElementById('exchangeModalItemCount').textContent = '수량 : ' + itemCount + '개';
+            document.getElementById('exchangeModalSellPrice').textContent = '판매가 : ' + formatNumber(itemPrice) + '원';
+            document.getElementById('exchangeModalDiscount').textContent = '할인 : -' + formatNumber(itemDiscount) + '원';
+            document.getElementById('exchangeModalTotalPrice').textContent = '결제금액 : ' + formatNumber(totalPrice) + '원';
+            document.getElementById('exchangeModalOrderStatus').textContent = orderStatus;
+
+
             exchange_request_modal.style.display ='block';
         });
     });

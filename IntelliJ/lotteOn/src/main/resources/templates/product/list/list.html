@@ -305,7 +305,7 @@
                     <img class="product-img" src="${product.snameList}" alt="${product.prodName}" />
                     <div class="product-info">
                         <span class="vendor-name">${product.company}</span> <span class="vendor-rank">${product.rank}</span><br>
-                        <span class="brand">${product.prodBrand}</span>
+                        <span class="brand">${product.prodBrand}</span><br>
                         <span class="pname">${product.prodName}</span>
                         <div class="meta">
                             <span>★ ${product.ratingAvg !== null ? product.ratingAvg.toFixed(1) : 0}</span>&nbsp;|&nbsp;리뷰 <span>${product.reviewCount}</span>
@@ -454,7 +454,7 @@
                             </div>
                         </div>
                         <p class="name">
-                            <span class="brand" th:text="${product.prodBrand}"></span>
+                            <span class="brand" th:text="${product.prodBrand}"></span><br>
                             <span class="product-name" th:text="${product.prodName}"></span>
                         </p>
                         <p class="price">
@@ -504,7 +504,7 @@
                             <img class="product-img" th:src="${product.sNameList}" alt="${product.prodName}" />
                             <div class="product-info">
                                 <span class="vendor-name" th:text="${product.company}">판매자명</span><span class="vendor-rank" th:text="${product.rank}">판매자등급</span><br>
-                                <span class="brand" th:text="${product.prodBrand}">브랜드</span>
+                                <span class="brand" th:text="${product.prodBrand}">브랜드</span><br>
                                 <span class="pname" th:text="${product.prodName}">상품명</span>
                                 <div class="meta">
                                     <span th:text="'★ ' + ${product.ratingAvg}">★ 4.8</span>&nbsp;|&nbsp;리뷰 <span th:text="${product.reviewCount}">0</span>

@@ -64,11 +64,11 @@
                     </div>
                     <div class="notice-footer">
                         <div class="pagination">
-                            <a class="prev" th:if="${reviewDTO.prev}" th:href="@{/cs/my/review(pg=${reviewDTO.start - 1}, size=${reviewDTO.size})}">이전</a>
+                            <a class="prev" th:if="${reviewDTO.prev}" th:href="@{/my/review(pg=${reviewDTO.start - 1}, size=${reviewDTO.size})}">이전</a>
                             <th:block th:each="i: ${#numbers.sequence(reviewDTO.start, reviewDTO.end)}">
-                                <a th:href="@{/cs/my/review(pg=${i}, size=${reviewDTO.size})}" th:text="${i}" th:class="${i == reviewDTO.pg ? 'active' : ''}"></a>
+                                <a th:href="@{/my/review(pg=${i}, size=${reviewDTO.size})}" th:text="${i}" th:class="${i == reviewDTO.pg ? 'active' : ''}"></a>
                             </th:block>
-                            <a class="next" th:if="${reviewDTO.next}" th:href="@{/cs/my/review(pg=${reviewDTO.end + 1}, size=${reviewDTO.size})}">다음</a>
+                            <a class="next" th:if="${reviewDTO.next}" th:href="@{/my/review(pg=${reviewDTO.end + 1}, size=${reviewDTO.size})}">다음</a>
                         </div>
                     </div>
                 </article>
