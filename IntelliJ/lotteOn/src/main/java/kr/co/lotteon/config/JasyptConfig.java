@@ -26,9 +26,6 @@ public class JasyptConfig {
         config.setStringOutputType("base64");
         encryptor.setConfig(config);
 
-        String encryptedText = encryptor.encrypt("308ec753fd2c007c3368d735e6deca2f");
-        System.out.println("카카오-id 123 : (" + encryptedText + ")");
-
         return encryptor;
     }
 }
