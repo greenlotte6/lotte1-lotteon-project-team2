@@ -72,6 +72,12 @@ public class AdminController {
 
         // 주문 수 계산
         operationDTO = adminService.countOrder(operationDTO);
+        
+        // 임금대기, 배송준비, 취소요청, 교환요청, 반품요청
+        operationDTO = adminService.countOrderDetail(operationDTO);
+        
+        // 상품 카테고리 별 총량 출력
+        operationDTO = adminService.countProductCategory(operationDTO);
 
         model.addAttribute("noticeDTOS", noticeDTOS);
         model.addAttribute("inquiryDTOS", inquiryDTOS);

@@ -42,6 +42,7 @@ import kr.co.lotteon.repository.category.MainCategoryRepository;
 import kr.co.lotteon.repository.category.SubCategoryRepository;
 import kr.co.lotteon.repository.coupon.CouponIssueRepository;
 import kr.co.lotteon.repository.coupon.CouponRepository;
+import kr.co.lotteon.repository.order.OrderItemRepository;
 import kr.co.lotteon.repository.order.OrderRepository;
 import kr.co.lotteon.repository.point.PointRepository;
 import kr.co.lotteon.repository.product.CartRepository;
@@ -83,6 +84,7 @@ public class adminService {
 
     // 주문
     private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
 
     // 카테고리
     private final MainCategoryRepository mainCategoryRepository;
@@ -1169,6 +1171,74 @@ public class adminService {
         operationDTO.setOrderPriceToday(orderRepository.findTotalOrderPriceBetween(startOfToday, startOfTomorrow));
         operationDTO.setOrderPriceYesterday(orderRepository.findTotalOrderPriceBetween(startOfYesterDay, startOfToday));
 
+        return operationDTO;
+    }
+
+    public OperationDTO countOrderDetail(OperationDTO operationDTO) {
+
+        String state = "입금대기";
+        long ready = orderRepository.countByOrderStatus(state);
+
+        state = "배송준비";
+        long delivery = orderRepository.countByOrderStatus(state);
+
+        state = "취소요청";
+        long cancel = orderRepository.countByOrderStatus(state);
+
+        state = "교환요청";
+        long exchange = orderRepository.countByOrderStatus(state);
+
+        state = "반품요청";
+        long returnCount = orderRepository.countByOrderStatus(state);
+
+        operationDTO.setReadyTotal(ready);
+        operationDTO.setDeliveryTotal(delivery);
+        operationDTO.setCancelTotal(cancel);
+        operationDTO.setExchangeTotal(exchange);
+        operationDTO.setReturnTotal(returnCount);
+
+        return operationDTO;
+    }
+
+    public OperationDTO countProductCategory(OperationDTO operationDTO) {
+
+        List<Object[]> results = orderItemRepository.findTotalPriceGroupByCategory();
+
+        int num = 1;
+        operationDTO.setSale4("기타");
+
+        for (Object[] row : results) {
+            String category = (String) row[0];
+            Double totalDiscountedPrice = (Double) row[1];
+            long totalPrice = totalDiscountedPrice != null ? totalDiscountedPrice.longValue() : 0L;
+
+            System.out.println(category);
+
+            switch (num){
+                case 1: {
+                    operationDTO.setSale1(category);
+                    operationDTO.setSale1Total(totalPrice);
+                    break;
+                }
+                case 2: {
+                    operationDTO.setSale2(category);
+                    operationDTO.setSale2Total(totalPrice);
+                }
+                case 3: {
+                    operationDTO.setSale3(category);
+                    operationDTO.setSale3Total(totalPrice);
+                }
+                case 4: {
+                    long total = operationDTO.getSale4Total() + totalPrice;
+                    operationDTO.setSale4Total(total);
+                }
+            }
+
+            num++;
+
+        }
+
+        System.out.println(operationDTO);
 
         return operationDTO;
     }
