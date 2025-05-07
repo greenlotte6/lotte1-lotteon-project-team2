@@ -139,7 +139,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
                 .fetch();
 
         long total = queryFactory
-                .select(qSeller.countDistinct())
+                .select(qOrderItem.count())
                 .from(qOrderItem)
                 .join(qOrderItem.order, qOrder)
                 .join(qOrderItem.product, qProduct)
