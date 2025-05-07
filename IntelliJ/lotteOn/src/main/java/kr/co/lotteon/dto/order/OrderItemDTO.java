@@ -20,6 +20,8 @@ public class OrderItemDTO {
     private int itemDiscount; // 할인율 (퍼센트)
     private int itemCount;    // 수량
 
+    private String orderStatus;
+
     private OrderDTO orderDTO;
 
     private ProductDTO product;

@@ -37,8 +37,6 @@ public class Order {
 
     private String orderAddr; // 배송 주소
 
-    private String orderStatus; // 주문 상태
-
     @CreationTimestamp
     private LocalDateTime orderDate; // 주문 일자
 
@@ -52,12 +50,5 @@ public class Order {
 
     private String payment;       // 결제 수단
     private String paymentContent;   // 결제 상세 정보
-
-    @PrePersist
-    public void prePersist() {
-        if (this.orderStatus == null) {
-            this.orderStatus = "입금대기";
-        }
-    }
 
 }

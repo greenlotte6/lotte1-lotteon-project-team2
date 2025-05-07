@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/css/myPage/searchPeriod.css">
     <link rel="stylesheet" href="/css/index_layout.css">
     <link rel="stylesheet" href="/css/common/header.css">
+    <link rel="stylesheet" href="/css/myPage/pagination.css">
     <script src="/js/myPage/searchPeriod.js"></script>
     <script src="/js/myPage/modal.js"></script>
     <script src="/js/headerMenu.js"></script>
@@ -24,7 +25,7 @@
         <!-- 헤더 끝 -->
         <!-- 메인 시작 -->
         <main>
-            <th:block th:insert="/myPage/inc/myShoppingInfo.html"></th:block>
+            <!--<th:block th:insert="/myPage/inc/myShoppingInfo.html"></th:block>-->
             <section class="content">
                 <!-- 왼쪽 사이드바 -->
                 <th:block th:include="/myPage/inc/sidebar.html"/>
@@ -93,140 +94,60 @@
                                     </tr>
                                 </tbody>
                                 <tbody>
-                                    <tr data-product-id="12345">
-                                        <td>2022-12-13</td>
+                                    <tr th:each="orderInfo, i : ${orderInfoPagingDTO.dtoList}">
+                                        <td th:text="${#strings.substring(orderInfo.orderDate, 0, 10)}"></td>
                                         <td class="product-info">
                                             <div class="img-container">
-                                                <img class="img" src="/images/product/lelabo_another.jpg" alt="">
+                                                <img class="img" th:src="${orderInfo.productImage}" alt="">
                                             </div>
                                             <div class="text-area">
-                                                <p>주문번호 : 1012211341</p>
-                                                <p class="">(주) 상호명</p>
-                                                <p>상품명</p>
-                                                <p>수량 : 1개</p>
-                                                <p>34,000원</p>
+                                                <p th:text="${'주문번호 : ' + orderInfo.orderNo}"></p>
+                                                <p th:text="${'상호명 : ' + orderInfo.seller.company}"></p>
+                                                <p th:text="${'상품명 : ' + orderInfo.product.prodName}"></p>
+                                                <p th:text="${'수량 : ' + orderInfo.orderItem.itemCount + '개'}"></p>
+                                                <p th:text="${'가격 : ' + #numbers.formatInteger(orderInfo.orderItem.itemPrice, 3, 'COMMA') + '원'}"></p>
                                             </div>
                                         </td>
-                                        <td>배송완료</td>
+                                        <td th:text="${orderInfo.orderStatus}"></td>
                                         <td>
-                                            <input type="submit" class="orderdetails-btn purchase_confirm_btn" value="구매확정" data-product-id="12345">
-                                            <input type="submit" class="orderdetails-btn product_review_btn" value="상품평쓰기" data-product-id="12345">
-                                            <input type="submit" class="orderdetails-btn return_request_btn" value="반품신청" data-product-id="12345">
-                                            <input type="submit" class="orderdetails-btn exchange_request_btn" value="교환신청" data-product-id="12345">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2022-12-13</td>
-                                        <td class="product-info">
-                                            <div class="img-container">
-                                                <img class="img" src="/images/product/lelabo_another.jpg" alt="">
-                                            </div>
-                                            <div class="text-area">
-                                                <p>주문번호 : 1012211341</p>
-                                                <p class="">(주) 상호명</p>
-                                                <p>상품명</p>
-                                                <p>수량 : 1개</p>
-                                                <p>34,000원</p>
-                                            </div>
-                                        </td>
-                                        <td>배송완료</td>
-                                        <td>
-                                            <input type="submit" class="orderdetails-btn purchase_confirm_btn" value="구매확정">
-                                            <input type="submit" class="orderdetails-btn product_review_btn" value="상품평쓰기">
-                                            <input type="submit" class="orderdetails-btn return_request_btn" value="반품신청">
-                                            <input type="submit" class="orderdetails-btn exchange_request_btn" value="교환신청">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2022-12-13</td>
-                                        <td class="product-info">
-                                            <div class="img-container">
-                                                <img class="img" src="/images/product/lelabo_another.jpg" alt="">
-                                            </div>
-                                            <div class="text-area">
-                                                <p>주문번호 : 1012211341</p>
-                                                <p class="">(주) 상호명</p>
-                                                <p>상품명</p>
-                                                <p>수량 : 1개</p>
-                                                <p>34,000원</p>
-                                            </div>
-                                        </td>
-                                        <td>배송완료</td>
-                                        <td>
-                                            <input type="submit" class="orderdetails-btn purchase_confirm_btn" value="구매확정">
-                                            <input type="submit" class="orderdetails-btn product_review_btn" value="상품평쓰기">
-                                            <input type="submit" class="orderdetails-btn return_request_btn" value="반품신청">
-                                            <input type="submit" class="orderdetails-btn exchange_request_btn" value="교환신청">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2022-12-13</td>
-                                        <td class="product-info">
-                                            <div class="img-container">
-                                                <img class="img" src="/images/product/lelabo_another.jpg" alt="">
-                                            </div>
-                                            <div class="text-area">
-                                                <p>주문번호 : 1012211341</p>
-                                                <p class="">(주) 상호명</p>
-                                                <p>상품명</p>
-                                                <p>수량 : 1개</p>
-                                                <p>34,000원</p>
-                                            </div>
-                                        </td>
-                                        <td>배송완료</td>
-                                        <td>
-                                            <input type="submit" class="orderdetails-btn purchase_confirm_btn" value="구매확정">
-                                            <input type="submit" class="orderdetails-btn product_review_btn" value="상품평쓰기">
-                                            <input type="submit" class="orderdetails-btn return_request_btn" value="반품신청">
-                                            <input type="submit" class="orderdetails-btn exchange_request_btn" value="교환신청">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2022-12-13</td>
-                                        <td class="product-info">
-                                            <div class="img-container">
-                                                <img class="img" src="/images/product/lelabo_another.jpg" alt="">
-                                            </div>
-                                            <div class="text-area">
-                                                <p>주문번호 : 1012211341</p>
-                                                <p class="">(주) 상호명</p>
-                                                <p>상품명</p>
-                                                <p>수량 : 1개</p>
-                                                <p>34,000원</p>
-                                            </div>
-                                        </td>
-                                        <td>배송완료</td>
-                                        <td>
-                                            <input type="submit" class="orderdetails-btn purchase_confirm_btn" value="구매확정">
-                                            <input type="submit" class="orderdetails-btn product_review_btn" value="상품평쓰기">
-                                            <input type="submit" class="orderdetails-btn return_request_btn" value="반품신청">
-                                            <input type="submit" class="orderdetails-btn exchange_request_btn" value="교환신청">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2022-12-13</td>
-                                        <td class="product-info">
-                                            <div class="img-container">
-                                                <img class="img" src="/images/product/lelabo_another.jpg" alt="">
-                                            </div>
-                                            <div class="text-area">
-                                                <p>주문번호 : 1012211341</p>
-                                                <p class="">(주) 상호명</p>
-                                                <p>상품명</p>
-                                                <p>수량 : 1개</p>
-                                                <p>34,000원</p>
-                                            </div>
-                                        </td>
-                                        <td>배송완료</td>
-                                        <td>
-                                            <input type="submit" class="orderdetails-btn purchase_confirm_btn" value="구매확정">
-                                            <input type="submit" class="orderdetails-btn product_review_btn" value="상품평쓰기">
-                                            <input type="submit" class="orderdetails-btn return_request_btn" value="반품신청">
-                                            <input type="submit" class="orderdetails-btn exchange_request_btn" value="교환신청">
+                                            <input type="button" class="orderdetails-btn purchase_confirm_btn" value="구매확정"
+                                                   th:data-product-id="${orderInfo.orderItem.itemNo}"
+                                                   th:data-prod-name="${orderInfo.product.prodName}"
+                                                   th:data-orderStatus="${orderInfo.orderStatus}">
+                                            <input type="button" class="orderdetails-btn product_review_btn" value="상품평쓰기" th:data-product-id="${orderInfo.orderItem.itemNo}" th:data-prod-name="${orderInfo.product.prodName}">
+                                            <input type="button" class="orderdetails-btn return_request_btn" value="반품신청"
+                                                   th:data-orderDate="${#strings.substring(orderInfo.orderDate, 0, 10)}"
+                                                   th:data-itemNo="${orderInfo.orderItem.itemNo}"
+                                                   th:data-prodName="${orderInfo.product.prodName}"
+                                                   th:data-company="${orderInfo.seller.company}"
+                                                   th:data-itemCount="${orderInfo.orderItem.itemCount}"
+                                                   th:data-itemPrice="${orderInfo.orderItem.itemPrice}"
+                                                   th:data-productImage="${orderInfo.productImage}"
+                                                   th:data-itemDiscount="${orderInfo.orderItem.itemDiscount}"
+                                                   th:data-orderStatus="${orderInfo.orderStatus}">
+                                            <input type="button" class="orderdetails-btn exchange_request_btn" value="교환신청"
+                                                   th:data-orderDate="${#strings.substring(orderInfo.orderDate, 0, 10)}"
+                                                   th:data-itemNo="${orderInfo.orderItem.itemNo}"
+                                                   th:data-prodName="${orderInfo.product.prodName}"
+                                                   th:data-company="${orderInfo.seller.company}"
+                                                   th:data-itemCount="${orderInfo.orderItem.itemCount}"
+                                                   th:data-itemPrice="${orderInfo.orderItem.itemPrice}"
+                                                   th:data-productImage="${orderInfo.productImage}"
+                                                   th:data-itemDiscount="${orderInfo.orderItem.itemDiscount}"
+                                                   th:data-orderStatus="${orderInfo.orderStatus}">
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
+                            <div class="notice-footer">
+                                <div class="pagination">
+                                    <a class="prev" th:if="${orderInfoPagingDTO.prev}" th:href="@{/my/review(pg=${orderInfoPagingDTO.start - 1}, size=${orderInfoPagingDTO.size})}">이전</a>
+                                    <th:block th:each="i: ${#numbers.sequence(orderInfoPagingDTO.start, orderInfoPagingDTO.end)}">
+                                        <a th:href="@{/my/order(pg=${i}, size=${orderInfoPagingDTO.size})}" th:text="${i}" th:class="${i == orderInfoPagingDTO.pg ? 'active' : ''}"></a>
+                                    </th:block>
+                                    <a class="next" th:if="${orderInfoPagingDTO.next}" th:href="@{/my/review(pg=${orderInfoPagingDTO.end + 1}, size=${orderInfoPagingDTO.size})}">다음</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </article>
@@ -275,7 +196,7 @@
                             <tbody>
                                 <tr>
                                     <td>상품명</td>
-                                    <td>상품명 출력</td>
+                                    <td id="modalProdName">상품</td>
                                 </tr>
                                 <tr>
                                     <td>만족도</td>
@@ -336,25 +257,25 @@
                                 </tbody>
                                 <tbody>
                                     <tr>
-                                        <td>2025-12-31</td>
+                                        <td id="returnModalOrderDate"></td>
                                         <td class="product-info">
                                             <div class="img-container">
-                                                <img class="img" src="/lotteOn/images/product/lelabo_another.jpg" alt="">
+                                                <img id="returnModalProductImage" class="img" src="" alt="">
                                             </div>
                                             <div class="text-area">
-                                                <p>주문번호 : 1012211341</p>
-                                                <p>(주) 상호명</p>
-                                                <p>상품명</p>
-                                                <p>수량 : 1개</p>
-                                                <p>34,000원</p>
+                                                <p id="returnModalOrderNo"></p>
+                                                <p id="returnModalCompany"></p>
+                                                <p id="returnModalProdName"></p>
+                                                <p id="returnModalItemCount"></p>
+                                                <p></p>
                                             </div>
                                         </td>
                                         <td>
-                                            <p>판매가 : 34,000원</p>
-                                            <p>할인 : -3,000원</p>
-                                            <p>결제금액 : 31,000원</p>
+                                            <p id="returnModalSellPrice"></p>
+                                            <p id="returnModalDiscount"></p>
+                                            <p id="returnModalTotalPrice"></p>
                                         </td>
-                                        <td>배송완료</td>
+                                        <td id="returnModalOrderStatus"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -368,10 +289,22 @@
                                     <tr>
                                         <td>반품유형</td>
                                         <td>
-                                            <input type="radio"/> 단순 변심 &ensp;
-                                            <input type="radio"/> 파손 및 불량 &ensp;
-                                            <input type="radio"/> 주문 실수 &ensp;
-                                            <input type="radio"/> 기타 &ensp;
+                                            <label>
+                                                <input type="radio" name="reason" value="단순 변심">
+                                                <span>단순 변심</span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="reason" value="파손 및 불량">
+                                                <span>파손 및 불량</span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="reason" value="주문 실수">
+                                                <span>주문 실수</span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="reason" value="기타">
+                                                <span>기타</span>
+                                            </label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -425,25 +358,25 @@
                                 </tbody>
                                 <tbody>
                                     <tr>
-                                        <td>2025-12-31</td>
+                                        <td id="exchangeModalOrderDate"></td>
                                         <td class="product-info">
                                             <div class="img-container">
-                                                <img class="img" src="/lotteOn/images/product/lelabo_another.jpg" alt="">
+                                                <img id="modalProductImage" class="img" src="" alt="">
                                             </div>
                                             <div class="text-area">
-                                                <p>주문번호 : 1012211341</p>
-                                                <p>(주) 상호명</p>
-                                                <p>상품명</p>
-                                                <p>수량 : 1개</p>
-                                                <p>34,000원</p>
+                                                <p id="exchangeModalOrderNo"></p>
+                                                <p id="exchangeModalCompany"></p>
+                                                <p id="exchangeModalProdName"></p>
+                                                <p id="exchangeModalItemCount"></p>
+                                                <p></p>
                                             </div>
                                         </td>
                                         <td>
-                                            <p>판매가 : 34,000원</p>
-                                            <p>할인 : -3,000원</p>
-                                            <p>결제금액 : 31,000원</p>
+                                            <p id="exchangeModalSellPrice"></p>
+                                            <p id="exchangeModalDiscount"></p>
+                                            <p id="exchangeModalTotalPrice"></p>
                                         </td>
-                                        <td>배송완료</td>
+                                        <td id="exchangeModalOrderStatus"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -457,10 +390,22 @@
                                     <tr>
                                         <td>반품유형</td>
                                         <td>
-                                            <input type="radio"/> 단순 변심 &ensp;
-                                            <input type="radio"/> 파손 및 불량 &ensp;
-                                            <input type="radio"/> 주문 실수 &ensp;
-                                            <input type="radio"/> 기타 &ensp;
+                                            <label>
+                                                <input type="radio" name="type" value="단순 변심">
+                                                <span>단순 변심</span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="type" value="파손 및 불량">
+                                                <span>파손 및 불량</span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="type" value="주문 실수">
+                                                <span>주문 실수</span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="type" value="기타">
+                                                <span>기타</span>
+                                            </label>
                                         </td>
                                     </tr>
                                     <tr>

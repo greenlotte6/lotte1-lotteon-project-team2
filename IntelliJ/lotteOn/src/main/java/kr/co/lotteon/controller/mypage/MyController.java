@@ -5,8 +5,10 @@ import jakarta.servlet.http.HttpSession;
 import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.config.BannerDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
+import kr.co.lotteon.dto.feedback.ReturnDTO;
 import kr.co.lotteon.dto.feedback.ReviewDTO;
 import kr.co.lotteon.dto.order.OrderDTO;
+import kr.co.lotteon.dto.order.OrderInfoDTO;
 import kr.co.lotteon.dto.order.OrderItemDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
@@ -44,14 +46,15 @@ public class MyController {
         BannerDTO banner = configService.findBanner("MY1");
         model.addAttribute("banner", banner);
 
+
         // 페이지 목록 5개로 제한
         pageRequestDTO.setSize(5);
         
         // 세션 정보 가져오기
-        String writer = userDetails.getUsername();
+        String uid = userDetails.getUsername();
 
         // 로그인 유저 조회
-        UserDTO userDTO = myPageService.findByUid(writer);
+        UserDTO userDTO = myPageService.findByUid(uid);
 
         // 로그인한 유저의 쿠폰 개수 조회
         long getCouponCount = myPageService.getCouponCount(userDTO);
@@ -75,23 +78,24 @@ public class MyController {
         PageResponseDTO<CouponDTO> couponDTO = myPageService.couponFindAll(userDTO, pageRequestDTO);
 
         // 로그인한 유저의 주문내역 조회
-        //PageResponseDTO<OrderDTO> orderDTO = myPageService.orderFindAll(userDTO, pageRequestDTO);
-        
+        PageResponseDTO<OrderInfoDTO> orderInfoPagingDTO = myPageService.orderInfoPaging(pageRequestDTO, uid);
+
+
+
         // 로그인한 유저의 정보 조회
         myPageService.splitPhone(userDTO);
         String formattedPhone = myPageService.joinPhone(userDTO);
         userDTO.setHp(formattedPhone);
 
-
         model.addAttribute("pointDTO", pointDTO);
         model.addAttribute("inquiryDTO", inquiryDTO);
         model.addAttribute("reviewDTO", reviewDTO);
         model.addAttribute("couponDTO", couponDTO);
-        //model.addAttribute("orderDTO", orderDTO);
         model.addAttribute("userDTO", userDTO);
         model.addAttribute("pendingInquiryCount", pendingInquiryCount);
         model.addAttribute("getCouponCount", getCouponCount);
         model.addAttribute("point", point);
+        model.addAttribute("orderInfoPagingDTO", orderInfoPagingDTO);
 
 
         return "/myPage/myPageMain";
@@ -100,19 +104,20 @@ public class MyController {
     @GetMapping("/my/order")
     public String order(@AuthenticationPrincipal UserDetails userDetails, PageRequestDTO pageRequestDTO, Model model) {
 
-        /*
+        pageRequestDTO.setSize(10);
+
         String uid = userDetails.getUsername();
 
-        UserDTO userDTO = myPageService.findByUid(uid);
-
-        PageResponseDTO<OrderDTO> orderDTO = myPageService.orderFindAll(userDTO, pageRequestDTO);
-        PageResponseDTO<OrderItemDTO> orderItemDTO = myPageService.orderItemFindAll(userDTO, pageRequestDTO);
+        PageResponseDTO<OrderInfoDTO> orderInfoPagingDTO = myPageService.orderInfoPaging(pageRequestDTO, uid);
+        //PageResponseDTO<ReturnDTO> returnDTO = myPageService.returnRegister();
 
 
-        model.addAttribute("orderDTO", orderDTO);
-        model.addAttribute("orderItemDTO", orderItemDTO);
+        log.info("orderInfoPagingDTO : " + orderInfoPagingDTO);
 
-        */
+
+
+        model.addAttribute("orderInfoPagingDTO", orderInfoPagingDTO);
+
 
         return "/myPage/orderDetails";
 

@@ -66,11 +66,11 @@
                     </div>
                     <div class="notice-footer">
                         <div class="pagination">
-                            <a class="prev" th:if="${inquiryDTO.prev}" th:href="@{/cs/qna/list(pg=${inquiryDTO.start - 1}, size=${inquiryDTO.size})}">이전</a>
+                            <a class="prev" th:if="${inquiryDTO.prev}" th:href="@{/my/qna(pg=${inquiryDTO.start - 1}, size=${inquiryDTO.size})}">이전</a>
                             <th:block th:each="i: ${#numbers.sequence(inquiryDTO.start, inquiryDTO.end)}">
-                                <a th:href="@{/cs/qna/list(pg=${i}, size=${inquiryDTO.size})}" th:text="${i}" th:class="${i == inquiryDTO.pg ? 'active' : ''}"></a>
+                                <a th:href="@{/my/qna(pg=${i}, size=${inquiryDTO.size})}" th:text="${i}" th:class="${i == inquiryDTO.pg ? 'active' : ''}"></a>
                             </th:block>
-                            <a class="next" th:if="${inquiryDTO.next}" th:href="@{/cs/qna/list(pg=${inquiryDTO.end + 1}, size=${inquiryDTO.size})}">다음</a>
+                            <a class="next" th:if="${inquiryDTO.next}" th:href="@{/my/qna(pg=${inquiryDTO.end + 1}, size=${inquiryDTO.size})}">다음</a>
                         </div>
                     </div>
                 </article>

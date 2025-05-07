@@ -21,12 +21,12 @@ public interface OrderRepository extends JpaRepository<Order, Integer> , OrderRe
 
 
     @Query("""
-    SELECT o.orderStatus AS status, COUNT(o) AS cnt 
+    SELECT oi.orderStatus AS status, COUNT(o) AS cnt 
     FROM OrderItem oi
     JOIN oi.order o
     JOIN oi.product p
     WHERE p.seller.sno = :sno
-    GROUP BY o.orderStatus
+    GROUP BY oi.orderStatus
     """)
     List<Object[]> findOrderStatusCountsBySeller(@Param("sno") int sno);
 
@@ -37,19 +37,19 @@ public interface OrderRepository extends JpaRepository<Order, Integer> , OrderRe
     FROM OrderItem oi
     JOIN oi.order o
     JOIN oi.product p
-    WHERE p.seller.sno = :sno AND o.orderStatus = '구매확정'
+    WHERE p.seller.sno = :sno AND oi.orderStatus = '구매확정'
     """)
     Long findConfirmedSalesTotalBySeller(@Param("sno") int sno);
 
     // 날짜 별 주문 총량
     @Query("""
-    SELECT o.orderStatus AS status, COUNT(o) AS cnt 
+    SELECT oi.orderStatus AS status, COUNT(o) AS cnt 
     FROM OrderItem oi
     JOIN oi.order o
     JOIN oi.product p
     WHERE p.seller.sno = :sno
       AND o.orderDate >= :term
-    GROUP BY o.orderStatus
+    GROUP BY oi.orderStatus
     """)
     List<Object[]> findOrderStatusCountsBySellerAndDate(
             @Param("sno") int sno,
@@ -64,10 +64,18 @@ public interface OrderRepository extends JpaRepository<Order, Integer> , OrderRe
     FROM OrderItem oi
     JOIN oi.order o
     JOIN oi.product p
-    WHERE p.seller.sno = :sno AND o.orderStatus = '구매확정'
+    WHERE p.seller.sno = :sno AND oi.orderStatus = '구매확정'
         AND o.orderDate >= :term
     """)
     Long findConfirmedSalesTotalBySellerAndDate(int sno, LocalDateTime term);
 
+    @Query("SELECT COUNT(o) FROM Order o WHERE o.orderDate BETWEEN :start AND :end")
+    long countByOrderDateBetween(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+
+    @Query("SELECT SUM(o.orderTotalPrice) FROM Order o")
+    long findTotalOrderPrice();
+
+    @Query("SELECT SUM(o.orderTotalPrice) FROM Order o WHERE o.orderDate BETWEEN :start AND :end")
+    long findTotalOrderPriceBetween(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
 }

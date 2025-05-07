@@ -34,13 +34,6 @@ public class OrderItem {
 
     private String category;
 
-    @PrePersist
-    public void prePersist() {
-        if (this.itemCount == 0) {
-            this.itemCount = 1;
-        }
-    }
-
     // 옵션 1
     private String opt1;
     private String opt1Cont;
@@ -64,4 +57,19 @@ public class OrderItem {
     // 옵션 6
     private String opt6;
     private String opt6Cont;
+
+
+    private String orderStatus; // 주문 상태
+
+    @PrePersist
+    public void prePersist() {
+        if (this.itemCount == 0) {
+            this.itemCount = 1;
+        }
+
+        if (this.orderStatus == null) {
+            this.orderStatus = "입금대기";
+        }
+    }
+
 }

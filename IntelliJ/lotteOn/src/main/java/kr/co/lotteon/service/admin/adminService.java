@@ -9,6 +9,7 @@ import kr.co.lotteon.dto.article.RecruitDTO;
 import kr.co.lotteon.dto.category.MainCategoryDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.coupon.CouponIssueDTO;
+import kr.co.lotteon.dto.operation.OperationDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.point.PointDTO;
@@ -41,6 +42,7 @@ import kr.co.lotteon.repository.category.MainCategoryRepository;
 import kr.co.lotteon.repository.category.SubCategoryRepository;
 import kr.co.lotteon.repository.coupon.CouponIssueRepository;
 import kr.co.lotteon.repository.coupon.CouponRepository;
+import kr.co.lotteon.repository.order.OrderItemRepository;
 import kr.co.lotteon.repository.order.OrderRepository;
 import kr.co.lotteon.repository.point.PointRepository;
 import kr.co.lotteon.repository.product.CartRepository;
@@ -61,6 +63,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -81,6 +84,7 @@ public class adminService {
 
     // 주문
     private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
 
     // 카테고리
     private final MainCategoryRepository mainCategoryRepository;
@@ -92,7 +96,7 @@ public class adminService {
 
     //장바구니
     private final CartRepository cartRepository;
-    
+
     // 게시판
     private final NoticeRepository noticeRepository;
     private final RecruitRepository recruitRepository;
@@ -101,7 +105,7 @@ public class adminService {
 
     // 포인트
     private final PointRepository pointRepository;
-    
+
     /*
      * 관리자 페이지 (상품 등록 메서드)
      * */
@@ -275,11 +279,11 @@ public class adminService {
 
     }
 
-    
+
     /*
-    * 공지사항 부분
-    * */
-    
+     * 공지사항 부분
+     * */
+
     // 공지사항 저장
     public void saveNotice(NoticeDTO noticeDTO, UserDetails userDetails) {
 
@@ -366,8 +370,8 @@ public class adminService {
 
 
     /*
-    * 쿠폰
-    * */
+     * 쿠폰
+     * */
     // 쿠폰 등록
     public void saveCoupon(CouponDTO couponDTO, UserDetails userDetails) {
         Coupon coupon = modelMapper.map(couponDTO, Coupon.class);
@@ -393,8 +397,8 @@ public class adminService {
     }
 
     /*
-    * 쿠폰 리스트
-    * */
+     * 쿠폰 리스트
+     * */
     public PageResponseDTO selectAllForCoupon(PageRequestDTO pageRequestDTO) {
 
         pageRequestDTO.setSize(10);
@@ -425,7 +429,7 @@ public class adminService {
                 .dtoList(DTOList)
                 .total(total)
                 .build();
-        
+
     }
 
     // 쿠폰 만료
@@ -596,7 +600,7 @@ public class adminService {
                 .dtoList(DTOList)
                 .total(total)
                 .build();
-        
+
     }
 
     // 자주묻는 질문 삭제
@@ -706,8 +710,8 @@ public class adminService {
     }
 
     /*
-    * 관리자 상점목록
-    * */
+     * 관리자 상점목록
+     * */
 
     public PageResponseDTO selectAllForSeller(PageRequestDTO pageRequestDTO) {
 
@@ -826,8 +830,8 @@ public class adminService {
     }
 
     /*
-    * 회원목록
-    * */
+     * 회원목록
+     * */
     public PageResponseDTO selectMemberForList(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setSize(10);
 
@@ -858,7 +862,7 @@ public class adminService {
                 .build();
 
     }
-    
+
     // 포인트 목록
     public PageResponseDTO selectPointForList(PageRequestDTO pageRequestDTO) {
         pageRequestDTO.setSize(10);
@@ -904,13 +908,13 @@ public class adminService {
             Point point = pointRepository.findById(no).get();
 
             int pointNum = point.getPoint();
-            
+
             // 유저 포인트 총량 계산
             kr.co.lotteon.entity.user.UserDetails userDetails = userDetailsRepository.findByUser(point.getUser()).get();
             int userPoint = userDetails.getUserPoint() - pointNum;
             userDetails.setUserPoint(userPoint);
             userDetailsRepository.save(userDetails);
-            
+
             pointRepository.deleteById(no);
         }
     }
@@ -1056,7 +1060,7 @@ public class adminService {
                 }else{
                     term = term.minusMonths(1);
                 }
-                
+
                 List<Object[]> result  = orderRepository.findOrderStatusCountsBySellerAndDate(sno, term);
 
                 Map<String, Integer> countMap = new HashMap<>();
@@ -1102,5 +1106,143 @@ public class adminService {
                 .build();
 
 
+    }
+
+    // 관리자 메인 (공지사항 5개 출력)
+    public List<NoticeDTO> NoticeLimit5() {
+        List<NoticeDTO> noticeDTOS = noticeRepository.findTop5ByOrderByNoDesc()
+                .stream()
+                .map(notice -> modelMapper.map(notice, NoticeDTO.class))
+                .collect(Collectors.toList());
+        return noticeDTOS;
+    }
+
+    // 관리자 메인 (문의사항 5개 출력)
+    public List<InquiryDTO> InquiryLimit5() {
+        List<InquiryDTO> inquireDTOS = inquiryRepository.findTop5ByOrderByNoDesc()
+                .stream()
+                .map(inquire -> modelMapper.map(inquire, InquiryDTO.class))
+                .collect(Collectors.toList());
+        return inquireDTOS;
+    }
+
+    // 관리자 메인 문의사항 갯수 출력
+    public OperationDTO countInquiry(OperationDTO operationDTO) {
+
+        operationDTO.setInquiryCountTotal(inquiryRepository.count());
+
+        LocalDate now = LocalDate.now();
+        operationDTO.setInquiryCountToday(inquiryRepository.countByWdate(now));
+
+        LocalDate yesterday = now.minusDays(1);
+        operationDTO.setInquiryCountYesterday(inquiryRepository.countByWdate(yesterday));
+        return operationDTO;
+    }
+
+    public OperationDTO countMemberRegister(OperationDTO operationDTO) {
+
+        operationDTO.setMemberCountTotal(userRepository.count());
+
+        LocalDateTime startOfToday = LocalDate.now().atStartOfDay();
+        LocalDateTime startOfYesterDay = LocalDate.now().minusDays(1).atStartOfDay();
+        LocalDateTime startOfTomorrow = LocalDate.now().plusDays(1).atStartOfDay();
+
+        long todayJoinCount = userRepository.countByRegDateBetween(startOfToday, startOfTomorrow);
+        operationDTO.setMemberCountToday(todayJoinCount);
+
+        long yesterdayJoinCount = userRepository.countByRegDateBetween(startOfYesterDay, startOfToday);
+        operationDTO.setMemberCountYesterday(yesterdayJoinCount);
+
+        return operationDTO;
+    }
+
+    public OperationDTO countOrder(OperationDTO operationDTO) {
+
+        operationDTO.setOrderCountTotal(orderRepository.count());
+
+        LocalDateTime startOfToday = LocalDate.now().atStartOfDay();
+        LocalDateTime startOfYesterDay = LocalDate.now().minusDays(1).atStartOfDay();
+        LocalDateTime startOfTomorrow = LocalDate.now().plusDays(1).atStartOfDay();
+
+        operationDTO.setOrderCountToday(orderRepository.countByOrderDateBetween(startOfToday, startOfTomorrow));
+        operationDTO.setOrderCountYesterday(orderRepository.countByOrderDateBetween(startOfYesterDay, startOfToday));
+
+        operationDTO.setOrderPriceTotal(orderRepository.findTotalOrderPrice());
+        operationDTO.setOrderPriceToday(orderRepository.findTotalOrderPriceBetween(startOfToday, startOfTomorrow));
+        operationDTO.setOrderPriceYesterday(orderRepository.findTotalOrderPriceBetween(startOfYesterDay, startOfToday));
+
+        return operationDTO;
+    }
+
+    public OperationDTO countOrderDetail(OperationDTO operationDTO) {
+
+        String state = "입금대기";
+        long ready = orderItemRepository.countByOrderStatus(state);
+
+        state = "배송준비";
+        long delivery = orderItemRepository.countByOrderStatus(state);
+
+        state = "취소요청";
+        long cancel = orderItemRepository.countByOrderStatus(state);
+
+        state = "교환요청";
+        long exchange = orderItemRepository.countByOrderStatus(state);
+
+        state = "반품요청";
+        long returnCount = orderItemRepository.countByOrderStatus(state);
+
+        operationDTO.setReadyTotal(ready);
+        operationDTO.setDeliveryTotal(delivery);
+        operationDTO.setCancelTotal(cancel);
+        operationDTO.setExchangeTotal(exchange);
+        operationDTO.setReturnTotal(returnCount);
+
+        return operationDTO;
+    }
+
+    public OperationDTO countProductCategory(OperationDTO operationDTO) {
+
+        List<Object[]> results = orderItemRepository.findTotalPriceGroupByCategory();
+
+        int num = 1;
+        operationDTO.setSale4("기타");
+
+        for (Object[] row : results) {
+            String category = (String) row[0];
+            Double totalDiscountedPrice = (Double) row[1];
+            long totalPrice = totalDiscountedPrice != null ? totalDiscountedPrice.longValue() : 0L;
+
+            System.out.println(category);
+
+            switch (num){
+                case 1: {
+                    operationDTO.setSale1(category);
+                    operationDTO.setSale1Total(totalPrice);
+                    break;
+                }
+                case 2: {
+                    operationDTO.setSale2(category);
+                    operationDTO.setSale2Total(totalPrice);
+                    break;
+                }
+                case 3: {
+                    operationDTO.setSale3(category);
+                    operationDTO.setSale3Total(totalPrice);
+                    break;
+                }
+                case 4: {
+                    long total = operationDTO.getSale4Total() + totalPrice;
+                    operationDTO.setSale4Total(total);
+                    break;
+                }
+            }
+
+            num++;
+
+        }
+
+        System.out.println(operationDTO);
+
+        return operationDTO;
     }
 }

@@ -1,21 +1,36 @@
 package kr.co.lotteon.service.mypage;
 
+import com.querydsl.core.Tuple;
 import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
+import kr.co.lotteon.dto.feedback.ReturnDTO;
 import kr.co.lotteon.dto.feedback.ReviewDTO;
+import kr.co.lotteon.dto.order.OrderDTO;
+import kr.co.lotteon.dto.order.OrderInfoDTO;
+import kr.co.lotteon.dto.order.OrderItemDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.point.PointDTO;
+import kr.co.lotteon.dto.product.ProductDTO;
+import kr.co.lotteon.dto.product.ProductImageDTO;
+import kr.co.lotteon.dto.seller.SellerDTO;
 import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.entity.article.Inquiry;
 import kr.co.lotteon.entity.coupon.Coupon;
+import kr.co.lotteon.entity.feedback.Return;
 import kr.co.lotteon.entity.feedback.Review;
+import kr.co.lotteon.entity.order.Order;
+import kr.co.lotteon.entity.order.OrderItem;
 import kr.co.lotteon.entity.point.Point;
+import kr.co.lotteon.entity.product.Product;
+import kr.co.lotteon.entity.product.ProductImage;
+import kr.co.lotteon.entity.seller.Seller;
 import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.article.InquiryRepository;
 import kr.co.lotteon.repository.coupon.CouponRepository;
+import kr.co.lotteon.repository.feedback.ReturnRepository;
 import kr.co.lotteon.repository.feedback.ReviewRepository;
-import kr.co.lotteon.repository.order.OrderItemRepository;
+import kr.co.lotteon.repository.order.OrderInfoRepository;
 import kr.co.lotteon.repository.order.OrderRepository;
 import kr.co.lotteon.repository.point.PointRepository;
 import kr.co.lotteon.repository.user.UserRepository;
@@ -40,11 +55,13 @@ public class MyPageService {
     private final InquiryRepository inquiryRepository;
     private final ReviewRepository reviewRepository;
     private final PointRepository pointRepository;
+    private final OrderInfoRepository orderInfoRepository;
     private final OrderRepository orderRepository;
-    private final OrderItemRepository orderItemRepository;
     private final CouponRepository couponRepository;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
+    private final ReturnRepository returnRepository;
+
 
     public PageResponseDTO<InquiryDTO> inquiryFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO) {
 
@@ -352,6 +369,96 @@ public class MyPageService {
             return "";
         }
     }
+
+/*
+    public PageResponseDTO<OrderInfoDTO> orderInfoFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO) {
+
+        User user = modelMapper.map(userDTO, User.class);
+
+        String uid = user.getUid();
+
+        // 페이징 처리 (정렬 기준은 필요에 따라 조정)
+        Pageable pageable = pageRequestDTO.getPageable("itemNo");
+        Page<OrderInfoDTO> orderInfoPage = orderInfoRepository.findOrderInfoByUserId(uid, pageable);
+
+
+
+        return PageResponseDTO.<OrderInfoDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(orderInfoPage.getContent())
+                .total((int) orderInfoPage.getTotalElements())
+                .build();
+
+    }
+*/
+
+    public PageResponseDTO<OrderInfoDTO> orderInfoPaging(PageRequestDTO pageRequestDTO, String uid) {
+
+        Pageable pageable = pageRequestDTO.getPageable("no");
+        Page<Tuple> pageObject = orderRepository.orderInfoPaging(pageRequestDTO, pageable, uid);
+
+        List<OrderInfoDTO> DTOList = pageObject.getContent().stream().map(tuple -> {
+
+            OrderItem orderItem = tuple.get(0, OrderItem.class);
+            OrderInfoDTO orderInfoDTO = new OrderInfoDTO();
+
+            OrderItemDTO orderItemDTO = modelMapper.map(orderItem, OrderItemDTO.class);
+            ProductDTO productDTO = orderItemDTO.getProduct();
+
+            String image = tuple.get(4, String.class);
+            orderInfoDTO.setProductImage(image);
+
+            productDTO.setProductDetail(null);
+            productDTO.setProductImage(null);
+            orderItemDTO.setProduct(null);
+            productDTO.setSubCategory(null);
+
+            orderInfoDTO.setSeller(productDTO.getSeller());
+            productDTO.setSeller(null);
+
+            orderInfoDTO.setProduct(productDTO);
+            orderInfoDTO.setOrderItem(orderItemDTO);
+
+            /*
+            orderInfoDTO.setOrderItem(orderItemDTO);
+            orderItemDTO.setProduct(orderItemDTO.getProduct());
+            */
+
+            int orderNo = tuple.get(1, Integer.class);
+
+            LocalDateTime orderDate = tuple.get(2, LocalDateTime.class);
+            String orderStatus = tuple.get(3, String.class);
+
+            orderInfoDTO.setOrderNo(orderNo);
+            orderInfoDTO.setOrderDate(orderDate);
+            orderInfoDTO.setOrderStatus(orderStatus);
+
+            System.out.println(orderInfoDTO);
+
+            return orderInfoDTO;
+        }).toList();
+
+        int total = (int) pageObject.getTotalElements();
+
+        log.info("total: {}", total);
+        log.info("sellerDTOList: {}", pageObject);
+
+
+        return PageResponseDTO.<OrderInfoDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(DTOList)
+                .total(total)
+                .build();
+
+    }
+
+/*
+    public void returnRegister(UserDTO userDTO, ReturnDTO returnDTO){
+
+        User user = modelMapper.map(userDTO, User.class);
+
+    }
+*/
 
 
 }
