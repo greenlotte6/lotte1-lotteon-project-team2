@@ -1162,8 +1162,13 @@ public class adminService {
         LocalDateTime startOfYesterDay = LocalDate.now().minusDays(1).atStartOfDay();
         LocalDateTime startOfTomorrow = LocalDate.now().plusDays(1).atStartOfDay();
 
-        operationDTO.setOrderCountToday(orderRepository.countByorderDateBetween(startOfToday, startOfTomorrow));
-        operationDTO.setOrderCountToday(orderRepository.countByorderDateBetween(startOfYesterDay, startOfToday));
+        operationDTO.setOrderCountToday(orderRepository.countByOrderDateBetween(startOfToday, startOfTomorrow));
+        operationDTO.setOrderCountYesterday(orderRepository.countByOrderDateBetween(startOfYesterDay, startOfToday));
+
+        operationDTO.setOrderPriceTotal(orderRepository.findTotalOrderPrice());
+        operationDTO.setOrderPriceToday(orderRepository.findTotalOrderPriceBetween(startOfToday, startOfTomorrow));
+        operationDTO.setOrderPriceYesterday(orderRepository.findTotalOrderPriceBetween(startOfYesterDay, startOfToday));
+
 
         return operationDTO;
     }
