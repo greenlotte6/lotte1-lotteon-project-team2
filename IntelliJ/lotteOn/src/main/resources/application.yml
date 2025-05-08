@@ -22,7 +22,19 @@ server:
       timeout: 2m
     context-path: /
 
+
 spring:
+  data:
+    redis:
+      host: 43.201.101.104
+      port: 6379
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
+
   servlet:
     multipart:
       location: uploads
@@ -123,7 +135,7 @@ spring:
 
 # Redis 설정 추가
 redis:
-  host: localhost
+  host: 43.201.101.104
   port: 6379
   # password: yourpassword  # 비밀번호가 설정된 경우 추가
   lettuce:
@@ -132,6 +144,7 @@ redis:
       max-idle: 8
       min-idle: 0
       max-wait: -1ms
+
 
 # 카카오 페이
 kakao:
