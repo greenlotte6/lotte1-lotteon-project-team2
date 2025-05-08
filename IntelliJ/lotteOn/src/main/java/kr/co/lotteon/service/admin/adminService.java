@@ -247,6 +247,8 @@ public class adminService {
         log.info("total: {}", total);
         log.info("productDTOList: {}", productDTOList);
 
+        System.out.println(productDTOList);
+
         return PageResponseDTO.<ProductDTO>builder()
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(productDTOList)
