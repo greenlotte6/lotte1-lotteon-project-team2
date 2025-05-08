@@ -41,17 +41,14 @@
 
         function drawPieChart() {
 
-            var articleObject = [[${operationDTO}]];
-
-            const sale1 = "[[${operationDTO.sale1} ?: '없음']]";
-            const sale1Total = [[${operationDTO.sale1Total} ?: 0]];
-            const sale2 = "[[${operationDTO.sale2} ?: '없음']]";
-            const sale2Total = [[${operationDTO.sale2Total} ?: 0]];
-            const sale3 = "[[${operationDTO.sale3} ?: '없음']]";
-            const sale3Total = [[${operationDTO.sale3Total} ?: 0]];
-            const sale4 = "[[${operationDTO.sale4} ?: '없음']]";
-            const sale4Total = [[${operationDTO.sale4Total} ?: 0]];
-
+            const sale1 = /*[[${operationDTO.sale1}]]*/ '뷰티';
+            const sale1Total = /*[[${operationDTO.sale1Total}]]*/;
+            const sale2 = /*[[${operationDTO.sale2}]]*/ '패션';
+            const sale2Total = /*[[${operationDTO.sale2Total}]]*/;
+            const sale3 = /*[[${operationDTO.sale3}]]*/ '의류';
+            const sale3Total = /*[[${operationDTO.sale3Total}]]*/;
+            const sale4 = /*[[${operationDTO.sale4}]]*/ '기타';
+            const sale4Total = /*[[${operationDTO.sale4Total}]]*/;
 
             var data = google.visualization.arrayToDataTable([
                 ['Task', 'Hours per Day'],
