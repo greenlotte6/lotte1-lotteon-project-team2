@@ -28,6 +28,9 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
 
     long countByOrderStatus(String state);
 
+
+    Optional<OrderItem> findByItemNo(long itemNo);
+
     @Query("""
     SELECT 
         DATE(o.orderDate),
@@ -40,4 +43,5 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     ORDER BY DATE(o.orderDate) ASC
     """)
     List<Object[]> countOrderStatsByDate(@Param("startDate") LocalDateTime startDate);
+
 }

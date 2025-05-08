@@ -1,6 +1,8 @@
 package kr.co.lotteon.dto.feedback;
 
+import kr.co.lotteon.dto.order.OrderItemDTO;
 import kr.co.lotteon.dto.user.UserDTO;
+import kr.co.lotteon.entity.order.OrderItem;
 import kr.co.lotteon.entity.user.User;
 import lombok.*;
 
@@ -19,4 +21,6 @@ public class ReturnDTO {
     private String content; //사유 입력
     private String sName;   //이미지 변환이름
     private String oName;   //이미지 기존이름
+
+    private OrderItemDTO orderItem;
 }

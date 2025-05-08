@@ -78,8 +78,14 @@ document.addEventListener('DOMContentLoaded', function(){
             document.getElementById('returnModalOrderStatus').textContent = orderStatus;
 
 
-
-            return_request_modal.style.display ='block';
+            if(orderStatus === "반품신청"){
+                alert("이미 반품 신청이 접수되어 있습니다.")
+            }else if(orderStatus === "구매확정"){
+                alert("구매 확정 후에는 반품 신청이 불가능합니다. 문의사항은 고객센터로 연락해 주세요.")
+            }else{
+                return_request_modal.style.display ='block';
+            }
+            
         });
     });
 
@@ -112,8 +118,15 @@ document.addEventListener('DOMContentLoaded', function(){
             document.getElementById('exchangeModalTotalPrice').textContent = '결제금액 : ' + formatNumber(totalPrice) + '원';
             document.getElementById('exchangeModalOrderStatus').textContent = orderStatus;
 
+            if(orderStatus === "교환신청"){
+                alert("이미 교환 신청이 접수되어 있습니다.")
+            }else if(orderStatus === "구매확정"){
+                alert("구매 확정 후에는 교환 신청이 불가능합니다. 문의사항은 고객센터로 연락해 주세요.")
+            }else{
+                exchange_request_modal.style.display ='block';
+            }
 
-            exchange_request_modal.style.display ='block';
+
         });
     });
 
@@ -135,7 +148,6 @@ document.addEventListener('DOMContentLoaded', function(){
             seller_info_modal.style.display = 'none';
         });
     });
-
 
 
     // 모달 닫기 버튼

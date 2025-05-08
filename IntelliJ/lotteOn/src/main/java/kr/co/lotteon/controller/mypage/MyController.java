@@ -3,6 +3,8 @@ package kr.co.lotteon.controller.mypage;
 import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.config.BannerDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
+import kr.co.lotteon.dto.feedback.ExchangeDTO;
+import kr.co.lotteon.dto.feedback.ReturnDTO;
 import kr.co.lotteon.dto.feedback.ReviewDTO;
 import kr.co.lotteon.dto.order.OrderInfoDTO;
 import kr.co.lotteon.dto.order.OrderItemDTO;
@@ -12,6 +14,7 @@ import kr.co.lotteon.dto.point.PointDTO;
 import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.service.config.ConfigService;
 import kr.co.lotteon.service.mypage.MyPageService;
+import kr.co.lotteon.service.order.OrderItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,10 +23,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -239,16 +240,61 @@ public class MyController {
 
         return "/myPage/myInquiry";
     }
-
+    
+    
+    // 구매확정 모달
     @PostMapping("/my/order/confirm")
     public ResponseEntity<?> confirmPurchase(@RequestBody Map<String, Object> payload) {
         Long itemNo = Long.valueOf(payload.get("itemNo").toString());
+
         boolean result = myPageService.confirmPurchase(itemNo);
         if (result) {
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("구매확정 실패");
         }
+    }
+    
+    // 반품하기 모달
+    @PostMapping("/my/order/return")
+    public ResponseEntity<?> returnRequest(@RequestBody Map<String, Object> payload, @AuthenticationPrincipal UserDetails userdetails) {
+
+        Long itemNo = Long.valueOf(payload.get("itemNo").toString());
+        String type = payload.get("type").toString();
+        String content = payload.get("content").toString();
+
+
+        String uid = userdetails.getUsername();
+        UserDTO userDTO = myPageService.findByUid(uid);
+
+        ReturnDTO returnDTO = new ReturnDTO();
+        returnDTO.setType(type);
+        returnDTO.setContent(content);
+
+        myPageService.returnRequest(returnDTO, itemNo, userDTO);
+
+        return ResponseEntity.ok().build();
+    }
+
+    // 반품하기 모달
+    @PostMapping("/my/order/exchange")
+    public ResponseEntity<?> exchangeRequest(@RequestBody Map<String, Object> payload, @AuthenticationPrincipal UserDetails userdetails) {
+
+        Long itemNo = Long.valueOf(payload.get("itemNo").toString());
+        String type = payload.get("type").toString();
+        String content = payload.get("content").toString();
+
+
+        String uid = userdetails.getUsername();
+        UserDTO userDTO = myPageService.findByUid(uid);
+
+        ExchangeDTO exchangeDTO = new ExchangeDTO();
+        exchangeDTO.setType(type);
+        exchangeDTO.setContent(content);
+
+        myPageService.exchangeRequest(exchangeDTO, itemNo, userDTO);
+
+        return ResponseEntity.ok().build();
     }
 
 
