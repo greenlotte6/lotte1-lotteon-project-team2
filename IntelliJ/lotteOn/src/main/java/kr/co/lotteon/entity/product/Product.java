@@ -43,6 +43,8 @@ public class Product {
     private int prodDeliveryFee; // 상품 무료배송
     private String prodContent; // 상품 내용
 
+    private String state; // 제품 상태 (판매/중단)
+
     @CreationTimestamp
     private LocalDateTime regDate; // 상품 등록일
     private int hit; // 상품 조회수

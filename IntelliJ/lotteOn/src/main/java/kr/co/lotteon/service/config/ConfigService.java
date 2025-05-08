@@ -284,7 +284,9 @@ public class ConfigService {
         if(bannerList.isEmpty()){
             return null;
         }else{
-            return modelMapper.map(bannerList.get(0), BannerDTO.class);
+            int size = bannerList.size();
+            int random = (int) (Math.random() * size);
+            return modelMapper.map(bannerList.get(random), BannerDTO.class);
         }
     }
 

@@ -9,47 +9,33 @@
     <link rel="stylesheet" href="/css/layout/layout.css">
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script th:src="@{/js/admin/postcode.js}"></script>
+
+    <style>
+        .stop{
+            color: red;
+        }
+
+        .operation{
+            color: #00b050;
+        }
+    </style>
     
-    <!-- 사이드바-->
     <!-- 사이드바-->
     <script src="/js/admin/sidebar.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function (){
 
-            // 삭제 기능
-            // 개별 삭제 링크에 confirm 추가
-            document.querySelectorAll('.delete-link').forEach(function(link) {
-                link.addEventListener('click', function(e) {
-                    if (!confirm("정말 삭제하시겠습니까?")) {
-                        e.preventDefault(); // 링크 이동 막기
-                    }
-                });
-            });
 
             // 전체 체크박스
             const deleteAllCheckbox = document.getElementById('deleteAll');
 
             // 개별 체크박스
-            const deleteCheckboxes = document.querySelectorAll('input[name="deleteNo"]');
+            const deleteCheckboxes = document.querySelectorAll('input[name="no"]');
 
             deleteAllCheckbox.addEventListener('change', function () {
                 const isChecked = this.checked;
                 deleteCheckboxes.forEach(cb => cb.checked = isChecked);
-            });
-
-            // 선택삭제 버튼 validation
-            document.querySelector('.member_list_form').addEventListener('submit', function(e) {
-                const checked = document.querySelectorAll('input[name="deleteNo"]:checked');
-                if (checked.length === 0) {
-                    e.preventDefault();
-                    alert('삭제할 항목을 선택해주세요.');
-                } else {
-                    const confirmDelete = confirm('선택한 항목을 정말 삭제하시겠습니까?');
-                    if (!confirmDelete) {
-                        e.preventDefault();
-                    }
-                }
             });
 
             document.querySelectorAll('.rank-select').forEach(function(select) {
@@ -57,41 +43,56 @@
                     const selectedRank = e.target.value;
                     const uid = e.target.dataset.uid;
 
-                    console.log(selectedRank);
-                    console.log(uid);
+                    const data = select.closest('tr');
+                    const checkbox = data.querySelector('input[name="no"]');
+                    checkbox.checked = true;
 
-                    if (!confirm("등급을 변경하시겠습니까?")) {
-                        // 사용자 취소 시 기존 값으로 복구하려면 필요
-                        window.location.reload(); // 혹은 원래 값으로 수동 복구
-                        return;
-                    }
-
-                    fetch('/admin/member/rank/modify', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            uid: uid,
-                            rank: selectedRank
-                        })
-                    })
-                        .then(response => {
-                            if (!response.ok) throw new Error('서버 오류');
-                            return response.text(); // 또는 response.json()
-                        })
-                        .then(data => {
-                            alert('등급이 변경되었습니다.');
-                        })
-                        .catch(error => {
-                            alert('등급 변경 중 오류가 발생했습니다.');
-                            console.error(error);
-                        });
                 });
             });
 
+            document.querySelector('.member_list_form').addEventListener('submit', function(e) {
+                const checkedBoxes = document.querySelectorAll('input[name="no"]:checked');
 
+                if (checkedBoxes.length === 0) {
+                    e.preventDefault();
+                    alert('수정할 항목을 선택해주세요.');
+                    return;
+                }
 
+                const confirmUpdate = confirm('선택한 항목을 정말 수정하시겠습니까?');
+                if (!confirmUpdate) {
+                    e.preventDefault();
+                    return;
+                }
+
+                // 기존에 생성된 hidden input이 있다면 제거
+                document.querySelectorAll('.dynamic-hidden').forEach(el => el.remove());
+
+                // 체크된 회원들에 대해 rank 값도 같이 전송
+                checkedBoxes.forEach(cb => {
+                    const uid = cb.value;
+                    const row = cb.closest('tr');
+                    const rankSelect = row.querySelector('select[name="rank"]');
+                    const selectedRank = rankSelect.value;
+
+                    // no
+                    const inputUid = document.createElement('input');
+                    inputUid.type = 'hidden';
+                    inputUid.name = 'uids';
+                    inputUid.value = uid;
+                    inputUid.classList.add('dynamic-hidden');
+
+                    // rank
+                    const inputRank = document.createElement('input');
+                    inputRank.type = 'hidden';
+                    inputRank.name = 'ranks';
+                    inputRank.value = selectedRank;
+                    inputRank.classList.add('dynamic-hidden');
+
+                    this.appendChild(inputUid);
+                    this.appendChild(inputRank);
+                });
+            });
 
         });
 
@@ -135,7 +136,7 @@
                         </div>
                     </div>
 
-                    <form action="#" class="member_list_form">
+                    <form th:action="@{/admin/member/rank/modify}" class="member_list_form" method="post">
                         <table>
                             <thead>
                                 <th><input type="checkbox" id="deleteAll"></th>
@@ -154,7 +155,7 @@
                             <tbody>
                                 <tr th:each="item, i : ${pageResponseDTO.dtoList}">
                                     <td>
-                                        <input type="checkbox" name="deleteNo" th:value="${item.uid}" >
+                                        <input type="checkbox" name="no" th:value="${item.uid}">
                                     </td>
                                     <td>[[${pageResponseDTO.startNo - i.index}]]</td>
                                     <td>[[${item.uid}]]</td>
@@ -173,7 +174,7 @@
                                     <td>[[${item.email}]]</td>
                                     <td>[[${item.hp}]]</td>
                                     <td th:text="${#temporals.format(item.regDate, 'yyyy.MM.dd HH:mm:ss')}"></td>
-                                    <td style="color: green;">[[${item.state}]]</td>
+                                    <td th:class="${item.state == '정상' ? 'operation' :  'stop' }">[[${item.state}]]</td>
                                     <td style="width: 60px;">
                                         <a href="#" id="modal_modify" class="detail">[ &nbsp; 수정 &nbsp; ]</a><br>
                                         <a th:href="@{/admin/member/state(uid=${item.uid} , state='중지')}">[ &nbsp; 중지 &nbsp; ]</a>
