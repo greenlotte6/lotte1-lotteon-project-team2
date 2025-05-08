@@ -261,38 +261,58 @@
                                     th:text="${#numbers.formatInteger(item.itemPrice * item.itemCount, 3, 'COMMA')}">0</td>
                             </tr>
                             <!-- 반복문 끝 -->
-
                         </table>
-
                     </div>
+
                     <div class="order_info">
                         <p>주문정보</p>
                         <table>
-                            <tr><th>주문번호</th><td>1000121121</td></tr>
-                            <tr><th>결제방법</th><td>신용카드</td></tr>
-                            <tr><th>주문자</th><td>홍길동</td></tr>
-                            <tr><th>연락처</th><td>010-1212-1212</td></tr>
-                       </table>
-                    </div>   
+                            <tr><th>주문번호</th><td th:text="${orderDTO.orderNo}"></td></tr>
+                            <tr><th>결제방법</th><td th:text="${orderDTO.payment}"></td></tr>
+                            <tr><th>주문자</th><td th:text="${orderDTO.orderSender}"></td></tr>
+                            <tr><th>연락처</th><td th:text="${orderDTO.senderHp}"></td></tr>
+                        </table>
+                    </div>
+
                     <div class="shipping_info">
                         <p>배송정보</p>
                         <table>
-                            <tr><th>수취인</th><td>홍길동</td></tr>
-                            <tr><th>연락처</th><td>010-1212-1212</td></tr>
-                            <tr><th>배송지 주소</th><td>부산 금정구 123-111 10층</td></tr>
+                            <tr><th>수취인</th><td th:text="${orderDTO.orderReceiver}"></td></tr>
+                            <tr><th>연락처</th><td th:text="${orderDTO.receiverHp}"></td></tr>
+                            <tr><th>배송지 주소</th><td th:text="${orderDTO.orderAddr}"></td></tr>
                         </table>
-                    </div>   
+                    </div>
+
                     <div class="cart_summary">
                         <p>결제정보</p>
                         <table>
-                            <tr><th>총 상품수</th><td id="summary-count">0</td></tr>
-                            <tr><th>총 상품금액</th><td id="summary-amount">0</td></tr>
-                            <tr><th> 총 할인금액</th><td id="summary-discount">0</td></tr>
-                            <tr><th>배송비</th><td id="summary-shipping">0</td></tr>
-                            <tr><th>적립 포인트</th><td id="summary-point">0</td></tr>
-                            <tr class="total"><th>총</th><td id="summary-total">0</td></tr>
+                            <tr>
+                                <th>총 상품수</th>
+                                <td id="summary-count">0</td>
+                            </tr>
+                            <tr>
+                                <th>총 상품금액</th>
+                                <td id="summary-amount">0</td>
+                            </tr>
+                            <tr>
+                                <th>총 할인금액</th>
+                                <td id="summary-discount">0</td>
+                            </tr>
+                            <tr>
+                                <th>배송비</th>
+                                <td id="summary-shipping">0</td>
+                            </tr>
+                            <tr>
+                                <th>적립 포인트</th>
+                                <td id="summary-point">0</td>
+                            </tr>
+                            <tr class="total">
+                                <th>총</th>
+                                <td th:text="${#numbers.formatInteger(orderDTO.orderTotalPrice, 1, 'COMMA')}" id="summary-total">0</td>
+                            </tr>
                         </table>
                     </div>
+
                 </div>
             </section>
         </main>

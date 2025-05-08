@@ -1,16 +1,14 @@
 package kr.co.lotteon.controller.product;
 
+import jakarta.servlet.http.HttpSession;
 import kr.co.lotteon.dao.ProductMapper;
 import kr.co.lotteon.dto.cart.CartDTO;
 import kr.co.lotteon.dto.config.BannerDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.coupon.CouponIssueDTO;
-import kr.co.lotteon.dto.order.OrderDTO;
-import kr.co.lotteon.dto.order.OrderItemDTO;
 import kr.co.lotteon.dto.page.ItemRequestDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
-import kr.co.lotteon.dto.point.PointDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.dto.product.ProductDetailDTO;
 import kr.co.lotteon.dto.user.UserDetailsDTO;
@@ -34,7 +32,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -137,6 +137,8 @@ public class ProductController {
     @PostMapping("/product/addCart")
     @ResponseBody
     public int cart(@RequestBody ItemRequestDTO itemRequestDTO, @AuthenticationPrincipal UserDetails userDetails) {
+
+        log.info("itemRequestDTO=" + itemRequestDTO);
         int result = cartService.addToCart(itemRequestDTO, userDetails);
         return result;
     }
@@ -159,7 +161,7 @@ public class ProductController {
         return result;
     }
 
-    // 주문하기 View
+    // 장바구니 담고 주문하기 View
     @GetMapping("/product/order")
     public String order(@RequestParam("cartNo") List<Integer> cartNos, Model model) {
 
@@ -179,15 +181,32 @@ public class ProductController {
         model.addAttribute(couponIssueDTOList);
         model.addAttribute(userDetailsDTO);
 
-        return  "/product/order";
+        return  "/product/order/order";
     }
 
+    // 바로 주문하기 View
+    @PostMapping("/product/order/direct")
+    public String order(@RequestParam Map<String, String> options,
+                        ItemRequestDTO itemRequestDTO,
+                        @AuthenticationPrincipal UserDetails userDetails,
+                        HttpSession session,
+                        Model model){
 
-    //주문완료
-    @GetMapping("/product/complete")
-    public String complete() {
-        return "/product/order_completed";
+        List<CartDTO> cartDTOList = orderService.makeCart(itemRequestDTO, userDetails, options);
+
+        String uid = userDetails.getUsername();
+        UserDetailsDTO userDetailsDTO = userDetailsService.findByUser(uid);
+        List<CouponIssueDTO> couponIssueDTOList = couponService.findAllByUser(uid);
+
+        model.addAttribute(cartDTOList);
+        model.addAttribute(couponIssueDTOList);
+        model.addAttribute(userDetailsDTO);
+
+        session.setAttribute("cartDTO", cartDTOList.get(0));
+
+        return "/product/order/order";
     }
+
 
     @GetMapping("/product/search")
     public String search() {

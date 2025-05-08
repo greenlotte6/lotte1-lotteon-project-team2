@@ -38,6 +38,7 @@
         const plusBtns = document.querySelectorAll('.btn-plus');
         const minusBtns = document.querySelectorAll('.btn-minus');
         const quantityEls = document.querySelectorAll('#quantity');
+        const quantityInputs = document.querySelectorAll('.quantity-input');  // input 요소
         const priceTotals = document.querySelectorAll('.price_total');
 
         const unitPrices = Array.from(priceTotals).map((el, i) => {
@@ -50,6 +51,7 @@
                 let count = parseInt(quantityEls[index].textContent);
                 count++;
                 quantityEls[index].textContent = count;
+                quantityInputs[index].value = count;
 
                 const totalPrice = unitPrices[index] * count;
                 priceTotals[index].textContent = totalPrice.toLocaleString() + '원';
@@ -65,7 +67,20 @@
                 if (count > 1) {
                     count--;
                     quantityEls[index].textContent = count;
+                    quantityInputs[index].value = count;
 
+                    const totalPrice = unitPrices[index] * count;
+                    priceTotals[index].textContent = totalPrice.toLocaleString() + '원';
+                }
+            });
+        });
+
+        // **추가된 부분**: input 필드에서 수량 변경 시, span 값도 업데이트
+        quantityInputs.forEach((input, index) => {
+            input.addEventListener('input', () => {
+                let count = parseInt(input.value);
+                if (count > 0) {
+                    quantityEls[index].textContent = count;  // span 값 업데이트
                     const totalPrice = unitPrices[index] * count;
                     priceTotals[index].textContent = totalPrice.toLocaleString() + '원';
                 }
@@ -566,8 +581,6 @@
             console.error('장바구니 버튼(form table button.cart)을 찾을 수 없습니다.');
         }
 
-
-
     });
 </script>
 
@@ -680,8 +693,8 @@
                     <div>
                         <img th:src="@{${productDTO.sNameThumb3}}" alt="상품 이미지">
                     </div>
-                    <form action="#">
-                        <input type="hidden" id="productNo" th:value="${productDTO.prodNo}">
+                    <form th:action="@{/product/order/direct}" method="post">
+                        <input type="hidden" id="productNo" name="prodNo" th:value="${productDTO.prodNo}">
                         <table>
                             <tr>
                                 <td colspan="2">
@@ -743,13 +756,14 @@
                             </tr>
                             <th:block th:each="i : ${#numbers.sequence(0, 5)}">
                                 <tr class="choice" th:if="${productDTO.option[i] != null and productDTO.option[i].length() > 0}">
-                                    <td>[[${productDTO.option[i]}]]</td>  <!-- option 배열의 i번째 값 -->
                                     <td>
-                                        <select>
-                                            <!-- options[i]는 해당 색상 또는 사이즈의 상세 옵션들을 나타냄 -->
+                                        [[${productDTO.option[i]}]]
+                                        <input type="hidden" th:name="'opt' + ${i + 1}" th:value="${productDTO.option[i]}">
+                                    </td>
+                                    <td>
+                                        <select th:name="'opt' + ${i + 1} + 'Cont'">
                                             <th:block th:each="opt : ${productDTO.options[i]}" th:if="${opt != null and opt != ''}">
-                                                <!-- 상세 옵션이 null이 아니면 출력 -->
-                                                <option th:text="${opt}"></option>
+                                                <option th:text="${opt}" th:value="${opt}"></option>
                                             </th:block>
                                         </select>
                                     </td>
@@ -760,6 +774,7 @@
                                     <div class="quantity-box">
                                         <button type="button" class="btn-minus">-</button>
                                         <span id="quantity">1</span>
+                                        <input type="hidden" class="quantity-input" name="quantity" value="1">
                                         <button type="button" class="btn-plus">+</button>
                                     </div>
                                 </td>
