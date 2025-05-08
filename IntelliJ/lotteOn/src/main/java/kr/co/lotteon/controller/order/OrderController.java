@@ -2,11 +2,9 @@ package kr.co.lotteon.controller.order;
 
 
 import jakarta.servlet.http.HttpSession;
+import kr.co.lotteon.dto.cart.CartDTO;
 import kr.co.lotteon.dto.kakao.Amount;
-import kr.co.lotteon.dto.kakao.KakaoApproveResponse;
 import kr.co.lotteon.dto.order.OrderDTO;
-import kr.co.lotteon.dto.order.OrderItemDTO;
-import kr.co.lotteon.entity.order.Order;
 import kr.co.lotteon.service.cart.CartService;
 import kr.co.lotteon.service.coupon.CouponService;
 import kr.co.lotteon.service.kakao.KakaoPayService;
@@ -16,8 +14,6 @@ import kr.co.lotteon.service.point.PointService;
 import kr.co.lotteon.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,7 +22,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -90,12 +85,11 @@ public class OrderController {
                               HttpSession session,
                               @RequestParam int usedPoint,
                               @RequestParam int earnedPoint,
-                              @RequestParam("cartNo") List<Integer> cartNos,
+                              @RequestParam(value = "cartNo", required = false) List<Integer> cartNos,
                               @RequestParam String receiverAddr1,
                               @RequestParam String receiverAddr2,
                               @RequestParam(value = "issueNo", required = false) long issueNo,
                               @AuthenticationPrincipal UserDetails userDetails) throws Exception {
-
 
         orderDTO.setUid(userDetails.getUsername());
         orderDTO.setOrderAddr(receiverAddr1 + " " + receiverAddr2);
@@ -103,20 +97,35 @@ public class OrderController {
         // Order 테이블 등록하기 -> 등록 후 orderItem을 등록하기 위한 order 출력
         int orderNo = orderService.registerOrder(orderDTO);
 
-        // 상세 주문 등록하기
-        orderService.registerOrderItem(orderNo, cartNos);
+        if(cartNos != null) {
 
-        // 포인트 사용 시 기록
-        pointService.changePoint(usedPoint, earnedPoint, userDetails);
+            System.out.println("장바구니 로직");
+            // 상세 주문 등록하기
+            orderService.registerOrderItem(orderNo, cartNos);
 
-        // 상품 재고, 판매량 계산
-        productService.changeSoldAndStock(cartNos);
+            // 상품 재고, 판매량 계산
+            productService.changeSoldAndStock(cartNos);
+
+            // 장바구니 지우기
+            // cartService.deleteAllByCartNo(cartNos);
+        }else{
+
+            System.out.println("바로구매 로직");
+            
+            CartDTO cartDTO = (CartDTO) session.getAttribute("cartDTO");
+            
+            System.out.println("상품 저장");
+            orderService.directOrderItem(orderNo, cartDTO);
+
+            // 상품 재고, 판매량 계산
+            productService.directSoldAndStock(cartDTO);
+        }
 
         // 쿠폰 사용상태로 바꾸기
         // couponService.changeState(issueNo);
 
-        // 장바구니 지우기
-        // cartService.deleteAllByCartNo(cartNos);
+        // 포인트 사용 시 기록
+        pointService.changePoint(usedPoint, earnedPoint, userDetails);
 
         session.setAttribute("orderNo", orderNo);
 
@@ -136,8 +145,6 @@ public class OrderController {
 
         kakaoPayService.approveResponse(pgToken);
 
-        log.info("orderDTO: {}", orderDTO);
-
         return "redirect:/product/order_completed";
     }
 
@@ -147,7 +154,7 @@ public class OrderController {
         OrderDTO orderDTO = (OrderDTO) session.getAttribute("orderDTO");
         model.addAttribute("orderDTO", orderDTO);
 
-        return "/product/order_completed";
+        return "/product/order/order_completed";
     }
 
 

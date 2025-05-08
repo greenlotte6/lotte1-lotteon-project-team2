@@ -1,6 +1,7 @@
 package kr.co.lotteon.service.product;
 
 import jakarta.transaction.Transactional;
+import kr.co.lotteon.dto.cart.CartDTO;
 import kr.co.lotteon.dto.page.ItemRequestDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
@@ -137,8 +138,6 @@ public class ProductService {
         }
     }
 
-
-
     public void hitCountUp(String prodNo) {
         Optional<Product> productOptional = productRepository.findByProdNo(prodNo);
         if(productOptional.isPresent()) {
@@ -146,6 +145,34 @@ public class ProductService {
             product.setHit(product.getHit() + 1);
             productRepository.save(product);
         }
+    }
+
+    public ProductDTO findByNo(String prodNo) {
+        Optional<Product> productOptional = productRepository.findByProdNo(prodNo);
+        if(productOptional.isPresent()) {
+            Product product = productOptional.get();
+            ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+            return productDTO;
+        }
+        return null;
+    }
+
+    public void directSoldAndStock(CartDTO cartDTO) throws Exception {
+
+        ProductDTO productDTO = cartDTO.getProduct();
+        Product product = productRepository.findById(productDTO.getProdNo()).get();
+
+        int cartProdCount = cartDTO.getCartProdCount();
+
+        product.setProdSold(product.getProdSold() + cartProdCount);
+
+        if (product.getProdStock() >= cartProdCount) {
+            product.setProdStock(product.getProdStock() - cartProdCount);
+        } else {
+            throw new Exception("Insufficient stock for product: " + product.getProdNo());
+        }
+        productRepository.save(product);
+
     }
 }
 
