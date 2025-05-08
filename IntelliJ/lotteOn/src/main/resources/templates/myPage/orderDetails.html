@@ -16,7 +16,6 @@
     <script src="/js/myPage/searchPeriod.js"></script>
     <script src="/js/myPage/modal.js"></script>
     <script src="/js/headerMenu.js"></script>
-
 </head>
 <body>
     <div id="wrapper">
@@ -162,7 +161,7 @@
                         <div class="modal-name">
                             <p>구매확정</p>
                         </div>
-                        <div class="exit" onclick="location.href='#'" style="cursor: pointer;">
+                        <div class="exit" style="cursor: pointer;">
                             <p class="modalClose">X</p> <!-- 수정 예정 -->
                         </div>
                     </div>
@@ -172,13 +171,55 @@
                             <p>상품을 받으신 분만 구매확정을 해주세요.</p>
                         </div>
                         <div class="btn">
-                            <input type="submit" value="확인" onclick="location.href='#'">
-                            <input type="submit" value="취소" class="modalClose">
+                            <input type="submit" value="확인" class="modalConfirmBtn">
+                            <input type="button" value="취소" class="modalClose">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <script>
+            let selectedBtn = null; // 어떤 버튼에서 모달을 띄웠는지 저장
+
+            // 모든 구매확정 버튼에 클릭 이벤트 등록
+            document.querySelectorAll('.purchase_confirm_btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    selectedBtn = this; // 클릭한 버튼 저장
+                });
+            });
+
+            // 모달 '확인' 버튼
+            document.getElementsByClassName('modalConfirmBtn')[0].addEventListener('click', function() {
+                if (!selectedBtn) return;
+
+                // 해당 행(tr)과 상태 셀(td) 찾기
+                const tr = selectedBtn.closest('tr');
+                const statusTd = tr.querySelectorAll('td')[2]; // 3번째 td (상태)
+                const itemNo = selectedBtn.getAttribute('data-product-id');
+                const modal = document.querySelector('.purchase_confirm_modal');
+
+                // 서버에 구매확정 요청
+                fetch('/my/order/confirm', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ itemNo: itemNo })
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // 상태 텍스트 변경
+                            statusTd.textContent = '구매확정';
+                            // 버튼 비활성화 또는 숨김 처리 (선택)
+                            selectedBtn.disabled = true;
+                            alert('구매확정 처리되었습니다.');
+
+                            modal.style.display = 'none';
+
+                        } else {
+                            alert('구매확정 처리에 실패했습니다.');
+                        }
+                    })
+            });
+        </script>
         <!--상품평 모달 팝업-->
         <div class="modal product_review_modal">
             <div class="modal_popup">
