@@ -31,6 +31,7 @@ import kr.co.lotteon.repository.coupon.CouponRepository;
 import kr.co.lotteon.repository.feedback.ReturnRepository;
 import kr.co.lotteon.repository.feedback.ReviewRepository;
 import kr.co.lotteon.repository.order.OrderInfoRepository;
+import kr.co.lotteon.repository.order.OrderItemRepository;
 import kr.co.lotteon.repository.order.OrderRepository;
 import kr.co.lotteon.repository.point.PointRepository;
 import kr.co.lotteon.repository.user.UserRepository;
@@ -61,6 +62,7 @@ public class MyPageService {
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     private final ReturnRepository returnRepository;
+    private final OrderItemRepository orderItemRepository;
 
 
     public PageResponseDTO<InquiryDTO> inquiryFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO) {
@@ -212,51 +214,7 @@ public class MyPageService {
                 .total(total)
                 .build();
     }
-/*
-    public PageResponseDTO<OrderDTO> orderFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO) {
 
-        User user = modelMapper.map(userDTO, User.class);
-
-        Pageable pageable = pageRequestDTO.getPageable("orderNo");
-
-        Page<Order> pageOrder = orderRepository.findAllByUser(user, pageable);
-
-        List<OrderDTO> orderDTOList = pageOrder.getContent().stream()
-                .map(order -> modelMapper.map(order, OrderDTO.class))
-                .collect(Collectors.toList());
-
-        int total = (int) pageOrder.getTotalElements();
-
-        return PageResponseDTO.<OrderDTO>builder()
-                .pageRequestDTO(pageRequestDTO)
-                .dtoList(orderDTOList)
-                .total(total)
-                .build();
-
-    }
-
-    public PageResponseDTO<OrderItemDTO> orderItemFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO) {
-
-        User user = modelMapper.map(userDTO, User.class);
-
-        Pageable pageable = pageRequestDTO.getPageable("itemNo");
-
-        Page<OrderItem> pageOrderItem = orderItemRepository.findAllByUser(user, pageable);
-
-        List<OrderItemDTO> orderItemDTOList = pageOrderItem.getContent().stream()
-                .map(orderItem -> modelMapper.map(orderItem, OrderItemDTO.class))
-                .collect(Collectors.toList());
-
-        int total = (int) pageOrderItem.getTotalElements();
-
-        return PageResponseDTO.<OrderItemDTO>builder()
-                .pageRequestDTO(pageRequestDTO)
-                .dtoList(orderItemDTOList)
-                .total(total)
-                .build();
-
-    }
-*/
 
     public UserDTO findByUid(String uid) {
 
@@ -293,20 +251,6 @@ public class MyPageService {
         userRepository.save(user);
 
     }
-
-    /*
-    public void countOrder(UserDTO userDTO){
-
-    }
-
-    public void countCoupon(UserDTO userDTO){
-
-    }
-
-    public void countInquiry(UserDTO userDTO){
-
-    }
-*/
 
 
     // 전화번호를 3등분하여 DTO에 세팅
@@ -370,27 +314,6 @@ public class MyPageService {
         }
     }
 
-/*
-    public PageResponseDTO<OrderInfoDTO> orderInfoFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO) {
-
-        User user = modelMapper.map(userDTO, User.class);
-
-        String uid = user.getUid();
-
-        // 페이징 처리 (정렬 기준은 필요에 따라 조정)
-        Pageable pageable = pageRequestDTO.getPageable("itemNo");
-        Page<OrderInfoDTO> orderInfoPage = orderInfoRepository.findOrderInfoByUserId(uid, pageable);
-
-
-
-        return PageResponseDTO.<OrderInfoDTO>builder()
-                .pageRequestDTO(pageRequestDTO)
-                .dtoList(orderInfoPage.getContent())
-                .total((int) orderInfoPage.getTotalElements())
-                .build();
-
-    }
-*/
 
     public PageResponseDTO<OrderInfoDTO> orderInfoPaging(PageRequestDTO pageRequestDTO, String uid) {
 
@@ -450,6 +373,17 @@ public class MyPageService {
                 .total(total)
                 .build();
 
+    }
+
+    public boolean confirmPurchase(Long itemNo) {
+        // 주문 아이템 조회
+        OrderItem orderItem = orderItemRepository.findById(itemNo).orElse(null);
+        if (orderItem == null) return false;
+
+        // 상태 변경
+        orderItem.setOrderStatus("구매확정");
+        orderItemRepository.save(orderItem);
+        return true;
     }
 
 /*
