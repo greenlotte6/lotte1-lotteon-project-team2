@@ -11,6 +11,7 @@ import kr.co.lotteon.dto.order.OrderItemDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.point.PointDTO;
+import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.service.config.ConfigService;
 import kr.co.lotteon.service.mypage.MyPageService;
@@ -26,6 +27,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -296,6 +298,40 @@ public class MyController {
 
         return ResponseEntity.ok().build();
     }
+    
+    // 리뷰 모달
+    @PostMapping("/my/order/review")
+    public ResponseEntity<?> reviewRequest(@RequestBody Map<String, Object> payload, @AuthenticationPrincipal UserDetails userdetails) {
+
+        // rating 안전 변환
+        Object ratingObj = payload.get("rating");
+        int rating;
+        if (ratingObj instanceof Integer) {
+            rating = (Integer) ratingObj;
+        } else if (ratingObj instanceof Number) {
+            rating = ((Number) ratingObj).intValue();
+        } else if (ratingObj instanceof String) {
+            rating = Integer.parseInt((String) ratingObj);
+        } else {
+            throw new IllegalArgumentException("Invalid rating value");
+        }
+
+        String productId = payload.get("productId").toString();
+        String content = payload.get("content").toString();
+
+        String uid = userdetails.getUsername();
+        UserDTO userDTO = myPageService.findByUid(uid);
+
+        ReviewDTO reviewDTO = new ReviewDTO();
+        reviewDTO.setRating(BigDecimal.valueOf(rating));
+        reviewDTO.setContent(content);
+
+
+        myPageService.reviewRegister(reviewDTO, userDTO, productId);
+
+        return ResponseEntity.ok().build();
+    }
+
 
 
     // 나의 정보 수정
