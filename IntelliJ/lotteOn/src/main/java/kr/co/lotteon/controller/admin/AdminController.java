@@ -387,18 +387,17 @@ public class AdminController {
 
     // 회원 등급 변경
     @PostMapping("/member/rank/modify")
-    @ResponseBody
-    public String memberRankModify(@RequestBody Map<String, String> data) {
+    public String modifyMembers(@RequestParam("uids") List<String> uids,
+                                @RequestParam("ranks") List<String> ranks) {
 
-        String uid = data.get("uid");
-        String rank = data.get("rank");
-        Boolean success = adminService.modifyUserRank(uid, rank);
-
-        if(!success){
-            return "error";
+        for (int i = 0; i < uids.size(); i++) {
+            String uid = uids.get(i);
+            String rank = ranks.get(i);
+            adminService.modifyUserRank(uid, rank);
+            // 여기서 uid에 해당하는 회원의 등급을 rank로 수정하는 로직 수행
         }
 
-        return "ok"; // 이 값이 클라이언트로 그대로 응답됨
+        return "redirect:/admin/member/list";
     }
 
     //회원 수정
@@ -477,7 +476,6 @@ public class AdminController {
     // 상품 전체 삭제
     @GetMapping("/product/delete/all")
     public String deleteProducts(@RequestParam("deleteNo") List<String> deleteNos) {
-        // configService.deleteVersions(deleteVnos);
         for(String prodNo : deleteNos){
             adminService.deleteProduct(prodNo);
         }

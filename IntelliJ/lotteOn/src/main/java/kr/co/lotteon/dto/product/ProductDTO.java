@@ -35,6 +35,8 @@ public class ProductDTO {
     private int prodDeliveryFee;
     private String prodContent;
 
+    private String state; // 제품 상태 (판매/중단)
+
     private LocalDateTime regDate;
     private int hit;
 

@@ -270,13 +270,9 @@ public class adminService {
          * */
         if(optProduct.isPresent()){
             Product product = optProduct.get();
-
-            productDetailRepository.deleteByProduct(product);
-            productImageRepository.deleteByProduct(product);
-            cartRepository.deleteByProduct(product);
-            productRepository.deleteById(no);
+            product.setState("중단");
+            productRepository.save(product);
         }
-
 
     }
 
