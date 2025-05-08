@@ -10,6 +10,7 @@ import kr.co.lotteon.dto.category.MainCategoryDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.coupon.CouponIssueDTO;
 import kr.co.lotteon.dto.operation.OperationDTO;
+import kr.co.lotteon.dto.operation.OrderSummaryDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.point.PointDTO;
@@ -1189,7 +1190,7 @@ public class adminService {
         String state = "입금대기";
         long ready = orderItemRepository.countByOrderStatus(state);
 
-        state = "배송준비";
+        state = "배송완료";
         long delivery = orderItemRepository.countByOrderStatus(state);
 
         state = "취소요청";
@@ -1257,24 +1258,48 @@ public class adminService {
     }
 
     public OperationDTO countDailyOrderStats(OperationDTO operationDTO) {
+        LocalDate startDay = LocalDate.now().minusDays(4);  // 4일 전
+        LocalDate endDay = LocalDate.now();  // 오늘
 
-        LocalDateTime startOfToday = LocalDate.now().atStartOfDay().minusDays(5);
+        // 4일 전부터 오늘까지 날짜별로 초기화된 DTO를 넣음
+        Map<LocalDate, OrderSummaryDTO> summaryMap = new TreeMap<>();
+        for (int i = 0; i <= 4; i++) {
+            LocalDate date = startDay.plusDays(i);
+            summaryMap.put(date, OrderSummaryDTO.builder()
+                    .date(date)
+                    .orderTotal(0)
+                    .creditTotal(0)
+                    .cancelTotal(0)
+                    .build());
+        }
+
+        LocalDateTime startOfToday = startDay.atStartOfDay();  // 4일 전부터의 시간대
+
         List<Object[]> results = orderItemRepository.countOrderStatsByDate(startOfToday);
-
-        Map<LocalDate, Map<String, Long>> stats = new TreeMap<>();
 
         for (Object[] row : results) {
             LocalDate date = ((java.sql.Date) row[0]).toLocalDate();
             String status = (String) row[1];
             Long count = (Long) row[2];
 
-            stats.computeIfAbsent(date, d -> new HashMap<>()).put(status, count);
+            OrderSummaryDTO dto = summaryMap.getOrDefault(date, new OrderSummaryDTO(date, 0, 0, 0));
+
+            if (status.equals("입금대기")) {
+                dto.setOrderTotal(dto.getOrderTotal() + count);
+            } else if (status.equals("구매확정") || status.equals("배송중")) {
+                dto.setCreditTotal(dto.getCreditTotal() + count);
+            } else {
+                dto.setCancelTotal(dto.getCancelTotal() + count);
+            }
+
+            summaryMap.put(date, dto);  // 날짜별로 업데이트된 정보 삽입
         }
 
-        System.out.println(stats);
-
+        // 최종 결과를 리스트로 변환하여 operationDTO에 저장
+        List<OrderSummaryDTO> orderSummaryDTOList = new ArrayList<>(summaryMap.values());
+        operationDTO.setSummaryDTOS(orderSummaryDTOList);
 
         return operationDTO;
-
     }
+
 }
