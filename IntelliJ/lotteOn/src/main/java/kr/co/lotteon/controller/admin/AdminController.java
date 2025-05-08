@@ -28,6 +28,7 @@ import kr.co.lotteon.service.config.ConfigService;
 import kr.co.lotteon.service.product.ImageService;
 import kr.co.lotteon.service.product.ProductService;
 import kr.co.lotteon.service.seller.SellerService;
+import kr.co.lotteon.service.visitor.VisitorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -36,6 +37,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +53,7 @@ public class AdminController {
     private final ProductService productService;
     private final adminService adminService;
     private final CsService csService;
+    private final VisitorService visitorService;
 
     // 관리자 메인
     @GetMapping
@@ -82,6 +85,20 @@ public class AdminController {
 
         // 상품 카테고리 별 총량 출력
         operationDTO = adminService.countProductCategory(operationDTO);
+
+        // 방문자 통계 데이터 가져오기
+        int todayVisitors = visitorService.getTodayVisitorCount();
+        int yesterdayVisitors = visitorService.getVisitorCountByDate(LocalDate.now().minusDays(1));
+        int totalVisitors = visitorService.getTotalVisitorCount(); // 이 메서드가 구현되어 있어야 함
+
+        log.info("방문자 통계: 오늘={}, 어제={}, 총={}", todayVisitors, yesterdayVisitors, totalVisitors);
+
+
+        // 방문자 통계 데이터를 모델에 추가
+        model.addAttribute("todayVisitors", todayVisitors);
+        model.addAttribute("yesterdayVisitors", yesterdayVisitors);
+        model.addAttribute("totalVisitors", totalVisitors);
+
 
         model.addAttribute("noticeDTOS", noticeDTOS);
         model.addAttribute("inquiryDTOS", inquiryDTOS);
@@ -815,6 +832,7 @@ public class AdminController {
         adminService.deleteRecruitByList(deleteNos);
         return "redirect:/admin/cs/recruit/list";
     }
+
 
 
 
