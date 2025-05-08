@@ -8,8 +8,10 @@ import org.springframework.data.domain.Pageable;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,5 +28,20 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
 
     long countByOrderStatus(String state);
 
+
     Optional<OrderItem> findByItemNo(long itemNo);
+
+    @Query("""
+    SELECT 
+        DATE(o.orderDate),
+        oi.orderStatus,
+        COUNT(oi)
+    FROM OrderItem oi
+    JOIN oi.order o
+    WHERE o.orderDate >= :startDate
+    GROUP BY DATE(o.orderDate), oi.orderStatus
+    ORDER BY DATE(o.orderDate) ASC
+    """)
+    List<Object[]> countOrderStatsByDate(@Param("startDate") LocalDateTime startDate);
+
 }

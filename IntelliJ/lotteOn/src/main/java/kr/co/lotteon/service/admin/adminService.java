@@ -10,6 +10,7 @@ import kr.co.lotteon.dto.category.MainCategoryDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.coupon.CouponIssueDTO;
 import kr.co.lotteon.dto.operation.OperationDTO;
+import kr.co.lotteon.dto.operation.OrderSummaryDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.point.PointDTO;
@@ -1168,8 +1169,18 @@ public class adminService {
         operationDTO.setOrderCountYesterday(orderRepository.countByOrderDateBetween(startOfYesterDay, startOfToday));
 
         operationDTO.setOrderPriceTotal(orderRepository.findTotalOrderPrice());
-        operationDTO.setOrderPriceToday(orderRepository.findTotalOrderPriceBetween(startOfToday, startOfTomorrow));
-        operationDTO.setOrderPriceYesterday(orderRepository.findTotalOrderPriceBetween(startOfYesterDay, startOfToday));
+
+        Long orderPriceToday = orderRepository.findTotalOrderPriceBetween(startOfToday, startOfTomorrow);
+        if(orderPriceToday == null){
+            orderPriceToday = 0L;
+        }
+        operationDTO.setOrderPriceToday(orderPriceToday);
+
+        Long orderPriceYesterday = orderRepository.findTotalOrderPriceBetween(startOfYesterDay, startOfToday);
+        if(orderPriceYesterday == null){
+            orderPriceYesterday = 0L;
+        }
+        operationDTO.setOrderPriceYesterday(orderPriceYesterday);
 
         return operationDTO;
     }
@@ -1179,7 +1190,7 @@ public class adminService {
         String state = "입금대기";
         long ready = orderItemRepository.countByOrderStatus(state);
 
-        state = "배송준비";
+        state = "배송완료";
         long delivery = orderItemRepository.countByOrderStatus(state);
 
         state = "취소요청";
@@ -1245,4 +1256,50 @@ public class adminService {
 
         return operationDTO;
     }
+
+    public OperationDTO countDailyOrderStats(OperationDTO operationDTO) {
+        LocalDate startDay = LocalDate.now().minusDays(4);  // 4일 전
+        LocalDate endDay = LocalDate.now();  // 오늘
+
+        // 4일 전부터 오늘까지 날짜별로 초기화된 DTO를 넣음
+        Map<LocalDate, OrderSummaryDTO> summaryMap = new TreeMap<>();
+        for (int i = 0; i <= 4; i++) {
+            LocalDate date = startDay.plusDays(i);
+            summaryMap.put(date, OrderSummaryDTO.builder()
+                    .date(date)
+                    .orderTotal(0)
+                    .creditTotal(0)
+                    .cancelTotal(0)
+                    .build());
+        }
+
+        LocalDateTime startOfToday = startDay.atStartOfDay();  // 4일 전부터의 시간대
+
+        List<Object[]> results = orderItemRepository.countOrderStatsByDate(startOfToday);
+
+        for (Object[] row : results) {
+            LocalDate date = ((java.sql.Date) row[0]).toLocalDate();
+            String status = (String) row[1];
+            Long count = (Long) row[2];
+
+            OrderSummaryDTO dto = summaryMap.getOrDefault(date, new OrderSummaryDTO(date, 0, 0, 0));
+
+            if (status.equals("입금대기")) {
+                dto.setOrderTotal(dto.getOrderTotal() + count);
+            } else if (status.equals("구매확정") || status.equals("배송중")) {
+                dto.setCreditTotal(dto.getCreditTotal() + count);
+            } else {
+                dto.setCancelTotal(dto.getCancelTotal() + count);
+            }
+
+            summaryMap.put(date, dto);  // 날짜별로 업데이트된 정보 삽입
+        }
+
+        // 최종 결과를 리스트로 변환하여 operationDTO에 저장
+        List<OrderSummaryDTO> orderSummaryDTOList = new ArrayList<>(summaryMap.values());
+        operationDTO.setSummaryDTOS(orderSummaryDTOList);
+
+        return operationDTO;
+    }
+
 }

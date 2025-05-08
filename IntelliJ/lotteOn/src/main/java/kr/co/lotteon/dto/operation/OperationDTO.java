@@ -2,6 +2,8 @@ package kr.co.lotteon.dto.operation;
 
 import lombok.*;
 
+import java.util.List;
+
 /*
 * 관리자 운영 정보 출력
 * */
@@ -48,6 +50,9 @@ public class OperationDTO {
     private long sale3Total; //3등 매출
     private String sale4; //4등 매출명
     private long sale4Total; //4등 매출
+
+    // 날짜 별 통계
+    private List<OrderSummaryDTO> summaryDTOS;
 
 
 }

@@ -24,13 +24,20 @@
         }
 
         function drawBarChart() {
+
+            const summaryDTO1 = /*[[${operationDTO.summaryDTOS[0]}]]*/ {};
+            const summaryDTO2 = /*[[${operationDTO.summaryDTOS[1]}]]*/ {};
+            const summaryDTO3 = /*[[${operationDTO.summaryDTOS[2]}]]*/ {};
+            const summaryDTO4 = /*[[${operationDTO.summaryDTOS[3]}]]*/ {};
+            const summaryDTO5 = /*[[${operationDTO.summaryDTOS[4]}]]*/ {};
+
             var data = google.visualization.arrayToDataTable([
                 ['day', '주문', '결제', '취소'],
-                ['10-10', 1000, 400, 200],
-                ['10-11', 1170, 460, 250],
-                ['10-12', 660, 1120, 300],
-                ['10-13', 1030, 540, 350],
-                ['10-14', 1030, 540, 350]
+                [summaryDTO1.date, summaryDTO1.orderTotal, summaryDTO1.creditTotal, summaryDTO1.cancelTotal],
+                [summaryDTO2.date, summaryDTO2.orderTotal, summaryDTO2.creditTotal, summaryDTO2.cancelTotal],
+                [summaryDTO3.date, summaryDTO3.orderTotal, summaryDTO3.creditTotal, summaryDTO3.cancelTotal],
+                [summaryDTO4.date, summaryDTO4.orderTotal, summaryDTO4.creditTotal, summaryDTO4.cancelTotal],
+                [summaryDTO5.date, summaryDTO5.orderTotal, summaryDTO5.creditTotal, summaryDTO5.cancelTotal]
             ]);
 
             var options = { chart: {} };
@@ -41,17 +48,14 @@
 
         function drawPieChart() {
 
-            var articleObject = [[${operationDTO}]];
-
-            const sale1 = "[[${operationDTO.sale1} ?: '없음']]";
-            const sale1Total = [[${operationDTO.sale1Total} ?: 0]];
-            const sale2 = "[[${operationDTO.sale2} ?: '없음']]";
-            const sale2Total = [[${operationDTO.sale2Total} ?: 0]];
-            const sale3 = "[[${operationDTO.sale3} ?: '없음']]";
-            const sale3Total = [[${operationDTO.sale3Total} ?: 0]];
-            const sale4 = "[[${operationDTO.sale4} ?: '없음']]";
-            const sale4Total = [[${operationDTO.sale4Total} ?: 0]];
-
+            const sale1 = /*[[${operationDTO.sale1}]]*/ '뷰티';
+            const sale1Total = /*[[${operationDTO.sale1Total}]]*/;
+            const sale2 = /*[[${operationDTO.sale2}]]*/ '패션';
+            const sale2Total = /*[[${operationDTO.sale2Total}]]*/;
+            const sale3 = /*[[${operationDTO.sale3}]]*/ '의류';
+            const sale3Total = /*[[${operationDTO.sale3Total}]]*/;
+            const sale4 = /*[[${operationDTO.sale4}]]*/ '기타';
+            const sale4Total = /*[[${operationDTO.sale4Total}]]*/;
 
             var data = google.visualization.arrayToDataTable([
                 ['Task', 'Hours per Day'],
@@ -175,7 +179,7 @@
                     <p class="title">공지사항</p>
                     <table>
                         <tr th:each="item : ${noticeDTOS}">
-                            <td>[[${'[' + item.cate + '] ' + item.title}]]</td>
+                            <td><a th:href="@{/admin/cs/notice/view(no=${item.no})}">[[${'[' + item.cate + '] ' + item.title}]]</a></td>
                             <td>[[${#temporals.format(item.wdate, 'yyyy.MM.dd')}]]</td>
                         </tr>
                     </table>
@@ -185,7 +189,7 @@
                     <p class="title">고객문의</p>
                     <table>
                         <tr th:each="item : ${inquiryDTOS}">
-                            <td>[[${'[' + item.cateV2 + '] ' + item.title}]]</td>
+                            <td><a th:href="@{/admin/cs/qna/view(no=${item.no})}">[[${'[' + item.cateV2 + '] ' + item.title}]]</a></td>
                             <td>[[${item.user.uid.substring(0, 3) + '***'}]]</td>
                             <td>[[${#temporals.format(item.wdate, 'yyyy.MM.dd')}]]</td>
                         </tr>
