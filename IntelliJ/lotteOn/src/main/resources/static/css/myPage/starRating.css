@@ -1,29 +1,20 @@
 .star-rating {
-    direction: rtl;
-    display: inline-flex;
-  }
-  .star-rating input[type="radio"] {
-    display: none;
-  }
-  .star-rating label {
-    width: 50px;
-    height: 50px;
-    background: url('/lotteOn/images/ico-star-empty.svg') no-repeat center/cover;
-    cursor: pointer;
-    position: relative;
-    display: inline-block;
-    padding: 0;
-    margin: 0;
-  }
-  .star-rating label.full {
-    clip-path: inset(0 0 0 50%);
-    margin-left: -50px;
-  }
-  .star-rating label.half {
-    clip-path: inset(0 50% 0 0);
-  }
-  .star-rating input[type="radio"]:checked ~ label,
-  .star-rating label:hover,
-  .star-rating label:hover ~ label {
-    background-image: url('/lotteOn/images/ico-star-full.svg');
-  }
+  display: flex;
+  flex-direction: row-reverse; /* 오른쪽부터 별 표시 */
+  justify-content: flex-end;
+}
+.star-rating input[type="radio"] {
+  display: none; /* 라디오 숨기기 */
+}
+.star-rating label {
+  cursor: pointer;
+  font-size: 3rem;
+  color: hsl(60, 80%, 45%);
+  transition: color 0.2s;
+}
+.star-rating input[type="radio"]:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  color: gold;
+  content: '★';
+}

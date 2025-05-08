@@ -20,6 +20,7 @@ import kr.co.lotteon.entity.feedback.Return;
 import kr.co.lotteon.entity.feedback.Review;
 import kr.co.lotteon.entity.order.OrderItem;
 import kr.co.lotteon.entity.point.Point;
+import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.article.InquiryRepository;
 import kr.co.lotteon.repository.coupon.CouponRepository;
@@ -30,12 +31,14 @@ import kr.co.lotteon.repository.order.OrderInfoRepository;
 import kr.co.lotteon.repository.order.OrderItemRepository;
 import kr.co.lotteon.repository.order.OrderRepository;
 import kr.co.lotteon.repository.point.PointRepository;
+import kr.co.lotteon.repository.product.ProductRepository;
 import kr.co.lotteon.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -63,6 +66,7 @@ public class MyPageService {
     private final ReturnRepository returnRepository;
     private final OrderItemRepository orderItemRepository;
     private final ExchangeRepository exchangeRepository;
+    private final ProductRepository productRepository;
 
 
     public PageResponseDTO<InquiryDTO> inquiryFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO) {
@@ -430,6 +434,28 @@ public class MyPageService {
         orderItem.setOrderStatus("반품신청");
 
         returnRepository.save(aReturn);
+
+    }
+
+
+    public void reviewRegister(ReviewDTO reviewDTO, UserDTO userDTO, String productId) {
+
+
+        User user = modelMapper.map(userDTO, User.class);
+
+        Product product = productRepository.findByProdNo(productId).orElse(null);
+
+        Review review = modelMapper.map(reviewDTO, Review.class);
+
+        System.out.println("user : " + user);
+        System.out.println("product : " + product);
+        System.out.println("review : " + review);
+
+
+        review.setWriter(user);
+        review.setProduct(product);
+
+        reviewRepository.save(review);
 
     }
 

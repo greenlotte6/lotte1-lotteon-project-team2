@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/css/index_layout.css">
     <link rel="stylesheet" href="/css/common/header.css">
     <link rel="stylesheet" href="/css/myPage/pagination.css">
+    <link rel="stylesheet" href="/css/myPage/starRating.css">
     <script src="/js/myPage/searchPeriod.js"></script>
     <script src="/js/myPage/modal.js"></script>
     <script src="/js/headerMenu.js"></script>
@@ -159,7 +160,11 @@
                                                    th:data-product-id="${orderInfo.orderItem.itemNo}"
                                                    th:data-prod-name="${orderInfo.product.prodName}"
                                                    th:data-orderStatus="${orderInfo.orderStatus}">
-                                            <input type="button" class="orderdetails-btn product_review_btn" value="상품평쓰기" th:data-product-id="${orderInfo.orderItem.itemNo}" th:data-prod-name="${orderInfo.product.prodName}">
+                                            <input type="button" class="orderdetails-btn product_review_btn" value="상품평쓰기"
+                                                   th:data-product-id="${orderInfo.orderItem.itemNo}"
+                                                   th:data-prod-name="${orderInfo.product.prodName}"
+                                                   th:data-orderStatus="${orderInfo.orderStatus}"
+                                                   th:data-prod-id="${orderInfo.product.prodNo}">
                                             <input type="button" class="orderdetails-btn return_request_btn" value="반품신청"
                                                    th:data-orderDate="${#strings.substring(orderInfo.orderDate, 0, 10)}"
                                                    th:data-itemNo="${orderInfo.orderItem.itemNo}"
@@ -249,13 +254,19 @@
                                 <tr>
                                     <td>만족도</td>
                                     <td>
-                                        ☆☆☆☆☆<!-- 수정예정 -->
+                                        <div class="star-rating">
+                                            <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
+                                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+                                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+                                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+                                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>내용</td>
                                     <td>
-                                        <textarea ></textarea>
+                                        <textarea name="review_content"></textarea>
                                     </td>
                                 </tr>
                                 <tr>
@@ -270,13 +281,74 @@
                             </tbody>
                         </table>
                         <div class="btn">
-                            <input type="submit" value="작성완료" onclick="location.href='#'";>
+                            <input type="submit" value="작성완료" class="modal_review_btn">
                             <input type="submit" value="취소" class="modalClose">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                let selectedBtn = null; // 어떤 버튼에서 모달을 띄웠는지 저장
+
+                document.querySelectorAll('.product_review_btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        selectedBtn = this; // 클릭한 버튼 저장
+                    });
+                });
+
+                // 모달 '확인' 버튼
+                document.getElementsByClassName('modal_review_btn')[0].addEventListener('click', function() {
+
+                    // 1. type(라디오) 값 가져오기
+                    const rating = document.querySelector('input[name="rating"]:checked');
+                    if (!rating) {
+                        alert('만족도를 체크해주세요.');
+                        return;
+                    }
+
+                    // 2. content(사유) 값 가져오기
+                    const content = document.querySelector('textarea[name="review_content"]').value;
+                    if (!content) {
+                        alert('내용을 입력해주세요.');
+                        return;
+                    }
+
+                    const itemNo = selectedBtn.getAttribute('data-orderItemNo');
+                    const tr = selectedBtn.closest('tr');
+                    const statusTd = tr.querySelectorAll('td')[2];
+                    const productId = selectedBtn.getAttribute('data-prod-id')
+
+                    // 4. 서버로 데이터 전송 (JSON)
+                    fetch('/my/order/review', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            rating: rating.value,
+                            content: content,
+                            itemNo: itemNo,
+                            productId: productId
+                        })
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                alert('상품리뷰 작성이 완료되었습니다.');
+                                // 모달 닫기
+                                document.querySelector('.product_review_modal').style.display = 'none';
+                                // 폼 초기화 (선택)
+                                document.querySelector('textarea[name="review_content"]').value = '';
+                                document.querySelectorAll('input[name="type"]').forEach(radio => radio.checked = false);
+                            } else {
+                                alert('상품리뷰 작성을 실패했습니다.');
+                            }
+                        })
+                        .catch(() => {
+                            alert('서버 오류가 발생했습니다.');
+                        });
+                });
+            })
+        </script>
         <!--반품신청 모달 팝업-->
         <div class="modal return_request_modal">
             <div class="modal_popup">
