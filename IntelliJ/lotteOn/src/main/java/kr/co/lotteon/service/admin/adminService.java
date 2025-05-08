@@ -1168,8 +1168,18 @@ public class adminService {
         operationDTO.setOrderCountYesterday(orderRepository.countByOrderDateBetween(startOfYesterDay, startOfToday));
 
         operationDTO.setOrderPriceTotal(orderRepository.findTotalOrderPrice());
-        operationDTO.setOrderPriceToday(orderRepository.findTotalOrderPriceBetween(startOfToday, startOfTomorrow));
-        operationDTO.setOrderPriceYesterday(orderRepository.findTotalOrderPriceBetween(startOfYesterDay, startOfToday));
+
+        Long orderPriceToday = orderRepository.findTotalOrderPriceBetween(startOfToday, startOfTomorrow);
+        if(orderPriceToday == null){
+            orderPriceToday = 0L;
+        }
+        operationDTO.setOrderPriceToday(orderPriceToday);
+
+        Long orderPriceYesterday = orderRepository.findTotalOrderPriceBetween(startOfYesterDay, startOfToday);
+        if(orderPriceYesterday == null){
+            orderPriceYesterday = 0L;
+        }
+        operationDTO.setOrderPriceYesterday(orderPriceYesterday);
 
         return operationDTO;
     }
@@ -1244,5 +1254,27 @@ public class adminService {
         System.out.println(operationDTO);
 
         return operationDTO;
+    }
+
+    public OperationDTO countDailyOrderStats(OperationDTO operationDTO) {
+
+        LocalDateTime startOfToday = LocalDate.now().atStartOfDay().minusDays(5);
+        List<Object[]> results = orderItemRepository.countOrderStatsByDate(startOfToday);
+
+        Map<LocalDate, Map<String, Long>> stats = new TreeMap<>();
+
+        for (Object[] row : results) {
+            LocalDate date = ((java.sql.Date) row[0]).toLocalDate();
+            String status = (String) row[1];
+            Long count = (Long) row[2];
+
+            stats.computeIfAbsent(date, d -> new HashMap<>()).put(status, count);
+        }
+
+        System.out.println(stats);
+
+
+        return operationDTO;
+
     }
 }
