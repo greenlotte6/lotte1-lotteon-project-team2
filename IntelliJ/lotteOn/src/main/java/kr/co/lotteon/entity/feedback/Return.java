@@ -1,6 +1,7 @@
 package kr.co.lotteon.entity.feedback;
 
 import jakarta.persistence.*;
+import kr.co.lotteon.entity.order.OrderItem;
 import kr.co.lotteon.entity.user.User;
 import lombok.*;
 
@@ -10,7 +11,7 @@ import lombok.*;
 @ToString
 @Builder
 @Entity
-@Table(name = "Return")
+@Table(name = "`Return`")
 public class Return {
 
     // 반품 테이블
@@ -27,4 +28,8 @@ public class Return {
     private String content; //사유 입력
     private String sName;   //이미지 변환이름
     private String oName;   //이미지 기존이름
+
+    @OneToOne
+    @JoinColumn(name="itemNo")
+    private OrderItem orderItem;
 }

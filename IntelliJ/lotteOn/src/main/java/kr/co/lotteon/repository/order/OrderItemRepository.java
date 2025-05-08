@@ -25,4 +25,6 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
 
 
     long countByOrderStatus(String state);
+
+    Optional<OrderItem> findByItemNo(long itemNo);
 }

@@ -3,31 +3,27 @@ package kr.co.lotteon.service.mypage;
 import com.querydsl.core.Tuple;
 import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
+import kr.co.lotteon.dto.feedback.ExchangeDTO;
 import kr.co.lotteon.dto.feedback.ReturnDTO;
 import kr.co.lotteon.dto.feedback.ReviewDTO;
-import kr.co.lotteon.dto.order.OrderDTO;
 import kr.co.lotteon.dto.order.OrderInfoDTO;
 import kr.co.lotteon.dto.order.OrderItemDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.point.PointDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
-import kr.co.lotteon.dto.product.ProductImageDTO;
-import kr.co.lotteon.dto.seller.SellerDTO;
 import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.entity.article.Inquiry;
 import kr.co.lotteon.entity.coupon.Coupon;
+import kr.co.lotteon.entity.feedback.Exchange;
 import kr.co.lotteon.entity.feedback.Return;
 import kr.co.lotteon.entity.feedback.Review;
-import kr.co.lotteon.entity.order.Order;
 import kr.co.lotteon.entity.order.OrderItem;
 import kr.co.lotteon.entity.point.Point;
-import kr.co.lotteon.entity.product.Product;
-import kr.co.lotteon.entity.product.ProductImage;
-import kr.co.lotteon.entity.seller.Seller;
 import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.article.InquiryRepository;
 import kr.co.lotteon.repository.coupon.CouponRepository;
+import kr.co.lotteon.repository.feedback.ExchangeRepository;
 import kr.co.lotteon.repository.feedback.ReturnRepository;
 import kr.co.lotteon.repository.feedback.ReviewRepository;
 import kr.co.lotteon.repository.order.OrderInfoRepository;
@@ -41,7 +37,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -63,6 +62,7 @@ public class MyPageService {
     private final UserRepository userRepository;
     private final ReturnRepository returnRepository;
     private final OrderItemRepository orderItemRepository;
+    private final ExchangeRepository exchangeRepository;
 
 
     public PageResponseDTO<InquiryDTO> inquiryFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO) {
@@ -231,6 +231,21 @@ public class MyPageService {
 
     }
 
+    public OrderItemDTO findByItemNo(long itemNo) {
+
+        Optional<OrderItem> optOrderItem = orderItemRepository.findByItemNo(itemNo);
+
+        if (optOrderItem.isPresent()) {
+            OrderItem orderItem = optOrderItem.get();
+            OrderItemDTO orderItemDTO = modelMapper.map(orderItem, OrderItemDTO.class);
+
+            return orderItemDTO;
+        }
+
+        return null;
+
+    }
+
     public void modify(UserDTO userDTO) {
 
         boolean exists = userRepository.existsByUid(userDTO.getUid());
@@ -386,13 +401,37 @@ public class MyPageService {
         return true;
     }
 
-/*
-    public void returnRegister(UserDTO userDTO, ReturnDTO returnDTO){
 
+    public void exchangeRequest(ExchangeDTO exchangedto, Long itemNo, UserDTO userDTO) {
+
+
+        OrderItem orderItem = orderItemRepository.findById(itemNo).orElse(null);
         User user = modelMapper.map(userDTO, User.class);
 
+        Exchange exchange = modelMapper.map(exchangedto, Exchange.class);
+
+        exchange.setUser(user);
+        exchange.setOrderItem(orderItem);
+        orderItem.setOrderStatus("교환신청");
+
+        exchangeRepository.save(exchange);
+
     }
-*/
+
+    public void returnRequest(ReturnDTO returnDTO, Long itemNo, UserDTO userDTO){
+
+        OrderItem orderItem = orderItemRepository.findById(itemNo).orElse(null);
+        User user = modelMapper.map(userDTO, User.class);
+
+        Return aReturn = modelMapper.map(returnDTO, Return.class);
+
+        aReturn.setUser(user);
+        aReturn.setOrderItem(orderItem);
+        orderItem.setOrderStatus("반품신청");
+
+        returnRepository.save(aReturn);
+
+    }
 
 
 }
