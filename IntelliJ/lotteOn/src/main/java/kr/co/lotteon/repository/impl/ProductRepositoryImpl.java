@@ -160,6 +160,8 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     @Override
     public Page<Tuple> selectAllForListByRole(PageRequestDTO pageRequestDTO, Pageable pageable) {
 
+        BooleanExpression booleanExpression = qProduct.state.eq("판매");
+
         String cate = pageRequestDTO.getSearchType();
         String keyword = pageRequestDTO.getKeyword();
 
@@ -169,6 +171,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                     .from(qProduct)
                     .join(qSeller).on(qProduct.seller.sno.eq(qSeller.sno))
                     .leftJoin(qProductImage).on(qProductImage.product.eq(qProduct))
+                    .where(booleanExpression)
                     .offset(pageable.getOffset())
                     .limit(pageable.getPageSize())
                     .orderBy(qProduct.regDate.desc()) // 정렬 조건
@@ -179,10 +182,13 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                     .from(qProduct)
                     .join(qSeller).on(qProduct.seller.sno.eq(qSeller.sno))
                     .leftJoin(qProductImage).on(qProductImage.product.eq(qProduct))
+                    .where(booleanExpression)
                     .fetchOne();
 
             return new PageImpl<>(tupleList, pageable, total);
         }else{
+
+            BooleanExpression baseCondition = qProduct.state.eq("판매");
 
             BooleanExpression expression = switch (cate) {
                 case "상품명" -> qProduct.prodName.contains(keyword);
@@ -190,6 +196,12 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 case "판매자" -> qProduct.company.contains(keyword);
                 default -> null;
             };
+
+            if (expression != null) {
+                expression = expression.and(baseCondition);
+            } else {
+                expression = baseCondition;
+            }
 
             List<Tuple> tupleList = queryFactory
                     .select(qProduct, qSeller.company, qProductImage)

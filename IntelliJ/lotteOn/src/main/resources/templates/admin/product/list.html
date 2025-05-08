@@ -113,8 +113,8 @@
                                 <input type="checkbox" id="deleteNo" name="deleteNo" th:value="${product.prodNo}">
                             </td>
                             <td>
-                                <img src="/images/productBox.jpg" alt="박스">
-
+                                <img th:src="${product.productImage.sNameList}" alt="박스"
+                                     onerror="this.src='/images/productBox.jpg';">
                             </td>
                             <td>[[${product.prodNo}]]</td>
                             <td>[[${product.prodName}]]</td>
