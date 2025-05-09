@@ -421,7 +421,7 @@ public class MyPageService {
 
 
         try{
-            if (file != null || !file.isEmpty()) {
+            if (file != null && !file.isEmpty()) {
                 String oName = file.getOriginalFilename();
                 String fileName1 = saveFile(file, uploadType);
 
@@ -451,7 +451,7 @@ public class MyPageService {
 
 
         try{
-            if (file != null || !file.isEmpty()) {
+            if (file != null && !file.isEmpty()) {
                 String oName = file.getOriginalFilename();
                 String fileName1 = saveFile(file, uploadType);
 
