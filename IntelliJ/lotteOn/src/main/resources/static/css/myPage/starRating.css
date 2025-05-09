@@ -9,7 +9,7 @@
 .star-rating label {
   cursor: pointer;
   font-size: 3rem;
-  color: hsl(60, 80%, 45%);
+  color: hsl(0, 0%, 45%);
   transition: color 0.2s;
 }
 .star-rating input[type="radio"]:checked ~ label,

@@ -302,6 +302,9 @@ public class MyController {
         exchangeDTO.setType(type);
         exchangeDTO.setContent(content);
 
+
+        System.out.println("교환하기 모달 컨트롤러 uploadType: " + uploadType);
+
         myPageService.exchangeRequest(exchangeDTO, itemNo, uploadType, userDTO, file);
 
         return ResponseEntity.ok().build();

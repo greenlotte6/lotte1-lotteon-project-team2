@@ -36,6 +36,7 @@ import kr.co.lotteon.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -67,7 +68,11 @@ public class MyPageService {
     private final OrderItemRepository orderItemRepository;
     private final ExchangeRepository exchangeRepository;
     private final ProductRepository productRepository;
-    private final String UploadPath = "C:/Users/lotte2/Desktop/workspace/lotte1-lotteon-project-team2/IntelliJ/lotteOn/uploads";
+
+    @Value("${spring.servlet.multipart.location}")
+    private String UploadPath;
+
+    // private final String UploadPath = "C:/Users/lotte2/Desktop/workspace/lotte1-lotteon-project-team2/IntelliJ/lotteOn/uploads";
 
 
     public PageResponseDTO<InquiryDTO> inquiryFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO) {
@@ -409,7 +414,6 @@ public class MyPageService {
 
     public void exchangeRequest(ExchangeDTO exchangedto, Long itemNo,String uploadType,  UserDTO userDTO, MultipartFile file) {
 
-
         OrderItem orderItem = orderItemRepository.findById(itemNo).orElse(null);
         User user = modelMapper.map(userDTO, User.class);
 
@@ -524,18 +528,28 @@ public class MyPageService {
         String uuid = UUID.randomUUID().toString();
         String savedFileName = uuid + ext;
 
-        // 저장 폴더 없으면 새로 생성
-        File dir = new File(UploadPath + "/" + UploadType);
-        if(!dir.exists()){
-            dir.mkdirs();
+        String path = "/" + UploadType;
+
+        java.io.File fileUploadDir = new java.io.File(UploadPath + "/" + UploadType);
+
+        if(!fileUploadDir.exists()){
+            // 파일 업로드 디렉터리가 존재하지 않으면 생성
+            fileUploadDir.mkdirs();
         }
 
+        // 파일 업로드 디렉터리 시스템 경로 구하기
+        String fileUploadPath = fileUploadDir.getAbsolutePath();
+
         // 파일 저장
-        File dest = new File(dir, savedFileName);
-        file.transferTo(dest);
+        try {
+            file.transferTo(new java.io.File(fileUploadPath, savedFileName));
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
 
         return savedFileName;
     }
 
 
 }
+
