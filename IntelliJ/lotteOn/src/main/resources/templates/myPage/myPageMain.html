@@ -238,20 +238,20 @@
                         <div class="modal-name">
                             <p>구매확정</p>
                         </div>
-                        <div class="exit" onclick="location.href='#'" style="cursor: pointer;">
+                        <div class="exit" style="cursor: pointer;">
                             <p class="modalClose">X</p> <!-- 수정 예정 -->
                         </div>
                     </div>
-                    <form class="modal-main table-sub">
+                    <div class="modal-main table-sub">
                         <div class="purchase_confirm_content" style="margin: 80px; font-size: 20px;">
                             <p>상품을 받으셨나요?</p>
                             <p>상품을 받으신 분만 구매확정을 해주세요.</p>
                         </div>
                         <div class="btn">
-                            <input type="submit" value="확인" onclick="location.href='#'">
-                            <input type="submit" value="취소" class="modalClose">
+                            <input type="submit" value="확인" class="modalConfirmBtn">
+                            <input type="button" value="취소" class="modalClose">
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -261,60 +261,117 @@
                 <div class="modal-wrapper">
                     <div class="modal-header">
                         <div class="modal-name">
-                            <p>상품리뷰</p>
+                            <p>상품평 작성</p>
                         </div>
                         <div class="exit" onclick="location.href='#'" style="cursor: pointer;">
                             <p class="modalClose">X</p> <!-- 수정 예정 -->
                         </div>
                     </div>
-                    <form class="modal-main table-sub">
+                    <div class="modal-main table-sub">
                         <table>
                             <tbody>
-                                <tr>
-                                    <td>상품명</td>
-                                    <td>상품명 출력</td>
-                                </tr>
-                                <tr>
-                                    <td>만족도</td>
-                                    <td>
-                                        <div class="star-rating">
-                                            <input type="radio" id="star5_modal1" name="rating_modal1" value="5"><label for="star5_modal1" class="full" title="5점"></label>
-                                            <input type="radio" id="star4half_modal1" name="rating_modal1" value="4.5"><label for="star4half_modal1" class="half" title="4.5점"></label>
-                                            <input type="radio" id="star4_modal1" name="rating_modal1" value="4"><label for="star4_modal1" class="full" title="4점"></label>
-                                            <input type="radio" id="star3half_modal1" name="rating_modal1" value="3.5"><label for="star3half_modal1" class="half" title="3.5점"></label>
-                                            <input type="radio" id="star3_modal1" name="rating_modal1" value="3"><label for="star3_modal1" class="full" title="3점"></label>
-                                            <input type="radio" id="star2half_modal1" name="rating_modal1" value="2.5"><label for="star2half_modal1" class="half" title="2.5점"></label>
-                                            <input type="radio" id="star2_modal1" name="rating_modal1" value="2"><label for="star2_modal1" class="full" title="2점"></label>
-                                            <input type="radio" id="star1half_modal1" name="rating_modal1" value="1.5"><label for="star1half_modal1" class="half" title="1.5점"></label>
-                                            <input type="radio" id="star1_modal1" name="rating_modal1" value="1"><label for="star1_modal1" class="full" title="1점"></label>
-                                            <input type="radio" id="star0half_modal1" name="rating_modal1" value="0.5"><label for="star0half_modal1" class="half" title="0.5점"></label>
-                                          </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>내용</td>
-                                    <td>
-                                        <textarea></textarea>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>사진</td>
-                                    <td class="file">
-                                        <input type="file" name="file1"/>
-                                        <input type="file" name="file2"/>
-                                    </td>
-                                </tr>
-                                
+                            <tr>
+                                <td>상품명</td>
+                                <td id="modalProdName">상품</td>
+                            </tr>
+                            <tr>
+                                <td>만족도</td>
+                                <td>
+                                    <div class="star-rating">
+                                        <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
+                                        <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+                                        <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+                                        <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+                                        <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>내용</td>
+                                <td>
+                                    <textarea name="review_content"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>사진</td>
+                                <td class="file">
+                                    <input type="file" name="file1"/>
+                                    <input type="file" name="file2"/>
+                                    <input type="file" name="file3"/>
+                                </td>
+                            </tr>
+
                             </tbody>
                         </table>
                         <div class="btn">
-                            <input type="submit" value="작성완료" onclick="location.href='#'">
+                            <input type="submit" value="작성완료" class="modal_review_btn">
                             <input type="submit" value="취소" class="modalClose">
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                let selectedBtn = null; // 어떤 버튼에서 모달을 띄웠는지 저장
+
+                document.querySelectorAll('.product_review_btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        selectedBtn = this; // 클릭한 버튼 저장
+                    });
+                });
+
+                // 모달 '확인' 버튼
+                document.getElementsByClassName('modal_review_btn')[0].addEventListener('click', function() {
+
+                    // 1. type(라디오) 값 가져오기
+                    const rating = document.querySelector('input[name="rating"]:checked');
+                    if (!rating) {
+                        alert('만족도를 체크해주세요.');
+                        return;
+                    }
+
+                    // 2. content(사유) 값 가져오기
+                    const content = document.querySelector('textarea[name="review_content"]').value;
+                    if (!content) {
+                        alert('내용을 입력해주세요.');
+                        return;
+                    }
+
+                    const itemNo = selectedBtn.getAttribute('data-orderItemNo');
+                    const tr = selectedBtn.closest('tr');
+                    const statusTd = tr.querySelectorAll('td')[2];
+                    const productId = selectedBtn.getAttribute('data-prod-id')
+
+                    // 4. 서버로 데이터 전송 (JSON)
+                    fetch('/my/order/review', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            rating: rating.value,
+                            content: content,
+                            itemNo: itemNo,
+                            productId: productId
+                        })
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                alert('상품리뷰 작성이 완료되었습니다.');
+                                // 모달 닫기
+                                document.querySelector('.product_review_modal').style.display = 'none';
+                                // 폼 초기화 (선택)
+                                document.querySelector('textarea[name="review_content"]').value = '';
+                                document.querySelectorAll('input[name="type"]').forEach(radio => radio.checked = false);
+                            } else {
+                                alert('상품리뷰 작성을 실패했습니다.');
+                            }
+                        })
+                        .catch(() => {
+                            alert('서버 오류가 발생했습니다.');
+                        });
+                });
+            })
+        </script>
         <!--반품신청 모달 팝업-->
         <div class="modal return_request_modal">
             <div class="modal_popup">
@@ -334,88 +391,149 @@
                         <div class="order-info table-main">
                             <table>
                                 <tbody>
-                                    <tr>
-                                        <th>날짜</th>
-                                        <th>상품정보</th>
-                                        <th>결제금액</th>
-                                        <th>상태</th>
-                                    </tr>
+                                <tr>
+                                    <th>날짜</th>
+                                    <th>상품정보</th>
+                                    <th>결제금액</th>
+                                    <th>상태</th>
+                                </tr>
                                 </tbody>
                                 <tbody>
-                                    <tr>
-                                        <td>2025-12-31</td>
-                                        <td class="product-info">
-                                            <div class="img-container">
-                                                <img class="img" src="/lotteOn/images/product/lelabo_another.jpg" alt="">
-                                            </div>
-                                            <div class="text-area">
-                                                <p>주문번호 : 1012211341</p>
-                                                <p>(주) 상호명</p>
-                                                <p>상품명</p>
-                                                <p>수량 : 1개</p>
-                                                <p>34,000원</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p>판매가 : 34,000원</p>
-                                            <p>할인 : -3,000원</p>
-                                            <p>결제금액 : 31,000원</p>
-                                        </td>
-                                        <td>배송완료</td>
-                                    </tr>
+                                <tr>
+                                    <td id="returnModalOrderDate"></td>
+                                    <td class="product-info">
+                                        <div class="img-container">
+                                            <img id="returnModalProductImage" class="img" src="" alt="">
+                                        </div>
+                                        <div class="text-area">
+                                            <p id="returnModalOrderNo"></p>
+                                            <p id="returnModalCompany"></p>
+                                            <p id="returnModalProdName"></p>
+                                            <p id="returnModalItemCount"></p>
+                                            <p></p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p id="returnModalSellPrice"></p>
+                                        <p id="returnModalDiscount"></p>
+                                        <p id="returnModalTotalPrice"></p>
+                                    </td>
+                                    <td id="returnModalOrderStatus"></td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <form class="return-Request table-sub">
+                        <div class="return-Request table-sub">
                             <div class="title-area">
                                 <h1>반품정보 입력</h1>
                             </div>
                             <table>
                                 <tbody>
-                                    <tr>
-                                        <td>반품유형</td>
-                                        <td>
-                                            <label>
-                                                <input type="radio" name="choice">
-                                                <span>단순 변심</span>
-                                            </label>
-                                                <label>
-                                                <input type="radio" name="choice">
-                                                <span>파손 및 불량</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="choice">
-                                                <span>주문 실수</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="choice">
-                                                <span>기타</span>
-                                            </label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>사유입력</td>
-                                        <td>
-                                            <textarea></textarea>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>사진첨부(선택)</td>
-                                        <td class="file">
-                                            <input type="file">
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td>반품유형</td>
+                                    <td>
+                                        <label>
+                                            <input type="radio" name="type" value="단순 변심">
+                                            <span>단순 변심</span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="type" value="파손 및 불량">
+                                            <span>파손 및 불량</span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="type" value="주문 실수">
+                                            <span>주문 실수</span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="type" value="기타">
+                                            <span>기타</span>
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>사유입력</td>
+                                    <td>
+                                        <textarea name="return_content"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>사진첨부(선택)</td>
+                                    <td class="file">
+                                        <input type="file">
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                             <div class="btn">
-                                <input type="submit" value="반품신청" onclick="location.href='#'">
-                                <input type="submit" value="취소" class="modalClose">
+                                <input type="button" value="반품신청" class="modal_return_btn">
+                                <input type="button" value="취소" class="modalClose">
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                let selectedBtn = null; // 어떤 버튼에서 모달을 띄웠는지 저장
+
+
+                document.querySelectorAll('.return_request_btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        selectedBtn = this; // 클릭한 버튼 저장
+                    });
+                });
+
+                // 모달 '확인' 버튼
+                document.getElementsByClassName('modal_return_btn')[0].addEventListener('click', function() {
+
+                    // 1. type(라디오) 값 가져오기
+                    const type = document.querySelector('input[name="type"]:checked');
+                    if (!type) {
+                        alert('반품유형을 선택하세요.');
+                        return;
+                    }
+
+                    // 2. content(사유) 값 가져오기
+                    const content = document.querySelector('textarea[name="return_content"]').value;
+                    if (!content) {
+                        alert('사유를 입력하세요.');
+                        return;
+                    }
+
+                    const itemNo = selectedBtn.getAttribute('data-orderItemNo');
+                    const tr = selectedBtn.closest('tr');
+                    const statusTd = tr.querySelectorAll('td')[2];
+
+                    // 4. 서버로 데이터 전송 (JSON)
+                    fetch('/my/order/return', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            type: type.value,
+                            content: content,
+                            itemNo: itemNo
+                        })
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                alert('반품신청이 완료되었습니다.');
+                                // 모달 닫기
+                                document.querySelector('.return_request_modal').style.display = 'none';
+                                // 폼 초기화 (선택)
+                                statusTd.textContent = "반품신청";
+                                document.querySelector('textarea[name="return_content"]').value = '';
+                                document.querySelectorAll('input[name="type"]').forEach(radio => radio.checked = false);
+                            } else {
+                                alert('반품신청에 실패했습니다.');
+                            }
+                        })
+                        .catch(() => {
+                            alert('서버 오류가 발생했습니다.');
+                        });
+                });
+            })
+        </script>
         <!--교환신청 모달 팝업-->
         <div class="modal exchange_request_modal">
             <div class="modal_popup">
@@ -435,88 +553,149 @@
                         <div class="order-info table-main">
                             <table>
                                 <tbody>
-                                    <tr>
-                                        <th>날짜</th>
-                                        <th>상품정보</th>
-                                        <th>결제금액</th>
-                                        <th>상태</th>
-                                    </tr>
+                                <tr>
+                                    <th>날짜</th>
+                                    <th>상품정보</th>
+                                    <th>결제금액</th>
+                                    <th>상태</th>
+                                </tr>
                                 </tbody>
                                 <tbody>
-                                    <tr>
-                                        <td>2025-12-31</td>
-                                        <td class="product-info">
-                                            <div class="img-container">
-                                                <img class="img" src="/lotteOn/images/product/lelabo_another.jpg" alt="">
-                                            </div>
-                                            <div class="text-area">
-                                                <p>주문번호 : 1012211341</p>
-                                                <p>(주) 상호명</p>
-                                                <p>상품명</p>
-                                                <p>수량 : 1개</p>
-                                                <p>34,000원</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p>판매가 : 34,000원</p>
-                                            <p>할인 : -3,000원</p>
-                                            <p>결제금액 : 31,000원</p>
-                                        </td>
-                                        <td>배송완료</td>
-                                    </tr>
+                                <tr>
+                                    <td id="exchangeModalOrderDate"></td>
+                                    <td class="product-info">
+                                        <div class="img-container">
+                                            <img id="modalProductImage" class="img" src="" alt="">
+                                        </div>
+                                        <div class="text-area">
+                                            <p id="exchangeModalOrderNo"></p>
+                                            <p id="exchangeModalCompany"></p>
+                                            <p id="exchangeModalProdName"></p>
+                                            <p id="exchangeModalItemCount"></p>
+                                            <p></p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p id="exchangeModalSellPrice"></p>
+                                        <p id="exchangeModalDiscount"></p>
+                                        <p id="exchangeModalTotalPrice"></p>
+                                    </td>
+                                    <td id="exchangeModalOrderStatus"></td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <form class="return-Request table-sub">
+                        <div class="return-Request table-sub">
                             <div class="title-area">
                                 <h1>교환정보 입력</h1>
                             </div>
                             <table>
                                 <tbody>
-                                    <tr>
-                                        <td>반품유형</td>
-                                        <td>
-                                            <label>
-                                                <input type="radio" name="choice">
-                                                <span>단순 변심</span>
-                                            </label>
-                                                <label>
-                                                <input type="radio" name="choice">
-                                                <span>파손 및 불량</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="choice">
-                                                <span>주문 실수</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" name="choice">
-                                                <span>기타</span>
-                                            </label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>사유입력</td>
-                                        <td>
-                                            <textarea></textarea>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>사진첨부(선택)</td>
-                                        <td class="file">
-                                            <input type="file">
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td>반품유형</td>
+                                    <td>
+                                        <label>
+                                            <input type="radio" name="type" value="단순 변심">
+                                            <span>단순 변심</span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="type" value="파손 및 불량">
+                                            <span>파손 및 불량</span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="type" value="주문 실수">
+                                            <span>주문 실수</span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="type" value="기타">
+                                            <span>기타</span>
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>사유입력</td>
+                                    <td>
+                                        <textarea name="exchange_content"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>사진첨부(선택)</td>
+                                    <td class="file">
+                                        <input type="file" id="exchange_image" accept="image/*">
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                             <div class="btn">
-                                <input type="submit" value="교환신청" onclick="location.href='#'";>
-                                <input type="submit" value="취소" class="modalClose">
+                                <input type="button" value="교환신청" class="modal_exchange_btn">
+                                <input type="button" value="취소" class="modalClose">
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                let selectedBtn = null; // 어떤 버튼에서 모달을 띄웠는지 저장
+
+
+                document.querySelectorAll('.exchange_request_btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        selectedBtn = this; // 클릭한 버튼 저장
+                    });
+                });
+
+                // 모달 '확인' 버튼
+                document.getElementsByClassName('modal_exchange_btn')[0].addEventListener('click', function() {
+
+                    // 1. type(라디오) 값 가져오기
+                    const type = document.querySelector('input[name="type"]:checked');
+                    if (!type) {
+                        alert('반품유형을 선택하세요.');
+                        return;
+                    }
+
+                    // 2. content(사유) 값 가져오기
+                    const content = document.querySelector('textarea[name="exchange_content"]').value;
+                    if (!content) {
+                        alert('사유를 입력하세요.');
+                        return;
+                    }
+
+                    const itemNo = selectedBtn.getAttribute('data-orderItemNo');
+                    const tr = selectedBtn.closest('tr');
+                    const statusTd = tr.querySelectorAll('td')[2];
+
+                    // 4. 서버로 데이터 전송 (JSON)
+                    fetch('/my/order/exchange', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            type: type.value,
+                            content: content,
+                            itemNo: itemNo
+                        })
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                alert('교환신청이 완료되었습니다.');
+                                // 모달 닫기
+                                document.querySelector('.exchange_request_modal').style.display = 'none';
+                                // 폼 초기화 (선택)
+                                statusTd.textContent = "교환신청";
+                                document.querySelector('textarea[name="return_content"]').value = '';
+                                document.querySelectorAll('input[name="type"]').forEach(radio => radio.checked = false);
+                            } else {
+                                alert('교환신청에 실패했습니다.');
+                            }
+                        })
+                        .catch(() => {
+                            alert('서버 오류가 발생했습니다.');
+                        });
+                });
+            })
+        </script>
         <!--주문상세-->
         <div class="modal order_details_modal">
             <div class="modal_popup">

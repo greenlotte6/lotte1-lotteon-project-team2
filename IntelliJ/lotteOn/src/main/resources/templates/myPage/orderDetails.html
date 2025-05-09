@@ -231,7 +231,6 @@
                 </div>
             </div>
         </div>
-
         <!--상품평 모달 팝업-->
         <div class="modal product_review_modal">
             <div class="modal_popup">
@@ -319,17 +318,25 @@
                     const tr = selectedBtn.closest('tr');
                     const statusTd = tr.querySelectorAll('td')[2];
                     const productId = selectedBtn.getAttribute('data-prod-id')
+                    const uploadType = "review";
+                    const file1 = document.querySelector('input[name="file1"]').files[0];
+                    const file2 = document.querySelector('input[name="file2"]').files[0];
+
+                    // FormData 객체 생성
+                    const formData = new FormData();
+                    formData.append('rating', rating.value);
+                    formData.append('content', content);
+                    formData.append('itemNo', itemNo);
+                    formData.append('productId', productId);
+                    formData.append('uploadType', uploadType);
+                    if (file1) formData.append('file1', file1);
+                    if (file2) formData.append('file2', file2);
+
 
                     // 4. 서버로 데이터 전송 (JSON)
                     fetch('/my/order/review', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            rating: rating.value,
-                            content: content,
-                            itemNo: itemNo,
-                            productId: productId
-                        })
+                        body: formData
                     })
                         .then(response => {
                             if (response.ok) {
@@ -436,7 +443,7 @@
                                     <tr>
                                         <td>사진첨부(선택)</td>
                                         <td class="file">
-                                            <input type="file">
+                                            <input type="file" name="file">
                                         </td>
                                     </tr>
                                 </tbody>
@@ -478,19 +485,27 @@
                         return;
                     }
 
+                    const modal = document.querySelector('.return_request_modal');
+                    const fileInput = modal.querySelector('input[name="file"]');
+                    const file = fileInput ? fileInput.files[0] : null;
+                    const uploadType = "return";
                     const itemNo = selectedBtn.getAttribute('data-orderItemNo');
                     const tr = selectedBtn.closest('tr');
                     const statusTd = tr.querySelectorAll('td')[2];
 
+
+                    // FormData 객체 생성
+                    const formData = new FormData();
+                    formData.append('type', type.value);
+                    formData.append('content', content);
+                    formData.append('itemNo', itemNo);
+                    formData.append('uploadType', uploadType);
+                    if (file) formData.append('file', file);
+
                     // 4. 서버로 데이터 전송 (JSON)
                     fetch('/my/order/return', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            type: type.value,
-                            content: content,
-                            itemNo: itemNo
-                        })
+                        body: formData
                     })
                         .then(response => {
                             if (response.ok) {
@@ -598,7 +613,7 @@
                                     <tr>
                                         <td>사진첨부(선택)</td>
                                         <td class="file">
-                                            <input type="file" id="exchange_image" accept="image/*">
+                                            <input type="file" name="file">
                                         </td>
                                     </tr>
                                 </tbody>
@@ -640,19 +655,26 @@
                         return;
                     }
 
+                    const modal = document.querySelector('.exchange_request_modal');
+                    const fileInput = modal.querySelector('input[name="file"]');
+                    const file = fileInput ? fileInput.files[0] : null;
+                    const uploadType = "exchange";
                     const itemNo = selectedBtn.getAttribute('data-orderItemNo');
                     const tr = selectedBtn.closest('tr');
                     const statusTd = tr.querySelectorAll('td')[2];
 
+                    // FormData 객체 생성
+                    const formData = new FormData();
+                    formData.append('type', type.value);
+                    formData.append('content', content);
+                    formData.append('itemNo', itemNo);
+                    formData.append('uploadType', uploadType);
+                    if (file) formData.append('file', file);
+
                     // 4. 서버로 데이터 전송 (JSON)
                     fetch('/my/order/exchange', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            type: type.value,
-                            content: content,
-                            itemNo: itemNo
-                        })
+                        body: formData
                     })
                         .then(response => {
                             if (response.ok) {
@@ -673,6 +695,203 @@
                 });
             })
         </script>
+        <!--주문상세-->
+        <div class="modal order_details_modal">
+            <div class="modal_popup">
+                <div class="modal-wrapper">
+                    <div class="modal-header">
+                        <div class="modal-name">
+                            <p>주문상세</p>
+                        </div>
+                        <div class="order-date">
+                            <p>2025-04-14</p>
+                        </div>
+                        <div class="exit" onclick="location.href='#'" style="cursor: pointer;">
+                            <p class="modalClose">X</p> <!-- 수정 예정 -->
+                        </div>
+                    </div>
+                    <div class="modal-main">
+                        <div class="title-area">
+                            <h1>주문정보</h1>
+                        </div>
+                        <div class="order-info table-main">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <th>날짜</th>
+                                    <th>상품정보</th>
+                                    <th>결제금액</th>
+                                    <th>상태</th>
+                                </tr>
+                                </tbody>
+                                <tbody>
+                                <tr>
+                                    <td>2025-12-31</td>
+                                    <td class="product-info">
+                                        <div class="img-container">
+                                            <img class="img" src="/lotteOn/images/product/lelabo_another.jpg" alt="">
+                                        </div>
+                                        <div class="text-area">
+                                            <p>주문번호 : 1012211341</p>
+                                            <p>(주) 상호명</p>
+                                            <p>상품명</p>
+                                            <p>수량 : 1개</p>
+                                            <p>34,000원</p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p>판매가 : 34,000원</p>
+                                        <p>할인 : -3,000원</p>
+                                        <p>결제금액 : 31,000원</p>
+                                    </td>
+                                    <td>배송완료</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="delivery-info table-sub">
+                            <div class="title-area">
+                                <h1>배송정보</h1>
+                            </div>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td>이름</td>
+                                    <td>홍길동</td>
+                                </tr>
+                                <tr>
+                                    <td>연락처</td>
+                                    <td>010-1234-1001</td>
+                                </tr>
+                                <tr>
+                                    <td>주소</td>
+                                    <td>[210**] 부산광역시 진구 대연동 121 10층 1004호</td>
+                                </tr>
+                                <tr>
+                                    <td>배송요청사항</td>
+                                    <td>없음</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--판매자정보 모달 팝업-->
+        <div class="modal seller_info_modal">
+            <div class="modal_popup">
+                <div class="modal-wrapper">
+                    <div class="modal-header">
+                        <div class="modal-name">
+                            <p>판매자정보</p>
+                        </div>
+                        <div class="exit" onclick="location.href='#'" style="cursor: pointer;">
+                            <p class="modalClose">X</p> <!-- 수정 예정 -->
+                        </div>
+                    </div>
+                    <div class="modal-main">
+                        <div class="seller-info table-sub">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td>판매자 등급</td>
+                                    <td>파워 딜러</td>
+                                </tr>
+                                <tr>
+                                    <td>상호</td>
+                                    <td>(주) 상호명</td>
+                                </tr>
+                                <tr>
+                                    <td>대표자</td>
+                                    <td>홍길동</td>
+                                </tr>
+                                <tr>
+                                    <td>전화번호</td>
+                                    <td>051-123-1000</td>
+                                </tr>
+                                <tr>
+                                    <td>FAX</td>
+                                    <td>051-123-1001</td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td>company@abc.com</td>
+                                </tr>
+                                <tr>
+                                    <td>사업자번호</td>
+                                    <td>123-12-123456</td>
+                                </tr>
+                                <tr>
+                                    <td>영업소재지</td>
+                                    <td>[21012] 부산광역시 진구 대연동 121 10층 1004호</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div>
+                                <p>* 위 정보는 전자상거래법 제 20조 제 2항 및 동법 시행령 제 25조 제 2항에 의거하여 소비자 보호에 의거 공개합니다.</p>
+                            </div>
+                            <div class="btn">
+                                <input type="submit" class="inquiry_btn" value="문의하기">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--문의하기 모달-->
+        <div class="modal inquiry_modal">
+            <div class="modal_popup">
+                <div class="modal-wrapper">
+                    <div class="modal-header">
+                        <div class="modal-name">
+                            <p>문의하기</p>
+                        </div>
+                        <div class="exit" onclick="location.href='#'" style="cursor: pointer;">
+                            <p class="modalClose">X</p> <!-- 수정 예정 -->
+                        </div>
+                    </div>
+                    <form class="modal-main table-sub">
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td>문의종류</td>
+                                <td>
+                                    <input type="radio" name="role" value=""/> 상품 &ensp;
+                                    <input type="radio" name="role" value=""/> 배송 &ensp;
+                                    <input type="radio" name="role" value=""/> 반품/취소 &ensp;
+                                    <input type="radio" name="role" value=""/> 교환 &ensp;
+                                    <input type="radio" name="role" value=""/> 기타 &ensp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Email</td>
+                                <td>
+                                    <input type="text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>제목</td>
+                                <td>
+                                    <input type="text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>내용</td>
+                                <td>
+                                    <textarea></textarea>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="btn">
+                            <input type="submit" value="등록하기" onclick="location.href='#'">
+                            <input type="submit" value="취소" class="modalClose">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <!-- 푸터 시작 -->
         <th:block th:include="/common/footer.html"/>
         <!-- 푸터 끝 -->
