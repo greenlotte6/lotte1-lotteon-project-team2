@@ -21,6 +21,7 @@ public class OrderInfoDTO {
     private SellerDTO seller;
     private OrderItemDTO orderItem;
     private ProductDTO product;
+    private OrderDTO order;
 
     // 상품이미지
     private String productImage;

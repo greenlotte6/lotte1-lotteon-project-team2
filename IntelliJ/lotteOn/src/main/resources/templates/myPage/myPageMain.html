@@ -62,9 +62,9 @@
                                                 <img class="img" th:src="${orderInfo.productImage}" alt="">
                                             </div>
                                             <div class="text-area">
-                                                <p th:text="${'주문번호 : ' + orderInfo.orderNo}"></p>
-                                                <p th:text="${'상호명 : ' + orderInfo.seller.company}"></p>
-                                                <p th:text="${'상품명 : ' + orderInfo.product.prodName}"></p>
+                                                <a class="order_details_a" th:text="${'주문번호 : ' + orderInfo.orderNo}"></a>
+                                                <a class="seller_info_a" th:text="${'상호명 : ' + orderInfo.seller.company}"></a>
+                                                <a th:text="${'상품명 : ' + orderInfo.product.prodName}"></a>
                                                 <p th:text="${'수량 : ' + orderInfo.orderItem.itemCount + '개'}"></p>
                                                 <p th:text="${'가격 : ' + #numbers.formatInteger(orderInfo.orderItem.itemPrice, 3, 'COMMA') + '원'}"></p>
                                             </div>

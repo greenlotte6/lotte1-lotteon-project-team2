@@ -147,9 +147,24 @@
                                                 <img class="img" th:src="${orderInfo.productImage}" alt="">
                                             </div>
                                             <div class="text-area">
-                                                <p th:text="${'주문번호 : ' + orderInfo.orderNo}"></p>
-                                                <p th:text="${'상호명 : ' + orderInfo.seller.company}"></p>
-                                                <p th:text="${'상품명 : ' + orderInfo.product.prodName}"></p>
+                                                <a class="order_details_a" th:text="${'주문번호 : ' + orderInfo.orderNo}"
+                                                                       th:data-orderDate="${#strings.substring(orderInfo.orderDate, 0, 10)}"
+                                                                       th:data-itemNo="${orderInfo.orderItem.itemNo}"
+                                                                       th:data-prodName="${orderInfo.product.prodName}"
+                                                                       th:data-company="${orderInfo.seller.company}"
+                                                                       th:data-itemCount="${orderInfo.orderItem.itemCount}"
+                                                                       th:data-itemPrice="${orderInfo.orderItem.itemPrice}"
+                                                                       th:data-productImage="${orderInfo.productImage}"
+                                                                       th:data-itemDiscount="${orderInfo.orderItem.itemDiscount}"
+                                                                       th:data-orderStatus="${orderInfo.orderStatus}"
+                                                                       th:data-orderItemNo="${orderInfo.orderItem.itemNo}"
+                                                                       th:data-orderReceiver="${orderInfo.order.orderReceiver}"
+                                                                       th:data-receiverHp="${orderInfo.order.receiverHp}"
+                                                                       th:data-receiverZip="${orderInfo.order.receiverZip}"
+                                                                       th:data-orderAddr="${orderInfo.order.orderAddr}"
+                                                                       th:data-orderContent="${orderInfo.order.orderContent}"></a>
+                                                <a class="seller_info_a" th:text="${'상호명 : ' + orderInfo.seller.company}"></a>
+                                                <a th:text="${'상품명 : ' + orderInfo.product.prodName}"></a>
                                                 <p th:text="${'수량 : ' + orderInfo.orderItem.itemCount + '개'}"></p>
                                                 <p th:text="${'가격 : ' + #numbers.formatInteger(orderInfo.orderItem.itemPrice, 3, 'COMMA') + '원'}"></p>
                                             </div>
@@ -702,9 +717,6 @@
                         <div class="modal-name">
                             <p>주문상세</p>
                         </div>
-                        <div class="order-date">
-                            <p>2025-04-14</p>
-                        </div>
                         <div class="exit" onclick="location.href='#'" style="cursor: pointer;">
                             <p class="modalClose">X</p> <!-- 수정 예정 -->
                         </div>
@@ -724,51 +736,51 @@
                                 </tr>
                                 </tbody>
                                 <tbody>
-                                <tr>
-                                    <td>2025-12-31</td>
-                                    <td class="product-info">
-                                        <div class="img-container">
-                                            <img class="img" src="/lotteOn/images/product/lelabo_another.jpg" alt="">
-                                        </div>
-                                        <div class="text-area">
-                                            <p>주문번호 : 1012211341</p>
-                                            <p>(주) 상호명</p>
-                                            <p>상품명</p>
-                                            <p>수량 : 1개</p>
-                                            <p>34,000원</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p>판매가 : 34,000원</p>
-                                        <p>할인 : -3,000원</p>
-                                        <p>결제금액 : 31,000원</p>
-                                    </td>
-                                    <td>배송완료</td>
-                                </tr>
+                                    <tr>
+                                        <td id="orderInfoModalOrderDate"></td>
+                                        <td class="product-info">
+                                            <div class="img-container">
+                                                <img id="orderInfoProductImage" class="img" src="" alt="">
+                                            </div>
+                                            <div class="text-area">
+                                                <p id="orderInfoModalOrderNo"></p>
+                                                <p id="orderInfoModalCompany"></p>
+                                                <p id="orderInfoModalProdName"></p>
+                                                <p id="orderInfoModalItemCount"></p>
+                                                <p></p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p id="orderInfoModalSellPrice"></p>
+                                            <p id="orderInfoModalDiscount"></p>
+                                            <p id="orderInfoModalTotalPrice"></p>
+                                        </td>
+                                        <td id="orderInfoModalOrderStatus"></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="delivery-info table-sub">
                             <div class="title-area">
-                                <h1>배송정보</h1>
+                                <h1>배송정보(구현예정)</h1>
                             </div>
                             <table>
                                 <tbody>
                                 <tr>
                                     <td>이름</td>
-                                    <td>홍길동</td>
+                                    <td id="orderInfoModalOrderReceiver"></td>
                                 </tr>
                                 <tr>
                                     <td>연락처</td>
-                                    <td>010-1234-1001</td>
+                                    <td id="orderInfoModalReceiverHp"></td>
                                 </tr>
                                 <tr>
                                     <td>주소</td>
-                                    <td>[210**] 부산광역시 진구 대연동 121 10층 1004호</td>
+                                    <td id="orderInfoModalOrderAddr"></td>
                                 </tr>
                                 <tr>
                                     <td>배송요청사항</td>
-                                    <td>없음</td>
+                                    <td id="orderInfoModalOrderContent"></td>
                                 </tr>
                                 </tbody>
                             </table>
