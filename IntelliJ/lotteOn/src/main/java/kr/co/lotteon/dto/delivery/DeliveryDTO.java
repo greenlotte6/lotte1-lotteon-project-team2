@@ -11,11 +11,14 @@ public class DeliveryDTO {
 
     private int dno;
 
-    private int orderNo;
+    private int orderNo; // 주문번호
 
-    private String deliveryCompany;
-
-    private String trackingNumber;
+    private String receiver; // 받는사람
+    private String zip; // 우편번호
+    private String addr; // 주소
+    private String trackingNumber; // 운송장번호
+    private String deliveryCompany; // 택배회사
 
     private String state;
+
 }
