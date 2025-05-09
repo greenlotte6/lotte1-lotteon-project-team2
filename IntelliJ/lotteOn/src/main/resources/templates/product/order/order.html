@@ -201,6 +201,19 @@
           });
 
 
+          // ✅ 전체 포인트 요약 업데이트
+          let totalEarnedPoint = 0;
+          document.querySelectorAll('.point').forEach(pointEl => {
+              const point = parseInt(pointEl?.innerText.replace(/[^0-9]/g, ''), 10);
+              if (!isNaN(point)) {
+                  totalEarnedPoint += point;
+              }
+          });
+
+          document.getElementById('summary-point').innerText = totalEarnedPoint.toLocaleString();
+          document.querySelector('input[name="earnedPoint"]').value = totalEarnedPoint;
+
+
           // ✅ 쿠폰 모달 창
           const modal = document.getElementById("couponModal");
           const showCouponModalButton = document.getElementById("showCouponModalButton");
@@ -418,47 +431,24 @@
               document.querySelector('input[name="quantity"]').value = totalCount;
 
               document.getElementById('summary-amount').innerText = totalOriginal.toLocaleString();
+              document.querySelector('input[name="originalTotalPrice"]').value = totalOriginal;
+
               document.getElementById('summary-discount').innerText = '-' + totalDiscount.toLocaleString();
+              document.querySelector('input[name="totalDiscount"]').value = totalDiscount;
 
               const shippingText = finalShippingCost === 0 ? '무료' : finalShippingCost.toLocaleString();
               document.getElementById('summary-shipping').innerText = shippingText;
+              document.querySelector('input[name="shippingFee"]').value = finalShippingCost;
 
               document.getElementById('summary-point-discount').innerText = '-' + pointDiscount.toLocaleString();
+              document.querySelector('input[name="pointDiscount"]').value = pointDiscount;
 
               const couponDiscountText = '-' + couponDiscount.toLocaleString();
               document.getElementById('summary-coupon-discount').innerText = couponDiscountText;
+              document.querySelector('input[name="couponDiscount"]').value = couponDiscount;
 
               document.getElementById('summary-total').innerText = finalTotal.toLocaleString();
-
               document.querySelector('input[name="orderTotalPrice"]').value = finalTotal;
-
-              const userRank = '[[${userDetailsDTO.rank}]]';
-              let pointRate = 0;
-
-              switch (userRank) {
-                  case 'VVIP':
-                      pointRate = 0.05;
-                      break;
-                  case 'VIP':
-                      pointRate = 0.04;
-                      break;
-                  case 'GOLD':
-                      pointRate = 0.03;
-                      break;
-                  case 'SILVER':
-                      pointRate = 0.02;
-                      break;
-                  case 'FAMILY':
-                      pointRate = 0.01;
-                      break;
-                  default:
-                      pointRate = 0;
-                      break;
-              }
-
-              const earnedPoint = Math.floor(finalTotal * pointRate);
-              document.getElementById('summary-point').innerText = earnedPoint.toLocaleString();
-              document.querySelector('input[name="earnedPoint"]').value = earnedPoint;
           }
 
 
@@ -792,22 +782,27 @@
                                     <tr>
                                         <th>상품금액</th>
                                         <td id="summary-amount"></td>
+                                        <input type="hidden" name="originalTotalPrice">
                                     </tr>
                                     <tr>
                                         <th>할인금액</th>
                                         <td id="summary-discount"></td>
+                                        <input type="hidden" name="totalDiscount">
                                     </tr>
                                     <tr>
                                         <th>배송비</th>
                                         <td id="summary-shipping"></td>
+                                        <input type="hidden" name="shippingFee">
                                     </tr>
                                     <tr>
                                         <th>포인트할인</th>
                                         <td id="summary-point-discount"></td>
+                                        <input type="hidden" name="pointDiscount">
                                     </tr>
                                     <tr>
                                         <th>쿠폰할인</th>
                                         <td id="summary-coupon-discount"></td>
+                                        <input type="hidden" name="couponDiscount">
                                     </tr>
                                     <tr>
                                         <th>적립 포인트</th>

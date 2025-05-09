@@ -19,6 +19,7 @@ import kr.co.lotteon.service.order.OrderItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -78,6 +79,10 @@ public class MyController {
 
         // 로그인한 유저의 주문내역 조회
         PageResponseDTO<OrderInfoDTO> orderInfoPagingDTO = myPageService.orderInfoPaging(pageRequestDTO, uid);
+
+        // 주문내역 모달
+
+
 
 
 
@@ -259,11 +264,12 @@ public class MyController {
     
     // 반품하기 모달
     @PostMapping("/my/order/return")
-    public ResponseEntity<?> returnRequest(@RequestBody Map<String, Object> payload, @AuthenticationPrincipal UserDetails userdetails) {
-
-        Long itemNo = Long.valueOf(payload.get("itemNo").toString());
-        String type = payload.get("type").toString();
-        String content = payload.get("content").toString();
+    public ResponseEntity<?> returnRequest(@RequestParam("type") String type,
+                                           @RequestParam("itemNo") Long itemNo,
+                                           @RequestParam("content") String content,
+                                           @RequestParam("uploadType") String uploadType,
+                                           @RequestParam(value = "file", required = false) MultipartFile file,
+                                           @AuthenticationPrincipal UserDetails userdetails) {
 
 
         String uid = userdetails.getUsername();
@@ -273,18 +279,20 @@ public class MyController {
         returnDTO.setType(type);
         returnDTO.setContent(content);
 
-        myPageService.returnRequest(returnDTO, itemNo, userDTO);
+        myPageService.returnRequest(returnDTO, itemNo, uploadType, userDTO, file);
 
         return ResponseEntity.ok().build();
     }
 
-    // 반품하기 모달
+    // 교환하기 모달
     @PostMapping("/my/order/exchange")
-    public ResponseEntity<?> exchangeRequest(@RequestBody Map<String, Object> payload, @AuthenticationPrincipal UserDetails userdetails) {
+    public ResponseEntity<?> exchangeRequest(@RequestParam("type") String type,
+                                             @RequestParam("itemNo") Long itemNo,
+                                             @RequestParam("content") String content,
+                                             @RequestParam("uploadType") String uploadType,
+                                             @RequestParam(value = "file", required = false) MultipartFile file,
+                                             @AuthenticationPrincipal UserDetails userdetails) {
 
-        Long itemNo = Long.valueOf(payload.get("itemNo").toString());
-        String type = payload.get("type").toString();
-        String content = payload.get("content").toString();
 
 
         String uid = userdetails.getUsername();
@@ -294,40 +302,41 @@ public class MyController {
         exchangeDTO.setType(type);
         exchangeDTO.setContent(content);
 
-        myPageService.exchangeRequest(exchangeDTO, itemNo, userDTO);
+        myPageService.exchangeRequest(exchangeDTO, itemNo, uploadType, userDTO, file);
 
         return ResponseEntity.ok().build();
     }
     
     // 리뷰 모달
-    @PostMapping("/my/order/review")
-    public ResponseEntity<?> reviewRequest(@RequestBody Map<String, Object> payload, @AuthenticationPrincipal UserDetails userdetails) {
+    @PostMapping(value = "/my/order/review", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> reviewRequest(
+            @RequestParam("rating") String ratingStr,
+            @RequestParam("content") String content,
+            @RequestParam("productId") String productId,
+            @RequestParam("uploadType") String uploadType,
+            @RequestParam(value = "file1", required = false) MultipartFile file1,
+            @RequestParam(value = "file2", required = false) MultipartFile file2,
+            @AuthenticationPrincipal UserDetails userDetails) {
 
-        // rating 안전 변환
-        Object ratingObj = payload.get("rating");
+        // rating 변환
         int rating;
-        if (ratingObj instanceof Integer) {
-            rating = (Integer) ratingObj;
-        } else if (ratingObj instanceof Number) {
-            rating = ((Number) ratingObj).intValue();
-        } else if (ratingObj instanceof String) {
-            rating = Integer.parseInt((String) ratingObj);
-        } else {
+        try {
+            rating = Integer.parseInt(ratingStr);
+        } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Invalid rating value");
         }
 
-        String productId = payload.get("productId").toString();
-        String content = payload.get("content").toString();
-
-        String uid = userdetails.getUsername();
+        // 사용자 정보 조회
+        String uid = userDetails.getUsername();
         UserDTO userDTO = myPageService.findByUid(uid);
 
+        // 리뷰 DTO 생성
         ReviewDTO reviewDTO = new ReviewDTO();
         reviewDTO.setRating(BigDecimal.valueOf(rating));
         reviewDTO.setContent(content);
 
-
-        myPageService.reviewRegister(reviewDTO, userDTO, productId);
+        // 파일 처리 로직 추가 필요
+        myPageService.reviewRegister(reviewDTO, userDTO, productId, uploadType, file1, file2);
 
         return ResponseEntity.ok().build();
     }
