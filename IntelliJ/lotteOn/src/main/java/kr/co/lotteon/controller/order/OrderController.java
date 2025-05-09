@@ -128,7 +128,7 @@ public class OrderController {
         }
 
         // 쿠폰 사용상태로 바꾸기
-        // couponService.changeState(issueNo);
+        couponService.changeState(issueNo);
 
         // 포인트 사용 시 기록
         UserDetailsDTO userDeatilsDTO = pointService.changePoint(usedPoint, userDetails);
