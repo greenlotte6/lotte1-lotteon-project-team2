@@ -37,7 +37,6 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     @Override
     public Page<Tuple> selectAllSales(PageRequestDTO pageRequestDTO, Pageable pageable) {
 
-
         String sort = pageRequestDTO.getSearchType();
 
         if(sort == null || sort.equals("일별")){
@@ -159,18 +158,20 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         // BooleanExpression booleanExpression = qOrder.user.uid.eq(uid);
 
         List<Tuple> tupleList = queryFactory
-                .select(qOrderItem, qOrder)
+                .select(qOrder, qOrderItem)
                 .from(qOrderItem)
                 .join(qOrderItem.order, qOrder)
+                .on(qOrder.orderNo.eq(qOrderItem.order.orderNo))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(qOrder.orderNo.desc())
                 .fetch();
 
         long total = queryFactory
-                .select(qOrderItem.count())
+                .select(qOrder.count())
                 .from(qOrderItem)
                 .join(qOrderItem.order, qOrder)
+                .on(qOrder.orderNo.eq(qOrderItem.order.orderNo))
                 .fetchOne();
 
         log.info("total: {}", total);

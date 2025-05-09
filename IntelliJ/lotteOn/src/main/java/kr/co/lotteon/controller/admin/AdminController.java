@@ -11,6 +11,7 @@ import kr.co.lotteon.dto.config.ConfigDTO;
 import kr.co.lotteon.dto.config.TermsDTO;
 import kr.co.lotteon.dto.config.VersionDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
+import kr.co.lotteon.dto.delivery.DeliveryDTO;
 import kr.co.lotteon.dto.operation.OperationDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
@@ -564,8 +565,8 @@ public class AdminController {
     //주문현황
     @GetMapping("/order/list")
     public String orderList(PageRequestDTO pageRequestDTO, Model model){
-        // PageResponseDTO pageResponseDTO = adminService.selectAllForOrder(pageRequestDTO);
-        //model.addAttribute(pageResponseDTO);
+        PageResponseDTO pageResponseDTO = adminService.selectAllForOrder(pageRequestDTO);
+        model.addAttribute(pageResponseDTO);
 
         return "/admin/order/list";
     }
@@ -574,6 +575,14 @@ public class AdminController {
     @GetMapping("/order/delivery")
     public String delivery(){
         return "/admin/order/delivery";
+    }
+
+    //배송하기
+    @PostMapping("/order/delivery")
+    public String delivery(DeliveryDTO deliveryDTO){
+
+
+        return "redirect:/admin/order/list";
     }
 
     /*

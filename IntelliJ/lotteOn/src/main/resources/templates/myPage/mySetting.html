@@ -70,8 +70,10 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>이름</td>
-                                    <td th:text="${userDTO.name}"></td>
+                                    <td>이름(수정예정)</td>
+                                    <td>
+                                        <input type="text" name="name" th:value="${userDTO.name}">
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>생년월일</td>
