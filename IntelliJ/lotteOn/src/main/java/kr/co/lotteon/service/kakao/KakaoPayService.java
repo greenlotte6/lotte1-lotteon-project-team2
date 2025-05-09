@@ -48,9 +48,16 @@ public class KakaoPayService {
         parameters.add("total_amount", String.valueOf(amount.getTotal()));
         parameters.add("vat_amount", String.valueOf(amount.getTax()));
         parameters.add("tax_free_amount", String.valueOf(amount.getTax_free()));
-        parameters.add("approval_url", "http://localhost:8080/payment/success");
-        parameters.add("cancel_url", "http://localhost:8080/payment/cancel");
-        parameters.add("fail_url", "http://localhost:8080/payment/fail");
+
+        // 로컬용
+        //parameters.add("approval_url", "http://localhost:8080/payment/success");
+        //parameters.add("cancel_url", "http://localhost:8080/payment/cancel");
+        //parameters.add("fail_url", "http://localhost:8080/payment/fail");
+
+        // 베포용
+        parameters.add("approval_url", "http://43.201.101.104:8080/payment/success");
+        parameters.add("cancel_url", "http://43.201.101.104:8080/payment/cancel");
+        parameters.add("fail_url", "http://43.201.101.104:8080/payment/fail");
 
         // 파라미터, 헤더
         HttpEntity<MultiValueMap<String, String>> requestEntity =
