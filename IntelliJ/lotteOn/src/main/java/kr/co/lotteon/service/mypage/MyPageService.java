@@ -67,6 +67,7 @@ public class MyPageService {
     private final OrderItemRepository orderItemRepository;
     private final ExchangeRepository exchangeRepository;
     private final ProductRepository productRepository;
+    private final String UploadPath = "C:/Users/lotte2/Desktop/workspace/lotte1-lotteon-project-team2/IntelliJ/lotteOn/uploads";
 
 
     public PageResponseDTO<InquiryDTO> inquiryFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO) {
@@ -406,7 +407,7 @@ public class MyPageService {
     }
 
 
-    public void exchangeRequest(ExchangeDTO exchangedto, Long itemNo, UserDTO userDTO) {
+    public void exchangeRequest(ExchangeDTO exchangedto, Long itemNo,String uploadType,  UserDTO userDTO, MultipartFile file) {
 
 
         OrderItem orderItem = orderItemRepository.findById(itemNo).orElse(null);
@@ -418,11 +419,24 @@ public class MyPageService {
         exchange.setOrderItem(orderItem);
         orderItem.setOrderStatus("교환신청");
 
+
+        try{
+            if (file != null || !file.isEmpty()) {
+                String oName = file.getOriginalFilename();
+                String fileName1 = saveFile(file, uploadType);
+
+                exchange.setSName(fileName1);
+                exchange.setOName(oName);
+            }
+        }catch (Exception e){
+            throw new RuntimeException("파일 저장 중 오류 발생", e);
+        }
+
         exchangeRepository.save(exchange);
 
     }
 
-    public void returnRequest(ReturnDTO returnDTO, Long itemNo, UserDTO userDTO){
+    public void returnRequest(ReturnDTO returnDTO, Long itemNo, String uploadType , UserDTO userDTO, MultipartFile file){
 
         OrderItem orderItem = orderItemRepository.findById(itemNo).orElse(null);
         User user = modelMapper.map(userDTO, User.class);
@@ -433,12 +447,28 @@ public class MyPageService {
         aReturn.setOrderItem(orderItem);
         orderItem.setOrderStatus("반품신청");
 
+
+
+
+        try{
+            if (file != null || !file.isEmpty()) {
+                String oName = file.getOriginalFilename();
+                String fileName1 = saveFile(file, uploadType);
+
+                aReturn.setSName(fileName1);
+                aReturn.setOName(oName);
+            }
+        }catch (Exception e){
+            throw new RuntimeException("파일 저장 중 오류 발생", e);
+        }
+
+
         returnRepository.save(aReturn);
 
     }
 
 
-    public void reviewRegister(ReviewDTO reviewDTO, UserDTO userDTO, String productId) {
+    public void reviewRegister(ReviewDTO reviewDTO, UserDTO userDTO, String productId, String uploadType , MultipartFile file1, MultipartFile file2) {
 
 
         User user = modelMapper.map(userDTO, User.class);
@@ -447,16 +477,64 @@ public class MyPageService {
 
         Review review = modelMapper.map(reviewDTO, Review.class);
 
-        System.out.println("user : " + user);
-        System.out.println("product : " + product);
-        System.out.println("review : " + review);
-
-
         review.setWriter(user);
         review.setProduct(product);
 
+        try{
+            if(file1 != null && !file1.isEmpty()){
+
+                String oNameFile1 = file1.getOriginalFilename();
+
+                String fileName1 = saveFile(file1, uploadType);
+                review.setSNameImage1(fileName1);
+                review.setONameImage1(oNameFile1);
+            }
+
+            if(file2 != null && !file2.isEmpty()){
+
+                String oNameFile2 = file2.getOriginalFilename();
+
+                String fileName2 = saveFile(file2, uploadType);
+                review.setSNameImage2(fileName2);
+                review.setONameImage2(oNameFile2);
+            }
+
+
+        }catch(IOException e){
+            throw new RuntimeException("파일 저장 중 오류 발생", e);
+        }
+
+
+
         reviewRepository.save(review);
 
+    }
+
+    private String saveFile(MultipartFile file, String UploadType) throws IOException {
+        if(file == null || file.isEmpty()){
+            return null;
+        }
+
+        String originalFileName = file.getOriginalFilename();
+        String ext = "";
+        int idx = originalFileName.lastIndexOf('.');
+        if(idx > 0) ext = originalFileName.substring(idx);
+
+        // 파일명 중복 방지
+        String uuid = UUID.randomUUID().toString();
+        String savedFileName = uuid + ext;
+
+        // 저장 폴더 없으면 새로 생성
+        File dir = new File(UploadPath + "/" + UploadType);
+        if(!dir.exists()){
+            dir.mkdirs();
+        }
+
+        // 파일 저장
+        File dest = new File(dir, savedFileName);
+        file.transferTo(dest);
+
+        return savedFileName;
     }
 
 
