@@ -390,7 +390,6 @@ h2 {
     flex: 1;
 }
 
-.product-info > span:nth-of-type(2),
 .product-info > span:nth-of-type(3) {
     margin-top: 5px;
     font-size: 16px;
@@ -443,3 +442,5 @@ h2 {
         flex: 0 0 100%;
     }
 }
+
+

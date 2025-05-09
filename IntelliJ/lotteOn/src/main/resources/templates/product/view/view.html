@@ -135,10 +135,10 @@
                         ${starsHTML}
                         <p>${review.rating}</p>
                     </div>
-                    <p>판매자 : ${review.company || '정보 없음'}</p>
+                    <p>판매자 : ${review?.product?.company || '정보 없음'}</p>
                     <p>${review.content.replace(/\n/g, '<br>')}</p>
-                    ${review.sNameImage1 ? `<img src="${review.sNameImage1}" alt="리뷰 이미지">` : ''}
-                    ${review.sNameImage2 ? `<img src="${review.sNameImage2}" alt="리뷰 이미지">` : ''}
+                     ${review.snameImage1 ? `<img src="${review.snameImage1}" alt="리뷰 이미지 1">` : ''}
+                     ${review.snameImage2 ? `<img src="${review.snameImage2}" alt="리뷰 이미지 2">` : ''}
                 `;
                 reviewsContainer.appendChild(reviewContent);
             });
@@ -161,6 +161,8 @@
             }
             reviewsPage.innerHTML = paginationHTML;
             reviewsContainer.appendChild(reviewsPage);
+
+            console.log("AJAX Response Data:", reviewData);
         }
         function fetchReviews(page, prodNo, sortType) {
             let requestUrl = `/product/reviewList?pg=${page}&prodNo=${prodNo}`;

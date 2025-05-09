@@ -37,7 +37,6 @@ public class OrderController {
     private final PointService pointService;
     private final ProductService productService;
     private final KakaoPayService kakaoPayService;
-    private final OrderItemService orderItemService;
 
     /*
     * 1. 주문
@@ -84,21 +83,17 @@ public class OrderController {
     public ResponseEntity orderSubmit(Amount amount,
                               OrderDTO orderDTO,
                               HttpSession session,
-                              @RequestParam int usedPoint,
-                              @RequestParam int earnedPoint,
+                              @RequestParam(value = "usedPoint", required = false) Integer usedPoint,
+                              @RequestParam(value = "earnedPoint", required = false) Integer earnedPoint,
                               @RequestParam(value = "cartNo", required = false) List<Integer> cartNos,
-                              @RequestParam String receiverAddr1,
-                              @RequestParam String receiverAddr2,
-                              @RequestParam(value = "issueNo", required = false) long issueNo,
+                              @RequestParam(value = "receiverAddr1", required = false) String receiverAddr1,
+                              @RequestParam(value = "receiverAddr2", required = false) String receiverAddr2,
+                              @RequestParam(value = "issueNo", required = false) Long issueNo,
                               @AuthenticationPrincipal UserDetails userDetails) throws Exception {
-
 
         orderDTO.setTotalQuantity(amount.getQuantity());
         orderDTO.setUid(userDetails.getUsername());
         orderDTO.setOrderAddr(receiverAddr1 + " " + receiverAddr2);
-
-
-        log.info("orderDTO: {}", orderDTO);
 
         // Order 테이블 등록하기 -> 등록 후 orderItem을 등록하기 위한 order 출력
         int orderNo = orderService.registerOrder(orderDTO);
@@ -106,6 +101,7 @@ public class OrderController {
         if(cartNos != null) {
 
             System.out.println("장바구니 로직");
+
             // 상세 주문 등록하기
             orderService.registerOrderItem(orderNo, cartNos);
 
@@ -117,10 +113,9 @@ public class OrderController {
         }else{
 
             System.out.println("바로구매 로직");
-            
+
             CartDTO cartDTO = (CartDTO) session.getAttribute("cartDTO");
-            
-            System.out.println("상품 저장");
+
             orderService.directOrderItem(orderNo, cartDTO);
 
             // 상품 재고, 판매량 계산

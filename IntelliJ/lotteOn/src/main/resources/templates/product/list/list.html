@@ -48,6 +48,7 @@
 
     // DOM 로드 후 실행
     document.addEventListener("DOMContentLoaded", function () {
+
         // 카테고리 아코디언 기능
         const parents = document.querySelectorAll(".category .parent");
         parents.forEach(parent => {
@@ -331,7 +332,6 @@
                     console.error('Ajax 요청 실패:', error);
                 });
         }
-
 
     });
 </script>
