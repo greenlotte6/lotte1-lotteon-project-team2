@@ -30,6 +30,16 @@ public class OrderDTO {
     private String payment;        // 결제 수단
     private String paymentContent;    // 결제 상세 정보
 
+    private int totalQuantity;
+    private int originalTotalPrice;
+    private int shippingFee;
+    private int totalDiscount;
+    private int totalPoint;
+    private int pointDiscount;
+    private int couponDiscount;
+
+
+
 
     // 상품 정보
     private List<OrderItemDTO> orderItems;

@@ -91,6 +91,10 @@ public class OrderController {
                               @RequestParam(value = "issueNo", required = false) long issueNo,
                               @AuthenticationPrincipal UserDetails userDetails) throws Exception {
 
+        log.info("orderDTO: {}", orderDTO);
+
+
+        orderDTO.setTotalQuantity(amount.getQuantity());
         orderDTO.setUid(userDetails.getUsername());
         orderDTO.setOrderAddr(receiverAddr1 + " " + receiverAddr2);
 
