@@ -4,8 +4,8 @@ logging:
       hibernate:
         orm:
           jdbc:
-            bind: trace
-    kr.co.lotteOn.controller.product: debug  # ← 여기에 추가
+            bind: INFO
+    kr.co.lotteOn.controller.product: INFO  # ← 여기에 추가
     root: info
 
 jasypt:

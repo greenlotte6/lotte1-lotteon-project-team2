@@ -1,7 +1,6 @@
 package kr.co.lotteon.entity.user;
 
 import jakarta.persistence.*;
-import kr.co.lotteon.dto.user.UserDTO;
 import lombok.*;
 
 @Data

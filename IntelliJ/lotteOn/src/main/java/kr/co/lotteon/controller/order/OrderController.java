@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import kr.co.lotteon.dto.cart.CartDTO;
 import kr.co.lotteon.dto.kakao.Amount;
 import kr.co.lotteon.dto.order.OrderDTO;
+import kr.co.lotteon.dto.user.UserDetailsDTO;
 import kr.co.lotteon.service.cart.CartService;
 import kr.co.lotteon.service.coupon.CouponService;
 import kr.co.lotteon.service.kakao.KakaoPayService;
@@ -91,12 +92,13 @@ public class OrderController {
                               @RequestParam(value = "issueNo", required = false) long issueNo,
                               @AuthenticationPrincipal UserDetails userDetails) throws Exception {
 
-        log.info("orderDTO: {}", orderDTO);
-
 
         orderDTO.setTotalQuantity(amount.getQuantity());
         orderDTO.setUid(userDetails.getUsername());
         orderDTO.setOrderAddr(receiverAddr1 + " " + receiverAddr2);
+
+
+        log.info("orderDTO: {}", orderDTO);
 
         // Order 테이블 등록하기 -> 등록 후 orderItem을 등록하기 위한 order 출력
         int orderNo = orderService.registerOrder(orderDTO);
@@ -129,8 +131,9 @@ public class OrderController {
         // couponService.changeState(issueNo);
 
         // 포인트 사용 시 기록
-        pointService.changePoint(usedPoint, earnedPoint, userDetails);
+        UserDetailsDTO userDeatilsDTO = pointService.changePoint(usedPoint, userDetails);
 
+        session.setAttribute("userDetailsDTO", userDeatilsDTO);
         session.setAttribute("orderNo", orderNo);
 
         amount = orderService.getAmount(orderNo, userDetails, orderDTO);
@@ -156,7 +159,12 @@ public class OrderController {
     public String orderCompleted(HttpSession session, Model model) {
 
         OrderDTO orderDTO = (OrderDTO) session.getAttribute("orderDTO");
+        UserDetailsDTO userDetailsDTO = (UserDetailsDTO) session.getAttribute("userDetailsDTO");
+
         model.addAttribute("orderDTO", orderDTO);
+        model.addAttribute("userDetailsDTO", userDetailsDTO);
+
+        log.info("userDetailsDTO: {}", userDetailsDTO);
 
         return "/product/order/order_completed";
     }
