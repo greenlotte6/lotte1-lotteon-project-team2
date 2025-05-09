@@ -38,6 +38,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -59,6 +60,9 @@ public class AdminController {
     @GetMapping
     public String main(Model model) {
 
+        LocalDateTime end = LocalDateTime.now();
+        LocalDateTime start = end.minusDays(7);
+
         OperationDTO operationDTO = new OperationDTO();
 
         // 공지사항 5개 출력
@@ -71,7 +75,7 @@ public class AdminController {
         operationDTO = adminService.countInquiry(operationDTO);
 
         // 회원 가입 수
-        operationDTO = adminService.countMemberRegister(operationDTO);
+        operationDTO = adminService.countMemberRegister(operationDTO, start, end);
 
         // 주문 수 계산
         operationDTO = adminService.countOrder(operationDTO);
@@ -559,7 +563,10 @@ public class AdminController {
 
     //주문현황
     @GetMapping("/order/list")
-    public String orderList(){
+    public String orderList(PageRequestDTO pageRequestDTO, Model model){
+        // PageResponseDTO pageResponseDTO = adminService.selectAllForOrder(pageRequestDTO);
+        //model.addAttribute(pageResponseDTO);
+
         return "/admin/order/list";
     }
 

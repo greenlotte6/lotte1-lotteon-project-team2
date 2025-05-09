@@ -119,8 +119,12 @@ public class VisitorService {
      * 총 방문자 수 집계
      */
     public int getTotalVisitorCount() {
-        // 데이터베이스에서 모든 방문자 통계 조회 후 합계 계산
-        List<DailyVisitorStats> allStats = visitorStatsRepository.findAll();
+
+        LocalDate start = LocalDate.now().minusDays(7);
+        LocalDate end = LocalDate.now();
+
+        // 데이터베이스에서 모든 방문자 통계 조회 후 합계 계산 (일주일 통계)
+        List<DailyVisitorStats> allStats = visitorStatsRepository.findByVisitDateBetween(start, end);
         return allStats.stream()
                 .mapToInt(DailyVisitorStats::getUniqueVisitors)
                 .sum();

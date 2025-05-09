@@ -44,4 +44,13 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     """)
     List<Object[]> countOrderStatsByDate(@Param("startDate") LocalDateTime startDate);
 
+
+    @Query("""
+    SELECT COUNT(oi)
+    FROM OrderItem oi
+    JOIN oi.order o
+    WHERE FUNCTION('DATE', o.orderDate) = CURRENT_DATE
+      AND oi.orderStatus = :state
+    """)
+    long countByOrderStatusToday(@Param("state") String state);
 }
