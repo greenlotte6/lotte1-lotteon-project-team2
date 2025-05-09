@@ -124,7 +124,7 @@
       <p th:text="${review.rating}">5</p>
     </div>
 
-    <p th:text="'판매자 : ' + ${review.company}">판매자 : 롯데백화점 본점</p>
+    <p th:text="'판매자 : ' +${review?.product?.company}">판매자 : 롯데백화점 본점</p>
 
     <p th:utext="${review.content}">
       리뷰 내용

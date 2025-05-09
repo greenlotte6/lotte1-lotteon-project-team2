@@ -19,7 +19,12 @@ public class PointService {
     private final UserDetailsRepository userDetailsRepository;
     private final ModelMapper modelMapper;
 
-    public UserDetailsDTO changePoint(int usedPoint, org.springframework.security.core.userdetails.UserDetails userDetails) {
+    public UserDetailsDTO changePoint(Integer usedPoint, org.springframework.security.core.userdetails.UserDetails userDetails) {
+
+        if (usedPoint == null || usedPoint == 0) {
+            return null;
+        }
+
         String uid = userDetails.getUsername();
 
         User user = User.builder()

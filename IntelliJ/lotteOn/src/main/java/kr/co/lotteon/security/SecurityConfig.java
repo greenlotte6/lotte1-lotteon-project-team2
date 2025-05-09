@@ -80,6 +80,7 @@ public class SecurityConfig {
                 .requestMatchers("/product/cart").hasAnyRole("USER", "SELLER", "ADMIN")
                 .requestMatchers("/product/addCart").hasAnyRole("USER", "SELLER", "ADMIN")
                 .requestMatchers("/product/order").hasAnyRole("USER", "SELLER", "ADMIN")
+                .requestMatchers("/product/order/direct").hasAnyRole("USER", "SELLER", "ADMIN")
                 .requestMatchers("/product/ViewLoginCheck").hasAnyRole("USER", "SELLER", "ADMIN")
                 .anyRequest().permitAll());
 

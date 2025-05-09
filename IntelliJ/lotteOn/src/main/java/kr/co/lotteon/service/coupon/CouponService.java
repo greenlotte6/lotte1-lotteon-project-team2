@@ -95,7 +95,13 @@ public class CouponService {
         }
     }
 
-    public void changeState(long issueNo) {
+    public void changeState(Long issueNo) {
+
+        if (issueNo == null || issueNo == 0L) {
+            log.info("쿠폰이 선택되지 않아 상태 변경 생략. issueNo: {}", issueNo);
+            return;
+        }
+
         Optional<CouponIssue> optCouponIssue = couponIssueRepository.findById(issueNo);
 
         if(optCouponIssue.isPresent()) {
