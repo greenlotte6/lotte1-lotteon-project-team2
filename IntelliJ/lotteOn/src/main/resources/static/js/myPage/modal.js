@@ -138,6 +138,40 @@ document.addEventListener('DOMContentLoaded', function(){
 
     order_details_a.forEach(function(btn){
         btn.addEventListener('click', function(){
+
+            const orderDate    = btn.getAttribute('data-orderdate');
+            const itemNo       = btn.getAttribute('data-itemno');
+            const prodName     = btn.getAttribute('data-prodname');
+            const company      = btn.getAttribute('data-company');
+            const itemCount    = btn.getAttribute('data-itemcount');
+            const itemPrice    = btn.getAttribute('data-itemprice');
+            const productImage = btn.getAttribute('data-productimage');
+            const itemDiscount = btn.getAttribute('data-itemdiscount');
+            const orderStatus  = btn.getAttribute('data-orderstatus');
+            const orderReceiver = btn.getAttribute('data-orderreceiver');
+            const receiverHp = btn.getAttribute('data-receiverhp');
+            const receiverZip = btn.getAttribute('data-receiverzip');
+            const orderAddr = btn.getAttribute('data-orderaddr');
+            const orderContent = btn.getAttribute('data-ordercontent');
+
+            const totalPrice = itemPrice - itemDiscount;
+
+            document.getElementById('orderInfoModalOrderDate').textContent = orderDate;
+            document.getElementById('orderInfoProductImage').src = productImage;
+            document.getElementById('orderInfoModalOrderNo').textContent = '주문번호 : ' + itemNo;
+            document.getElementById('orderInfoModalCompany').textContent = company;
+            document.getElementById('orderInfoModalProdName').textContent = prodName;
+            document.getElementById('orderInfoModalItemCount').textContent = '수량 : ' + itemCount + '개';
+            document.getElementById('orderInfoModalSellPrice').textContent = '판매가 : ' + formatNumber(itemPrice) + '원';
+            document.getElementById('orderInfoModalDiscount').textContent = '할인 : -' + formatNumber(itemDiscount) + '원';
+            document.getElementById('orderInfoModalTotalPrice').textContent = '결제금액 : ' + formatNumber(totalPrice) + '원';
+            document.getElementById('orderInfoModalOrderStatus').textContent = orderStatus;
+            document.getElementById('orderInfoModalOrderReceiver').textContent = orderReceiver;
+            document.getElementById('orderInfoModalReceiverHp').textContent = receiverHp;
+            //document.getElementById('orderInfoModalReceiverZip').textContent = receiverZip;
+            document.getElementById('orderInfoModalOrderAddr').textContent = orderAddr;
+            document.getElementById('orderInfoModalOrderContent').textContent = orderContent;
+
             order_details_modal.style.display ='block';
         });
     });

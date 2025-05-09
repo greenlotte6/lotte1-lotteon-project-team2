@@ -6,6 +6,7 @@ import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.feedback.ExchangeDTO;
 import kr.co.lotteon.dto.feedback.ReturnDTO;
 import kr.co.lotteon.dto.feedback.ReviewDTO;
+import kr.co.lotteon.dto.order.OrderDTO;
 import kr.co.lotteon.dto.order.OrderInfoDTO;
 import kr.co.lotteon.dto.order.OrderItemDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
@@ -18,6 +19,7 @@ import kr.co.lotteon.entity.coupon.Coupon;
 import kr.co.lotteon.entity.feedback.Exchange;
 import kr.co.lotteon.entity.feedback.Return;
 import kr.co.lotteon.entity.feedback.Review;
+import kr.co.lotteon.entity.order.Order;
 import kr.co.lotteon.entity.order.OrderItem;
 import kr.co.lotteon.entity.point.Point;
 import kr.co.lotteon.entity.product.Product;
@@ -372,7 +374,8 @@ public class MyPageService {
             orderItemDTO.setProduct(orderItemDTO.getProduct());
             */
 
-            int orderNo = tuple.get(1, Integer.class);
+            Order order = tuple.get(1, Order.class);
+            int orderNo = order.getOrderNo();
 
             LocalDateTime orderDate = tuple.get(2, LocalDateTime.class);
             String orderStatus = tuple.get(3, String.class);
@@ -380,6 +383,7 @@ public class MyPageService {
             orderInfoDTO.setOrderNo(orderNo);
             orderInfoDTO.setOrderDate(orderDate);
             orderInfoDTO.setOrderStatus(orderStatus);
+            orderInfoDTO.setOrder(modelMapper.map(order, OrderDTO.class));
 
             System.out.println(orderInfoDTO);
 
