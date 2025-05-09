@@ -10,319 +10,319 @@
 </head>
 
 <body>
-    <script>
-        // 롯데On 주문 페이지 전체 스크립트
-        document.addEventListener("DOMContentLoaded", function () {
-  
+<script>
+    // 롯데On 주문 페이지 전체 스크립트
+    document.addEventListener("DOMContentLoaded", function () {
+
         // ✅ 카테고리 아코디언
         document.querySelectorAll(".category .parent").forEach(parent => {
-          parent.style.cursor = "pointer";
-          parent.addEventListener("click", () => {
-            const currentChildren = parent.nextElementSibling;
-            document.querySelectorAll(".category .children").forEach(children => {
-              if (children !== currentChildren) {
-                children.style.display = "none";
-              }
+            parent.style.cursor = "pointer";
+            parent.addEventListener("click", () => {
+                const currentChildren = parent.nextElementSibling;
+                document.querySelectorAll(".category .children").forEach(children => {
+                    if (children !== currentChildren) {
+                        children.style.display = "none";
+                    }
+                });
+                if (currentChildren && currentChildren.classList.contains("children")) {
+                    const isVisible = currentChildren.style.display === "block";
+                    currentChildren.style.display = isVisible ? "none" : "block";
+                }
             });
-            if (currentChildren && currentChildren.classList.contains("children")) {
-              const isVisible = currentChildren.style.display === "block";
-              currentChildren.style.display = isVisible ? "none" : "block";
-            }
-          });
         });
-  
+
         // ✅ 판매자별 테이블 접기
         const tables = Array.from(document.querySelectorAll('.order_content'));
         const container = document.getElementById('tables-container');
         const vendorGroups = {};
-  
+
         tables.forEach(table => {
-          const vendor = table.querySelector('.vendor-name')?.innerText.trim();
-          if (!vendor) return;
-          if (!vendorGroups[vendor]) vendorGroups[vendor] = [];
-          vendorGroups[vendor].push(table);
+            const vendor = table.querySelector('.vendor-name')?.innerText.trim();
+            if (!vendor) return;
+            if (!vendorGroups[vendor]) vendorGroups[vendor] = [];
+            vendorGroups[vendor].push(table);
         });
-  
+
         container.innerHTML = '';
-  
+
         Object.entries(vendorGroups).forEach(([vendor, tables]) => {
-          const section = document.createElement('div');
-          section.className = 'vendor-section';
-  
-          const header = document.createElement('div');
-          header.className = 'vendor-header';
-  
-          const titleSpan = document.createElement('span');
-          titleSpan.className = 'vendor-title';
-          titleSpan.innerText = vendor;
-  
-          const iconSpan = document.createElement('span');
-          iconSpan.className = 'vendor-toggle-icon';
-          iconSpan.innerText = '▼';
-  
-          header.appendChild(titleSpan);
-          header.appendChild(iconSpan);
-  
-          const group = document.createElement('div');
-          group.className = 'vendor-group';
-  
-          tables.forEach((table, i) => {
-            if (i !== 0) table.style.display = 'none';
-            group.appendChild(table);
-          });
-  
-          header.addEventListener('click', () => {
-            const isOpen = header.classList.toggle('open');
-            const allTables = group.querySelectorAll('.order_content');
-            allTables.forEach((t, i) => {
-              if (i === 0) return;
-              t.style.display = isOpen ? 'table' : 'none';
+            const section = document.createElement('div');
+            section.className = 'vendor-section';
+
+            const header = document.createElement('div');
+            header.className = 'vendor-header';
+
+            const titleSpan = document.createElement('span');
+            titleSpan.className = 'vendor-title';
+            titleSpan.innerText = vendor;
+
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'vendor-toggle-icon';
+            iconSpan.innerText = '▼';
+
+            header.appendChild(titleSpan);
+            header.appendChild(iconSpan);
+
+            const group = document.createElement('div');
+            group.className = 'vendor-group';
+
+            tables.forEach((table, i) => {
+                if (i !== 0) table.style.display = 'none';
+                group.appendChild(table);
             });
-          });
-  
-          section.appendChild(header);
-          section.appendChild(group);
-          container.appendChild(section);
+
+            header.addEventListener('click', () => {
+                const isOpen = header.classList.toggle('open');
+                const allTables = group.querySelectorAll('.order_content');
+                allTables.forEach((t, i) => {
+                    if (i === 0) return;
+                    t.style.display = isOpen ? 'table' : 'none';
+                });
+            });
+
+            section.appendChild(header);
+            section.appendChild(group);
+            container.appendChild(section);
         });
-  
+
         // ✅ 각 상품 계산
         document.querySelectorAll('.order_content').forEach(table => {
-          const row = table.querySelector('tr:nth-of-type(2)');
-          if (!row) return;
-  
-          const originalEl = row.querySelector('.price_original');
-          const saleEl = row.querySelector('.price_total');
-          const discountEl = row.querySelector('.discount-rate');
-          const pointEl = row.querySelector('.point');
-          const shippingEl = row.querySelector('.shipping');
-          const totalEl = row.querySelector('.total');
-          const quantityEl = row.querySelector('.quantity');
-  
-          const quantity = parseInt(quantityEl?.innerText || '1', 10);
-          const originalUnit = parseInt(originalEl?.dataset.unit || '0', 10);
-          const discountRate = parseFloat((discountEl?.innerText || '0').replace('%', '')) || 0;
-  
-          if (!isNaN(discountRate) && originalUnit > 0 && quantity > 0) {
-            const original = originalUnit * quantity;
-            originalEl.innerText = original.toLocaleString();
-  
-            const unitSale = Math.floor(originalUnit * (1 - discountRate / 100));
-            const sale = unitSale * quantity;
-            saleEl.dataset.unit = sale;
-            saleEl.innerText = sale.toLocaleString();
-  
-            const point = Math.floor(unitSale * 0.01 * quantity);
-            if (pointEl) pointEl.innerText = point.toLocaleString();
-  
-            const shipping = parseInt(shippingEl?.innerText.replace(/[^0-9]/g, '') || '0', 10);
-            const total = sale + shipping;
-            if (totalEl) totalEl.innerText = total.toLocaleString();
-          }
-        });
-      
-    });
-  
-  
-  
-    </script>
-      
-    <div id="wrapper">
-        <!-- 헤더 시작 -->
-        <th:block th:include="/common/header.html"/>
-        <!-- 헤더 끝 -->
+            const row = table.querySelector('tr:nth-of-type(2)');
+            if (!row) return;
 
-        <!-- 메인 내용 시작 -->
-        <main>
-            <section class="content">
-                <!-- 사이드바-->
-                <aside>
-                    <div class="category">
-                        <p>카테고리</p>
-                        <div class="category-item">
+            const originalEl = row.querySelector('.price_original');
+            const saleEl = row.querySelector('.price_total');
+            const discountEl = row.querySelector('.discount-rate');
+            const pointEl = row.querySelector('.point');
+            const shippingEl = row.querySelector('.shipping');
+            const totalEl = row.querySelector('.total');
+            const quantityEl = row.querySelector('.quantity');
+
+            const quantity = parseInt(quantityEl?.innerText || '1', 10);
+            const originalUnit = parseInt(originalEl?.dataset.unit || '0', 10);
+            const discountRate = parseFloat((discountEl?.innerText || '0').replace('%', '')) || 0;
+
+            if (!isNaN(discountRate) && originalUnit > 0 && quantity > 0) {
+                const original = originalUnit * quantity;
+                originalEl.innerText = original.toLocaleString();
+
+                const unitSale = Math.floor(originalUnit * (1 - discountRate / 100));
+                const sale = unitSale * quantity;
+                saleEl.dataset.unit = sale;
+                saleEl.innerText = sale.toLocaleString();
+
+                const point = Math.floor(unitSale * 0.01 * quantity);
+                if (pointEl) pointEl.innerText = point.toLocaleString();
+
+                const shipping = parseInt(shippingEl?.innerText.replace(/[^0-9]/g, '') || '0', 10);
+                const total = sale + shipping;
+                if (totalEl) totalEl.innerText = total.toLocaleString();
+            }
+        });
+
+    });
+
+
+
+</script>
+
+<div id="wrapper">
+    <!-- 헤더 시작 -->
+    <th:block th:include="/common/header.html"/>
+    <!-- 헤더 끝 -->
+
+    <!-- 메인 내용 시작 -->
+    <main>
+        <section class="content">
+            <!-- 사이드바-->
+            <aside>
+                <div class="category">
+                    <p>카테고리</p>
+                    <div class="category-item">
                         <div class="parent">뷰티</div>
                         <div class="children">
                             <a href="/view/product/beauty/skincare/skincare.html">스킨케어</a>
                             <a href="/view/product/beauty/makeup">메이크업</a>
                             <a href="/view/product/beauty/perfume">향수</a>
                         </div>
-                        </div>
-                    
-                        <div class="category-item">
+                    </div>
+
+                    <div class="category-item">
                         <div class="parent">럭셔리</div>
                         <div class="children">
                             <a href="/view/product/luxury/bag">가방</a>
                             <a href="/view/product/luxury/watch">시계</a>
                             <a href="/view/product/luxury/shoes">신발</a>
                         </div>
-                        </div>
-                    
-                        <div class="category-item">
+                    </div>
+
+                    <div class="category-item">
                         <div class="parent">여성패션</div>
                         <div class="children">
                             <a href="/view/product/wfashion/onepiece">원피스</a>
                             <a href="/view/product/wfashion/blouse">블라우스</a>
                             <a href="/view/product/wfashion/pants">팬츠</a>
                         </div>
-                        </div>
-                    
-                        <div class="category-item">
+                    </div>
+
+                    <div class="category-item">
                         <div class="parent">남성패션</div>
                         <div class="children">
                             <a href="/view/product/mfashion/shirt">셔츠</a>
                             <a href="/view/product/mfashion/slacks">슬랙스</a>
                             <a href="/view/product/mfashion/jacket">자켓</a>
                         </div>
-                        </div>
-                    
-                        <div class="category-item">
+                    </div>
+
+                    <div class="category-item">
                         <div class="parent">가전</div>
                         <div class="children">
                             <a href="/view/product/electronics/computer">컴퓨터</a>
                             <a href="/view/product/electronics/game">게임</a>
                             <a href="/view/product/electronics/tv">티비</a>
                         </div>
-                        </div>
-                    
-                        <div class="category-item">
+                    </div>
+
+                    <div class="category-item">
                         <div class="parent">가구</div>
                         <div class="children">
                             <a href="/view/product/furniture/sofa">쇼파</a>
                             <a href="/view/product/furniture/bed">침구</a>
                             <a href="/view/product/furniture/wardrobe">옷장</a>
                         </div>
-                        </div>
-                    
-                        <div class="category-item">
+                    </div>
+
+                    <div class="category-item">
                         <div class="parent">반려동물</div>
                         <div class="children">
                             <a href="/view/product/pet/dog">강아지</a>
                             <a href="/view/product/pet/cat">고양이</a>
                             <a href="/view/product/pet/parrot">앵무새</a>
                         </div>
-                        </div>
-                    
-                        <div class="category-item">
+                    </div>
+
+                    <div class="category-item">
                         <div class="parent">취미</div>
                         <div class="children">
                             <a href="/view/product/hobby/knitting">뜨개</a>
                             <a href="/view/product/hobby/badminton">배드민턴</a>
                             <a href="/view/product/hobby/poldance">폴댄스</a>
                         </div>
-                        </div>
-                    
-                        <div class="category-item">
+                    </div>
+
+                    <div class="category-item">
                         <div class="parent">여행</div>
                         <div class="children">
                             <a href="/view/product/travel/asia">아시아</a>
                             <a href="/view/product/travel/europe">유럽</a>
                             <a href="/view/product/travel/northamerica">북미</a>
                         </div>
-                        </div>
                     </div>
-                </aside>
-                <!-- 사이드 바 끝 -->
-                 
-                <!-- 메인 시작 -->
-                <div class="order">
-                    <h1>주문완료</h1>
-                    <div id="tables-container">
-                        <table class="order_content">
-                            <tr>
-                                <th></th>
-                                <th>상품명</th>
-                                <th>수량</th>
-                                <th>판매가</th>
-                                <th>할인</th>
-                                <th>포인트</th>
-                                <th>배송비</th>
-                                <th>총합</th>
-                            </tr>
-                            <tr th:each="item : ${orderDTO.orderItems}">
-                                <td>
-                                    <img th:src="@{${item.product.productImage.sNameList}}" alt="상품 이미지">
-                                </td>
-                                <td>
-                                    <p class="vendor-name" th:text="${item.product.seller.company}">판매자명</p><br>
-                                    <span th:text="${item.product.prodBrand}">브랜드</span><br>
-                                    <span th:text="${item.product.prodName}">상품명</span>
-                                </td>
-                                <td class="quantity" th:text="${item.itemCount}">1</td>
-                                <td class="cart_price">
-                                    <p class="price_original" th:data-unit="${item.product.prodPrice}"
-                                       th:text="${#numbers.formatInteger(item.product.prodPrice, 3, 'COMMA')}">0</p>
-                                    <p class="price_total"
-                                       th:data-unit="${item.itemPrice}"
-                                       th:text="${#numbers.formatInteger(item.itemPrice, 3, 'COMMA')}">0</p>
-                                </td>
-                                <td class="discount-rate" th:text="${item.itemDiscount + '%'}">0%</td>
-                                <td class="point" th:text="${item.product.prodPoint}">0</td>
-                                <td class="shipping" th:text="${#numbers.formatInteger(item.product.prodDeliveryFee, 3, 'COMMA')}">0</td>
-                                <td class="total"
-                                    th:text="${#numbers.formatInteger(item.itemPrice * item.itemCount, 3, 'COMMA')}">0</td>
-                            </tr>
-                            <!-- 반복문 끝 -->
-                        </table>
-                    </div>
-
-                    <div class="order_info">
-                        <p>주문정보</p>
-                        <table>
-                            <tr><th>주문번호</th><td th:text="${orderDTO.orderNo}"></td></tr>
-                            <tr><th>결제방법</th><td th:text="${orderDTO.payment}"></td></tr>
-                            <tr><th>주문자</th><td th:text="${orderDTO.orderSender}"></td></tr>
-                            <tr><th>연락처</th><td th:text="${orderDTO.senderHp}"></td></tr>
-                        </table>
-                    </div>
-
-                    <div class="shipping_info">
-                        <p>배송정보</p>
-                        <table>
-                            <tr><th>수취인</th><td th:text="${orderDTO.orderReceiver}"></td></tr>
-                            <tr><th>연락처</th><td th:text="${orderDTO.receiverHp}"></td></tr>
-                            <tr><th>배송지 주소</th><td th:text="${orderDTO.orderAddr}"></td></tr>
-                        </table>
-                    </div>
-
-                    <div class="cart_summary">
-                        <p>결제정보</p>
-                        <table>
-                            <tr>
-                                <th>총 상품수</th>
-                                <td id="summary-count">0</td>
-                            </tr>
-                            <tr>
-                                <th>총 상품금액</th>
-                                <td id="summary-amount">0</td>
-                            </tr>
-                            <tr>
-                                <th>총 할인금액</th>
-                                <td id="summary-discount">0</td>
-                            </tr>
-                            <tr>
-                                <th>배송비</th>
-                                <td id="summary-shipping">0</td>
-                            </tr>
-                            <tr>
-                                <th>적립 포인트</th>
-                                <td id="summary-point">0</td>
-                            </tr>
-                            <tr class="total">
-                                <th>총</th>
-                                <td th:text="${#numbers.formatInteger(orderDTO.orderTotalPrice, 1, 'COMMA')}" id="summary-total">0</td>
-                            </tr>
-                        </table>
-                    </div>
-
                 </div>
-            </section>
-        </main>
-        <!-- 메인 내용 끝 -->
+            </aside>
+            <!-- 사이드 바 끝 -->
 
-        <!-- 푸터 시작 -->
-        <th:block th:include="/common/footer.html"/>
-        <!-- 푸터 끝 -->
+            <!-- 메인 시작 -->
+            <div class="order">
+                <h1>주문완료</h1>
+                <div id="tables-container">
+                    <table class="order_content">
+                        <tr>
+                            <th></th>
+                            <th>상품명</th>
+                            <th>수량</th>
+                            <th>판매가</th>
+                            <th>할인</th>
+                            <th>포인트</th>
+                            <th>배송비</th>
+                            <th>총합</th>
+                        </tr>
+                        <tr th:each="item : ${orderDTO.orderItems}">
+                            <td>
+                                <img th:src="@{${item.product.productImage.sNameList}}" alt="상품 이미지">
+                            </td>
+                            <td>
+                                <p class="vendor-name" th:text="${item.product.seller.company}">판매자명</p><br>
+                                <span th:text="${item.product.prodBrand}">브랜드</span><br>
+                                <span th:text="${item.product.prodName}">상품명</span>
+                            </td>
+                            <td class="quantity" th:text="${item.itemCount}">1</td>
+                            <td class="cart_price">
+                                <p class="price_original" th:data-unit="${item.product.prodPrice}"
+                                   th:text="${#numbers.formatInteger(item.product.prodPrice, 3, 'COMMA')}">0</p>
+                                <p class="price_total"
+                                   th:data-unit="${item.itemPrice}"
+                                   th:text="${#numbers.formatInteger(item.itemPrice, 3, 'COMMA')}">0</p>
+                            </td>
+                            <td class="discount-rate" th:text="${item.itemDiscount + '%'}">0%</td>
+                            <td class="point" th:text="${item.product.prodPoint}">0</td>
+                            <td class="shipping" th:text="${item.product.prodDeliveryFee == 0 ? '무료배송' : #numbers.formatInteger(item.product.prodDeliveryFee, 3, 'COMMA')}">0</td>
+                            <td class="total"
+                                th:text="${#numbers.formatInteger(item.itemPrice * item.itemCount, 3, 'COMMA')}">0</td>
+                        </tr>
+                        <!-- 반복문 끝 -->
+                    </table>
+                </div>
 
-    </div>
+                <div class="order_info">
+                    <p>주문정보</p>
+                    <table>
+                        <tr><th>주문번호</th><td th:text="${orderDTO.orderNo}"></td></tr>
+                        <tr><th>결제방법</th><td th:text="${orderDTO.payment}"></td></tr>
+                        <tr><th>주문자</th><td th:text="${orderDTO.orderSender}"></td></tr>
+                        <tr><th>연락처</th><td th:text="${orderDTO.senderHp}"></td></tr>
+                    </table>
+                </div>
+
+                <div class="shipping_info">
+                    <p>배송정보</p>
+                    <table>
+                        <tr><th>수취인</th><td th:text="${orderDTO.orderReceiver}"></td></tr>
+                        <tr><th>연락처</th><td th:text="${orderDTO.receiverHp}"></td></tr>
+                        <tr><th>배송지 주소</th><td th:text="${orderDTO.orderAddr}"></td></tr>
+                    </table>
+                </div>
+
+                <div class="cart_summary">
+                    <p>결제정보</p>
+                    <table>
+                        <tr>
+                            <th>총 상품수</th>
+                            <td id="summary-count" th:text="${orderDTO.totalQuantity}">0</td>
+                        </tr>
+                        <tr>
+                            <th>총 상품금액</th>
+                            <td id="summary-amount" th:text="${#numbers.formatInteger(orderDTO.originalTotalPrice, 1, 'COMMA')}">0</td>
+                        </tr>
+                        <tr>
+                            <th>총 할인금액</th>
+                            <td id="summary-discount" th:text="${#numbers.formatInteger(orderDTO.totalDiscount + orderDTO.pointDiscount + orderDTO.couponDiscount, 1, 'COMMA')}">0</td>
+                        </tr>
+                        <tr>
+                            <th>배송비</th>
+                            <td id="summary-shipping" th:text="${orderDTO.shippingFee == 0 ? '무료배송' : #numbers.formatInteger(orderDTO.shippingFee, 1, 'COMMA')}">0</td>
+                        </tr>
+                        <tr>
+                            <th>적립 포인트</th>
+                            <td id="summary-point" th:text="${#numbers.formatInteger(orderDTO.pointDiscount, 1, 'COMMA')}">0</td>
+                        </tr>
+                        <tr class="total">
+                            <th>총</th>
+                            <td th:text="${#numbers.formatInteger(orderDTO.orderTotalPrice, 1, 'COMMA')}" id="summary-total">0</td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+        </section>
+    </main>
+    <!-- 메인 내용 끝 -->
+
+    <!-- 푸터 시작 -->
+    <th:block th:include="/common/footer.html"/>
+    <!-- 푸터 끝 -->
+
+</div>
 
 </body>
 </html>
