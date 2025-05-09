@@ -45,7 +45,7 @@
                     <div class="select_div">
                         <div class="select_box">
                             <form th:action="@{/admin/shop/sales/search}" id="search_form">
-                                <select name="searchType" id="select" style="width: 100px;">
+                                <select name="searchType" id="select" style="width: 100px;" th:field="*{pageResponseDTO.searchType}">
                                     <option value="일별">일별</option>
                                     <option value="주간">주간</option>
                                     <option value="한달">한달</option>

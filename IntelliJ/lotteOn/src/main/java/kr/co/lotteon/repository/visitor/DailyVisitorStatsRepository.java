@@ -15,4 +15,5 @@ public interface DailyVisitorStatsRepository extends JpaRepository<DailyVisitorS
 
     List<DailyVisitorStats> findByVisitDateBetweenOrderByVisitDateDesc(LocalDate startDate, LocalDate endDate);
 
+    List<DailyVisitorStats> findByVisitDateBetween(LocalDate start, LocalDate end);
 }

@@ -11,6 +11,7 @@ import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.coupon.CouponIssueDTO;
 import kr.co.lotteon.dto.operation.OperationDTO;
 import kr.co.lotteon.dto.operation.OrderSummaryDTO;
+import kr.co.lotteon.dto.order.OrderDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.point.PointDTO;
@@ -29,6 +30,7 @@ import kr.co.lotteon.entity.category.MainCategory;
 import kr.co.lotteon.entity.category.SubCategory;
 import kr.co.lotteon.entity.coupon.Coupon;
 import kr.co.lotteon.entity.coupon.CouponIssue;
+import kr.co.lotteon.entity.order.Order;
 import kr.co.lotteon.entity.point.Point;
 import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.entity.product.ProductDetail;
@@ -380,7 +382,6 @@ public class adminService {
         if(userOtp.isPresent()){
             User user = userOtp.get();
             coupon.setUser(user);
-            coupon.setIssuedBy(user.getName());
 
             // 쿠폰 이름 : 내용 / (유저이름)
             // 예) 삼성 7% 할인 / (관리자)
@@ -1128,7 +1129,10 @@ public class adminService {
     // 관리자 메인 문의사항 갯수 출력
     public OperationDTO countInquiry(OperationDTO operationDTO) {
 
-        operationDTO.setInquiryCountTotal(inquiryRepository.count());
+        LocalDate end = LocalDate.now();            // 오늘
+        LocalDate start = end.minusDays(7);         // 7일 전
+
+        operationDTO.setInquiryCountTotal(inquiryRepository.countByWdateBetween(start,end));
 
         LocalDate now = LocalDate.now();
         operationDTO.setInquiryCountToday(inquiryRepository.countByWdate(now));
@@ -1138,9 +1142,9 @@ public class adminService {
         return operationDTO;
     }
 
-    public OperationDTO countMemberRegister(OperationDTO operationDTO) {
+    public OperationDTO countMemberRegister(OperationDTO operationDTO, LocalDateTime start, LocalDateTime end) {
 
-        operationDTO.setMemberCountTotal(userRepository.count());
+        operationDTO.setMemberCountTotal(userRepository.countByRegDateBetween(start, end));
 
         LocalDateTime startOfToday = LocalDate.now().atStartOfDay();
         LocalDateTime startOfYesterDay = LocalDate.now().minusDays(1).atStartOfDay();
@@ -1157,7 +1161,10 @@ public class adminService {
 
     public OperationDTO countOrder(OperationDTO operationDTO) {
 
-        operationDTO.setOrderCountTotal(orderRepository.count());
+        LocalDateTime end = LocalDateTime.now();
+        LocalDateTime start = end.minusDays(7);
+
+        operationDTO.setOrderCountTotal(orderRepository.countByOrderDateBetween(start, end));
 
         LocalDateTime startOfToday = LocalDate.now().atStartOfDay();
         LocalDateTime startOfYesterDay = LocalDate.now().minusDays(1).atStartOfDay();
@@ -1166,7 +1173,7 @@ public class adminService {
         operationDTO.setOrderCountToday(orderRepository.countByOrderDateBetween(startOfToday, startOfTomorrow));
         operationDTO.setOrderCountYesterday(orderRepository.countByOrderDateBetween(startOfYesterDay, startOfToday));
 
-        operationDTO.setOrderPriceTotal(orderRepository.findTotalOrderPrice());
+        operationDTO.setOrderPriceTotal(orderRepository.findTotalOrderPriceLast7Days(start,end));
 
         Long orderPriceToday = orderRepository.findTotalOrderPriceBetween(startOfToday, startOfTomorrow);
         if(orderPriceToday == null){
@@ -1186,19 +1193,19 @@ public class adminService {
     public OperationDTO countOrderDetail(OperationDTO operationDTO) {
 
         String state = "입금대기";
-        long ready = orderItemRepository.countByOrderStatus(state);
+        long ready = orderItemRepository.countByOrderStatusToday(state);
 
         state = "배송완료";
-        long delivery = orderItemRepository.countByOrderStatus(state);
+        long delivery = orderItemRepository.countByOrderStatusToday(state);
 
         state = "취소요청";
-        long cancel = orderItemRepository.countByOrderStatus(state);
+        long cancel = orderItemRepository.countByOrderStatusToday(state);
 
-        state = "교환요청";
-        long exchange = orderItemRepository.countByOrderStatus(state);
+        state = "교환신청";
+        long exchange = orderItemRepository.countByOrderStatusToday(state);
 
-        state = "반품요청";
-        long returnCount = orderItemRepository.countByOrderStatus(state);
+        state = "반품신청";
+        long returnCount = orderItemRepository.countByOrderStatusToday(state);
 
         operationDTO.setReadyTotal(ready);
         operationDTO.setDeliveryTotal(delivery);
@@ -1300,4 +1307,30 @@ public class adminService {
         return operationDTO;
     }
 
+    // 주문 현황 리스트
+    public PageResponseDTO selectAllForOrder(PageRequestDTO pageRequestDTO) {
+
+        pageRequestDTO.setSize(10);
+
+        Pageable pageable = pageRequestDTO.getPageable("no");
+        Page<Tuple> pageObject = orderRepository.selectAllOrder(pageRequestDTO, pageable);
+
+        List<OrderDTO> DTOList = pageObject.getContent().stream().map(tuple -> {
+            Order order = tuple.get(0, Order.class);
+            OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
+            return orderDTO;
+        }).toList();
+
+        int total = (int) pageObject.getTotalElements();
+
+        log.info("total: {}", total);
+        log.info("DTOList: {}", pageObject);
+
+        return PageResponseDTO.<OrderDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(DTOList)
+                .total(total)
+                .build();
+
+    }
 }

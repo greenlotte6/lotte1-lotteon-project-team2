@@ -152,4 +152,31 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
         return new PageImpl<>(tupleList, pageable, total);
     }
+
+    @Override
+    public Page<Tuple> selectAllOrder(PageRequestDTO pageRequestDTO, Pageable pageable) {
+
+        // BooleanExpression booleanExpression = qOrder.user.uid.eq(uid);
+
+        List<Tuple> tupleList = queryFactory
+                .select(qOrderItem, qOrder)
+                .from(qOrderItem)
+                .join(qOrderItem.order, qOrder)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(qOrder.orderNo.desc())
+                .fetch();
+
+        long total = queryFactory
+                .select(qOrderItem.count())
+                .from(qOrderItem)
+                .join(qOrderItem.order, qOrder)
+                .fetchOne();
+
+        log.info("total: {}", total);
+        log.info("tupleList: {}", tupleList);
+
+        return new PageImpl<>(tupleList, pageable, total);
+
+    }
 }
