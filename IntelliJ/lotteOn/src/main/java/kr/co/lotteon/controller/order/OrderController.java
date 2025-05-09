@@ -107,7 +107,7 @@ public class OrderController {
             productService.changeSoldAndStock(cartNos);
 
             // 장바구니 지우기
-            // cartService.deleteAllByCartNo(cartNos);
+            cartService.deleteAllByCartNo(cartNos);
         }else{
 
             System.out.println("바로구매 로직");
