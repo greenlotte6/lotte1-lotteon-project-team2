@@ -39,7 +39,9 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     public Page<Tuple> selectAllForList(PageRequestDTO pageRequestDTO, Pageable pageable) {
         int subCateNo = pageRequestDTO.getSubCateNo();
 
-        BooleanExpression expression = qProduct.subCategory.subCateNo.eq(subCateNo);
+        BooleanExpression expression = qProduct.subCategory.subCateNo.eq(subCateNo)
+                .and(qProduct.state.eq("판매"));
+
 
         List<Tuple> tupleList = queryFactory
                 .select(qProduct, qSeller.company, qSeller.rank, qProductImage.sNameList)
@@ -66,7 +68,10 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     // 카테고리별 베스트
     @Override
     public Page<Tuple> selectBestAllForList(int subCateNo) {
-        BooleanExpression expression = qProduct.subCategory.subCateNo.eq(subCateNo);
+
+        BooleanExpression expression = qProduct.subCategory.subCateNo.eq(subCateNo)
+                .and(qProduct.state.eq("판매"));
+
 
         //  일관된 시간 생성 방식 적용
         LocalDateTime threeMonthsAgo = LocalDateTime.now().minusMonths(3)
@@ -118,7 +123,9 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             }
         }
 
-        BooleanExpression expression = qProduct.subCategory.subCateNo.eq(subCateNo);
+        BooleanExpression expression = qProduct.subCategory.subCateNo.eq(subCateNo)
+                .and(qProduct.state.eq("판매"));
+
 
         if ((sortType != null && (sortType.equals("mostSales") || sortType.equals("manyReviews"))) && period != null) {
             LocalDate now = LocalDate.now(ZoneId.of("Asia/Seoul"));
