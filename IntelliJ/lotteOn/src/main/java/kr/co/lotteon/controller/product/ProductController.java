@@ -165,12 +165,25 @@ public class ProductController {
 
     // 장바구니 담고 주문하기 View
     @GetMapping("/product/order")
-    public String order(@RequestParam("cartNo") List<Integer> cartNos, Model model) {
+    public String order(@RequestParam("cartNo") List<Integer> cartNos,
+                        @RequestParam("cartProdCount") List<Integer> cartProdCounts,
+                        Model model) {
+
+        log.info("cartNos: " + cartNos);
+        log.info("cartProdCounts: " + cartProdCounts);
+
 
         List<CartDTO> cartDTOList = new ArrayList<>();
 
-        for(Integer cartNo : cartNos) {
+        for (int i = 0; i < cartNos.size(); i++) {
+            Integer cartNo = cartNos.get(i);
+            Integer prodCount = cartProdCounts.get(i);
+
             CartDTO cartDTO = orderService.findByCartNo(cartNo);
+            cartDTO.setCartProdCount(prodCount);
+
+            //orderService.updateCartQuantity(cartNo, prodCount);
+
             cartDTOList.add(cartDTO);
         }
 
