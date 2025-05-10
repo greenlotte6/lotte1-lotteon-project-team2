@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -188,6 +189,16 @@ public class OrderService {
                 .build();
 
         orderItemRepository.save(orderItem);
-
     }
+
+//    // 주문하기 누를때 장바구니 수량 DB에 업데이트
+//    @Transactional
+//    public void updateCartQuantity(Integer cartNo, Integer quantity) {
+//        Cart cart = cartRepository.findById(cartNo)
+//                .orElseThrow(() -> new IllegalArgumentException("장바구니 항목을 찾을 수 없습니다."));
+//
+//        cart.setCartProdCount(quantity);
+//
+//    }
+
 }

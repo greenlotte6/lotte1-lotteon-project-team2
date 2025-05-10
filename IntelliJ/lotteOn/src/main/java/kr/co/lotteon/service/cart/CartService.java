@@ -11,6 +11,8 @@ import kr.co.lotteon.repository.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,24 +29,8 @@ import java.util.stream.Collectors;
 public class CartService {
 
     private final CartRepository cartRepository;
-    private final ProductRepository productRepository;
-    private final ModelMapper modelMapper;
-
-
-    // 장바구니 뷰 보여주기
-    public ProductDTO findAllByProdNo(ItemRequestDTO itemRequestDTO) {
-        String prodNo = itemRequestDTO.getProdNo();
-
-        Optional<Product> optProduct = productRepository.findByProdNo(prodNo);
-
-        if (optProduct.isPresent()) {
-            Product product = optProduct.get();
-            ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
-            return productDTO;
-        }
-        return null;
-    }
-
+    private final  ModelMapper modelMapper;
+    //private final RedisTemplate<String, CartDTO> redisTemplate;
 
     // 장바구니에 상품 추가
     public int addToCart(ItemRequestDTO itemRequestDTO, UserDetails userDetails) {
@@ -160,6 +146,16 @@ public class CartService {
             cartRepository.deleteByCartNo(cartNo);
         }
     }
+
+
+//    public void updateQuantityInRedis(Integer cartNo, Integer quantity) {
+//        String redisKey = "cart:" + cartNo;
+//        CartDTO cartDTO = redisTemplate.opsForValue().get(redisKey);
+//        if (cartDTO == null) throw new RuntimeException("Redis에 장바구니 없음");
+//
+//        cartDTO.setCartProdCount(quantity);
+//        redisTemplate.opsForValue().set(redisKey, cartDTO);
+//    }
 
 
 

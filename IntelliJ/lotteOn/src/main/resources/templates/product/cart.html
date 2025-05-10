@@ -6,13 +6,14 @@
     <link rel="stylesheet" href="/css/layout/layout.css">
     <link rel="stylesheet" href="/css/product/product_header.css">
     <link rel="stylesheet" href="/css/product/cart.css">
-    <title>장바구니 : 롯데On</title>
+    <title>장바구니 : 롯데 On</title>
 </head>
 
 <body>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
 
+            // [1] 주문 버튼 클릭 시 체크된 상품 없으면 경고
             const orderForm = document.getElementById('order-form');
             const orderButton = document.getElementById('order-button');
 
@@ -26,6 +27,7 @@
             });
 
 
+            // [2] 카테고리 토글 (열기/닫기)
             const parents = document.querySelectorAll(".category .parent");
 
             parents.forEach(parent => {
@@ -46,11 +48,14 @@
                 });
             });
 
+
+            // [3] 수량 +, - 버튼 및 체크박스들
             const plusBtns = document.querySelectorAll('.btn-plus');
             const minusBtns = document.querySelectorAll('.btn-minus');
             const checkAll = document.querySelector('#check-all');
             const itemCheckboxes = document.querySelectorAll('.cart_content input[type="checkbox"]');
 
+            // [4] 요약 정보 업데이트 함수
             function updateSummary() {
                 let totalCount = 0;
                 let originalTotalAmount = 0;
@@ -143,6 +148,8 @@
                 document.getElementById('summary-total').textContent = finalTotal.toLocaleString() + '원';
             }
 
+
+            // [5] 수량 조절 버튼
             plusBtns.forEach((btn) => {
                 btn.addEventListener('click', () => {
                     const cartContent = btn.closest('.cart_content');
@@ -156,9 +163,11 @@
                     const unitOriginal = parseInt(priceOriginalEl.dataset.unit);
                     const unitTotal = parseInt(priceTotalEl.dataset.unit);
 
-
                     priceOriginalEl.textContent = (unitOriginal * count).toLocaleString() + '원';
                     priceTotalEl.textContent = (unitTotal * count).toLocaleString() + '원';
+
+                    const quantityInput = cartContent.querySelector('.quantity-input');
+                    quantityInput.value = count;
 
                     updateSummary();
                 });
@@ -181,22 +190,33 @@
                         priceOriginalEl.textContent = (unitOriginal * count).toLocaleString() + '원';
                         priceTotalEl.textContent = (unitTotal * count).toLocaleString() + '원';
 
+                        const quantityInput = cartContent.querySelector('.quantity-input');
+                        quantityInput.value = count;
+
                         updateSummary();
                     }
                 });
             });
 
+
+            // [6] 체크박스 변화 시 요약 업데이트
             itemCheckboxes.forEach(cb => cb.addEventListener('change', updateSummary));
 
+
+            // [7] 전체 선택 기능
             checkAll.addEventListener('change', function () {
                 const isChecked = this.checked;
                 itemCheckboxes.forEach(cb => cb.checked = isChecked);
                 updateSummary();
             });
 
+
+            // [8] 초기화 시 전체 해제 및 요약 초기 계산
             itemCheckboxes.forEach(cb => cb.checked = false);
             updateSummary();
 
+
+            // [9] 판매자별로 상품 정렬
             const cartItems = Array.from(document.querySelectorAll('.cart_content'));
             const sellerGroups = {};
             cartItems.forEach(item => {
@@ -218,28 +238,31 @@
             }
 
 
-            // 선택 삭제 로직
+            // [10] 선택 항목 삭제
             const deleteSelectedBtn = document.querySelector('.cart_header button[type="button"]');
 
             if (deleteSelectedBtn) {
 
-                function clearSummary() {
-                    document.getElementById('summary-count').textContent = '0';
-                    document.getElementById('summary-amount').textContent = '0';
-                    document.getElementById('summary-discount').textContent = '0';
-                    document.getElementById('summary-shipping').textContent = '0';
-                    document.getElementById('summary-point').textContent = '0';
-                    document.getElementById('summary-total').textContent = '0원';
-
+                function updateSummaryAfterDelete() {
+                    const allCheckboxes = document.querySelectorAll('.cart_content input[type="checkbox"]');
                     const checkAllLabel = document.querySelector('label[for="check-all"]');
                     const checkAll = document.getElementById('check-all');
-                    const remainingCheckboxes = document.querySelectorAll('.cart_content input[type="checkbox"]').length;
 
                     if (checkAllLabel) {
-                        checkAllLabel.textContent = `전체선택(0)`;
+                        checkAllLabel.textContent = `전체선택(${allCheckboxes.length})`;
                     }
+
                     if (checkAll) {
                         checkAll.checked = false;
+                    }
+
+                    if (allCheckboxes.length === 0) {
+                        document.getElementById('summary-count').textContent = '0';
+                        document.getElementById('summary-amount').textContent = '0';
+                        document.getElementById('summary-discount').textContent = '0';
+                        document.getElementById('summary-shipping').textContent = '0';
+                        document.getElementById('summary-point').textContent = '0';
+                        document.getElementById('summary-total').textContent = '0원';
                     }
                 }
 
@@ -278,6 +301,7 @@
                                 alert(`상품(번호: ${cartNo}) 삭제 중 네트워크 오류 발생`);
                                 return { success: false, element: cartItemElement };
                             });
+
                         deletePromises.push(deletePromise);
                     });
 
@@ -291,26 +315,26 @@
                                 deletedCount++;
                             } else if (!result.success && result.element) {
                                 const failedCheckbox = result.element.querySelector('input[type="checkbox"]');
-                                if(failedCheckbox) failedCheckbox.checked = false;
+                                if (failedCheckbox) failedCheckbox.checked = false;
                             }
                         });
 
-                        clearSummary();
+                        updateSummaryAfterDelete();
 
                         if (deletedCount > 0) {
-                        } else if (selectedCheckboxes.length > 0 && deletedCount === 0) {
+                            // 성공한 경우 메시지 없이 조용히 넘어감
+                        } else {
                             alert('상품 삭제에 실패했습니다. 다시 시도해주세요.');
                         }
 
                     } catch (error) {
-                        console.error("Promise.all 처리 중 오류:", error);
-                        alert("일부 상품 삭제 중 예기치 않은 오류가 발생했습니다.");
-                        clearSummary();
+                        updateSummaryAfterDelete();
                     }
                 });
             }
 
 
+            // [11] 예상 도착일 표시 (3일 뒤)
             const arrivalSpans = document.querySelectorAll('.arrival-date');
             const arrivalDate = new Date();
             arrivalDate.setDate(arrivalDate.getDate() + 3);
@@ -488,6 +512,7 @@
                                     <div class="quantity-box">
                                         <button class="btn-minus" type="button">-</button>
                                         <span class="quantity">[[${cart.cartProdCount}]]</span>
+                                        <input type="hidden" name="cartProdCount" class="quantity-input" th:value="${cart.cartProdCount}">
                                         <button class="btn-plus" type="button">+</button>
                                     </div>
                                     <div class="cart_price">
