@@ -191,14 +191,5 @@ public class OrderService {
         orderItemRepository.save(orderItem);
     }
 
-//    // 주문하기 누를때 장바구니 수량 DB에 업데이트
-//    @Transactional
-//    public void updateCartQuantity(Integer cartNo, Integer quantity) {
-//        Cart cart = cartRepository.findById(cartNo)
-//                .orElseThrow(() -> new IllegalArgumentException("장바구니 항목을 찾을 수 없습니다."));
-//
-//        cart.setCartProdCount(quantity);
-//
-//    }
 
 }

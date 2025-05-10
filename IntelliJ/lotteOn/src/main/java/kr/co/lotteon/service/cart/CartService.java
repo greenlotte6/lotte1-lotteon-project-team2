@@ -148,16 +148,5 @@ public class CartService {
     }
 
 
-//    public void updateQuantityInRedis(Integer cartNo, Integer quantity) {
-//        String redisKey = "cart:" + cartNo;
-//        CartDTO cartDTO = redisTemplate.opsForValue().get(redisKey);
-//        if (cartDTO == null) throw new RuntimeException("Redis에 장바구니 없음");
-//
-//        cartDTO.setCartProdCount(quantity);
-//        redisTemplate.opsForValue().set(redisKey, cartDTO);
-//    }
-
-
-
 
 }

@@ -182,8 +182,6 @@ public class ProductController {
             CartDTO cartDTO = orderService.findByCartNo(cartNo);
             cartDTO.setCartProdCount(prodCount);
 
-            //orderService.updateCartQuantity(cartNo, prodCount);
-
             cartDTOList.add(cartDTO);
         }
 
