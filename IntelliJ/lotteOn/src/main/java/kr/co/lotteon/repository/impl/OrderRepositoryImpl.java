@@ -158,10 +158,8 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         // BooleanExpression booleanExpression = qOrder.user.uid.eq(uid);
 
         List<Tuple> tupleList = queryFactory
-                .select(qOrder, qOrderItem)
-                .from(qOrderItem)
-                .join(qOrderItem.order, qOrder)
-                .on(qOrder.orderNo.eq(qOrderItem.order.orderNo))
+                .select(qOrder, qOrder.orderDate)
+                .from(qOrder)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(qOrder.orderNo.desc())
@@ -169,9 +167,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
         long total = queryFactory
                 .select(qOrder.count())
-                .from(qOrderItem)
-                .join(qOrderItem.order, qOrder)
-                .on(qOrder.orderNo.eq(qOrderItem.order.orderNo))
+                .from(qOrder)
                 .fetchOne();
 
         log.info("total: {}", total);
