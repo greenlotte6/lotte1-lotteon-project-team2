@@ -567,6 +567,7 @@ public class AdminController {
     public String orderList(PageRequestDTO pageRequestDTO, Model model){
         PageResponseDTO pageResponseDTO = adminService.selectAllForOrder(pageRequestDTO);
         model.addAttribute(pageResponseDTO);
+        model.addAttribute("order",pageResponseDTO.getDtoList());
 
         return "/admin/order/list";
     }
