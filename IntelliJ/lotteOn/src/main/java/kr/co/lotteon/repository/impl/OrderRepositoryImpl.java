@@ -157,23 +157,72 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
         // BooleanExpression booleanExpression = qOrder.user.uid.eq(uid);
 
-        List<Tuple> tupleList = queryFactory
-                .select(qOrder, qOrder.orderDate)
-                .from(qOrder)
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .orderBy(qOrder.orderNo.desc())
-                .fetch();
+        String keyword = pageRequestDTO.getKeyword();
+        String type = pageRequestDTO.getSearchType();
 
-        long total = queryFactory
-                .select(qOrder.count())
-                .from(qOrder)
-                .fetchOne();
+        if(type == null || type.equals("")){
+            List<Tuple> tupleList = queryFactory
+                    .select(qOrder, qOrder.orderDate)
+                    .from(qOrder)
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .orderBy(qOrder.orderNo.desc())
+                    .fetch();
 
-        log.info("total: {}", total);
-        log.info("tupleList: {}", tupleList);
+            long total = queryFactory
+                    .select(qOrder.count())
+                    .from(qOrder)
+                    .fetchOne();
 
-        return new PageImpl<>(tupleList, pageable, total);
+            log.info("total: {}", total);
+            log.info("tupleList: {}", tupleList);
+
+            return new PageImpl<>(tupleList, pageable, total);
+
+        }else{
+
+            BooleanExpression booleanExpression = null;
+
+            switch (type){
+                case "주문번호" : {
+                    booleanExpression = qOrder.orderNo.like("%"+keyword+"%");
+                    break;
+                }
+                case "주문자" : {
+                    booleanExpression = qOrder.user.uid.like("%"+keyword+"%");
+                    break;
+                }
+                case "주문자명" : {
+                    booleanExpression = qOrder.user.name.like("%"+keyword+"%");
+                    break;
+                }
+                default : {
+                    break;
+                }
+            }
+
+            List<Tuple> tupleList = queryFactory
+                    .select(qOrder, qOrder.orderDate)
+                    .from(qOrder)
+                    .where(booleanExpression)
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .orderBy(qOrder.orderNo.desc())
+                    .fetch();
+
+            long total = queryFactory
+                    .select(qOrder.count())
+                    .from(qOrder)
+                    .where(booleanExpression)
+                    .fetchOne();
+
+            log.info("total: {}", total);
+            log.info("tupleList: {}", tupleList);
+
+            return new PageImpl<>(tupleList, pageable, total);
+
+        }
+
 
     }
 }
