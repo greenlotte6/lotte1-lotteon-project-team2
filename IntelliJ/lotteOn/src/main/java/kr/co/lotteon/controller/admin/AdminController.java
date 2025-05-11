@@ -573,6 +573,16 @@ public class AdminController {
     }
 
     //주문현황
+    @GetMapping("/order/search")
+    public String orderSearchList(PageRequestDTO pageRequestDTO, Model model){
+        PageResponseDTO pageResponseDTO = adminService.selectAllForOrder(pageRequestDTO);
+        model.addAttribute(pageResponseDTO);
+        model.addAttribute("order",pageResponseDTO.getDtoList());
+        return "/admin/order/list";
+    }
+
+
+    //주문현황
     @GetMapping("/order/delivery")
     public String delivery(){
         return "/admin/order/delivery";

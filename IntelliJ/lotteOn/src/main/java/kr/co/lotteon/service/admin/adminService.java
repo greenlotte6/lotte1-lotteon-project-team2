@@ -1319,8 +1319,6 @@ public class adminService {
             Order order = tuple.get(0, Order.class);
             OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
 
-            System.out.println(orderDTO);
-
             int size = orderDTO.getOrderItems().size();
             orderDTO.setCount(size);
 

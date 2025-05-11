@@ -35,11 +35,11 @@
 
                     <div class="select_div">
                         <div class="select_box">
-                            <form action="#">
-                                <select name="brand" style="width: 100px;">
-                                    <option value="상품명">주문번호</option>
-                                    <option value="상품번호">주문자</option>
-                                    <option value="판매자">주문자명</option>
+                            <form th:action="@{/admin/order/search}">
+                                <select name="searchType" style="width: 100px;">
+                                    <option value="주문번호">주문번호</option>
+                                    <option value="주문자">주문자</option>
+                                    <option value="주문자명">주문자명</option>
                                 </select>
                                 <input type="text" name="keyword" class="search_text" placeholder="키워드 입력">
                                 <input type="submit" class="search_btn" value="검색">
@@ -119,8 +119,8 @@
     <div class="modal" th:each="order, i : ${pageResponseDTO.dtoList}" th:id="'openDetail-' + ${i.index}">
         <div class="modal_popup">
             <div class="modal_head">
-                <span class="modal_title">주문상세</span><span class="modal_title_id">10121211341</span>
-                <button type="button" class="close_btn">X</button>
+                <span class="modal_title">주문상세</span><span class="modal_title_id">[[${order.orderNo}]]</span>
+                <button type="button" class="close_btn" th:onclick="'closeDetail(' + ${i.index} + ')'">X</button>
             </div>
 
             <div class="modal_main">
@@ -138,55 +138,62 @@
                         <th>결제금액</th>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr th:each="item : ${order.orderItems}">
                             <td>
-                                <img src="/images/product/blnk_star.png" style="width: 40px; height: 40px;" alt="별">
+                                <img th:src="${item.product.productImage.sNameList}" style="width: 40px; height: 40px;" alt="별">
                             </td>
-                            <td id="prodNo">120120021</td>
-                            <td id="prodName">상품명</td>
-                            <td id="seller">(주)상호명</td>
-                            <td id="price">2,4000</td>
-                            <td id="discount">-1,200</td>
-                            <td id="count">3</td>
-                            <td id="ship">0</td>
-                            <td id="credit">68,400</td>
+                            <td id="prodNo">[[${item.product.prodNo}]]</td>
+                            <td id="prodName">[[${item.product.prodName}]]</td>
+                            <td id="seller">[[${item.product.company}]]</td>
+                            <td id="price">[[${item.product.prodPrice}]]</td>
+                            <td id="discount">[[${item.product.prodDiscount}]]%</td>
+                            <td id="count">[[${item.itemCount}]]</td>
+                            <td id="ship">[[${item.product.prodDeliveryFee}]]</td>
+                            <td id="credit">[[${item.product.prodPrice * item.itemCount * ( 100 - item.product.prodDiscount) / 100
+                                +  item.product.prodDeliveryFee }]]</td>
                         </tr>
                     </tbody>
                 </table>
 
                 <div class="total_div">
                     <span>총 상품금액</span> 
-                    <span class="rs">107,000원</span><br>
+                    <span class="rs">[[${order.originalTotalPrice}]]원</span><br>
 
                     <span>총 할인금액</span> 
-                    <span class="rs">-7,100원</span><br>
+                    <span class="rs">-[[${order.totalDiscount}]]원</span><br>
+
+                    <span>포인트 할인</span>
+                    <span class="rs">-[[${order.pointDiscount}]]원</span><br>
+
+                    <span>쿠폰 할인</span>
+                    <span class="rs">-[[${order.couponDiscount}]]원</span><br>
 
                     <span>배송비</span> 
-                    <span class="rs">3,100원</span><br>
+                    <span class="rs">[[${order.shippingFee}]]원</span><br>
 
                     <span>총 결제금액</span> 
-                    <span class="rs"><span style="color: red;">102,900</span>원</span><br>
+                    <span class="rs"><span style="color: red;">[[${order.orderTotalPrice}]]</span>원</span><br>
                 </div>
 
                 <!-- 결제 정보 -->
-                <p class="modal_title_black" style="margin-top: 110px;">결제정보</p>
+                <p class="modal_title_black" style="margin-top: 140px;">결제정보</p>
                 <table class="info">
                     <tr>
                         <td>주문번호</td>
-                        <td>10121211341</td>
+                        <td>[[${order.orderNo}]]</td>
                     </tr>
                     <tr>
                         <td>결제방법</td>
-                        <td>신용카드 / 1234 **** **** 4432</td>
+                        <td>[[${order.payment}]] / [[${order.paymentContent}]]</td>
                     </tr>
                     <tr>
                         <td>주문자 / 연락처</td>
-                        <td>김유신 / 010-1234-1234</td>
+                        <td>[[${order.orderSender}]] / [[${order.senderHp}]]</td>
                     </tr>
                     <tr>
                         <td>결제상태</td>
                         <td style="color: #36B04B;">
-                            결제완료 <span class="rs">총 결제 금액 <span style="color: red;">102,900</span>원</span>
+                            결제완료 <span class="rs">총 결제 금액 <span style="color: red;">[[${order.orderTotalPrice}]]</span>원</span>
                         </td>
                     </tr>
                 </table>
@@ -195,15 +202,15 @@
                 <table class="info">
                     <tr>
                         <td>수취인</td>
-                        <td>김유신</td>
+                        <td>[[${order.orderReceiver}]]</td>
                     </tr>
                     <tr>
                         <td>연락처</td>
-                        <td>010-1234-1234</td>
+                        <td>[[${order.receiverHp}]]</td>
                     </tr>
                     <tr>
                         <td>배송지 주소</td>
-                        <td>부산 부산진구 123-11 10 층</td>
+                        <td>[[${order.orderAddr}]]</td>
                     </tr>
                 </table>
             </div>
@@ -228,6 +235,10 @@
             document.getElementById("openDetail-" + index).style.display = "block";
         }
 
+
+        function closeDetail(index){
+            document.getElementById("openDetail-" + index).style.display = "none";
+        }
 
         //닫기 버튼을 눌렀을 때 모달팝업이 닫힘
         modalClose.addEventListener('click',function(){
