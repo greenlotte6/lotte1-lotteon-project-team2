@@ -253,6 +253,7 @@ public class CsController {
         // UserDTO 조회
         UserDTO user = userService.findById(uid);
         inquiryDTO.setUser(user);
+        inquiryDTO.setChannel("고객센터");
 
         csService.register(inquiryDTO);
 

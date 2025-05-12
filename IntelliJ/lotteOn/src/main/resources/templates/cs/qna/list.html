@@ -64,7 +64,7 @@
                                 <td th:text="${inquiry.cateV1}"></td>
                                 <td th:text="${inquiry.cateV2}"></td>
                                 <td><a th:href="@{/cs/qna/view(no=${inquiry.no})}">[[${inquiry.title}]]</a></td>
-                                <td th:text="${inquiry.user.name}"></td>
+                                <td th:text="${#strings.concat(#strings.substring(inquiry.user.name, 0, 1), '**')}"></td>
                                 <td th:text="${#temporals.format(inquiry.wdate, 'yyyy-MM-dd')}"></td>
                                 <td class="state" th:text="${inquiry.state}"></td>
                             </tr>
