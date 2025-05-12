@@ -14,10 +14,9 @@ import lombok.*;
 public class Delivery {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int dno;
+    private long dno;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "orderNo", nullable = false)
     private Order order;
 
@@ -26,4 +25,11 @@ public class Delivery {
     private String trackingNumber;
 
     private String state;
+
+    @PrePersist
+    public void prePersist() {
+        if (this.state == null) {
+            this.state = "배송준비";
+        }
+    }
 }
