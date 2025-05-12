@@ -23,6 +23,7 @@ import kr.co.lotteon.service.product.ProductService;
 import kr.co.lotteon.service.user.UserDetailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -163,24 +164,30 @@ public class ProductController {
         return result;
     }
 
+
+    // 장바구니 수량 업데이트
+    @PostMapping("/update/cartProdCount")
+    @ResponseBody
+    public ResponseEntity<String> updateQuantity(@RequestParam Integer cartNo, @RequestParam int newQuantity) {
+        log.info("cartNo: {}", cartNo);
+        log.info("newQuantity: {}", newQuantity);
+        cartService.updateCartProdCount(cartNo, newQuantity);
+        return ResponseEntity.ok("수량이 성공적으로 업데이트되었습니다.");
+    }
+
+
+
     // 장바구니 담고 주문하기 View
     @GetMapping("/product/order")
     public String order(@RequestParam("cartNo") List<Integer> cartNos,
-                        @RequestParam("cartProdCount") List<Integer> cartProdCounts,
                         Model model) {
-
-        log.info("cartNos: " + cartNos);
-        log.info("cartProdCounts: " + cartProdCounts);
-
 
         List<CartDTO> cartDTOList = new ArrayList<>();
 
         for (int i = 0; i < cartNos.size(); i++) {
             Integer cartNo = cartNos.get(i);
-            Integer prodCount = cartProdCounts.get(i);
 
             CartDTO cartDTO = orderService.findByCartNo(cartNo);
-            cartDTO.setCartProdCount(prodCount);
 
             cartDTOList.add(cartDTO);
         }

@@ -733,7 +733,10 @@
                                         <div class="modal-content">
                                             <span class="close-button">&times;</span>
                                             <p>
-                                                <span>홍길동</span> 님만을 위한<br>
+                                                <th:block th:with="isLoggedIn=${#authentication.principal != 'anonymousUser'}">
+                                                    <span th:if="${isLoggedIn}" th:text="${#authentication.principal.user.name}"></span>
+                                                </th:block>
+                                                </span> 님만을 위한<br>
                                                 <span>상품할인혜택</span>을 적용해 보세요!
                                             </p>
                                             <div id="couponList">

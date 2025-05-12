@@ -31,6 +31,7 @@ public class OrderItem {
     private int itemPrice;    // 구매 당시 상품 가격
     private int itemDiscount; // 할인율 (퍼센트)
     private int itemCount;  // 구매 수량 (기본값 1)
+    private int itemPoint;
 
     private String category;
 

@@ -22,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -93,8 +92,11 @@ public class OrderService {
     }
 
 
-    public void registerOrderItem(int orderNo, List<Integer> cartNos) {
-        for (Integer cartNo : cartNos) {
+    public void registerOrderItem(int orderNo, List<Integer> cartNos, List<Integer> itemPointList) {
+        for (int i = 0; i < cartNos.size(); i++) {
+            Integer cartNo = cartNos.get(i);
+            Integer itemPoint = itemPointList.get(i);
+
             Cart cart = cartRepository.findById(cartNo).get();
             Product product = cart.getProduct();
 
@@ -116,6 +118,7 @@ public class OrderService {
                     .itemCount(cart.getCartProdCount())
                     .itemPrice(product.getProdPrice())
                     .itemDiscount(product.getProdDiscount())
+                    .itemPoint(itemPoint)
                     .category(category)
                     .build();
 
@@ -123,6 +126,41 @@ public class OrderService {
 
         }
     }
+
+
+    public void directOrderItem(int orderNo, CartDTO cartDTO,List<Integer> itemPointList) {
+
+        int itemPoint = itemPointList.get(0);
+
+        ProductDTO productDTO = cartDTO.getProduct();
+        String category = productDTO.getMainCategoryName();
+
+        Cart cart = modelMapper.map(cartDTO, Cart.class);
+        Product product = modelMapper.map(productDTO, Product.class);
+
+        Order order = Order.builder()
+                .orderNo(orderNo)
+                .build();
+
+        OrderItem orderItem = OrderItem.builder()
+                .order(order)
+                .product(product)
+                .opt1(cart.getOpt1()).opt2(cart.getOpt2())
+                .opt3(cart.getOpt3()).opt4(cart.getOpt4())
+                .opt5(cart.getOpt5()).opt6(cart.getOpt6())
+                .opt1Cont(cart.getOpt1Cont()).opt2Cont(cart.getOpt2Cont())
+                .opt3Cont(cart.getOpt3Cont()).opt4Cont(cart.getOpt4Cont())
+                .opt5Cont(cart.getOpt5Cont()).opt6Cont(cart.getOpt6Cont())
+                .itemCount(cart.getCartProdCount())
+                .itemPrice(product.getProdPrice())
+                .itemDiscount(product.getProdDiscount())
+                .itemPoint(itemPoint)
+                .category(category)
+                .build();
+
+        orderItemRepository.save(orderItem);
+    }
+
 
     // CartDTO 생성 로직을 makeCart 메서드로 분리
     public List<CartDTO> makeCart(ItemRequestDTO itemRequestDTO, UserDetails userDetails, Map<String, String> options) {
@@ -159,36 +197,6 @@ public class OrderService {
         cartDTOList.add(cartDTO);
 
         return cartDTOList;
-    }
-
-    public void directOrderItem(int orderNo, CartDTO cartDTO) {
-
-        ProductDTO productDTO = cartDTO.getProduct();
-        String category = productDTO.getMainCategoryName();
-
-        Cart cart = modelMapper.map(cartDTO, Cart.class);
-        Product product = modelMapper.map(productDTO, Product.class);
-
-        Order order = Order.builder()
-                .orderNo(orderNo)
-                .build();
-
-        OrderItem orderItem = OrderItem.builder()
-                .order(order)
-                .product(product)
-                .opt1(cart.getOpt1()).opt2(cart.getOpt2())
-                .opt3(cart.getOpt3()).opt4(cart.getOpt4())
-                .opt5(cart.getOpt5()).opt6(cart.getOpt6())
-                .opt1Cont(cart.getOpt1Cont()).opt2Cont(cart.getOpt2Cont())
-                .opt3Cont(cart.getOpt3Cont()).opt4Cont(cart.getOpt4Cont())
-                .opt5Cont(cart.getOpt5Cont()).opt6Cont(cart.getOpt6Cont())
-                .itemCount(cart.getCartProdCount())
-                .itemPrice(product.getProdPrice())
-                .itemDiscount(product.getProdDiscount())
-                .category(category)
-                .build();
-
-        orderItemRepository.save(orderItem);
     }
 
 
