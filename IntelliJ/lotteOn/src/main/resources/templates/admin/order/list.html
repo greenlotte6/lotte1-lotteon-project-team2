@@ -8,6 +8,28 @@
     <link rel="stylesheet" href="/css/admin/order.css">
     <link rel="stylesheet" href="/css/layout/layout.css">
 
+    <style>
+        .status-shipping {
+            color: blue;
+            font-weight: bold;
+        }
+
+        .status-delivered {
+            color: greenyellow;
+            font-weight: bold;
+        }
+
+        .status-paid {
+            color: orange;
+            font-weight: bold;
+        }
+
+        .status_cancel{
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+
     <!-- 사이드바-->
     <script src="/js/admin/sidebar.js"></script>
 
@@ -71,7 +93,13 @@
                                     <td>[[${item.count}]]</td>
                                     <td>[[${item.orderTotalPrice}]]</td>
                                     <td>[[${item.payment}]]</td>
-                                    <td>[[${item.orderItems[0].orderStatus}]]</td>
+                                    <td th:text="${item.orderItems[0].orderStatus}"
+                                        th:class="${item.orderItems[0].orderStatus == '입금대기' || item.orderItems[0].orderStatus == '결제대기'  } ?
+                                        'status-delivered' : (${item.orderItems[0].orderStatus == '배송준비' || item.orderItems[0].orderStatus == '배송중' || item.orderItems[0].orderStatus == '배송완료' }
+                                        ? 'status-shipping' : 'status_cancel')"></td>
+
+
+                                    </td>
                                     <td th:text="${#temporals.format(item.orderDate, 'yyyy.MM.dd')}"></td>
                                     <td>
                                         <a href="#" class="delivery"
