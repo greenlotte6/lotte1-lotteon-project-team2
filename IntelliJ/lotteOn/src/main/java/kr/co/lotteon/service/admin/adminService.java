@@ -9,6 +9,7 @@ import kr.co.lotteon.dto.article.RecruitDTO;
 import kr.co.lotteon.dto.category.MainCategoryDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.coupon.CouponIssueDTO;
+import kr.co.lotteon.dto.delivery.DeliveryDTO;
 import kr.co.lotteon.dto.operation.OperationDTO;
 import kr.co.lotteon.dto.operation.OrderSummaryDTO;
 import kr.co.lotteon.dto.order.OrderDTO;
@@ -30,7 +31,9 @@ import kr.co.lotteon.entity.category.MainCategory;
 import kr.co.lotteon.entity.category.SubCategory;
 import kr.co.lotteon.entity.coupon.Coupon;
 import kr.co.lotteon.entity.coupon.CouponIssue;
+import kr.co.lotteon.entity.delivery.Delivery;
 import kr.co.lotteon.entity.order.Order;
+import kr.co.lotteon.entity.order.OrderItem;
 import kr.co.lotteon.entity.point.Point;
 import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.entity.product.ProductDetail;
@@ -45,6 +48,7 @@ import kr.co.lotteon.repository.category.MainCategoryRepository;
 import kr.co.lotteon.repository.category.SubCategoryRepository;
 import kr.co.lotteon.repository.coupon.CouponIssueRepository;
 import kr.co.lotteon.repository.coupon.CouponRepository;
+import kr.co.lotteon.repository.delivery.DeliveryRepository;
 import kr.co.lotteon.repository.order.OrderItemRepository;
 import kr.co.lotteon.repository.order.OrderRepository;
 import kr.co.lotteon.repository.point.PointRepository;
@@ -105,6 +109,9 @@ public class adminService {
     private final RecruitRepository recruitRepository;
     private final FaqRepository faqRepository;
     private final InquiryRepository inquiryRepository;
+
+    // 배달
+    private final DeliveryRepository deliveryRepository;
 
     // 포인트
     private final PointRepository pointRepository;
@@ -1337,4 +1344,47 @@ public class adminService {
                 .build();
 
     }
+
+    public void saveDelivery(DeliveryDTO deliveryDTO) {
+
+        Order order = Order.builder()
+                .orderNo(deliveryDTO.getOrderNo())
+                .build();
+
+        if ("12345678901".equals(deliveryDTO.getTrackingNumber())) {
+            String prefix = switch (deliveryDTO.getDeliveryCompany()) {
+                case "CJ대한통운" -> "1";
+                case "한진택배" -> "2";
+                case "롯데택배" -> "3";
+                case "우체국택배" -> "4";
+                case "로젠택배" -> "5";
+                case "경동택배" -> "6";
+                case "합동택배" -> "7";
+                default -> "8";
+            };
+
+            long track = Long.parseLong(prefix + "2345670000");
+
+            while (deliveryRepository.existsById(track)) {
+                track++;
+            }
+
+            deliveryDTO.setDno(track); // 이 경우 GeneratedValue 제거 필요
+        }
+
+        Delivery delivery = modelMapper.map(deliveryDTO, Delivery.class);
+        delivery.setOrder(order);
+
+        deliveryRepository.save(delivery);
+
+        List<OrderItem> orderItems = orderItemRepository.findByOrder(order);
+        for (OrderItem item : orderItems) {
+            item.setOrderStatus("배송준비");
+        }
+        orderItemRepository.saveAll(orderItems);
+    }
+
+
+
 }
+

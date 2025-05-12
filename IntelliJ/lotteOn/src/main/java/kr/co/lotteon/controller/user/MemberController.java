@@ -132,7 +132,7 @@ public class MemberController {
 
         sellerService.saveSeller(userDTO, sellerDTO);
 
-        return "redirect:/user/member/login";
+        return "redirect:/";
     }
 
 

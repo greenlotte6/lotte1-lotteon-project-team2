@@ -68,14 +68,21 @@ public class VisitorService {
      */
 
     public int getVisitorCountByDate(LocalDate date) {
-        if (date.equals(LocalDate.now())) {
-            // 오늘 데이터는 Redis에서 조회
-            return getTodayVisitorCount();
-        } else {
-            // 과거 데이터는 DB에서 조회
-            Optional<DailyVisitorStats> stats = visitorStatsRepository.findByVisitDate(date);
-            return stats.map(DailyVisitorStats::getUniqueVisitors).orElse(0);
+        // 먼저 Redis에서 확인 (오늘, 어제 모두)
+        String key = String.format(VISITOR_KEY, date.toString());
+        Long size = redisTemplate.opsForSet().size(key);
+        int redisCount = size != null ? size.intValue() : 0;
+
+        if (redisCount > 0) {
+            log.info("Redis에서 {} 날짜의 방문자 수 조회: {}", date, redisCount);
+            return redisCount;
         }
+
+        // Redis에 없으면 DB에서 확인
+        Optional<DailyVisitorStats> stats = visitorStatsRepository.findByVisitDate(date);
+        int dbCount = stats.map(DailyVisitorStats::getUniqueVisitors).orElse(0);
+        log.info("DB에서 {} 날짜의 방문자 수 조회: {}", date, dbCount);
+        return dbCount;
     }
 
 
