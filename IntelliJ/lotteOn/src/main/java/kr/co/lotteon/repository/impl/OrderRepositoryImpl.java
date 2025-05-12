@@ -10,6 +10,7 @@ import kr.co.lotteon.entity.order.QOrderItem;
 import kr.co.lotteon.entity.product.QProduct;
 import kr.co.lotteon.entity.product.QProductImage;
 import kr.co.lotteon.entity.seller.QSeller;
+import kr.co.lotteon.entity.user.QUser;
 import kr.co.lotteon.repository.custom.OrderRepositoryCustom;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     private final QProduct qProduct = QProduct.product;
     private final QProductImage qProductImage = QProductImage.productImage;
     private final QSeller qSeller = QSeller.seller;
+    private final QUser qUser = QUser.user;
 
     // 판매자 별 매출 통계
     @Override
@@ -126,11 +128,12 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         BooleanExpression booleanExpression = qOrder.user.uid.eq(uid);
 
         List<Tuple> tupleList = queryFactory
-                .select(qOrderItem, qOrder, qOrder.orderDate, qOrderItem.orderStatus , qProductImage.sNameThumb3)
+                .select(qOrderItem, qOrder, qOrder.orderDate, qOrderItem.orderStatus , qProductImage.sNameThumb3, qSeller, qUser)
                 .from(qOrderItem)
                 .join(qOrderItem.order, qOrder)
                 .join(qOrderItem.product, qProduct)
                 .join(qProduct.seller, qSeller)
+                .join(qOrder.user, qUser)
                 .where(booleanExpression)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -143,6 +146,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
                 .join(qOrderItem.order, qOrder)
                 .join(qOrderItem.product, qProduct)
                 .join(qProduct.seller, qSeller)
+                .join(qOrder.user, qUser)
                 .where(booleanExpression)
                 .fetchOne();
 

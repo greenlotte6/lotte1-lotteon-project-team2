@@ -61,15 +61,8 @@ public class Inquiry {
 
     @PrePersist
     public void prePersist() {
-        if (this.channel == null) {
-            this.channel = "고객센터";
-        }
         if(this.state == null){
             this.state = "검토중";
-        }
-
-        if(this.password==0){
-            this.password = 777;
         }
     }
 
