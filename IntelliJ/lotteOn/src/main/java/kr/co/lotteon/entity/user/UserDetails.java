@@ -31,5 +31,10 @@ public class UserDetails {
         if (this.content == null) {
             this.content = "없음";
         }
+
+        if (this.rank == null) {
+            this.rank = "FAMILY";
+        }
+
     }
 }
