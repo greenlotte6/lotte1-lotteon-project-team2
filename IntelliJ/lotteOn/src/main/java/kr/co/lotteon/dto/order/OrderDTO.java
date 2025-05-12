@@ -37,6 +37,7 @@ public class OrderDTO {
     private int totalDiscount;
     private int pointDiscount;
     private int couponDiscount;
+    private int totalPoint;
 
     private int count; // itemOrder 갯수 (관리자 페이지 사용)
 

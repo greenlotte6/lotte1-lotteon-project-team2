@@ -96,45 +96,9 @@
         });
 
 
-        // ✅ 각 상품 계산
-        document.querySelectorAll('.order_content').forEach(table => {
-            const row = table.querySelector('tr:nth-of-type(2)');
-            if (!row) return;
 
-            const originalEl = row.querySelector('.price_original');
-            const saleEl = row.querySelector('.price_total');
-            const discountEl = row.querySelector('.discount-rate');
-            const pointEl = row.querySelector('.point');
-            const shippingEl = row.querySelector('.shipping');
-            const totalEl = row.querySelector('.total');
-            const quantityEl = row.querySelector('.quantity');
-
-            const quantity = parseInt(quantityEl?.innerText || '1', 10);
-            const originalUnit = parseInt(originalEl?.dataset.unit || '0', 10);
-            const discountRate = parseFloat((discountEl?.innerText || '0').replace('%', '')) || 0;
-
-            if (!isNaN(discountRate) && originalUnit > 0 && quantity > 0) {
-                const original = originalUnit * quantity;
-                originalEl.innerText = original.toLocaleString();
-
-                const unitSale = Math.floor(originalUnit * (1 - discountRate / 100));
-                const sale = unitSale * quantity;
-                saleEl.dataset.unit = sale;
-                saleEl.innerText = sale.toLocaleString();
-
-                const point = Math.floor(unitSale * 0.01 * quantity);
-                if (pointEl) pointEl.innerText = point.toLocaleString();
-
-                const shipping = parseInt(shippingEl?.innerText.replace(/[^0-9]/g, '') || '0', 10);
-                const total = sale + shipping;
-                if (totalEl) totalEl.innerText = total.toLocaleString();
-            }
-        });
 
     });
-
-
-
 </script>
 
 <div id="wrapper">
@@ -266,7 +230,7 @@
                                    th:text="${#numbers.formatInteger(item.itemPrice, 3, 'COMMA')}">0</p>
                             </td>
                             <td class="discount-rate" th:text="${item.itemDiscount + '%'}">0%</td>
-                            <td class="point" th:text="${item.product.prodPoint}">0</td>
+                            <td class="point" th:text="${item.itemPoint}">0</td>
                             <td class="shipping" th:text="${item.product.prodDeliveryFee == 0 ? '무료배송' : #numbers.formatInteger(item.product.prodDeliveryFee, 3, 'COMMA')}">0</td>
                             <td class="total"
                                 th:text="${#numbers.formatInteger(item.itemPrice * item.itemCount, 3, 'COMMA')}">0</td>
@@ -315,7 +279,7 @@
                         </tr>
                         <tr>
                             <th>적립 포인트</th>
-                            <td id="summary-point" th:text="${#numbers.formatInteger(orderDTO.pointDiscount, 1, 'COMMA')}">0</td>
+                            <td id="summary-point" th:text="${orderDTO.totalPoint}">0</td>
                         </tr>
                         <tr class="total">
                             <th>총</th>

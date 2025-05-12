@@ -141,11 +141,11 @@
               const saleEl = row.querySelector('.price_total');
               const discountEl = row.querySelector('.discount-rate');
               const quantityEl = row.querySelector('.quantity');
-              const pointEl = row.querySelector('.point'); // 포인트 표시 요소
 
               const quantity = parseInt(quantityEl?.innerText || '1', 10);
               const originalUnit = parseInt(originalEl?.dataset.unit || '0', 10);
               const discountRate = parseFloat((discountEl?.innerText || '0').replace('%', '')) || 0;
+
 
               if (!isNaN(discountRate) && originalUnit > 0 && quantity > 0) {
                   // 원래 가격 계산 및 표시
@@ -162,6 +162,8 @@
                   const sale = flooredDiscountedUnitPrice * quantity;
                   saleEl.dataset.unit = sale;
                   saleEl.innerText = sale.toLocaleString();
+
+                  const pointEl = row.querySelector('input.point');
 
                   // 포인트 계산 로직
                   const discountedPriceForPoint = parseInt(saleEl?.dataset.unit || '0', 10);
@@ -193,10 +195,9 @@
                       }
 
                       const point = Math.floor(discountedPriceForPoint * pointRate);
-                      pointEl.innerText = point.toLocaleString();
+                      pointEl.value = point.toString();
                   }
               } else {
-                  console.log('할인율, 원래 단가 또는 수량이 유효하지 않습니다.');
               }
           });
 
@@ -204,14 +205,22 @@
           // ✅ 전체 포인트 요약 업데이트
           let totalEarnedPoint = 0;
           document.querySelectorAll('.point').forEach(pointEl => {
-              const point = parseInt(pointEl?.innerText.replace(/[^0-9]/g, ''), 10);
+              const pointValue = pointEl?.value.replace(/[^\d]/g, ''); // value 속성에서 숫자만 추출
+              console.log('pointValue:', pointValue); // 추출된 값 확인
+              const point = parseInt(pointValue, 10);
+
               if (!isNaN(point)) {
                   totalEarnedPoint += point;
               }
           });
 
           document.getElementById('summary-point').innerText = totalEarnedPoint.toLocaleString();
-          document.querySelector('input[name="earnedPoint"]').value = totalEarnedPoint;
+          document.querySelector('input[name="totalPoint"]').value = totalEarnedPoint;
+
+          console.log(totalEarnedPoint.toLocaleString());
+          console.log(totalEarnedPoint);
+
+
 
 
           // ✅ 쿠폰 모달 창
@@ -267,14 +276,11 @@
 
                   // 모달 열릴 때마다 applyCouponButton을 다시 찾아서 이벤트 바인딩
                   const applyCouponButton = modal.querySelector(".modal-buttons button");
-                  console.log("applyCouponButton:", applyCouponButton);
 
                   if (applyCouponButton) {
                       applyCouponButton.onclick = function () {
 
                           if (selectedCouponData) {
-                              // 선택된 쿠폰 데이터 출력
-                              console.log('[쿠폰 적용] 선택된 쿠폰 데이터:', selectedCouponData);
 
                               document.getElementById("couponData").value = selectedCouponData.issueNo;
 
@@ -458,8 +464,6 @@
               const pointInput = document.querySelector('.discount_info input');
               const currentPoint = '[[${userDetailsDTO.userPoint}]]';
 
-              console.log('currentPoint:', currentPoint);
-
               const pointText = pointInput?.value.trim();
 
               if (currentPoint < 5000) {
@@ -477,7 +481,6 @@
 
               const pointValue = parseInt(pointText, 10);
 
-              console.log('pointValue:', pointValue);
 
               if (pointValue < 5000) {
                   alert('포인트는 5,000점 이상부터 사용 가능합니다.');
@@ -677,7 +680,7 @@
                                     <p class="price_total" th:with="discountedPrice=${cart.product.prodPrice * (100 - cart.product.prodDiscount) / 100}" th:data-unit="${discountedPrice}" th:text="${#numbers.formatInteger(discountedPrice, 3, 'COMMA')}">0</p>
                                 </td>
                                 <td class="discount-rate" th:text="${cart.product.prodDiscount + '%'}">0%</td>
-                                <td class="point" th:text="${cart.product.prodPoint}">0</td>
+                                <td><input type="text" class="point" name="itemPoint"></td>
                                 <td class="shipping" th:text="${cart.product.prodDeliveryFee == 0 ? '무료배송' : #numbers.formatInteger(cart.product.prodDeliveryFee, 3, 'COMMA')}">0</td>
                                 <td class="total" th:with="itemTotal=${(cart.product.prodPrice * (100 - cart.product.prodDiscount) / 100) * cart.cartProdCount + cart.product.prodDeliveryFee}" th:text="${#numbers.formatInteger(itemTotal, 3, 'COMMA')}">0</td>
                             </tr>
@@ -807,7 +810,7 @@
                                     <tr>
                                         <th>적립 포인트</th>
                                         <td id="summary-point"></td>
-                                        <input type="hidden" name="earnedPoint">
+                                        <input type="hidden" name="totalPoint">
                                     </tr>
                                     <tr class="total">
                                         <th>총</th>
@@ -853,11 +856,9 @@
                     body: formData
                 })
                     .then(response => {
-                        console.log("원시 응답 객체:", response);
                         return response.json();
                     })
                     .then(data => {
-                        console.log("카카오페이 응답 JSON:", data);
                         window.location.href = data.next_redirect_pc_url;
                     })
                     .catch(err => {
