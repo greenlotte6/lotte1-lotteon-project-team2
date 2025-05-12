@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -14,7 +15,7 @@ import java.time.LocalTime;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class BannerDTO {
+public class BannerDTO implements Serializable {
 
     private int bno;
 

@@ -69,199 +69,99 @@
                 <section class="hit-products">
                   <div class="section-title">히트상품</div>
                   <div class="product-grid">
-                    <div class="product-card">
-                      <img src="/images/cs/coupon.png" alt="상품1">
+                    <div class="product-card" th:each="item : ${hitList}">
+                      <a th:href="@{/product/view(prodNo = ${item.prodNo})}">
+                        <img th:src="@{|${item.productImage.sNameThumb3}|}" alt="상품1">
+                      </a>
                       <div class="product-info">
-                        <div class="product-name">인기 니트 가디건</div>
+                        <div class="product-name">[[${item.prodName}]]</div>
                         <div class="product-price">
-                          <del>39,000원</del>
-                          <span class="discount">20%</span>
-                          <strong>31,200원</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="product-card">
-                      <img src="/images/cs/coupon.png" alt="상품2">
-                      <div class="product-info">
-                        <div class="product-name">스타일 슬랙스</div>
-                        <div class="product-price">
-                          <del>59,000원</del>
-                          <span class="discount">25%</span>
-                          <strong>44,250원</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="product-card">
-                      <img src="/images/cs/coupon.png" alt="상품3">
-                      <div class="product-info">
-                        <div class="product-name">향수 세트</div>
-                        <div class="product-price">
-                          <del>89,000원</del>
-                          <span class="discount">10%</span>
-                          <strong>80,100원</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="product-card">
-                      <img src="/images/cs/coupon.png" alt="상품4">
-                      <div class="product-info">
-                        <div class="product-name">향수 세트</div>
-                        <div class="product-price">
-                          <del>89,000원</del>
-                          <span class="discount">10%</span>
-                          <strong>80,100원</strong>
+                          <del>[[${#numbers.formatInteger(item.prodPrice , 3, 'COMMA')}]]원</del>
+                          <span class="discount">[[${item.prodDiscount}]]%</span>
+                          <strong>[[${#numbers.formatInteger(item.prodPrice * (100 - item.prodDiscount) / 100, 3, 'COMMA')}]]원</strong>
                         </div>
                       </div>
                     </div>
                   </div>
                 </section>
+                <section class="hit-products">
+                  <div class="section-title">할인상품</div>
+                  <div class="product-grid">
+                    <div class="product-card" th:each="item : ${discountList}">
+                      <a th:href="@{/product/view(prodNo = ${item.prodNo})}">
+                        <img th:src="@{|${item.productImage.sNameThumb3}|}" alt="상품1">
+                      </a>
+                      <div class="product-info">
+                        <div class="product-name">[[${item.prodName}]]</div>
+                        <div class="product-price">
+                          <del>[[${#numbers.formatInteger(item.prodPrice , 3, 'COMMA')}]]원</del>
+                          <span class="discount">[[${item.prodDiscount}]]%</span>
+                          <strong>[[${#numbers.formatInteger(item.prodPrice * (100 - item.prodDiscount) / 100, 3, 'COMMA')}]]원</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
                 <section class="hit-products">
                   <div class="section-title">추천상품</div>
                   <div class="product-grid">
-                    <div class="product-card">
-                      <img src="/images/cs/coupon.png" alt="상품1">
+                    <div class="product-card" th:each="item : ${reviewTopList}">
+                      <a th:href="@{/product/view(prodNo = ${item.prodNo})}">
+                        <img th:src="@{|${item.productImage.sNameThumb3}|}" alt="상품1">
+                      </a>
                       <div class="product-info">
-                        <div class="product-name">인기 니트 가디건</div>
+                        <div class="product-name">[[${item.prodName}]]</div>
                         <div class="product-price">
-                          <del>39,000원</del>
-                          <span class="discount">20%</span>
-                          <strong>31,200원</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="product-card">
-                      <img src="/images/cs/coupon.png" alt="상품2">
-                      <div class="product-info">
-                        <div class="product-name">스타일 슬랙스</div>
-                        <div class="product-price">
-                          <del>59,000원</del>
-                          <span class="discount">25%</span>
-                          <strong>44,250원</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="product-card">
-                      <img src="/images/cs/coupon.png" alt="상품3">
-                      <div class="product-info">
-                        <div class="product-name">향수 세트</div>
-                        <div class="product-price">
-                          <del>89,000원</del>
-                          <span class="discount">10%</span>
-                          <strong>80,100원</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="product-card">
-                      <img src="/images/cs/coupon.png" alt="상품4">
-                      <div class="product-info">
-                        <div class="product-name">향수 세트</div>
-                        <div class="product-price">
-                          <del>89,000원</del>
-                          <span class="discount">10%</span>
-                          <strong>80,100원</strong>
+                          <del>[[${#numbers.formatInteger(item.prodPrice , 3, 'COMMA')}]]원</del>
+                          <span class="discount">[[${item.prodDiscount}]]%</span>
+                          <strong>[[${#numbers.formatInteger(item.prodPrice * (100 - item.prodDiscount) / 100, 3, 'COMMA')}]]원</strong>
                         </div>
                       </div>
                     </div>
                   </div>
                 </section>
+
                 <section class="hit-products">
-                  <div class="section-title">할인상품</div>
+                  <div class="section-title">최신상품</div>
                   <div class="product-grid">
-                    <div class="product-card">
-                      <img src="/images/cs/coupon.png" alt="상품1">
+                    <div class="product-card" th:each="item : ${recentList}">
+                      <a th:href="@{/product/view(prodNo = ${item.prodNo})}">
+                        <img th:src="@{|${item.productImage.sNameThumb3}|}" alt="상품1">
+                      </a>
                       <div class="product-info">
-                        <div class="product-name">인기 니트 가디건</div>
+                        <div class="product-name">[[${item.prodName}]]</div>
                         <div class="product-price">
-                          <del>39,000원</del>
-                          <span class="discount">20%</span>
-                          <strong>31,200원</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="product-card">
-                      <img src="/images/cs/coupon.png" alt="상품2">
-                      <div class="product-info">
-                        <div class="product-name">스타일 슬랙스</div>
-                        <div class="product-price">
-                          <del>59,000원</del>
-                          <span class="discount">25%</span>
-                          <strong>44,250원</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="product-card">
-                      <img src="/images/cs/coupon.png" alt="상품3">
-                      <div class="product-info">
-                        <div class="product-name">향수 세트</div>
-                        <div class="product-price">
-                          <del>89,000원</del>
-                          <span class="discount">10%</span>
-                          <strong>80,100원</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="product-card">
-                      <img src="/images/cs/coupon.png" alt="상품4">
-                      <div class="product-info">
-                        <div class="product-name">향수 세트</div>
-                        <div class="product-price">
-                          <del>89,000원</del>
-                          <span class="discount">10%</span>
-                          <strong>80,100원</strong>
+                          <del>[[${#numbers.formatInteger(item.prodPrice , 3, 'COMMA')}]]원</del>
+                          <span class="discount">[[${item.prodDiscount}]]%</span>
+                          <strong>[[${#numbers.formatInteger(item.prodPrice * (100 - item.prodDiscount) / 100, 3, 'COMMA')}]]원</strong>
                         </div>
                       </div>
                     </div>
                   </div>
                 </section>
+
+
+
                 <section class="hit-products">
-                  <div class="section-title">할인상품</div>
+                  <div class="section-title">리뷰많은상품</div>
                   <div class="product-grid">
-                    <div class="product-card">
-                      <img src="/images/cs/coupon.png" alt="상품1">
+                    <div class="product-card" th:each="item : ${reviewManyList}">
+                      <a th:href="@{/product/view(prodNo = ${item.prodNo})}">
+                        <img th:src="@{|${item.productImage.sNameThumb3}|}" alt="상품1">
+                      </a>
                       <div class="product-info">
-                        <div class="product-name">인기 니트 가디건</div>
+                        <div class="product-name">[[${item.prodName}]]</div>
                         <div class="product-price">
-                          <del>39,000원</del>
-                          <span class="discount">20%</span>
-                          <strong>31,200원</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="product-card">
-                      <img src="/images/cs/coupon.png" alt="상품2">
-                      <div class="product-info">
-                        <div class="product-name">스타일 슬랙스</div>
-                        <div class="product-price">
-                          <del>59,000원</del>
-                          <span class="discount">25%</span>
-                          <strong>44,250원</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="product-card">
-                      <img src="/images/cs/coupon.png" alt="상품3">
-                      <div class="product-info">
-                        <div class="product-name">향수 세트</div>
-                        <div class="product-price">
-                          <del>89,000원</del>
-                          <span class="discount">10%</span>
-                          <strong>80,100원</strong>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="product-card">
-                      <img src="/images/cs/coupon.png" alt="상품4">
-                      <div class="product-info">
-                        <div class="product-name">향수 세트</div>
-                        <div class="product-price">
-                          <del>89,000원</del>
-                          <span class="discount">10%</span>
-                          <strong>80,100원</strong>
+                          <del>[[${#numbers.formatInteger(item.prodPrice , 3, 'COMMA')}]]원</del>
+                          <span class="discount">[[${item.prodDiscount}]]%</span>
+                          <strong>[[${#numbers.formatInteger(item.prodPrice * (100 - item.prodDiscount) / 100, 3, 'COMMA')}]]원</strong>
                         </div>
                       </div>
                     </div>
                   </div>
                 </section>
+
   
               </div>
               <!--사이드 바-->
@@ -269,68 +169,16 @@
                 <div class="best-products">
                   <h2>베스트 상품</h2>
                   <ol class="product-list">
-                    <li>
-                      <div class="rank">1</div>
-                        <img th:src="@{/images/cs/coupon.png}" alt="상품1"
-                             th:onclick="|location.href='@{/product/view}'|" style="cursor: pointer;"/>
+                    <li th:each="item, i : ${bestList}">
+                      <div class="rank">[[${i.index + 1}]]</div>
+                        <img th:src="@{|${item.productImage.sNameThumb3}|}" alt="상품1"
+                             th:onclick="|location.href='@{/product/view(prodNo=${item.prodNo})}'|" style="cursor: pointer;"/>
                       <div class="info">
-                        <div class="name">상품명</div>
+                        <div class="name">[[${item.prodName}]]</div>
                         <div class="price">
-                          <del>30,000원</del>
-                          <span class="discount">10%</span>
-                          <strong>27,000원</strong>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="rank">2</div>
-                        <img th:src="@{/images/cs/coupon.png}" alt="상품2"
-                             th:onclick="|location.href='@{/product/view}'|" style="cursor: pointer;"/>
-                      <div class="info">
-                        <div class="name">상품명</div>
-                        <div class="price">
-                          <del>30,000원</del>
-                          <span class="discount">10%</span>
-                          <strong>27,000원</strong>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="rank">3</div>
-                        <img th:src="@{/images/cs/coupon.png}" alt="상품3"
-                             th:onclick="|location.href='@{/product/view}'|" style="cursor: pointer;"/>
-                      <div class="info">
-                        <div class="name">상품명</div>
-                        <div class="price">
-                          <del>30,000원</del>
-                          <span class="discount">10%</span>
-                          <strong>27,000원</strong>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="rank">4</div>
-                        <img th:src="@{/images/cs/coupon.png}" alt="상품4"
-                             th:onclick="|location.href='@{/product/view}'|" style="cursor: pointer;"/>
-                      <div class="info">
-                        <div class="name">상품명</div>
-                        <div class="price">
-                          <del>30,000원</del>
-                          <span class="discount">10%</span>
-                          <strong>27,000원</strong>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="rank">5</div>
-                        <img th:src="@{/images/cs/coupon.png}" alt="상품5"
-                             th:onclick="|location.href='@{/product/view}'|" style="cursor: pointer;"/>
-                      <div class="info">
-                        <div class="name">상품명</div>
-                        <div class="price">
-                          <del>30,000원</del>
-                          <span class="discount">10%</span>
-                          <strong>27,000원</strong>
+                          <del>[[${#numbers.formatInteger(item.prodPrice , 3, 'COMMA')}]]원</del>
+                          <span class="discount">[[${item.prodDiscount}]]%</span>
+                          <strong>[[${#numbers.formatInteger(item.prodPrice * (100 - item.prodDiscount) / 100, 3, 'COMMA')}]]원</strong>
                         </div>
                       </div>
                     </li>
