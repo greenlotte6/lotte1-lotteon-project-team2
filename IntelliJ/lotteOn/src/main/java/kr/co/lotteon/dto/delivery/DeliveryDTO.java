@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 public class DeliveryDTO {
 
-    private int dno;
+    private long dno;
 
     private int orderNo; // 주문번호
 

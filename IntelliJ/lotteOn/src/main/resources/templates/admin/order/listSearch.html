@@ -92,15 +92,15 @@
                     <!-- 페이징 -->
                     <div class="page">
                         <th:block th:if="${pageResponseDTO.prev}">
-                            <a th:href="@{/admin/order/list(pg=${pageResponseDTO.start-1}, searchType=${pageResponseDTO.searchType})}" class="prev">이전</a>
+                            <a th:href="@{/admin/order/search(pg=${pageResponseDTO.start-1}, searchType=${pageResponseDTO.searchType} , keyword=${pageResponseDTO.keyword})}" class="prev">이전</a>
                         </th:block>
 
                         <th:block th:each="num:${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end)}">
-                            <a th:href="@{/admin/order/list(pg=${num} , searchType=${pageResponseDTO.searchType})}" th:class="${num == pageResponseDTO.pg} ? 'current' : 'num'">[[${num}]]</a>
+                            <a th:href="@{/admin/order/search(pg=${num} , searchType=${pageResponseDTO.searchType} , keyword=${pageResponseDTO.keyword})}" th:class="${num == pageResponseDTO.pg} ? 'current' : 'num'">[[${num}]]</a>
                         </th:block>
 
                         <th:block th:if="${pageResponseDTO.next}">
-                            <a th:href="@{/admin/order/list(pg=${pageResponseDTO.end+1} , searchType=${pageResponseDTO.searchType} )}" class="next">다음</a>
+                            <a th:href="@{/admin/order/search(pg=${pageResponseDTO.end+1} , searchType=${pageResponseDTO.searchType} , keyword=${pageResponseDTO.keyword} )}" class="next">다음</a>
                         </th:block>
                     </div>
                     
@@ -260,7 +260,7 @@
             </div>
 
             <div class="modal_main">
-                <form th:action="@{/admin/order/delivery}" method="post">
+                <form th:action="@{/admin/order/delivery}"  method="post">
 
                     <table class="delivery_modal_table">
                         <tr>

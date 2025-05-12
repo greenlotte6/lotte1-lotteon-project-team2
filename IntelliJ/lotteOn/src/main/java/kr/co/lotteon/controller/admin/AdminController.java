@@ -578,7 +578,7 @@ public class AdminController {
         PageResponseDTO pageResponseDTO = adminService.selectAllForOrder(pageRequestDTO);
         model.addAttribute(pageResponseDTO);
         model.addAttribute("order",pageResponseDTO.getDtoList());
-        return "/admin/order/list";
+        return "/admin/order/listSearch";
     }
 
 
@@ -592,6 +592,7 @@ public class AdminController {
     @PostMapping("/order/delivery")
     public String delivery(DeliveryDTO deliveryDTO){
 
+        adminService.saveDelivery(deliveryDTO);
 
         return "redirect:/admin/order/list";
     }
