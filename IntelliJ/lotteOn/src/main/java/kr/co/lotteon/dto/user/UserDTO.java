@@ -24,6 +24,7 @@ public class UserDTO{
     private String regip;   // IP주소
     private String state;   // 상태(정상,중지,휴먼,탈퇴)
     private String ssn;
+    private String gender;
 
     private LocalDateTime regDate;     // 가입일자
     private LocalDateTime updateDate;  // 변경날짜(마이페이지)
