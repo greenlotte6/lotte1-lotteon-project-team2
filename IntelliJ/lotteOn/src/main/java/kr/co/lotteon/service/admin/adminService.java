@@ -13,6 +13,7 @@ import kr.co.lotteon.dto.delivery.DeliveryDTO;
 import kr.co.lotteon.dto.operation.OperationDTO;
 import kr.co.lotteon.dto.operation.OrderSummaryDTO;
 import kr.co.lotteon.dto.order.OrderDTO;
+import kr.co.lotteon.dto.order.OrderItemDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.point.PointDTO;
@@ -1370,6 +1371,13 @@ public class adminService {
             }
 
             deliveryDTO.setDno(track); // 이 경우 GeneratedValue 제거 필요
+        }else{
+            long track = Long.parseLong(deliveryDTO.getTrackingNumber());
+            while (deliveryRepository.existsById(track)) {
+                track++;
+            }
+
+            deliveryDTO.setDno(track);
         }
 
         Delivery delivery = modelMapper.map(deliveryDTO, Delivery.class);
@@ -1385,6 +1393,43 @@ public class adminService {
     }
 
 
+    public PageResponseDTO selectAllForDelivery(PageRequestDTO pageRequestDTO) {
 
+        pageRequestDTO.setSize(10);
+
+        Pageable pageable = pageRequestDTO.getPageable("no");
+        Page<Tuple> pageObject = deliveryRepository.selectAllDelivery(pageRequestDTO, pageable);
+
+        List<OrderDTO> DTOList = pageObject.getContent().stream().map(tuple -> {
+            Order order = tuple.get(0, Order.class);
+            Delivery delivery = tuple.get(1, Delivery.class);
+            OrderItem orderItem = tuple.get(2, OrderItem.class);
+
+            OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
+            DeliveryDTO  deliveryDTO = modelMapper.map(delivery, DeliveryDTO.class);
+            OrderItemDTO orderItemDTO = modelMapper.map(orderItem, OrderItemDTO.class);
+            orderDTO.setDelivery(deliveryDTO);
+            orderDTO.setOrderItem(orderItemDTO);
+            orderDTO.setImage(orderItem.getProduct().getProductImage().getSNameList());
+            int size = orderDTO.getOrderItems().size();
+            orderDTO.setCount(size);
+
+            System.out.println(orderDTO);
+
+            return orderDTO;
+        }).toList();
+
+        int total = (int) pageObject.getTotalElements();
+
+        log.info("total: {}", total);
+        log.info("DTOList: {}", pageObject);
+
+        return PageResponseDTO.<OrderDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(DTOList)
+                .total(total)
+                .build();
+
+    }
 }
 

@@ -1,5 +1,6 @@
 package kr.co.lotteon.dto.order;
 
+import kr.co.lotteon.dto.delivery.DeliveryDTO;
 import kr.co.lotteon.dto.user.UserDTO;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -42,6 +43,11 @@ public class OrderDTO {
     private int count; // itemOrder 갯수 (관리자 페이지 사용)
 
     private UserDTO user;
+    private DeliveryDTO delivery;
+    private OrderItemDTO orderItem;
+
+    private String image;
+
     // 상품 정보
     private List<OrderItemDTO> orderItems;
 

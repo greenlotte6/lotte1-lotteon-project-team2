@@ -572,7 +572,7 @@ public class AdminController {
         return "/admin/order/list";
     }
 
-    //주문현황
+    //주문현황 검색
     @GetMapping("/order/search")
     public String orderSearchList(PageRequestDTO pageRequestDTO, Model model){
         PageResponseDTO pageResponseDTO = adminService.selectAllForOrder(pageRequestDTO);
@@ -584,17 +584,26 @@ public class AdminController {
 
     //주문현황
     @GetMapping("/order/delivery")
-    public String delivery(){
+    public String delivery(PageRequestDTO pageRequestDTO, Model model){
+
+        PageResponseDTO pageResponseDTO = adminService.selectAllForDelivery(pageRequestDTO);
+        model.addAttribute(pageResponseDTO);
         return "/admin/order/delivery";
     }
 
     //배송하기
     @PostMapping("/order/delivery")
     public String delivery(DeliveryDTO deliveryDTO){
-
         adminService.saveDelivery(deliveryDTO);
-
         return "redirect:/admin/order/list";
+    }
+
+    // 배송 검색
+    @GetMapping("/order/delivery/search")
+    public String deliverySearchList(PageRequestDTO pageRequestDTO, Model model){
+        PageResponseDTO pageResponseDTO = adminService.selectAllForDelivery(pageRequestDTO);
+        model.addAttribute(pageResponseDTO);
+        return "/admin/order/deliverySearch";
     }
 
     /*
