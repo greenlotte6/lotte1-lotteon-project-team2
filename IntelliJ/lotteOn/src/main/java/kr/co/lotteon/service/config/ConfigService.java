@@ -29,6 +29,7 @@ import kr.co.lotteon.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -228,11 +229,12 @@ public class ConfigService {
         bannerRepository.save(banner);
     }
 
+    @Cacheable(value = "slide-banners", key = "#cate")
     public List<BannerDTO> findBannerByCate(String cate) {
         if(cate == null){
             cate = "MAIN1";
         }
-
+        
         List<Banner> bannerList = bannerRepository.findByCateAndEndDayGreaterThanOrderByBnoDesc( cate, LocalDate.now());
         List<BannerDTO> bannerDTOList = new ArrayList<>();
 
