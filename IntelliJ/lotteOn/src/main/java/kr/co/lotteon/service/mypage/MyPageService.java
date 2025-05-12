@@ -13,6 +13,7 @@ import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.point.PointDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
+import kr.co.lotteon.dto.seller.SellerDTO;
 import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.entity.article.Inquiry;
 import kr.co.lotteon.entity.coupon.Coupon;
@@ -23,6 +24,7 @@ import kr.co.lotteon.entity.order.Order;
 import kr.co.lotteon.entity.order.OrderItem;
 import kr.co.lotteon.entity.point.Point;
 import kr.co.lotteon.entity.product.Product;
+import kr.co.lotteon.entity.seller.Seller;
 import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.article.InquiryRepository;
 import kr.co.lotteon.repository.coupon.CouponRepository;
@@ -369,10 +371,6 @@ public class MyPageService {
             orderInfoDTO.setProduct(productDTO);
             orderInfoDTO.setOrderItem(orderItemDTO);
 
-            /*
-            orderInfoDTO.setOrderItem(orderItemDTO);
-            orderItemDTO.setProduct(orderItemDTO.getProduct());
-            */
 
             Order order = tuple.get(1, Order.class);
             int orderNo = order.getOrderNo();
@@ -380,21 +378,21 @@ public class MyPageService {
             LocalDateTime orderDate = tuple.get(2, LocalDateTime.class);
             String orderStatus = tuple.get(3, String.class);
 
+            Seller seller = tuple.get(5, Seller.class);
+            User user = tuple.get(6, User.class);
+
+
             orderInfoDTO.setOrderNo(orderNo);
             orderInfoDTO.setOrderDate(orderDate);
             orderInfoDTO.setOrderStatus(orderStatus);
             orderInfoDTO.setOrder(modelMapper.map(order, OrderDTO.class));
-
-            System.out.println(orderInfoDTO);
+            orderInfoDTO.setSeller(modelMapper.map(seller, SellerDTO.class));
+            orderInfoDTO.setUser(modelMapper.map(user, UserDTO.class));
 
             return orderInfoDTO;
         }).toList();
 
         int total = (int) pageObject.getTotalElements();
-
-        log.info("total: {}", total);
-        log.info("sellerDTOList: {}", pageObject);
-
 
         return PageResponseDTO.<OrderInfoDTO>builder()
                 .pageRequestDTO(pageRequestDTO)
@@ -517,6 +515,19 @@ public class MyPageService {
         reviewRepository.save(review);
 
     }
+
+    public void inquiryRegister(UserDTO userDTO, InquiryDTO inquiryDTO){
+
+        User user = modelMapper.map(userDTO, User.class);
+
+        Inquiry inquiry = modelMapper.map(inquiryDTO, Inquiry.class);
+
+        inquiry.setUser(user);
+
+        inquiryRepository.save(inquiry);
+
+    }
+
 
     private String saveFile(MultipartFile file, String UploadType) throws IOException {
         if(file == null || file.isEmpty()){

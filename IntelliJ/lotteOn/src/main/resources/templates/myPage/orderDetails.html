@@ -163,7 +163,18 @@
                                                                        th:data-receiverZip="${orderInfo.order.receiverZip}"
                                                                        th:data-orderAddr="${orderInfo.order.orderAddr}"
                                                                        th:data-orderContent="${orderInfo.order.orderContent}"></a>
-                                                <a class="seller_info_a" th:text="${'상호명 : ' + orderInfo.seller.company}"></a>
+                                                <a class="seller_info_a" th:text="${'상호명 : ' + orderInfo.seller.company}"
+                                                                        th:data-sellerRank="${orderInfo.seller.rank}"
+                                                                       th:data-sellerCompany="${orderInfo.seller.company}"
+                                                                       th:data-sellerCeo="${orderInfo.seller.ceo}"
+                                                                       th:data-sellerHp="${orderInfo.user.hp}"
+                                                                       th:data-sellerFax="${orderInfo.seller.fax}"
+                                                                       th:data-sellerEmail="${orderInfo.user.email}"
+                                                                       th:data-sellerBizRegNo="${orderInfo.seller.bizRegNo}"
+                                                                       th:data-sellerZip="${orderInfo.user.zip}"
+                                                                       th:data-sellerAddr1="${orderInfo.user.addr1}"
+                                                                       th:data-sellerAddr2="${orderInfo.user.addr2}"
+                                                                       th:data-prodNo="${orderInfo.product.prodNo}"></a>
                                                 <a th:text="${'상품명 : ' + orderInfo.product.prodName}"></a>
                                                 <p th:text="${'수량 : ' + orderInfo.orderItem.itemCount + '개'}"></p>
                                                 <p th:text="${'가격 : ' + #numbers.formatInteger(orderInfo.orderItem.itemPrice, 3, 'COMMA') + '원'}"></p>
@@ -797,7 +808,7 @@
                         <div class="modal-name">
                             <p>판매자정보</p>
                         </div>
-                        <div class="exit" onclick="location.href='#'" style="cursor: pointer;">
+                        <div class="exit" style="cursor: pointer;">
                             <p class="modalClose">X</p> <!-- 수정 예정 -->
                         </div>
                     </div>
@@ -805,37 +816,41 @@
                         <div class="seller-info table-sub">
                             <table>
                                 <tbody>
+                                <tr style="display: none;">
+                                    <td>상품번호</td>
+                                    <td id="orderInfoModalProductNo"></td>
+                                </tr>
                                 <tr>
                                     <td>판매자 등급</td>
-                                    <td>파워 딜러</td>
+                                    <td id="orderInfoModalSellerRank"></td>
                                 </tr>
                                 <tr>
                                     <td>상호</td>
-                                    <td>(주) 상호명</td>
+                                    <td id="orderInfoModalSellerCompany"></td>
                                 </tr>
                                 <tr>
                                     <td>대표자</td>
-                                    <td>홍길동</td>
+                                    <td id="orderInfoModalSellerCeo"></td>
                                 </tr>
                                 <tr>
                                     <td>전화번호</td>
-                                    <td>051-123-1000</td>
+                                    <td id="orderInfoModalSellerHp"></td>
                                 </tr>
                                 <tr>
                                     <td>FAX</td>
-                                    <td>051-123-1001</td>
+                                    <td id="orderInfoModalSellerFax"></td>
                                 </tr>
                                 <tr>
                                     <td>Email</td>
-                                    <td>company@abc.com</td>
+                                    <td id="orderInfoModalSellerEmail"></td>
                                 </tr>
                                 <tr>
                                     <td>사업자번호</td>
-                                    <td>123-12-123456</td>
+                                    <td id="orderInfoModalSellerBizRegNo"></td>
                                 </tr>
                                 <tr>
                                     <td>영업소재지</td>
-                                    <td>[21012] 부산광역시 진구 대연동 121 10층 1004호</td>
+                                    <td id="orderInfoModalSellerFullAddress"></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -843,7 +858,7 @@
                                 <p>* 위 정보는 전자상거래법 제 20조 제 2항 및 동법 시행령 제 25조 제 2항에 의거하여 소비자 보호에 의거 공개합니다.</p>
                             </div>
                             <div class="btn">
-                                <input type="submit" class="inquiry_btn" value="문의하기">
+                                <input type="button" class="inquiry_btn" th:data-prodNo="${orderInfoPagingDTO}">
                             </div>
                         </div>
                     </div>
@@ -858,7 +873,7 @@
                         <div class="modal-name">
                             <p>문의하기</p>
                         </div>
-                        <div class="exit" onclick="location.href='#'" style="cursor: pointer;">
+                        <div class="exit" style="cursor: pointer;">
                             <p class="modalClose">X</p> <!-- 수정 예정 -->
                         </div>
                     </div>
@@ -868,41 +883,128 @@
                             <tr>
                                 <td>문의종류</td>
                                 <td>
-                                    <input type="radio" name="role" value=""/> 상품 &ensp;
-                                    <input type="radio" name="role" value=""/> 배송 &ensp;
-                                    <input type="radio" name="role" value=""/> 반품/취소 &ensp;
-                                    <input type="radio" name="role" value=""/> 교환 &ensp;
-                                    <input type="radio" name="role" value=""/> 기타 &ensp;
+                                    <label>
+                                        <input type="radio" name="inquiry_type" value="상품">
+                                        <span>상품</span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="inquiry_type" value="배송">
+                                        <span>배송</span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="inquiry_type" value="반품/취소">
+                                        <span>반품/취소</span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="inquiry_type" value="교환/기타">
+                                        <span>교환/기타</span>
+                                    </label>
                                 </td>
                             </tr>
+                            <input type="hidden" id="inquiryProdNo">
                             <tr>
                                 <td>Email</td>
                                 <td>
-                                    <input type="text">
+                                    <input type="text" th:field="${orderInfoPagingDTO.dtoList[0].user.email}">
                                 </td>
                             </tr>
                             <tr>
                                 <td>제목</td>
                                 <td>
-                                    <input type="text">
+                                    <input type="text" name="inquiry_title">
                                 </td>
                             </tr>
                             <tr>
                                 <td>내용</td>
                                 <td>
-                                    <textarea></textarea>
+                                    <textarea name="inquiry_content"></textarea>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
                         <div class="btn">
-                            <input type="submit" value="등록하기" onclick="location.href='#'">
-                            <input type="submit" value="취소" class="modalClose">
+                            <input type="button" value="등록하기" class="inquiry_register_btn">
+                            <input type="button" value="취소" class="modalClose">
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                let selectedBtn = null; // 어떤 버튼에서 모달을 띄웠는지 저장
+
+                document.querySelectorAll('.inquiry_btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        selectedBtn = this; // 클릭한 버튼 저장
+                    });
+                });
+
+                // 모달 '확인' 버튼
+                document.getElementsByClassName('inquiry_register_btn')[0].addEventListener('click', function() {
+
+                    // 1. type(라디오) 값 가져오기
+                    const type = document.querySelector('input[name="inquiry_type"]:checked');
+                    if (!type) {
+                        alert('문의유형을 선택하세요.');
+                        return;
+                    }
+
+                    const email = document.querySelector('input[name="inquiry_title"]').value;
+                    if(!email){
+                        alert('이메일을 입력하세요.');
+                        return;
+                    }
+
+                    const title = document.querySelector('input[name="inquiry_title"]').value;
+                    if (!title) {
+                        alert('제목을 입력하세요.');
+                        return;
+                    }
+
+                    const content = document.querySelector('textarea[name="inquiry_content"]').value;
+                    if (!content) {
+                        alert('문의 내용을 입력하세요.');
+                        return;
+                    }
+
+                    const modal = document.querySelector('.inquiry_modal');
+
+                    const prodNo = modal.querySelector('#inquiryProdNo').value;
+
+                    console.log(prodNo);
+
+                    // FormData 객체 생성
+                    const formData = new FormData();
+                    formData.append('type', type.value);
+                    formData.append('title', title);
+                    formData.append('content', content);
+                    formData.append('email', email);
+                    formData.append('prodNo', prodNo);
+
+                    // 4. 서버로 데이터 전송
+                    fetch('/my/order/inquiry', {
+                        method: 'POST',
+                        body: formData
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                alert('문의신청이 완료되었습니다.');
+                                // 모달 닫기
+                                document.querySelector('.inquiry_modal').style.display = 'none';
+                                // 폼 초기화 (선택)
+                                document.querySelector('textarea[name="inquiry_content"]').value = '';
+                                document.querySelectorAll('input[name="inquiry_type"]').forEach(radio => radio.checked = false);
+                            } else {
+                                alert('문의신청에 실패했습니다.');
+                            }
+                        })
+                        .catch(() => {
+                            alert('서버 오류가 발생했습니다.');
+                        });
+                });
+            })
+        </script>
         <!-- 푸터 시작 -->
         <th:block th:include="/common/footer.html"/>
         <!-- 푸터 끝 -->

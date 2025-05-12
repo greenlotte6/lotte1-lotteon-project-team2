@@ -1,5 +1,6 @@
 package kr.co.lotteon.controller.mypage;
 
+import jakarta.servlet.http.HttpServletRequest;
 import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.config.BannerDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -113,15 +115,8 @@ public class MyController {
         String uid = userDetails.getUsername();
 
         PageResponseDTO<OrderInfoDTO> orderInfoPagingDTO = myPageService.orderInfoPaging(pageRequestDTO, uid);
-        //PageResponseDTO<ReturnDTO> returnDTO = myPageService.returnRegister();
-
-
-        log.info("orderInfoPagingDTO : " + orderInfoPagingDTO);
-
-
 
         model.addAttribute("orderInfoPagingDTO", orderInfoPagingDTO);
-
 
         return "/myPage/orderDetails";
 
@@ -247,7 +242,37 @@ public class MyController {
 
         return "/myPage/myInquiry";
     }
-    
+
+
+    // 문의하기 모달
+    @PostMapping("/my/order/inquiry")
+    public ResponseEntity<?> inquiry(@RequestParam("type") String type,
+                        @RequestParam("email") String email,
+                        @RequestParam("title") String title,
+                        @RequestParam("content") String content,
+                        @RequestParam("prodNo") String prodNo,
+                        @AuthenticationPrincipal UserDetails userdetails, InquiryDTO inquiryDTO, HttpServletRequest request){
+
+        String uid = userdetails.getUsername();
+        UserDTO userDTO = myPageService.findByUid(uid);
+
+
+        LocalDate now = LocalDate.now();
+        inquiryDTO.setWdate(now);
+        inquiryDTO.setRegip(request.getRemoteAddr());
+        inquiryDTO.setProdNo(prodNo);
+        inquiryDTO.setCateV1(type);
+        inquiryDTO.setEmail(email);
+        inquiryDTO.setTitle(title);
+        inquiryDTO.setContent(content);
+        inquiryDTO.setChannel("판매자 게시판");
+
+
+
+        myPageService.inquiryRegister(userDTO, inquiryDTO);
+
+        return ResponseEntity.ok().build();
+    }
     
     // 구매확정 모달
     @PostMapping("/my/order/confirm")

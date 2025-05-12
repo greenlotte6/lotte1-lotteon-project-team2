@@ -130,11 +130,44 @@ document.addEventListener('DOMContentLoaded', function(){
         });
     });
 
+    let selectProductNo = null;
+
     seller_info_a.forEach(function(btn){
         btn.addEventListener('click', function(){
+
+            // 판매자 정보
+            const sellerRank = btn.getAttribute('data-sellerrank');
+            const sellerCompany = btn.getAttribute('data-sellercompany');
+            const sellerCeo = btn.getAttribute('data-sellerceo');
+            const sellerHp = btn.getAttribute('data-sellerhp');
+            const sellerFax = btn.getAttribute('data-sellerfax');
+            const sellerEmail = btn.getAttribute('data-selleremail');
+            const sellerBizRegNo = btn.getAttribute('data-sellerbizregno');
+            const sellerZip = btn.getAttribute('data-sellerzip');
+            const sellerAddr1 = btn.getAttribute('data-selleraddr1');
+            const sellerAddr2 = btn.getAttribute('data-selleraddr2');
+            const sellerFullAddress = `[${sellerZip}] ${sellerAddr1} ${sellerAddr2}`;
+            const productNo = btn.getAttribute('data-prodno');
+
+            selectProductNo = productNo; // 전역 변수에 저장
+
+            document.getElementById('orderInfoModalSellerRank').textContent = sellerRank;
+            document.getElementById('orderInfoModalSellerCompany').textContent = sellerCompany;
+            document.getElementById('orderInfoModalSellerCeo').textContent = sellerCeo;
+            document.getElementById('orderInfoModalSellerHp').textContent = sellerHp;
+            document.getElementById('orderInfoModalSellerFax').textContent = sellerFax;
+            document.getElementById('orderInfoModalSellerEmail').textContent = sellerEmail;
+            document.getElementById('orderInfoModalSellerBizRegNo').textContent = sellerBizRegNo;
+            document.getElementById('orderInfoModalSellerFullAddress').textContent = sellerFullAddress;
+            document.getElementById('orderInfoModalProductNo').textContent = productNo;
+
+
+
             seller_info_modal.style.display ='block';
         });
     });
+
+
 
     order_details_a.forEach(function(btn){
         btn.addEventListener('click', function(){
@@ -154,6 +187,8 @@ document.addEventListener('DOMContentLoaded', function(){
             const orderAddr = btn.getAttribute('data-orderaddr');
             const orderContent = btn.getAttribute('data-ordercontent');
 
+
+
             const totalPrice = itemPrice - itemDiscount;
 
             document.getElementById('orderInfoModalOrderDate').textContent = orderDate;
@@ -172,12 +207,17 @@ document.addEventListener('DOMContentLoaded', function(){
             document.getElementById('orderInfoModalOrderAddr').textContent = orderAddr;
             document.getElementById('orderInfoModalOrderContent').textContent = orderContent;
 
+
+
             order_details_modal.style.display ='block';
         });
     });
 
     inquiry_btn.forEach(function(btn){
         btn.addEventListener('click', function(){
+
+            document.getElementById('inquiryProdNo').value = selectProductNo;
+
             inquiry_modal.style.display ='block';
             seller_info_modal.style.display = 'none';
         });
