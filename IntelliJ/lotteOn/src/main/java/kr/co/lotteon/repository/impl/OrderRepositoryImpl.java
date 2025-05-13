@@ -170,9 +170,8 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         String keyword = pageRequestDTO.getKeyword();
         String searchType = pageRequestDTO.getSearchType();
 
-        booleanExpression.and(qOrderItem.orderStatus.eq(searchType));
-
-
+        booleanExpression = booleanExpression.and(qOrderItem.orderStatus.eq(searchType));
+        booleanExpression = booleanExpression.and(qOrderItem.product.prodName.like("%" + keyword + "%"));
 
         /*
         // 2. 날짜 검색

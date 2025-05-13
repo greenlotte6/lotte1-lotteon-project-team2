@@ -465,6 +465,7 @@ public class MyPageService {
             return orderInfoDTO;
         }).toList();
 
+
         int total = (int) pageObject.getTotalElements();
 
         return PageResponseDTO.<OrderInfoDTO>builder()

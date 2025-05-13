@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/css/myPage/myPageRating.css">
     <link rel="stylesheet" href="/css/common/header.css">
     <link rel="stylesheet" href="/css/index_layout.css">
+    <link rel="stylesheet" href="/css/myPage/star.css">
     <script src="/js/myPage/modal.js"></script>
     <script src="/js/common/state.js"></script>
     <script src="/js/headerMenu.js"></script>
@@ -264,7 +265,10 @@
                                         <td>1</td>
                                         <td th:text="${review.product.prodNo} + '/' + ${review.product.prodName}"></td>
                                         <td th:text="${review.content}"></td>
-                                        <td th:text="${review.rating}"></td>
+                                        <td>
+                                            <span class="review-star" th:text="${'★★★★★'.substring(0, review.rating) + '☆☆☆☆☆'.substring(0, 5 - review.rating)}"></span>
+                                            <span class="score" th:text="' [' + ${#strings.substring(review.rating, 0, 1)} + '점]'"></span>
+                                        </td>
                                         <td th:text="${#temporals.format(review.wdate, 'yyyy-MM-dd')}"></td>
                                     </tr>
                                 </tbody>
