@@ -1,10 +1,14 @@
 package kr.co.lotteon.config;
 
 import jakarta.annotation.PostConstruct;
+import kr.co.lotteon.dto.category.SubCategoryDTO;
+import kr.co.lotteon.dto.config.ConfigDTO;
+import kr.co.lotteon.dto.config.VersionDTO;
 import kr.co.lotteon.entity.config.Config;
 import kr.co.lotteon.entity.config.Version;
 import kr.co.lotteon.repository.config.ConfigRepository;
 import kr.co.lotteon.repository.config.VersionRepository;
+import kr.co.lotteon.service.config.ConfigService;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +27,9 @@ public class AppInfo {
     @Autowired
     private ConfigRepository configRepository;
 
+    @Autowired
+    private ConfigService configService;
+
     @Value("${spring.application.name}") //application.yml 파일에 속성값으로 초기화
     private String appName;
 
@@ -33,6 +40,8 @@ public class AppInfo {
 
     // 데이터베이스의 버전정보
     private String appVersion;
+
+    private SubCategoryDTO subCategory;
 
     // 사이트 정보
     private String title;
@@ -109,8 +118,13 @@ public class AppInfo {
 
     // 버전 변경 시
     public void chageVersion(){
-        Version version = versionRepository.findTopByOrderByWdateDesc();
-        Optional<Config> configOpt = configRepository.findById(1);
+
+        // 버전 캐싱 처리
+        VersionDTO version = configService.findTopByOrderByWdateDesc();
+        
+        // 환경설정 캐싱 처리
+        ConfigDTO config = configService.findById();
+        // Optional<Config> configOpt = configRepository.findById(1);
 
         if(version == null){
             appVersion = appVersionSub;
@@ -118,8 +132,7 @@ public class AppInfo {
             appVersion = version.getVersion();
         }
 
-        if(configOpt.isPresent()){
-            Config config = configOpt.get();
+        if(config != null){
             subTitle = config.getSubTitle();
             title = config.getTitle();
             copyright = config.getCopyright();
@@ -153,4 +166,9 @@ public class AppInfo {
         }
     }
 
+    public void callCategory() {
+
+
+
+    }
 }

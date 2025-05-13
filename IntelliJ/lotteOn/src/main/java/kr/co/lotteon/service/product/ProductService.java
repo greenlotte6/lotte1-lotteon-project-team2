@@ -178,7 +178,9 @@ public class ProductService {
     }
 
     // 할인 상품 top 8 출력 - 메인
+    @Cacheable(value = "product-discount")
     public List<ProductDTO> findDiscountTop8() {
+        log.info("할인 상품 출력");
         List<ProductDTO> productDTOS = new ArrayList<>();
         List<Product> products = productRepository.findTop8ByOrderByProdDiscountDesc();
         for (Product product : products) {
@@ -189,7 +191,9 @@ public class ProductService {
     }
 
     // 조회수 높은 상품 8개
+    @Cacheable(value = "product-hit")
     public List<ProductDTO> findHitTop8() {
+        log.info("조회수 높은 상품 출력");
         List<ProductDTO> productDTOS = new ArrayList<>();
         List<Product> products = productRepository.findTop8ByOrderByHitDesc();
         for (Product product : products) {
@@ -200,7 +204,10 @@ public class ProductService {
     }
 
     // 리뷰 총점 높은 상품 8개
+    @Cacheable(value = "product-top-review")
     public List<ProductDTO> findReviewTop8() {
+        log.info("리뷰 총점 높은 상품 출력");
+
         List<ProductDTO> productDTOS = new ArrayList<>();
         List<Product> products = productRepository.findTop8ByOrderByRatingTotalDesc();
         for (Product product : products) {
@@ -211,7 +218,11 @@ public class ProductService {
     }
 
     // 리뷰 많은 상품 8개
+    @Cacheable(value = "product-many-review")
     public List<ProductDTO> findReviewManyTop8() {
+
+        log.info("리뷰 많은 상품 출력");
+
         List<ProductDTO> productDTOS = new ArrayList<>();
         List<Product> products = productRepository.findTop8ByOrderByReviewCountDesc();
         for (Product product : products) {
@@ -222,7 +233,12 @@ public class ProductService {
     }
 
     // 베스트 상품 5개 / 판매량 높은순
+
+    @Cacheable(value = "product-best")
     public List<ProductDTO> findBestTop5() {
+
+        log.info("베스트 상품 출력");
+
         List<ProductDTO> productDTOS = new ArrayList<>();
         List<Product> products = productRepository.findTop5ByOrderByProdSoldDesc();
         for (Product product : products) {
@@ -232,8 +248,10 @@ public class ProductService {
         return productDTOS;
     }
 
-    // 최신 삳품 8개
+    // 최신 상품 8개
+    @Cacheable(value = "product-recent")
     public List<ProductDTO> findRecentTop8() {
+        log.info("최신 상품 출력");
         List<ProductDTO> productDTOS = new ArrayList<>();
         List<Product> products = productRepository.findTop8ByOrderByRegDateDesc();
         for (Product product : products) {

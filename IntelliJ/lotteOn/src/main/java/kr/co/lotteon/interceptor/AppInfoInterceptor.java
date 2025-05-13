@@ -50,6 +50,9 @@ public class AppInfoInterceptor implements HandlerInterceptor {
                 modelAndView.addObject("banner", banner);
             }
 
+            // 카테고리
+            appInfo.callCategory();
+
             appInfo.chageVersion();
             modelAndView.addObject(appInfo);
         }

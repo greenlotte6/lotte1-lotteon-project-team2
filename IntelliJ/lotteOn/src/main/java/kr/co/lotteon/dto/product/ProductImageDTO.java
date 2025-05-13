@@ -3,6 +3,7 @@ package kr.co.lotteon.dto.product;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductImageDTO {
+public class ProductImageDTO implements Serializable {
 
     private int ino;
 

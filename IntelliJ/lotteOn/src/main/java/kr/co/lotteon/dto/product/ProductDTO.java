@@ -4,6 +4,8 @@ import kr.co.lotteon.dto.category.MainCategoryDTO;
 import kr.co.lotteon.dto.category.SubCategoryDTO;
 import kr.co.lotteon.dto.seller.SellerDTO;
 import lombok.*;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
@@ -12,7 +14,7 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductDTO {
+public class ProductDTO implements Serializable {
 
     private String prodNo;
 

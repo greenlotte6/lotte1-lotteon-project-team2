@@ -87,6 +87,8 @@ public class ConfigService {
     * */
 
     // 버전 등록 (관리자)
+
+    @CacheEvict(value = "version" , allEntries = true)
     public void saveVersion(VersionDTO versionDTO, UserDetails userDetails) {
         Version version = modelMapper.map(versionDTO, Version.class);
         String uid = userDetails.getUsername();
@@ -127,12 +129,14 @@ public class ConfigService {
 
     }
 
+    @CacheEvict(value = "version" , allEntries = true)
     public void deleteVersions(List<Integer> deleteVnos) {
         for(int i : deleteVnos){
             versionRepository.deleteById(i);
         }
     }
 
+    @CacheEvict(value = "config" , allEntries = true)
     public void modifyTitleAndSubTitle(String title, String subTitle) {
         Optional<Config> configOpt = configRepository.findById(1);
         if(configOpt.isPresent()){
@@ -162,6 +166,7 @@ public class ConfigService {
         return null;
     }
 
+    @CacheEvict(value = "config" , allEntries = true)
     public void modifyCopyright(String copyright) {
         Optional<Config> configOpt = configRepository.findById(1);
         if(configOpt.isPresent()){
@@ -177,6 +182,7 @@ public class ConfigService {
         }
     }
 
+    @CacheEvict(value = "config" , allEntries = true)
     public void modifyCompany(ConfigDTO configDTO) {
         Optional<Config> configOpt = configRepository.findById(1);
         if(configOpt.isPresent()){
@@ -201,6 +207,7 @@ public class ConfigService {
         }
     }
 
+    @CacheEvict(value = "config" , allEntries = true)
     public void modifyCustomer(ConfigDTO configDTO) {
         Optional<Config> configOpt = configRepository.findById(1);
         if(configOpt.isPresent()){
@@ -508,5 +515,22 @@ public class ConfigService {
             int random = (int) (Math.random() * size);
             return banners.get(random);
         }
+    }
+
+    @Cacheable(value = "version")
+    public VersionDTO findTopByOrderByWdateDesc() {
+        log.info("버전 실행!! ");
+        Version version = versionRepository.findTopByOrderByWdateDesc();
+        return modelMapper.map(version, VersionDTO.class);
+    }
+
+    @Cacheable(value = "config")
+    public ConfigDTO findById() {
+        log.info("환경설정 호출!!");
+        Optional<Config> configOpt = configRepository.findById(1);
+        if(configOpt.isPresent()){
+            return modelMapper.map(configOpt.get(), ConfigDTO.class);
+        }
+        return null;
     }
 }
