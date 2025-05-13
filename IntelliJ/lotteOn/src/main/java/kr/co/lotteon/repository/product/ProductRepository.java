@@ -19,7 +19,6 @@ public interface ProductRepository  extends JpaRepository<Product, String>, Prod
 
     List<Product> findBySubCategory(SubCategory subCategory);
 
-
     List<Product> findTop8ByOrderByProdDiscountDesc();
 
     List<Product> findTop8ByOrderByHitDesc();

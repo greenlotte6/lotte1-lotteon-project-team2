@@ -1,5 +1,6 @@
 package kr.co.lotteon.repository.impl;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -33,37 +34,6 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     private final QSeller qSeller = QSeller.seller;
     private final QProductImage qProductImage = QProductImage.productImage;
 
-
-    // 상품 목록
-    @Override
-    public Page<Tuple> selectAllForList(PageRequestDTO pageRequestDTO, Pageable pageable) {
-        int subCateNo = pageRequestDTO.getSubCateNo();
-
-        BooleanExpression expression = qProduct.subCategory.subCateNo.eq(subCateNo)
-                .and(qProduct.state.eq("판매"));
-
-
-        List<Tuple> tupleList = queryFactory
-                .select(qProduct, qSeller.company, qSeller.rank, qProductImage.sNameList)
-                .from(qProduct)
-                .join(qSeller).on(qProduct.seller.sno.eq(qSeller.sno))
-                .leftJoin(qProductImage).on(qProductImage.product.prodNo.eq(qProduct.prodNo))
-                .where(expression)
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .orderBy(qProduct.regDate.asc())
-                .fetch();
-
-        long total = queryFactory
-                .select(qProduct.count())
-                .from(qProduct)
-                .join(qSeller).on(qProduct.seller.sno.eq(qSeller.sno))
-                .leftJoin(qProductImage).on(qProductImage.product.prodNo.eq(qProduct.prodNo))
-                .where(expression)
-                .fetchOne();
-
-        return new PageImpl<>(tupleList, pageable, total);
-    }
 
     // 카테고리별 베스트
     @Override
@@ -99,7 +69,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         String sortType = pageRequestDTO.getSortType();
         String period = pageRequestDTO.getPeriod();
 
-        OrderSpecifier<?> orderSpecifier = qProduct.regDate.desc(); // 기본 정렬: 최신 등록순 (sortType이 null일 경우)
+        OrderSpecifier<?> orderSpecifier = qProduct.regDate.desc();
 
         NumberExpression<Integer> discountedPrice = qProduct.prodPrice
                 .multiply(
@@ -162,6 +132,90 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
         return new PageImpl<>(tupleList, pageable, total);
     }
+
+
+    // 상품 검색 목록 정렬
+    @Override
+    public Page<Tuple> sortedSearchProducts(PageRequestDTO pageRequestDTO, Pageable pageable) {
+        String sortType = pageRequestDTO.getSortType();
+        String period = pageRequestDTO.getPeriod();
+        String keyword = pageRequestDTO.getKeyword();
+
+        OrderSpecifier<?> orderSpecifier = qProduct.regDate.desc();
+
+        NumberExpression<Integer> discountedPrice = qProduct.prodPrice
+                .multiply(
+                        Expressions
+                                .asNumber(1)
+                                .subtract(
+                                        qProduct.prodDiscount.divide(100)
+                                )
+                )
+                .floor()
+                .castToNum(Integer.class);
+
+        if (sortType != null) {
+            switch (sortType) {
+                case "mostSales" -> orderSpecifier = qProduct.prodSold.desc();
+                case "lowPrice" -> orderSpecifier = discountedPrice.asc();
+                case "highPrice" -> orderSpecifier =  discountedPrice.desc();
+                case "highRating" -> orderSpecifier = qProduct.ratingAvg.desc();
+                case "manyReviews" -> orderSpecifier = qProduct.reviewCount.desc();
+                case "latest" -> orderSpecifier = qProduct.regDate.desc();
+            }
+        }
+
+        BooleanExpression expression = qProduct.state.eq("판매");
+
+
+        if ((sortType != null && (sortType.equals("mostSales") || sortType.equals("manyReviews"))) && period != null) {
+            LocalDate now = LocalDate.now(ZoneId.of("Asia/Seoul"));
+            LocalDate startDate = switch (period) {
+                case "1year" -> now.minusYears(1);
+                case "6month" -> now.minusMonths(6);
+                case "1month" -> now.minusMonths(1);
+                default -> null;
+            };
+
+            if (startDate != null) {
+                expression = expression.and(qProduct.regDate.after(startDate.atStartOfDay()));
+            }
+        }
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            BooleanBuilder keywordBooleanBuilder = new BooleanBuilder();
+
+            keywordBooleanBuilder.or(qProduct.prodName.containsIgnoreCase(keyword));
+            keywordBooleanBuilder.or(qProduct.prodBrand.containsIgnoreCase(keyword));
+            keywordBooleanBuilder.or(qProduct.subCategory.subCategoryName.containsIgnoreCase(keyword));
+
+            expression = expression.and(keywordBooleanBuilder);
+        }
+
+        List<Tuple> tupleList = queryFactory
+                .select(qProduct, qSeller.company, qSeller.rank, qProductImage.sNameList)
+                .from(qProduct)
+                .join(qSeller).on(qProduct.seller.sno.eq(qSeller.sno))
+                .leftJoin(qProductImage).on(qProductImage.product.eq(qProduct))
+                .where(expression)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(orderSpecifier)
+                .fetch();
+
+        long total = queryFactory
+                .select(qProduct.count())
+                .from(qProduct)
+                .join(qSeller).on(qProduct.seller.sno.eq(qSeller.sno))
+                .leftJoin(qProductImage).on(qProductImage.product.eq(qProduct))
+                .where(expression)
+                .fetchOne();
+
+        log.info("tupleList: {}", tupleList);
+
+        return new PageImpl<>(tupleList, pageable, total);
+    }
+
 
     // 관리자 상품 목록 조회(관리자)
     @Override

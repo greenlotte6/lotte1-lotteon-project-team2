@@ -23,34 +23,6 @@ public class ProductListService {
     private final ProductRepository productRepository;
     private final ModelMapper modelMapper;
 
-    // 상품 목록 조회
-    public PageResponseDTO selectAllForList(PageRequestDTO pageRequestDTO) {
-        Pageable pageable = pageRequestDTO.getPageable("no");
-
-        Page<Tuple> pageProduct = productRepository.selectAllForList(pageRequestDTO, pageable);
-
-        List<ProductDTO> productDTOList = pageProduct.getContent().stream().map(tuple -> {
-            Product product = tuple.get(0, Product.class);
-            String company = tuple.get(1,  String.class);
-            String rank = tuple.get(2, String.class);
-            String sNameList = tuple.get(3,  String.class);
-
-            ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
-            productDTO.setCompany(company);
-            productDTO.setRank(rank);
-            productDTO.setSNameList(sNameList);
-
-            return productDTO;
-        }).toList();
-
-        int total = (int) pageProduct.getTotalElements();
-
-        return PageResponseDTO.<ProductDTO>builder()
-                .pageRequestDTO(pageRequestDTO)
-                .dtoList(productDTOList)
-                .total(total)
-                .build();
-    }
 
     //  베스트 상품 조회
     public List<ProductDTO> selectBestAllForList(int subCateNo) {
@@ -101,5 +73,40 @@ public class ProductListService {
                 .total(total)
                 .build();
     }
+
+
+    //  상품 검색 목록 조회
+    public PageResponseDTO sortedSearchProducts(PageRequestDTO pageRequestDTO) {
+        Pageable pageable = pageRequestDTO.getPageable("no");
+
+        Page<Tuple> pageProduct = productRepository.sortedSearchProducts(pageRequestDTO, pageable);
+
+        List<ProductDTO> productDTOList = pageProduct.getContent().stream().map(tuple -> {
+            Product product = tuple.get(0, Product.class);
+            String company = tuple.get(1, String.class);
+            String rank = tuple.get(2, String.class);
+            String sNameList = tuple.get(3, String.class);
+
+            ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+            productDTO.setCompany(company);
+            productDTO.setRank(rank);
+            productDTO.setSNameList(sNameList);
+
+            return productDTO;
+        }).toList();
+
+        int total = (int) pageProduct.getTotalElements();
+
+        return PageResponseDTO.<ProductDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(productDTOList)
+                .total(total)
+                .build();
+    }
+
+
+
+
+
 }
 

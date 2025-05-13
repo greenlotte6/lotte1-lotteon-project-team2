@@ -230,11 +230,4 @@ public class ProductController {
         return "/product/order/order";
     }
 
-
-    @GetMapping("/product/search")
-    public String search() {
-        return "/product/search";
-    }
-
-
 }
