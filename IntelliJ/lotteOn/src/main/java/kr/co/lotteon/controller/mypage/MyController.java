@@ -14,6 +14,7 @@ import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.point.PointDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.dto.user.UserDTO;
+import kr.co.lotteon.entity.config.Banner;
 import kr.co.lotteon.service.config.ConfigService;
 import kr.co.lotteon.service.mypage.MyPageService;
 import kr.co.lotteon.service.order.OrderItemService;
@@ -32,6 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -45,9 +47,10 @@ public class MyController {
     @GetMapping("/my/home")
     public String myHome(PageRequestDTO pageRequestDTO, Model model, @AuthenticationPrincipal UserDetails userDetails) {
 
-        BannerDTO banner = configService.findBanner("MY1");
-        model.addAttribute("banner", banner);
+        List<BannerDTO> banners = configService.findBanner("MY1");
+        BannerDTO banner = configService.randomBanner(banners);
 
+        model.addAttribute("banner", banner);
 
         // 페이지 목록 5개로 제한
         pageRequestDTO.setSize(5);

@@ -12,6 +12,7 @@ import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.dto.product.ProductDetailDTO;
 import kr.co.lotteon.dto.user.UserDetailsDTO;
+import kr.co.lotteon.entity.config.Banner;
 import kr.co.lotteon.service.article.InquiryService;
 import kr.co.lotteon.service.cart.CartService;
 import kr.co.lotteon.service.config.ConfigService;
@@ -57,7 +58,9 @@ public class ProductController {
     @GetMapping("/product/view")
     public String view(PageRequestDTO pageRequestDTO, Model model) {
 
-        BannerDTO banner = configService.findBanner("PRODUCT1");
+        List<BannerDTO> banners= configService.findBanner("PRODUCT1");
+        BannerDTO banner = configService.randomBanner(banners);
+
         model.addAttribute("banner", banner);
 
         pageRequestDTO.setSize(5);

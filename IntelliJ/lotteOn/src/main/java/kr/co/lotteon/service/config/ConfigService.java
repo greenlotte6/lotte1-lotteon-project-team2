@@ -29,6 +29,7 @@ import kr.co.lotteon.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -223,8 +224,13 @@ public class ConfigService {
 
     }
 
+
+    // @Cacheable(value = "slide-banners", key = "#cate")
+
     // 배너 저장
+    @CacheEvict(value = "slide-banners", key = "#bannerDTO.cate")
     public void saveBanner(BannerDTO bannerDTO) {
+        System.out.println(bannerDTO.getCate());
         Banner banner = modelMapper.map(bannerDTO, Banner.class);
         bannerRepository.save(banner);
     }
@@ -264,32 +270,40 @@ public class ConfigService {
     }
 
     // 배너 상태 변경하기(활성/비활성)
-    public void changeBanner(int bno, String state) {
+    @CacheEvict(value = "slide-banners", key = "#cate")
+    public void changeBanner(int bno, String state, String cate) {
         Optional<Banner> bannerOpt = bannerRepository.findById(bno);
         if(bannerOpt.isPresent()){
+
+            log.info("배너 상태 변경: {}", bannerOpt.get());
+
             Banner banner = bannerOpt.get();
             banner.setState(state);
             bannerRepository.save(banner);
+
         }
     }
 
     // 배너 지우기
-    public void deleteBanner(List<Integer> deleteVnos) {
+    @CacheEvict(value = "slide-banners", key = "#cate")
+    public void deleteBanner(List<Integer> deleteVnos, String cate) {
         for(int num : deleteVnos){
             bannerRepository.deleteById(num);
         }
     }
 
-    public BannerDTO findBanner(String cate) {
+    @Cacheable(value = "slide-banners", key = "#cate")
+    public List<BannerDTO> findBanner(String cate) {
+
 
         List<Banner> bannerList = bannerRepository.findBannerByCate(cate);
-        if(bannerList.isEmpty()){
-            return null;
-        }else{
-            int size = bannerList.size();
-            int random = (int) (Math.random() * size);
-            return modelMapper.map(bannerList.get(random), BannerDTO.class);
+        List<BannerDTO> bannerDTOList = new ArrayList<>();
+        for(Banner banner : bannerList){
+            bannerDTOList.add(modelMapper.map(banner, BannerDTO.class));
         }
+
+        // List<BannerDTO> bannerDTOList = new ArrayList<>();
+        return bannerDTOList;
     }
 
     public void deleteBannerTimeout() {
@@ -483,6 +497,16 @@ public class ConfigService {
 
                 index++;
             }
+        }
+    }
+
+    public BannerDTO randomBanner(List<BannerDTO> banners) {
+        if(banners.isEmpty()){
+            return null;
+        }else{
+            int size = banners.size();
+            int random = (int) (Math.random() * size);
+            return banners.get(random);
         }
     }
 }
