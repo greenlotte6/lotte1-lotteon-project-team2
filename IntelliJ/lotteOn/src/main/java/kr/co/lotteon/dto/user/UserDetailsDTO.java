@@ -2,12 +2,14 @@ package kr.co.lotteon.dto.user;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 @Data
 @Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDetailsDTO {
+public class UserDetailsDTO implements Serializable {
 
     // 유저 상세정보 DTO
 

@@ -83,8 +83,8 @@ public class OrderController {
     public ResponseEntity orderSubmit(Amount amount,
                               OrderDTO orderDTO,
                               HttpSession session,
+                              @RequestParam(value = "itemPoint", required = false) List<Integer> itemPointList,
                               @RequestParam(value = "usedPoint", required = false) Integer usedPoint,
-                              @RequestParam(value = "earnedPoint", required = false) Integer earnedPoint,
                               @RequestParam(value = "cartNo", required = false) List<Integer> cartNos,
                               @RequestParam(value = "receiverAddr1", required = false) String receiverAddr1,
                               @RequestParam(value = "receiverAddr2", required = false) String receiverAddr2,
@@ -100,23 +100,22 @@ public class OrderController {
 
         if(cartNos != null) {
 
-            System.out.println("장바구니 로직");
-
             // 상세 주문 등록하기
-            orderService.registerOrderItem(orderNo, cartNos);
+            orderService.registerOrderItem(orderNo, cartNos, itemPointList);
 
             // 상품 재고, 판매량 계산
             productService.changeSoldAndStock(cartNos);
 
             // 장바구니 지우기
             cartService.deleteAllByCartNo(cartNos);
+
         }else{
 
-            System.out.println("바로구매 로직");
-
+            // 세션에서 cartDTO 꺼내기
             CartDTO cartDTO = (CartDTO) session.getAttribute("cartDTO");
 
-            orderService.directOrderItem(orderNo, cartDTO);
+            // 상세 주문 등록하기
+            orderService.directOrderItem(orderNo, cartDTO, itemPointList);
 
             // 상품 재고, 판매량 계산
             productService.directSoldAndStock(cartDTO);
@@ -154,12 +153,10 @@ public class OrderController {
     public String orderCompleted(HttpSession session, Model model) {
 
         OrderDTO orderDTO = (OrderDTO) session.getAttribute("orderDTO");
-        UserDetailsDTO userDetailsDTO = (UserDetailsDTO) session.getAttribute("userDetailsDTO");
 
         model.addAttribute("orderDTO", orderDTO);
-        model.addAttribute("userDetailsDTO", userDetailsDTO);
 
-        log.info("userDetailsDTO: {}", userDetailsDTO);
+        log.info("orderDTO: {}", orderDTO);
 
         return "/product/order/order_completed";
     }

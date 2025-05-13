@@ -3,6 +3,7 @@ package kr.co.lotteon.entity.point;
 import jakarta.persistence.*;
 import kr.co.lotteon.entity.user.User;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -23,7 +24,10 @@ public class Point {
 
     private int point; //적립,사용 포인트 양
     private String pointDesc; //포인트 사용,적립 내역
+
+    @CreationTimestamp
     private LocalDateTime pointDate; //포인트 적립,사용일
+
     private LocalDateTime expiryDate; //만료날짜
 
     @OneToOne
@@ -31,4 +35,5 @@ public class Point {
     private User user;
 
     private int orderNo;
+
 }

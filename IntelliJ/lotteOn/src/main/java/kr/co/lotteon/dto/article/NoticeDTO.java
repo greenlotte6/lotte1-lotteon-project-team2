@@ -3,6 +3,7 @@ package kr.co.lotteon.dto.article;
 import kr.co.lotteon.dto.user.UserDTO;
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class NoticeDTO {
+public class NoticeDTO implements Serializable {
 
     // 공지사항 DTO
 

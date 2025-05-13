@@ -147,6 +147,17 @@ public class CartService {
         }
     }
 
+    public void updateCartProdCount(Integer cartNo, int newQuantity) {
+        Optional<Cart> cartOptional = cartRepository.findById(cartNo);
+        if (cartOptional.isPresent()) {
+            Cart cart = cartOptional.get();
+            cart.setCartProdCount(newQuantity);
+            cartRepository.save(cart);
+        } else {
+            throw new RuntimeException("장바구니 항목을 찾을 수 없습니다.");
+        }
+    }
+
 
 
 }

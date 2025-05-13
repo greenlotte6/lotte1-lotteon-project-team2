@@ -2,6 +2,7 @@ package kr.co.lotteon.dto.category;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
@@ -9,7 +10,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class MainCategoryDTO {
+public class MainCategoryDTO implements Serializable {
 
     private int mainCateNo;
     private String mainCategoryName;

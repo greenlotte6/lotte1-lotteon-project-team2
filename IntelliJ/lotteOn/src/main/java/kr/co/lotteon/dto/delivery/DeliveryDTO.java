@@ -2,6 +2,8 @@ package kr.co.lotteon.dto.delivery;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @ToString
@@ -9,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 public class DeliveryDTO {
 
-    private int dno;
+    private long dno;
 
     private int orderNo; // 주문번호
 
@@ -20,5 +22,7 @@ public class DeliveryDTO {
     private String deliveryCompany; // 택배회사
 
     private String state;
+
+    private LocalDateTime deliveryDate;
 
 }

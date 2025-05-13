@@ -29,6 +29,8 @@ import kr.co.lotteon.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -85,6 +87,8 @@ public class ConfigService {
     * */
 
     // 버전 등록 (관리자)
+
+    @CacheEvict(value = "version" , allEntries = true)
     public void saveVersion(VersionDTO versionDTO, UserDetails userDetails) {
         Version version = modelMapper.map(versionDTO, Version.class);
         String uid = userDetails.getUsername();
@@ -125,12 +129,14 @@ public class ConfigService {
 
     }
 
+    @CacheEvict(value = "version" , allEntries = true)
     public void deleteVersions(List<Integer> deleteVnos) {
         for(int i : deleteVnos){
             versionRepository.deleteById(i);
         }
     }
 
+    @CacheEvict(value = "config" , allEntries = true)
     public void modifyTitleAndSubTitle(String title, String subTitle) {
         Optional<Config> configOpt = configRepository.findById(1);
         if(configOpt.isPresent()){
@@ -160,6 +166,7 @@ public class ConfigService {
         return null;
     }
 
+    @CacheEvict(value = "config" , allEntries = true)
     public void modifyCopyright(String copyright) {
         Optional<Config> configOpt = configRepository.findById(1);
         if(configOpt.isPresent()){
@@ -175,6 +182,7 @@ public class ConfigService {
         }
     }
 
+    @CacheEvict(value = "config" , allEntries = true)
     public void modifyCompany(ConfigDTO configDTO) {
         Optional<Config> configOpt = configRepository.findById(1);
         if(configOpt.isPresent()){
@@ -199,6 +207,7 @@ public class ConfigService {
         }
     }
 
+    @CacheEvict(value = "config" , allEntries = true)
     public void modifyCustomer(ConfigDTO configDTO) {
         Optional<Config> configOpt = configRepository.findById(1);
         if(configOpt.isPresent()){
@@ -222,17 +231,23 @@ public class ConfigService {
 
     }
 
+
+    // @Cacheable(value = "slide-banners", key = "#cate")
+
     // 배너 저장
+    @CacheEvict(value = "slide-banners", key = "#bannerDTO.cate")
     public void saveBanner(BannerDTO bannerDTO) {
+        System.out.println(bannerDTO.getCate());
         Banner banner = modelMapper.map(bannerDTO, Banner.class);
         bannerRepository.save(banner);
     }
 
+    @Cacheable(value = "slide-banners", key = "#cate")
     public List<BannerDTO> findBannerByCate(String cate) {
         if(cate == null){
             cate = "MAIN1";
         }
-
+        
         List<Banner> bannerList = bannerRepository.findByCateAndEndDayGreaterThanOrderByBnoDesc( cate, LocalDate.now());
         List<BannerDTO> bannerDTOList = new ArrayList<>();
 
@@ -262,32 +277,40 @@ public class ConfigService {
     }
 
     // 배너 상태 변경하기(활성/비활성)
-    public void changeBanner(int bno, String state) {
+    @CacheEvict(value = "slide-banners", key = "#cate")
+    public void changeBanner(int bno, String state, String cate) {
         Optional<Banner> bannerOpt = bannerRepository.findById(bno);
         if(bannerOpt.isPresent()){
+
+            log.info("배너 상태 변경: {}", bannerOpt.get());
+
             Banner banner = bannerOpt.get();
             banner.setState(state);
             bannerRepository.save(banner);
+
         }
     }
 
     // 배너 지우기
-    public void deleteBanner(List<Integer> deleteVnos) {
+    @CacheEvict(value = "slide-banners", key = "#cate")
+    public void deleteBanner(List<Integer> deleteVnos, String cate) {
         for(int num : deleteVnos){
             bannerRepository.deleteById(num);
         }
     }
 
-    public BannerDTO findBanner(String cate) {
+    @Cacheable(value = "slide-banners", key = "#cate")
+    public List<BannerDTO> findBanner(String cate) {
+
 
         List<Banner> bannerList = bannerRepository.findBannerByCate(cate);
-        if(bannerList.isEmpty()){
-            return null;
-        }else{
-            int size = bannerList.size();
-            int random = (int) (Math.random() * size);
-            return modelMapper.map(bannerList.get(random), BannerDTO.class);
+        List<BannerDTO> bannerDTOList = new ArrayList<>();
+        for(Banner banner : bannerList){
+            bannerDTOList.add(modelMapper.map(banner, BannerDTO.class));
         }
+
+        // List<BannerDTO> bannerDTOList = new ArrayList<>();
+        return bannerDTOList;
     }
 
     public void deleteBannerTimeout() {
@@ -482,5 +505,37 @@ public class ConfigService {
                 index++;
             }
         }
+    }
+
+    public BannerDTO randomBanner(List<BannerDTO> banners) {
+        if(banners.isEmpty()){
+            return null;
+        }else{
+            int size = banners.size();
+            int random = (int) (Math.random() * size);
+            return banners.get(random);
+        }
+    }
+
+    @Cacheable(value = "version")
+    public VersionDTO findTopByOrderByWdateDesc() {
+        log.info("버전 실행!! ");
+        Version version = versionRepository.findTopByOrderByWdateDesc();
+        return modelMapper.map(version, VersionDTO.class);
+    }
+
+    @Cacheable(value = "config")
+    public ConfigDTO findById() {
+        log.info("환경설정 호출!!");
+        Optional<Config> configOpt = configRepository.findById(1);
+        if(configOpt.isPresent()){
+            return modelMapper.map(configOpt.get(), ConfigDTO.class);
+        }
+        return null;
+    }
+
+    @CacheEvict(value = "category"  , allEntries = true)
+    public void deleteCategoryCache() {
+        log.info("카테고리 캐시 삭제");
     }
 }

@@ -2,6 +2,7 @@ package kr.co.lotteon.dto.user;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
@@ -9,7 +10,7 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO{
+public class UserDTO implements Serializable {
 
     private String uid;     // 아이디
     private String pass;    // 비밀번호
@@ -24,6 +25,7 @@ public class UserDTO{
     private String regip;   // IP주소
     private String state;   // 상태(정상,중지,휴먼,탈퇴)
     private String ssn;
+    private String gender;
 
     private LocalDateTime regDate;     // 가입일자
     private LocalDateTime updateDate;  // 변경날짜(마이페이지)

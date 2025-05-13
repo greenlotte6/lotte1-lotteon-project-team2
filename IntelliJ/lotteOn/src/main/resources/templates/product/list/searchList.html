@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/layout/layout.css">
     <link rel="stylesheet" href="/css/product/product_header.css">
-    <link rel="stylesheet" href="/css/product/list.css">
+    <link rel="stylesheet" href="/css/product/list_search.css">
     <title>상품목록 : 롯데On</title>
 </head>
 <body>
@@ -48,6 +48,9 @@
 
     // DOM 로드 후 실행
     document.addEventListener("DOMContentLoaded", function () {
+
+        // 상품 목록 로드
+        loadProducts(`&sortType=salesCount&period=`);
 
         // 카테고리 아코디언 기능
         const parents = document.querySelectorAll(".category .parent");
@@ -96,7 +99,6 @@
         const salesPeriodSelect = document.getElementById('salesPeriodSelect');
         const reviewPeriodSelect = document.getElementById('reviewPeriodSelect');
         const sortLinks = document.querySelectorAll('.nav a[data-sort]');
-
 
         function getView() {
             const wrapper = document.getElementById('productWrapper');
@@ -236,17 +238,78 @@
             return number.toLocaleString();
         }
 
-        // 상품 목록 로드
-        loadProducts(`&sortType=salesCount&period=`);
+
+
+
 
         function loadProducts(params) {
             const currentUrl = new URL(window.location.href);
-            const subCateNo = currentUrl.searchParams.get('subCateNo') ;
             const sortTypeParam = currentUrl.searchParams.get('sortType');
             const periodParam = currentUrl.searchParams.get('period') || '';
+            const keywordParam = currentUrl.searchParams.get('keyword') || '';
             const pgParam = new URLSearchParams(params).get('pg') || '1';
+            const subKeywordInputElement = document.getElementById('subKeywordInput');
+            const subKeywordParam = subKeywordInputElement ? subKeywordInputElement.value.trim() : '';
 
-            const url = `/product/ajaxList?subCateNo=${encodeURIComponent(subCateNo)}&view=${encodeURIComponent(getView())}&pg=${encodeURIComponent(pgParam)}&sortType=${encodeURIComponent(sortTypeParam)}&period=${encodeURIComponent(periodParam)}`;
+            console.log(keywordParam);
+
+
+            const selectedFilters = [];
+            document.querySelectorAll('.search_filters input[name="filter"]:checked').forEach(checkbox => {
+                selectedFilters.push(checkbox.value);
+            });
+            const searchTypeParam = selectedFilters.join(',');
+
+            let minPriceParam = '';
+            let maxPriceParam = '';
+            const priceFilterCheckbox = document.getElementById('priceFilterCheckbox');
+
+            if (priceFilterCheckbox && priceFilterCheckbox.checked) {
+                const minPriceInput = document.getElementById('minPriceInput');
+                const maxPriceInput = document.getElementById('maxPriceInput');
+                if (minPriceInput && minPriceInput.value) {
+                    minPriceParam = minPriceInput.value;
+                }
+                if (maxPriceInput && maxPriceInput.value) {
+                    maxPriceParam = maxPriceInput.value;
+                }
+            }
+
+
+            const queryParams = [
+                `view=${encodeURIComponent(getView())}`,
+                `pg=${encodeURIComponent(pgParam)}`,
+                `sortType=${encodeURIComponent(sortTypeParam)}`,
+                `period=${encodeURIComponent(periodParam)}`
+            ];
+
+            if (keywordParam) {
+                console.log("keywordParam: "+keywordParam)
+                queryParams.push(`keyword=${encodeURIComponent(keywordParam)}`);
+            }
+
+            if (searchTypeParam) {
+                queryParams.push(`searchType=${encodeURIComponent(searchTypeParam)}`);
+            }
+
+            if (priceFilterCheckbox && priceFilterCheckbox.checked) {
+                if (minPriceParam) {
+                    queryParams.push(`minPrice=${encodeURIComponent(minPriceParam)}`);
+                }
+                if (maxPriceParam) {
+                    queryParams.push(`maxPrice=${encodeURIComponent(maxPriceParam)}`);
+                }
+            }
+
+            if (subKeywordParam) {
+                queryParams.push(`subKeyword=${encodeURIComponent(subKeywordParam)}`);
+            }
+
+            const url = `/product/ajaxSearchList?${queryParams.join('&')}`;
+
+            console.log("최종 요청 URL (바로 이 URL로 fetch합니다):", url);
+
+
 
             fetch(url)
                 .then(response => response.json())
@@ -296,14 +359,6 @@
     <!-- 헤더 끝 -->
     <main>
         <section class="content">
-            <div class="bar">
-                <div>
-                    <a href="#">HOME</a>&nbsp;&nbsp;>&nbsp;&nbsp;
-                    <a href="#">뷰티</a>&nbsp;&nbsp;>&nbsp;&nbsp;
-                    <a href="#">향수</a>
-                </div>
-            </div>
-            <p class="page_name">향수</p>
             <!-- 사이드바-->
             <aside>
                 <div class="category">
@@ -384,42 +439,36 @@
             </aside>
             <!-- 사이드 바 끝 -->
             <div class="container">
-                <div class="slider">
-                    <div class="slides" id="slides">
-                        <img src="/images/product/banner1.jpg" alt="배너 1">
-                        <img src="/images/product/banner2.jpg" alt="배너 2">
-                        <img src="/images/product/banner1.jpg" alt="배너 3">
-                        <img src="/images/product/banner2.jpg" alt="배너 4">
-                    </div>
-                    <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
-                    <button class="next" onclick="moveSlide(1)">&#10095;</button>
-                </div>
-                <h2>카테고리 베스트 상품</h2>
-                <div class="best-grid">
-                    <div class="best-card"
-                         th:each="product, stat : ${productDTOList}"
-                         th:attr="data-prodno=${product.prodNo}">
-                        <p class="rank" th:text="${stat.count}"></p>
-                        <img class="product-img" th:src="${product.sNameList}" alt="상품 이미지" />
-                        <div class="vendor-row">
-                            <span class="vendor-name" th:text="${product.company}"></span>
-                            <div class="icons">
-                                <button><img th:src="@{/images/product/icon_favorite.png}" alt="찜"></button>
-                                <button><img th:src="@{/images/product/icon_cart.png}" alt="장바구니"></button>
+                <div class="search">
+                    <p>
+                        <span class="keyword">향수</span>&nbsp;&nbsp;검색결과&nbsp;&nbsp;
+                        <span class="total">(총: 20건)</span>
+                    </p>
+                    <div class="search-container">
+                        <form action="#" id="productSearchForm">
+                            <div class="search_area">
+                                <input type="search" placeholder="검색어를 입력하세요">
+                                <button type="submit" class="search_icon">
+                                    <img src="/images/search_ico.svg" alt="검색" class="search_iconImg">
+                                </button>
                             </div>
-                        </div>
-                        <p class="name">
-                            <span class="brand" th:text="${product.prodBrand}"></span><br>
-                            <span class="product-name" th:text="${product.prodName}"></span>
-                        </p>
-                        <p class="price">
-                            <span class="discount" th:text="${product.prodDiscount + '%'}"></span>
-                            <span th:text="${#numbers.formatInteger(product.prodPrice, 3, 'COMMA')} + '원'"></span>
-                        </p>
-                        <p class="review">
-                            <span class="star" th:text="'★ ' + ${product.ratingTotal}"></span>
-                            &nbsp;&nbsp;|&nbsp;&nbsp;리뷰 <span th:text="${product.reviewCount}"></span>
-                        </p>
+                            <div class="search_filters">
+                                <label>
+                                    <input type="checkbox" name="filter" value="name"> 상품명
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="filter" value="description"> 브랜드
+                                </label>
+                                <div class="price-range">
+                                    <label>
+                                        <input type="checkbox" name="filter" value="price"> 가격
+                                    </label>
+                                    <input type="number" placeholder="최소" min="0">
+                                    ~
+                                    <input type="number" placeholder="최대" min="0">
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="nab_bar">
@@ -458,7 +507,7 @@
                         <div class="product-item">
                             <img class="product-img">
                             <div class="product-info">
-                                <span class="vendor-name">판매자명</span><span class="vendor-rank">판매자등급</span><br>
+                                <span class="vendor-name">판매자등급</span><br>
                                 <span class="brand">브랜드</span><br>
                                 <span class="pname">상품명</span>
                                 <div class="meta">
@@ -469,7 +518,7 @@
                             </div>
                             <div class="product-price">
                                 <del>정가</del><br>
-                                <span>할인율</span>
+                                <span class="discount">할인율</span>
                                 <span>판매가</span> 원
                                 <div class="icons">
                                     <button><img src="/images/product/icon_favorite.png" alt="찜"></button>

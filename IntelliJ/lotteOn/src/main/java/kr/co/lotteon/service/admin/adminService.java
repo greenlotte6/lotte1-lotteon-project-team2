@@ -9,9 +9,11 @@ import kr.co.lotteon.dto.article.RecruitDTO;
 import kr.co.lotteon.dto.category.MainCategoryDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
 import kr.co.lotteon.dto.coupon.CouponIssueDTO;
+import kr.co.lotteon.dto.delivery.DeliveryDTO;
 import kr.co.lotteon.dto.operation.OperationDTO;
 import kr.co.lotteon.dto.operation.OrderSummaryDTO;
 import kr.co.lotteon.dto.order.OrderDTO;
+import kr.co.lotteon.dto.order.OrderItemDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.point.PointDTO;
@@ -30,7 +32,9 @@ import kr.co.lotteon.entity.category.MainCategory;
 import kr.co.lotteon.entity.category.SubCategory;
 import kr.co.lotteon.entity.coupon.Coupon;
 import kr.co.lotteon.entity.coupon.CouponIssue;
+import kr.co.lotteon.entity.delivery.Delivery;
 import kr.co.lotteon.entity.order.Order;
+import kr.co.lotteon.entity.order.OrderItem;
 import kr.co.lotteon.entity.point.Point;
 import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.entity.product.ProductDetail;
@@ -45,6 +49,7 @@ import kr.co.lotteon.repository.category.MainCategoryRepository;
 import kr.co.lotteon.repository.category.SubCategoryRepository;
 import kr.co.lotteon.repository.coupon.CouponIssueRepository;
 import kr.co.lotteon.repository.coupon.CouponRepository;
+import kr.co.lotteon.repository.delivery.DeliveryRepository;
 import kr.co.lotteon.repository.order.OrderItemRepository;
 import kr.co.lotteon.repository.order.OrderRepository;
 import kr.co.lotteon.repository.point.PointRepository;
@@ -105,6 +110,9 @@ public class adminService {
     private final RecruitRepository recruitRepository;
     private final FaqRepository faqRepository;
     private final InquiryRepository inquiryRepository;
+
+    // 배달
+    private final DeliveryRepository deliveryRepository;
 
     // 포인트
     private final PointRepository pointRepository;
@@ -1228,8 +1236,6 @@ public class adminService {
             Double totalDiscountedPrice = (Double) row[1];
             long totalPrice = totalDiscountedPrice != null ? totalDiscountedPrice.longValue() : 0L;
 
-            System.out.println(category);
-
             switch (num){
                 case 1: {
                     operationDTO.setSale1(category);
@@ -1256,8 +1262,6 @@ public class adminService {
             num++;
 
         }
-
-        System.out.println(operationDTO);
 
         return operationDTO;
     }
@@ -1337,4 +1341,91 @@ public class adminService {
                 .build();
 
     }
+
+    public void saveDelivery(DeliveryDTO deliveryDTO) {
+
+        Order order = Order.builder()
+                .orderNo(deliveryDTO.getOrderNo())
+                .build();
+
+        if ("12345678901".equals(deliveryDTO.getTrackingNumber())) {
+            String prefix = switch (deliveryDTO.getDeliveryCompany()) {
+                case "CJ대한통운" -> "1";
+                case "한진택배" -> "2";
+                case "롯데택배" -> "3";
+                case "우체국택배" -> "4";
+                case "로젠택배" -> "5";
+                case "경동택배" -> "6";
+                case "합동택배" -> "7";
+                default -> "8";
+            };
+
+            long track = Long.parseLong(prefix + "2345670000");
+
+            while (deliveryRepository.existsById(track)) {
+                track++;
+            }
+
+            deliveryDTO.setDno(track); // 이 경우 GeneratedValue 제거 필요
+        }else{
+            long track = Long.parseLong(deliveryDTO.getTrackingNumber());
+            while (deliveryRepository.existsById(track)) {
+                track++;
+            }
+
+            deliveryDTO.setDno(track);
+        }
+
+        Delivery delivery = modelMapper.map(deliveryDTO, Delivery.class);
+        delivery.setOrder(order);
+
+        deliveryRepository.save(delivery);
+
+        List<OrderItem> orderItems = orderItemRepository.findByOrder(order);
+        for (OrderItem item : orderItems) {
+            item.setOrderStatus("배송준비");
+        }
+        orderItemRepository.saveAll(orderItems);
+    }
+
+
+    public PageResponseDTO selectAllForDelivery(PageRequestDTO pageRequestDTO) {
+
+        pageRequestDTO.setSize(10);
+
+        Pageable pageable = pageRequestDTO.getPageable("no");
+        Page<Tuple> pageObject = deliveryRepository.selectAllDelivery(pageRequestDTO, pageable);
+
+        List<OrderDTO> DTOList = pageObject.getContent().stream().map(tuple -> {
+            Order order = tuple.get(0, Order.class);
+            Delivery delivery = tuple.get(1, Delivery.class);
+            OrderItem orderItem = tuple.get(2, OrderItem.class);
+
+            OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
+            DeliveryDTO  deliveryDTO = modelMapper.map(delivery, DeliveryDTO.class);
+            OrderItemDTO orderItemDTO = modelMapper.map(orderItem, OrderItemDTO.class);
+            orderDTO.setDelivery(deliveryDTO);
+            orderDTO.setOrderItem(orderItemDTO);
+            orderDTO.setImage(orderItem.getProduct().getProductImage().getSNameList());
+            int size = orderDTO.getOrderItems().size();
+            orderDTO.setCount(size);
+
+            System.out.println(orderDTO);
+
+            return orderDTO;
+        }).toList();
+
+        int total = (int) pageObject.getTotalElements();
+
+        log.info("total: {}", total);
+        log.info("DTOList: {}", pageObject);
+
+        return PageResponseDTO.<OrderDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(DTOList)
+                .total(total)
+                .build();
+
+    }
 }
+

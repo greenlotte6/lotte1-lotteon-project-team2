@@ -57,5 +57,6 @@ public class Order {
     private int totalDiscount;
     private int pointDiscount;
     private int couponDiscount;
+    private int totalPoint;
 
 }

@@ -194,20 +194,20 @@ public class AdminController {
     public String bannerChange(@RequestParam("bno") int bno
                                 , @RequestParam("cate") String cate
                                 , @RequestParam("state") String state) {
-        configService.changeBanner(bno, state);
+
+        configService.changeBanner(bno, state, cate);
         return "redirect:/admin/config/banner?cate=" + cate;
     }
 
     // 배너 삭제하기
-    // 버전삭제
     @GetMapping("/config/banner/delete")
     public String deleteBanners(@RequestParam("deleteNo") List<Integer> deleteVnos) {
 
         //배너 이미지 지우기
-        imageService.deleteBanner(deleteVnos);
+        String cate = imageService.deleteBanner(deleteVnos);
 
         //배너 지우고
-        configService.deleteBanner(deleteVnos);
+        configService.deleteBanner(deleteVnos, cate);
         return "redirect:/admin/config/banner";
     }
 
@@ -274,8 +274,9 @@ public class AdminController {
         if(newSubCateNosV2 != null){
             configService.saveNewSubV2(newSubCateNosV2, index);
         }
-        System.out.println(newSubCateNosV2);
 
+        // 카테고리 캐시 삭제
+        configService.deleteCategoryCache();
         return "redirect:/admin/config/category";
 
     }
@@ -285,6 +286,9 @@ public class AdminController {
     @ResponseBody
     public String deleteMainCategory(@RequestParam("mainCateNo") int mainCateNo) {
         configService.deleteMainCategory(mainCateNo);
+
+        // 캐시 삭제
+        configService.deleteCategoryCache();
         return "ok";
     }
 
@@ -293,6 +297,9 @@ public class AdminController {
     @ResponseBody
     public String deleteSubCategory(@RequestParam("subCateNo") int subCateNo) {
         configService.deleteSubCategory(subCateNo);
+        
+        // 캐시 삭제
+        configService.deleteCategoryCache();
         return"ok";
     }
 
@@ -572,28 +579,38 @@ public class AdminController {
         return "/admin/order/list";
     }
 
-    //주문현황
+    //주문현황 검색
     @GetMapping("/order/search")
     public String orderSearchList(PageRequestDTO pageRequestDTO, Model model){
         PageResponseDTO pageResponseDTO = adminService.selectAllForOrder(pageRequestDTO);
         model.addAttribute(pageResponseDTO);
         model.addAttribute("order",pageResponseDTO.getDtoList());
-        return "/admin/order/list";
+        return "/admin/order/listSearch";
     }
 
 
     //주문현황
     @GetMapping("/order/delivery")
-    public String delivery(){
+    public String delivery(PageRequestDTO pageRequestDTO, Model model){
+
+        PageResponseDTO pageResponseDTO = adminService.selectAllForDelivery(pageRequestDTO);
+        model.addAttribute(pageResponseDTO);
         return "/admin/order/delivery";
     }
 
     //배송하기
     @PostMapping("/order/delivery")
     public String delivery(DeliveryDTO deliveryDTO){
-
-
+        adminService.saveDelivery(deliveryDTO);
         return "redirect:/admin/order/list";
+    }
+
+    // 배송 검색
+    @GetMapping("/order/delivery/search")
+    public String deliverySearchList(PageRequestDTO pageRequestDTO, Model model){
+        PageResponseDTO pageResponseDTO = adminService.selectAllForDelivery(pageRequestDTO);
+        model.addAttribute(pageResponseDTO);
+        return "/admin/order/deliverySearch";
     }
 
     /*

@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -185,6 +186,7 @@ public class ImageService {
         }
     }
 
+    @CacheEvict(value = "config" , allEntries = true)
     public void modifyConfigImage(ConfigDTO configDTO) {
 
         Optional<Config> configImageOpt = configRepository.findById(1);
@@ -258,13 +260,21 @@ public class ImageService {
         return bannerDTO;
     }
 
-    public void deleteBanner(List<Integer> deleteVnos) {
+    public String deleteBanner(List<Integer> deleteVnos) {
+
+        String cate = null;
+
         for(int num : deleteVnos){
             Optional<Banner> bannerOpt = bannerRepository.findById(num);
             if(bannerOpt.isPresent()){
                 Banner banner = bannerOpt.get();
                 deleteImage(banner.getSName());
+                cate = banner.getCate();
             }
         }
+
+        return cate;
+
+
     }
 }

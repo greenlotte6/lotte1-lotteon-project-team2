@@ -27,8 +27,8 @@
                      alt="lotteOn">
             </a>
             <div class="search">
-                <form action="#">
-                    <input type="search" placeholder="검색어를 입력하세요"/>
+                <form action="/product/searchList">
+                    <input type="search" name="keyword" placeholder="검색어를 입력하세요"/>
                     <button type="submit" class="header_search">
                         <img src="/images/search_ico.svg" alt="검색" class="search-icon"/>
                     </button>
@@ -63,29 +63,16 @@
 
                 <div class="category-menu" id="categoryMenu">
                     <ul>
-                        <li data-index="0"><a href="#">패션 / 의류 / 뷰티</a></li>
-                        <li data-index="1"><a href="#">가전 / 디지털</a></li>
-                        <li data-index="2"><a href="#">식품 / 생필품</a></li>
-                        <li data-index="3"><a href="#">홈 / 문구 / 취미</a></li>
+                        <li th:each="item, i : ${appInfo.Categories}" th:attr="data-index=${i.index}">
+                            <a href="#">[[${item.mainCategoryName}]]</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="subcategory-menu" id="subcategoryMenu">
-                    <ul data-index="0">
-                        <li><a th:href="@{/product/list}">패션</a></li>
-                        <li><a th:href="@{/product/list}">의류</a></li>
-                        <li><a th:href="@{/product/list?subCateNo=3}">뷰티</a></li>
-                    </ul>
-                    <ul data-index="1">
-                        <li><a th:href="@{/product/list}">가전</a></li>
-                        <li><a th:href="@{/product/list}">디지털</a></li>
-                    </ul>
-                    <ul data-index="2">
-                        <li><a th:href="@{/product/list}">식품</a></li>
-                        <li><a th:href="@{/product/list}">생필품</a></li>
-                    </ul>
-                    <ul data-index="3">
-                        <li><a th:href="@{/product/list}">홈</a></li>
-                        <li><a th:href="@{/product/list}">문구</a></li>
+                    <ul th:each="item, i : ${appInfo.Categories}" th:attr="data-index=${i.index}">
+                        <li th:each="sub : ${item.subCategories}"> 
+                            <a th:href="@{/product/list(subCateNo=${sub.subCateNo})}">[[${sub.subCategoryName}]]</a>
+                        </li>
                     </ul>
                 </div>
 

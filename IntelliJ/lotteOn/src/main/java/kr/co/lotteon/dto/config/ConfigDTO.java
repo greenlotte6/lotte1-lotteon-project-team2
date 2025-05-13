@@ -3,12 +3,14 @@ package kr.co.lotteon.dto.config;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.Serializable;
+
 @Data
 @Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ConfigDTO {
+public class ConfigDTO implements Serializable {
 
     // 사이트설정 DTO
 

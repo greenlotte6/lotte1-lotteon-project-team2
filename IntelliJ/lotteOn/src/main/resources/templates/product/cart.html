@@ -166,8 +166,10 @@
                     priceOriginalEl.textContent = (unitOriginal * count).toLocaleString() + '원';
                     priceTotalEl.textContent = (unitTotal * count).toLocaleString() + '원';
 
-                    const quantityInput = cartContent.querySelector('.quantity-input');
-                    quantityInput.value = count;
+                    const cartNoInput = cartContent.querySelector('input[name="cartNo"]');
+                    const cartNoValue = cartNoInput.value;
+
+                    updateCartProductCount(cartNoValue, count);
 
                     updateSummary();
                 });
@@ -190,13 +192,40 @@
                         priceOriginalEl.textContent = (unitOriginal * count).toLocaleString() + '원';
                         priceTotalEl.textContent = (unitTotal * count).toLocaleString() + '원';
 
-                        const quantityInput = cartContent.querySelector('.quantity-input');
-                        quantityInput.value = count;
+                        const cartNoInput = cartContent.querySelector('input[name="cartNo"]');
+                        const cartNoValue = cartNoInput.value;
+
+                        updateCartProductCount(cartNoValue, count);
 
                         updateSummary();
                     }
                 });
             });
+
+
+            // 수량 변경 업데이트
+            function updateCartProductCount(cartNo, newQuantity) {
+                const formData = new URLSearchParams();
+                formData.append("cartNo", cartNo);
+                formData.append("newQuantity", newQuantity);
+
+                fetch('/update/cartProdCount', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: formData.toString()
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Cart updated:', data);
+                        // 서버 응답에 따라 추가적인 처리 가능
+                    })
+                    .catch(error => {
+                        console.error('Error updating cart:', error);
+                    });
+            }
+
 
 
             // [6] 체크박스 변화 시 요약 업데이트
@@ -458,7 +487,7 @@
                         <div>
                             <div class="cart_header">
                                 <input type="checkbox" id="check-all">
-                                <label for="check-all">전체선택(3)</label>
+                                <label for="check-all">전체선택(0)</label>
                                 <button type="button">선택삭제</button>
                             </div>
 
@@ -512,7 +541,6 @@
                                     <div class="quantity-box">
                                         <button class="btn-minus" type="button">-</button>
                                         <span class="quantity">[[${cart.cartProdCount}]]</span>
-                                        <input type="hidden" name="cartProdCount" class="quantity-input" th:value="${cart.cartProdCount}">
                                         <button class="btn-plus" type="button">+</button>
                                     </div>
                                     <div class="cart_price">

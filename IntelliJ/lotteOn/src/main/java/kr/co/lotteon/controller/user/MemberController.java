@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import kr.co.lotteon.dto.config.BannerDTO;
 import kr.co.lotteon.dto.seller.SellerDTO;
 import kr.co.lotteon.dto.user.UserDTO;
+import kr.co.lotteon.entity.config.Banner;
 import kr.co.lotteon.entity.config.Terms;
 import kr.co.lotteon.entity.seller.Seller;
 import kr.co.lotteon.service.config.ConfigService;
@@ -22,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -42,7 +44,8 @@ public class MemberController {
 
     @GetMapping("/member/login")
     public String login(Model model) {
-        BannerDTO banner = configService.findBanner("MEMBER1");
+        List<BannerDTO> banners = configService.findBanner("MEMBER1");
+        BannerDTO banner = configService.randomBanner(banners);
         model.addAttribute("banner", banner);
         return "/member/login";
     }
@@ -132,7 +135,7 @@ public class MemberController {
 
         sellerService.saveSeller(userDTO, sellerDTO);
 
-        return "redirect:/user/member/login";
+        return "redirect:/";
     }
 
 

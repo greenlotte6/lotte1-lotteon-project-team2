@@ -8,6 +8,9 @@
   <link rel="stylesheet" th:href="@{/css/member/login.css}" />
 </head>
 <body>
+
+<div id="toast-container"></div>
+
 <div id="wrapper">
   <!-- 헤더 시작 -->
   <header>
@@ -179,5 +182,217 @@
   </footer>
   <!-- 푸터 끝 -->
 </div>
+
+<!-- 토스트 알림 CSS -->
+<style>
+  #toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+
+  .toast {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transform: translateX(400px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    max-width: 350px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .toast.show {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .toast.success {
+    border-left: 4px solid #28a745;
+  }
+
+  .toast.success::before {
+    content: "✅";
+    margin-right: 10px;
+    font-size: 18px;
+  }
+
+  .toast.info {
+    border-left: 4px solid #007bff;
+  }
+
+  .toast.info::before {
+    content: "ℹ️";
+    margin-right: 10px;
+    font-size: 18px;
+  }
+
+  .toast.error {
+    border-left: 4px solid #dc3545;
+  }
+
+  .toast.error::before {
+    content: "❌";
+    margin-right: 10px;
+    font-size: 18px;
+  }
+
+  .toast-title {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+  }
+
+  .toast-message {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .toast-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  .toast-close:hover {
+    color: #333;
+  }
+
+  .toast-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: #28a745;
+    animation: progress 4s linear;
+  }
+
+  .toast.success .toast-progress {
+    background: #28a745;
+  }
+
+  .toast.info .toast-progress {
+    background: #007bff;
+  }
+
+  .toast.error .toast-progress {
+    background: #dc3545;
+  }
+
+  @keyframes progress {
+    from { width: 100%; }
+    to { width: 0%; }
+  }
+</style>
+
+<!-- 토스트 알림 JavaScript -->
+<script>
+  // 토스트 알림 함수
+  function showToast(title, message, type = 'success', duration = 4000) {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+
+    toast.className = `toast ${type}`;
+    toast.innerHTML = `
+        <button class="toast-close" onclick="closeToast(this)">&times;</button>
+        <div class="toast-title">${title}</div>
+        <div class="toast-message">${message}</div>
+        <div class="toast-progress"></div>
+      `;
+
+    container.appendChild(toast);
+
+    // 애니메이션 트리거
+    setTimeout(() => toast.classList.add('show'), 100);
+
+    // 자동 제거
+    setTimeout(() => {
+      closeToast(toast.querySelector('.toast-close'));
+    }, duration);
+  }
+
+  // 토스트 닫기 함수
+  function closeToast(closeBtn) {
+    const toast = closeBtn.parentElement;
+    toast.classList.remove('show');
+
+    setTimeout(() => {
+      if (toast.parentNode) {
+        toast.parentNode.removeChild(toast);
+      }
+    }, 300);
+  }
+
+  // URL 파라미터 확인 및 토스트 표시
+  document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const successType = urlParams.get('success');
+
+    if (successType === 'user') {
+      showToast(
+              '회원가입 완료! 🎉',
+              '일반 회원가입이 완료되었습니다.<br>신규 가입 쿠폰이 발급되었습니다. 마이페이지에서 확인하세요!',
+              'success',
+              5000
+      );
+    } else if (successType === 'seller') {
+      showToast(
+              '판매자 가입 완료!',
+              '판매자 계정이 성공적으로 생성되었습니다.',
+              'info',
+              4000
+      );
+    }
+
+    // 기존 에러 메시지도 토스트로 변환 (선택사항)
+    const paramCode = urlParams.get('code');
+    if (paramCode) {
+      let title = '';
+      let message = '';
+      let type = 'error';
+
+      switch(paramCode) {
+        case '100':
+          title = '로그인 실패';
+          message = '아이디 또는 비밀번호가 일치하지 않습니다.';
+          break;
+        case '101':
+          title = '로그아웃 완료';
+          message = '로그아웃 되었습니다.';
+          type = 'info';
+          break;
+        case '102':
+          title = '계정 상태 오류';
+          message = '탈퇴한 회원입니다. 다시 가입해주세요.';
+          break;
+      }
+
+      if (title && message) {
+        showToast(title, message, type);
+      }
+    }
+
+    // URL 파라미터 제거 (뒤로가기 시 중복 표시 방지)
+    if (successType || paramCode) {
+      const newUrl = window.location.pathname;
+      window.history.replaceState({}, document.title, newUrl);
+    }
+  });
+</script>
+
+
+
 </body>
 </html>

@@ -27,6 +27,10 @@ public class PageRequestDTO {
     // 추가 필드 (검색)
     private String searchType;
     private String keyword;
+    private String subKeyword;
+
+    private int maxPrice;
+    private int minPrice;
 
     private String startDate;
     private String endDate;

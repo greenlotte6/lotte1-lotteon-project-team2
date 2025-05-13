@@ -8,28 +8,6 @@
     <link rel="stylesheet" href="/css/admin/order.css">
     <link rel="stylesheet" href="/css/layout/layout.css">
 
-    <style>
-        .status-shipping {
-            color: blue;
-            font-weight: bold;
-        }
-
-        .status-delivered {
-            color: greenyellow;
-            font-weight: bold;
-        }
-
-        .status-paid {
-            color: orange;
-            font-weight: bold;
-        }
-
-        .status_cancel{
-            color: red;
-            font-weight: bold;
-        }
-    </style>
-
     <!-- 사이드바-->
     <script src="/js/admin/sidebar.js"></script>
 
@@ -93,13 +71,7 @@
                                     <td>[[${item.count}]]</td>
                                     <td>[[${item.orderTotalPrice}]]</td>
                                     <td>[[${item.payment}]]</td>
-                                    <td th:text="${item.orderItems[0].orderStatus}"
-                                        th:class="${item.orderItems[0].orderStatus == '입금대기' || item.orderItems[0].orderStatus == '결제대기'  } ?
-                                        'status-delivered' : (${item.orderItems[0].orderStatus == '배송준비' || item.orderItems[0].orderStatus == '배송중' || item.orderItems[0].orderStatus == '배송완료' }
-                                        ? 'status-shipping' : 'status_cancel')"></td>
-
-
-                                    </td>
+                                    <td>[[${item.orderItems[0].orderStatus}]]</td>
                                     <td th:text="${#temporals.format(item.orderDate, 'yyyy.MM.dd')}"></td>
                                     <td>
                                         <a href="#" class="delivery"
@@ -120,15 +92,15 @@
                     <!-- 페이징 -->
                     <div class="page">
                         <th:block th:if="${pageResponseDTO.prev}">
-                            <a th:href="@{/admin/order/list(pg=${pageResponseDTO.start-1}, searchType=${pageResponseDTO.searchType})}" class="prev">이전</a>
+                            <a th:href="@{/admin/order/search(pg=${pageResponseDTO.start-1}, searchType=${pageResponseDTO.searchType} , keyword=${pageResponseDTO.keyword})}" class="prev">이전</a>
                         </th:block>
 
                         <th:block th:each="num:${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end)}">
-                            <a th:href="@{/admin/order/list(pg=${num} , searchType=${pageResponseDTO.searchType})}" th:class="${num == pageResponseDTO.pg} ? 'current' : 'num'">[[${num}]]</a>
+                            <a th:href="@{/admin/order/search(pg=${num} , searchType=${pageResponseDTO.searchType} , keyword=${pageResponseDTO.keyword})}" th:class="${num == pageResponseDTO.pg} ? 'current' : 'num'">[[${num}]]</a>
                         </th:block>
 
                         <th:block th:if="${pageResponseDTO.next}">
-                            <a th:href="@{/admin/order/list(pg=${pageResponseDTO.end+1} , searchType=${pageResponseDTO.searchType} )}" class="next">다음</a>
+                            <a th:href="@{/admin/order/search(pg=${pageResponseDTO.end+1} , searchType=${pageResponseDTO.searchType} , keyword=${pageResponseDTO.keyword} )}" class="next">다음</a>
                         </th:block>
                     </div>
                     
@@ -288,7 +260,7 @@
             </div>
 
             <div class="modal_main">
-                <form th:action="@{/admin/order/delivery}" method="post">
+                <form th:action="@{/admin/order/delivery}"  method="post">
 
                     <table class="delivery_modal_table">
                         <tr>
