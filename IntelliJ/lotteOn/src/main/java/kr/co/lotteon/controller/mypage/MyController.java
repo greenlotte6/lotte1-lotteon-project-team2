@@ -89,8 +89,6 @@ public class MyController {
 
 
 
-
-
         // 로그인한 유저의 정보 조회
         myPageService.splitPhone(userDTO);
         String formattedPhone = myPageService.joinPhone(userDTO);
@@ -140,6 +138,8 @@ public class MyController {
         return "/myPage/orderDetailsSearch";
 
     }
+
+
 
 
     @GetMapping("/my/point")

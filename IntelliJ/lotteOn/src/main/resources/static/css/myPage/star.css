@@ -1,0 +1,10 @@
+.review-star {
+    color: gold;
+    font-size: 1.1em;
+    letter-spacing: 1px;
+}
+.score {
+    color: #333;
+    font-size: 1em;
+    margin-left: 4px;
+}
