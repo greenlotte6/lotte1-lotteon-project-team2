@@ -43,11 +43,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.time.LocalDate;
@@ -136,6 +134,8 @@ public class MyPageService {
         return numberFormat.format(point);
     }
 
+
+
     public PageResponseDTO<CouponDTO> couponFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO) {
 
         User user = modelMapper.map(userDTO, User.class);
@@ -159,6 +159,27 @@ public class MyPageService {
                 .dtoList(couponDTOList)
                 .total(total)
                 .build();
+
+    }
+
+    public void pointRegister(PointDTO pointDTO, UserDTO userDTO, OrderItemDTO orderItemDTO) {
+        User user = modelMapper.map(userDTO, User.class);
+
+        Point point = modelMapper.map(pointDTO, Point.class);
+
+        OrderItem orderItem = modelMapper.map(orderItemDTO, OrderItem.class);
+
+        int getPoint = orderItem.getItemPoint();
+        //int orderNO = orderItem.getOrder().getOrderNo();
+
+        point.setUser(user);
+        point.setPoint(getPoint);
+        point.setPointDesc("구매확정");
+        point.setPointDate(LocalDateTime.now());
+        point.setExpiryDate(LocalDateTime.now().plusDays(365));
+        //point.setOrderNo(orderNO);
+
+        pointRepository.save(point);
 
     }
 
@@ -208,26 +229,6 @@ public class MyPageService {
                 .build();
     }
 
-    public PageResponseDTO<PointDTO> searchPoint(UserDTO userDTO, PageRequestDTO pageRequestDTO, String startDate, String endDate, String search) {
-
-        User user = modelMapper.map(userDTO, User.class);
-
-        Pageable pageable = pageRequestDTO.getPageable("pointNo");
-
-        Page<Point> pagePoint = pointRepository.searchPoints(user, search, startDate, endDate, pageable);
-
-        List<PointDTO> pointDTOList = pagePoint.getContent().stream()
-                .map(point -> modelMapper.map(point, PointDTO.class))
-                .collect(Collectors.toList());
-
-        int total = (int) pagePoint.getTotalElements();
-
-        return PageResponseDTO.<PointDTO>builder()
-                .pageRequestDTO(pageRequestDTO)
-                .dtoList(pointDTOList)
-                .total(total)
-                .build();
-    }
 
 
     public UserDTO findByUid(String uid) {
@@ -243,6 +244,20 @@ public class MyPageService {
 
         return null;
 
+    }
+
+    public OrderItemDTO FindByItemNo(Long itemNo) {
+
+        Optional<OrderItem> optOrderItem = orderItemRepository.findByItemNo(itemNo);
+
+        if (optOrderItem.isPresent()) {
+            OrderItem orderitem = optOrderItem.get();
+            OrderItemDTO orderItemDTO = modelMapper.map(orderitem, OrderItemDTO.class);
+
+            return orderItemDTO;
+        }
+
+        return null;
     }
 
     public OrderItemDTO findByItemNo(long itemNo) {
@@ -402,15 +417,79 @@ public class MyPageService {
 
     }
 
+    public PageResponseDTO<OrderInfoDTO> searchOrder(PageRequestDTO pageRequestDTO, String uid) {
+
+        Pageable pageable = pageRequestDTO.getPageable("no");
+        Page<Tuple> pageObject = orderRepository.orderInfoPagingSearch(pageRequestDTO, pageable, uid);
+
+        List<OrderInfoDTO> DTOList = pageObject.getContent().stream().map(tuple -> {
+
+            OrderItem orderItem = tuple.get(0, OrderItem.class);
+            OrderInfoDTO orderInfoDTO = new OrderInfoDTO();
+
+            OrderItemDTO orderItemDTO = modelMapper.map(orderItem, OrderItemDTO.class);
+            ProductDTO productDTO = orderItemDTO.getProduct();
+
+            String image = tuple.get(4, String.class);
+            orderInfoDTO.setProductImage(image);
+
+            productDTO.setProductDetail(null);
+            productDTO.setProductImage(null);
+            orderItemDTO.setProduct(null);
+            productDTO.setSubCategory(null);
+
+            orderInfoDTO.setSeller(productDTO.getSeller());
+            productDTO.setSeller(null);
+
+            orderInfoDTO.setProduct(productDTO);
+            orderInfoDTO.setOrderItem(orderItemDTO);
+
+
+            Order order = tuple.get(1, Order.class);
+            int orderNo = order.getOrderNo();
+
+            LocalDateTime orderDate = tuple.get(2, LocalDateTime.class);
+            String orderStatus = tuple.get(3, String.class);
+
+            Seller seller = tuple.get(5, Seller.class);
+            User user = tuple.get(6, User.class);
+
+
+            orderInfoDTO.setOrderNo(orderNo);
+            orderInfoDTO.setOrderDate(orderDate);
+            orderInfoDTO.setOrderStatus(orderStatus);
+            orderInfoDTO.setOrder(modelMapper.map(order, OrderDTO.class));
+            orderInfoDTO.setSeller(modelMapper.map(seller, SellerDTO.class));
+            orderInfoDTO.setUser(modelMapper.map(user, UserDTO.class));
+
+            return orderInfoDTO;
+        }).toList();
+
+        int total = (int) pageObject.getTotalElements();
+
+        return PageResponseDTO.<OrderInfoDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(DTOList)
+                .total(total)
+                .build();
+
+    }
+
+
+
     public boolean confirmPurchase(Long itemNo) {
         // 주문 아이템 조회
         OrderItem orderItem = orderItemRepository.findById(itemNo).orElse(null);
-        if (orderItem == null) return false;
+        if (orderItem != null) {
+            // 상태 변경
+            orderItem.setOrderStatus("구매확정");
+            orderItemRepository.save(orderItem);
+            return true;
 
-        // 상태 변경
-        orderItem.setOrderStatus("구매확정");
-        orderItemRepository.save(orderItem);
-        return true;
+        }else{
+            return false;
+        }
+
     }
 
 

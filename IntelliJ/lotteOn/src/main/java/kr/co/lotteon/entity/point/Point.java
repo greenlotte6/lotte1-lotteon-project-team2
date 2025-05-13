@@ -34,4 +34,6 @@ public class Point {
     @JoinColumn(name="uid")
     private User user;
 
+    private int orderNo;
+
 }

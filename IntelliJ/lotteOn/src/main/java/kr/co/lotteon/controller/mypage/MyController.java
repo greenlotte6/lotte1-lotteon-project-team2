@@ -123,8 +123,24 @@ public class MyController {
 
         return "/myPage/orderDetails";
 
+    }
+
+
+    @GetMapping("/my/order/search")
+    public String search(@AuthenticationPrincipal UserDetails userDetails, PageRequestDTO pageRequestDTO, Model model) {
+
+        pageRequestDTO.setSize(10);
+
+        String uid = userDetails.getUsername();
+
+        PageResponseDTO<OrderInfoDTO> orderInfoPagingDTO = myPageService.searchOrder(pageRequestDTO, uid);
+
+        model.addAttribute("orderInfoPagingDTO", orderInfoPagingDTO);
+
+        return "/myPage/orderDetailsSearch";
 
     }
+
 
     @GetMapping("/my/point")
     public String point(PageRequestDTO pageRequestDTO,
@@ -279,11 +295,17 @@ public class MyController {
     
     // 구매확정 모달
     @PostMapping("/my/order/confirm")
-    public ResponseEntity<?> confirmPurchase(@RequestBody Map<String, Object> payload) {
+    public ResponseEntity<?> confirmPurchase(@RequestBody Map<String, Object> payload, PointDTO pointDTO, @AuthenticationPrincipal UserDetails userdetails) {
         Long itemNo = Long.valueOf(payload.get("itemNo").toString());
+
+        String uid = userdetails.getUsername();
+        UserDTO userDTO = myPageService.findByUid(uid);
+        OrderItemDTO orderItemDTO = myPageService.FindByItemNo(itemNo);
+
 
         boolean result = myPageService.confirmPurchase(itemNo);
         if (result) {
+            myPageService.pointRegister(pointDTO, userDTO, orderItemDTO);
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("구매확정 실패");
