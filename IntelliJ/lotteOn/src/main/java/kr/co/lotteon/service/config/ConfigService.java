@@ -533,4 +533,9 @@ public class ConfigService {
         }
         return null;
     }
+
+    @CacheEvict(value = "category"  , allEntries = true)
+    public void deleteCategoryCache() {
+        log.info("카테고리 캐시 삭제");
+    }
 }

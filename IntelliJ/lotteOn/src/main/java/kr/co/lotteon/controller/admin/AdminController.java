@@ -274,8 +274,9 @@ public class AdminController {
         if(newSubCateNosV2 != null){
             configService.saveNewSubV2(newSubCateNosV2, index);
         }
-        System.out.println(newSubCateNosV2);
 
+        // 카테고리 캐시 삭제
+        configService.deleteCategoryCache();
         return "redirect:/admin/config/category";
 
     }
@@ -285,6 +286,9 @@ public class AdminController {
     @ResponseBody
     public String deleteMainCategory(@RequestParam("mainCateNo") int mainCateNo) {
         configService.deleteMainCategory(mainCateNo);
+
+        // 캐시 삭제
+        configService.deleteCategoryCache();
         return "ok";
     }
 
@@ -293,6 +297,9 @@ public class AdminController {
     @ResponseBody
     public String deleteSubCategory(@RequestParam("subCateNo") int subCateNo) {
         configService.deleteSubCategory(subCateNo);
+        
+        // 캐시 삭제
+        configService.deleteCategoryCache();
         return"ok";
     }
 

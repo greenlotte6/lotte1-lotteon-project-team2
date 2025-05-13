@@ -1,18 +1,22 @@
 package kr.co.lotteon.config;
 
 import jakarta.annotation.PostConstruct;
+import kr.co.lotteon.dto.category.MainCategoryDTO;
 import kr.co.lotteon.dto.category.SubCategoryDTO;
 import kr.co.lotteon.dto.config.ConfigDTO;
 import kr.co.lotteon.dto.config.VersionDTO;
+import kr.co.lotteon.entity.category.MainCategory;
 import kr.co.lotteon.entity.config.Config;
 import kr.co.lotteon.entity.config.Version;
 import kr.co.lotteon.repository.config.ConfigRepository;
 import kr.co.lotteon.repository.config.VersionRepository;
+import kr.co.lotteon.service.category.CategoryService;
 import kr.co.lotteon.service.config.ConfigService;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.util.List;
 import java.util.Optional;
 
 @Data
@@ -28,6 +32,9 @@ public class AppInfo {
     private ConfigRepository configRepository;
 
     @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
     private ConfigService configService;
 
     @Value("${spring.application.name}") //application.yml 파일에 속성값으로 초기화
@@ -41,7 +48,7 @@ public class AppInfo {
     // 데이터베이스의 버전정보
     private String appVersion;
 
-    private SubCategoryDTO subCategory;
+    private List<MainCategoryDTO> Categories;
 
     // 사이트 정보
     private String title;
@@ -168,7 +175,8 @@ public class AppInfo {
 
     public void callCategory() {
 
-
+        List<MainCategoryDTO> mainCategories = categoryService.findAllCate();
+        Categories = mainCategories;
 
     }
 }
