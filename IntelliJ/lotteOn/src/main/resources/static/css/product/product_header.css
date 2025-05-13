@@ -152,7 +152,22 @@ header {
     gap: 20px;
 }
 
-.category-menu {
+#categoryBtn{
+    position: relative;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#categoryBtn img{
+    width: 60px;
+    height: 60px;
+}
+
+#categoryMenu {
     position: absolute;
     top: 100%;
     left: 0;
@@ -161,37 +176,38 @@ header {
     border: 1px solid #ddd;
     display: none;
     z-index: 1000;
+    margin: 0px;
 }
 
-.category-menu ul {
+#categoryMenu ul {
     list-style: none;
     padding: 10px 0;
     margin: 0;
 }
 
-.category-menu li a {
+#categoryMenu li a {
     display: block;
     padding: 10px 20px;
     text-decoration: none;
     color: #333;
     font-size: 14px;
+    font-weight: lighter;
 }
 
-.category-menu li a:hover {
+#categoryMenu li a:hover {
     background-color: #fce9e9;
 }
 
-.category-menu li.active {
+#categoryMenu li.active {
     background-color: #fce9e9;
     font-weight: bold;
 }
 
-.category-menu li.active a {
+#categoryMenu li.active a {
     color: red;
 }
 
-
-.subcategory-menu {
+#subcategoryMenu {
     position: absolute;
     width: 200px;
     background-color: white;
@@ -200,14 +216,14 @@ header {
     z-index: 1001;
 }
 
-.subcategory-menu ul {
+#subcategoryMenu ul {
     display: none;
     list-style: none;
     padding: 10px 0;
     margin: 0;
 }
 
-.subcategory-menu ul li a {
+#subcategoryMenu ul li a {
     display: block;
     padding: 10px 20px;
     text-decoration: none;
@@ -215,7 +231,7 @@ header {
     font-size: 14px;
 }
 
-.subcategory-menu ul li a:hover {
+#subcategoryMenu ul li a:hover {
     background-color: #fce9e9;
 }
 
