@@ -194,20 +194,20 @@ public class AdminController {
     public String bannerChange(@RequestParam("bno") int bno
                                 , @RequestParam("cate") String cate
                                 , @RequestParam("state") String state) {
-        configService.changeBanner(bno, state);
+
+        configService.changeBanner(bno, state, cate);
         return "redirect:/admin/config/banner?cate=" + cate;
     }
 
     // 배너 삭제하기
-    // 버전삭제
     @GetMapping("/config/banner/delete")
     public String deleteBanners(@RequestParam("deleteNo") List<Integer> deleteVnos) {
 
         //배너 이미지 지우기
-        imageService.deleteBanner(deleteVnos);
+        String cate = imageService.deleteBanner(deleteVnos);
 
         //배너 지우고
-        configService.deleteBanner(deleteVnos);
+        configService.deleteBanner(deleteVnos, cate);
         return "redirect:/admin/config/banner";
     }
 

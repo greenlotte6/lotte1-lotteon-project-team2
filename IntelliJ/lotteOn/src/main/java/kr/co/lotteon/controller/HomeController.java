@@ -2,6 +2,7 @@ package kr.co.lotteon.controller;
 
 import kr.co.lotteon.dto.config.BannerDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
+import kr.co.lotteon.entity.config.Banner;
 import kr.co.lotteon.service.config.ConfigService;
 import kr.co.lotteon.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,9 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model){
-        BannerDTO banner = configService.findBanner("MAIN1");
+        List<BannerDTO> banners = configService.findBanner("MAIN1");
+        BannerDTO banner = configService.randomBanner(banners);
+
         List<BannerDTO> bannerDTOS = configService.findBannerByCate("MAIN2");
 
         model.addAttribute("banner", banner);

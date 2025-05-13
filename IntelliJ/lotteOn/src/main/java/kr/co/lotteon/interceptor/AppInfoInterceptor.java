@@ -5,11 +5,14 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import kr.co.lotteon.config.AppInfo;
 import kr.co.lotteon.dto.config.BannerDTO;
+import kr.co.lotteon.entity.config.Banner;
 import kr.co.lotteon.repository.config.VersionRepository;
 import kr.co.lotteon.service.config.ConfigService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -42,7 +45,8 @@ public class AppInfoInterceptor implements HandlerInterceptor {
 
             // 마이 페이지 배너
             if(requestURI.contains("my")){
-                BannerDTO banner = configService.findBanner("MY1");
+                List<BannerDTO> banners = configService.findBanner("MY1");
+                BannerDTO banner = configService.randomBanner(banners);
                 modelAndView.addObject("banner", banner);
             }
 
