@@ -30,6 +30,38 @@
                 });
             });
 
+            document.querySelector('#search_form').addEventListener("submit",function (e){
+
+                e.preventDefault();
+
+                const searchType = document.querySelector('select[name="searchType"]').value;
+
+
+                // 서버에 구매확정 요청
+                fetch(`/my/order/exist?searchType=${encodeURIComponent(searchType)}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => response.text())
+                    .then(text => {
+                        if (text === 'ok') {
+                            e.target.submit();
+                        } else {
+                            alert("없어요");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("에러 발생:", error);
+                        alert("서버 통신 중 오류가 발생했습니다.");
+                    });
+
+            })
+
+
+
+
             // 모달 '확인' 버튼
             document.getElementsByClassName('modalConfirmBtn')[0].addEventListener('click', function() {
                 if (!selectedBtn) return;
@@ -108,7 +140,7 @@
                                 <input type="radio" name="choice" value="3">
                                 <span>직접입력</span>
                             </label>
-                            <form class="search_form" th:action="@{/my/order/search}">
+                            <form class="search_form" th:action="@{/my/order/search}" id="search_form">
                                 <input type="date" class="datepicker" id="startDate" name="startDate">
                                 ~
                                 <input type="date" class="datepicker" id="endDate" name="endDate">
