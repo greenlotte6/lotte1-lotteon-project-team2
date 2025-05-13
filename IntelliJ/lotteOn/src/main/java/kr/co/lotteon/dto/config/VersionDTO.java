@@ -1,9 +1,9 @@
 package kr.co.lotteon.dto.config;
 
 import kr.co.lotteon.dto.user.UserDTO;
-import kr.co.lotteon.entity.user.User;
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
@@ -11,7 +11,9 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class VersionDTO {
+public class VersionDTO implements Serializable {
+
+    private static final long serialVersionUID = 13222L;
 
     // 버전 정보 DTO
 

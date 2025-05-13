@@ -1236,8 +1236,6 @@ public class adminService {
             Double totalDiscountedPrice = (Double) row[1];
             long totalPrice = totalDiscountedPrice != null ? totalDiscountedPrice.longValue() : 0L;
 
-            System.out.println(category);
-
             switch (num){
                 case 1: {
                     operationDTO.setSale1(category);
@@ -1264,8 +1262,6 @@ public class adminService {
             num++;
 
         }
-
-        System.out.println(operationDTO);
 
         return operationDTO;
     }

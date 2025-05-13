@@ -2,13 +2,15 @@ package kr.co.lotteon.dto.product;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductDetailDTO {
+public class ProductDetailDTO implements Serializable {
 
     private int no;
 

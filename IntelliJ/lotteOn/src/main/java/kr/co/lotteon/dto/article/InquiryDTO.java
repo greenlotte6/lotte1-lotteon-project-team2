@@ -4,6 +4,7 @@ import kr.co.lotteon.dto.user.UserDTO;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class InquiryDTO {
+public class InquiryDTO implements Serializable {
 
     // 문의하기 DTO
 

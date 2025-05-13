@@ -3,13 +3,15 @@ package kr.co.lotteon.dto.seller;
 import kr.co.lotteon.dto.user.UserDTO;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class SellerDTO {
+public class SellerDTO implements Serializable {
 
     private int sno;          // 판매자 번호 (PK)
 
