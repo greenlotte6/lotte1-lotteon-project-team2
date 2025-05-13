@@ -29,4 +29,6 @@ public class Point {
     @OneToOne
     @JoinColumn(name="uid")
     private User user;
+
+    private int orderNo;
 }

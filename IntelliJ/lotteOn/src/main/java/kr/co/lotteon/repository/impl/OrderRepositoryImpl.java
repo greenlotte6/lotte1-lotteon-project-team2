@@ -1,5 +1,6 @@
 package kr.co.lotteon.repository.impl;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -152,6 +154,62 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
         log.info("total: {}", total);
         log.info("tupleList: {}", tupleList);
+
+        return new PageImpl<>(tupleList, pageable, total);
+    }
+
+    @Override
+    public Page<Tuple> orderInfoPagingSearch(PageRequestDTO pageRequestDTO, Pageable pageable, String uid) {
+
+        BooleanExpression booleanExpression = qOrder.user.uid.eq(uid);
+
+        System.out.println("keyword" + pageRequestDTO.getKeyword());
+        System.out.println("type" + pageRequestDTO.getSearchType());
+
+        // 1. 키워드 검색
+        String keyword = pageRequestDTO.getKeyword();
+        String searchType = pageRequestDTO.getSearchType();
+
+        booleanExpression.and(qOrderItem.orderStatus.eq(searchType));
+
+
+
+        /*
+        // 2. 날짜 검색
+        if (pageRequestDTO.getStartDate() != null && !pageRequestDTO.getStartDate().isEmpty()) {
+            LocalDateTime start = LocalDate.parse(pageRequestDTO.getStartDate()).atStartOfDay();
+            booleanExpression.and(qOrder.orderDate.goe(start));
+        }
+        if (pageRequestDTO.getEndDate() != null && !pageRequestDTO.getEndDate().isEmpty()) {
+            LocalDateTime end = LocalDate.parse(pageRequestDTO.getEndDate()).atTime(23, 59, 59);
+            booleanExpression.and(qOrder.orderDate.loe(end));
+        }
+*/
+        List<Tuple> tupleList = queryFactory
+                .select(qOrderItem, qOrder, qOrder.orderDate, qOrderItem.orderStatus , qProductImage.sNameThumb3, qSeller, qUser)
+                .from(qOrderItem)
+                .join(qOrderItem.order, qOrder)
+                .join(qOrderItem.product, qProduct)
+                .join(qProduct.seller, qSeller)
+                .join(qOrder.user, qUser)
+                .where(booleanExpression)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(qOrder.orderNo.desc())
+                .fetch();
+
+        long total = queryFactory
+                .select(qOrderItem.count())
+                .from(qOrderItem)
+                .join(qOrderItem.order, qOrder)
+                .join(qOrderItem.product, qProduct)
+                .join(qProduct.seller, qSeller)
+                .join(qOrder.user, qUser)
+                .where(booleanExpression)
+                .fetchOne();
+
+        log.info("total: {}", total);
+
 
         return new PageImpl<>(tupleList, pageable, total);
     }

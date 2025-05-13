@@ -33,10 +33,14 @@ document.addEventListener('DOMContentLoaded', function(){
 
             if(orderStatus === "구매확정"){
                 alert("이미 구매확정입니다.");
-                return;
+            }else if(orderStatus === "반품신청"){
+                alert("반품 신청 중에는 구매확정이 불가합니다. 문의사항은 고객센터로 연락 바랍니다.");
+            }else if(orderStatus === "교환신청"){
+                alert("교환 신청 중에는 구매확정이 불가합니다. 문의사항은 고객센터로 연락 바랍니다.")
+            }else{
+                purchase_confirm_modal.style.display ='block';
             }
 
-            purchase_confirm_modal.style.display ='block';
         });
     });
 
@@ -81,7 +85,9 @@ document.addEventListener('DOMContentLoaded', function(){
             if(orderStatus === "반품신청"){
                 alert("이미 반품 신청이 접수되어 있습니다.")
             }else if(orderStatus === "구매확정"){
-                alert("구매 확정 후에는 반품 신청이 불가능합니다. 문의사항은 고객센터로 연락해 주세요.")
+                alert("구매확정 후에는 반품 신청이 불가합니다. 문의사항은 고객센터로 연락 바랍니다.")
+            }else if(orderStatus === "교환신청"){
+                alert("교환 신청 중에는 반품 신청이 불가합니다. 문의사항은 고객센터로 연락 바랍니다.")
             }else{
                 return_request_modal.style.display ='block';
             }
@@ -122,6 +128,8 @@ document.addEventListener('DOMContentLoaded', function(){
                 alert("이미 교환 신청이 접수되어 있습니다.")
             }else if(orderStatus === "구매확정"){
                 alert("구매 확정 후에는 교환 신청이 불가능합니다. 문의사항은 고객센터로 연락해 주세요.")
+            }else if(orderStatus === "반품신청") {
+                alert("반품 신청 중에는 교환 신청이 불가능합니다. 문의사항은 고객센터로 연락해 주세요.")
             }else{
                 exchange_request_modal.style.display ='block';
             }

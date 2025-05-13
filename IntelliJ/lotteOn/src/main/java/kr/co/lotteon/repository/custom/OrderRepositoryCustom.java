@@ -10,5 +10,7 @@ public interface OrderRepositoryCustom {
 
     Page<Tuple> orderInfoPaging(PageRequestDTO pageRequestDTO, Pageable pageable, String uid);
 
+    Page<Tuple> orderInfoPagingSearch(PageRequestDTO pageRequestDTO, Pageable pageable, String uid);
+
     Page<Tuple> selectAllOrder(PageRequestDTO pageRequestDTO, Pageable pageable);
 }
