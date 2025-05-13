@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>[[${appInfo.title}]] : [[${appInfo.subTitle}]]</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="/css/index_layout.css">
     <link rel="stylesheet" href="/css/lotteon.css">
     <link rel="stylesheet" href="/css/common/header.css">
@@ -141,8 +142,6 @@
                   </div>
                 </section>
 
-
-
                 <section class="hit-products">
                   <div class="section-title">리뷰많은상품</div>
                   <div class="product-grid">
@@ -162,7 +161,6 @@
                   </div>
                 </section>
 
-  
               </div>
               <!--사이드 바-->
               <aside class="sidebar">
@@ -303,6 +301,63 @@
   });
 
   </script>
+
+<!--
+<script>
+  let hit = false;
+
+  $(window).scroll(function() {
+    var documentHeight = $(document).height();
+    var scrollTop = $(window).scrollTop();
+    var windowHeight = $(window).height();
+
+    if (scrollTop + windowHeight >= documentHeight - 500) {  // 500px 정도 여유를 두고
+      if (!hit) {
+        hit = true;
+        alert("실행");
+
+        $.ajax({
+          url: '/main/discount',  // 요청할 URL
+          method: 'GET',
+          success: function(response) {
+            console.log(response);  // 응답 받은 JSON 데이터를 콘솔에 출력하여 확인
+
+            // 서버에서 받은 JSON 데이터를 HTML로 변환
+            if (response && Array.isArray(response)) {
+              response.forEach(item => {
+                var productHtml = `
+      <div class="product-card">
+        <a href="/product/view/prodNo=${item.prodNo}">
+          <img src="/images/background.jpg" alt="상품1">
+        </a>
+        <div class="product-info">
+          <div class="product-name">${item.prodName}</div>
+          <div class="product-price">
+            <del>${item.prodPrice}</del>
+            <span class="discount">${item.prodDiscount}</span>
+            <strong>${item.prodPrice * (100 - item.prodDiscount) / 100}</strong>
+          </div>
+        </div>
+      </div>
+    `;
+                $('.hit-products .product-grid').append(productHtml);
+              });
+            }
+          },
+          error: function(error) {
+            console.error('Error loading discount products:', error);
+          }
+        });
+      } else {
+        return;
+      }
+    }
+  });
+</script>
+-->
+
+
+
 </html>
 
 

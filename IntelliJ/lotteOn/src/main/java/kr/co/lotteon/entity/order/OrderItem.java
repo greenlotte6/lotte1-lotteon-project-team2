@@ -33,7 +33,6 @@ public class OrderItem {
     private int itemPoint;
     private int itemCount;  // 구매 수량 (기본값 1)
 
-
     private String category;
 
     // 옵션 1

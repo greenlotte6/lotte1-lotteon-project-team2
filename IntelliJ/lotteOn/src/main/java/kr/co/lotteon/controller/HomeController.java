@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -53,14 +54,26 @@ public class HomeController {
         List<ProductDTO> reviewManyList = productService.findReviewManyTop8();
 
 
-        model.addAttribute("discountList", discountList);
         model.addAttribute("hitList", hitList);
+        model.addAttribute("bestList", bestList);
+
+
+        model.addAttribute("discountList", discountList);
         model.addAttribute("reviewTopList" , reviewTopList);
         model.addAttribute("reviewManyList", reviewManyList);
-        model.addAttribute("bestList", bestList);
         model.addAttribute("recentList", recentList);
 
         return "/index";
     }
+
+    @GetMapping("/main/discount")
+    @ResponseBody
+    public List<ProductDTO> loadMoreDiscountProducts() {
+        System.out.println("실행");
+        List<ProductDTO> list =productService.findDiscountTop8();
+        System.out.println(list);
+        return list;
+    }
+
 
 }
