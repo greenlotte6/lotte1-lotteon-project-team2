@@ -8,11 +8,12 @@ import org.springframework.data.domain.Pageable;
 public interface ProductRepositoryCustom {
 
 
-    public Page<Tuple> selectAllForList(PageRequestDTO pageRequestDTO, Pageable pageable);
+    Page<Tuple> selectBestAllForList(int subCate);
 
-    public Page<Tuple> selectBestAllForList(int subCate);
+    Page<Tuple> sortedProducts(PageRequestDTO pageRequestDTO, Pageable pageable);
 
-    public Page<Tuple> sortedProducts(PageRequestDTO pageRequestDTO, Pageable pageable);
+    Page<Tuple> sortedSearchProducts(PageRequestDTO pageRequestDTO, Pageable pageable);
 
     Page<Tuple> selectAllForListByRole(PageRequestDTO pageRequestDTO, Pageable pageable);
+
 }
