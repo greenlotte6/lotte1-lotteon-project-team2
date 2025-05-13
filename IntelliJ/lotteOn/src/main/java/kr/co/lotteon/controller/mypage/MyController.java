@@ -139,6 +139,22 @@ public class MyController {
 
     }
 
+    @ResponseBody
+    @GetMapping("/my/order/exist")
+    public String orderExist(@AuthenticationPrincipal UserDetails userDetails, @RequestParam("searchType") String searchType) {
+
+        Boolean exist = myPageService.existOrderByType(searchType);
+
+        System.out.println(exist);
+        if(exist){
+            return "ok";
+        }
+
+        return "error";
+
+    }
+
+
 
 
 

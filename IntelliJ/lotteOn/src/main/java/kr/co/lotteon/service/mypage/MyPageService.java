@@ -646,5 +646,9 @@ public class MyPageService {
     }
 
 
+    public Boolean existOrderByType(String searchType) {
+        Boolean exist = orderItemRepository.existsByOrderStatus(searchType);
+        return exist;
+    }
 }
 
