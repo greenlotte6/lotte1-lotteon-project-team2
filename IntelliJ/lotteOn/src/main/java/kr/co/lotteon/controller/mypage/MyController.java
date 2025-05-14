@@ -25,6 +25,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +45,7 @@ public class MyController {
 
     private final MyPageService myPageService;
     private final ConfigService configService;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/my/home")
     public String myHome(PageRequestDTO pageRequestDTO, Model model, @AuthenticationPrincipal UserDetails userDetails) {
@@ -107,6 +109,44 @@ public class MyController {
 
 
         return "/myPage/myPageMain";
+    }
+
+    @GetMapping("/my/info/check")
+    public String myInfoCheck(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+
+        String uid = userDetails.getUsername();
+
+        UserDTO userDTO = myPageService.findByUid(uid);
+
+        model.addAttribute("userDTO", userDTO);
+
+        return "/myPage/checkPassword";
+    }
+
+    @PostMapping("/my/info/check")
+    public String passwordCheck(@AuthenticationPrincipal UserDetails userDetails,
+                                @RequestParam String inputPassword) {
+
+        String uid = userDetails.getUsername();
+
+        UserDTO userDTO = myPageService.findByUid(uid);
+
+        String encodedPassword = userDTO.getPass();
+
+
+        // 비밀번호 일치 / 불일치 => 확인 완료
+        if (passwordEncoder.matches(inputPassword, encodedPassword)) {
+            // 비밀번호 일치
+
+            
+
+        } else {
+            // 비밀번호 불일치
+
+        }
+
+
+        return "redirect:/my/info";
     }
 
     @GetMapping("/my/order")
