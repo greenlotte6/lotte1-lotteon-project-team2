@@ -172,12 +172,12 @@ main {
     width: 100%;
     object-fit: cover;
     border-radius: 10px;
+    height: 240px;
 }
 
 .img_section {
     width: 350px;
-    height: 300px;
-    margin-bottom: 20px;
+    height: 270px;
     border-radius: 10px;
 }
 
@@ -194,7 +194,7 @@ main {
 }
 
 .text_section > p:nth-child(2) {
-    font-size: 18px;
+    font-size: 16px;
     color: #BFBFBF;
 }
 
