@@ -48,6 +48,18 @@
 
     // DOM 로드 후 실행
     document.addEventListener("DOMContentLoaded", function () {
+        const productSearchForm = document.getElementById('productSearchForm');
+
+        if (productSearchForm) {
+            productSearchForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                console.log("두 번째 폼(#productSearchForm) 제출됨");
+                loadProducts({ pg: '1' });
+            });
+        } else {
+            console.error("ID가 'productSearchForm'인 폼을 찾을 수 없습니다.");
+        }
+
 
         // 상품 목록 로드
         loadProducts(`&sortType=salesCount&period=`);
@@ -238,10 +250,6 @@
             return number.toLocaleString();
         }
 
-
-
-
-
         function loadProducts(params) {
             const currentUrl = new URL(window.location.href);
             const sortTypeParam = currentUrl.searchParams.get('sortType');
@@ -275,7 +283,6 @@
                 }
             }
 
-
             const queryParams = [
                 `view=${encodeURIComponent(getView())}`,
                 `pg=${encodeURIComponent(pgParam)}`,
@@ -307,20 +314,36 @@
 
             const url = `/product/ajaxSearchList?${queryParams.join('&')}`;
 
-            console.log("최종 요청 URL (바로 이 URL로 fetch합니다):", url);
-
-
-
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
+                    const totalItems = data.total !== undefined ? data.total : (data.totalElements !== undefined ? data.totalElements : 0);
+
+                    const totalCountSpan = document.querySelector('span.total');
+                    if (totalCountSpan) {
+                        totalCountSpan.textContent = `(총: ${totalItems.toLocaleString()}건)`;
+                    }
+
                     const productListContainer = document.querySelector('#productWrapper .product-list');
-                    productListContainer.innerHTML = ''; // 기존 목록 초기화
-                    data.dtoList.forEach(product => {
-                        const productItem = document.createElement('div');
-                        productItem.classList.add('product-item');
-                        productItem.setAttribute('data-prodno', product.prodNo);
-                        productItem.innerHTML = `
+                    productListContainer.innerHTML = '';
+
+                    const pageContainer = document.querySelector('.page');
+
+                    if (totalItems === 0) {
+                        const noResultsMessage = document.createElement('div');
+                        noResultsMessage.classList.add('no-results-message');
+                        noResultsMessage.textContent = '검색결과가 없습니다.';
+                        productListContainer.appendChild(noResultsMessage);
+
+                        if (pageContainer) {
+                            pageContainer.innerHTML = '';
+                        }
+                    } else {
+                        data.dtoList.forEach(product => {
+                            const productItem = document.createElement('div');
+                            productItem.classList.add('product-item');
+                            productItem.setAttribute('data-prodno', product.prodNo);
+                            productItem.innerHTML = `
                     <img class="product-img" src="${product.snameList}" alt="${product.prodName}" />
                     <div class="product-info">
                         <span class="vendor-name">${product.company}</span> <span class="vendor-rank">${product.rank}</span><br>
@@ -334,20 +357,33 @@
                     <div class="product-price">
                         <del>${formatNumber(product.prodPrice)}원</del><br>
                         <span class="discount">${product.prodDiscount}%</span>
-                        <span>${formatNumber(product.prodPrice * (100 - product.prodDiscount) / 100)}원</span>
+                        <span>${formatNumber(Math.floor(product.prodPrice * (100 - product.prodDiscount) / 100))}원</span>
                         <div class="icons">
                             <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
                             <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
                         </div>
                     </div>
                 `;
-                        productListContainer.appendChild(productItem);
-                    });
-                    updatePagination(data);
-                    attachProductClickHandler('#productWrapper', '.product-item');
+                            productListContainer.appendChild(productItem);
+                        });
+
+                        if (pageContainer) {
+                            updatePagination(data);
+                        }
+                        attachProductClickHandler('#productWrapper', '.product-item');
+                    }
                 })
                 .catch(error => {
                     console.error('Ajax 요청 실패:', error);
+                    // 사용자에게도 오류 메시지를 보여주는 것이 좋습니다.
+                    const productListContainer = document.querySelector('#productWrapper .product-list');
+                    if (productListContainer) {
+                        productListContainer.innerHTML = '<div class="error-message">상품을 불러오는 데 실패했습니다. 다시 시도해주세요.</div>';
+                    }
+                    const pageContainer = document.querySelector('.page');
+                    if (pageContainer) {
+                        pageContainer.innerHTML = ''; // 오류 시 페이지네이션도 비움
+                    }
                 });
         }
 
@@ -441,31 +477,31 @@
             <div class="container">
                 <div class="search">
                     <p>
-                        <span class="keyword">향수</span>&nbsp;&nbsp;검색결과&nbsp;&nbsp;
+                        <span class="keyword" th:text="${keyword}">키워드</span>&nbsp;&nbsp;검색결과&nbsp;&nbsp;
                         <span class="total">(총: 20건)</span>
                     </p>
                     <div class="search-container">
                         <form action="#" id="productSearchForm">
                             <div class="search_area">
-                                <input type="search" placeholder="검색어를 입력하세요">
+                                <input type="search" id="subKeywordInput" placeholder="검색어를 입력하세요">
                                 <button type="submit" class="search_icon">
                                     <img src="/images/search_ico.svg" alt="검색" class="search_iconImg">
                                 </button>
                             </div>
                             <div class="search_filters">
                                 <label>
-                                    <input type="checkbox" name="filter" value="name"> 상품명
+                                    <input type="radio" name="filter" value="상품명"> 상품명
                                 </label>
                                 <label>
-                                    <input type="checkbox" name="filter" value="description"> 브랜드
+                                    <input type="radio" name="filter" value="브랜드"> 브랜드
                                 </label>
                                 <div class="price-range">
                                     <label>
-                                        <input type="checkbox" name="filter" value="price"> 가격
+                                        <input type="radio" name="filter" value="가격" id="priceFilterCheckbox"> 가격
                                     </label>
-                                    <input type="number" placeholder="최소" min="0">
+                                    <input type="number" id="minPriceInput" placeholder="최소" min="0">
                                     ~
-                                    <input type="number" placeholder="최대" min="0">
+                                    <input type="number" id="maxPriceInput" placeholder="최대" min="0">
                                 </div>
                             </div>
                         </form>

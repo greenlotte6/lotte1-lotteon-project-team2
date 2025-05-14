@@ -431,6 +431,10 @@ h2 {
     position: relative;
 }
 
+.search_area {
+    position: relative;
+}
+
 .search_area input {
     width: 240px;
     height: 40px;
@@ -474,7 +478,7 @@ h2 {
     cursor: pointer;
 }
 
-.search_filters input[type="checkbox"] {
+.search_filters input[type="radio"] {
     width: 16px;
     height: 16px;
     flex-shrink: 0;
@@ -493,6 +497,15 @@ h2 {
 
 .price-range input:focus {
     border-color: #ef2a23;
+}
+
+.no-results-message {
+    font-size: 30px;
+    text-align: center;
+    color: #777;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    width: 100%;
 }
 
 
