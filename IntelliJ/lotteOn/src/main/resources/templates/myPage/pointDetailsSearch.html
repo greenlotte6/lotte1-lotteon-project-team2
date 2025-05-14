@@ -59,7 +59,7 @@
                                 <input type="radio" name="choice" value="3">
                                 <span>직접입력</span>
                             </label>
-                            <form th:action="@{/my/point/search}" class="search_form">
+                            <form class="search_form" th:action="@{/my/point/search}">
                                 <input type="date" class="datepicker" id="startDate" th:field="*{pointDTO.startDate}">
                                 ~
                                 <input type="date" class="datepicker" id="endDate" th:field="*{pointDTO.endDate}">
@@ -96,11 +96,11 @@
                     </div>
                     <div class="notice-footer">
                         <div class="pagination">
-                            <a class="prev" th:if="${pointDTO.prev}" th:href="@{/my/point(pg=${pointDTO.start - 1}, size=${pointDTO.size})}">이전</a>
+                            <a class="prev" th:if="${pointDTO.prev}" th:href="@{/my/point/search(pg=${pointDTO.start - 1}, size=${pointDTO.size})}">이전</a>
                             <th:block th:each="i: ${#numbers.sequence(pointDTO.start, pointDTO.end)}">
-                                <a th:href="@{/my/point(pg=${i}, size=${pointDTO.size})}" th:text="${i}" th:class="${i == pointDTO.pg ? 'active' : ''}"></a>
+                                <a th:href="@{/my/point/search(pg=${i}, size=${pointDTO.size})}" th:text="${i}" th:class="${i == pointDTO.pg ? 'active' : ''}"></a>
                             </th:block>
-                            <a class="next" th:if="${pointDTO.next}" th:href="@{/my/point(pg=${pointDTO.end + 1}, size=${pointDTO.size})}">다음</a>
+                            <a class="next" th:if="${pointDTO.next}" th:href="@{/my/point/search(pg=${pointDTO.end + 1}, size=${pointDTO.size})}">다음</a>
                         </div>
                     </div>
                 </article>

@@ -50,6 +50,7 @@ import java.io.IOException;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -132,6 +133,37 @@ public class MyPageService {
         // 1,000 단위로 콤마 추가
         NumberFormat numberFormat = NumberFormat.getInstance(Locale.KOREA);
         return numberFormat.format(point);
+    }
+
+    public PageResponseDTO<PointDTO> searchPoint(UserDTO userDTO, PageRequestDTO pageRequestDTO, LocalDate startDate, LocalDate endDate) {
+
+        User user = modelMapper.map(userDTO, User.class);
+        Pageable pageable = pageRequestDTO.getPageable("pointNo");
+
+        Page<Point> pagePoint;
+
+        if (startDate != null && endDate != null) {
+            // LocalDate → LocalDateTime 변환
+            LocalDateTime startDateTime = startDate.atStartOfDay();
+            LocalDateTime endDateTime = endDate.atTime(LocalTime.MAX);
+
+            pagePoint = pointRepository.findAllByUserAndPointDateBetween(user, startDateTime, endDateTime, pageable);
+        } else {
+            // 날짜 조건이 없으면 기존 방식
+            pagePoint = pointRepository.findAllByUser(user, pageable);
+        }
+
+        List<PointDTO> pointDTOList = pagePoint.getContent().stream()
+                .map(point -> modelMapper.map(point, PointDTO.class))
+                .collect(Collectors.toList());
+
+        int total = (int) pagePoint.getTotalElements();
+
+        return PageResponseDTO.<PointDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(pointDTOList)
+                .total(total)
+                .build();
     }
 
 
@@ -233,16 +265,16 @@ public class MyPageService {
 
     public UserDTO findByUid(String uid) {
 
-        Optional<User> optUser = userRepository.findByUid(uid);
+        Optional<User> optUser = userRepository.findById(uid);
 
         if (optUser.isPresent()) {
+
             User user = optUser.get();
             UserDTO userDTO = modelMapper.map(user, UserDTO.class);
 
             return userDTO;
         }
-
-        return null;
+       return null;
 
     }
 
@@ -478,6 +510,8 @@ public class MyPageService {
 
 
 
+
+
     public boolean confirmPurchase(Long itemNo) {
         // 주문 아이템 조회
         OrderItem orderItem = orderItemRepository.findById(itemNo).orElse(null);
@@ -646,9 +680,15 @@ public class MyPageService {
     }
 
 
-    public Boolean existOrderByType(String searchType) {
-        Boolean exist = orderItemRepository.existsByOrderStatus(searchType);
-        return exist;
+
+    public Boolean existOrderByType(LocalDateTime start, LocalDateTime end, String searchType, String keyword) {
+
+        if(searchType.equals("전체")){
+            return orderItemRepository.existsByOrder_OrderDateBetweenAndProduct_ProdNameContaining(start, end, keyword);
+        }else{
+           return orderItemRepository.existsByOrder_OrderDateBetweenAndOrderStatusAndProduct_ProdNameContaining(start, end, searchType, keyword);
+        }
+
     }
 }
 

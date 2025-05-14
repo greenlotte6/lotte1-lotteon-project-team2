@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -53,5 +54,8 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
 
     List<OrderItem> findByOrder(Order order);
 
-    Boolean existsByOrderStatus(String searchType);
+
+    Boolean existsByOrder_OrderDateBetweenAndOrderStatusAndProduct_ProdNameContaining(LocalDateTime start, LocalDateTime end, String searchType, String keyword);
+
+    Boolean existsByOrder_OrderDateBetweenAndProduct_ProdNameContaining(LocalDateTime start, LocalDateTime end, String keyword);
 }

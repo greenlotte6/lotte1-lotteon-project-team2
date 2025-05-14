@@ -8,6 +8,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -34,6 +37,9 @@ public class PageRequestDTO {
 
     private String startDate;
     private String endDate;
+
+    private LocalDate start;
+    private LocalDate end;
 
     // 추가 필드 (상품 목록 정렬용)
     private String sortType;

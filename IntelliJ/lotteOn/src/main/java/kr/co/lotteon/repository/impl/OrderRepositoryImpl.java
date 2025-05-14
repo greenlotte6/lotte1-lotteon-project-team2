@@ -163,27 +163,28 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
         BooleanExpression booleanExpression = qOrder.user.uid.eq(uid);
 
-        System.out.println("keyword" + pageRequestDTO.getKeyword());
-        System.out.println("type" + pageRequestDTO.getSearchType());
 
         // 1. 키워드 검색
         String keyword = pageRequestDTO.getKeyword();
         String searchType = pageRequestDTO.getSearchType();
 
-        booleanExpression = booleanExpression.and(qOrderItem.orderStatus.eq(searchType));
-        booleanExpression = booleanExpression.and(qOrderItem.product.prodName.like("%" + keyword + "%"));
+        LocalDate startDate = pageRequestDTO.getStart();
+        LocalDate endDate =  pageRequestDTO.getEnd();
 
-        /*
-        // 2. 날짜 검색
-        if (pageRequestDTO.getStartDate() != null && !pageRequestDTO.getStartDate().isEmpty()) {
-            LocalDateTime start = LocalDate.parse(pageRequestDTO.getStartDate()).atStartOfDay();
-            booleanExpression.and(qOrder.orderDate.goe(start));
+
+        if (searchType != null && !searchType.isEmpty()) {
+            booleanExpression = booleanExpression.and(qOrderItem.orderStatus.eq(searchType));
         }
-        if (pageRequestDTO.getEndDate() != null && !pageRequestDTO.getEndDate().isEmpty()) {
-            LocalDateTime end = LocalDate.parse(pageRequestDTO.getEndDate()).atTime(23, 59, 59);
-            booleanExpression.and(qOrder.orderDate.loe(end));
+
+        if (keyword != null && !keyword.isEmpty()) {
+            booleanExpression = booleanExpression.and(qOrderItem.product.prodName.like("%" + keyword + "%"));
         }
-*/
+
+        if (startDate != null && endDate != null) {
+            booleanExpression = booleanExpression.and(qOrder.orderDate.between(startDate.atStartOfDay(), endDate.atStartOfDay()));
+        }
+
+
         List<Tuple> tupleList = queryFactory
                 .select(qOrderItem, qOrder, qOrder.orderDate, qOrderItem.orderStatus , qProductImage.sNameThumb3, qSeller, qUser)
                 .from(qOrderItem)

@@ -33,6 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
@@ -115,9 +116,26 @@ public class MyController {
 
         String uid = userDetails.getUsername();
 
+        UserDTO userDTO = myPageService.findByUid(uid);
+
+        // 로그인한 유저의 쿠폰 개수 조회
+        long getCouponCount = myPageService.getCouponCount(userDTO);
+
+        // 로그인한 유저의 검토중 문의 개수 조회
+        long pendingInquiryCount = myPageService.getPendingInquiryCount(userDTO);
+
+        // 로그인한 유저의 포인트 조회
+        String point = myPageService.getPoint(userDTO);
+
         PageResponseDTO<OrderInfoDTO> orderInfoPagingDTO = myPageService.orderInfoPaging(pageRequestDTO, uid);
 
+        model.addAttribute("point", point);
         model.addAttribute("orderInfoPagingDTO", orderInfoPagingDTO);
+        model.addAttribute("userDTO", userDTO);
+        model.addAttribute("orderInfoPagingDTO", orderInfoPagingDTO);
+        model.addAttribute("getCouponCount", getCouponCount);
+        model.addAttribute("pendingInquiryCount", pendingInquiryCount);
+
 
         return "/myPage/orderDetails";
 
@@ -125,31 +143,66 @@ public class MyController {
 
 
     @GetMapping("/my/order/search")
-    public String search(@AuthenticationPrincipal UserDetails userDetails, PageRequestDTO pageRequestDTO, Model model) {
-
+    public String search(@AuthenticationPrincipal UserDetails userDetails,
+                         PageRequestDTO pageRequestDTO, Model model) {
+        
         pageRequestDTO.setSize(10);
 
         String uid = userDetails.getUsername();
 
+        UserDTO userDTO = myPageService.findByUid(uid);
+
+        // 로그인한 유저의 쿠폰 개수 조회
+        long getCouponCount = myPageService.getCouponCount(userDTO);
+
+        // 로그인한 유저의 검토중 문의 개수 조회
+        long pendingInquiryCount = myPageService.getPendingInquiryCount(userDTO);
+
+        // 로그인한 유저의 포인트 조회
+        String point = myPageService.getPoint(userDTO);
+
         PageResponseDTO<OrderInfoDTO> orderInfoPagingDTO = myPageService.searchOrder(pageRequestDTO, uid);
 
+        model.addAttribute("userDTO", userDTO);
         model.addAttribute("orderInfoPagingDTO", orderInfoPagingDTO);
+        model.addAttribute("getCouponCount", getCouponCount);
+        model.addAttribute("pendingInquiryCount", pendingInquiryCount);
+        model.addAttribute("point", point);
 
-        return "/myPage/orderDetailsSearch";
+        return "/myPage/orderDetails";
 
     }
 
     @ResponseBody
     @GetMapping("/my/order/exist")
-    public String orderExist(@AuthenticationPrincipal UserDetails userDetails, @RequestParam("searchType") String searchType) {
+    public String orderExist(@AuthenticationPrincipal UserDetails userDetails,
+                             @RequestParam("searchType") String searchType,
+                             @RequestParam("start") LocalDate start,
+                             @RequestParam("end") LocalDate end,
+                             @RequestParam("keyword") String keyword) {
 
-        Boolean exist = myPageService.existOrderByType(searchType);
+        log.info("searchType : " + searchType );
+        log.info("start : " + start );
+        log.info("end : " + end );
+        log.info("keyword : " + keyword );
 
-        System.out.println(exist);
+        System.out.println("searchType : " + searchType );
+        System.out.println("start : " + start );
+        System.out.println("end : " + end );
+        System.out.println("keyword : " + keyword );
+
+        LocalDateTime localStart = start.atStartOfDay();
+        LocalDateTime localEnd = end.atTime(LocalTime.MAX);;
+
+
+        Boolean exist = myPageService.existOrderByType(localStart, localEnd, searchType, keyword);
+        
         if(exist){
+            System.out.println("존재");
             return "ok";
         }
 
+        System.out.println("존재안함");
         return "error";
 
     }
@@ -191,6 +244,36 @@ public class MyController {
         model.addAttribute("point", point);
 
         return "/myPage/pointDetails";
+    }
+
+    @GetMapping ("/my/point/search")
+    public String searchPoint(@AuthenticationPrincipal UserDetails userDetails,
+                              @RequestParam(value="startDate", required = false, defaultValue = "") LocalDate startDate,
+                              @RequestParam(value="endDate", required = false, defaultValue="") LocalDate endDate,
+                              PageRequestDTO pageRequestDTO, Model model){
+
+        String uid = userDetails.getUsername();
+
+        UserDTO userDTO = myPageService.findByUid(uid);
+
+        // 로그인한 유저의 쿠폰 개수 조회
+        long getCouponCount = myPageService.getCouponCount(userDTO);
+
+        // 로그인한 유저의 검토중 문의 개수 조회
+        long pendingInquiryCount = myPageService.getPendingInquiryCount(userDTO);
+
+        // 로그인한 유저의 포인트 조회
+        String point = myPageService.getPoint(userDTO);
+
+        PageResponseDTO<PointDTO> PointDTO = myPageService.searchPoint(userDTO, pageRequestDTO, startDate, endDate);
+
+        model.addAttribute("pointDTO", PointDTO);
+        model.addAttribute("userDTO", userDTO);
+        model.addAttribute("getCouponCount", getCouponCount);
+        model.addAttribute("pendingInquiryCount", pendingInquiryCount);
+        model.addAttribute("point", point);
+
+        return "/myPage/pointDetailsSearch";
     }
 
     @GetMapping("/my/coupon")
