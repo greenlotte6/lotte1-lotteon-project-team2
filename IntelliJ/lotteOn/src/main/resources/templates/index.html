@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[[${appInfo.title}]] : [[${appInfo.subTitle}]]</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[[${appInfo.title}]] : [[${appInfo.subTitle}]]</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="/css/common/header.css">
-    <link rel="stylesheet" href="/css/index_layout.css">
-    <link rel="stylesheet" href="/css/lotteon.css">
-    <script src="/js/headerMenu.js"></script>
-    <script src="/js/aside.js"></script>
-    <link id="favicon" rel="icon" th:href="@{/upload/{favicon}(favicon=${appInfo.favicon})}">
+  <link rel="stylesheet" href="/css/common/header.css">
+  <link rel="stylesheet" href="/css/index_layout.css">
+  <link rel="stylesheet" href="/css/lotteon.css">
+  <script src="/js/headerMenu.js"></script>
+  <script src="/js/aside.js"></script>
+  <link id="favicon" rel="icon" th:href="@{/upload/{favicon}(favicon=${appInfo.favicon})}">
 
   <style>
     .loading-overlay {
@@ -59,214 +59,214 @@
     }
   </style>
 
-    <!-- 헤더 푸터만 있습니다.(광고버전)-->
+  <!-- 헤더 푸터만 있습니다.(광고버전)-->
 
   <!-- 파비콘 테스트 -->
   <script>
-      window.onload = function() {
-        var favicon = document.getElementById('favicon');
+    window.onload = function() {
+      var favicon = document.getElementById('favicon');
 
-        // 파비콘 이미지가 존재하는지 확인
-        var img = new Image();
-        img.onload = function() {
-          // 이미지가 정상적으로 로드되면 아무 작업도 안 함
-        };
-        img.onerror = function() {
-          // 이미지 로드 실패 시 대체 파비콘을 설정
-          favicon.href = '/images/파비콘기초이미지.png';  // 대체 파비콘 경로
-        };
-
-        // 시도하려는 파비콘 이미지 URL
-        img.src = favicon.href;
+      // 파비콘 이미지가 존재하는지 확인
+      var img = new Image();
+      img.onload = function() {
+        // 이미지가 정상적으로 로드되면 아무 작업도 안 함
       };
-    </script>
+      img.onerror = function() {
+        // 이미지 로드 실패 시 대체 파비콘을 설정
+        favicon.href = '/images/파비콘기초이미지.png';  // 대체 파비콘 경로
+      };
+
+      // 시도하려는 파비콘 이미지 URL
+      img.src = favicon.href;
+    };
+  </script>
 </head>
 <body>
-    <div id="wrapper">
-      <div class="advertisement"
-           th:style="'background-color:' + ${banner.color} +';'">
-        <a th:href="${banner.link}">
-          <img th:src="@{/upload/{image}(image=${banner.sName})}"
-               th:style="'width:' + ${banner.width} + 'px;'
+<div id="wrapper">
+  <div class="advertisement"
+       th:style="'background-color:' + ${banner.color} +';'">
+    <a th:href="${banner.link}">
+      <img th:src="@{/upload/{image}(image=${banner.sName})}"
+           th:style="'width:' + ${banner.width} + 'px;'
                +'height:' + ${banner.height} + 'px;'"
-               onerror="this.src='/images/광고사진.jpeg';"
-               alt="lotteOn">
-        </a>
-      </div>
-      <th:block th:include="/common/header.html"/>
-        <main>
-            <div class="main-container">
-              <div class="main-content">
-              <!--메인 배너-->
-                <section class="main-banner">
-                  <div class="swiper mySwiper">
-                    <div class="swiper-wrapper">
-                      <div class="swiper-slide" th:each="banner : ${bannerDTOS}">
-                        <img th:src="@{/upload/{image}(image=${banner.sName})}"
-                             th:style="'width:' + ${banner.width} + 'px;' + 'height:' + ${banner.height} + 'px;'"
-                             th:attr="onclick=|location.href='${banner.link}'|"
-                             onerror="this.src='/images/lotteon/배너이미지1.png';"
-                             style="cursor: pointer;"
-                             alt="lotteOn">
-                      </div>
-
-                    </div>
-                    <div class="swiper-pagination"></div>
-                    <div class="slide-area prev-area"></div>
-                    <div class="slide-area next-area"></div>
-                  </div>
-                </section>
-                <section class="hit-products">
-                  <div class="section-title">히트상품</div>
-                  <div class="product-grid">
-                    <div class="product-card" th:each="item : ${hitList}">
-                      <a th:href="@{/product/view(prodNo = ${item.prodNo})}">
-                        <img th:src="@{|${item.productImage.sNameThumb3}|}" alt="상품1">
-                      </a>
-                      <div class="product-info">
-                        <div class="product-name">[[${item.prodName}]]</div>
-                        <div class="product-price">
-                          <del>[[${#numbers.formatInteger(item.prodPrice , 3, 'COMMA')}]]원</del>
-                          <span class="discount">[[${item.prodDiscount}]]%</span>
-                          <strong>[[${#numbers.formatInteger(item.prodPrice * (100 - item.prodDiscount) / 100, 3, 'COMMA')}]]원</strong>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-                <section class="hit-products" id="discount-products">
-                  <div class="section-title">할인상품 <i class="fas fa-cog fa-spin section-spinner"></i> </div>
-                  <div class="product-grid">
-                    <div class="product-card" th:each="item : ${discountList}">
-                      <a th:href="@{/product/view(prodNo = ${item.prodNo})}">
-                        <img th:src="@{|${item.productImage.sNameThumb3}|}" alt="상품1">
-                      </a>
-                      <div class="product-info">
-                        <div class="product-name">[[${item.prodName}]]</div>
-                        <div class="product-price">
-                          <del>[[${#numbers.formatInteger(item.prodPrice , 3, 'COMMA')}]]원</del>
-                          <span class="discount">[[${item.prodDiscount}]]%</span>
-                          <strong>[[${#numbers.formatInteger(item.prodPrice * (100 - item.prodDiscount) / 100, 3, 'COMMA')}]]원</strong>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-
-                <section class="hit-products" id="recommend">
-                  <div class="section-title">추천상품 <i class="fas fa-cog fa-spin section-spinner"></i></div>
-                  <div class="product-grid">
-                    <div class="product-card" th:each="item : ${reviewTopList}">
-                      <a th:href="@{/product/view(prodNo = ${item.prodNo})}">
-                        <img th:src="@{|${item.productImage.sNameThumb3}|}" alt="상품1">
-                      </a>
-                      <div class="product-info">
-                        <div class="product-name">[[${item.prodName}]]</div>
-                        <div class="product-price">
-                          <del>[[${#numbers.formatInteger(item.prodPrice , 3, 'COMMA')}]]원</del>
-                          <span class="discount">[[${item.prodDiscount}]]%</span>
-                          <strong>[[${#numbers.formatInteger(item.prodPrice * (100 - item.prodDiscount) / 100, 3, 'COMMA')}]]원</strong>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-
-                <section class="hit-products" id="recent">
-                  <div class="section-title">최신상품 <i class="fas fa-cog fa-spin section-spinner"></i></div>
-                  <div class="product-grid">
-                    <div class="product-card" th:each="item : ${recentList}">
-                      <a th:href="@{/product/view(prodNo = ${item.prodNo})}">
-                        <img th:src="@{|${item.productImage.sNameThumb3}|}" alt="상품1">
-                      </a>
-                      <div class="product-info">
-                        <div class="product-name">[[${item.prodName}]]</div>
-                        <div class="product-price">
-                          <del>[[${#numbers.formatInteger(item.prodPrice , 3, 'COMMA')}]]원</del>
-                          <span class="discount">[[${item.prodDiscount}]]%</span>
-                          <strong>[[${#numbers.formatInteger(item.prodPrice * (100 - item.prodDiscount) / 100, 3, 'COMMA')}]]원</strong>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-
-                <section class="hit-products" id="review">
-                  <div class="section-title">리뷰많은상품 <i class="fas fa-cog fa-spin section-spinner"></i></div>
-                  <div class="product-grid">
-                    <div class="product-card" th:each="item : ${reviewManyList}">
-                      <a th:href="@{/product/view(prodNo = ${item.prodNo})}">
-                        <img th:src="@{|${item.productImage.sNameThumb3}|}" alt="상품1">
-                      </a>
-                      <div class="product-info">
-                        <div class="product-name">[[${item.prodName}]]</div>
-                        <div class="product-price">
-                          <del>[[${#numbers.formatInteger(item.prodPrice , 3, 'COMMA')}]]원</del>
-                          <span class="discount">[[${item.prodDiscount}]]%</span>
-                          <strong>[[${#numbers.formatInteger(item.prodPrice * (100 - item.prodDiscount) / 100, 3, 'COMMA')}]]원</strong>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-
+           onerror="this.src='/images/광고사진.jpeg';"
+           alt="lotteOn">
+    </a>
+  </div>
+  <th:block th:include="/common/header.html"/>
+  <main>
+    <div class="main-container">
+      <div class="main-content">
+        <!--메인 배너-->
+        <section class="main-banner">
+          <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide" th:each="banner : ${bannerDTOS}">
+                <img th:src="@{/upload/{image}(image=${banner.sName})}"
+                     th:style="'width:' + ${banner.width} + 'px;' + 'height:' + ${banner.height} + 'px;'"
+                     th:attr="onclick=|location.href='${banner.link}'|"
+                     onerror="this.src='/images/lotteon/배너이미지1.png';"
+                     style="cursor: pointer;"
+                     alt="lotteOn">
               </div>
-              <!--사이드 바-->
-              <aside class="sidebar">
-                <div class="best-products">
-                  <h2>베스트 상품</h2>
-                  <ol class="product-list">
-                    <li th:each="item, i : ${bestList}">
-                      <div class="rank">[[${i.index + 1}]]</div>
-                        <img th:src="@{|${item.productImage.sNameThumb3}|}" alt="상품1"
-                             th:onclick="|location.href='@{/product/view(prodNo=${item.prodNo})}'|" style="cursor: pointer;"/>
-                      <div class="info">
-                        <div class="name">[[${item.prodName}]]</div>
-                        <div class="price">
-                          <del>[[${#numbers.formatInteger(item.prodPrice , 3, 'COMMA')}]]원</del>
-                          <span class="discount">[[${item.prodDiscount}]]%</span>
-                          <strong>[[${#numbers.formatInteger(item.prodPrice * (100 - item.prodDiscount) / 100, 3, 'COMMA')}]]원</strong>
-                        </div>
-                      </div>
-                    </li>
-                  </ol>
-                </div>
-              </aside>
-              
-            </div>
-        </main>
-        <th:block th:include="/common/footer.html"/>
-    </div>
 
-      
-      
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="slide-area prev-area"></div>
+            <div class="slide-area next-area"></div>
+          </div>
+        </section>
+        <section class="hit-products">
+          <div class="section-title">히트상품</div>
+          <div class="product-grid">
+            <div class="product-card" th:each="item : ${hitList}">
+              <a th:href="@{/product/view(prodNo = ${item.prodNo})}">
+                <img th:src="@{|${item.productImage.sNameThumb3}|}" alt="상품1">
+              </a>
+              <div class="product-info">
+                <div class="product-name">[[${item.prodName}]]</div>
+                <div class="product-price">
+                  <del>[[${#numbers.formatInteger(item.prodPrice , 3, 'COMMA')}]]원</del>
+                  <span class="discount">[[${item.prodDiscount}]]%</span>
+                  <strong>[[${#numbers.formatInteger(item.prodPrice * (100 - item.prodDiscount) / 100, 3, 'COMMA')}]]원</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="hit-products" id="discount-products">
+          <div class="section-title">할인상품 <i class="fas fa-cog fa-spin section-spinner"></i> </div>
+          <div class="product-grid">
+            <div class="product-card" th:each="item : ${discountList}">
+              <a th:href="@{/product/view(prodNo = ${item.prodNo})}">
+                <img th:src="@{|${item.productImage.sNameThumb3}|}" alt="상품1">
+              </a>
+              <div class="product-info">
+                <div class="product-name">[[${item.prodName}]]</div>
+                <div class="product-price">
+                  <del>[[${#numbers.formatInteger(item.prodPrice , 3, 'COMMA')}]]원</del>
+                  <span class="discount">[[${item.prodDiscount}]]%</span>
+                  <strong>[[${#numbers.formatInteger(item.prodPrice * (100 - item.prodDiscount) / 100, 3, 'COMMA')}]]원</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="hit-products" id="recommend">
+          <div class="section-title">추천상품 <i class="fas fa-cog fa-spin section-spinner"></i></div>
+          <div class="product-grid">
+            <div class="product-card" th:each="item : ${reviewTopList}">
+              <a th:href="@{/product/view(prodNo = ${item.prodNo})}">
+                <img th:src="@{|${item.productImage.sNameThumb3}|}" alt="상품1">
+              </a>
+              <div class="product-info">
+                <div class="product-name">[[${item.prodName}]]</div>
+                <div class="product-price">
+                  <del>[[${#numbers.formatInteger(item.prodPrice , 3, 'COMMA')}]]원</del>
+                  <span class="discount">[[${item.prodDiscount}]]%</span>
+                  <strong>[[${#numbers.formatInteger(item.prodPrice * (100 - item.prodDiscount) / 100, 3, 'COMMA')}]]원</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="hit-products" id="recent">
+          <div class="section-title">최신상품 <i class="fas fa-cog fa-spin section-spinner"></i></div>
+          <div class="product-grid">
+            <div class="product-card" th:each="item : ${recentList}">
+              <a th:href="@{/product/view(prodNo = ${item.prodNo})}">
+                <img th:src="@{|${item.productImage.sNameThumb3}|}" alt="상품1">
+              </a>
+              <div class="product-info">
+                <div class="product-name">[[${item.prodName}]]</div>
+                <div class="product-price">
+                  <del>[[${#numbers.formatInteger(item.prodPrice , 3, 'COMMA')}]]원</del>
+                  <span class="discount">[[${item.prodDiscount}]]%</span>
+                  <strong>[[${#numbers.formatInteger(item.prodPrice * (100 - item.prodDiscount) / 100, 3, 'COMMA')}]]원</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="hit-products" id="review">
+          <div class="section-title">리뷰많은상품 <i class="fas fa-cog fa-spin section-spinner"></i></div>
+          <div class="product-grid">
+            <div class="product-card" th:each="item : ${reviewManyList}">
+              <a th:href="@{/product/view(prodNo = ${item.prodNo})}">
+                <img th:src="@{|${item.productImage.sNameThumb3}|}" alt="상품1">
+              </a>
+              <div class="product-info">
+                <div class="product-name">[[${item.prodName}]]</div>
+                <div class="product-price">
+                  <del>[[${#numbers.formatInteger(item.prodPrice , 3, 'COMMA')}]]원</del>
+                  <span class="discount">[[${item.prodDiscount}]]%</span>
+                  <strong>[[${#numbers.formatInteger(item.prodPrice * (100 - item.prodDiscount) / 100, 3, 'COMMA')}]]원</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+      <!--사이드 바-->
+      <aside class="sidebar">
+        <div class="best-products">
+          <h2>베스트 상품</h2>
+          <ol class="product-list">
+            <li th:each="item, i : ${bestList}">
+              <div class="rank">[[${i.index + 1}]]</div>
+              <img th:src="@{|${item.productImage.sNameThumb3}|}" alt="상품1"
+                   th:onclick="|location.href='@{/product/view(prodNo=${item.prodNo})}'|" style="cursor: pointer;"/>
+              <div class="info">
+                <div class="name">[[${item.prodName}]]</div>
+                <div class="price">
+                  <del>[[${#numbers.formatInteger(item.prodPrice , 3, 'COMMA')}]]원</del>
+                  <span class="discount">[[${item.prodDiscount}]]%</span>
+                  <strong>[[${#numbers.formatInteger(item.prodPrice * (100 - item.prodDiscount) / 100, 3, 'COMMA')}]]원</strong>
+                </div>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+  <th:block th:include="/common/footer.html"/>
+</div>
+
+
+
 </body>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    const swiper = new Swiper(".mySwiper", {
-      loop: true,
-      effect: "fade",
-      autoplay: {
-        delay: 4000,
-        disableOnInteraction: false
-      },
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true
-      }
-    });
-  
-    document.querySelector(".prev-area").addEventListener("click", () => {
-      swiper.slidePrev();
-    });
-  
-    document.querySelector(".next-area").addEventListener("click", () => {
-      swiper.slideNext();
-    });
+  const swiper = new Swiper(".mySwiper", {
+    loop: true,
+    effect: "fade",
+    autoplay: {
+      delay: 4000,
+      disableOnInteraction: false
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true
+    }
+  });
 
-    
-    document.addEventListener('DOMContentLoaded', function () {
+  document.querySelector(".prev-area").addEventListener("click", () => {
+    swiper.slidePrev();
+  });
+
+  document.querySelector(".next-area").addEventListener("click", () => {
+    swiper.slideNext();
+  });
+
+
+  document.addEventListener('DOMContentLoaded', function () {
     const sidebar = document.querySelector('.sidebar');
     const defaultTop = sidebar.offsetTop;
     const triggerOffset = 300; // 몇 px부터 따라오기 시작
@@ -294,7 +294,7 @@
     });
   });
 
-  </script>
+</script>
 
 
 <script>
@@ -555,54 +555,54 @@
     }
 */
 
-/*
-    // 리뷰많은상품
-    if (!review && scrollBottom >= $('#review').offset().top - 100) {  // 500px 정도 여유를 두고
-      if (!review) {
-        review = true;
+    /*
+        // 리뷰많은상품
+        if (!review && scrollBottom >= $('#review').offset().top - 100) {  // 500px 정도 여유를 두고
+          if (!review) {
+            review = true;
 
-        $.ajax({
-          url: '/main/review/many',  // 요청할 URL
-          method: 'GET',
-          success: function(response) {
+            $.ajax({
+              url: '/main/review/many',  // 요청할 URL
+              method: 'GET',
+              success: function(response) {
 
-            console.log(response);  // 응답 받은 JSON 데이터를 콘솔에 출력하여 확인
+                console.log(response);  // 응답 받은 JSON 데이터를 콘솔에 출력하여 확인
 
-            // 서버에서 받은 JSON 데이터를 HTML로 변환
-            if (response && Array.isArray(response)) {
-              response.forEach(item => {
+                // 서버에서 받은 JSON 데이터를 HTML로 변환
+                if (response && Array.isArray(response)) {
+                  response.forEach(item => {
 
-                console.log(item);
+                    console.log(item);
 
-                var productHtml = `
-                    <div class="product-card">
-                      <a href="/product/view?prodNo=${item.prodNo}">
-                        <img src="${item.snameThumb3}" alt="상품 이미지">
-                      </a>
+                    var productHtml = `
+                        <div class="product-card">
+                          <a href="/product/view?prodNo=${item.prodNo}">
+                            <img src="${item.snameThumb3}" alt="상품 이미지">
+                          </a>
 
-                      <div class="product-info">
-                        <div class="product-name">${item.prodName}</div>
-                        <div class="product-price">
-                          <del>${item.prodPrice}</del>
-                          <span class="discount">${item.prodDiscount}%</span>
-                          <strong>${item.prodPrice * (100 - item.prodDiscount) / 100}</strong>
+                          <div class="product-info">
+                            <div class="product-name">${item.prodName}</div>
+                            <div class="product-price">
+                              <del>${item.prodPrice}</del>
+                              <span class="discount">${item.prodDiscount}%</span>
+                              <strong>${item.prodPrice * (100 - item.prodDiscount) / 100}</strong>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-    `;
-                $('#review .product-grid').append(productHtml);
-              });
-            }
-          },
-          error: function(error) {
-            console.error('Error loading review products:', error);
+        `;
+                    $('#review .product-grid').append(productHtml);
+                  });
+                }
+              },
+              error: function(error) {
+                console.error('Error loading review products:', error);
+              }
+            });
+          } else {
+            return;
           }
-        });
-      } else {
-        return;
-      }
-    }
-*/
+        }
+    */
 
 
 
@@ -622,5 +622,3 @@
 
 
 </html>
-
-

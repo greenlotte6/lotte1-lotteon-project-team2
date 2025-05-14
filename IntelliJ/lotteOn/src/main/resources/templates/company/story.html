@@ -7,6 +7,72 @@
     <title>기업문화 소개</title>
     <link rel="stylesheet" href="/css/layout/companyCommon.css" />
     <link rel="stylesheet" href="/css/company/story.css" />
+    <script>
+
+        function blockAll(){
+            const box0 = document.getElementById("all");
+            const box1 = document.getElementById("culture");
+            const box2 = document.getElementById("interview");
+            const box3 = document.getElementById("recruit");
+            const box4 = document.getElementById("board");
+            const box5 = document.getElementById("esg");
+
+            box0.style.display = "none";
+            box1.style.display = "none";
+            box2.style.display = "none";
+            box3.style.display = "none";
+            box4.style.display = "none";
+            box5.style.display = "none";
+        }
+
+        function allCulture(event) {
+            event.preventDefault(); // a 태그의 기본 동작 방지
+            // 원하는 동작
+            blockAll();
+            const box = document.getElementById("all");
+            box.style.display = "flex";
+        }
+
+        function culture(event) {
+            event.preventDefault(); // a 태그의 기본 동작 방지
+            // 원하는 동작
+            blockAll();
+            const box = document.getElementById("culture");
+            box.style.display = "flex";
+        }
+
+        function interview(event) {
+            event.preventDefault(); // a 태그의 기본 동작 방지
+            // 원하는 동작
+            blockAll();
+            const box = document.getElementById("interview");
+            box.style.display = "flex";
+        }
+
+        function recruit(event) {
+            event.preventDefault(); // a 태그의 기본 동작 방지
+            // 원하는 동작
+            blockAll();
+            const box = document.getElementById("recruit");
+            box.style.display = "flex";
+        }
+
+        function board(event) {
+            event.preventDefault(); // a 태그의 기본 동작 방지
+            // 원하는 동작
+            blockAll();
+            const box = document.getElementById("board");
+            box.style.display = "flex";
+        }
+
+        function esg(event) {
+            event.preventDefault(); // a 태그의 기본 동작 방지
+            // 원하는 동작
+            blockAll();
+            const box = document.getElementById("esg");
+            box.style.display = "flex";
+        }
+    </script>
 </head>
 <body>
 <div id="wrapper">
@@ -17,8 +83,8 @@
                 <a th:href="@{/}"><img src="/images/logo.png" alt="lotteOn" /></a>
             </div>
             <div class="user_menu">
-                <a th:href="@{/company/index}">HOME</a>
-                <a th:href="@{/company/culture}">기업문화</a>
+                <a th:href="@{/company/index}" id="a_home">HOME</a>
+                <a th:href="@{/company/culture}" id="a_culture">기업문화</a>
                 <a th:href="@{/company/story}" class="active">소식과 이야기</a>
                 <a th:href="@{/company/recruit}">채용</a>
                 <a th:href="@{/company/media}">미디어</a>
@@ -35,96 +101,462 @@
                     <p>우리의 다양한 이야기를 소개합니다.</p>
                 </div>
                 <div class="category">
-                    <a href="#" class="active">전체보기</a>
-                    <a href="#">기업문화</a>
-                    <a href="#">인터뷰</a>
-                    <a href="#">채용</a>
-                    <a href="#">롯데ON 보도자료</a>
-                    <a href="#">ESG</a>
+                    <a href="#" onclick="allCulture(event)"  class="active">전체보기</a>
+                    <a href="#" onclick="culture(event)">기업문화</a>
+                    <a href="#" onclick="interview(event)">인터뷰</a>
+                    <a href="#" onclick="recruit(event)">채용</a>
+                    <a href="#" onclick="board(event)">롯데ON 보도자료</a>
+                    <a href="#" onclick="esg(event)">ESG</a>
                 </div>
-                <div class="story_content">
+
+                <div class="story_content " id="all">
                     <div class="article_section">
                         <div class="img_section">
-                            <img src="/images/watch.jpg" />
+                            <img src="/images/company/culture1.PNG" />
                         </div>
                         <div class="text_section">
-                            <p>롯데온, ‘갤럭시워치 FE 골프패키지’ 선착순 한정 판매</p>
+                            <p>말복 이벤트&Floor Meeting</p>
+                            <p>8월 말복 이벤트&Floor Meeting 현장을 만나보아요🐥</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/interview1.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>롯데e커머스 사람들 시리즈 24</p>
+                            <p>아우터 클리어런스 대형 행사 기획으로 대상을 수상한 이진호 MD님을 소개합니다👏🏻</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/interview2.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>롯데e커머스 사람들 시리즈 23</p>
+                            <p>12월 M.O.M 공동대상 민정님과 한결님의 이야기 함께 들어보아요👍🏻</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/recruit1.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>2023년 IT개발 채용연계형 교육생을 모집합니다!</p>
+                            <p>롯데e커머스에서 IT개발직무 채용 연계형 교육생을 모집합니다!</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/recruit2.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>롯데e커머스에는 교복처럼 입는 옷이 있다?!</p>
                             <p>롯데온이 18일 ‘갤럭시워치 FE 골프패키지’ 출시를 기념해 300명의 고객에게만 선착순</p>
                         </div>
                     </div>
                     <div class="article_section">
                         <div class="img_section">
-                            <img src="/images/watch.jpg" />
+                            <img src="/images/company/culture6.jpg" />
                         </div>
                         <div class="text_section">
-                            <p>롯데온, ‘갤럭시워치 FE 골프패키지’ 선착순 한정 판매</p>
-                            <p>롯데온이 18일 ‘갤럭시워치 FE 골프패키지’ 출시를 기념해 300명의 고객에게만 선착순</p>
+                            <p>주니어 팀장 타운홀 미팅</p>
+                            <p>열정 가득 주니어 팀장님들과 진행한 타운홀 미팅 함께 살펴보아요🙌🏻</p>
                         </div>
                     </div>
                     <div class="article_section">
                         <div class="img_section">
-                            <img src="/images/watch.jpg" />
+                            <img src="/images/company/culture7.jpg" />
                         </div>
                         <div class="text_section">
-                            <p>롯데온, ‘갤럭시워치 FE 골프패키지’ 선착순 한정 판매</p>
-                            <p>롯데온이 18일 ‘갤럭시워치 FE 골프패키지’ 출시를 기념해 300명의 고객에게만 선착순</p>
+                            <p>OKR Awards 2023</p>
+                            <p>상반기 우리의 성과에 대해 인정, 격려하는 OKR Awards를 진행했어요👏🏻</p>
                         </div>
                     </div>
                     <div class="article_section">
                         <div class="img_section">
-                            <img src="/images/watch.jpg" />
+                            <img src="/images/company/esg2.jpg" />
                         </div>
                         <div class="text_section">
-                            <p>롯데온, ‘갤럭시워치 FE 골프패키지’ 선착순 한정 판매</p>
-                            <p>롯데온이 18일 ‘갤럭시워치 FE 골프패키지’ 출시를 기념해 300명의 고객에게만 선착순</p>
+                            <p>[ESG활동] 롯데e커머스의 고객 중심 서비스 개선 활동</p>
+                            <p>고객 경험 개선과 Value Proposition을 위한 서비스 결함 발굴 및 개선</p>
                         </div>
                     </div>
                     <div class="article_section">
                         <div class="img_section">
-                            <img src="/images/watch.jpg" />
+                            <img src="/images/company/esg3.png" />
                         </div>
                         <div class="text_section">
-                            <p>롯데온, ‘갤럭시워치 FE 골프패키지’ 선착순 한정 판매</p>
-                            <p>롯데온이 18일 ‘갤럭시워치 FE 골프패키지’ 출시를 기념해 300명의 고객에게만 선착순</p>
-                        </div>
-                    </div>
-                    <div class="article_section">
-                        <div class="img_section">
-                            <img src="/images/watch.jpg" />
-                        </div>
-                        <div class="text_section">
-                            <p>롯데온, ‘갤럭시워치 FE 골프패키지’ 선착순 한정 판매</p>
-                            <p>롯데온이 18일 ‘갤럭시워치 FE 골프패키지’ 출시를 기념해 300명의 고객에게만 선착순</p>
-                        </div>
-                    </div>
-                    <div class="article_section">
-                        <div class="img_section">
-                            <img src="/images/watch.jpg" />
-                        </div>
-                        <div class="text_section">
-                            <p>롯데온, ‘갤럭시워치 FE 골프패키지’ 선착순 한정 판매</p>
-                            <p>롯데온이 18일 ‘갤럭시워치 FE 골프패키지’ 출시를 기념해 300명의 고객에게만 선착순</p>
-                        </div>
-                    </div>
-                    <div class="article_section">
-                        <div class="img_section">
-                            <img src="/images/watch.jpg" />
-                        </div>
-                        <div class="text_section">
-                            <p>롯데온, ‘갤럭시워치 FE 골프패키지’ 선착순 한정 판매</p>
-                            <p>롯데온이 18일 ‘갤럭시워치 FE 골프패키지’ 출시를 기념해 300명의 고객에게만 선착순</p>
-                        </div>
-                    </div>
-                    <div class="article_section">
-                        <div class="img_section">
-                            <img src="/images/watch.jpg" />
-                        </div>
-                        <div class="text_section">
-                            <p>롯데온, ‘갤럭시워치 FE 골프패키지’ 선착순 한정 판매</p>
-                            <p>롯데온이 18일 ‘갤럭시워치 FE 골프패키지’ 출시를 기념해 300명의 고객에게만 선착순</p>
+                            <p>[ESG활동] 롯데e커머스 개인정보보호 활동</p>
+                            <p>안심하고 지속적으로 이용할 수 있는 라이프스타일 플랫폼 구축</p>
                         </div>
                     </div>
                 </div>
+
+                <div class="story_content " id="culture" style="display: none">
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/culture1.PNG" />
+                        </div>
+                        <div class="text_section">
+                            <p>말복 이벤트&Floor Meeting</p>
+                            <p>8월 말복 이벤트&Floor Meeting 현장을 만나보아요🐥</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/culture2.png" />
+                        </div>
+                        <div class="text_section">
+                            <p>NEW-START Day!</p>
+                            <p>롯데ON이 새로운 공간에서 새롭게 출발합니다🙌🏻</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/culture3.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>Adieu 2023, Next Page 2024</p>
+                            <p>롯데ON의 종무식과 취임식의 현장을 함께 살펴보아요!🎉</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/culture4.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>2022년 하반기 IT 신규입사자 1st Anniversary!</p>
+                            <p>2022년 하반기 IT 주니어 입사 1주년 기념 행사의 현장으로!</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/culture5.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>2023년 여가친화기업 선정</p>
+                            <p>롯데e커머스가 2023년 여가친화기업으로 선정되었어요🏆</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/culture6.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>주니어 팀장 타운홀 미팅</p>
+                            <p>열정 가득 주니어 팀장님들과 진행한 타운홀 미팅 함께 살펴보아요🙌🏻</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/culture7.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>OKR Awards 2023</p>
+                            <p>상반기 우리의 성과에 대해 인정, 격려하는 OKR Awards를 진행했어요👏🏻</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/culture8.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>개인정보보호 유공 국무총리 표창 수상</p>
+                            <p>롯데ON은 개인정보보호를 위해 다양한 노력을 하고 있어요!</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/culture9.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>롯데ON 일자리 창출 유공 대통령 표창 수상</p>
+                            <p>롯데ON이 ‘2023년 일자리 창출 유공 대통령표창’을 수상했어요🏆</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="story_content" id="interview" style="display: none">
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/interview1.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>롯데e커머스 사람들 시리즈 24</p>
+                            <p>아우터 클리어런스 대형 행사 기획으로 대상을 수상한 이진호 MD님을 소개합니다👏🏻</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/interview2.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>롯데e커머스 사람들 시리즈 23</p>
+                            <p>12월 M.O.M 공동대상 민정님과 한결님의 이야기 함께 들어보아요👍🏻</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/interview3.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>롯데e커머스 사람들 시리즈 22</p>
+                            <p>Solution Architect 직무와 프로젝트 이야기 함께 들어보아요👨🏻‍💻</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/interview4.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>롯데e커머스 사람들 시리즈 21</p>
+                            <p>MD 직무, 월간롯데X단독상품 프로젝트까지 인철님의 인터뷰 함께 들어보아요💌</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/interview5.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>롯데e커머스 사람들 시리즈 20</p>
+                            <p>9월 M.O.M 공동 대상 소영님과 은영님을 소개합니다👏🏻</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/interview6.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>롯데e커머스 사람들 시리즈 19</p>
+                            <p>8월 M.O.M 대상 최원준 님의 패션MD 이야기 함께 들어보아요😄</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/interview7.png" />
+                        </div>
+                        <div class="text_section">
+                            <p>롯데e커머스 사람들 시리즈 18</p>
+                            <p>경진님이 들려주는 딜크릿 이야기부터 G-TFT 이야기까지 함께 들어보아요❣</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/interview8.png" />
+                        </div>
+                        <div class="text_section">
+                            <p>롯데e커머스 사람들 시리즈 17</p>
+                            <p>트렌드패션팀 영춘님의 고감도 신규브랜드 확대부터 직무 이야기까지! 함께 들어볼까요?👏🏻</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/interview9.png" />
+                        </div>
+                        <div class="text_section">
+                            <p>롯데e커머스 사람들 시리즈 16</p>
+                            <p>롯데ON의 효율적 배송을 책임지는 라스트마일팀 신욱님의 이야기 함께 들어보아요👍🏻</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="story_content" style="display: none" id="recruit">
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/recruit1.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>2023년 IT개발 채용연계형 교육생을 모집합니다!</p>
+                            <p>롯데e커머스에서 IT개발직무 채용 연계형 교육생을 모집합니다!</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/recruit2.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>롯데e커머스에는 교복처럼 입는 옷이 있다?!</p>
+                            <p>롯데온이 18일 ‘갤럭시워치 FE 골프패키지’ 출시를 기념해 300명의 고객에게만 선착순</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/recruit3.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>롯데온, ‘갤럭시워치 FE 골프패키지’ 선착순 한정 판매</p>
+                            <p>블라인드, 잡플래닛 등 인터넷 속 이야기들에 대해 가감없이 솔직하게 현직자가 직접 대답해 드립니다!</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/recruit4.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>IT/UX 신입사원, 어떻게 입사했을까?</p>
+                            <p>밸런스 게임을 통해 알아본 인턴 최종 전환까지의 여정</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/recruit5.png" />
+                        </div>
+                        <div class="text_section">
+                            <p>IT개발 채용연계형 교육생을 모집합니다!</p>
+                            <p>롯데e커머스에서 IT개발직무 채용 연계형 교육생을 모집합니다!</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/recruit6.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>메타버스 채용설명회에 초대합니다!</p>
+                            <p>롯데e커머스 채용이 궁금하다면?
+                                메타버스에서 만나요!</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/recruit7.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>롯데e커머스 채용이 궁금해요!</p>
+                            <p>채용 담당자가 알려주는 롯데e커머스 채용 활용서</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/watch.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>롯데ON에서 쇼핑 좀 해 본 인재를 찾습니다!</p>
+                            <p>롯데ON과 함께 성장하고 싶다면!</p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="story_content" style="display: none" id="board">
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/board1.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>롯데온, ‘갤럭시워치 FE 골프패키지’ 선착순 한정 판매</p>
+                            <p>롯데온이 18일 ‘갤럭시워치 FE 골프패키지’ 출시를 기념해 300명의 고객에게만 선착순</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/board2.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>‘대명아임레디’ 라이프 서비스 론칭 기념 단독 혜택!</p>
+                            <p>롯데온이 상품 다변화를 통해 라이프스타일 플랫폼으로 도약에 나선다. 롯데온이 이달</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/board3.png" />
+                        </div>
+                        <div class="text_section">
+                            <p>‘릴레이 뷰티 데이즈’서 ‘트렌드 뷰티’ 최대 혜택!</p>
+                            <p>럭셔리에서 트렌드까지 뷰티 영역 확대 나선 롯데온!</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/board4.jpeg" />
+                        </div>
+                        <div class="text_section">
+                            <p>롯데온 ‘복날위크’서 무더위 날리고 기력 보충하세요!</p>
+                            <p>“복날 몸보신은 고기 VS 간편하게 챙기는 건강식품?”</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/board5.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>AI 기반 개인화 추천형 광고 솔루션 ‘스마트매출업’ 론칭!</p>
+                            <p>“파트너사 마케팅 돕고, 고객 쇼핑 만족도 높인다!”</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/board6.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>단독 뷰티 브랜드 ‘쿼터노트’로 2030 뷰티 팬(Fan) 잡는다!</p>
+                            <p>이색 콘셉트로 SNS 뒤흔든 ‘쿼터노트’!</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/board7.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>롯데 계열사 단독 혜택으로 똘똘 뭉친 롯데온 ‘월간 롯데’!</p>
+                            <p>여름 휴가 준비는 ‘롯데’가 책임진다!</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/board8.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>롯데온에서 ‘롯데면세점 도쿄 긴자점’ 상품 한 번에 쇼핑!</p>
+                            <p>엔저로 날아오른 ‘일본 직구’ 잡는다!</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/board9.jpeg" />
+                        </div>
+                        <div class="text_section">
+                            <p>롯데온 단독 혜택 받고, ‘클린뷰티’ 동참하세요!</p>
+                            <p>친환경 고체 샴푸바부터 못난이 채소 업사이클링 상품까지!</p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="story_content" style="display: none" id="esg">
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/esg1.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>지속가능경영보고서</p>
+                            <p>롯데쇼핑은 매년 경제ㆍ환경ㆍ사회ㆍ지배구조 부문에 대한 성과와 지속가능경영의 방향성을 담은 지속가능경영보고서를</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/esg2.jpg" />
+                        </div>
+                        <div class="text_section">
+                            <p>[ESG활동] 롯데e커머스의 고객 중심 서비스 개선 활동</p>
+                            <p>고객 경험 개선과 Value Proposition을 위한 서비스 결함 발굴 및 개선</p>
+                        </div>
+                    </div>
+                    <div class="article_section">
+                        <div class="img_section">
+                            <img src="/images/company/esg3.png" />
+                        </div>
+                        <div class="text_section">
+                            <p>[ESG활동] 롯데e커머스 개인정보보호 활동</p>
+                            <p>안심하고 지속적으로 이용할 수 있는 라이프스타일 플랫폼 구축</p>
+                        </div>
+                    </div>
+
+                </div>
+
+
             </article>
         </section>
     </main>

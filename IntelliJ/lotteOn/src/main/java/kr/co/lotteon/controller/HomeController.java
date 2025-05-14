@@ -99,8 +99,9 @@ public class HomeController {
     }
 
     public void delay(){
+
         try {
-            Thread.sleep(1500); // 0.6초 지연
+            Thread.sleep(600); // 0.6초 지연
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
