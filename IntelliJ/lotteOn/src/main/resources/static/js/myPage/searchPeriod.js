@@ -75,4 +75,8 @@ document.addEventListener('DOMContentLoaded', function(){
     // 초기값: 오늘~오늘
     document.getElementById('startDate').value = getToday();
     document.getElementById('endDate').value = getToday();
+
+
+
+
 });

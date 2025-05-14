@@ -171,6 +171,9 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         LocalDate startDate = pageRequestDTO.getStart();
         LocalDate endDate =  pageRequestDTO.getEnd();
 
+        if(searchType.equals("전체")){
+            searchType = null;
+        }
 
         if (searchType != null && !searchType.isEmpty()) {
             booleanExpression = booleanExpression.and(qOrderItem.orderStatus.eq(searchType));

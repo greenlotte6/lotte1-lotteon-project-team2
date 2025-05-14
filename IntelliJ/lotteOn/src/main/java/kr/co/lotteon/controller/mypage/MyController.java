@@ -145,7 +145,7 @@ public class MyController {
     @GetMapping("/my/order/search")
     public String search(@AuthenticationPrincipal UserDetails userDetails,
                          PageRequestDTO pageRequestDTO, Model model) {
-        
+
         pageRequestDTO.setSize(10);
 
         String uid = userDetails.getUsername();
@@ -169,7 +169,7 @@ public class MyController {
         model.addAttribute("pendingInquiryCount", pendingInquiryCount);
         model.addAttribute("point", point);
 
-        return "/myPage/orderDetails";
+        return "/myPage/orderDetailsSearch";
 
     }
 
@@ -194,16 +194,15 @@ public class MyController {
         LocalDateTime localStart = start.atStartOfDay();
         LocalDateTime localEnd = end.atTime(LocalTime.MAX);;
 
-
         Boolean exist = myPageService.existOrderByType(localStart, localEnd, searchType, keyword);
-        
-        if(exist){
-            System.out.println("존재");
-            return "ok";
-        }
 
-        System.out.println("존재안함");
-        return "error";
+        log.info("exist : " + exist );
+
+        if(exist){
+            return "ok";
+        }else{
+            return "error";
+        }
 
     }
 

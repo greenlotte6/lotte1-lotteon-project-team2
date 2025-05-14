@@ -686,7 +686,7 @@ public class MyPageService {
         if(searchType.equals("전체")){
             return orderItemRepository.existsByOrder_OrderDateBetweenAndProduct_ProdNameContaining(start, end, keyword);
         }else{
-           return orderItemRepository.existsByOrder_OrderDateBetweenAndOrderStatusAndProduct_ProdNameContaining(start, end, searchType, keyword);
+            return orderItemRepository.existsByOrder_OrderDateBetweenAndOrderStatusAndProduct_ProdNameContaining(start, end, searchType, keyword);
         }
 
     }
