@@ -47,21 +47,11 @@ public class HomeController {
         //최신 상품
         List<ProductDTO> recentList = productService.findRecentTop8();
 
-        //할인 높은 상품 8개
-        List<ProductDTO> discountList = productService.findDiscountTop8();
-
         //리뷰 많은 상품 8개
         List<ProductDTO> reviewManyList = productService.findReviewManyTop8();
 
-
         model.addAttribute("hitList", hitList);
         model.addAttribute("bestList", bestList);
-
-
-        model.addAttribute("discountList", discountList);
-        model.addAttribute("reviewTopList" , reviewTopList);
-        model.addAttribute("reviewManyList", reviewManyList);
-        model.addAttribute("recentList", recentList);
 
         return "/index";
     }
@@ -69,11 +59,54 @@ public class HomeController {
     @GetMapping("/main/discount")
     @ResponseBody
     public List<ProductDTO> loadMoreDiscountProducts() {
-        System.out.println("실행");
+        // productService.deleteDiscountCache();
+
+        delay(); // 딜레이
         List<ProductDTO> list =productService.findDiscountTop8();
-        System.out.println(list);
         return list;
     }
+
+    //평점 높은 상품 8개 (추천상품)
+    @GetMapping("/main/recommendation")
+    @ResponseBody
+    public List<ProductDTO> loadMoreRecommendProducts() {
+        log.info("추천 상품 출력: ");
+        //productService.deleteRecommendationCache();
+        delay(); // 딜레이
+        List<ProductDTO> list =productService.findReviewTop8();
+        return list;
+    }
+
+    @GetMapping("/main/recent")
+    @ResponseBody
+    public List<ProductDTO> loadMoreRecentProducts() {
+        log.info("최신 상품 출력: ");
+        //productService.deleteRecentCache();
+        delay(); // 딜레이
+        List<ProductDTO> list = productService.findReviewTop8();
+        return list;
+    }
+
+    // 리뷰 많은 순서
+    @GetMapping("/main/review/many")
+    @ResponseBody
+    public List<ProductDTO> loadMoreReviewProducts() {
+        log.info("리뷰 많은 상품 출력: ");
+        // productService.deleteReviewManyCache();
+        delay(); // 딜레이
+        List<ProductDTO> list = productService.findReviewManyTop8();
+        return list;
+    }
+
+    public void delay(){
+        try {
+            Thread.sleep(1500); // 0.6초 지연
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 
 }
