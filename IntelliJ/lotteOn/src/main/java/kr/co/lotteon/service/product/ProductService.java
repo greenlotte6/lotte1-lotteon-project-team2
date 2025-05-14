@@ -5,13 +5,16 @@ import kr.co.lotteon.dto.cart.CartDTO;
 import kr.co.lotteon.dto.page.ItemRequestDTO;
 import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
+import kr.co.lotteon.dto.product.ProductImageDTO;
 import kr.co.lotteon.entity.cart.Cart;
 import kr.co.lotteon.entity.product.Product;
+import kr.co.lotteon.entity.product.ProductImage;
 import kr.co.lotteon.repository.product.CartRepository;
 import kr.co.lotteon.repository.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -178,13 +181,15 @@ public class ProductService {
     }
 
     // 할인 상품 top 8 출력 - 메인
-    @Cacheable(value = "product-discount")
+
     public List<ProductDTO> findDiscountTop8() {
         log.info("할인 상품 출력");
         List<ProductDTO> productDTOS = new ArrayList<>();
         List<Product> products = productRepository.findTop8ByOrderByProdDiscountDesc();
         for (Product product : products) {
             ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+            productDTO.setSNameThumb3(product.getProductImage().getSNameThumb3());
+
             productDTOS.add(productDTO);
         }
         return productDTOS;
@@ -212,6 +217,7 @@ public class ProductService {
         List<Product> products = productRepository.findTop8ByOrderByRatingTotalDesc();
         for (Product product : products) {
             ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+            productDTO.setSNameThumb3(product.getProductImage().getSNameThumb3());
             productDTOS.add(productDTO);
         }
         return productDTOS;
@@ -227,6 +233,7 @@ public class ProductService {
         List<Product> products = productRepository.findTop8ByOrderByReviewCountDesc();
         for (Product product : products) {
             ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+            productDTO.setSNameThumb3(product.getProductImage().getSNameThumb3());
             productDTOS.add(productDTO);
         }
         return productDTOS;
@@ -243,6 +250,7 @@ public class ProductService {
         List<Product> products = productRepository.findTop5ByOrderByProdSoldDesc();
         for (Product product : products) {
             ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+            productDTO.setSNameThumb3(product.getProductImage().getSNameThumb3());
             productDTOS.add(productDTO);
         }
         return productDTOS;
@@ -256,9 +264,26 @@ public class ProductService {
         List<Product> products = productRepository.findTop8ByOrderByRegDateDesc();
         for (Product product : products) {
             ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+            productDTO.setSNameThumb3(product.getProductImage().getSNameThumb3());
             productDTOS.add(productDTO);
         }
         return productDTOS;
+    }
+
+    @CacheEvict(value = "product-discount"  , allEntries = true)
+    public void deleteDiscountCache() {
+    }
+
+    @CacheEvict(value = "product-top-review"  , allEntries = true)
+    public void deleteRecommendationCache() {
+    }
+
+    @CacheEvict(value = "product-recent"  , allEntries = true)
+    public void deleteRecentCache() {
+    }
+
+    @CacheEvict(value = "product-many-review"  , allEntries = true)
+    public void deleteReviewManyCache() {
     }
 }
 
