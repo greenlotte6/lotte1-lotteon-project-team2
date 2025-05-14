@@ -23,7 +23,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             let selectedBtn = null; // 어떤 버튼에서 모달을 띄웠는지 저장
 
-            // 모든 구매확정 버튼에 클릭 이벤트 등록
             document.querySelectorAll('.purchase_confirm_btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     selectedBtn = this; // 클릭한 버튼 저장
@@ -34,6 +33,7 @@
 
                 e.preventDefault();
 
+
                 const search_form = document.querySelector('#search_form');
 
                 const searchType = document.querySelector('select[name="searchType"]').value;
@@ -41,6 +41,14 @@
                 const end = document.querySelector('input[name="end"]').value;
                 const keyword = search_form.querySelector('input[name="keyword"]').value;
 
+                const startDate = search_form.querySelector('input[name="start"]');
+                const endDate = search_form.querySelector('input[name="end"]');
+
+                if (startDate.value === "" || endDate.value === "") {
+                    alert("시작일과 종료일을 모두 입력해주세요.");
+                    e.preventDefault(); // 폼 제출 막기
+                    return; // 이후 코드 실행 방지
+                }
 
                 const params = new URLSearchParams({
                     searchType: searchType,
@@ -60,7 +68,7 @@
                         if (text === 'ok') {
                             e.target.submit();
                         } else {
-                            alert("없어요");
+                            alert("검색하신 주문 내역이 없습니다.");
                         }
                     })
                     .catch(error => {
@@ -79,6 +87,7 @@
                 const statusTd = tr.querySelectorAll('td')[2]; // 3번째 td (상태)
                 const itemNo = selectedBtn.getAttribute('data-product-id');
                 const modal = document.querySelector('.purchase_confirm_modal');
+
 
                 // 서버에 구매확정 요청
                 fetch('/my/order/confirm', {
@@ -149,11 +158,11 @@
                                 <span>직접입력</span>
                             </label>
                             <form class="search_form" th:action="@{/my/order/search}">
-                                <input type="date" class="datepicker" id="startDate" name="startDate">
+                                <input type="date" class="datepicker" id="startDate" name="start">
                                 ~
-                                <input type="date" class="datepicker" id="endDate" name="endDate">
+                                <input type="date" class="datepicker" id="endDate" name="end">
                                 <select name="searchType">
-                                    <option value="">전체</option>
+                                    <option value="전체">전체</option>
                                     <option value="입금대기">입금대기</option>
                                     <option value="결제완료">결제완료</option>
                                     <option value="상품준비중">상품준비중</option>

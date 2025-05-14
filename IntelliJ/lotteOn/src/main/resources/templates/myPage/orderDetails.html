@@ -33,6 +33,7 @@
 
                 e.preventDefault();
 
+
                 const search_form = document.querySelector('#search_form');
 
                 const searchType = document.querySelector('select[name="searchType"]').value;
@@ -40,6 +41,14 @@
                 const end = document.querySelector('input[name="end"]').value;
                 const keyword = search_form.querySelector('input[name="keyword"]').value;
 
+                const startDate = search_form.querySelector('input[name="start"]');
+                const endDate = search_form.querySelector('input[name="end"]');
+
+                if (startDate.value === "" || endDate.value === "") {
+                    alert("시작일과 종료일을 모두 입력해주세요.");
+                    e.preventDefault(); // 폼 제출 막기
+                    return; // 이후 코드 실행 방지
+                }
 
                 const params = new URLSearchParams({
                     searchType: searchType,
@@ -57,10 +66,9 @@
                     .then(response => response.text())
                     .then(text => {
                         if (text === 'ok') {
-                            alert("Ok")
                             e.target.submit();
                         } else {
-                            alert("없어요");
+                            alert("검색하신 주문 내역이 없습니다.");
                         }
                     })
                     .catch(error => {
