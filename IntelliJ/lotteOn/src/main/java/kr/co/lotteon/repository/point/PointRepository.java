@@ -41,4 +41,5 @@ public interface PointRepository extends JpaRepository<Point, Integer> {
     @Query("SELECT SUM(p.point) FROM Point p WHERE p.user.uid = :uid")
     Integer findTotalPointByUid(String uid);
 
+    Page<Point> findAllByUserAndPointDateBetween(User user, LocalDateTime startDate, LocalDateTime endDate, Pageable pageable);
 }

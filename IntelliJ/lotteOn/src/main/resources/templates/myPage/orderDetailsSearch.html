@@ -30,6 +30,46 @@
                 });
             });
 
+            document.querySelector('#search_form').addEventListener("submit",function (e){
+
+                e.preventDefault();
+
+                const search_form = document.querySelector('#search_form');
+
+                const searchType = document.querySelector('select[name="searchType"]').value;
+                const start = document.querySelector('input[name="start"]').value;
+                const end = document.querySelector('input[name="end"]').value;
+                const keyword = search_form.querySelector('input[name="keyword"]').value;
+
+
+                const params = new URLSearchParams({
+                    searchType: searchType,
+                    start: start,
+                    end: end,
+                    keyword: keyword
+                });
+
+                fetch(`/my/order/exist?${params.toString()}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => response.text())
+                    .then(text => {
+                        if (text === 'ok') {
+                            e.target.submit();
+                        } else {
+                            alert("없어요");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("에러 발생:", error);
+                        alert("서버 통신 중 오류가 발생했습니다.");
+                    });
+
+            })
+
             // 모달 '확인' 버튼
             document.getElementsByClassName('modalConfirmBtn')[0].addEventListener('click', function() {
                 if (!selectedBtn) return;
@@ -71,7 +111,7 @@
         <!-- 헤더 끝 -->
         <!-- 메인 시작 -->
         <main>
-            <!--<th:block th:insert="/myPage/inc/myShoppingInfo.html"></th:block>-->
+            <th:block th:insert="/myPage/inc/myShoppingInfo.html"></th:block>
             <section class="content">
                 <!-- 왼쪽 사이드바 -->
                 <th:block th:include="/myPage/inc/sidebar.html"/>

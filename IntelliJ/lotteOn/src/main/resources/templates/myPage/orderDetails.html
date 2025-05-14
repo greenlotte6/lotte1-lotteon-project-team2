@@ -23,7 +23,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             let selectedBtn = null; // 어떤 버튼에서 모달을 띄웠는지 저장
 
-            // 모든 구매확정 버튼에 클릭 이벤트 등록
             document.querySelectorAll('.purchase_confirm_btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     selectedBtn = this; // 클릭한 버튼 저장
@@ -34,11 +33,22 @@
 
                 e.preventDefault();
 
+                const search_form = document.querySelector('#search_form');
+
                 const searchType = document.querySelector('select[name="searchType"]').value;
+                const start = document.querySelector('input[name="start"]').value;
+                const end = document.querySelector('input[name="end"]').value;
+                const keyword = search_form.querySelector('input[name="keyword"]').value;
 
 
-                // 서버에 구매확정 요청
-                fetch(`/my/order/exist?searchType=${encodeURIComponent(searchType)}`, {
+                const params = new URLSearchParams({
+                    searchType: searchType,
+                    start: start,
+                    end: end,
+                    keyword: keyword
+                });
+
+                fetch(`/my/order/exist?${params.toString()}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -47,6 +57,7 @@
                     .then(response => response.text())
                     .then(text => {
                         if (text === 'ok') {
+                            alert("Ok")
                             e.target.submit();
                         } else {
                             alert("없어요");
@@ -59,9 +70,6 @@
 
             })
 
-
-
-
             // 모달 '확인' 버튼
             document.getElementsByClassName('modalConfirmBtn')[0].addEventListener('click', function() {
                 if (!selectedBtn) return;
@@ -71,6 +79,7 @@
                 const statusTd = tr.querySelectorAll('td')[2]; // 3번째 td (상태)
                 const itemNo = selectedBtn.getAttribute('data-product-id');
                 const modal = document.querySelector('.purchase_confirm_modal');
+
 
                 // 서버에 구매확정 요청
                 fetch('/my/order/confirm', {
@@ -103,7 +112,7 @@
         <!-- 헤더 끝 -->
         <!-- 메인 시작 -->
         <main>
-            <!--<th:block th:insert="/myPage/inc/myShoppingInfo.html"></th:block>-->
+            <th:block th:insert="/myPage/inc/myShoppingInfo.html"></th:block>
             <section class="content">
                 <!-- 왼쪽 사이드바 -->
                 <th:block th:include="/myPage/inc/sidebar.html"/>
@@ -141,11 +150,11 @@
                                 <span>직접입력</span>
                             </label>
                             <form class="search_form" th:action="@{/my/order/search}" id="search_form">
-                                <input type="date" class="datepicker" id="startDate" name="startDate">
+                                <input type="date" class="datepicker" id="startDate" name="start">
                                 ~
-                                <input type="date" class="datepicker" id="endDate" name="endDate">
+                                <input type="date" class="datepicker" id="endDate" name="end">
                                 <select name="searchType">
-                                    <option value="">전체</option>
+                                    <option value="전체">전체</option>
                                     <option value="입금대기">입금대기</option>
                                     <option value="결제완료">결제완료</option>
                                     <option value="상품준비중">상품준비중</option>
