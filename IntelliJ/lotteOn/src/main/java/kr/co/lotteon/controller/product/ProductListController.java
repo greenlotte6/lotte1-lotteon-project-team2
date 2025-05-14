@@ -45,7 +45,8 @@ public class ProductListController {
 
     // 상품 목록 검색 - 첫 페이지 진입용
     @GetMapping("/product/searchList")
-    public String searchList(@RequestParam String keyword) {
+    public String searchList(@RequestParam String keyword, Model model) {
+        model.addAttribute("keyword", keyword);
         return "/product/list/searchList";
     }
 

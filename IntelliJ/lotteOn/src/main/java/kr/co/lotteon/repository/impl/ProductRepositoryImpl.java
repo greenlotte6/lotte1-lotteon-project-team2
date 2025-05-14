@@ -3,11 +3,13 @@ package kr.co.lotteon.repository.impl;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import kr.co.lotteon.dto.page.PageRequestDTO;
+import kr.co.lotteon.entity.category.SubCategory;
 import kr.co.lotteon.entity.product.QProduct;
 import kr.co.lotteon.entity.product.QProductImage;
 import kr.co.lotteon.entity.seller.QSeller;
@@ -139,7 +141,15 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     public Page<Tuple> sortedSearchProducts(PageRequestDTO pageRequestDTO, Pageable pageable) {
         String sortType = pageRequestDTO.getSortType();
         String period = pageRequestDTO.getPeriod();
+
+        // 1차 검색 필드
         String keyword = pageRequestDTO.getKeyword();
+
+        // 2차 검색 필드
+        String searchType = pageRequestDTO.getSearchType();
+        String subKeyword = pageRequestDTO.getSubKeyword();
+        int minPrice = pageRequestDTO.getMinPrice();
+        int maxPrice = pageRequestDTO.getMaxPrice();
 
         OrderSpecifier<?> orderSpecifier = qProduct.regDate.desc();
 
@@ -182,6 +192,8 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             }
         }
 
+
+        // 1차 검색 조건
         if (keyword != null && !keyword.trim().isEmpty()) {
             BooleanBuilder keywordBooleanBuilder = new BooleanBuilder();
 
@@ -191,6 +203,41 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
             expression = expression.and(keywordBooleanBuilder);
         }
+
+
+        // 2차 검색 조건
+        if (searchType != null && !searchType.trim().isEmpty()) {
+            switch (searchType) {
+                case "상품명":
+                    if (subKeyword != null && !subKeyword.trim().isEmpty()) {
+                        expression = expression.and(qProduct.prodName.containsIgnoreCase(subKeyword));
+                    }
+                    break;
+                case "브랜드":
+                    if (subKeyword != null && !subKeyword.trim().isEmpty()) {
+                        expression = expression.and(qProduct.prodBrand.containsIgnoreCase(subKeyword));
+                    }
+                    break;
+                case "가격":
+                    if (minPrice > 0) {
+                        expression = expression.and(discountedPrice.goe(minPrice));
+                    }
+                    if (maxPrice > 0) {
+                        expression = expression.and(discountedPrice.loe(maxPrice));
+                    }
+                    Predicate subKeywordInPriceContext = createTextSearchCondition(subKeyword, qProduct);
+                    if (subKeywordInPriceContext != null) {
+                        expression = expression.and(subKeywordInPriceContext);
+                    }
+                    break;
+            }
+        } else { // searchType이 없는 경우
+            Predicate generalSubKeywordCondition = createTextSearchCondition(subKeyword, qProduct);
+            if (generalSubKeywordCondition != null) {
+                expression = expression.and(generalSubKeywordCondition);
+            }
+        }
+
 
         List<Tuple> tupleList = queryFactory
                 .select(qProduct, qSeller.company, qSeller.rank, qProductImage.sNameList)
@@ -215,6 +262,22 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
         return new PageImpl<>(tupleList, pageable, total);
     }
+
+
+    // 2차 검색 조건 메서드
+    private Predicate createTextSearchCondition(String term, QProduct qProduct) {
+        if (term == null || term.trim().isEmpty()) {
+            return null; // 검색어가 없으면 조건을 추가하지 않음
+        }
+
+        BooleanBuilder builder = new BooleanBuilder();
+        builder.or(qProduct.prodName.containsIgnoreCase(term));
+        builder.or(qProduct.prodBrand.containsIgnoreCase(term));
+        builder.or(qProduct.subCategory.subCategoryName.containsIgnoreCase(term));
+
+        return builder;
+    }
+
 
 
     // 관리자 상품 목록 조회(관리자)
