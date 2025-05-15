@@ -63,6 +63,8 @@ public class KakaoPayService {
 
         String url = request.getRequestURL().toString();
 
+        System.out.println(url);
+/*
         if(url.contains("local")){
             parameters.add("approval_url", "http://localhost:8080/payment/success");
             parameters.add("cancel_url", "http://localhost:8080/payment/cancel");
@@ -80,6 +82,13 @@ public class KakaoPayService {
             parameters.add("cancel_url", "https://www.lotteon.store/payment/cancel");
             parameters.add("fail_url", "https://www.lotteon.store/payment/fail");
         }
+*/
+
+        // 도메인 베포용
+        parameters.add("approval_url", "https://www.lotteon.store/payment/success");
+        parameters.add("cancel_url", "https://www.lotteon.store/payment/cancel");
+        parameters.add("fail_url", "https://www.lotteon.store/payment/fail");
+
 
         // 베포용
         //parameters.add("approval_url", "http://43.201.101.104:8080/payment/success");
