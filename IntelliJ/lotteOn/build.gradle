@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'kr.co.lotteOn'
-version = '0.1.7-SNAPSHOT'
+version = '0.1.8-SNAPSHOT'
 
 // application.properties 파일 참조를 위한 스크립트
 processResources {

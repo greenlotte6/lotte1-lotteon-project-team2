@@ -52,10 +52,6 @@ public class KakaoPayService {
         parameters.add("vat_amount", String.valueOf(amount.getTax()));
         parameters.add("tax_free_amount", String.valueOf(amount.getTax_free()));
 
-        // 로컬용
-        parameters.add("approval_url", "http://localhost:8080/payment/success");
-        parameters.add("cancel_url", "http://localhost:8080/payment/cancel");
-        parameters.add("fail_url", "http://localhost:8080/payment/fail");
 
         HttpServletRequest request =
                 ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
