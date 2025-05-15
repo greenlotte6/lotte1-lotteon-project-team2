@@ -34,13 +34,26 @@ public class CouponIssueRepositoryImpl implements CouponIssueRepositoryCustom {
 
         String type = pageRequestDTO.getSearchType();
 
+
         // 기존 페이징 기능
         if (type == null || type.equals("")) {
+
+            BooleanExpression expression = null;
+
+            String role = pageRequestDTO.getRole();
+            String uid = pageRequestDTO.getUid();
+
+            if(role.contains("SELLER")){
+                expression = qCoupon.user.uid.eq(uid);
+            }
+
+
             List<Tuple> tupleList = queryFactory
                     .select(qCouponIssue, qCoupon, qUser.uid)
                     .from(qCouponIssue)
                     .join(qCoupon).on(qCoupon.cno.eq(qCouponIssue.coupon.cno))
                     .join(qUser).on(qCouponIssue.user.uid.eq(qUser.uid))
+                    .where(expression)
                     .offset(pageable.getOffset())
                     .limit(pageable.getPageSize())
                     .orderBy(qCoupon.cno.desc()) // 정렬 조건
@@ -51,6 +64,7 @@ public class CouponIssueRepositoryImpl implements CouponIssueRepositoryCustom {
                     .from(qCouponIssue)
                     .join(qCoupon).on(qCoupon.cno.eq(qCouponIssue.coupon.cno))
                     .join(qUser).on(qCouponIssue.user.uid.eq(qUser.uid))
+                    .where(expression)
                     .fetchOne();
 
             return new PageImpl<>(tupleList, pageable, total);
@@ -65,6 +79,13 @@ public class CouponIssueRepositoryImpl implements CouponIssueRepositoryCustom {
                 booleanExpression = qCoupon.couponName.contains(pageRequestDTO.getKeyword());
             } else {
                 booleanExpression = qUser.uid.contains(pageRequestDTO.getKeyword());
+            }
+
+            String role = pageRequestDTO.getRole();
+            String uid = pageRequestDTO.getUid();
+
+            if(role.contains("SELLER")){
+                booleanExpression = booleanExpression.and(qCoupon.user.uid.eq(uid));
             }
 
             List<Tuple> tupleList = queryFactory

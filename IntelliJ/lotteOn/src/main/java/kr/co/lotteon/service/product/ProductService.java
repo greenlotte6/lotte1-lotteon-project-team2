@@ -285,5 +285,20 @@ public class ProductService {
     @CacheEvict(value = "product-many-review"  , allEntries = true)
     public void deleteReviewManyCache() {
     }
+
+    @CacheEvict(value = "autocomplete", allEntries = true)
+    public void deleteSearchList(){
+
+    }
+
+    public void deleteRegisterCache() {
+        deleteRecentCache();
+        deleteSearchList();
+    }
+
+
+
+
+
 }
 

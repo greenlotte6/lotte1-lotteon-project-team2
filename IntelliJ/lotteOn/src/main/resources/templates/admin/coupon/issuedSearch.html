@@ -13,11 +13,15 @@
 
     <style>
         .able {
-            color: red;
+            color: #6FCD8F;
         }
 
         .expired {
-            color: #6FCD8F;
+            color: red;
+        }
+
+        .stop{
+            color: #808080;
         }
 
         .manageEnd{
@@ -95,7 +99,7 @@
                                 <td>[[${item.coupon.couponType}]]</td>
                                 <td>[[${item.coupon.couponName}]]</td>
                                 <td>[[${item.uid}]]</td>
-                                <td th:class="${item.state == '사용' ? 'expired' : item.state == '미사용' || item.state == '중단' ? 'able' : ''}">
+                                <td th:class="${item.state == '사용' ? 'expired' : item.state == '미사용' ? 'able' : 'stop'}">
                                     [[${item.state}]]
                                 </td>
                                 <td>[[${item.usedDate}]]</td>
