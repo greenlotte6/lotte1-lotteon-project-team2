@@ -1,6 +1,10 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <aside class="sidebar">
     <!-- Sidebar -->
-    <div class="sidebar">
+
+    <!-- 관리자 -->
+    <div class="sidebar" sec:authorize="hasRole('ROLE_ADMIN')">
         <h3 class="sidebar-title">관리 메뉴</h3>
         <ul class="sidebar-menu">
             <li>
@@ -59,4 +63,33 @@
             </li>
         </ul>
     </div>
+
+    <!-- 판매자 -->
+    <div class="sidebar" sec:authorize="hasRole('ROLE_SELLER')">
+        <h3 class="sidebar-title">관리 메뉴</h3>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="#" class="menu-toggle">상품관리</a>
+                <ul class="submenu">
+                    <li><a th:href="@{/admin/product/list}">상품목록</a></li>
+                    <li><a th:href="@{/admin/product/register}">상품등록</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" class="menu-toggle">주문관리</a>
+                <ul class="submenu">
+                    <li><a th:href="@{/admin/order/list}">주문현황</a></li>
+                    <li><a th:href="@{/admin/order/delivery}">배송현황</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" class="menu-toggle">쿠폰관리</a>
+                <ul class="submenu">
+                    <li><a th:href="@{/admin/coupon/list}">쿠폰등록</a></li>
+                    <li><a th:href="@{/admin/coupon/issued}">쿠폰발급현황</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
 </aside>

@@ -82,6 +82,8 @@ public class SecurityConfig {
                 .requestMatchers("/product/order").hasAnyRole("USER", "SELLER", "ADMIN")
                 .requestMatchers("/product/order/direct").hasAnyRole("USER", "SELLER", "ADMIN")
                 .requestMatchers("/product/ViewLoginCheck").hasAnyRole("USER", "SELLER", "ADMIN")
+                .requestMatchers("/admin").hasAnyRole("ADMIN", "SELLER")
+                .requestMatchers("/admin/*").hasAnyRole("ADMIN", "SELLER")
                 .anyRequest().permitAll());
 
 

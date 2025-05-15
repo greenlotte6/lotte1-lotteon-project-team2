@@ -44,7 +44,7 @@ public class ImageService {
         String ext = oName.substring(oName.lastIndexOf("."));
         String sName = UUID.randomUUID().toString() + ext;
         productImageDTO.setONameList(oName);
-        productImageDTO.setSNameList(sName);
+        productImageDTO.setSNameList("/upload/"+sName);
         uploadImage(productImageDTO.getFile1(), sName);
 
         // 메인 출력 이미지 변환
@@ -52,7 +52,7 @@ public class ImageService {
         ext = oName.substring(oName.lastIndexOf("."));
         sName = UUID.randomUUID().toString() + ext;
         productImageDTO.setONameMain(oName);
-        productImageDTO.setSNameMain(sName);
+        productImageDTO.setSNameMain("/upload/"+sName);
         uploadImage(productImageDTO.getFile2(), sName);
 
         // 상품 상세 출력 이미지 변환 (작은 이미지)
@@ -60,7 +60,7 @@ public class ImageService {
         ext = oName.substring(oName.lastIndexOf("."));
         sName = UUID.randomUUID().toString() + ext;
         productImageDTO.setONameThumb3(oName);
-        productImageDTO.setSNameThumb3(sName);
+        productImageDTO.setSNameThumb3("/upload/"+sName);
         uploadImage(productImageDTO.getFile3(), sName);
 
         // 상품 상세 출력 이미지
@@ -68,7 +68,7 @@ public class ImageService {
         ext = oName.substring(oName.lastIndexOf("."));
         sName = UUID.randomUUID().toString() + ext;
         productImageDTO.setONameDetail(oName);
-        productImageDTO.setSNameDetail(sName);
+        productImageDTO.setSNameDetail("/upload/"+sName);
         uploadImage(productImageDTO.getFile4(), sName);
 
         ProductImage productImage = modelMapper.map(productImageDTO, ProductImage.class);
@@ -137,7 +137,7 @@ public class ImageService {
                     ext = oName.substring(oName.lastIndexOf("."));
                     sName = UUID.randomUUID().toString() + ext;
                     productImage.setONameList(oName);
-                    productImage.setSNameList(sName);
+                    productImage.setSNameList("/upload/"+ sName);
                     uploadImage(productImageDTO.getFile1(), sName);
 
                 }
@@ -151,7 +151,7 @@ public class ImageService {
                     ext = oName.substring(oName.lastIndexOf("."));
                     sName = UUID.randomUUID().toString() + ext;
                     productImage.setONameMain(oName);
-                    productImage.setSNameMain(sName);
+                    productImage.setSNameMain("/upload/"+sName);
                     uploadImage(productImageDTO.getFile2(), sName);
                 }
             }
@@ -164,7 +164,7 @@ public class ImageService {
                     ext = oName.substring(oName.lastIndexOf("."));
                     sName = UUID.randomUUID().toString() + ext;
                     productImage.setONameThumb3(oName);
-                    productImage.setSNameThumb3(sName);
+                    productImage.setSNameThumb3("/upload/"+sName);
                     uploadImage(productImageDTO.getFile3(), sName);
                 }
             }
@@ -177,7 +177,7 @@ public class ImageService {
                     ext = oName.substring(oName.lastIndexOf("."));
                     sName = UUID.randomUUID().toString() + ext;
                     productImage.setONameDetail(oName);
-                    productImage.setSNameDetail(sName);
+                    productImage.setSNameDetail("/upload/"+sName);
                     uploadImage(productImageDTO.getFile4(), sName);
                 }
             }
