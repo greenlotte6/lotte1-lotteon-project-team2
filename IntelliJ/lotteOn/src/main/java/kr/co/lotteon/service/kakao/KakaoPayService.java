@@ -1,6 +1,7 @@
 package kr.co.lotteon.service.kakao;
 
 
+import jakarta.servlet.http.HttpServletRequest;
 import kr.co.lotteon.dto.kakao.Amount;
 import kr.co.lotteon.dto.kakao.KakaoApproveResponse;
 import kr.co.lotteon.dto.kakao.KakaoCancelResponse;
@@ -16,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Slf4j
 @Service
@@ -54,11 +57,36 @@ public class KakaoPayService {
         parameters.add("cancel_url", "http://localhost:8080/payment/cancel");
         parameters.add("fail_url", "http://localhost:8080/payment/fail");
 
+        HttpServletRequest request =
+                ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+                        .getRequest();
+
+        String url = request.getRequestURL().toString();
+
+        if(url.contains("local")){
+            parameters.add("approval_url", "http://localhost:8080/payment/success");
+            parameters.add("cancel_url", "http://localhost:8080/payment/cancel");
+            parameters.add("fail_url", "http://localhost:8080/payment/fail");
+        }
+
+        if(url.contains("43.201")){
+            parameters.add("approval_url", "http://43.201.101.104:8080/payment/success");
+            parameters.add("cancel_url", "http://43.201.101.104:8080/payment/cancel");
+            parameters.add("fail_url", "http://43.201.101.104:8080/payment/fail");
+        }
+
+        if(url.contains("lotteon.store")){
+            parameters.add("approval_url", "https://www.lotteon.store/payment/success");
+            parameters.add("cancel_url", "https://www.lotteon.store/payment/cancel");
+            parameters.add("fail_url", "https://www.lotteon.store/payment/fail");
+        }
+
         // 베포용
         //parameters.add("approval_url", "http://43.201.101.104:8080/payment/success");
         //parameters.add("cancel_url", "http://43.201.101.104:8080/payment/cancel");
         //parameters.add("fail_url", "http://43.201.101.104:8080/payment/fail");
 
+        
         // 파라미터, 헤더
         HttpEntity<MultiValueMap<String, String>> requestEntity =
                 new HttpEntity<>(parameters, this.getHeaders());
