@@ -140,7 +140,7 @@ public class ProductController {
 
 
     // 장바구니 상품 담기
-    @PostMapping("/product/addCart")
+    @GetMapping("/product/addCart")
     @ResponseBody
     public int cart(@RequestBody ItemRequestDTO itemRequestDTO, @AuthenticationPrincipal UserDetails userDetails) {
 
