@@ -76,6 +76,7 @@ header {
     display: flex;
     align-items: center;
     width: 100%;
+    position: relative;
 }
 
 .logo .search input[type="search"] {
@@ -104,6 +105,28 @@ header {
     width: 20px;
     height: 20px;
     filter: invert(16%) sepia(97%) saturate(7487%) hue-rotate(357deg) brightness(104%) contrast(108%);
+}
+
+#autocompleteList {
+    width: 480px;
+    border: 2px solid red;
+    border-top: 1px solid lightgray;
+    display: none;
+    position: absolute;
+    background: #fff;
+    padding: 10px;
+    box-sizing: border-box;
+    top: 105%;
+    left: -15px;
+    z-index: 1000;
+}
+
+
+#autocompleteList div {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 3px;
+    color: #404040;
 }
 
 .advertisement {
@@ -268,3 +291,5 @@ header {
     color: red;
     font-weight: bold;
 }
+
+

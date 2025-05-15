@@ -551,7 +551,7 @@ public class ConfigService {
 
     @Cacheable(value = "autocomplete", key = "#keyword.toLowerCase()")
     public List<String> getAutocompleteSuggestions(String keyword) {
-        if (!StringUtils.hasText(keyword) || keyword.length() < 2) {
+        if (!StringUtils.hasText(keyword) || keyword.length() < 1) {
             return List.of();
         }
 
@@ -581,7 +581,7 @@ public class ConfigService {
                 })
                 .filter(suggestion -> suggestion.toLowerCase().contains(lowerKeyword))
                 .distinct()
-                .limit(10)
+                .limit(7)
                 .collect(Collectors.toList());
     }
 
