@@ -35,8 +35,10 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -88,7 +90,9 @@ public class MyController {
         // 로그인한 유저의 주문내역 조회
         PageResponseDTO<OrderInfoDTO> orderInfoPagingDTO = myPageService.orderInfoPaging(pageRequestDTO, uid);
 
-        // 주문내역 모달
+        // 로그인한 유저의 주문 수 조회
+        long orderCount = myPageService.orderCount(userDTO);
+
 
 
 
@@ -97,6 +101,7 @@ public class MyController {
         String formattedPhone = myPageService.joinPhone(userDTO);
         userDTO.setHp(formattedPhone);
 
+        model.addAttribute("orderCount", orderCount);
         model.addAttribute("pointDTO", pointDTO);
         model.addAttribute("inquiryDTO", inquiryDTO);
         model.addAttribute("reviewDTO", reviewDTO);
@@ -123,30 +128,49 @@ public class MyController {
         return "/myPage/checkPassword";
     }
 
+    @GetMapping("/my/info/check/password")
+    @ResponseBody
+    public Map<String, Object> checkPassword(@AuthenticationPrincipal UserDetails userDetails) {
+        String uid = userDetails.getUsername();
+        UserDTO userDTO = myPageService.findByUid(uid);
+
+        Map<String, Object> result = new HashMap<>();
+        boolean hasPassword = Objects.nonNull(userDTO.getPass());
+        result.put("hasPassword", hasPassword);
+
+        return result;
+    }
+
+    @ResponseBody
     @PostMapping("/my/info/check")
     public String passwordCheck(@AuthenticationPrincipal UserDetails userDetails,
                                 @RequestParam String inputPassword) {
 
         String uid = userDetails.getUsername();
-
         UserDTO userDTO = myPageService.findByUid(uid);
 
         String encodedPassword = userDTO.getPass();
 
 
-        // 비밀번호 일치 / 불일치 => 확인 완료
+
         if (passwordEncoder.matches(inputPassword, encodedPassword)) {
-            // 비밀번호 일치
-
-            
-
+            return "ok";
         } else {
-            // 비밀번호 불일치
-
+            return "error";
         }
+    }
 
+    @ResponseBody
+    @PostMapping("/my/info/change")
+    public String passwordUpdate(    @AuthenticationPrincipal UserDetails userDetails,
+                                     @RequestParam("newPassword") String newPassword){
 
-        return "redirect:/my/info";
+        String uid = userDetails.getUsername();
+        UserDTO userDTO = myPageService.findByUid(uid);
+
+        myPageService.passwordUpdate(userDTO, newPassword);
+
+        return "success";
     }
 
     @GetMapping("/my/order")
@@ -167,7 +191,11 @@ public class MyController {
         // 로그인한 유저의 포인트 조회
         String point = myPageService.getPoint(userDTO);
 
+        // 로그인한 유저의 주문 수 조회
+        long orderCount = myPageService.orderCount(userDTO);
+        model.addAttribute("orderCount", orderCount);
         PageResponseDTO<OrderInfoDTO> orderInfoPagingDTO = myPageService.orderInfoPaging(pageRequestDTO, uid);
+
 
         model.addAttribute("point", point);
         model.addAttribute("orderInfoPagingDTO", orderInfoPagingDTO);
@@ -201,6 +229,9 @@ public class MyController {
         // 로그인한 유저의 포인트 조회
         String point = myPageService.getPoint(userDTO);
 
+        long orderCount = myPageService.orderCount(userDTO);
+        model.addAttribute("orderCount", orderCount);
+
         PageResponseDTO<OrderInfoDTO> orderInfoPagingDTO = myPageService.searchOrder(pageRequestDTO, uid);
 
         model.addAttribute("userDTO", userDTO);
@@ -221,15 +252,6 @@ public class MyController {
                              @RequestParam("end") LocalDate end,
                              @RequestParam("keyword") String keyword) {
 
-        log.info("searchType : " + searchType );
-        log.info("start : " + start );
-        log.info("end : " + end );
-        log.info("keyword : " + keyword );
-
-        System.out.println("searchType : " + searchType );
-        System.out.println("start : " + start );
-        System.out.println("end : " + end );
-        System.out.println("keyword : " + keyword );
 
         LocalDateTime localStart = start.atStartOfDay();
         LocalDateTime localEnd = end.atTime(LocalTime.MAX);;
@@ -272,7 +294,9 @@ public class MyController {
         // 로그인한 유저의 포인트 조회
         String point = myPageService.getPoint(userDTO);
 
-        //PageResponseDTO<PointDTO> pointDTO = myPageService.searchPoint(userDTO, pageRequestDTO , startDate, endDate, search);
+
+        long orderCount = myPageService.orderCount(userDTO);
+        model.addAttribute("orderCount", orderCount);
 
         PageResponseDTO<PointDTO> pointDTO = myPageService.pointFindAll(userDTO, pageRequestDTO);
 
@@ -304,6 +328,9 @@ public class MyController {
         // 로그인한 유저의 포인트 조회
         String point = myPageService.getPoint(userDTO);
 
+        long orderCount = myPageService.orderCount(userDTO);
+        model.addAttribute("orderCount", orderCount);
+
         PageResponseDTO<PointDTO> PointDTO = myPageService.searchPoint(userDTO, pageRequestDTO, startDate, endDate);
 
         model.addAttribute("pointDTO", PointDTO);
@@ -330,6 +357,9 @@ public class MyController {
 
         // 로그인한 유저의 포인트 조회
         String point = myPageService.getPoint(userDTO);
+
+        long orderCount = myPageService.orderCount(userDTO);
+        model.addAttribute("orderCount", orderCount);
 
         PageResponseDTO<CouponDTO> couponDTO = myPageService.couponFindAll(userDTO, pageRequestDTO);
 
@@ -363,6 +393,9 @@ public class MyController {
         // 로그인한 유저의 포인트 조회
         String point = myPageService.getPoint(userDTO);
 
+        long orderCount = myPageService.orderCount(userDTO);
+        model.addAttribute("orderCount", orderCount);
+
         model.addAttribute("userDTO", userDTO);
         model.addAttribute("reviewDTO", reviewDTO);
         model.addAttribute("getCouponCount", getCouponCount);
@@ -387,6 +420,10 @@ public class MyController {
 
         // 로그인한 유저의 포인트 조회
         String point = myPageService.getPoint(userDTO);
+
+
+        long orderCount = myPageService.orderCount(userDTO);
+        model.addAttribute("orderCount", orderCount);
 
         PageResponseDTO<InquiryDTO> inquiryDTO = myPageService.inquiryFindAll(userDTO, pageRequestDTO);
 
@@ -539,6 +576,7 @@ public class MyController {
     public String modify(@AuthenticationPrincipal UserDetails userDetails,
                          @RequestParam String email1,
                          @RequestParam String email2,
+                         @RequestParam String name,
                          @RequestParam String phonePart1,
                          @RequestParam String phonePart2,
                          @RequestParam String phonePart3,
@@ -557,6 +595,7 @@ public class MyController {
         userDTO.setZip(zip);
         userDTO.setAddr1(addr1);
         userDTO.setAddr2(addr2);
+        userDTO.setName(name);
         userDTO.setUpdateDate(LocalDateTime.now());
 
 
@@ -593,6 +632,9 @@ public class MyController {
 
         // 로그인한 유저의 포인트 조회
         String point = myPageService.getPoint(userDTO);
+
+        long orderCount = myPageService.orderCount(userDTO);
+        model.addAttribute("orderCount", orderCount);
 
         myPageService.splitPhone(userDTO);
 

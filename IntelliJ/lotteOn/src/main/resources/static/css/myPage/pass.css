@@ -100,7 +100,7 @@ body {
     color: #000;
   }
   
-  .btn-login {
+  .btn-login, .btn-change-password {
     background-color: #f44336;
     color: white;
     border: none;

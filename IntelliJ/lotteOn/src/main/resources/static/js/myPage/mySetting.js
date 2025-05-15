@@ -14,36 +14,34 @@ document.addEventListener('DOMContentLoaded', function(){
     // 여러 개의 수정 버튼을 지원하려면 class 사용 권장
     document.querySelectorAll('.editBtn').forEach(btn => {
         btn.addEventListener('click', function () {
-
-            const inputs = this.parentElement.querySelectorAll('.phone-input');
-            const emailInputs = this.parentElement.querySelectorAll('.email-input');
+            // 버튼이 속한 <td> 내에서만 input을 찾음
+            const parentTd = this.parentElement;
+            const phoneInputs = parentTd.querySelectorAll('.phone-input');
+            const emailInputs = parentTd.querySelectorAll('.email-input');
+            const nameInputs = parentTd.querySelectorAll('.name-input');
             const isEdit = this.textContent === '수정';
 
-            inputs.forEach(input => {
+            // 각각의 input에 대해 수정 가능/불가능 토글
+            phoneInputs.forEach(input => {
                 input.readOnly = !isEdit;
-
-                if (isEdit) {
-                    input.classList.remove('readonly-style'); // 기본 스타일 제거
-                    input.classList.add('editing');           // 수정 스타일 추가
-                } else {
-                    input.classList.remove('editing');
-                    input.classList.add('readonly-style');    // 다시 기본 스타일 추가
-                }
+                input.classList.toggle('editing', isEdit);
+                input.classList.toggle('readonly-style', !isEdit);
             });
 
             emailInputs.forEach(input => {
                 input.readOnly = !isEdit;
-
-                if (isEdit) {
-                    input.classList.remove('readonly-style');
-                    input.classList.add('editing');
-                } else {
-                    input.classList.remove('editing');
-                    input.classList.add('readonly-style');
-                }
+                input.classList.toggle('editing', isEdit);
+                input.classList.toggle('readonly-style', !isEdit);
             });
 
-            this.textContent = isEdit ? '저장' : '수정';
+            nameInputs.forEach(input => {
+                input.readOnly = !isEdit;
+                input.classList.toggle('editing', isEdit);
+                input.classList.toggle('readonly-style', !isEdit);
+            });
+
+            // 버튼 숨기기!
+            this.style.display = 'none';
         });
     });
 
