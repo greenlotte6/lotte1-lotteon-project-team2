@@ -8,7 +8,7 @@
 
         input.addEventListener('input', () => {
             const keyword = input.value.trim();
-            if (keyword.length < 2) { // 최소 글자 수 제한
+            if (keyword.length < 1) { // 최소 글자 수 제한
                 autocompleteList.style.display = 'none';
                 return;
             }
@@ -29,7 +29,7 @@
                         div.addEventListener('click', () => {
                             input.value = item;
                             autocompleteList.style.display = 'none';
-                            document.getElementById('searchForm').submit(); // 바로 검색
+                            document.getElementById('searchForm').submit();
                         });
                         autocompleteList.appendChild(div);
                     });
@@ -81,7 +81,7 @@
                     <button type="submit" class="header_search">
                         <img src="/images/search_ico.svg" alt="검색" class="search-icon"/>
                     </button>
-                    <div id="autocompleteList" style="border: 1px solid #ccc; display:none; position:absolute; background:#fff;"></div>
+                    <div id="autocompleteList"></div>
                 </form>
             </div>
             <div class="user-icons">
