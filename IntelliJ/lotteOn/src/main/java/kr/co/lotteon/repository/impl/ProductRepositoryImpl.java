@@ -7,9 +7,12 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import kr.co.lotteon.dto.page.PageRequestDTO;
-import kr.co.lotteon.entity.category.SubCategory;
+import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.entity.product.QProduct;
 import kr.co.lotteon.entity.product.QProductImage;
 import kr.co.lotteon.entity.seller.QSeller;
@@ -35,6 +38,19 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     private final QProduct qProduct = QProduct.product;
     private final QSeller qSeller = QSeller.seller;
     private final QProductImage qProductImage = QProductImage.productImage;
+
+
+    @PersistenceContext
+    private EntityManager em;
+
+    @Override
+    public List<Product> findAll(BooleanBuilder builder) {
+        JPAQuery<Product> query = new JPAQuery<>(em);
+        QProduct product = QProduct.product;
+        return query.from(product)
+                .where(builder)
+                .fetch();
+    }
 
 
     // 카테고리별 베스트

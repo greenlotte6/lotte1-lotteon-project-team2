@@ -1,6 +1,55 @@
 <html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <script src="/js/aside.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const input = document.getElementById('searchInput');
+        const autocompleteList = document.getElementById('autocompleteList');
+
+        input.addEventListener('input', () => {
+            const keyword = input.value.trim();
+            if (keyword.length < 2) { // 최소 글자 수 제한
+                autocompleteList.style.display = 'none';
+                return;
+            }
+
+            fetch('/product/autocomplete?keyword=' + encodeURIComponent(keyword))
+                .then(res => res.json())
+                .then(data => {
+                    autocompleteList.innerHTML = '';
+                    if (data.length === 0) {
+                        autocompleteList.style.display = 'none';
+                        return;
+                    }
+                    data.forEach(item => {
+                        const div = document.createElement('div');
+                        div.textContent = item;
+                        div.style.padding = '5px';
+                        div.style.cursor = 'pointer';
+                        div.addEventListener('click', () => {
+                            input.value = item;
+                            autocompleteList.style.display = 'none';
+                            document.getElementById('searchForm').submit(); // 바로 검색
+                        });
+                        autocompleteList.appendChild(div);
+                    });
+                    autocompleteList.style.display = 'block';
+                })
+                .catch(err => {
+                    autocompleteList.style.display = 'none';
+                    console.error('자동완성 에러:', err);
+                });
+        });
+
+        // 검색창 바깥 클릭시 자동완성 숨기기
+        document.addEventListener('click', (e) => {
+            if (!document.querySelector('.search').contains(e.target)) {
+                autocompleteList.style.display = 'none';
+            }
+        });
+    });
+
+</script>
 <header>
     <div class="header_main">
         <div class="user_menu">
@@ -28,10 +77,11 @@
             </a>
             <div class="search">
                 <form action="/product/searchList">
-                    <input type="search" name="keyword" th:value="${keyword}" placeholder="검색어를 입력하세요"/>
+                    <input id="searchInput" type="search" name="keyword" th:value="${keyword}" placeholder="검색어를 입력하세요" />
                     <button type="submit" class="header_search">
                         <img src="/images/search_ico.svg" alt="검색" class="search-icon"/>
                     </button>
+                    <div id="autocompleteList" style="border: 1px solid #ccc; display:none; position:absolute; background:#fff;"></div>
                 </form>
             </div>
             <div class="user-icons">
@@ -70,7 +120,7 @@
                 </div>
                 <div class="subcategory-menu" id="subcategoryMenu">
                     <ul th:each="item, i : ${appInfo.Categories}" th:attr="data-index=${i.index}">
-                        <li th:each="sub : ${item.subCategories}"> 
+                        <li th:each="sub : ${item.subCategories}">
                             <a th:href="@{/product/list(subCateNo=${sub.subCateNo})}">[[${sub.subCategoryName}]]</a>
                         </li>
                     </ul>
