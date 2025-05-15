@@ -38,6 +38,8 @@ public class SellerService {
         // 유저 등급 설정
         userDTO.setRole("SELLER");
 
+        userDTO.setState("정상");
+
         // 판매자 등급 설정
         sellerDTO.setRank("BRONZE");
 
