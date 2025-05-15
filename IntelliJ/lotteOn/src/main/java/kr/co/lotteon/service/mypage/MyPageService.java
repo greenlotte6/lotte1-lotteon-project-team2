@@ -43,9 +43,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.beans.Encoder;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.time.LocalDate;
@@ -71,6 +73,7 @@ public class MyPageService {
     private final OrderItemRepository orderItemRepository;
     private final ExchangeRepository exchangeRepository;
     private final ProductRepository productRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Value("${spring.servlet.multipart.location}")
     private String UploadPath;
@@ -105,6 +108,15 @@ public class MyPageService {
                 .total(total)
                 .build();
     }
+
+    public long orderCount(UserDTO userDTO){
+        String uid = userDTO.getUid(); // 또는 userDTO.getUsername();
+        List<String> excluded = Arrays.asList("교환신청", "반품신청", "구매확정");
+
+        long orderItemCount = orderItemRepository.countByOrder_User_UidAndOrderStatusNotIn(uid, excluded);
+        return orderItemCount;
+    }
+
 
     public long getPendingInquiryCount(UserDTO userDTO) {
         User user = modelMapper.map(userDTO, User.class);
@@ -678,6 +690,16 @@ public class MyPageService {
 
         return savedFileName;
     }
+
+    public void passwordUpdate(UserDTO userDTO, String inputPassword){
+
+        User user = modelMapper.map(userDTO, User.class);
+
+        user.setPass(passwordEncoder.encode(inputPassword));
+
+        userRepository.save(user);
+    }
+
 
 
 

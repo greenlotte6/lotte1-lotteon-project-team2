@@ -3,6 +3,7 @@ package kr.co.lotteon.repository.order;
 import kr.co.lotteon.entity.order.Order;
 import kr.co.lotteon.entity.order.OrderItem;
 
+import kr.co.lotteon.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -58,4 +59,6 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     Boolean existsByOrder_OrderDateBetweenAndOrderStatusAndProduct_ProdNameContaining(LocalDateTime start, LocalDateTime end, String searchType, String keyword);
 
     Boolean existsByOrder_OrderDateBetweenAndProduct_ProdNameContaining(LocalDateTime start, LocalDateTime end, String keyword);
+
+    long countByOrder_User_UidAndOrderStatusNotIn(String uid, List<String> excluded);
 }

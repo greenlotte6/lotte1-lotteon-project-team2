@@ -66,13 +66,14 @@
                                 <tr>
                                     <td>비밀번호</td>
                                     <td>
-                                        <button type="button" th:onclick="|location.href='@{/my/info/check}'|">수정</button>
+                                        <button type="button" id="checkPasswordBtn">수정</button>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>이름(수정예정)</td>
+                                    <td>이름</td>
                                     <td>
-                                        <input type="text" name="name" th:value="${userDTO.name}">
+                                        <input type="text" name="name" class="name-input readonly-style" th:value="${userDTO.name}" readonly>
+                                        <button class="editBtn" type="button">수정</button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -150,6 +151,25 @@
                                     location.href = '/user/logout';
                                 }
                             }
+
+                            document.addEventListener('DOMContentLoaded', function() {
+                                document.getElementById('checkPasswordBtn').addEventListener('click', function() {
+                                    fetch('/my/info/check/password', {
+                                        method: 'GET'
+                                    })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if (data.hasPassword) {
+                                                window.location.href = '/my/info/check';
+                                            } else {
+                                                alert('소셜 로그인(구글, 카카오, 네이버)은 비밀번호 변경이 불가합니다.');
+                                            }
+                                        })
+                                        .catch(error => {
+                                            alert('서버 통신 중 오류가 발생했습니다.');
+                                        });
+                                });
+                            });
                         </script>
                     </div>
                 </article>
