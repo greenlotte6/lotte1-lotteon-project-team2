@@ -30,15 +30,24 @@ public class DeliveryRepositoryImpl implements DeliveryRepositoryCustom {
     private final QOrder qOrder = QOrder.order;
     private final QDelivery qDelivery = QDelivery.delivery;
     private final QOrderItem qOrderItem = QOrderItem.orderItem;
+    private final QProduct qProduct = QProduct.product;
+    private final QSeller qSeller = QSeller.seller;
 
 
     @Override
     public Page<Tuple> selectAllDelivery(PageRequestDTO pageRequestDTO, Pageable pageable) {
 
-        // BooleanExpression booleanExpression = qOrder.user.uid.eq(uid);
+        BooleanExpression expression = null;
 
         String keyword = pageRequestDTO.getKeyword();
         String type = pageRequestDTO.getSearchType();
+
+        String role = pageRequestDTO.getRole();
+        String uid = pageRequestDTO.getUid();
+
+        if(role.contains("SELLER")){
+            expression = qSeller.user.uid.eq(uid);
+        }
 
         if (type == null || type.equals("")) {
             List<Tuple> tupleList = queryFactory
@@ -46,6 +55,9 @@ public class DeliveryRepositoryImpl implements DeliveryRepositoryCustom {
                     .from(qOrderItem)
                     .join(qOrder).on(qOrderItem.order.orderNo.eq(qOrder.orderNo))
                     .join(qDelivery).on(qDelivery.order.orderNo.eq(qOrder.orderNo))
+                    .join(qOrderItem.product, qProduct)
+                    .join(qProduct.seller, qSeller)
+                    .where(expression)
                     .offset(pageable.getOffset())
                     .limit(pageable.getPageSize())
                     .orderBy(qDelivery.deliveryDate.desc())
@@ -56,6 +68,9 @@ public class DeliveryRepositoryImpl implements DeliveryRepositoryCustom {
                     .from(qOrderItem)
                     .join(qOrder).on(qOrderItem.order.orderNo.eq(qOrder.orderNo))
                     .join(qDelivery).on(qDelivery.order.orderNo.eq(qOrder.orderNo))
+                    .join(qOrderItem.product, qProduct)
+                    .join(qProduct.seller, qSeller)
+                    .where(expression)
                     .fetchOne();
 
             log.info("total: {}", total);
@@ -85,11 +100,17 @@ public class DeliveryRepositoryImpl implements DeliveryRepositoryCustom {
                 }
             }
 
+            if(role.contains("SELLER")){
+                booleanExpression = booleanExpression.and(qSeller.user.uid.eq(uid));
+            }
+
             List<Tuple> tupleList = queryFactory
                     .select(qOrder, qDelivery, qOrderItem)
                     .from(qOrderItem)
                     .join(qOrder).on(qOrderItem.order.orderNo.eq(qOrder.orderNo))
                     .join(qDelivery).on(qDelivery.order.orderNo.eq(qOrder.orderNo))
+                    .join(qOrderItem.product, qProduct)
+                    .join(qProduct.seller, qSeller)
                     .where(booleanExpression)
                     .offset(pageable.getOffset())
                     .limit(pageable.getPageSize())
@@ -101,6 +122,8 @@ public class DeliveryRepositoryImpl implements DeliveryRepositoryCustom {
                     .from(qOrderItem)
                     .join(qOrder).on(qOrderItem.order.orderNo.eq(qOrder.orderNo))
                     .join(qDelivery).on(qDelivery.order.orderNo.eq(qOrder.orderNo))
+                    .join(qOrderItem.product, qProduct)
+                    .join(qProduct.seller, qSeller)
                     .where(booleanExpression)
                     .fetchOne();
 

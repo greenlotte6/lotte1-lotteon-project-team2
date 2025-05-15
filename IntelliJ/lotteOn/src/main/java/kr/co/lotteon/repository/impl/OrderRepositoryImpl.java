@@ -220,12 +220,49 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     @Override
     public Page<Tuple> selectAllOrder(PageRequestDTO pageRequestDTO, Pageable pageable) {
 
-        // BooleanExpression booleanExpression = qOrder.user.uid.eq(uid);
+        BooleanExpression expression = null;
+
+        String role = pageRequestDTO.getRole();
+        String uid = pageRequestDTO.getUid();
 
         String keyword = pageRequestDTO.getKeyword();
         String type = pageRequestDTO.getSearchType();
 
+        if(role.contains("SELLER")){
+            expression = qSeller.user.uid.eq(uid);
+        }
+
         if(type == null || type.equals("")){
+
+            List<Tuple> tupleList = queryFactory
+                    .select(qOrder, qOrder.orderDate)
+                    .from(qOrder)
+                    .join(qOrder.orderItems, qOrderItem)
+                    .join(qOrderItem.product, qProduct)
+                    .join(qProduct.seller, qSeller)
+                    .where(expression)
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .orderBy(qOrder.orderNo.desc())
+                    .fetch();
+
+            long total = queryFactory
+                    .select(qOrder.count())
+                    .from(qOrder)
+                    .join(qOrder.orderItems, qOrderItem)
+                    .join(qOrderItem.product, qProduct)
+                    .join(qProduct.seller, qSeller)
+                    .where(expression)
+                    .fetchOne();
+
+            log.info("total: {}", total);
+            log.info("tupleList: {}", tupleList);
+
+            return new PageImpl<>(tupleList, pageable, total);
+
+
+
+            /*
             List<Tuple> tupleList = queryFactory
                     .select(qOrder, qOrder.orderDate)
                     .from(qOrder)
@@ -243,7 +280,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
             log.info("tupleList: {}", tupleList);
 
             return new PageImpl<>(tupleList, pageable, total);
-
+*/
         }else{
 
             BooleanExpression booleanExpression = null;
@@ -266,9 +303,17 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
                 }
             }
 
+            if(booleanExpression != null && role.contains("SELLER")){
+                booleanExpression = booleanExpression.and(qSeller.user.uid.eq(uid));
+            }
+
+
             List<Tuple> tupleList = queryFactory
                     .select(qOrder, qOrder.orderDate)
                     .from(qOrder)
+                    .join(qOrder.orderItems, qOrderItem)
+                    .join(qOrderItem.product, qProduct)
+                    .join(qProduct.seller, qSeller)
                     .where(booleanExpression)
                     .offset(pageable.getOffset())
                     .limit(pageable.getPageSize())
@@ -278,6 +323,9 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
             long total = queryFactory
                     .select(qOrder.count())
                     .from(qOrder)
+                    .join(qOrder.orderItems, qOrderItem)
+                    .join(qOrderItem.product, qProduct)
+                    .join(qProduct.seller, qSeller)
                     .where(booleanExpression)
                     .fetchOne();
 
