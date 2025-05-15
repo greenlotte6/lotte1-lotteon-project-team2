@@ -130,6 +130,8 @@ public class OrderController {
         session.setAttribute("userDetailsDTO", userDeatilsDTO);
         session.setAttribute("orderNo", orderNo);
 
+        log.info("orderNo: " + orderNo);
+
         amount = orderService.getAmount(orderNo, userDetails, orderDTO);
 
         // 카카오페이 결제 요청
@@ -142,6 +144,10 @@ public class OrderController {
 
         Integer orderNo = (Integer) session.getAttribute("orderNo");
         OrderDTO orderDTO = orderService.findAllByOrderNo(orderNo);
+
+        log.info("orderNo: " + orderNo);
+        log.info("orderDTO: " + orderDTO);
+
         session.setAttribute("orderDTO", orderDTO);
 
         kakaoPayService.approveResponse(pgToken);
