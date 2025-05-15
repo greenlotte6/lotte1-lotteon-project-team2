@@ -92,7 +92,7 @@
 
 .login-button {
   padding: 14px 137px;
-  background-color: #007bff;
+  background-color: #ff3b30;
   color: white;
   border: none;
   border-radius: 8px;
@@ -130,7 +130,7 @@
 }
 
 .login-options span a {
-  color: #007bff;
+  color: #666666;
   text-decoration: none;
 }
 
@@ -200,7 +200,7 @@
   text-align: left;
   color: #333;
   width: 100%;
-  margin-left: 150px; /* 원하는 만큼 오른쪽으로 이동 */
+  margin-left: 110px; /* 원하는 만큼 오른쪽으로 이동 */
 }
 
 /* 인증 마크 */
