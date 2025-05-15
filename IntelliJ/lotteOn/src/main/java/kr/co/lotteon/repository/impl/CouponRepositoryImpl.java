@@ -28,11 +28,19 @@ public class CouponRepositoryImpl implements CouponRepositoryCustom {
     @Override
     public Page<Tuple> selectAllCoupon(PageRequestDTO pageRequestDTO, Pageable pageable) {
 
+        String role = pageRequestDTO.getRole();
+        String uid = pageRequestDTO.getUid();
+
+
         if(pageRequestDTO.getSearchType().equals("전체")) {
 
             String keyword = pageRequestDTO.getKeyword();
             if(keyword != null) {
                 BooleanExpression expression = qCoupon.couponName.containsIgnoreCase(keyword);
+
+                if(role.contains("SELLER")){
+                    expression = expression.and(qUser.uid.eq(uid));
+                }
 
                 List<Tuple> tupleList = queryFactory
                         .select(qCoupon, qCoupon)
@@ -79,6 +87,10 @@ public class CouponRepositoryImpl implements CouponRepositoryCustom {
                 expression = qCoupon.couponName.containsIgnoreCase(pageRequestDTO.getKeyword());
             }else{
                 expression = qCoupon.issuedBy.contains(pageRequestDTO.getKeyword());
+            }
+
+            if(role.contains("SELLER")){
+                expression = expression.and(qUser.uid.eq(uid));
             }
 
             String keyword = pageRequestDTO.getKeyword();

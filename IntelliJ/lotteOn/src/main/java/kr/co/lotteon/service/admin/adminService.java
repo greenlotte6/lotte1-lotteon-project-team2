@@ -132,6 +132,8 @@ public class adminService {
         product.setSeller(seller);
         product.setSubCategory(subCategory);
 
+        product.setState("판매");
+
         // 제품 번호를 위한 준비
         // 년도 + 메인카테고리 번호 + 서브카테고리 번호
         String subNo = String.valueOf(subCategory.getSubCateNo());
