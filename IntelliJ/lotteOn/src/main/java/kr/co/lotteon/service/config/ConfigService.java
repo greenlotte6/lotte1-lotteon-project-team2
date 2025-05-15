@@ -1,5 +1,6 @@
 package kr.co.lotteon.service.config;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
 import jakarta.transaction.Transactional;
 import kr.co.lotteon.dto.category.MainCategoryDTO;
@@ -17,6 +18,7 @@ import kr.co.lotteon.entity.config.Config;
 import kr.co.lotteon.entity.config.Terms;
 import kr.co.lotteon.entity.config.Version;
 import kr.co.lotteon.entity.product.Product;
+import kr.co.lotteon.entity.product.QProduct;
 import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.category.MainCategoryRepository;
 import kr.co.lotteon.repository.category.SubCategoryRepository;
@@ -35,11 +37,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -55,6 +61,8 @@ public class ConfigService {
     private final MainCategoryRepository mainCategoryRepository;
     private final SubCategoryRepository subCategoryRepository;
     private final ProductRepository productRepository;
+
+    private final QProduct qProduct = QProduct.product;
 
     public TermsDTO findTerms() {
         Terms terms = termsRepository.findById(1).get();
@@ -244,6 +252,7 @@ public class ConfigService {
 
     @Cacheable(value = "slide-banners", key = "#cate")
     public List<BannerDTO> findBannerByCate(String cate) {
+
         if(cate == null){
             cate = "MAIN1";
         }
@@ -538,4 +547,42 @@ public class ConfigService {
     public void deleteCategoryCache() {
         log.info("카테고리 캐시 삭제");
     }
+
+
+    @Cacheable(value = "autocomplete", key = "#keyword.toLowerCase()")
+    public List<String> getAutocompleteSuggestions(String keyword) {
+        if (!StringUtils.hasText(keyword) || keyword.length() < 2) {
+            return List.of();
+        }
+
+        String lowerKeyword = keyword.toLowerCase();
+
+        BooleanBuilder builder = new BooleanBuilder();
+
+        builder.or(qProduct.prodName.lower().contains(lowerKeyword))
+                .or(qProduct.prodBrand.lower().contains(lowerKeyword))
+                .or(qProduct.subCategory.subCategoryName.lower().contains(lowerKeyword));
+
+        List<Product> products = productRepository.findAll(builder);
+
+        return products.stream()
+                .flatMap(product -> {
+                    Stream.Builder<String> streamBuilder = Stream.builder();
+                    if (product.getProdName() != null) {
+                        streamBuilder.add(product.getProdName());
+                    }
+                    if (product.getProdBrand() != null) {
+                        streamBuilder.add(product.getProdBrand());
+                    }
+                    if (product.getSubCategory() != null && product.getSubCategory().getSubCategoryName() != null) {
+                        streamBuilder.add(product.getSubCategory().getSubCategoryName());
+                    }
+                    return streamBuilder.build();
+                })
+                .filter(suggestion -> suggestion.toLowerCase().contains(lowerKeyword))
+                .distinct()
+                .limit(10)
+                .collect(Collectors.toList());
+    }
+
 }
