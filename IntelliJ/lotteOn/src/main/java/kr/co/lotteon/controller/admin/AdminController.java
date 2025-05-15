@@ -32,7 +32,10 @@ import kr.co.lotteon.service.seller.SellerService;
 import kr.co.lotteon.service.visitor.VisitorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +43,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -481,14 +485,54 @@ public class AdminController {
 
     // 상품현황
     @GetMapping("/product/list")
-    public String productList(PageRequestDTO pageRequestDTO, Model model){
+    public String productList(PageRequestDTO pageRequestDTO, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String uid = userDetails.getUsername();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+
+        String role = null;
+        for (GrantedAuthority auth : authorities) {
+
+            if(auth.getAuthority().equals("ROLE_ADMIN")){
+                role = auth.getAuthority();
+                break;
+            }else if(auth.getAuthority().equals("ROLE_SELLER")){
+                role = auth.getAuthority();
+                break;
+            }
+        }
+
+        pageRequestDTO.setRole(role);
+        pageRequestDTO.setUid(uid);
+
         PageResponseDTO pageResponseDTO = adminService.selectAllForList(pageRequestDTO);
         model.addAttribute(pageResponseDTO);
      return "/admin/product/list";
     }
 
     @GetMapping("/product/search")
-    public String productSearch(PageRequestDTO pageRequestDTO, Model model){
+    public String productSearch(PageRequestDTO pageRequestDTO, Model model, @AuthenticationPrincipal UserDetails userDetails){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String uid = userDetails.getUsername();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+
+        String role = null;
+        for (GrantedAuthority auth : authorities) {
+
+            if(auth.getAuthority().equals("ROLE_ADMIN")){
+                role = auth.getAuthority();
+                break;
+            }else if(auth.getAuthority().equals("ROLE_SELLER")){
+                role = auth.getAuthority();
+                break;
+            }
+        }
+
+        pageRequestDTO.setRole(role);
+        pageRequestDTO.setUid(uid);
+
         PageResponseDTO pageResponseDTO = adminService.selectAllForList(pageRequestDTO);
         model.addAttribute(pageResponseDTO);
         return "/admin/product/listSearch";
@@ -571,7 +615,27 @@ public class AdminController {
 
     //주문현황
     @GetMapping("/order/list")
-    public String orderList(PageRequestDTO pageRequestDTO, Model model){
+    public String orderList(PageRequestDTO pageRequestDTO, Model model , @AuthenticationPrincipal UserDetails userDetails){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String uid = userDetails.getUsername();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+
+        String role = null;
+        for (GrantedAuthority auth : authorities) {
+
+            if(auth.getAuthority().equals("ROLE_ADMIN")){
+                role = auth.getAuthority();
+                break;
+            }else if(auth.getAuthority().equals("ROLE_SELLER")){
+                role = auth.getAuthority();
+                break;
+            }
+        }
+
+        pageRequestDTO.setRole(role);
+        pageRequestDTO.setUid(uid);
+
         PageResponseDTO pageResponseDTO = adminService.selectAllForOrder(pageRequestDTO);
         model.addAttribute(pageResponseDTO);
         model.addAttribute("order",pageResponseDTO.getDtoList());
@@ -581,7 +645,27 @@ public class AdminController {
 
     //주문현황 검색
     @GetMapping("/order/search")
-    public String orderSearchList(PageRequestDTO pageRequestDTO, Model model){
+    public String orderSearchList(PageRequestDTO pageRequestDTO, Model model , @AuthenticationPrincipal UserDetails userDetails){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String uid = userDetails.getUsername();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+
+        String role = null;
+        for (GrantedAuthority auth : authorities) {
+
+            if(auth.getAuthority().equals("ROLE_ADMIN")){
+                role = auth.getAuthority();
+                break;
+            }else if(auth.getAuthority().equals("ROLE_SELLER")){
+                role = auth.getAuthority();
+                break;
+            }
+        }
+
+        pageRequestDTO.setRole(role);
+        pageRequestDTO.setUid(uid);
+
         PageResponseDTO pageResponseDTO = adminService.selectAllForOrder(pageRequestDTO);
         model.addAttribute(pageResponseDTO);
         model.addAttribute("order",pageResponseDTO.getDtoList());
@@ -589,9 +673,28 @@ public class AdminController {
     }
 
 
-    //주문현황
+    //배송현황
     @GetMapping("/order/delivery")
-    public String delivery(PageRequestDTO pageRequestDTO, Model model){
+    public String delivery(PageRequestDTO pageRequestDTO, Model model , @AuthenticationPrincipal UserDetails userDetails){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String uid = userDetails.getUsername();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+
+        String role = null;
+        for (GrantedAuthority auth : authorities) {
+
+            if(auth.getAuthority().equals("ROLE_ADMIN")){
+                role = auth.getAuthority();
+                break;
+            }else if(auth.getAuthority().equals("ROLE_SELLER")){
+                role = auth.getAuthority();
+                break;
+            }
+        }
+
+        pageRequestDTO.setRole(role);
+        pageRequestDTO.setUid(uid);
 
         PageResponseDTO pageResponseDTO = adminService.selectAllForDelivery(pageRequestDTO);
         model.addAttribute(pageResponseDTO);
@@ -607,7 +710,27 @@ public class AdminController {
 
     // 배송 검색
     @GetMapping("/order/delivery/search")
-    public String deliverySearchList(PageRequestDTO pageRequestDTO, Model model){
+    public String deliverySearchList(PageRequestDTO pageRequestDTO, Model model  , @AuthenticationPrincipal UserDetails userDetails){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String uid = userDetails.getUsername();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+
+        String role = null;
+        for (GrantedAuthority auth : authorities) {
+
+            if(auth.getAuthority().equals("ROLE_ADMIN")){
+                role = auth.getAuthority();
+                break;
+            }else if(auth.getAuthority().equals("ROLE_SELLER")){
+                role = auth.getAuthority();
+                break;
+            }
+        }
+
+        pageRequestDTO.setRole(role);
+        pageRequestDTO.setUid(uid);
+
         PageResponseDTO pageResponseDTO = adminService.selectAllForDelivery(pageRequestDTO);
         model.addAttribute(pageResponseDTO);
         return "/admin/order/deliverySearch";

@@ -22,6 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -302,6 +304,13 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
         BooleanExpression booleanExpression = qProduct.state.eq("판매");
 
+        String role = pageRequestDTO.getRole();
+        String uid = pageRequestDTO.getUid();
+
+        if(role.contains("SELLER")){
+            booleanExpression = booleanExpression.and(qSeller.user.uid.eq(uid));
+        }
+
         String cate = pageRequestDTO.getSearchType();
         String keyword = pageRequestDTO.getKeyword();
 
@@ -341,6 +350,10 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 expression = expression.and(baseCondition);
             } else {
                 expression = baseCondition;
+            }
+
+            if(role.contains("SELLER")){
+                expression = expression.and(qSeller.user.uid.eq(uid));
             }
 
             List<Tuple> tupleList = queryFactory
