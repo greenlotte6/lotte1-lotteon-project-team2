@@ -527,12 +527,14 @@
                 };
                 console.log("장바구니 데이터 전송 시도:", cartItemData);
 
-                fetch('/product/addCart', {
-                    method: 'POST',
+                const params = new URLSearchParams({ key: 'value' }).toString();
+
+                fetch('/product/addCart?' + params, {
+                    method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(cartItemData),
+
                     credentials: 'include'
                 })
                     .then(response => {
