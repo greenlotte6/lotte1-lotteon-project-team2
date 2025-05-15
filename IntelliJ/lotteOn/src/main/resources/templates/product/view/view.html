@@ -531,11 +531,9 @@
 
                 fetch('/product/addCart?' + params, {
                     method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-
-                    credentials: 'include'
+                    headers: {'Content-Type': 'application/json'},
+                    credentials: 'include',
+                    redirect: 'manual'
                 })
                     .then(response => {
                         if (response.redirected) {
