@@ -88,6 +88,10 @@ aside {
     margin-top: 20px;
 }
 
+.product_page > form {
+    margin-bottom: 100px;
+}
+
 .product_page > div:nth-of-type(1)  {
     float: left;
     width: 500px;
@@ -263,11 +267,21 @@ tr:nth-child(3) span:nth-child(2) {
 }
 
 .tab-menu {
+    position: relative;
+    background: white;
+    z-index: 1000;
     display: flex;
-    border-bottom: 1px solid #ccc;
-    margin: 100px 0 20px 0;
+    margin-left: 10px;
+    margin-bottom: 10px;
     list-style: none;
+}
 
+.tab-menu.fixed {
+    position: fixed;
+    width: 990px;
+    top: 0;
+    left: 550px;
+    right: 0;
 }
 
 .tab-menu li {
@@ -277,7 +291,7 @@ tr:nth-child(3) span:nth-child(2) {
     cursor: pointer;
     font-weight: 600;
     color: #555;
-    border-bottom: 2px solid transparent;
+
 }
 
 .tab-menu li.active {
@@ -289,6 +303,11 @@ tr:nth-child(3) span:nth-child(2) {
     display: none;
     padding: 10px 0;
 }
+
+.tab-pane {
+    scroll-margin-top: 70px; /* tab-menu 높이만큼 */
+}
+
 
 .tab-content .tab-pane.active {
     display: block;

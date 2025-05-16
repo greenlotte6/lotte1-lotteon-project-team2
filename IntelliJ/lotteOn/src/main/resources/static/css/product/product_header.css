@@ -73,6 +73,7 @@ header {
     display: flex;
     align-items: center;
     width: 100%;
+    position: relative;
 }
 
 .logo .search input[type="search"] {
@@ -265,6 +266,31 @@ header {
     color: red;
     font-weight: bold;
 }
+
+#autocompleteList {
+    width: 480px;
+    border: 2px solid red;
+    border-top: 1px solid lightgray;
+    display: none;
+    position: absolute;
+    background: #fff;
+    padding: 10px;
+    box-sizing: border-box;
+    top: 105%;
+    left: -15px;
+    z-index: 1000;
+}
+
+
+#autocompleteList div {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 3px;
+    color: #404040;
+}
+
+
+
 
 
 
