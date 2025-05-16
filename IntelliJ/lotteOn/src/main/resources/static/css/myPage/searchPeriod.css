@@ -32,7 +32,7 @@ input[type="radio"]:checked + span {
     margin-bottom: 5px;
     border: 3px solid #EEEEEE;
     padding: 5px;
-    width: 560px;
+    width: 570px;
     float: right;
 }
 
@@ -75,4 +75,13 @@ input[type="radio"]:checked + span {
 .searchSpace >p{
     margin-right: auto;
     font-size: 14px;
+}
+
+.searchSpace_point p{
+    margin-right: 5px;
+}
+
+
+.point-table th{
+    width: 20%;
 }
