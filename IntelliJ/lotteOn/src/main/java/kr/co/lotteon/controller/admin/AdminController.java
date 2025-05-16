@@ -577,7 +577,8 @@ public class AdminController {
         adminService.saveProductDetail(productDetailDTO, savedProduct);
 
         // 캐시 삭제
-        productService.deleteRegisterCache();
+        productService.deleteSearchListCache();
+        productService.deleteRecentCache();
 
         return "redirect:/admin/product/register";
     }

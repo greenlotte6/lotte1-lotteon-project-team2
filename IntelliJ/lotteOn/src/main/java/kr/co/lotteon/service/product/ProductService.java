@@ -10,6 +10,7 @@ import kr.co.lotteon.entity.cart.Cart;
 import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.entity.product.ProductImage;
 import kr.co.lotteon.repository.product.CartRepository;
+import kr.co.lotteon.repository.product.ProductImageRepository;
 import kr.co.lotteon.repository.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final ProductImageRepository productImageRepository;
     private final ModelMapper modelMapper;
     private final CartRepository cartRepository;
 
@@ -287,18 +289,15 @@ public class ProductService {
     }
 
     @CacheEvict(value = "autocomplete", allEntries = true)
-    public void deleteSearchList(){
+    public void deleteSearchListCache(){
 
     }
-
-    public void deleteRegisterCache() {
-        deleteRecentCache();
-        deleteSearchList();
+    
+    // 상품 이미지 출력
+    public ProductImageDTO findImageByNo(ProductDTO productDTO) {
+        Product product = modelMapper.map(productDTO, Product.class);
+        ProductImage productImage = productImageRepository.findByProduct(product).get();
+        return modelMapper.map(productImage, ProductImageDTO.class);
     }
-
-
-
-
-
 }
 

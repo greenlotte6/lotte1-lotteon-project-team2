@@ -11,6 +11,7 @@ import kr.co.lotteon.dto.page.PageRequestDTO;
 import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.dto.product.ProductDetailDTO;
+import kr.co.lotteon.dto.product.ProductImageDTO;
 import kr.co.lotteon.dto.user.UserDetailsDTO;
 import kr.co.lotteon.entity.config.Banner;
 import kr.co.lotteon.service.article.InquiryService;
@@ -79,8 +80,11 @@ public class ProductController {
         // qna
         PageResponseDTO inquiryPageResponseDTO = inquiryService.selectAllForList(pageRequestDTO);
 
+        ProductImageDTO productImageDTO = productService.findImageByNo(productDTO);
+
         model.addAttribute(productDTO);
         model.addAttribute(productDetailDTO);
+        model.addAttribute("productImage", productImageDTO);
         model.addAttribute("reviewPageResponseDTO", reviewPageResponseDTO);
         model.addAttribute("inquiryPageResponseDTO", inquiryPageResponseDTO);
 
