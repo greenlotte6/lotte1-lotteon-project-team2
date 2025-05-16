@@ -115,7 +115,7 @@ spring:
           google:
             client-id: ENC("ulRddMvAq2uykQAVpPKN7YR1aLbrBHr1yhELtgDqijeCpfX8gAfuqTuf1YLGSOaN0T+8R4aNQW5geAH327wRodQjYKo6JT75HuzTOeTZ0N2BhJkeLriWWA==")
             client-secret: ENC("gG0dgP/Y9gpD9VkV31XZYOglhbCmxNmzjwekgxlo04SpOhQVlImi59jj0X4WgXIb")
-            redirect-uri: http://localhost:8080/login/oauth2/code/google
+            redirect-uri:  https://lotteon.store/login/oauth2/code/google
             scope:
               - email
               - profile
@@ -123,7 +123,7 @@ spring:
           naver:
             client-name: naver
             authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:8080/login/oauth2/code/naver
+            redirect-uri: https://lotteon.store/login/oauth2/code/naver
 
             client-id: ENC("2lFmuHXayfA6Voee2j5mE2q3q8kRxFn8yQ0KZ+gTVZ8=")
             client-secret: ENC("8Gzpq0DfyfkTlOZzhFHoWzDuB4EmEDrY")
