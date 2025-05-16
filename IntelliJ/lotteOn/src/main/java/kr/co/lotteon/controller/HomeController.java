@@ -80,10 +80,10 @@ public class HomeController {
     @GetMapping("/main/recent")
     @ResponseBody
     public List<ProductDTO> loadMoreRecentProducts() {
-        log.info("최신 상품 출력: ");
         //productService.deleteRecentCache();
         delay(); // 딜레이
-        List<ProductDTO> list = productService.findReviewTop8();
+        // List<ProductDTO> list = productService.findDiscountTop8();
+        List<ProductDTO> list = productService.findDiscountTop8();
         return list;
     }
 
