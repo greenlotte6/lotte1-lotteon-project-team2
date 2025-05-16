@@ -98,7 +98,7 @@ spring:
             authorization-grant-type: authorization_code
 
             # 카카오 > 내 애플리케이션 > 카카오 로그인 > 등록한 Redirect URI 입력
-            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+            redirect-uri: https://lotteon.store/login/oauth2/code/kakao
 
             # 카카오 > 내 애플리케이션 > 요약정보 > REST API 키 입력
             client-id: ENC("K4+Ewgcgye8xKOBKaoDAMrNsEHKEk9jhSroFhk8kcqaMaox96Hww0Z6iebWXXyvz")
