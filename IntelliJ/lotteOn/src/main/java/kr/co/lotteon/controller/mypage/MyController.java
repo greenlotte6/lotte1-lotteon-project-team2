@@ -604,7 +604,7 @@ public class MyController {
         myPageService.modify(userDTO);
 
 
-        return "redirect:/my/home";
+        return "redirect:/my/info";
     }
 
     @PostMapping("/my/withdraw")
