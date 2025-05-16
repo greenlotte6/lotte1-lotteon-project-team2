@@ -198,8 +198,10 @@ public class ProductService {
     }
 
     // 조회수 높은 상품 8개
+    //@CacheEvict(value = "product-hit"  , allEntries = true)
     @Cacheable(value = "product-hit")
     public List<ProductDTO> findHitTop8() {
+
         log.info("조회수 높은 상품 출력");
         List<ProductDTO> productDTOS = new ArrayList<>();
         List<Product> products = productRepository.findTop8ByOrderByHitDesc();
