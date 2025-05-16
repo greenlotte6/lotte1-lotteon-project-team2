@@ -101,10 +101,22 @@ spring:
             redirect-uri: https://lotteon.store/login/oauth2/code/kakao
 
             # 카카오 > 내 애플리케이션 > 요약정보 > REST API 키 입력
-            client-id: ENC("K4+Ewgcgye8xKOBKaoDAMrNsEHKEk9jhSroFhk8kcqaMaox96Hww0Z6iebWXXyvz")
+
+            #명기
+            #client-id: ENC("K4+Ewgcgye8xKOBKaoDAMrNsEHKEk9jhSroFhk8kcqaMaox96Hww0Z6iebWXXyvz")
+
+            # 상호
+            #client-id: 553cbe3c55b08148e1bcad2930c886dc
+            client-id: ENC("BZknqnjVU6gLrK45/n7fphFLlyKRMCipzJ4tRdnSUr0vDcHPHTvMXR5ZcYSJeS3E")
 
             # 카카오 > 내 애플리케이션 > 카카오 로그인 > 보안 > Client Secret 생성 후 입력
-            client-secret: ENC("mBR6Yfz08Z6rUnlxXkqa2m/3BM/MWkY0fwxX7NnY6ltRAvvXRekO4Em7Uk0JXRb2")
+
+            #상호
+            #client-secret: Xw6xWUo43GltM6eqm6bG4prABeBmOIM7
+            client-secret: ENC("UWPCY+9gkix2nOMuJE50D5Yjiuvj9GDc7HFI4cW+tpoUaYhqujIk+GhkrBwbGkSS")
+
+            #명기
+            #client-secret: ENC("mBR6Yfz08Z6rUnlxXkqa2m/3BM/MWkY0fwxX7NnY6ltRAvvXRekO4Em7Uk0JXRb2")
 
             client-authentication-method: client_secret_post
             scope:
