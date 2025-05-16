@@ -82,8 +82,8 @@ public class HomeController {
     public List<ProductDTO> loadMoreRecentProducts() {
         //productService.deleteRecentCache();
         delay(); // 딜레이
-        // List<ProductDTO> list = productService.findDiscountTop8();
-        List<ProductDTO> list = productService.findDiscountTop8();
+        List<ProductDTO> list = productService.findRecentTop8();
+        //List<ProductDTO> list = productService.findDiscountTop8();
         return list;
     }
 
