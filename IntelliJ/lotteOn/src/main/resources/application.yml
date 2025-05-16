@@ -121,6 +121,7 @@ spring:
               - profile
 
           naver:
+            provider : naver
             client-name: naver
             authorization-grant-type: authorization_code
             redirect-uri: https://lotteon.store/login/oauth2/code/naver
