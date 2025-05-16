@@ -53,7 +53,7 @@
                                 </tbody>
                                 <tbody>
                                     <tr th:each="review, i : ${reviewDTO.dtoList}">
-                                        <td>1</td>
+                                        <td th:text="${reviewDTO.startNo - i.index}"></td>
                                         <td th:text="${review.product.prodNo} + '/' + ${review.product.prodName}"></td>
                                         <td th:text="${review.content}"></td>
                                         <td>

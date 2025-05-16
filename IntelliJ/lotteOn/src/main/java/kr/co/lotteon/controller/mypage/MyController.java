@@ -427,6 +427,8 @@ public class MyController {
 
         PageResponseDTO<InquiryDTO> inquiryDTO = myPageService.inquiryFindAll(userDTO, pageRequestDTO);
 
+        log.info("inquiryDTO : " + inquiryDTO);
+
         model.addAttribute("userDTO", userDTO);
         model.addAttribute("inquiryDTO", inquiryDTO);
         model.addAttribute("getCouponCount", getCouponCount);

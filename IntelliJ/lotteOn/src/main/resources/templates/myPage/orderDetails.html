@@ -222,7 +222,8 @@
                                                                        th:data-sellerAddr1="${orderInfo.user.addr1}"
                                                                        th:data-sellerAddr2="${orderInfo.user.addr2}"
                                                                        th:data-prodNo="${orderInfo.product.prodNo}"></a>
-                                                <a th:text="${'상품명 : ' + orderInfo.product.prodName}"></a>
+                                                <a th:href="@{/product/view(prodNo=${orderInfo.product.prodNo})}"
+                                                   th:text="${'상품명 : ' + orderInfo.product.prodName}"></a>
                                                 <p th:text="${'수량 : ' + orderInfo.orderItem.itemCount + '개'}"></p>
                                                 <p th:text="${'가격 : ' + #numbers.formatInteger(orderInfo.orderItem.itemPrice, 3, 'COMMA') + '원'}"></p>
                                             </div>
