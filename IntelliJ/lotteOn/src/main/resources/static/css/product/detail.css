@@ -325,7 +325,8 @@ tr:nth-child(3) span:nth-child(2) {
 
 #detail > img:nth-of-type(2) {
     width: 100%;
-    height: 500px;
+    height: auto;
+    /* height: 500px; */
     margin-bottom: 40px;
 }
 

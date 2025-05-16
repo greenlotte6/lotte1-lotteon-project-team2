@@ -259,7 +259,7 @@ public class ProductService {
     }
 
     // 최신 상품 8개
-    // @Cacheable(value = "product-recent")
+    @Cacheable(value = "product-recent")
     public List<ProductDTO> findRecentTop8() {
         log.info("최신 상품 출력");
         List<ProductDTO> productDTOS = new ArrayList<>();

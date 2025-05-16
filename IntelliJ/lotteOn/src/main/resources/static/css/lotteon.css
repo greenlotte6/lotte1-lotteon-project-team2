@@ -205,6 +205,10 @@
   gap: 20px;
 }
 
+.hit-products{
+  width: 980px;
+}
+
 .product-card {
   background: #fff;
   border: 1px solid #eee;
@@ -220,7 +224,7 @@
 }
 
 .product-card img {
-  width: 100%;
+  width: 220px;
   height: 200px;
   object-fit: cover;
 }
