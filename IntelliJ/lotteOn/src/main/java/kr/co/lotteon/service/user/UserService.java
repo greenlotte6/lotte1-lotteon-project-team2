@@ -64,7 +64,7 @@ public class UserService {
 
         LocalDateTime now = LocalDateTime.now();
 
-        // 포안트 기록
+        // 포인트 기록
         Point point = Point.builder()
                 .expiryDate(now.plusMonths(6))
                 .pointDesc("회원가입 축하포인트!")
