@@ -96,9 +96,9 @@ spring:
           kakao:
             client-name: kakao
             authorization-grant-type: authorization_code
-
             # 카카오 > 내 애플리케이션 > 카카오 로그인 > 등록한 Redirect URI 입력
             redirect-uri: https://lotteon.store/login/oauth2/code/kakao
+
 
             # 카카오 > 내 애플리케이션 > 요약정보 > REST API 키 입력
 
@@ -120,9 +120,9 @@ spring:
 
             client-authentication-method: client_secret_post
             scope:
-              - profile_nickname
-              - profile_image
               - account_email
+              - profile_image
+              - profile_nickname
 
           google:
             client-id: ENC("ulRddMvAq2uykQAVpPKN7YR1aLbrBHr1yhELtgDqijeCpfX8gAfuqTuf1YLGSOaN0T+8R4aNQW5geAH327wRodQjYKo6JT75HuzTOeTZ0N2BhJkeLriWWA==")

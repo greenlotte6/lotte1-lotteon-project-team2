@@ -1,7 +1,14 @@
 package kr.co.lotteon.oauth2;
 
 
+import kr.co.lotteon.entity.coupon.Coupon;
+import kr.co.lotteon.entity.coupon.CouponIssue;
+import kr.co.lotteon.entity.point.Point;
 import kr.co.lotteon.entity.user.User;
+import kr.co.lotteon.entity.user.UserDetails;
+import kr.co.lotteon.repository.coupon.CouponIssueRepository;
+import kr.co.lotteon.repository.point.PointRepository;
+import kr.co.lotteon.repository.user.UserDetailsRepository;
 import kr.co.lotteon.repository.user.UserRepository;
 import kr.co.lotteon.security.MyUserDetails;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +20,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
 
@@ -22,6 +30,9 @@ import java.util.Optional;
 public class Oauth2UserService extends DefaultOAuth2UserService {
 
     private final UserRepository userRepository;
+    private final UserDetailsRepository userDetailsRepository;
+    private final CouponIssueRepository couponIssueRepository;
+    private final PointRepository pointRepository;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -85,10 +96,52 @@ public class Oauth2UserService extends DefaultOAuth2UserService {
                     .name(name)
                     .email(email)
                     .role("USER")
+                    .state("정상")
                     .provider(provider)
                     .build();
             log.info("▶ 신규 사용자 저장 시도: {}", user);
             userRepository.save(user);
+
+            UserDetails userDetails = UserDetails.builder()
+                    .user(user)
+                    .userPoint(5000)
+                    .gender("male")
+                    .rank("FAMILY")
+                    .build();
+
+            userDetailsRepository.save(userDetails);
+
+            LocalDateTime now = LocalDateTime.now();
+
+            // 포인트 기록
+            Point point = Point.builder()
+                    .expiryDate(now.plusMonths(6))
+                    .pointDesc("회원가입 축하포인트!")
+                    .point(5000)
+                    .user(user)
+                    .build();
+
+            pointRepository.save(point);
+
+            // 쿠폰 발급
+            Coupon coupon = Coupon.builder()
+                    .cno(1012211368)
+                    .build();
+
+            String expire = String.valueOf(now.plusMonths(1));
+
+            // 쿠폰 이슈
+            CouponIssue couponIssue = CouponIssue.builder()
+                    .user(user)
+                    .coupon(coupon)
+                    .issuedBy("관리자")
+                    .validTo(expire)
+                    .build();
+
+            couponIssueRepository.save(couponIssue);
+
+
+
             log.info("▶ 사용자 저장 완료");
         }
 
