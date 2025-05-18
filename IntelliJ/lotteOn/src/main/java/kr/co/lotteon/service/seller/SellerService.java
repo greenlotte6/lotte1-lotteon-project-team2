@@ -4,7 +4,9 @@ import kr.co.lotteon.dto.seller.SellerDTO;
 import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.entity.seller.Seller;
 import kr.co.lotteon.entity.user.User;
+import kr.co.lotteon.entity.user.UserDetails;
 import kr.co.lotteon.repository.seller.SellerRepository;
+import kr.co.lotteon.repository.user.UserDetailsRepository;
 import kr.co.lotteon.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,7 @@ public class SellerService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
+    private final UserDetailsRepository userDetailsRepository;
 
     /*
      * 판매자 등록
@@ -49,6 +52,16 @@ public class SellerService {
         sellerDTO.setUser(userDTO);
         Seller seller = modelMapper.map(sellerDTO, Seller.class);
         sellerRepository.save(seller);
+
+        UserDetails userDetails = UserDetails.builder()
+                .rank("FAMILY")
+                .gender("male")
+                .user(user)
+                .content("없음")
+                .userPoint(0)
+                .build();
+
+        userDetailsRepository.save(userDetails);
 
     }
 

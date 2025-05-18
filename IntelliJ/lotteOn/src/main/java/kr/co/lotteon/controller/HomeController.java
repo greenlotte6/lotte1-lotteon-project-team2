@@ -25,7 +25,10 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model){
+
+        // 배너 캐시로 들고오기
         List<BannerDTO> banners = configService.findBanner("MAIN1");
+
         BannerDTO banner = configService.randomBanner(banners);
 
         List<BannerDTO> bannerDTOS = configService.findBannerByCate("MAIN2");
@@ -40,15 +43,6 @@ public class HomeController {
 
         //조회수 많은 상품 8개
         List<ProductDTO> hitList = productService.findHitTop8();
-
-        //평점 높은 상품 8개 (추천상품)
-        List<ProductDTO> reviewTopList = productService.findReviewTop8();
-
-        //최신 상품
-        List<ProductDTO> recentList = productService.findRecentTop8();
-
-        //리뷰 많은 상품 8개
-        List<ProductDTO> reviewManyList = productService.findReviewManyTop8();
 
         model.addAttribute("hitList", hitList);
         model.addAttribute("bestList", bestList);

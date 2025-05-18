@@ -127,7 +127,7 @@
                 <!-- 사이드바 끝-->
                 <!-- 오른쪽 글 -->
                 <article class="main_content_side">
-                    <div class="ad">
+                    <div class="ad" th:if="${banner != null}">
                         <img th:src="@{/upload/{image}(image=${banner.sName})}"
                              th:style="'width:' + ${banner.width} + 'px;'
                                             +'height:' + ${banner.height} + 'px;'"

@@ -41,6 +41,7 @@ import org.springframework.util.StringUtils;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -517,12 +518,26 @@ public class ConfigService {
     }
 
     public BannerDTO randomBanner(List<BannerDTO> banners) {
-        if(banners.isEmpty()){
+
+        List<BannerDTO> activeBanners = new ArrayList<>();
+
+        LocalDateTime now = LocalDateTime.now();
+
+        for(BannerDTO banner : banners){
+            LocalDateTime startDateTime = LocalDateTime.of(banner.getStartDay(), banner.getStartTime());
+            LocalDateTime endDateTime = LocalDateTime.of(banner.getEndDay(), banner.getEndTime());
+
+            if (startDateTime.isBefore(now) && endDateTime.isAfter(now)) {
+                activeBanners.add(banner);
+            }
+        }
+
+        if(activeBanners.isEmpty()){
             return null;
         }else{
             int size = banners.size();
             int random = (int) (Math.random() * size);
-            return banners.get(random);
+            return activeBanners.get(random);
         }
     }
 

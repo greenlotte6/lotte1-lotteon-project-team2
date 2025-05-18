@@ -86,11 +86,10 @@ public class AdminController {
         operationDTO = adminService.countOrder(operationDTO);
         
         // 임금대기, 배송준비, 취소요청, 교환요청, 반품요청
-        operationDTO = adminService.countOrderDetail(operationDTO);
+        operationDTO = adminService.countOrderDetail(operationDTO, start, end);
 
         // 날짜 별 주문, 결제, 취소
         operationDTO = adminService.countDailyOrderStats(operationDTO);
-
 
         // 상품 카테고리 별 총량 출력
         operationDTO = adminService.countProductCategory(operationDTO);

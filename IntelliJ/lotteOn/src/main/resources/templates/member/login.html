@@ -98,7 +98,7 @@
 
           <!-- 오른쪽 배너 -->
           <div class="login-banner">
-            <div class="banner">
+            <div class="banner" th:if="${banner != null}">
               <img th:src="@{/upload/{image}(image=${banner.sName})}"
                    th:style="'width:' + ${banner.width} + 'px;'
                +'height:' + ${banner.height} + 'px;'"

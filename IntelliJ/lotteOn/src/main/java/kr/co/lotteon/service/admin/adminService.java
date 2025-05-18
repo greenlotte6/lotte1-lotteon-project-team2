@@ -1206,22 +1206,19 @@ public class adminService {
         return operationDTO;
     }
 
-    public OperationDTO countOrderDetail(OperationDTO operationDTO) {
+    public OperationDTO countOrderDetail(OperationDTO operationDTO, LocalDateTime start, LocalDateTime end) {
 
-        String state = "입금대기";
-        long ready = orderItemRepository.countByOrderStatusToday(state);
+        long ready = orderItemRepository.countByOrderStatusBetween("입금대기", start, end);
+        
+        ready += orderItemRepository.countByOrderStatusBetween("결제완료", start, end);
 
-        state = "배송완료";
-        long delivery = orderItemRepository.countByOrderStatusToday(state);
+        long delivery = orderItemRepository.countByOrderStatusBetween("배송", start, end);
 
-        state = "취소요청";
-        long cancel = orderItemRepository.countByOrderStatusToday(state);
+        long cancel = orderItemRepository.countByOrderStatusBetween("취소요청", start, end);
 
-        state = "교환신청";
-        long exchange = orderItemRepository.countByOrderStatusToday(state);
+        long exchange = orderItemRepository.countByOrderStatusBetween("교환신청", start, end);
 
-        state = "반품신청";
-        long returnCount = orderItemRepository.countByOrderStatusToday(state);
+        long returnCount = orderItemRepository.countByOrderStatusBetween("반품신청", start, end);
 
         operationDTO.setReadyTotal(ready);
         operationDTO.setDeliveryTotal(delivery);
@@ -1303,7 +1300,7 @@ public class adminService {
 
             if (status.equals("입금대기")) {
                 dto.setOrderTotal(dto.getOrderTotal() + count);
-            } else if (status.equals("구매확정") || status.equals("배송중")) {
+            } else if (status.equals("구매확정") || status.contains("배송")) {
                 dto.setCreditTotal(dto.getCreditTotal() + count);
             } else {
                 dto.setCancelTotal(dto.getCancelTotal() + count);
@@ -1437,5 +1434,6 @@ public class adminService {
                 .build();
 
     }
+
 }
 
