@@ -387,7 +387,8 @@
 
         // QnA ajax 처리
         const prodNoElement = document.getElementById('prodNo');
-        const qnaContainer = document.querySelector('.qna_content').parentNode;
+        const qnaEl = document.querySelector('.qna_content');
+        const qnaContainer = qnaEl ? qnaEl.parentNode : null;
         const qnaPagination = document.querySelector('.qna_page');
         function updateQnaListUI(qnaData) {
             if (qnaData && Array.isArray(qnaData.dtoList)) {
@@ -521,6 +522,8 @@
         if (cartButton) {
             cartButton.addEventListener('click', (event) => {
                 event.preventDefault();
+
+                console.log("click...");
 
                 const productNoInput = document.getElementById('productNo');
                 const productNo = productNoInput ? productNoInput.value : null;
