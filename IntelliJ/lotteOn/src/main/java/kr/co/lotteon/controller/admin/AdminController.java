@@ -609,6 +609,9 @@ public class AdminController {
         //상품 상세 정보 저장
         adminService.modifyProductDetail(savedProduct, productDetailDTO);
 
+        // 캐시 삭제
+        productService.deleteRecentCache();
+
         return "redirect:/admin/product/list";
     }
 
