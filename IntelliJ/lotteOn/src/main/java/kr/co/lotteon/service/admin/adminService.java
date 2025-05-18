@@ -1131,7 +1131,13 @@ public class adminService {
     public List<InquiryDTO> InquiryLimit5() {
         List<InquiryDTO> inquireDTOS = inquiryRepository.findTop5ByOrderByNoDesc()
                 .stream()
-                .map(inquire -> modelMapper.map(inquire, InquiryDTO.class))
+                .map(inquire -> {
+                    InquiryDTO inquiryDTO =  modelMapper.map(inquire, InquiryDTO.class);
+                    if(inquiryDTO.getCateV2()==null){
+                        inquiryDTO.setCateV2(inquiryDTO.getCateV1());
+                    }
+                    return  inquiryDTO;
+                })
                 .collect(Collectors.toList());
         return inquireDTOS;
     }
