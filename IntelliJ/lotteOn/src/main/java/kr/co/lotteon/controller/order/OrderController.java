@@ -15,6 +15,7 @@ import kr.co.lotteon.service.point.PointService;
 import kr.co.lotteon.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,7 +25,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -76,7 +80,6 @@ public class OrderController {
     * 6. 장바구니 지우기
     *    추가 사항: orderItem에 카테고리 추가햇어요.
     *    관리자 페이지에서 카테고리 별로 매출 계산해야되서
-    *
     * */
 
     @PostMapping("/order/submit")
@@ -90,6 +93,9 @@ public class OrderController {
                               @RequestParam(value = "receiverAddr2", required = false) String receiverAddr2,
                               @RequestParam(value = "issueNo", required = false) Long issueNo,
                               @AuthenticationPrincipal UserDetails userDetails) throws Exception {
+
+        log.info("orderDTO: {}", orderDTO);
+        log.info("Amount: {}", amount);
 
         orderDTO.setTotalQuantity(amount.getQuantity());
         orderDTO.setUid(userDetails.getUsername());
@@ -127,20 +133,28 @@ public class OrderController {
         // 포인트 사용 시 기록
         UserDetailsDTO userDeatilsDTO = pointService.changePoint(usedPoint, userDetails);
 
-        session.setAttribute("userDetailsDTO", userDeatilsDTO);
-        session.setAttribute("orderNo", orderNo);
 
-        log.info("orderNo: " + orderNo);
+        session.setAttribute("orderNo", orderNo);
 
         amount = orderService.getAmount(orderNo, userDetails, orderDTO);
 
+
         // 카카오페이 결제 요청
-        return kakaoPayService.kakaoPayReady(amount);
+        if ("카카오페이".equals(orderDTO.getPayment())) {
+            return kakaoPayService.kakaoPayReady(amount);
+        } else {
+            log.info("결제[///");
+            Map<String, Object> response = new HashMap<>();
+            response.put("redirectUrl", "/payment/success");
+            return ResponseEntity.ok(response); // JSON 응답
+        }
+
+
     }
 
     // 결제 성공
     @GetMapping("/payment/success")
-    public String afterPayRequest(@RequestParam("pg_token") String pgToken, HttpSession session) {
+    public String afterPayRequest(@RequestParam(value="pg_token", required = false) String pgToken, HttpSession session) {
 
         Integer orderNo = (Integer) session.getAttribute("orderNo");
         OrderDTO orderDTO = orderService.findAllByOrderNo(orderNo);
@@ -150,7 +164,9 @@ public class OrderController {
 
         session.setAttribute("orderDTO", orderDTO);
 
-        kakaoPayService.approveResponse(pgToken);
+        if(pgToken != null) {
+            kakaoPayService.approveResponse(pgToken);
+        }
 
         return "redirect:/product/order_completed";
     }

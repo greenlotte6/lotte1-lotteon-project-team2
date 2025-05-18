@@ -287,7 +287,7 @@ tr:nth-child(3) span:nth-child(2) {
 .tab-menu li {
     padding: 10px 20px;
     font-size: 18px;
-    margin: 0 65px;
+    margin: 0 60px;
     cursor: pointer;
     font-weight: 600;
     color: #555;
@@ -465,8 +465,7 @@ tr:nth-child(3) span:nth-child(2) {
     height: 50px;
     line-height: 60px;
     display: flex;
-    margin-top: 40px;
-    border-top: 1px solid #eee;
+    margin-top: 20px;
 }
 
 .reviews > div:nth-of-type(1) > p {
