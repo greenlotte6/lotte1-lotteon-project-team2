@@ -83,7 +83,7 @@
 </head>
 <body>
 <div id="wrapper">
-  <div class="advertisement"
+  <div class="advertisement" th:if="${banner != null}"
        th:style="'background-color:' + ${banner.color} +';'">
     <a th:href="${banner.link}">
       <img th:src="@{/upload/{image}(image=${banner.sName})}"
@@ -337,9 +337,9 @@
                       <div class="product-info">
                         <div class="product-name">${item.prodName}</div>
                         <div class="product-price">
-                          <del>${item.prodPrice}</del>
+                          <del>${item.prodPrice}원</del>
                           <span class="discount">${item.prodDiscount}%</span>
-                          <strong>${item.prodPrice * (100 - item.prodDiscount) / 100}</strong>
+                          <strong>${item.prodPrice * (100 - item.prodDiscount) / 100}원</strong>
                         </div>
                       </div>
                     </div>
@@ -388,9 +388,9 @@
                       <div class="product-info">
                         <div class="product-name">${item.prodName}</div>
                         <div class="product-price">
-                          <del>${item.prodPrice}</del>
+                          <del>${item.prodPrice}원</del>
                           <span class="discount">${item.prodDiscount}%</span>
-                          <strong>${item.prodPrice * (100 - item.prodDiscount) / 100}</strong>
+                          <strong>${item.prodPrice * (100 - item.prodDiscount) / 100}원</strong>
                         </div>
                       </div>
                     </div>
@@ -434,9 +434,9 @@
                       <div class="product-info">
                         <div class="product-name">${item.prodName}</div>
                         <div class="product-price">
-                          <del>${item.prodPrice}</del>
+                          <del>${item.prodPrice}원</del>
                           <span class="discount">${item.prodDiscount}%</span>
-                          <strong>${item.prodPrice * (100 - item.prodDiscount) / 100}</strong>
+                          <strong>${item.prodPrice * (100 - item.prodDiscount) / 100}원</strong>
                         </div>
                       </div>
                     </div>
@@ -483,9 +483,9 @@
                       <div class="product-info">
                         <div class="product-name">${item.prodName}</div>
                         <div class="product-price">
-                          <del>${item.prodPrice}</del>
+                          <del>${item.prodPrice}원</del>
                           <span class="discount">${item.prodDiscount}%</span>
-                          <strong>${item.prodPrice * (100 - item.prodDiscount) / 100}</strong>
+                          <strong>${item.prodPrice * (100 - item.prodDiscount) / 100}원</strong>
                         </div>
                       </div>
                     </div>

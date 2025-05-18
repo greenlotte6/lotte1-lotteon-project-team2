@@ -41,6 +41,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -49,6 +50,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.beans.Encoder;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -607,10 +609,35 @@ public class MyPageService {
 
         Product product = productRepository.findByProdNo(productId).orElse(null);
 
+        if(product != null){
+            // 리뷰 수 계산
+            int count = product.getReviewCount() + 1;
+            product.setReviewCount(count);
+            // 총합 계산
+            BigDecimal rating = reviewDTO.getRating(); // BigDecimal
+            double ratingValue = rating.doubleValue();
+            product.setRatingTotal(product.getRatingTotal() + ratingValue);
+
+            double avg = ratingValue / count;
+            double roundedAvg = Math.round(avg * 10.0) / 10.0;
+            product.setRatingAvg(roundedAvg);
+        }
+
         Review review = modelMapper.map(reviewDTO, Review.class);
 
         review.setWriter(user);
         review.setProduct(product);
+
+        LocalDateTime now = LocalDateTime.now();
+
+        Point point = Point.builder()
+                .user(user)
+                .point(500)
+                .pointDesc("상품 리뷰(" + product.getProdName() +")")
+                .expiryDate(now.plusYears(1))
+                .build();
+
+        point = pointRepository.save(point);
 
         try{
             if(file1 != null && !file1.isEmpty()){
@@ -711,6 +738,10 @@ public class MyPageService {
             return orderItemRepository.existsByOrder_OrderDateBetweenAndOrderStatusAndProduct_ProdNameContaining(start, end, searchType, keyword);
         }
 
+    }
+
+    @CacheEvict(value = "product-many-review"  , allEntries = true)
+    public void deleteReviewCache() {
     }
 }
 

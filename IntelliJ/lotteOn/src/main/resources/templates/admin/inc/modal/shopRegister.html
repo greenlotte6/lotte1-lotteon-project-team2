@@ -21,14 +21,14 @@
                     <tr>
                         <td>비밀번호</td>
                         <td>
-                            <input type="text" name="pass">
+                            <input type="password" name="pass">
                             <span>영문, 숫자, 특수문자 8~12자 설정</span>
                         </td>
                     </tr>
                     <tr>
                         <td>비밀번호확인</td>
                         <td>
-                            <input type="text">
+                            <input type="password">
                         </td>
                     </tr>
                 </table>
@@ -72,7 +72,7 @@
                         <td>주소</td>
                         <td class="address_form">
                             <input type="text" name="zip" id="zip" readonly placeholder="우편번호 선택"/>
-                            <button type="button" style="border: none;"  onclick="postcode()"><img th:src="@{/images/chk_post.gif}" style="height: 24px;"  alt="우편번호찾기"/></button><br>
+                            <button type="button" style="border: none;"  onclick="postcode()"><img th:src="@{/images/chk_post.gif}" style="width: 80px; height: 24px;"  alt="우편번호찾기"/></button><br>
                             <input class="inputs" type="text" name="addr1" id="addr1" readonly placeholder="기본주소 선택"/> <br>
                             <input class="inputs"type="text" name="addr2" id="addr2" placeholder="상세주소 입력"/>
                         </td>

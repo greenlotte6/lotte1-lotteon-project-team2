@@ -20,6 +20,7 @@ import kr.co.lotteon.service.mypage.MyPageService;
 import kr.co.lotteon.service.order.OrderItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -567,6 +568,7 @@ public class MyController {
 
         // 파일 처리 로직 추가 필요
         myPageService.reviewRegister(reviewDTO, userDTO, productId, uploadType, file1, file2);
+        myPageService.deleteReviewCache();
 
         return ResponseEntity.ok().build();
     }

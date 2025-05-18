@@ -53,6 +53,10 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     """)
     long countByOrderStatusToday(@Param("state") String state);
 
+
+
+
+
     List<OrderItem> findByOrder(Order order);
 
 
@@ -61,4 +65,17 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     Boolean existsByOrder_OrderDateBetweenAndProduct_ProdNameContaining(LocalDateTime start, LocalDateTime end, String keyword);
 
     long countByOrder_User_UidAndOrderStatusNotIn(String uid, List<String> excluded);
+
+    @Query("""
+    SELECT COUNT(oi)
+    FROM OrderItem oi
+    JOIN oi.order o
+    WHERE o.orderDate BETWEEN :startDate AND :endDate
+      AND oi.orderStatus LIKE CONCAT('%', :state, '%')
+    """)
+    long countByOrderStatusBetween(
+            @Param("state") String state,
+            @Param("startDate") LocalDateTime startDate,
+            @Param("endDate") LocalDateTime endDate
+    );
 }
