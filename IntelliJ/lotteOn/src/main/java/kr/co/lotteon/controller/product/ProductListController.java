@@ -5,7 +5,6 @@ import kr.co.lotteon.dto.page.PageResponseDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.service.config.ConfigService;
 import kr.co.lotteon.service.product.ProductListService;
-import kr.co.lotteon.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -14,13 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.data.redis.core.RedisCallback;
-import org.springframework.data.domain.Range;
 
-import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.List;
-import java.util.Set;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -34,8 +29,9 @@ public class ProductListController {
     // 상품 목록 - 첫 페이지 진입용
     @GetMapping("/product/list")
     public String list(PageRequestDTO pageRequestDTO, Model model) {
-        List<ProductDTO> productList = productListService.selectBestAllForList(pageRequestDTO.getSubCateNo());
-        model.addAttribute(productList);
+        List<ProductDTO> productDTOList = productListService.selectBestAllForList(pageRequestDTO.getSubCateNo());
+        model.addAttribute(productDTOList);
+        log.info("productList: {}", productDTOList);
         return "/product/list/list";
     }
 
@@ -64,8 +60,6 @@ public class ProductListController {
     @GetMapping("/product/ajaxSearchList")
     @ResponseBody
     public PageResponseDTO ajaxSearchList(PageRequestDTO pageRequestDTO, @RequestParam(value = "view", defaultValue = "list") String view) {
-        log.info("pageRequestDTO:{}", pageRequestDTO);
-
         PageResponseDTO pageResponseDTO = productListService.sortedSearchProducts(pageRequestDTO);
         pageResponseDTO.setSortType(pageRequestDTO.getSortType());
         pageResponseDTO.setPeriod(pageRequestDTO.getPeriod());
@@ -78,9 +72,7 @@ public class ProductListController {
     @GetMapping("/product/autocomplete")
     @ResponseBody
     public List<String> autocomplete(@RequestParam String keyword) {
-        log.info("Autocomplete called with keyword: {}", keyword);
         List<String> results =  configService.getAutocompleteSuggestions(keyword);
-        log.info("Autocomplete results: {}", results);
         return results;
     }
 

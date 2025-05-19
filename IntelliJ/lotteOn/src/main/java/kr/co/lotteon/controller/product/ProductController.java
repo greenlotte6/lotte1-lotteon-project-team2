@@ -88,8 +88,6 @@ public class ProductController {
         model.addAttribute("reviewPageResponseDTO", reviewPageResponseDTO);
         model.addAttribute("inquiryPageResponseDTO", inquiryPageResponseDTO);
 
-        log.info("reviewPageResponseDTO: {}", reviewPageResponseDTO);
-
         return "/product/view/view";
     }
 
@@ -147,8 +145,6 @@ public class ProductController {
     @PostMapping("/product/addCart")
     @ResponseBody
     public int cart(@RequestBody ItemRequestDTO itemRequestDTO, @AuthenticationPrincipal UserDetails userDetails) {
-
-        log.info("itemRequestDTO=" + itemRequestDTO);
         int result = cartService.addToCart(itemRequestDTO, userDetails);
         return result;
     }
@@ -176,8 +172,6 @@ public class ProductController {
     @PostMapping("/update/cartProdCount")
     @ResponseBody
     public ResponseEntity<String> updateQuantity(@RequestParam Integer cartNo, @RequestParam int newQuantity) {
-        log.info("cartNo: {}", cartNo);
-        log.info("newQuantity: {}", newQuantity);
         cartService.updateCartProdCount(cartNo, newQuantity);
         return ResponseEntity.ok("수량이 성공적으로 업데이트되었습니다.");
     }
