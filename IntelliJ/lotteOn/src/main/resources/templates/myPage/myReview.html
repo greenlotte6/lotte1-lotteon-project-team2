@@ -52,16 +52,18 @@
                                     </tr>
                                 </tbody>
                                 <tbody>
-                                    <tr th:each="review, i : ${reviewDTO.dtoList}">
-                                        <td th:text="${reviewDTO.startNo - i.index}"></td>
-                                        <td th:text="${review.product.prodNo} + '/' + ${review.product.prodName}"></td>
-                                        <td th:text="${review.content}"></td>
-                                        <td>
-                                            <span class="review-star" th:text="${'★★★★★'.substring(0, review.rating) + '☆☆☆☆☆'.substring(0, 5 - review.rating)}"></span>
-                                            <span class="score" th:text="' [' + ${#strings.substring(review.rating, 0, 1)} + '점]'"></span>
-                                        </td>
-                                        <td th:text="${#temporals.format(review.wdate, 'yyyy-MM-dd')}"></td>
-                                    </tr>
+                                <tr th:each="review, i : ${reviewDTO.dtoList}">
+                                    <td th:text="${reviewDTO.startNo - i.index}"></td>
+                                    <td th:text="${#strings.length(review.product.prodName) > 15 ?
+                                        #strings.substring(review.product.prodName, 0, 15) + '...' :
+                                        review.product.prodName}"></td>
+                                    <td th:text="${review.content}"></td>
+                                    <td>
+                                        <span class="review-star" th:text="${'★★★★★'.substring(0, review.rating) + '☆☆☆☆☆'.substring(0, 5 - review.rating)}"></span>
+                                        <span class="score" th:text="' [' + ${#strings.substring(review.rating, 0, 1)} + '점]'"></span>
+                                    </td>
+                                    <td th:text="${#temporals.format(review.wdate, 'yyyy-MM-dd')}"></td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>

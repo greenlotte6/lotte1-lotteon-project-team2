@@ -213,7 +213,8 @@ document.addEventListener('DOMContentLoaded', function(){
             document.getElementById('orderInfoModalReceiverHp').textContent = receiverHp;
             //document.getElementById('orderInfoModalReceiverZip').textContent = receiverZip;
             document.getElementById('orderInfoModalOrderAddr').textContent = orderAddr;
-            document.getElementById('orderInfoModalOrderContent').textContent = orderContent;
+            document.getElementById('orderInfoModalOrderContent').textContent =
+                orderContent && orderContent.trim() !== "" ? orderContent : "없음";
 
 
 

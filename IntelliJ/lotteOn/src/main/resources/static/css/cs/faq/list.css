@@ -164,7 +164,9 @@
 }
 
 .faq-answer {
-    margin-top: 10px;
+
+    margin-bottom: 10px;
+    width: 820px;
     display: none;
     font-size: 18px;
     color: #020202;
@@ -173,6 +175,7 @@
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #f9f9f9;
+    float: right;
 }
 
 .faq-answer span{
