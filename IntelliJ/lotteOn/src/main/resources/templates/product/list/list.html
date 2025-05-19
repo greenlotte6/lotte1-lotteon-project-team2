@@ -25,6 +25,36 @@
         slides.style.transform = `translateX(-${index * 100}%)`;
     }
 
+
+    // 쿠폰 발급 토스트 시작
+
+    let toastTimer = null; // 타이머 변수 저장
+
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+
+        // 토스트가 이미 표시 중이면 초기화
+        if (toastTimer) {
+            clearTimeout(toastTimer);
+            toast.classList.remove('show', 'hide');
+        }
+
+        toast.textContent = message;
+        toast.style.display = 'block';
+        toast.classList.add('show');
+
+        // 사라지는 타이머 재설정
+        toastTimer = setTimeout(() => {
+            toast.classList.remove('show');
+            toast.classList.add('hide');
+
+            // 애니메이션 끝나면 완전히 숨김
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 500);
+        }, 3000);
+    }
+
     function coupon(index) {
         // 서버에 전달할 데이터 객체
         const data = { index: index };
@@ -46,12 +76,27 @@
             .then(result => {
                 // 서버 응답 처리
                 console.log('서버 응답:', result);
-                alert('쿠폰 발급 성공!');
+
+                const view = document.getElementById("toast");
+
+                if (result === "1") {
+                    view.style.backgroundColor = "red";
+                } else if (result === "2") {
+                    view.style.backgroundColor = "green";
+                }else if (result === "3") {
+                    view.style.backgroundColor = "orange";
+                }else if (result === "4") {
+                    view.style.backgroundColor = "blue";
+                }
+
+                showToast('쿠폰이 발급되었습니다');
             })
             .catch(error => {
                 console.error('에러 발생:', error);
             });
     }
+
+    // 쿠폰 발급 토스트 끝
 
     function toggleView(view) {
         const wrapper = document.getElementById('productWrapper');
@@ -440,6 +485,34 @@
     <!-- 푸터 시작 -->
     <th:block th:include="/common/footer.html"/>
     <!-- 푸터 끝 -->
+
+    <div id="toast"></div>
+    <style>
+        #toast {
+            display: none;
+            position: fixed;
+            top: 30px;
+            right: -350px; /* 시작 위치: 화면 밖 */
+            background-color: #e53935; /* 빨간색 배경 */
+            color: white;
+            padding: 14px 28px;
+            border-radius: 8px;
+            z-index: 9999;
+            font-size: 15px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: right 0.5s ease-in-out;
+        }
+
+        #toast.show {
+            display: block;
+            right: 30px; /* 화면 안으로 슬라이드 인 */
+        }
+
+        #toast.hide {
+            right: -350px; /* 다시 오른쪽으로 나감 */
+        }
+    </style>
 </div>
 </body>
 </html>
