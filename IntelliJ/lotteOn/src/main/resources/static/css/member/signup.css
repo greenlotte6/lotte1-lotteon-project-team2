@@ -69,3 +69,8 @@
   text-decoration: none;
   font-size: 20px;
 }
+
+
+input[type="checkbox"] {
+  accent-color: #ff0000 ; /* 예: #ff0000 (빨간색) */
+}
