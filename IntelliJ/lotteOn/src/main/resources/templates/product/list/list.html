@@ -25,6 +25,35 @@
         slides.style.transform = `translateX(-${index * 100}%)`;
     }
 
+    function coupon(index) {
+        // 서버에 전달할 데이터 객체
+        const data = { index: index };
+
+        // 비동기 POST 요청
+        fetch('/coupon/issue', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' // JSON 형식임을 명시
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('서버 응답 오류');
+                }
+                return response.json(); // 응답을 JSON으로 파싱
+            })
+            .then(result => {
+                // 서버 응답 처리
+                console.log('서버 응답:', result);
+                alert('쿠폰 발급 성공!');
+            })
+            .catch(error => {
+                console.error('에러 발생:', error);
+                alert('쿠폰 발급 중 에러가 발생했습니다.');
+            });
+    }
+
     function toggleView(view) {
         const wrapper = document.getElementById('productWrapper');
         const toGridBtn = document.getElementById('toGrid');
@@ -311,10 +340,10 @@
             <div class="container">
                 <div class="slider">
                     <div class="slides" id="slides">
-                        <img src="/images/product/banner1.jpg" alt="배너 1">
-                        <img src="/images/product/banner2.jpg" alt="배너 2">
-                        <img src="/images/product/banner1.jpg" alt="배너 3">
-                        <img src="/images/product/banner2.jpg" alt="배너 4">
+                        <img src="/images/product/banner1.jpg" alt="배너 1" onclick="coupon(1)">
+                        <img src="/images/product/banner2.jpg" alt="배너 2" onclick="coupon(2)">
+                        <img src="/images/product/banner1.jpg" alt="배너 3" onclick="coupon(3)">
+                        <img src="/images/product/banner2.jpg" alt="배너 4" onclick="coupon(4)">
                     </div>
                     <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
                     <button class="next" onclick="moveSlide(1)">&#10095;</button>

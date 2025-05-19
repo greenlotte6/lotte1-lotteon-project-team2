@@ -145,4 +145,34 @@ public class CouponService {
 
     }
 
+    public void IssueToUser(Integer index, UserDetails userDetails) {
+
+        User user = User.builder()
+                .uid(userDetails.getUsername())
+                .build();
+
+        int cno = 0;
+        switch (index) {
+            case 1: cno = 1; break;
+            case 2: cno = 2; break;
+            case 3: cno = 3; break;
+            case 4: cno = 4; break;
+            default: break;
+        }
+
+        /*
+        Coupon coupon = Coupon.builder()
+                .cno(cno)
+                .build();
+*/
+
+        /*
+        CouponIssue couponIssue = CouponIssue.builder()
+                .coupon(coupon)
+                .user(user)
+                .issuedBy(coupon.getIssuedBy())
+                .build();
+*/
+
+    }
 }
