@@ -29,7 +29,7 @@ table{
     width: 135px;
     height: 135px;
     object-fit: cover;
-    margin-right: 100px;
+    margin-right: 60px;
 }
 
 .table-main th{
@@ -55,7 +55,7 @@ table{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: auto;
+    height: 156px;
 }
 
 
@@ -67,4 +67,8 @@ table{
 
 .text-area a{
     text-decoration-line: underline;
+}
+
+.text-area {
+    width: 210px;
 }

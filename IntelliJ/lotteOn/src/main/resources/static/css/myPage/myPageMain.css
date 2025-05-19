@@ -214,11 +214,21 @@
 }
 
 
-.points-accrual-details-table th{
-    width: 20%;
+.points-accrual-details-table th:nth-child(1){
+    width: 160px;
 }
 
+.points-accrual-details-table th:nth-child(2){
+    width: 100px;
+}
 
+.points-accrual-details-table th:nth-child(3){
+    width: 130px;
+}
+
+.points-accrual-details-table th:nth-child(5){
+    width: 160px;
+}
 
 
 

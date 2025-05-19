@@ -259,8 +259,6 @@ public class MyController {
 
         Boolean exist = myPageService.existOrderByType(localStart, localEnd, searchType, keyword);
 
-        log.info("exist : " + exist );
-
         if(exist){
             return "ok";
         }else{
@@ -463,6 +461,7 @@ public class MyController {
         inquiryDTO.setTitle(title);
         inquiryDTO.setContent(content);
         inquiryDTO.setChannel("판매자 게시판");
+        inquiryDTO.setCateV2("판매자 게시판");
 
 
 
