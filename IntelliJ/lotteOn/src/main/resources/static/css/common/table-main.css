@@ -72,3 +72,19 @@ table{
 .text-area {
     width: 210px;
 }
+
+.point-table th:nth-child(1){
+    width: 160px;
+}
+
+.point-table th:nth-child(2){
+    width: 100px;
+}
+
+.point-table th:nth-child(3){
+    width: 130px;
+}
+
+.point-table th:nth-child(5){
+    width: 160px;
+}

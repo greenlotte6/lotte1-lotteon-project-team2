@@ -87,7 +87,8 @@
                                             <td>사용</td>
                                         </th:block>
                                         <td th:text="${point.point} + 원"></td>
-                                        <td th:text="${point.pointDesc}"></td>
+                                        <td th:text="${#strings.length(point.pointDesc) > 30 ?
+                                        #strings.substring(point.pointDesc, 0, 30) + '...' : point.pointDesc}"></td>
                                         <td th:text="${#temporals.format(point.expiryDate, 'yyyy-MM-dd')}"></td>
                                     </tr>
                                 </tbody>
