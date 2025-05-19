@@ -180,7 +180,13 @@ public class CsService {
 
 
         List<InquiryDTO> inquiryDTOList = pageInquiry.getContent().stream()
-                .map(inquiry -> modelMapper.map(inquiry, InquiryDTO.class)) // ModelMapper 사용
+                .map(inquiry -> {
+                    InquiryDTO inquiryDTO = modelMapper.map(inquiry, InquiryDTO.class);
+                    if(inquiryDTO.getCateV2() == null){
+                        inquiryDTO.setCateV2(inquiryDTO.getCateV1());
+                    }
+                    return inquiryDTO;
+                }) // ModelMapper 사용
                 .collect(Collectors.toList());
 
         int total = (int) pageInquiry.getTotalElements();
