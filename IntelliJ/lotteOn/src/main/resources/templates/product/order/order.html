@@ -775,7 +775,13 @@
                         return response.json();
                     })
                     .then(data => {
-                        window.location.href = data.next_redirect_pc_url;
+
+                        if(data.type === '일반'){
+                            alert("일반 결제");
+                            window.location.href = "/product/order_completed";
+                        }else{
+                            window.location.href = data.next_redirect_pc_url;
+                        }
                     })
                     .catch(err => {
                         alert('에러 발생: ' + err);

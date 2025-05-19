@@ -5,7 +5,10 @@ import jakarta.servlet.http.HttpSession;
 import kr.co.lotteon.dto.cart.CartDTO;
 import kr.co.lotteon.dto.kakao.Amount;
 import kr.co.lotteon.dto.order.OrderDTO;
+import kr.co.lotteon.dto.order.OrderItemDTO;
 import kr.co.lotteon.dto.user.UserDetailsDTO;
+import kr.co.lotteon.entity.order.Order;
+import kr.co.lotteon.entity.order.OrderItem;
 import kr.co.lotteon.service.cart.CartService;
 import kr.co.lotteon.service.coupon.CouponService;
 import kr.co.lotteon.service.kakao.KakaoPayService;
@@ -15,6 +18,7 @@ import kr.co.lotteon.service.point.PointService;
 import kr.co.lotteon.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -138,15 +142,32 @@ public class OrderController {
 
         amount = orderService.getAmount(orderNo, userDetails, orderDTO);
 
+        Map<String, Object> response = new HashMap<>();
 
         // 카카오페이 결제 요청
         if ("카카오페이".equals(orderDTO.getPayment())) {
             return kakaoPayService.kakaoPayReady(amount);
         } else {
-            log.info("결제[///");
-            Map<String, Object> response = new HashMap<>();
-            response.put("redirectUrl", "/payment/success");
-            return ResponseEntity.ok(response); // JSON 응답
+            log.info("결제///");
+            log.info("일반 결제 선택. 서버에서 /payment/success 로 리다이렉트합니다.");
+
+            /*
+            HttpHeaders headers = new HttpHeaders();
+            headers.setLocation(URI.create("/payment/success"));
+            return new ResponseEntity<>(headers, HttpStatus.FOUND);
+
+             */
+
+            OrderDTO order = orderService.findOrder(orderNo);
+            List<OrderItemDTO> orderList = orderService.findOrderItems(order);
+            order.setOrderItems(orderList);
+
+            log.info("order: {}", order);
+
+            session.setAttribute("orderDTO", order);
+
+            response.put("type", "일반");
+            return ResponseEntity.ok(response);
         }
 
 
@@ -158,6 +179,9 @@ public class OrderController {
 
         Integer orderNo = (Integer) session.getAttribute("orderNo");
         OrderDTO orderDTO = orderService.findAllByOrderNo(orderNo);
+
+        log.info("success!!!!!");
+
 
         log.info("orderNo: " + orderNo);
         log.info("orderDTO: " + orderDTO);
@@ -173,6 +197,10 @@ public class OrderController {
 
     @GetMapping("/product/order_completed")
     public String orderCompleted(HttpSession session, Model model) {
+
+        log.info("completed!!!!!");
+
+
 
         OrderDTO orderDTO = (OrderDTO) session.getAttribute("orderDTO");
 

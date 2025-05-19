@@ -268,7 +268,6 @@ tr:nth-child(3) span:nth-child(2) {
 
 .tab-menu {
     position: relative;
-    background: white;
     z-index: 1000;
     display: flex;
     margin-left: 10px;
@@ -277,6 +276,7 @@ tr:nth-child(3) span:nth-child(2) {
 }
 
 .tab-menu.fixed {
+    background: white;
     position: fixed;
     width: 990px;
     top: 0;
