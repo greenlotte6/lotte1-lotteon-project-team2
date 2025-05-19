@@ -47,6 +47,69 @@
                 let point = this.value/100;
                 prodPoint.value = point;
             })
+
+            let company = document.getElementById('company');
+            let companyTest = true;
+
+            company.addEventListener("change", function (){
+
+                fetch(`/admin/companyCheck?company=`+encodeURIComponent(company.value))
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data) {
+                            companyTest = true;
+                        } else {
+                            alert("등록되지 않은 회사입니다..");
+                            companyTest = false;
+                        }
+                    }).catch(err => {
+                    console.log(err);
+                    alert("오류 발생했습니다.")
+                })
+
+            })
+
+
+            document.getElementById('prodRegister').addEventListener("submit", function(e){
+                e.preventDefault();
+
+                const subCateSelect = document.getElementById("subCateNo");
+                const selectedValue = subCateSelect.value;
+
+                let cateTest = false;
+
+                if (selectedValue === "2차 카테고리") {
+                    alert("2차 카테고리를 선택해주세요.");
+                    return;
+                }
+
+                cateTest = true;
+
+                const point = document.getElementById("prodPoint").value;
+                const pointNumber = parseFloat(point);
+
+                let pointTest = false;
+
+                if (!isNaN(pointNumber) && point.includes('.')) {
+                    alert("가격을 수정해주세요. 포인트는 정수입니다");
+                    return;
+                }
+
+                pointTest = true;
+
+                if(companyTest === false){
+                    alert("제소사 이름을 확인해주세요.");
+                }
+
+                if(cateTest === true && pointTest === true && companyTest === true){
+                    this.submit(); // 폼 전송
+                }
+
+            })
+
+
+
+
         });
     </script>
 
@@ -71,7 +134,7 @@
                         </div>
                     </div>
 
-                    <form th:action="@{/admin/product/register}" method="post" enctype="multipart/form-data">
+                    <form th:action="@{/admin/product/register}" id="prodRegister" method="post" enctype="multipart/form-data">
                         <!-- 상품 분류 -->
                         <p class="title">상품분류</p>
                         <div class="text_div">
@@ -94,7 +157,7 @@
                             <tr>
                                 <td>2차 분류</td>
                                 <td>
-                                    <select name="subCateNo">
+                                    <select name="subCateNo" id="subCateNo">
                                         <option>2차 카테고리</option>
                                     </select>
                                 </td>
@@ -117,7 +180,7 @@
                             </tr>
                             <tr>
                                 <td>제조사</td>
-                                <td><input type="text" name="company" value="패밀리상사"></td>
+                                <td><input type="text" name="company" id="company" value="패밀리상사"></td>
                             </tr>
                             <tr>
                                 <td>브랜드명</td>

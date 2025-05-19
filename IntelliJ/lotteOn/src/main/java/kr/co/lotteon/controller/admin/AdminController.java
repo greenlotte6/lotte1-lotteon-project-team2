@@ -582,6 +582,14 @@ public class AdminController {
         return "redirect:/admin/product/register";
     }
 
+    @ResponseBody
+    @GetMapping("/companyCheck")
+    public Boolean companyCheck(@RequestParam("company") String company){
+
+        Boolean exist = adminService.existCompany(company);
+        return exist;
+    }
+
     // 상품 수정 페이지
     @GetMapping("/product/modify")
     public String productModify(@RequestParam("no") String no, Model model){
