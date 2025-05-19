@@ -267,7 +267,7 @@
                         <div class="meta">
                             <span>★ ${product.ratingAvg !== null ? product.ratingAvg.toFixed(1) : 0}</span>&nbsp;|&nbsp;리뷰 <span>${product.reviewCount}</span>
                         </div>
-                        ${product.prodDeliveryFee === 0 ? '<span class="badge-free">무료배송</span>' : `<span>${formatNumber(product.prodDeliveryFee)}원</span>`}
+                        ${product.prodDeliveryFee === 0 ? '<span class="badge-free">무료배송</span>' : `<span class="badge-fee">${formatNumber(product.prodDeliveryFee)}원</span>`}
                     </div>
                     <div class="product-price">
                         <del>${formatNumber(product.prodPrice)}원</del><br>
@@ -299,12 +299,12 @@
         <section class="content">
             <div class="bar">
                 <div>
-                    <a href="#">HOME</a>&nbsp;&nbsp;>&nbsp;&nbsp;
-                    <a href="#">뷰티</a>&nbsp;&nbsp;>&nbsp;&nbsp;
-                    <a href="#">향수</a>
+                    <a href="/">HOME</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;
+                    <a th:text="${productDTOList[0].mainCategoryName}" href="#">1차 카테고리</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;
+                    <a th:text="${productDTOList[0].subCategory.subCategoryName}" href="#">2차 카테고리</a>
                 </div>
             </div>
-            <p class="page_name">향수</p>
+            <p class="page_name" th:text="${productDTOList[0].subCategory.subCategoryName}">2차 카테고리</p>
             <!-- 사이드바-->
             <th:block th:include="/product/side.html"/>
             <!-- 사이드 바 끝 -->

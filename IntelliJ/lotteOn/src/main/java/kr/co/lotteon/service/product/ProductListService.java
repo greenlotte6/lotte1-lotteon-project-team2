@@ -40,8 +40,6 @@ public class ProductListService {
             return productDTO;
         }).toList();
 
-        log.info("BsetProductDTOList: {}", productDTOList);
-
         return productDTOList;
     }
 

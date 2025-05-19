@@ -250,6 +250,10 @@ h2 {
     font-size: 12px;
 }
 
+.vendor-rank {
+    margin-left: 3px;
+}
+
 .icons {
     display: flex;
     gap: 5px;
