@@ -41,7 +41,7 @@
                 if (!response.ok) {
                     throw new Error('서버 응답 오류');
                 }
-                return response.json(); // 응답을 JSON으로 파싱
+                return response.text(); // 먼저 .text()로 응답 내용을 꺼냄
             })
             .then(result => {
                 // 서버 응답 처리
@@ -50,7 +50,6 @@
             })
             .catch(error => {
                 console.error('에러 발생:', error);
-                alert('쿠폰 발급 중 에러가 발생했습니다.');
             });
     }
 
