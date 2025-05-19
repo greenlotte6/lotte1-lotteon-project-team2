@@ -3,6 +3,7 @@ package kr.co.lotteon.service.order;
 import kr.co.lotteon.dto.cart.CartDTO;
 import kr.co.lotteon.dto.kakao.Amount;
 import kr.co.lotteon.dto.order.OrderDTO;
+import kr.co.lotteon.dto.order.OrderItemDTO;
 import kr.co.lotteon.dto.page.ItemRequestDTO;
 import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.dto.user.UserDTO;
@@ -200,4 +201,20 @@ public class OrderService {
     }
 
 
+    public OrderDTO findOrder(int orderNo) {
+        Order order = orderRepository.findById(orderNo).get();
+        log.info("order-sevice: {}", order);
+        return modelMapper.map(order, OrderDTO.class);
+    }
+
+    public List<OrderItemDTO> findOrderItems(OrderDTO order) {
+        Order order1 = modelMapper.map(order, Order.class);
+        List<OrderItem> list = orderItemRepository.findByOrder(order1);
+        List<OrderItemDTO> orderDTOList = new ArrayList<>();
+        for (OrderItem orderItem : list) {
+            OrderItemDTO orderItemDTO = modelMapper.map(orderItem, OrderItemDTO.class);
+            orderDTOList.add(orderItemDTO);
+        }
+        return orderDTOList;
+    }
 }
