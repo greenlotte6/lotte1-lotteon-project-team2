@@ -88,7 +88,6 @@ public class OrderService {
     public OrderDTO findAllByOrderNo(Integer orderNo) {
         Order order = orderRepository.findById(orderNo).get();
         OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
-
         return orderDTO;
     }
 
@@ -203,7 +202,6 @@ public class OrderService {
 
     public OrderDTO findOrder(int orderNo) {
         Order order = orderRepository.findById(orderNo).get();
-        log.info("order-sevice: {}", order);
         return modelMapper.map(order, OrderDTO.class);
     }
 
