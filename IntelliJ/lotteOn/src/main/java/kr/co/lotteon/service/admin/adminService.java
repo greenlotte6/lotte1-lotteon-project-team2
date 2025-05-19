@@ -987,6 +987,27 @@ public class adminService {
 
     }
 
+    // 유저 변경하기(검증)
+    public int modifyUserValid(String email, String hp, String uid) {
+        int exist = 0;
+
+        User user =  userRepository.findById(uid).get();
+
+        if(!user.getHp().equals(hp)){
+            if(userRepository.findByHp(hp).isPresent()){
+                exist = 1;
+            }
+        }
+
+        if(!user.getEmail().equals(email)){
+            if(userRepository.findByEmail(email).isPresent()){
+                exist = 2;
+            }
+        }
+
+        return exist;
+    }
+
     // 유저 변경하기
     public void modifyMember(UserDTO userDTO, UserDetailsDTO userDetailsDTO) {
         String uid = userDTO.getUid();
@@ -1321,14 +1342,16 @@ public class adminService {
 
         pageRequestDTO.setSize(10);
 
-
-
         Pageable pageable = pageRequestDTO.getPageable("no");
         Page<Tuple> pageObject = orderRepository.selectAllOrder(pageRequestDTO, pageable);
 
         List<OrderDTO> DTOList = pageObject.getContent().stream().map(tuple -> {
             Order order = tuple.get(0, Order.class);
             OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
+
+            if(orderDTO.getOrderContent() == null || orderDTO.getOrderContent().equals("")){
+                orderDTO.setOrderContent("없음");
+            }
 
             int size = orderDTO.getOrderItems().size();
             orderDTO.setCount(size);
@@ -1411,6 +1434,11 @@ public class adminService {
             OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
             DeliveryDTO  deliveryDTO = modelMapper.map(delivery, DeliveryDTO.class);
             OrderItemDTO orderItemDTO = modelMapper.map(orderItem, OrderItemDTO.class);
+
+            if(orderDTO.getOrderContent() == null || orderDTO.getOrderContent().equals("")){
+                orderDTO.setOrderContent("없음");
+            }
+
             orderDTO.setDelivery(deliveryDTO);
             orderDTO.setOrderItem(orderItemDTO);
             orderDTO.setImage(orderItem.getProduct().getProductImage().getSNameList());
@@ -1438,6 +1466,27 @@ public class adminService {
     public Boolean existCompany(String company) {
         Boolean exist = sellerRepository.existsByCompany(company);
         return exist;
+    }
+
+
+    public void couponExpiration() {
+        LocalDate now = LocalDate.now();
+        List<Coupon> expiredCoupons = couponRepository.findByValidToBeforeAndStateNot(now, "종료");
+        for (Coupon coupon : expiredCoupons) {
+            coupon.setState("종료");
+        }
+
+        couponRepository.saveAll(expiredCoupons); // 일괄 저장
+
+    }
+
+    public void couponIssueExpiration() {
+        LocalDate now = LocalDate.now();
+        List<CouponIssue> expiredCoupons = couponIssueRepository.findByValidToBeforeAndStateNot(String.valueOf(now), "종료");
+        for (CouponIssue couponIssue : expiredCoupons) {
+            couponIssue.setState("중단");
+        }
+        couponIssueRepository.saveAll(expiredCoupons);
     }
 }
 
