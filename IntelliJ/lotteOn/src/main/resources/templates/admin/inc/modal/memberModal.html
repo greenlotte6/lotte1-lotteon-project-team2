@@ -1,0 +1,190 @@
+<!-- 회원수정 모달 -->
+<div class="modal">
+    <div class="modal_popup">
+        <div class="modal_head">
+            <span class="modal_title">회원수정</span>
+            <button type="button" class="close_btn">X</button>
+        </div>
+
+        <div class="modal_main">
+            <form th:action="@{/admin/member/modify}" class="member" method="post">
+                <table class="modal_member">
+                    <tr>
+                        <td>아이디</td>
+                        <td>
+                            <input type="text" name="uid" id="uid" readonly style="color: #a8a5a5">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>이름</td>
+                        <td>
+                            <input type="text" name="name" placeholder="홍길동" id="name">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>성별</td>
+                        <td>
+                            <input name="gender" type="radio" value="male" id="genderMale">남
+                            <input name="gender" type="radio" value="female" id="genderFemale" style="margin-left: 10px;">여
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>등급</td>
+                        <td>
+                            <input type="text" name="rank" readonly value="FAMILY" id="rank" style="color: #a8a5a5">
+                            <span style="margin-left: 10px;">등급 수정은 회원 목록에서 선택수정 가능</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>상태</td>
+                        <td style="color: #57C479;" id="state">정상</td>
+                    </tr>
+                    <tr>
+                        <td>EMAIL</td>
+                        <td>
+                            <input type="text" name="email" id="email">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>휴대폰</td>
+                        <td>
+                            <input type="text" name="hp" id="hp">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>우편번호</td>
+                        <td>
+                            <input type="text" name="zip" id="zip" placeholder="우편번호 선택"/>
+                            <button type="button" style="border: none;"  onclick="postcode()"><img th:src="@{/images/chk_post.gif}"  alt="우편번호찾기"/></button><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>기본주소</td>
+                        <td>
+                            <input class="inputs" type="text" name="addr1" id="addr1"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>상세주소</td>
+                        <td>
+                            <input class="inputs" type="text" name="addr2" id="addr2" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>가입일</td>
+                        <td id="regDate">0000-00-00 00:00:00</td>
+                    </tr>
+                    <tr>
+                        <td>최근로그인날짜</td>
+                        <td id="lastLoginAt">0000-00-00 00:00:00</td>
+                    </tr>
+                    <tr>
+                        <td>기타</td>
+                        <td>
+                            <textarea name="content" placeholder="회원에대한기타정보입력" id="content"></textarea>
+                        </td>
+                    </tr>
+                </table>
+
+                <button type="submit" class="modal_btn">수정하기</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    const modal = document.querySelector('.modal');
+    const modalOpenBtns = document.querySelectorAll('.detail');
+    const modalClose = document.querySelector('.close_btn');
+
+    const uid = document.getElementById("uid");
+    const name = document.getElementById("name");
+    const gender = document.getElementById("gender");
+    const rank = document.getElementById("rank");
+    const state = document.getElementById("state");
+    const email = document.getElementById("email");
+    const hp = document.getElementById("hp");
+    const zip = document.getElementById("zip");
+    const addr1 = document.getElementById("addr1");
+    const addr2 = document.getElementById("addr2");
+    const regDate = document.getElementById("regDate");
+    const lastLoginAt = document.getElementById("lastLoginAt");
+    const content = document.getElementById("content");
+
+
+    //열기 버튼을 눌렀을 때 모달팝업이 열림
+    modalOpenBtns.forEach(btn => {
+        btn.addEventListener('click', function (e) {
+
+            //데이터 넣기
+            const data = btn.closest('tr');
+            uid.value = data.querySelector('td:nth-child(3)').textContent; // 아이디
+            name.value = data.querySelector('td:nth-child(4)').textContent; // 이름
+
+            const genderText = data.querySelector('td:nth-child(5)').textContent.trim();
+            if (genderText === 'M') {
+                document.getElementById('genderMale').checked = true;
+            } else if (genderText === 'F') {
+                document.getElementById('genderFemale').checked = true;
+            }
+
+            state.textContent = data.querySelector('td:nth-child(11)').textContent;
+            email.value = data.querySelector('td:nth-child(8)').textContent; // 이메일
+            hp.value = data.querySelector('td:nth-child(9)').textContent; // 휴대폰
+            regDate.textContent = data.querySelector('td:nth-child(10)').textContent;
+
+            addr1.value = data.querySelector('#addr1V1').value;
+            addr2.value = data.querySelector('#addr2V1').value;
+            zip.value = data.querySelector('#zipV1').value;
+            content.textContent = data.querySelector('#contentV1').value;
+            lastLoginAt.textContent = data.querySelector('#lastLoginAtV1').value;
+
+
+
+
+            //'on' class 추가
+            modal.classList.add('on');
+        });
+    });
+    //닫기 버튼을 눌렀을 때 모달팝업이 닫힘
+    modalClose.addEventListener('click', function () {
+        //'on' class 제거
+        modal.classList.remove('on');
+    });
+
+    document.querySelector('.member').addEventListener("submit",function (e){
+        e.preventDefault();
+
+        const email = document.getElementById("email").value;
+        const hp = document.getElementById("hp").value;
+        const uid = document.getElementById("uid").value;
+
+        const data = { email: email , hp : hp, uid : uid };
+
+        fetch('/admin/member/valid', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' // JSON 형식임을 명시
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.text()) // 응답을 텍스트로 추출
+            .then(text => {
+                // 여기서 text를 사용하여 응답 처리
+                console.log('응답 텍스트:', text);
+                if(text === "0"){
+                    e.target.submit();
+                }else if(text === '1'){
+                    alert("휴대폰 번호가 중복입니다.");
+                }else{
+                    alert("이메일이 중복입니다.")
+                }
+
+            })
+            .catch(error => {
+                console.error('에러 발생:', error);
+            });
+
+    })
+</script>

@@ -440,6 +440,21 @@ public class AdminController {
         return "redirect:/admin/member/list";
     }
 
+    //회원 수정 검증
+    @ResponseBody
+    @PostMapping("/member/valid")
+    public String memberValid(@RequestBody Map<String, Object> member){
+        String email = member.get("email").toString();
+        String hp = member.get("hp").toString();
+        String uid = member.get("uid").toString();
+
+        int exist = adminService.modifyUserValid(email,hp,uid);
+
+        System.out.println(exist);
+
+        return String.valueOf(exist);
+    }
+
     /*
     * 중지: 정지
     * 재개: 재개
@@ -764,6 +779,9 @@ public class AdminController {
     @GetMapping("/coupon/list")
     public String couponList(PageRequestDTO pageRequestDTO, Model model  , @AuthenticationPrincipal UserDetails userDetails){
 
+        // 쿠폰 지난 날짜는 비활성화
+        adminService.couponExpiration();
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String uid = userDetails.getUsername();
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
@@ -791,6 +809,9 @@ public class AdminController {
     //쿠폰발급목록 (유저가 발급한 쿠폰)
     @GetMapping("/coupon/issued")
     public String issued(PageRequestDTO pageRequestDTO, Model model , @AuthenticationPrincipal UserDetails userDetails){
+
+        // 날짜 지났을 때 만료
+        adminService.couponIssueExpiration();
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String uid = userDetails.getUsername();

@@ -7,6 +7,7 @@ import kr.co.lotteon.repository.custom.CouponIssueRepositoryCustom;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -18,4 +19,6 @@ public interface CouponIssueRepository extends JpaRepository<CouponIssue, Long> 
     List<CouponIssue> findByCoupon(Coupon coupon);
 
     List<CouponIssue> findAllByUser(User user);
+
+    List<CouponIssue> findByValidToBeforeAndStateNot(String validTo, String state);
 }

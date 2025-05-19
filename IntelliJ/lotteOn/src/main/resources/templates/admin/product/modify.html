@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 상품등록 : 롯데On</title>
+    <title>관리자 상품수정 : 롯데On</title>
     <link rel="stylesheet" href="/css/admin/admin.css">
     <link rel="stylesheet" href="/css/admin/product.css">
     <link rel="stylesheet" href="/css/layout/layout.css">
@@ -47,6 +47,66 @@
                 let point = this.value/100;
                 prodPoint.value = point;
             })
+
+            let company = document.getElementById('company');
+            let companyTest = true;
+
+            company.addEventListener("change", function (){
+
+                fetch(`/admin/companyCheck?company=`+encodeURIComponent(company.value))
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data) {
+                            companyTest = true;
+                        } else {
+                            alert("등록되지 않은 회사입니다..");
+                            companyTest = false;
+                        }
+                    }).catch(err => {
+                    console.log(err);
+                    alert("오류 발생했습니다.")
+                })
+
+            })
+
+
+            document.getElementById('prodRegister').addEventListener("submit", function(e){
+                e.preventDefault();
+
+                const subCateSelect = document.getElementById("subCateNo");
+                const selectedValue = subCateSelect.value;
+
+                let cateTest = false;
+
+                if (selectedValue === "2차 카테고리") {
+                    alert("2차 카테고리를 선택해주세요.");
+                    return;
+                }
+
+                cateTest = true;
+
+                const point = document.getElementById("prodPoint").value;
+                const pointNumber = parseFloat(point);
+
+                let pointTest = false;
+
+                if (!isNaN(pointNumber) && point.includes('.')) {
+                    alert("가격을 수정해주세요. 포인트는 정수입니다");
+                    return;
+                }
+
+                pointTest = true;
+
+                if(companyTest === false){
+                    alert("제소사 이름을 확인해주세요.");
+                }
+
+                if(cateTest === true && pointTest === true && companyTest === true){
+                    this.submit(); // 폼 전송
+                }
+
+            })
+
         });
     </script>
 
@@ -71,7 +131,7 @@
                         </div>
                     </div>
 
-                    <form th:action="@{/admin/product/modify}" method="post" enctype="multipart/form-data">
+                    <form th:action="@{/admin/product/modify}" method="post" id="prodRegister" enctype="multipart/form-data">
                         <!-- 상품 분류 -->
                         <input type="hidden" name="prodNo" th:value="${product.prodNo}">
 
@@ -97,7 +157,7 @@
                             <tr>
                                 <td>2차 분류</td>
                                 <td>
-                                    <select name="subCateNo">
+                                    <select name="subCateNo" id="subCateNo">
                                         <option th:value="${product.subCategory.subCateNo}"
                                                 th:text="${product.subCategory.subCategoryName}"></option>
                                     </select>
@@ -121,7 +181,7 @@
                             </tr>
                             <tr>
                                 <td>제조사</td>
-                                <td><input type="text" name="company" th:value="${product.company}" ></td>
+                                <td><input type="text" name="company" id="company" th:value="${product.company}" ></td>
                             </tr>
                             <tr>
                                 <td>브랜드명</td>
