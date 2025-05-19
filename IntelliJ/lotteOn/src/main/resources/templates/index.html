@@ -362,14 +362,14 @@
       if (!recommendation) {
         recommendation = true;
 
-        document.getElementById('loading').style.display = 'flex';
+        // document.getElementById('loading').style.display = 'flex';
 
         $.ajax({
           url: '/main/recommendation',  // 요청할 URL
           method: 'GET',
           success: function(response) {
 
-            document.getElementById('loading').style.display = 'none';
+            // document.getElementById('loading').style.display = 'none';
 
             console.log(response);  // 응답 받은 JSON 데이터를 콘솔에 출력하여 확인
 
@@ -506,116 +506,9 @@
       // end
     }
 
-    /*
-    // 최근상품
-    if (!recent && scrollBottom >= $('#recent').offset().top - 100) { // 500px 정도 여유를 두고
-      if (!recent) {
-        recent = true;
-
-        $.ajax({
-          url: '/main/recent',  // 요청할 URL
-          method: 'GET',
-          success: function(response) {
-            console.log(response);  // 응답 받은 JSON 데이터를 콘솔에 출력하여 확인
-
-
-            // 서버에서 받은 JSON 데이터를 HTML로 변환
-            if (response && Array.isArray(response)) {
-              response.forEach(item => {
-
-                console.log(item);
-
-                var productHtml = `
-                    <div class="product-card">
-                      <a href="/product/view?prodNo=${item.prodNo}">
-                        <img src="${item.snameThumb3}" alt="상품 이미지">
-                      </a>
-
-                      <div class="product-info">
-                        <div class="product-name">${item.prodName}</div>
-                        <div class="product-price">
-                          <del>${item.prodPrice}</del>
-                          <span class="discount">${item.prodDiscount}%</span>
-                          <strong>${item.prodPrice * (100 - item.prodDiscount) / 100}</strong>
-                        </div>
-                      </div>
-                    </div>
-    `;
-                $('#recent .product-grid').append(productHtml);
-              });
-            }
-          },
-          error: function(error) {
-            console.error('Error loading recent products:', error);
-          }
-        });
-      } else {
-        return;
-      }
-    }
-*/
-
-    /*
-        // 리뷰많은상품
-        if (!review && scrollBottom >= $('#review').offset().top - 100) {  // 500px 정도 여유를 두고
-          if (!review) {
-            review = true;
-
-            $.ajax({
-              url: '/main/review/many',  // 요청할 URL
-              method: 'GET',
-              success: function(response) {
-
-                console.log(response);  // 응답 받은 JSON 데이터를 콘솔에 출력하여 확인
-
-                // 서버에서 받은 JSON 데이터를 HTML로 변환
-                if (response && Array.isArray(response)) {
-                  response.forEach(item => {
-
-                    console.log(item);
-
-                    var productHtml = `
-                        <div class="product-card">
-                          <a href="/product/view?prodNo=${item.prodNo}">
-                            <img src="${item.snameThumb3}" alt="상품 이미지">
-                          </a>
-
-                          <div class="product-info">
-                            <div class="product-name">${item.prodName}</div>
-                            <div class="product-price">
-                              <del>${item.prodPrice}</del>
-                              <span class="discount">${item.prodDiscount}%</span>
-                              <strong>${item.prodPrice * (100 - item.prodDiscount) / 100}</strong>
-                            </div>
-                          </div>
-                        </div>
-        `;
-                    $('#review .product-grid').append(productHtml);
-                  });
-                }
-              },
-              error: function(error) {
-                console.error('Error loading review products:', error);
-              }
-            });
-          } else {
-            return;
-          }
-        }
-    */
-
-
-
-
   });
 </script>
 
-<div id="loading" class="loading-overlay">
-  <div class="loading-content">
-    <div class="spinner"></div>
-    <div class="loading-text">⏳ 상품 정보 호출 중입니다...</div>
-  </div>
-</div>
 
 
 

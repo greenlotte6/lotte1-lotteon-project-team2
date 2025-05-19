@@ -135,7 +135,7 @@ public class OrderController {
         couponService.changeState(issueNo);
 
         // 포인트 사용 시 기록
-        UserDetailsDTO userDeatilsDTO = pointService.changePoint(usedPoint, userDetails);
+        UserDetailsDTO userDeatilsDTO = pointService.changePoint(usedPoint, userDetails, orderNo);
 
 
         session.setAttribute("orderNo", orderNo);

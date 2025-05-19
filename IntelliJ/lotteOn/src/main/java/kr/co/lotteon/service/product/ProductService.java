@@ -275,25 +275,39 @@ public class ProductService {
     }
 
 
+    // 할인 상품 캐시 삭제
     @CacheEvict(value = "product-discount"  , allEntries = true)
     public void deleteDiscountCache() {
     }
 
+    //리뷰 높은 상품 캐시 삭제
     @CacheEvict(value = "product-top-review"  , allEntries = true)
     public void deleteRecommendationCache() {
     }
 
+    // 최신 상품 캐시 삭제
     @CacheEvict(value = "product-recent"  , allEntries = true)
     public void deleteRecentCache() {
     }
 
+    // 리뷰 많은 상품 캐시 삭제
     @CacheEvict(value = "product-many-review"  , allEntries = true)
     public void deleteReviewManyCache() {
     }
 
+    // 검색 캐시 삭제
     @CacheEvict(value = "autocomplete", allEntries = true)
     public void deleteSearchListCache(){
+    }
 
+    // 인기 상품 캐시 삭제
+    @CacheEvict(value = "product-hit", allEntries = true)
+    public void deleteHitCache() {
+    }
+
+    // 베스트 상품 캐시 삭제
+    @CacheEvict(value = "product-best", allEntries = true)
+    public void deleteBestCache() {
     }
 
     // 상품 이미지 출력
@@ -302,5 +316,7 @@ public class ProductService {
         ProductImage productImage = productImageRepository.findByProduct(product).get();
         return modelMapper.map(productImage, ProductImageDTO.class);
     }
+    
+    
 }
 

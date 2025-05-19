@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -25,12 +26,35 @@ public class CouponController {
 
     private final CouponService couponService;
 
+    /*
     // 쿠폰 발급
     @ResponseBody
     @GetMapping("/issue")
     public void issue(@AuthenticationPrincipal UserDetails userDetails, CouponDTO couponDTO) {
         couponService.IssueToUser(couponDTO, userDetails);
     }
+*/
+
+    // 쿠폰 발급
+    @ResponseBody
+    @PostMapping("/issue")
+    public void issueIssue(@AuthenticationPrincipal UserDetails userDetails, @RequestBody Map<String, Object> coupon) {
+
+        Integer index = (Integer) coupon.get("index");
+
+        System.out.println("issueIssue");
+
+        System.out.println("실행");
+        
+        if(userDetails == null) {
+            System.out.println("널");
+        }
+
+        couponService.IssueToUser(index, userDetails);
+
+
+    }
+
 
 
 

@@ -576,8 +576,14 @@ public class AdminController {
         adminService.saveProductDetail(productDetailDTO, savedProduct);
 
         // 캐시 삭제
-        productService.deleteSearchListCache();
-        productService.deleteRecentCache();
+        productService.deleteSearchListCache(); //검색
+        productService.deleteRecentCache(); //최신
+        productService.deleteDiscountCache(); //할인
+        productService.deleteRecommendationCache(); //추천
+        productService.deleteBestCache(); // 베스트 상품
+        productService.deleteHitCache(); // 인기 상품 캐시 삭제
+
+        // 리뷰 관련 캐시는 리뷰 등록했을 때 삭제
 
         return "redirect:/admin/product/register";
     }
