@@ -38,7 +38,7 @@ public class CouponController {
     // 쿠폰 발급
     @ResponseBody
     @PostMapping("/issue")
-    public void issueIssue(@AuthenticationPrincipal UserDetails userDetails, @RequestBody Map<String, Object> coupon) {
+    public String issueIssue(@AuthenticationPrincipal UserDetails userDetails, @RequestBody Map<String, Object> coupon) {
 
         Integer index = (Integer) coupon.get("index");
 
@@ -51,6 +51,14 @@ public class CouponController {
         }
 
         couponService.IssueToUser(index, userDetails);
+
+        if(index == 1){
+            return "ok";
+        }
+
+        return "fail";
+
+
 
 
     }
