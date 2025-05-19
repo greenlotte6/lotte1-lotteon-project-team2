@@ -1435,5 +1435,9 @@ public class adminService {
 
     }
 
+    public Boolean existCompany(String company) {
+        Boolean exist = sellerRepository.existsByCompany(company);
+        return exist;
+    }
 }
 
