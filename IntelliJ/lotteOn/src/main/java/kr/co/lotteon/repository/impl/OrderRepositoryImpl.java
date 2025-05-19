@@ -184,7 +184,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         }
 
         if (startDate != null && endDate != null) {
-            booleanExpression = booleanExpression.and(qOrder.orderDate.between(startDate.atStartOfDay(), endDate.atStartOfDay()));
+            booleanExpression = booleanExpression.and(qOrder.orderDate.between(startDate.atStartOfDay(),  endDate.atTime(23, 59, 59)));
         }
 
 
