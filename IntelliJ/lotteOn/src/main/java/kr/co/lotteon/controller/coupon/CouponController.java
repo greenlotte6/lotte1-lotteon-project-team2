@@ -36,6 +36,7 @@ public class CouponController {
 */
 
     // 쿠폰 발급
+    // 쿠폰 발급
     @ResponseBody
     @PostMapping("/issue")
     public String issueIssue(@AuthenticationPrincipal UserDetails userDetails, @RequestBody Map<String, Object> coupon) {
@@ -45,23 +46,18 @@ public class CouponController {
         System.out.println("issueIssue");
 
         System.out.println("실행");
-        
+
         if(userDetails == null) {
             System.out.println("널");
         }
 
         couponService.IssueToUser(index, userDetails);
 
-        if(index == 1){
-            return "ok";
-        }
-
-        return "fail";
-
-
+        return String.valueOf(index);
 
 
     }
+
 
 
 
