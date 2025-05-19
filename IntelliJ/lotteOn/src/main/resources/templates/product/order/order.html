@@ -777,7 +777,6 @@
                     .then(data => {
 
                         if(data.type === '일반'){
-                            alert("일반 결제");
                             window.location.href = "/product/order_completed";
                         }else{
                             window.location.href = data.next_redirect_pc_url;
