@@ -3,6 +3,7 @@ package kr.co.lotteon.service.mypage;
 import com.querydsl.core.Tuple;
 import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
+import kr.co.lotteon.dto.coupon.CouponIssueDTO;
 import kr.co.lotteon.dto.feedback.ExchangeDTO;
 import kr.co.lotteon.dto.feedback.ReturnDTO;
 import kr.co.lotteon.dto.feedback.ReviewDTO;
@@ -17,6 +18,7 @@ import kr.co.lotteon.dto.seller.SellerDTO;
 import kr.co.lotteon.dto.user.UserDTO;
 import kr.co.lotteon.entity.article.Inquiry;
 import kr.co.lotteon.entity.coupon.Coupon;
+import kr.co.lotteon.entity.coupon.CouponIssue;
 import kr.co.lotteon.entity.feedback.Exchange;
 import kr.co.lotteon.entity.feedback.Return;
 import kr.co.lotteon.entity.feedback.Review;
@@ -27,6 +29,7 @@ import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.entity.seller.Seller;
 import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.article.InquiryRepository;
+import kr.co.lotteon.repository.coupon.CouponIssueRepository;
 import kr.co.lotteon.repository.coupon.CouponRepository;
 import kr.co.lotteon.repository.feedback.ExchangeRepository;
 import kr.co.lotteon.repository.feedback.ReturnRepository;
@@ -55,6 +58,7 @@ import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -76,6 +80,7 @@ public class MyPageService {
     private final ExchangeRepository exchangeRepository;
     private final ProductRepository productRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CouponIssueRepository couponIssueRepository;
 
     @Value("${spring.servlet.multipart.location}")
     private String UploadPath;
@@ -206,6 +211,73 @@ public class MyPageService {
                 .total(total)
                 .build();
 
+    }
+
+    public PageResponseDTO<CouponIssueDTO> couponIssueFindAll(UserDTO userDTO, PageRequestDTO pageRequestDTO) {
+
+        User user = modelMapper.map(userDTO, User.class);
+
+        Pageable pageable = pageRequestDTO.getPageable("issueNo");
+
+
+        // 1. 해당 유저의 모든 쿠폰을 가져온다 (페이징 없이)
+        List<CouponIssue> allCoupons = couponIssueRepository.findAllByUser(user);
+
+
+        // 오늘 날짜
+        LocalDateTime today = LocalDateTime.now();
+
+
+        List<CouponIssueDTO> filteredList = allCoupons.stream()
+                .filter(couponIssue -> {
+                    String validToStr = couponIssue.getValidTo();
+                    System.out.println("validToStr: " + validToStr);
+
+                    if (validToStr == null) return false; // null 체크
+
+                    try {
+                        LocalDateTime validToDate = LocalDateTime.parse(validToStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                        System.out.println("validToDate: " + validToDate);
+
+                        System.out.println("asd : " + !validToDate.isBefore(today));
+                        return !validToDate.isBefore(today); // 오늘 포함 이후
+
+
+                    } catch (Exception e) {
+                        System.out.println("parse error: " + e.getMessage());
+                        return false; // 잘못된 형식이면 필터링에서 제외
+                    }
+                })
+                .map(couponIssue -> modelMapper.map(couponIssue, CouponIssueDTO.class))
+                .collect(Collectors.toList());
+
+        System.out.println("filteredList : " + filteredList);
+
+        /*
+        int page = pageRequestDTO.getPg();   // 0부터 시작하는 페이지 번호
+        int size = pageRequestDTO.getSize();
+        int start = page * size;
+        int end = Math.min(start + size, filteredList.size());
+
+        List<CouponIssueDTO> pagedList;
+        if (start >= filteredList.size()) {
+            // 시작 인덱스가 데이터 크기보다 크면 빈 리스트 반환
+            pagedList = new ArrayList<>();
+        } else {
+            pagedList = filteredList.subList(start, end);
+        }
+
+
+
+        System.out.println(pagedList);
+
+        */
+
+        return PageResponseDTO.<CouponIssueDTO>builder()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(filteredList)
+                .total(filteredList.size())
+                .build();
     }
 
     public void pointRegister(PointDTO pointDTO, UserDTO userDTO, OrderItemDTO orderItemDTO) {

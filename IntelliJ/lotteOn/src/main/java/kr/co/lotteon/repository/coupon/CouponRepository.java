@@ -22,4 +22,6 @@ public interface CouponRepository extends JpaRepository<Coupon,Long>, CouponRepo
     Page<Coupon> findAllByUserAndValidToAfter(User user, LocalDate today, Pageable pageable);
 
     long countByUserAndValidToAfter(User user, LocalDate today);
+
+    List<Coupon> findAllByUser(User user);
 }

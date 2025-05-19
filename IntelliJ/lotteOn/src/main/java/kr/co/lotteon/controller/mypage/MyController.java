@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import kr.co.lotteon.dto.article.InquiryDTO;
 import kr.co.lotteon.dto.config.BannerDTO;
 import kr.co.lotteon.dto.coupon.CouponDTO;
+import kr.co.lotteon.dto.coupon.CouponIssueDTO;
 import kr.co.lotteon.dto.feedback.ExchangeDTO;
 import kr.co.lotteon.dto.feedback.ReturnDTO;
 import kr.co.lotteon.dto.feedback.ReviewDTO;
@@ -360,10 +361,10 @@ public class MyController {
         long orderCount = myPageService.orderCount(userDTO);
         model.addAttribute("orderCount", orderCount);
 
-        PageResponseDTO<CouponDTO> couponDTO = myPageService.couponFindAll(userDTO, pageRequestDTO);
+        PageResponseDTO<CouponIssueDTO> couponIssueDTO = myPageService.couponIssueFindAll(userDTO, pageRequestDTO);
 
         model.addAttribute("userDTO", userDTO);
-        model.addAttribute("couponDTO", couponDTO);
+        model.addAttribute("couponIssueDTO", couponIssueDTO);
         model.addAttribute("getCouponCount", getCouponCount);
         model.addAttribute("pendingInquiryCount", pendingInquiryCount);
         model.addAttribute("point", point);
