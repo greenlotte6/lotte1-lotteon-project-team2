@@ -72,3 +72,6 @@ table{
     color: #ffffff;
 }
 
+.main_content_side input[type=text] {
+    padding-left: 5px;
+}
