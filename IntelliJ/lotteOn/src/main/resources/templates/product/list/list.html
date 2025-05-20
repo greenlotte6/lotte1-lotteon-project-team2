@@ -417,7 +417,7 @@
                             <span th:text="${#numbers.formatInteger(product.prodPrice, 3, 'COMMA')} + '원'"></span>
                         </p>
                         <p class="review">
-                            <span class="star" th:text="'★ ' + ${product.ratingTotal}"></span>
+                            <span class="star" th:text="'★ ' + ${product.ratingAvg}"></span>
                             &nbsp;&nbsp;|&nbsp;&nbsp;리뷰 <span th:text="${product.reviewCount}"></span>
                         </p>
                     </div>

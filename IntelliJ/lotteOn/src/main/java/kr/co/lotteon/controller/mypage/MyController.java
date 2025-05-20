@@ -480,6 +480,7 @@ public class MyController {
         UserDTO userDTO = myPageService.findByUid(uid);
         OrderItemDTO orderItemDTO = myPageService.FindByItemNo(itemNo);
 
+        myPageService.upPoint(userDTO, orderItemDTO);
 
         boolean result = myPageService.confirmPurchase(itemNo);
         if (result) {
