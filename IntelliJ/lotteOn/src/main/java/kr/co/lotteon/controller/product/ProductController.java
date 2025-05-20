@@ -130,9 +130,8 @@ public class ProductController {
     // 쿠폰 발급받기
     @PostMapping("/product/couponIssue")
     @ResponseBody
-    public ResponseEntity<String> couponIssue(@RequestBody CouponIssueDTO couponIssueDTO,
-                                              @AuthenticationPrincipal UserDetails userDetails) {
-        int result = couponService.couponIssue(couponIssueDTO, userDetails);
+    public ResponseEntity<String> couponIssue(@RequestParam  List<Long> cno, @AuthenticationPrincipal UserDetails userDetails) {
+        int result = couponService.couponIssue(cno, userDetails);
         if (result == 1) {
             return ResponseEntity.ok("쿠폰이 발급되었습니다.");
         } else {
@@ -176,7 +175,6 @@ public class ProductController {
         cartService.updateCartProdCount(cartNo, newQuantity);
         return ResponseEntity.ok("수량이 성공적으로 업데이트되었습니다.");
     }
-
 
 
     // 장바구니 담고 주문하기 View
@@ -225,6 +223,7 @@ public class ProductController {
         model.addAttribute(userDetailsDTO);
 
         session.setAttribute("cartDTO", cartDTOList.get(0));
+
 
         return "/product/order/order";
     }
