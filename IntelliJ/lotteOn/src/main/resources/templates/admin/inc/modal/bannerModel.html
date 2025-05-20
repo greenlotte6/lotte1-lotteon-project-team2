@@ -25,9 +25,42 @@
                     <tr>
                         <td>배너배경색입력</td>
                         <td>
-                            <input type="text" name="color" placeholder="배너배경색입력" required>
+                            <div class="color-picker-wrapper">
+                                <label for="color">배경색</label>
+                                <input type="color" class="banner_color" name="color" id="color" required>
+                            </div>
                         </td>
                     </tr>
+                    <style>
+                        .color-picker-wrapper {
+                            width: 100px;
+                            display: flex;
+                            align-items: center;
+                            padding: 5px;
+                            border: 2px solid #ddd;
+                            border-radius: 8px;
+                            background-color: #f9f9f9;
+                        }
+
+                        #color{
+                            margin-left: 10px;
+                            width: 20px;
+                        }
+
+                        .color-picker-wrapper label {
+                            font-weight: bold;
+                            color: #333;
+                        }
+
+                        input.banner_color {
+                            width: 40px;
+                            height: 40px;
+                            padding: 0;
+                            border: none;
+                            border-radius: 8px;
+                            cursor: pointer;
+                        }
+                    </style>
                     <tr>
                         <td>배너링크입력</td>
                         <td>
