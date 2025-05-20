@@ -28,6 +28,7 @@ import kr.co.lotteon.entity.point.Point;
 import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.entity.seller.Seller;
 import kr.co.lotteon.entity.user.User;
+import kr.co.lotteon.entity.user.UserDetails;
 import kr.co.lotteon.repository.article.InquiryRepository;
 import kr.co.lotteon.repository.coupon.CouponIssueRepository;
 import kr.co.lotteon.repository.coupon.CouponRepository;
@@ -39,6 +40,7 @@ import kr.co.lotteon.repository.order.OrderItemRepository;
 import kr.co.lotteon.repository.order.OrderRepository;
 import kr.co.lotteon.repository.point.PointRepository;
 import kr.co.lotteon.repository.product.ProductRepository;
+import kr.co.lotteon.repository.user.UserDetailsRepository;
 import kr.co.lotteon.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -81,6 +83,7 @@ public class MyPageService {
     private final ProductRepository productRepository;
     private final PasswordEncoder passwordEncoder;
     private final CouponIssueRepository couponIssueRepository;
+    private final UserDetailsRepository userDetailsRepository;
 
     @Value("${spring.servlet.multipart.location}")
     private String UploadPath;
@@ -734,9 +737,7 @@ public class MyPageService {
         }catch(IOException e){
             throw new RuntimeException("파일 저장 중 오류 발생", e);
         }
-
-
-
+        
         reviewRepository.save(review);
 
     }
@@ -814,6 +815,18 @@ public class MyPageService {
 
     @CacheEvict(value = "product-many-review"  , allEntries = true)
     public void deleteReviewCache() {
+    }
+
+    public void upPoint(UserDTO userDTO, OrderItemDTO orderItemDTO) {
+        User user = modelMapper.map(userDTO, User.class);
+
+        UserDetails userDetails = userDetailsRepository.findByUser(user).get();
+
+        int point = userDetails.getUserPoint() + orderItemDTO.getItemPoint();
+        userDetails.setUserPoint(point);
+
+        userDetailsRepository.save(userDetails);
+
     }
 }
 
