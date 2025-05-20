@@ -14,6 +14,7 @@ table{
 }
 
 .table-sub > table tr td:nth-child(1){
+    width: 120px;
     text-align: center;
     background-color: #f2f2f2;
 }
