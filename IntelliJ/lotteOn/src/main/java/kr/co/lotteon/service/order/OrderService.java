@@ -97,7 +97,7 @@ public class OrderService {
 
         String status = "결제대기";
         if ("카카오페이".equals(orderDTO.getPayment())) {
-            status = "입금완료";
+            status = "결제완료";
         }
 
         for (int i = 0; i < cartNos.size(); i++) {
@@ -142,7 +142,7 @@ public class OrderService {
 
         String status = "결제대기";
         if ("카카오페이".equals(orderDTO.getPayment())) {
-            status = "입금완료";
+            status = "결제완료";
         }
 
         int itemPoint = itemPointList.get(0);
