@@ -48,7 +48,9 @@ document.addEventListener('DOMContentLoaded', function(){
         btn.addEventListener('click', function(){
             const prodName = btn.getAttribute('data-prod-name');
 
-            document.getElementById('modalProdName').textContent = prodName;
+            const displayName = prodName.length > 50 ? prodName.substring(0, 50) + "..." : prodName;
+
+            document.getElementById('modalProdName').textContent = displayName;
 
             product_review_modal.style.display ='block';
         });
@@ -69,12 +71,18 @@ document.addEventListener('DOMContentLoaded', function(){
 
             const totalPrice = itemPrice - itemDiscount;
 
+
+            const displayName = prodName.length > 20 ? prodName.substring(0, 20) + "..." : prodName;
+
+
+            document.getElementById('returnModalProdName').textContent = '상품명 : ' + displayName;
+
             // 모달에 데이터 넣기
             document.getElementById('returnModalOrderDate').textContent = orderDate;
             document.getElementById('returnModalProductImage').src = productImage;
             document.getElementById('returnModalOrderNo').textContent = '주문번호 : ' + itemNo;
-            document.getElementById('returnModalCompany').textContent = company;
-            document.getElementById('returnModalProdName').textContent = prodName;
+            document.getElementById('returnModalCompany').textContent = '상호명 : ' + company;
+            document.getElementById('returnModalProdName').textContent = '상품명 : ' + displayName;
             document.getElementById('returnModalItemCount').textContent = '수량 : ' + itemCount + '개';
             document.getElementById('returnModalSellPrice').textContent = '판매가 : ' + formatNumber(itemPrice) + '원';
             document.getElementById('returnModalDiscount').textContent = '할인 : -' + formatNumber(itemDiscount) + '원';
@@ -112,12 +120,14 @@ document.addEventListener('DOMContentLoaded', function(){
             // 계산
             const totalPrice = itemPrice - itemDiscount;
 
+            const displayName = prodName.length > 20 ? prodName.substring(0, 20) + "..." : prodName;
+
             // 모달에 데이터 넣기
             document.getElementById('exchangeModalOrderDate').textContent = orderDate;
             document.getElementById('modalProductImage').src = productImage;
             document.getElementById('exchangeModalOrderNo').textContent = '주문번호 : ' + itemNo;
-            document.getElementById('exchangeModalCompany').textContent = company;
-            document.getElementById('exchangeModalProdName').textContent = prodName;
+            document.getElementById('exchangeModalCompany').textContent = '상호명 : ' + company;
+            document.getElementById('exchangeModalProdName').textContent = '상품명 : ' + displayName;
             document.getElementById('exchangeModalItemCount').textContent = '수량 : ' + itemCount + '개';
             document.getElementById('exchangeModalSellPrice').textContent = '판매가 : ' + formatNumber(itemPrice) + '원';
             document.getElementById('exchangeModalDiscount').textContent = '할인 : -' + formatNumber(itemDiscount) + '원';
@@ -159,6 +169,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
             selectProductNo = productNo; // 전역 변수에 저장
 
+
             document.getElementById('orderInfoModalSellerRank').textContent = sellerRank;
             document.getElementById('orderInfoModalSellerCompany').textContent = sellerCompany;
             document.getElementById('orderInfoModalSellerCeo').textContent = sellerCeo;
@@ -195,6 +206,8 @@ document.addEventListener('DOMContentLoaded', function(){
             const orderAddr = btn.getAttribute('data-orderaddr');
             const orderContent = btn.getAttribute('data-ordercontent');
 
+            const displayName = prodName.length > 20 ? prodName.substring(0, 20) + "..." : prodName;
+
 
 
             const totalPrice = itemPrice - itemDiscount;
@@ -202,8 +215,8 @@ document.addEventListener('DOMContentLoaded', function(){
             document.getElementById('orderInfoModalOrderDate').textContent = orderDate;
             document.getElementById('orderInfoProductImage').src = productImage;
             document.getElementById('orderInfoModalOrderNo').textContent = '주문번호 : ' + itemNo;
-            document.getElementById('orderInfoModalCompany').textContent = company;
-            document.getElementById('orderInfoModalProdName').textContent = prodName;
+            document.getElementById('orderInfoModalCompany').textContent = '상호명 : ' + company;
+            document.getElementById('orderInfoModalProdName').textContent = '상품명 : ' + displayName;
             document.getElementById('orderInfoModalItemCount').textContent = '수량 : ' + itemCount + '개';
             document.getElementById('orderInfoModalSellPrice').textContent = '판매가 : ' + formatNumber(itemPrice) + '원';
             document.getElementById('orderInfoModalDiscount').textContent = '할인 : -' + formatNumber(itemDiscount) + '원';
