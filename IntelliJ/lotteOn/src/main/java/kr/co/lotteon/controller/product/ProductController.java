@@ -44,7 +44,6 @@ import java.util.Map;
 @Controller
 public class ProductController {
 
-    private final ProductMapper productMapper;
     private final ProductDetailService productDetailService;
     private final ReviewService reviewService;
     private final InquiryService inquiryService;
@@ -69,8 +68,8 @@ public class ProductController {
 
         // 상품 조회수 추가
         productService.hitCountUp(prodNo);
-        // 상품 + 상품이미지
-        ProductDTO productDTO = productMapper.selectProductByProdNo(prodNo);
+        // 상품
+        ProductDTO productDTO = productService.selectProductByProdNo(prodNo);
         // 상품 옵션 Split
         productDTO = productService.OptionSplit(productDTO);
         // 상품 상세
@@ -79,7 +78,7 @@ public class ProductController {
         PageResponseDTO reviewPageResponseDTO = reviewService.selectAllForList(pageRequestDTO);
         // qna
         PageResponseDTO inquiryPageResponseDTO = inquiryService.selectAllForList(pageRequestDTO);
-
+        // 상품 이미지
         ProductImageDTO productImageDTO = productService.findImageByNo(productDTO);
 
         model.addAttribute(productDTO);

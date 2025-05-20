@@ -630,13 +630,13 @@
                 <div class="bar">
                     <div>
                         <a href="#">HOME</a>&nbsp;&nbsp;>&nbsp;&nbsp;
-                        <a href="#">1차 카테고리</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;
-                        <a href="#">2차 카테고리</a>
+                        <a th:text="${productDTO.mainCategoryName}" href="#">1차 카테고리</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;
+                        <a th:text="${productDTO.subCategory.subCategoryName}" href="#">2차 카테고리</a>
                     </div>
                 </div>
                 <div class="product_page">
                     <div>
-                        <img th:src="@{${productDTO.sNameThumb3}}" alt="상품 이미지">
+                        <img th:src="@{${productDTO.productImage.sNameMain}}" alt="상품 이미지">
                     </div>
                     <form th:action="@{/product/order/direct}" method="post">
                         <input type="hidden" id="productNo" name="prodNo" th:value="${productDTO.prodNo}">
