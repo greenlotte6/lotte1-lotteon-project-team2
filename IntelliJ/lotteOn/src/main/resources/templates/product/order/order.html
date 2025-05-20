@@ -251,7 +251,8 @@
                       const issuedBy = item.getAttribute("data-issued-by")?.trim();
                       const couponState = item.getAttribute("data-state")?.trim();
 
-                      item.style.display = vendorSet.has(issuedBy) && couponState === "미사용" ? "block" : "none";
+                      item.style.display = (vendorSet.has(issuedBy) || issuedBy === "관리자") && couponState === "미사용" ? "block" : "none";
+
                       item.classList.remove("selected");
                       item.style.border = "1px solid #ccc";
 
@@ -666,7 +667,7 @@
                                                               data-issued-by=${couponIssue.coupon.issuedBy},
                                                                data-state=${couponIssue.state}">
                                                     <p th:text="${couponIssue.coupon.benefit}"></p>
-                                                    <p th:text="${couponIssue.coupon.couponName} + ' / ' + ${couponIssue.coupon.issuedBy}"></p>
+                                                    <p th:text="${couponIssue.coupon.couponName}"></p>
                                                     <p th:text="|쿠폰 종류: ${couponIssue.coupon.couponType} (${couponIssue.coupon.minPrice} 이상 구매 시 사용 가능)|"></p>
                                                     <span class="coupon-expiry"
                                                           th:if="${couponIssue.coupon.validTo != null and couponIssue.coupon.validTo.isBefore(T(java.time.LocalDate).now().plusDays(7))}"

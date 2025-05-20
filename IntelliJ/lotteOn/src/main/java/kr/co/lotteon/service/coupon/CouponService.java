@@ -14,7 +14,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -34,19 +33,13 @@ public class CouponService {
     private final ModelMapper modelMapper;
 
     public List<CouponDTO> findAllByCompany(String company) {
-        List<Coupon> couponList = couponRepository.findAllByIssuedBy(company);
-        LocalDate today = LocalDate.now();
+        List<Coupon> couponList = couponRepository.findValidCouponsByCompanyOrAdmin(company, LocalDate.now());
 
-        List<Coupon> validCouponList = couponList.stream()
-                .filter(coupon -> coupon.getValidTo().isAfter(today) || coupon.getValidTo().isEqual(today))
-                .collect(Collectors.toList());
-
-        List<CouponDTO> couponDTOList = validCouponList.stream()
+        return couponList.stream()
                 .map(coupon -> modelMapper.map(coupon, CouponDTO.class))
                 .collect(Collectors.toList());
-
-        return couponDTOList;
     }
+
 
     public List<CouponIssueDTO> findAllByUser(String uid) {
         Optional<User> optUser = userRepository.findByUid(uid);
@@ -68,32 +61,48 @@ public class CouponService {
     }
 
 
-    public int couponIssue(CouponIssueDTO couponIssueDTO, UserDetails userDetails) {
-
+    public int couponIssue(List<Long> cnoList, UserDetails userDetails) {
         User user = User.builder()
                 .uid(userDetails.getUsername())
                 .build();
 
-        Coupon coupon = Coupon.builder()
-                .cno(Long.parseLong(couponIssueDTO.getCno()))
-                .build();
+        int successCount = 0;
 
-        CouponIssue couponIssue = modelMapper.map(couponIssueDTO, CouponIssue.class);
+        for (Long cno : cnoList) {
+            Optional<Coupon> optionalCoupon = couponRepository.findById(cno);
 
-        couponIssue.setUser(user);
-        couponIssue.setCoupon(coupon);
-
-        Boolean exist = couponIssueRepository.existsByUserAndCoupon(user, coupon);
-
-        try {
-            if(!exist){
-                couponIssueRepository.save(couponIssue);
+            if (optionalCoupon.isEmpty()) {
+                continue;
             }
-            return 1;
-        }catch (Exception e) {
-            return 0;
+
+            Coupon coupon = optionalCoupon.get();
+
+            boolean exist = couponIssueRepository.existsByUserAndCoupon(user, coupon);
+            if (exist) {
+                successCount++;
+                continue;
+            }
+
+            try {
+                CouponIssue couponIssue = CouponIssue.builder()
+                        .user(user)
+                        .coupon(coupon)
+                        .regDate(LocalDate.now())
+                        .issuedBy(coupon.getIssuedBy())
+                        .validTo(String.valueOf(coupon.getValidTo()))
+                        .build();
+
+                couponIssueRepository.save(couponIssue);
+                successCount++;
+            } catch (Exception e) {
+                log.error(e.getMessage());
+            }
         }
+
+        return successCount;
     }
+
+
 
     public void changeState(Long issueNo) {
 

@@ -329,23 +329,23 @@
             if (applyCouponButton) {
                 applyCouponButton.addEventListener('click', function () {
                     if (selectedCoupons.size > 0) {
-                        const companyName = companySpan.textContent.trim();
                         applyCouponButton.disabled = true;
                         applyCouponButton.textContent = '요청 중...';
                         const requests = [];
-                        selectedCoupons.forEach((couponElement, cnoKey) => {
+                        selectedCoupons.forEach((couponElement) => {
                             const couponCno = couponElement.dataset.cno;
-                            const couponValidTo = couponElement.dataset.validto;
-                            const singleCouponPayload = {
-                                issuedBy: companyName,
-                                cno: couponCno,
-                                validTo: couponValidTo
-                            };
+                            console.log("couponCno: " + couponCno);
+
+                            const formData = new URLSearchParams();
+                            formData.append("cno", couponCno);
+
                             const request = fetch('/product/couponIssue', {
                                 method: 'POST',
                                 credentials: 'include',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify(singleCouponPayload)
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded'
+                                },
+                                body: formData.toString()
                             })
                                 .then(response => response.text())
                                 .then(message => {
@@ -361,12 +361,8 @@
                         });
                         Promise.all(requests).then(results => {
                             const successCount = results.filter(msg => msg.includes('발급되었습니다')).length;
-                            const failCount = results.length - successCount;
                             if (successCount > 0) {
                                 alert(`쿠폰 ${successCount}개가 발급되었습니다.`);
-                            }
-                            if (failCount > 0) {
-                                alert(`쿠폰 ${failCount}개는 이미 발급받았거나 오류가 발생했습니다.`);
                             }
                             applyCouponButton.disabled = false;
                             applyCouponButton.textContent = '할인 혜택 받기';
