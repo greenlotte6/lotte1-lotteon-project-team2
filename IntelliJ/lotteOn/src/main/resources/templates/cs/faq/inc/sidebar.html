@@ -2,13 +2,46 @@
     <div class="cs-title">자주묻는질문</div>
 
     <ul class="cs-menu">
-        <li><a th:href="@{/cs/faq/list(cateV1='회원')}">회원</a></li>
-        <li><a th:href="@{/cs/faq/list(cateV1='쿠폰-혜택-이벤트')}">쿠폰 / 혜택 / 이벤트</a></li>
-        <li><a th:href="@{/cs/faq/list(cateV1='주문-결제')}">주문 / 결제</a></li>
-        <li><a th:href="@{/cs/faq/list(cateV1='배송')}">배송</a></li>
-        <li><a th:href="@{/cs/faq/list(cateV1='취소-반품-교환')}">취소 / 반품 / 교환</a></li>
-        <li><a th:href="@{/cs/faq/list(cateV1='여행-숙박-항공')}">여행 / 숙박 / 항공</a></li>
-        <li><a th:href="@{/cs/faq/list(cateV1='안전거래')}">안전거래</a></li>
+        <li><a th:href="@{/cs/faq/list(cateV1='회원')}" id="c1">회원</a></li>
+        <li><a th:href="@{/cs/faq/list(cateV1='쿠폰-혜택-이벤트')}" id="c2">쿠폰 / 혜택 / 이벤트</a></li>
+        <li><a th:href="@{/cs/faq/list(cateV1='주문-결제')}" id="c3">주문 / 결제</a></li>
+        <li><a th:href="@{/cs/faq/list(cateV1='배송')}" id="c4">배송</a></li>
+        <li><a th:href="@{/cs/faq/list(cateV1='취소-반품-교환')}" id="c5">취소 / 반품 / 교환</a></li>
+        <li><a th:href="@{/cs/faq/list(cateV1='여행-숙박-항공')}" id="c6">여행 / 숙박 / 항공</a></li>
+        <li><a th:href="@{/cs/faq/list(cateV1='안전거래')}" id="c7">안전거래</a></li>
     </ul>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const params = new URLSearchParams(location.search);
+            const title = document.querySelector(".this-location");
+
+            const path = params.get("cateV1");
+            if (path.includes("회원")) {
+                document.getElementById("c1").classList.add("active");
+            }else if (path.includes("쿠폰-혜택-이벤트")) {
+                document.getElementById("c2").classList.add("active");
+            }else if (path.includes("주문-결제")) {
+                document.getElementById("c3").classList.add("active");
+            }else if (path.includes("배송")) {
+                document.getElementById("c4").classList.add("active");
+            }else if (path.includes("취소-반품-교환")) {
+                document.getElementById("c5").classList.add("active");
+            }else if (path.includes("여행-숙박-항공")) {
+                document.getElementById("c6").classList.add("active");
+            }else if (path.includes("안전거래")) {
+                document.getElementById("c7").classList.add("active");
+            }
+        });
+    </script>
+
+    <style>
+        .active {
+            color: red;
+            font-weight: bold;
+            background-color: #ffe5e5;
+        }
+    </style>
+
 
 </aside>

@@ -11,17 +11,28 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const params = new URLSearchParams(location.search);
-            const path = params.get("cateV1");
+            const title = document.querySelector(".this-location");
+
+            const all = window.location.pathname;
+
+            if(all.includes("listAll")){
+                title.textContent = "전체";
+                document.getElementById("c1").classList.add("active");
+            }
+
+            const path = params.get("cate");
             if (path.includes("고객서비스")) {
+                title.textContent = "고객서비스";
                 document.getElementById("c2").classList.add("active");
             }else if (path.includes("안전거래")) {
+                title.textContent = "안전거래";
                 document.getElementById("c3").classList.add("active");
             }else if (path.includes("위해상품")) {
+                title.textContent = "위해상품";
                 document.getElementById("c4").classList.add("active");
             }else if (path.includes("이벤트당첨")) {
+                title.textContent = "이벤트당첨";
                 document.getElementById("c5").classList.add("active");
-            }else{
-                document.getElementById("c1").classList.add("active");
             }
         });
     </script>
@@ -30,7 +41,7 @@
         .active {
             color: red;
             font-weight: bold;
-            background-color: #f9f9f9;
+            background-color: #ffe5e5;
         }
     </style>
 
