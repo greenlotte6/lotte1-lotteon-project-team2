@@ -1,11 +1,21 @@
+/*헤더*/
+header{
+  background-color: #E0DFDF;
+  margin-bottom: 0;
+
+  height: 100px;
+}
+
+
 /*메인*/
 main {
-  min-height: 500px;
+  margin-top: 40px;
+  min-height: 600px;
 }
 
 .logo > a > img{
   width: 200px;
-  height: 40px;
+  height: 60px;
   float: left;
 }
 
