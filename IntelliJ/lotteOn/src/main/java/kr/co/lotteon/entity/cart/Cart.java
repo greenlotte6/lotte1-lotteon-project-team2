@@ -16,7 +16,7 @@ import kr.co.lotteon.entity.product.Product;
 @Builder
 @Entity
 @Table(name = "Cart")
-public class Cart {
+public class    Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
