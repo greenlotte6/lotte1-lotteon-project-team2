@@ -34,12 +34,15 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
         String searchType = pageRequestDTO.getSearchType();
         String keyword = pageRequestDTO.getKeyword();
 
+        BooleanExpression booleanExpression = qUser.role.eq("USER");
+
         if(searchType == null) {
             List<Tuple> tupleList = queryFactory
                     .select(qUser, qUserDetails)
                     .from(qUserDetails)
                     .join(qUser)
                     .on(qUserDetails.user.uid.eq(qUser.uid))
+                    .where(booleanExpression)
                     .offset(pageable.getOffset())
                     .limit(pageable.getPageSize())
                     .orderBy(qUser.regDate.desc())
@@ -50,6 +53,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                     .from(qUserDetails)
                     .join(qUserDetails.user, qUser)
                     .on(qUserDetails.user.uid.eq(qUser.uid))
+                    .where(booleanExpression)
                     .fetchOne();
 
             log.info("total: {}", total);
@@ -63,8 +67,10 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                 case "이름" -> qUser.name.contains(keyword);
                 case "이메일" -> qUser.email.contains(keyword);
                 case "휴대폰" -> qUser.hp.contains(keyword);
-                default -> null;
+                default -> booleanExpression;
             };
+
+            expression = expression.and(booleanExpression);
 
             List<Tuple> tupleList = queryFactory
                     .select(qUser, qUserDetails)

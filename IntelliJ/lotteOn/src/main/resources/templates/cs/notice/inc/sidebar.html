@@ -1,11 +1,37 @@
 <aside class="cs-sidebar">
     <div class="cs-title">공지사항</div>
     <ul class="cs-menu">
-        <li><a th:href="@{/cs/notice/listAll}">전체</a></li>
-        <li><a th:href="@{/cs/notice/list(cate=고객서비스)}">고객서비스</a></li>
-        <li><a th:href="@{/cs/notice/list(cate=안전거래)}">안전거래</a></li>
-        <li><a th:href="@{/cs/notice/list(cate=위해상품)}">위해상품</a></li>
-        <li><a th:href="@{/cs/notice/list(cate=이벤트당첨)}">이벤트당첨</a></li>
+        <li><a th:href="@{/cs/notice/listAll}" id="c1">전체</a></li>
+        <li><a th:href="@{/cs/notice/list(cate=고객서비스)}" id="c2">고객서비스</a></li>
+        <li><a th:href="@{/cs/notice/list(cate=안전거래)}" id="c3">안전거래</a></li>
+        <li><a th:href="@{/cs/notice/list(cate=위해상품)}" id="c4">위해상품</a></li>
+        <li><a th:href="@{/cs/notice/list(cate=이벤트당첨)}" id="c5">이벤트당첨</a></li>
     </ul>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const params = new URLSearchParams(location.search);
+            const path = params.get("cateV1");
+            if (path.includes("고객서비스")) {
+                document.getElementById("c2").classList.add("active");
+            }else if (path.includes("안전거래")) {
+                document.getElementById("c3").classList.add("active");
+            }else if (path.includes("위해상품")) {
+                document.getElementById("c4").classList.add("active");
+            }else if (path.includes("이벤트당첨")) {
+                document.getElementById("c5").classList.add("active");
+            }else{
+                document.getElementById("c1").classList.add("active");
+            }
+        });
+    </script>
+
+    <style>
+        .active {
+            color: red;
+            font-weight: bold;
+            background-color: #f9f9f9;
+        }
+    </style>
 
 </aside>

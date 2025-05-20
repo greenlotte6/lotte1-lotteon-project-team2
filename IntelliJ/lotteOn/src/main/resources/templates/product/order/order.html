@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="/css/layout/layout.css">
     <link rel="stylesheet" href="/css/product/product_header.css">
     <link rel="stylesheet" href="/css/product/order.css">
+
+    <!-- HTTPS로 변환 -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>주문하기 : 롯데On</title>
     <style>
         .loading-overlay {
@@ -777,7 +780,6 @@
                     .then(data => {
 
                         if(data.type === '일반'){
-                            alert("일반 결제");
                             window.location.href = "/product/order_completed";
                         }else{
                             window.location.href = data.next_redirect_pc_url;

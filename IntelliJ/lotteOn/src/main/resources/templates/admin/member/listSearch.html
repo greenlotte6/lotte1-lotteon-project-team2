@@ -17,45 +17,73 @@
     <script>
         document.addEventListener('DOMContentLoaded', function (){
 
-            // 삭제 기능
-            // 개별 삭제 링크에 confirm 추가
-            document.querySelectorAll('.delete-link').forEach(function(link) {
-                link.addEventListener('click', function(e) {
-                    if (!confirm("정말 삭제하시겠습니까?")) {
-                        e.preventDefault(); // 링크 이동 막기
-                    }
-                });
-            });
 
             // 전체 체크박스
             const deleteAllCheckbox = document.getElementById('deleteAll');
 
             // 개별 체크박스
-            const deleteCheckboxes = document.querySelectorAll('input[name="deleteNo"]');
+            const deleteCheckboxes = document.querySelectorAll('input[name="no"]');
 
             deleteAllCheckbox.addEventListener('change', function () {
                 const isChecked = this.checked;
                 deleteCheckboxes.forEach(cb => cb.checked = isChecked);
             });
 
-            // 선택삭제 버튼 validation
-            document.querySelector('.member_list_form').addEventListener('submit', function(e) {
-                const checked = document.querySelectorAll('input[name="deleteNo"]:checked');
-                if (checked.length === 0) {
-                    e.preventDefault();
-                    alert('삭제할 항목을 선택해주세요.');
-                } else {
-                    const confirmDelete = confirm('선택한 항목을 정말 삭제하시겠습니까?');
-                    if (!confirmDelete) {
-                        e.preventDefault();
-                    }
-                }
+            document.querySelectorAll('.rank-select').forEach(function(select) {
+                select.addEventListener('change', function(e) {
+                    const selectedRank = e.target.value;
+                    const uid = e.target.dataset.uid;
+
+                    const data = select.closest('tr');
+                    const checkbox = data.querySelector('input[name="no"]');
+                    checkbox.checked = true;
+
+                });
             });
 
-            document.querySelector('#cate').addEventListener('change',function(e){
-                this.form.submit();
-            })
+            document.querySelector('.member_list_form').addEventListener('submit', function(e) {
+                const checkedBoxes = document.querySelectorAll('input[name="no"]:checked');
 
+                if (checkedBoxes.length === 0) {
+                    e.preventDefault();
+                    alert('수정할 항목을 선택해주세요.');
+                    return;
+                }
+
+                const confirmUpdate = confirm('선택한 항목을 정말 수정하시겠습니까?');
+                if (!confirmUpdate) {
+                    e.preventDefault();
+                    return;
+                }
+
+                // 기존에 생성된 hidden input이 있다면 제거
+                document.querySelectorAll('.dynamic-hidden').forEach(el => el.remove());
+
+                // 체크된 회원들에 대해 rank 값도 같이 전송
+                checkedBoxes.forEach(cb => {
+                    const uid = cb.value;
+                    const row = cb.closest('tr');
+                    const rankSelect = row.querySelector('select[name="rank"]');
+                    const selectedRank = rankSelect.value;
+
+                    // no
+                    const inputUid = document.createElement('input');
+                    inputUid.type = 'hidden';
+                    inputUid.name = 'uids';
+                    inputUid.value = uid;
+                    inputUid.classList.add('dynamic-hidden');
+
+                    // rank
+                    const inputRank = document.createElement('input');
+                    inputRank.type = 'hidden';
+                    inputRank.name = 'ranks';
+                    inputRank.value = selectedRank;
+                    inputRank.classList.add('dynamic-hidden');
+
+                    this.appendChild(inputUid);
+                    this.appendChild(inputRank);
+                });
+            });
 
         });
 
@@ -99,7 +127,7 @@
                         </div>
                     </div>
 
-                    <form action="#" class="member_list_form">
+                    <form th:action="@{/admin/member/rank/modify}" class="member_list_form" method="post">
                         <table>
                             <thead>
                                 <th><input type="checkbox" id="deleteAll"></th>
@@ -118,30 +146,37 @@
                             <tbody>
                                 <tr th:each="item, i : ${pageResponseDTO.dtoList}">
                                     <td>
-                                        <input type="checkbox" name="deleteNo" th:value="${item.uid}" >
+                                        <input type="checkbox" name="no" th:value="${item.uid}">
                                     </td>
                                     <td>[[${pageResponseDTO.startNo - i.index}]]</td>
                                     <td>[[${item.uid}]]</td>
                                     <td>[[${item.name}]]</td>
                                     <td>[[${item.userDetails.gender}]]</td>
                                     <td>
-                                        <select name="rank">
-                                            <option value="VVIP" th:selected="${item.userDetails.rank == 'VVIP'}">VVIP</option>
-                                            <option value="VIP" th:selected="${item.userDetails.rank == 'VIP'}">VIP</option>
-                                            <option value="GOLD" th:selected="${item.userDetails.rank == 'GOLD'}">GOLD</option>
-                                            <option value="SILVER" th:selected="${item.userDetails.rank == 'SILVER'}">SILVER</option>
+                                        <select name="rank" class="rank-select" th:data-uid="${item.uid}">
                                             <option value="FAMILY" th:selected="${item.userDetails.rank == 'FAMILY'}">FAMILY</option>
+                                            <option value="SILVER" th:selected="${item.userDetails.rank == 'SILVER'}">SILVER</option>
+                                            <option value="GOLD" th:selected="${item.userDetails.rank == 'GOLD'}">GOLD</option>
+                                            <option value="VIP" th:selected="${item.userDetails.rank == 'VIP'}">VIP</option>
+                                            <option value="VVIP" th:selected="${item.userDetails.rank == 'VVIP'}">VVIP</option>
                                         </select>
                                     </td>
                                     <td>[[${item.userDetails.userPoint}]]</td>
                                     <td>[[${item.email}]]</td>
                                     <td>[[${item.hp}]]</td>
-                                    <td th:text="${#temporals.format(item.lastLoginAt, 'yyyy.MM.dd HH:mm:ss')}"></td>
-                                    <td style="color: green;">[[${item.state}]]</td>
-                                    <td>
-                                        <a href="#" id="modal_modify">[ 수정 ]</a><br>
-                                        <a href="#">[ 중지 ]</a>
+                                    <td th:text="${#temporals.format(item.regDate, 'yyyy.MM.dd HH:mm:ss')}"></td>
+                                    <td th:class="${item.state == '정상' ? 'operation' :  'stop' }">[[${item.state}]]</td>
+                                    <td style="width: 60px;">
+                                        <a href="#" id="modal_modify" class="detail">[ &nbsp; 수정 &nbsp; ]</a><br>
+                                        <a th:href="@{/admin/member/state(uid=${item.uid} , state='중지')}">[ &nbsp; 중지 &nbsp; ]</a>
+                                        <a th:href="@{/admin/member/state(uid=${item.uid} , state='재개')}">[ &nbsp; 재개 &nbsp; ]</a>
+                                        <a th:href="@{/admin/member/state(uid=${item.uid} , state='비활성')}">[ 비활성 ]</a>
                                     </td>
+                                    <input type="hidden" id="addr1V1" th:value="${item.addr1}">
+                                    <input type="hidden" id="addr2V1" th:value="${item.addr2}">
+                                    <input type="hidden" id="contentV1" th:value="${item.userDetails.content}">
+                                    <input type="hidden" id="lastLoginAtV1" th:value="${#temporals.format(item.lastLoginAt, 'yyyy.MM.dd HH:mm:ss')}">
+                                    <input type="hidden" id="zipV1" th:value="${item.zip}">
                                 </tr>
                                 
                             </tbody>
@@ -178,116 +213,8 @@
 
 
     <!-- 모달 -->
-    <!-- 배너 등록 모달 -->
-    <div class="modal">
-        <div class="modal_popup">
-            <div class="modal_head">
-                <span class="modal_title">회원수정</span>
-                <button type="button" class="close_btn">X</button>
-            </div>
-
-            <div class="modal_main">
-                <form action="#" class="member">
-                    <table class="modal_member">
-                        <tr>
-                            <td>아이디</td>
-                            <td>
-                                <input type="text" name="uid">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>이름</td>
-                            <td>
-                                <input type="text" name="name" placeholder="홍길동">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>성별</td>
-                            <td>
-                                <input name="gender" type="radio" value="남">남
-                                <input name="gender" type="radio" value="여" style="margin-left: 10px;">여
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>등급</td>
-                            <td>
-                                <input type="text" name="rank" readonly value="FAMILY"> 
-                                <span style="margin-left: 10px;">등급 수정은 회원 목록에서 선택수정 가능</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>상태</td>
-                            <td style="color: #57C479;">정상</td>
-                        </tr>
-                        <tr>
-                            <td>EMAIL</td>
-                            <td>
-                                <input type="text" name="email">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>휴대폰</td>
-                            <td>
-                                <input type="text" name="hp">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>우편번호</td>
-                            <td>
-                                <input type="text" name="zip" id="zip" placeholder="우편번호 선택"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>기본주소</td>
-                            <td>
-                                <input class="inputs" type="text" name="addr1" id="addr1"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>상세주소</td>
-                            <td>
-                                <input class="inputs" type="text" name="addr2" id="addr2" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>가입일</td>
-                            <td>0000-00-00 00:00:00</td>
-                        </tr>
-                        <tr>
-                            <td>최근로그인날짜</td>
-                            <td>0000-00-00 00:00:00</td>
-                        </tr>
-                        <tr>
-                            <td>기타</td>
-                            <td>
-                                <textarea name="content" placeholder="회원에대한기타정보입력"></textarea>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <button type="submit" class="modal_btn">수정하기</button>
-                </form>
-                
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const modal = document.querySelector('.modal');
-        const modalOpen = document.querySelector('#modal_modify');
-        const modalClose = document.querySelector('.close_btn');
-
-        //열기 버튼을 눌렀을 때 모달팝업이 열림
-        modalOpen.addEventListener('click',function(){
-            //'on' class 추가
-            modal.classList.add('on');
-        });
-        //닫기 버튼을 눌렀을 때 모달팝업이 닫힘
-        modalClose.addEventListener('click',function(){
-            //'on' class 제거
-            modal.classList.remove('on');
-        });
-    </script>
+    <!-- 맴버 수정 모달 -->
+    <th:block th:include="/admin/inc/modal/memberModal.html"/>
 
 
 

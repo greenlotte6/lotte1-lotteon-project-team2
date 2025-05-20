@@ -145,4 +145,54 @@ public class CouponService {
 
     }
 
+    public void IssueToUser(Integer index, UserDetails userDetails) {
+
+        User user = User.builder()
+                .uid(userDetails.getUsername())
+                .build();
+
+        int cno = 0;
+        switch (index) {
+            case 1: cno = 1012211372; break;
+            case 2: cno = 1012211373; break;
+            case 3: cno = 1012211370; break;
+            case 4: cno = 1012211371; break;
+            default: break;
+        }
+
+        Coupon coupon = Coupon.builder()
+                .cno(cno)
+                .build();
+
+        Boolean exist = couponIssueRepository.existsByUserAndCoupon(user, coupon);
+        LocalDateTime now = LocalDateTime.now().plusDays(20);
+
+        if(!exist){
+            CouponIssue couponIssue = CouponIssue
+                    .builder()
+                    .user(user)
+                    .coupon(coupon)
+                    .validTo(String.valueOf(now))
+                    .state("미사용")
+                    .issuedBy("관리자")
+                    .build();
+
+            couponIssueRepository.save(couponIssue);
+        }
+
+        /*
+        Coupon coupon = Coupon.builder()
+                .cno(cno)
+                .build();
+*/
+
+        /*
+        CouponIssue couponIssue = CouponIssue.builder()
+                .coupon(coupon)
+                .user(user)
+                .issuedBy(coupon.getIssuedBy())
+                .build();
+*/
+
+    }
 }

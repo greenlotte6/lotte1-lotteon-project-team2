@@ -27,7 +27,7 @@
                 <!-- 사이드바 끝-->
                 <!-- 오른쪽 글 -->
                 <form class="write-container" th:action="@{/cs/qna/write}" method="post">
-                    <h2>회원</h2>
+                    <h2>문의하기</h2>
                     <input type="hidden" name="writer" th:value="${#authentication.principal.user.uid}"/>
                     <div class="form-group">
                         <label for="type1">문의유형</label>

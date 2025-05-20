@@ -705,7 +705,7 @@ public class MyPageService {
         Point point = Point.builder()
                 .user(user)
                 .point(500)
-                .pointDesc("상품 리뷰(" + product.getProdName() +")")
+                .pointDesc("상품 리뷰(상품 번호 : " + product.getProdNo() +") 적립")
                 .expiryDate(now.plusYears(1))
                 .build();
 

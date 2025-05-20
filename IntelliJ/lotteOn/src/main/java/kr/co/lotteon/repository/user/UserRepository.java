@@ -26,6 +26,8 @@ public interface UserRepository extends JpaRepository<User,String> , UserReposit
 
     @Query("SELECT COUNT(u) FROM User u WHERE u.regDate BETWEEN :start AND :end")
     long countByRegDateBetween(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+
+    Optional<Object> findByHp(String hp);
 }
 
 

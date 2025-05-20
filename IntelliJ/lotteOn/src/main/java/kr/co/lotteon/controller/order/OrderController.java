@@ -98,9 +98,6 @@ public class OrderController {
                               @RequestParam(value = "issueNo", required = false) Long issueNo,
                               @AuthenticationPrincipal UserDetails userDetails) throws Exception {
 
-        log.info("orderDTO: {}", orderDTO);
-        log.info("Amount: {}", amount);
-
         orderDTO.setTotalQuantity(amount.getQuantity());
         orderDTO.setUid(userDetails.getUsername());
         orderDTO.setOrderAddr(receiverAddr1 + " " + receiverAddr2);
@@ -135,7 +132,7 @@ public class OrderController {
         couponService.changeState(issueNo);
 
         // 포인트 사용 시 기록
-        UserDetailsDTO userDeatilsDTO = pointService.changePoint(usedPoint, userDetails);
+        UserDetailsDTO userDeatilsDTO = pointService.changePoint(usedPoint, userDetails, orderNo);
 
 
         session.setAttribute("orderNo", orderNo);
@@ -148,29 +145,15 @@ public class OrderController {
         if ("카카오페이".equals(orderDTO.getPayment())) {
             return kakaoPayService.kakaoPayReady(amount);
         } else {
-            log.info("결제///");
-            log.info("일반 결제 선택. 서버에서 /payment/success 로 리다이렉트합니다.");
-
-            /*
-            HttpHeaders headers = new HttpHeaders();
-            headers.setLocation(URI.create("/payment/success"));
-            return new ResponseEntity<>(headers, HttpStatus.FOUND);
-
-             */
-
             OrderDTO order = orderService.findOrder(orderNo);
             List<OrderItemDTO> orderList = orderService.findOrderItems(order);
             order.setOrderItems(orderList);
-
-            log.info("order: {}", order);
 
             session.setAttribute("orderDTO", order);
 
             response.put("type", "일반");
             return ResponseEntity.ok(response);
         }
-
-
     }
 
     // 결제 성공
@@ -180,33 +163,20 @@ public class OrderController {
         Integer orderNo = (Integer) session.getAttribute("orderNo");
         OrderDTO orderDTO = orderService.findAllByOrderNo(orderNo);
 
-        log.info("success!!!!!");
-
-
-        log.info("orderNo: " + orderNo);
-        log.info("orderDTO: " + orderDTO);
-
         session.setAttribute("orderDTO", orderDTO);
 
         if(pgToken != null) {
             kakaoPayService.approveResponse(pgToken);
         }
-
         return "redirect:/product/order_completed";
     }
 
     @GetMapping("/product/order_completed")
     public String orderCompleted(HttpSession session, Model model) {
 
-        log.info("completed!!!!!");
-
-
-
         OrderDTO orderDTO = (OrderDTO) session.getAttribute("orderDTO");
 
         model.addAttribute("orderDTO", orderDTO);
-
-        log.info("orderDTO: {}", orderDTO);
 
         return "/product/order/order_completed";
     }

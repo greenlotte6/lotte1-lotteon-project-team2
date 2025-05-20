@@ -22,6 +22,6 @@ public interface CouponIssueRepository extends JpaRepository<CouponIssue, Long> 
 
     List<CouponIssue> findAllByUser(User user);
 
-
+    List<CouponIssue> findByValidToBeforeAndStateNot(String validTo, String state);
 
 }
