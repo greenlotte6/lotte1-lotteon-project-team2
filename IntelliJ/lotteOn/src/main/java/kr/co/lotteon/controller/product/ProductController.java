@@ -88,6 +88,8 @@ public class ProductController {
         model.addAttribute("reviewPageResponseDTO", reviewPageResponseDTO);
         model.addAttribute("inquiryPageResponseDTO", inquiryPageResponseDTO);
 
+        log.info("productDTO: {}", productDTO);
+
         return "/product/view/view";
     }
 

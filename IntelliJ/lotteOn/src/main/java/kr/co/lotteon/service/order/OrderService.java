@@ -93,6 +93,13 @@ public class OrderService {
 
 
     public void registerOrderItem(int orderNo, List<Integer> cartNos, List<Integer> itemPointList) {
+        OrderDTO orderDTO = findAllByOrderNo(orderNo);
+
+        String status = "결제대기";
+        if ("카카오페이".equals(orderDTO.getPayment())) {
+            status = "입금완료";
+        }
+
         for (int i = 0; i < cartNos.size(); i++) {
             Integer cartNo = cartNos.get(i);
             Integer itemPoint = itemPointList.get(i);
@@ -104,6 +111,7 @@ public class OrderService {
 
             Order order = Order.builder()
                     .orderNo(orderNo)
+                    .payment(orderDTO.getPayment())
                     .build();
 
             OrderItem orderItem = OrderItem.builder()
@@ -120,15 +128,22 @@ public class OrderService {
                     .itemDiscount(product.getProdDiscount())
                     .itemPoint(itemPoint)
                     .category(category)
+                    .orderStatus(status)
                     .build();
 
             orderItemRepository.save(orderItem);
-
         }
     }
 
 
     public void directOrderItem(int orderNo, CartDTO cartDTO,List<Integer> itemPointList) {
+
+        OrderDTO orderDTO = findAllByOrderNo(orderNo);
+
+        String status = "결제대기";
+        if ("카카오페이".equals(orderDTO.getPayment())) {
+            status = "입금완료";
+        }
 
         int itemPoint = itemPointList.get(0);
 
@@ -156,6 +171,7 @@ public class OrderService {
                 .itemDiscount(product.getProdDiscount())
                 .itemPoint(itemPoint)
                 .category(category)
+                .orderStatus(status)
                 .build();
 
         orderItemRepository.save(orderItem);
