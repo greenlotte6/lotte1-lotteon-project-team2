@@ -64,8 +64,8 @@
                 </div>
                 <a th:href="@{/cs/index}">고객센터</a>
                 <a th:href="@{/my/order}">주문배송</a>
-                <div sec:authorize="isAuthenticated()"> <!-- 로그인해야 관리자 버튼이 생김 admin으로 접속해야 생기도록 수정해야함 -->
-                    <a th:href="@{/admin}">관리자</a>
+                <div sec:authorize="hasAnyRole('ADMIN', 'SELLER')">
+                    <a th:href="@{/admin}">관리페이지</a>
                 </div>
             </div>
         </div>

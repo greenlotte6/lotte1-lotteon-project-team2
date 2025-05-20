@@ -63,7 +63,23 @@ public class AdminController {
 
     // 관리자 메인
     @GetMapping
-    public String main(Model model) {
+    public String main(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String uid = userDetails.getUsername();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+
+        String role = null;
+        for (GrantedAuthority auth : authorities) {
+
+            if(auth.getAuthority().equals("ROLE_ADMIN")){
+                role = auth.getAuthority();
+                break;
+            }else if(auth.getAuthority().equals("ROLE_SELLER")){
+                role = auth.getAuthority();
+                break;
+            }
+        }
 
         LocalDateTime end = LocalDateTime.now();
         LocalDateTime start = end.minusDays(7);

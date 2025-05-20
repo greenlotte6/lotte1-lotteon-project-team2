@@ -11,6 +11,24 @@
     <!-- 사이드바-->
     <script src="/js/admin/sidebar.js"></script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function (){
+            const form = document.getElementById('hp-form');
+
+            form.addEventListener("submit", function (e){
+                e.preventDefault();
+
+                const hp = document.getElementById('hp').value;
+
+                if(hp.length>13){
+                    alert("전화번호는 총 13자리 입니다. 예) 02-1234-5677");
+                    return;
+                }
+
+                e.target.submit();
+            })
+        })
+    </script>
 
     
 </head>
@@ -160,12 +178,12 @@
                         <p>푸터에 노출되는 고객센터 정보 입니다.</p>
                     </div>
 
-                    <form th:action="@{/admin/config/customer/modify}" method="post" class="m-50">
+                    <form th:action="@{/admin/config/customer/modify}" id="hp-form" method="post" class="m-50">
                         <table class="version_table">
                             <tr>
                                 <td>전화번호</td>
                                 <td>
-                                    <input type="text" th:value="${config.hp}" name="hp">
+                                    <input type="text" th:value="${config.hp}" name="hp" id="hp">
                                 </td>
                             </tr>
                             <tr>
