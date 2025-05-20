@@ -7,19 +7,14 @@ import kr.co.lotteon.dto.kakao.Amount;
 import kr.co.lotteon.dto.order.OrderDTO;
 import kr.co.lotteon.dto.order.OrderItemDTO;
 import kr.co.lotteon.dto.user.UserDetailsDTO;
-import kr.co.lotteon.entity.order.Order;
-import kr.co.lotteon.entity.order.OrderItem;
 import kr.co.lotteon.service.cart.CartService;
 import kr.co.lotteon.service.coupon.CouponService;
 import kr.co.lotteon.service.kakao.KakaoPayService;
-import kr.co.lotteon.service.order.OrderItemService;
 import kr.co.lotteon.service.order.OrderService;
 import kr.co.lotteon.service.point.PointService;
 import kr.co.lotteon.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,7 +24,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,46 +39,6 @@ public class OrderController {
     private final PointService pointService;
     private final ProductService productService;
     private final KakaoPayService kakaoPayService;
-
-    /*
-    * 1. 주문
-    * Order 테이블에 데이터 넣기
-    * OrderItem 테이블에 데이터 넣기
-    * */
-
-    /*
-    * 2. 포인트
-    * Point 테이블에 사용한 포인트량, 적립된 포인트량 기록
-    * UserDetail 테이블에 포인트 총량 기록
-    * */
-
-    /*
-    * 3. 상품
-    * Product 테이블에 재고(prodStock), 판매량(prodSold) 계산하기
-    * */
-    
-    /*
-    * 4. 쿠폰
-    * 사용한 쿠폰 상태 바꾸기
-    * */
-    
-    /*
-    * 4. 장바구니
-    * 구매한 장바구니 cartNo 지우기
-    * */
-
-
-    /*
-    * 진행한거 :
-    * 1. 장바구니 페이지 체크 안됬을 때 생기는 에러 해결
-    * 2. 결제 페이지 버퍼링 추가
-    * 3. Order 테이블 데이터 넣기
-    * 4. OrderItem 테이블 데이터 넣기
-    * 5. 상품 View 조회 시 조회수 + 1
-    * 6. 장바구니 지우기
-    *    추가 사항: orderItem에 카테고리 추가햇어요.
-    *    관리자 페이지에서 카테고리 별로 매출 계산해야되서
-    * */
 
     @PostMapping("/order/submit")
     public ResponseEntity orderSubmit(Amount amount,
