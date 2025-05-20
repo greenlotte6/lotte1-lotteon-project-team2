@@ -139,9 +139,9 @@
                         </tr>
                         <tr>
                             <td>[[${operationDTO.orderCountTotal}]]</td>
-                            <td>[[${operationDTO.orderPriceTotal}]]</td>
+                            <td>[[${#numbers.formatInteger(operationDTO.orderPriceTotal, 3, 'COMMA')}]]원</td>
                             <td>[[${operationDTO.memberCountTotal}]]</td>
-                            <td>[[${totalVisitors}]]</td>
+                            <td>[[${#numbers.formatInteger(totalVisitors, 3, 'COMMA')}]]</td>
                             <td>[[${operationDTO.inquiryCountTotal}]]</td>
                         </tr>
                     </table>
@@ -151,7 +151,7 @@
                             <td>오늘</td>
                             <td>[[${operationDTO.orderCountToday}]]</td>
                             <td>오늘</td>
-                            <td>[[${operationDTO.orderPriceToday}]]</td>
+                            <td>[[${#numbers.formatInteger(operationDTO.orderPriceToday, 3, 'COMMA')}]]</td>
                             <td>오늘</td>
                             <td>[[${operationDTO.memberCountToday}]]</td>
                             <td>오늘</td>
@@ -163,7 +163,7 @@
                             <td>어제</td>
                             <td>[[${operationDTO.orderCountYesterday}]]</td>
                             <td>어제</td>
-                            <td>[[${operationDTO.orderPriceYesterday}]]</td>
+                            <td>[[${#numbers.formatInteger(operationDTO.orderPriceYesterday, 3, 'COMMA')}]]</td>
                             <td>어제</td>
                             <td>[[${operationDTO.memberCountYesterday}]]</td>
                             <td>어제</td>
@@ -179,7 +179,12 @@
                     <p class="title">공지사항</p>
                     <table>
                         <tr th:each="item : ${noticeDTOS}">
-                            <td><a th:href="@{/admin/cs/notice/view(no=${item.no})}">[[${'[' + item.cate + '] ' + item.title}]]</a></td>
+                            <td>
+                                <a th:href="@{/admin/cs/notice/view(no=${item.no})}">
+                                    [[${'[' + item.cate + '] ' + (item.title.length() > 30 ? item.title.substring(0, 15) + '...' : item.title)}]]
+                                </a>
+                            </td>
+
                             <td>[[${#temporals.format(item.wdate, 'yyyy.MM.dd')}]]</td>
                         </tr>
                     </table>
@@ -189,7 +194,11 @@
                     <p class="title">고객문의</p>
                     <table>
                         <tr th:each="item : ${inquiryDTOS}">
-                            <td><a th:href="@{/admin/cs/qna/view(no=${item.no})}">[[${'[' + item.cateV2 + '] ' + item.title}]]</a></td>
+                            <td>
+                                <a th:href="@{/admin/cs/qna/view(no=${item.no})}">
+                                    [[${'[' + item.cateV2 + '] ' + (item.title.length() > 15 ? item.title.substring(0, 15) + '...' : item.title)}]]
+                                </a>
+                            </td>
                             <td>[[${item.user.uid.substring(0, 3) + '***'}]]</td>
                             <td>[[${#temporals.format(item.wdate, 'yyyy.MM.dd')}]]</td>
                         </tr>
