@@ -161,8 +161,8 @@
                     </div>
                     <p>판매자 : ${review?.product?.company || '정보 없음'}</p>
                     <p>${review.content.replace(/\n/g, '<br>')}</p>
-                     ${review.snameImage1 ? `<img src="${review.snameImage1}" alt="리뷰 이미지 1">` : ''}
-                     ${review.snameImage2 ? `<img src="${review.snameImage2}" alt="리뷰 이미지 2">` : ''}
+                     ${review.snameImage1 ? `<img src="/upload/review/${review.snameImage1}" alt="리뷰 이미지 1">` : ''}
+                     ${review.snameImage2 ? `<img src="/upload/review/${review.snameImage2}" alt="리뷰 이미지 2">` : ''}
                 `;
                 reviewsContainer.appendChild(reviewContent);
             });
