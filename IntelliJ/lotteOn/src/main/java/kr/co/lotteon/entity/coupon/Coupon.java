@@ -35,7 +35,7 @@ public class Coupon {
     private String benefit; //혜택 (2,000 할인, 15% 할인 등)
 
     private LocalDate validFrom; //사용기간 시작일
-    private LocalDate  validTo; //사용기간 만료일
+    private LocalDate validTo; //사용기간 만료일
 
     @CreationTimestamp
     private LocalDate regDate; //발급일

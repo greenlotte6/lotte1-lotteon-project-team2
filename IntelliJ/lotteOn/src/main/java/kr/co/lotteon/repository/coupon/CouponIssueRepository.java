@@ -4,6 +4,8 @@ import kr.co.lotteon.entity.coupon.Coupon;
 import kr.co.lotteon.entity.coupon.CouponIssue;
 import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.custom.CouponIssueRepositoryCustom;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -21,4 +23,5 @@ public interface CouponIssueRepository extends JpaRepository<CouponIssue, Long> 
     List<CouponIssue> findAllByUser(User user);
 
     List<CouponIssue> findByValidToBeforeAndStateNot(String validTo, String state);
+
 }

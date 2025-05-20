@@ -52,13 +52,13 @@
                                     </tr>
                                 </tbody>
                                 <tbody>
-                                    <tr th:each="coupon, i : ${couponDTO.dtoList}">
-                                        <td th:text="${coupon.cno}"></td>
-                                        <td th:text="${coupon.benefit}"></td>
-                                        <td th:text="${coupon.couponName}"></td>
-                                        <td th:text="${coupon.state}"></td>
-                                        <td th:text="${coupon.minPrice} + 원"></td>
-                                        <td th:text="${#temporals.format(coupon.validTo, 'yyyy-MM-dd')}"></td>
+                                    <tr th:each="couponIssue, i : ${couponIssueDTO.dtoList}">
+                                        <td th:text="${couponIssue.issueNo}"></td>
+                                        <td th:text="${couponIssue.coupon.benefit}"></td>
+                                        <td th:text="${couponIssue.coupon.couponName}"></td>
+                                        <td th:text="${couponIssue.coupon.state}"></td>
+                                        <td th:text="${couponIssue.coupon.minPrice} + 원"></td>
+                                        <td th:text="${#temporals.format(couponIssue.coupon.validTo, 'yyyy-MM-dd')}"></td>
                                     </tr>
                                 </tbody>
                             </table>

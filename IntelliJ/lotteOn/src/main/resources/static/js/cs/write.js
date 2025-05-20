@@ -33,4 +33,48 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
+    document.querySelector('.submit').addEventListener('click', function(e){
+        
+        e.preventDefault();
+
+        const type1 = document.getElementById('type1').value;
+
+        // 보이는 type2만 체크 (offsetParent로 체크)
+        const visibleType2 = Array.from(document.querySelectorAll('.type2'))
+            .find(el => el.offsetParent !== null);
+        const type2 = visibleType2 ? visibleType2.value : '';
+
+        const title = document.getElementById('title').value.trim();
+        const content = document.getElementById('content').value.trim();
+
+        if(!type1){
+            alert("1차유형을 선택해주세요.");
+            document.getElementById('type1').focus();
+            return false;
+        }
+
+        if(!type2){
+            alert("2차유형을 선택해주세요.");
+            if (visibleType2) visibleType2.focus();
+            return false;
+        }
+
+        if(!title){
+            alert("제목을 입력해주세요.");
+            document.getElementById('title').focus();
+            return false;
+        }
+
+        if(!content){
+            alert("내용을 입력해주세요.");
+            document.getElementById('content').focus();
+            return false;
+        }
+
+        // 정상 제출 시
+        e.target.form.submit();
+    });
+
+
 });
