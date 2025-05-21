@@ -87,25 +87,6 @@ public class CsController {
         return "/cs/notice/view";
     }
 
-    @GetMapping("/cs/notice/service")
-    public String noticeService() {
-        return "/cs/notice/service";
-    }
-
-    @GetMapping("/cs/notice/safeDeal")
-    public String noticeSafeDeal() {
-        return "/cs/notice/safeDeal";
-    }
-
-    @GetMapping("/cs/notice/event")
-    public String noticeEvent() {
-        return "/cs/notice/event";
-    }
-
-    @GetMapping("/cs/notice/dangerProduct")
-    public String noticeDangerProduct() {return "/cs/notice/dangerProduct";}
-
-
     @GetMapping("/cs/faq/list")
     public String faqList(Model model, PageRequestDTO pageRequestDTO, @RequestParam("cateV1") String cateV1) {
 
@@ -137,43 +118,6 @@ public class CsController {
         return "/cs/faq/list";
     }
 
-    @GetMapping("/cs/faq/view")
-    public String faqView() {
-        return "/cs/faq/view";
-    }
-
-    @GetMapping("/cs/faq/coupon")
-    public String faqCoupon() {
-        return "/cs/faq/coupon";
-    }
-
-    @GetMapping("/cs/faq/order")
-    public String faqOrder() {
-        return "/cs/faq/order";
-    }
-
-    @GetMapping("/cs/faq/delivery")
-    public String faqDelivery() {
-        return "/cs/faq/delivery";
-    }
-
-    @GetMapping("/cs/faq/cancel")
-    public String faqCancel() {
-        return "/cs/faq/cancel";
-    }
-
-    @GetMapping("/cs/faq/trip")
-    public String faqTrip() {
-        return "/cs/faq/trip";
-    }
-
-    @GetMapping("/cs/faq/safeDeal")
-    public String faqSafeDeal() {
-        return "/cs/faq/safeDeal";
-    }
-
-
-
     @GetMapping("/cs/qna/list")
     public String qnaList(@RequestParam("cateV1") String cateV1, Model model, PageRequestDTO pageRequestDTO) {
 
@@ -191,51 +135,6 @@ public class CsController {
         model.addAttribute("inquiryDTO", inquiryDTO);
 
         return "/cs/qna/view";
-    }
-
-    @GetMapping("/cs/qna/coupon")
-    public String qnaCoupon(@RequestParam("cateV1") String cateV1,Model model, PageRequestDTO pageRequestDTO) {
-
-        PageResponseDTO<InquiryDTO> responseDTO = csService.findCateV1All(pageRequestDTO, cateV1);
-        model.addAttribute("cateV1", cateV1);
-        model.addAttribute("responseDTO", responseDTO);
-
-        return "/cs/qna/coupon";
-    }
-
-    @GetMapping("/cs/qna/order")
-    public String qnaOrder() {
-        return "/cs/qna/order";
-    }
-
-    @GetMapping("/cs/qna/delivery")
-    public String qnaDelivery(@RequestParam("cateV1") String cateV1,Model model, PageRequestDTO pageRequestDTO) {
-
-        PageResponseDTO<InquiryDTO> responseDTO = csService.findCateV1All(pageRequestDTO, cateV1);
-        model.addAttribute("cateV1", cateV1);
-        model.addAttribute("responseDTO", responseDTO);
-
-        return "/cs/qna/delivery";
-    }
-
-    @GetMapping("/cs/qna/cancel")
-    public String qnaCancel() {
-        return "/cs/qna/cancel";
-    }
-
-    @GetMapping("/cs/qna/trip")
-    public String qnaTrip() {
-        return "/cs/qna/trip";
-    }
-
-    @GetMapping("/cs/qna/safeDeal")
-    public String qnaSafeDeal(@RequestParam("cateV1") String cateV1,Model model, PageRequestDTO pageRequestDTO) {
-
-        PageResponseDTO<InquiryDTO> responseDTO = csService.findCateV1All(pageRequestDTO, cateV1);
-        model.addAttribute("cateV1", cateV1);
-        model.addAttribute("responseDTO", responseDTO);
-
-        return "/cs/qna/safeDeal";
     }
 
     @GetMapping("/cs/qna/write")
