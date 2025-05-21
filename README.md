@@ -51,3 +51,4 @@
 - **헤더, 푸터** → `layout.css`
 
 - **sidebar** → `inc/이름/sidebar`
+# LotteOn
