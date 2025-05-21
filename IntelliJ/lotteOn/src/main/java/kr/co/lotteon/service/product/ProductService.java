@@ -34,15 +34,6 @@ public class ProductService {
     private final ModelMapper modelMapper;
     private final CartRepository cartRepository;
 
-    // 글 조회수
-    @Transactional
-    public void increaseHit(PageRequestDTO pageRequestDTO) {
-        String prodNo = pageRequestDTO.getProdNo();
-        Product product = productRepository.findByProdNo(prodNo)
-                .orElseThrow(() -> new RuntimeException("해당 게시글이 존재하지 않습니다."));
-        product.setHit(product.getHit() + 1);
-    }
-
 
     public ProductDTO OptionSplit(ProductDTO productDTO) {
         String prodNo = productDTO.getProdNo();
@@ -316,7 +307,15 @@ public class ProductService {
         ProductImage productImage = productImageRepository.findByProduct(product).get();
         return modelMapper.map(productImage, ProductImageDTO.class);
     }
-    
-    
+
+
+    public ProductDTO selectProductByProdNo(String prodNo) {
+        Optional<Product> optProduct = productRepository.findByProdNo(prodNo);
+
+        if (optProduct.isPresent()) {
+            return modelMapper.map(optProduct.get(), ProductDTO.class);
+        }
+        return null;
+    }
 }
 

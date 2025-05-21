@@ -161,8 +161,8 @@
                     </div>
                     <p>판매자 : ${review?.product?.company || '정보 없음'}</p>
                     <p>${review.content.replace(/\n/g, '<br>')}</p>
-                     ${review.snameImage1 ? `<img src="${review.snameImage1}" alt="리뷰 이미지 1">` : ''}
-                     ${review.snameImage2 ? `<img src="${review.snameImage2}" alt="리뷰 이미지 2">` : ''}
+                     ${review.snameImage1 ? `<img src="/upload/review/${review.snameImage1}" alt="리뷰 이미지 1">` : ''}
+                     ${review.snameImage2 ? `<img src="/upload/review/${review.snameImage2}" alt="리뷰 이미지 2">` : ''}
                 `;
                 reviewsContainer.appendChild(reviewContent);
             });
@@ -329,23 +329,23 @@
             if (applyCouponButton) {
                 applyCouponButton.addEventListener('click', function () {
                     if (selectedCoupons.size > 0) {
-                        const companyName = companySpan.textContent.trim();
                         applyCouponButton.disabled = true;
                         applyCouponButton.textContent = '요청 중...';
                         const requests = [];
-                        selectedCoupons.forEach((couponElement, cnoKey) => {
+                        selectedCoupons.forEach((couponElement) => {
                             const couponCno = couponElement.dataset.cno;
-                            const couponValidTo = couponElement.dataset.validto;
-                            const singleCouponPayload = {
-                                issuedBy: companyName,
-                                cno: couponCno,
-                                validTo: couponValidTo
-                            };
+                            console.log("couponCno: " + couponCno);
+
+                            const formData = new URLSearchParams();
+                            formData.append("cno", couponCno);
+
                             const request = fetch('/product/couponIssue', {
                                 method: 'POST',
                                 credentials: 'include',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify(singleCouponPayload)
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded'
+                                },
+                                body: formData.toString()
                             })
                                 .then(response => response.text())
                                 .then(message => {
@@ -361,12 +361,8 @@
                         });
                         Promise.all(requests).then(results => {
                             const successCount = results.filter(msg => msg.includes('발급되었습니다')).length;
-                            const failCount = results.length - successCount;
                             if (successCount > 0) {
                                 alert(`쿠폰 ${successCount}개가 발급되었습니다.`);
-                            }
-                            if (failCount > 0) {
-                                alert(`쿠폰 ${failCount}개는 이미 발급받았거나 오류가 발생했습니다.`);
                             }
                             applyCouponButton.disabled = false;
                             applyCouponButton.textContent = '할인 혜택 받기';
@@ -630,13 +626,13 @@
                 <div class="bar">
                     <div>
                         <a href="#">HOME</a>&nbsp;&nbsp;>&nbsp;&nbsp;
-                        <a href="#">1차 카테고리</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;
-                        <a href="#">2차 카테고리</a>
+                        <a th:text="${productDTO.mainCategoryName}" href="#">1차 카테고리</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;
+                        <a th:text="${productDTO.subCategory.subCategoryName}" href="#">2차 카테고리</a>
                     </div>
                 </div>
                 <div class="product_page">
                     <div>
-                        <img th:src="@{${productDTO.sNameThumb3}}" alt="상품 이미지">
+                        <img th:src="@{${productDTO.productImage.sNameMain}}" alt="상품 이미지">
                     </div>
                     <form th:action="@{/product/order/direct}" method="post">
                         <input type="hidden" id="productNo" name="prodNo" th:value="${productDTO.prodNo}">
