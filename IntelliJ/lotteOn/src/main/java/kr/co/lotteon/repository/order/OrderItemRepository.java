@@ -22,12 +22,6 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
             "FROM OrderItem oi GROUP BY oi.category ORDER BY SUM(oi.itemPrice * (1 - (oi.itemDiscount / 100.0))) DESC")
     List<Object[]> findTotalPriceGroupByCategory();
 
-    List<OrderItem> findAllByOrder_OrderNo(int orderNo);
-
-
-    long countByOrderStatus(String state);
-
-
     Optional<OrderItem> findByItemNo(long itemNo);
 
     @Query("""
@@ -42,19 +36,6 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     ORDER BY DATE(o.orderDate) ASC
     """)
     List<Object[]> countOrderStatsByDate(@Param("startDate") LocalDateTime startDate);
-
-
-    @Query("""
-    SELECT COUNT(oi)
-    FROM OrderItem oi
-    JOIN oi.order o
-    WHERE FUNCTION('DATE', o.orderDate) = CURRENT_DATE
-      AND oi.orderStatus = :state
-    """)
-    long countByOrderStatusToday(@Param("state") String state);
-
-
-
 
 
     List<OrderItem> findByOrder(Order order);
@@ -78,4 +59,6 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
             @Param("startDate") LocalDateTime startDate,
             @Param("endDate") LocalDateTime endDate
     );
+
+    List<OrderItem> findByOrder_OrderNo(Integer orderNo);
 }

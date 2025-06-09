@@ -5,6 +5,24 @@ document.addEventListener('DOMContentLoaded', function () {
     const categoryItems = categoryMenu.querySelectorAll('li');
     const subMenus = subcategoryMenu.querySelectorAll('ul');
 
+    // 카테고리 아코디언 메뉴 토글
+    const parents = document.querySelectorAll(".category .parent");
+    parents.forEach(parent => {
+        parent.style.cursor = "pointer";
+        parent.addEventListener("click", () => {
+            const currentChildren = parent.nextElementSibling;
+            document.querySelectorAll(".category .children").forEach(children => {
+                if (children !== currentChildren) {
+                    children.style.display = "none";
+                }
+            });
+            if (currentChildren && currentChildren.classList.contains("children")) {
+                const isVisible = currentChildren.style.display === "block";
+                currentChildren.style.display = isVisible ? "none" : "block";
+            }
+        });
+    });
+
     categoryBtn.addEventListener('click', function (e) {
         e.stopPropagation();
         const isVisible = categoryMenu.style.display === 'block';

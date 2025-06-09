@@ -9,112 +9,13 @@
     <script src="/js/headerMenu.js"></script>
     <title>주문완료 : 롯데On</title>
 </head>
-
 <body>
-<script>
-    // 롯데On 주문 페이지 전체 스크립트
-    document.addEventListener("DOMContentLoaded", function () {
-
-        // ✅ 카테고리 아코디언
-        document.querySelectorAll(".category .parent").forEach(parent => {
-            parent.style.cursor = "pointer";
-            parent.addEventListener("click", () => {
-                const currentChildren = parent.nextElementSibling;
-                document.querySelectorAll(".category .children").forEach(children => {
-                    if (children !== currentChildren) {
-                        children.style.display = "none";
-                    }
-                });
-                if (currentChildren && currentChildren.classList.contains("children")) {
-                    const isVisible = currentChildren.style.display === "block";
-                    currentChildren.style.display = isVisible ? "none" : "block";
-                }
-            });
-        });
-
-        // ✅ 판매자별 테이블 접기
-        const table = document.querySelector('.order_content'); // 원본 테이블
-        const container = document.getElementById('tables-container');
-        const rows = Array.from(table.querySelectorAll('tr')).slice(1); // 헤더 제외
-
-        const vendorGroups = {};
-
-        rows.forEach(row => {
-            const vendor = row.querySelector('.vendor-name')?.innerText.trim();
-            if (!vendor) return;
-            if (!vendorGroups[vendor]) vendorGroups[vendor] = [];
-            vendorGroups[vendor].push(row);
-        });
-
-        container.innerHTML = '';
-
-        Object.entries(vendorGroups).forEach(([vendor, trList]) => {
-            const section = document.createElement('div');
-            section.className = 'vendor-section';
-
-            const header = document.createElement('div');
-            header.className = 'vendor-header';
-
-            const titleSpan = document.createElement('span');
-            titleSpan.className = 'vendor-title';
-            titleSpan.innerText = vendor;
-
-            const iconSpan = document.createElement('span');
-            iconSpan.className = 'vendor-toggle-icon';
-            iconSpan.innerText = '▼';
-
-            header.appendChild(titleSpan);
-            header.appendChild(iconSpan);
-
-            const groupTable = document.createElement('table');
-            groupTable.className = 'order_content';
-
-            const headerRow = table.querySelector('tr').cloneNode(true);
-            groupTable.appendChild(headerRow);
-
-            const clonedTrs = [];
-
-            trList.forEach((tr, i) => {
-                const clonedRow = tr.cloneNode(true);
-                if (i !== 0) clonedRow.style.display = 'none';
-                clonedTrs.push(clonedRow);
-                groupTable.appendChild(clonedRow);
-            });
-
-            let isOpen = false;
-            header.addEventListener('click', () => {
-                isOpen = !isOpen;
-                clonedTrs.forEach((tr, i) => {
-                    if (i === 0) return; // 첫 번째는 항상 보이게
-                    tr.style.display = isOpen ? 'table-row' : 'none';
-                });
-                iconSpan.innerText = isOpen ? '▲' : '▼';
-            });
-
-            section.appendChild(header);
-            section.appendChild(groupTable);
-            container.appendChild(section);
-        });
-
-
-
-
-    });
-</script>
-
+<script src="/js/product/order_completed.js"></script>
 <div id="wrapper">
-    <!-- 헤더 시작 -->
     <th:block th:include="/common/header.html"/>
-    <!-- 헤더 끝 -->
-
-    <!-- 메인 내용 시작 -->
     <main>
         <section class="content">
-            <!-- 사이드바-->
             <th:block th:include="/product/side.html"/>
-            <!-- 사이드 바 끝 -->
-
-            <!-- 메인 시작 -->
             <div class="order">
                 <h1>주문완료</h1>
                 <div id="tables-container">
@@ -152,10 +53,8 @@
                             <td class="total"
                                 th:text="${#numbers.formatInteger(item.itemPrice * item.itemCount, 3, 'COMMA')}">0</td>
                         </tr>
-                        <!-- 반복문 끝 -->
                     </table>
                 </div>
-
                 <div class="order_info">
                     <p>주문정보</p>
                     <table>
@@ -165,7 +64,6 @@
                         <tr><th>연락처</th><td th:text="${orderDTO.senderHp}"></td></tr>
                     </table>
                 </div>
-
                 <div class="shipping_info">
                     <p>배송정보</p>
                     <table>
@@ -174,7 +72,6 @@
                         <tr><th>배송지 주소</th><td th:text="${orderDTO.orderAddr}"></td></tr>
                     </table>
                 </div>
-
                 <div class="cart_summary">
                     <p>결제정보</p>
                     <table>
@@ -204,17 +101,10 @@
                         </tr>
                     </table>
                 </div>
-
             </div>
         </section>
     </main>
-    <!-- 메인 내용 끝 -->
-
-    <!-- 푸터 시작 -->
     <th:block th:include="/common/footer.html"/>
-    <!-- 푸터 끝 -->
-
 </div>
-
 </body>
 </html>

@@ -26,8 +26,8 @@ import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.service.admin.adminService;
 import kr.co.lotteon.service.article.CsService;
 import kr.co.lotteon.service.config.ConfigService;
-import kr.co.lotteon.service.product.ImageService;
-import kr.co.lotteon.service.product.ProductService;
+import kr.co.lotteon.service.admin.ImageService;
+import kr.co.lotteon.service.admin.ProductService;
 import kr.co.lotteon.service.seller.SellerService;
 import kr.co.lotteon.service.visitor.VisitorService;
 import lombok.RequiredArgsConstructor;
@@ -613,6 +613,8 @@ public class AdminController {
         productService.deleteRecommendationCache(); //추천
         productService.deleteBestCache(); // 베스트 상품
         productService.deleteHitCache(); // 인기 상품 캐시 삭제
+        productService.deleteBestListCache();
+        productService.deleteSortedProductListCache();
 
         // 리뷰 관련 캐시는 리뷰 등록했을 때 삭제
 

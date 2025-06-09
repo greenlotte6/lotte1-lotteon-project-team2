@@ -51,4 +51,8 @@ public class OrderDTO {
     // 상품 정보
     private List<OrderItemDTO> orderItems;
 
+    // 추가 필드
+    private String receiverAddr1;
+    private String receiverAddr2;
+
 }

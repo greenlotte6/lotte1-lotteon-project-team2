@@ -26,12 +26,12 @@ public class ProductListController {
     private final RedisTemplate<String, String> redisTemplate;
     private final ConfigService configService;
 
+
     // 상품 목록 - 첫 페이지 진입용
     @GetMapping("/product/list")
     public String list(PageRequestDTO pageRequestDTO, Model model) {
         List<ProductDTO> productDTOList = productListService.selectBestAllForList(pageRequestDTO.getSubCateNo());
         model.addAttribute(productDTOList);
-        log.info("productList: {}", productDTOList);
         return "/product/list/list";
     }
 
@@ -75,9 +75,6 @@ public class ProductListController {
         List<String> results =  configService.getAutocompleteSuggestions(keyword);
         return results;
     }
-
-
-
 
 
 }

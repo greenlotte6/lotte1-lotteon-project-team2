@@ -5,12 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PageResponseDTO<T> {
+public class PageResponseDTO<T> implements Serializable {
 
     private List<T> dtoList;
 

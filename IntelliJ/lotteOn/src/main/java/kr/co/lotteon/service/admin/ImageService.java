@@ -1,4 +1,4 @@
-package kr.co.lotteon.service.product;
+package kr.co.lotteon.service.admin;
 
 import kr.co.lotteon.dto.config.BannerDTO;
 import kr.co.lotteon.dto.config.ConfigDTO;
@@ -18,7 +18,6 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;

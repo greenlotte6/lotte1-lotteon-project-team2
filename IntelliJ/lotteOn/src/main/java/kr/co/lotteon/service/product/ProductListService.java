@@ -9,6 +9,7 @@ import kr.co.lotteon.repository.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class ProductListService {
 
 
     //  베스트 상품 조회
+    @Cacheable(value = "bestProductList", key = "#subCateNo")
     public List<ProductDTO> selectBestAllForList(int subCateNo) {
         Page<Tuple> pageProduct = productRepository.selectBestAllForList(subCateNo);
 
@@ -43,7 +45,9 @@ public class ProductListService {
         return productDTOList;
     }
 
+
     //  정렬된 상품 목록 조회
+    @Cacheable(value = "sortedProductList", key = "#pageRequestDTO.toString()")
     public PageResponseDTO sortedProducts(PageRequestDTO pageRequestDTO) {
         Pageable pageable = pageRequestDTO.getPageable("no");
 

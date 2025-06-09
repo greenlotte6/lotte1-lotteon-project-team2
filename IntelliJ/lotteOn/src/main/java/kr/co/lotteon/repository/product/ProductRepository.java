@@ -24,8 +24,6 @@ public interface ProductRepository  extends JpaRepository<Product, String>, Prod
 
     List<Product> findTop8ByOrderByHitDesc();
 
-    List<Product> findTop8ByOrderByRatingAvgDesc();
-
     List<Product> findTop8ByOrderByReviewCountDesc();
 
     List<Product> findTop5ByOrderByProdSoldDesc();

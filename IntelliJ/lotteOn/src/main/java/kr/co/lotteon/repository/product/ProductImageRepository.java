@@ -9,7 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface ProductImageRepository extends JpaRepository<ProductImage, Integer> {
-    void deleteByProduct(Product product);
 
     Optional<ProductImage> findByProduct(Product savedProduct);
 }
