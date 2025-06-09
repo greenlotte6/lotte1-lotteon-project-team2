@@ -95,7 +95,7 @@
   - 공지사항,자주묻는질문, 문의하기, 채용하기 기능 
 
 ---
-## 🛠️ Technology Stack
+## 5. 🛠️ Technology Stack
 
 ### Version Control & Collaboration
 <p align="left">
@@ -104,7 +104,7 @@
   <img alt="Slack"   src="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white"      height="28"/>
 </p>
 
-### 🖥️ Language
+### 6. 🖥️ Language
 <p align="left">
   <img alt="Java"       src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white"         height="28"/>
   <img alt="HTML5"      src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"     height="28"/>
@@ -112,7 +112,7 @@
   <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" height="28"/>
 </p>
 
-### 🚀 Backend Frameworks
+### 7. 🚀 Backend Frameworks
 <p align="left">
   <img alt="Spring Boot" src="https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white" height="28"/>
   <img alt="Spring Security" src="https://img.shields.io/badge/Spring%20Security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white" height="28"/>
@@ -121,7 +121,7 @@
   <img alt="QueryDSL"         src="https://img.shields.io/badge/QueryDSL-000000?style=for-the-badge&logo=querydsl&logoColor=white"   height="28"/>
 </p>
 
-### 🌐 Frontend
+### 8. 🌐 Frontend
 <p align="left">
   <img alt="Thymeleaf"        src="https://img.shields.io/badge/Thymeleaf-005F0F?style=for-the-badge&logo=thymeleaf&logoColor=white" height="28"/>
   <img alt="JavaScript"       src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" height="28"/>
@@ -129,13 +129,13 @@
   <img alt="CSS3"             src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"       height="28"/>
 </p>
 
-### 🗄️ Database & Cache
+### 9. 🗄️ Database & Cache
 <p align="left">
   <img alt="MySQL"  src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" height="28"/>
   <img alt="Redis"  src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white"   height="28"/>
 </p>
 
-### ☁️ Infrastructure
+### 10. ☁️ Infrastructure
 <p align="left">
   <img alt="AWS EC2"        src="https://img.shields.io/badge/AWS%20EC2-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white" height="28"/>
   <img alt="Nginx"          src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white"     height="28"/>
@@ -143,20 +143,11 @@
   <img alt="Certbot"        src="https://img.shields.io/badge/Certbot-046941?style=for-the-badge&logo=certbot&logoColor=white"       height="28"/>
 </p>
 
-### 📺 Demo Video
+---
+
+### 11. 📺 시연 동영상 링크
 <p align="left">
   <a href="https://www.youtube.com/watch?v=zflUa58VzH8" target="_blank">
     <img alt="Watch Demo Video" src="https://img.shields.io/badge/YouTube-Demo%20Video-red?style=for-the-badge&logo=youtube&logoColor=white" height="28"/>
-  </a>
-</p>
-
-### 📺 Demo Video
-
-<p align="center">
-  <a href="https://www.youtube.com/watch?v=zflUa58VzH8" target="_blank">
-    <!-- 유튜브 썸네일을 불러옵니다 (vi/<VIDEO_ID>/hqdefault.jpg) -->
-    <img src="https://img.youtube.com/vi/zflUa58VzH8/hqdefault.jpg" 
-         alt="LOTTE ON Demo Video" 
-         width="600" />
   </a>
 </p>
