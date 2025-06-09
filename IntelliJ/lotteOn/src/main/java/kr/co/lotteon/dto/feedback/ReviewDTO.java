@@ -28,7 +28,7 @@ public class ReviewDTO {
 
     private String sNameImage1;
     private String oNameImage1;
-    private String SNameImage2;
+    private String sNameImage2;
     private String oNameImage2;
 
     // 추가 필드

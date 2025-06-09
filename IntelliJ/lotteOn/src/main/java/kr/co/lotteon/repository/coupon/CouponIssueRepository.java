@@ -18,16 +18,10 @@ import java.util.List;
 public interface CouponIssueRepository extends JpaRepository<CouponIssue, Long> , CouponIssueRepositoryCustom {
     boolean existsByUserAndCoupon(User user, Coupon coupon);
 
-    List<CouponIssue> findByUserAndCoupon(User user, Coupon coupon);
-
     List<CouponIssue> findByCoupon(Coupon coupon);
 
     List<CouponIssue> findAllByUser(User user);
 
     List<CouponIssue> findByValidToBeforeAndStateNot(String validTo, String state);
-
-
-    @Query("SELECT c FROM Coupon c WHERE (c.issuedBy = :company OR c.issuedBy = '관리자') AND c.validTo >= :today")
-    List<Coupon> findValidCouponsByCompanyOrAdmin(@Param("company") String company, @Param("today") LocalDate today);
 
 }

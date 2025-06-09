@@ -24,13 +24,9 @@ public interface CouponRepository extends JpaRepository<Coupon,Long>, CouponRepo
 
     long countByUserAndValidToAfter(User user, LocalDate today);
 
-    List<Coupon> findAllByUser(User user);
-
     List<Coupon> findByValidToBeforeAndStateNot(LocalDate validToBefore, String state);
-
 
     @Query("SELECT c FROM Coupon c WHERE (c.issuedBy = :company OR c.issuedBy = '관리자') AND c.validTo >= :today")
     List<Coupon> findValidCouponsByCompanyOrAdmin(@Param("company") String company, @Param("today") LocalDate today);
-
 
 }

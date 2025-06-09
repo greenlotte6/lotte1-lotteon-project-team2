@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartDTO {
-
     private int cartNo;
 
     private String uid;

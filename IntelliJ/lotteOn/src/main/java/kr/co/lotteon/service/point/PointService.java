@@ -18,42 +18,7 @@ import java.util.Optional;
 @Service
 public class PointService {
 
-    private final UserDetailsRepository userDetailsRepository;
-    private final PointRepository pointRepository;
-    private final ModelMapper modelMapper;
 
-    public UserDetailsDTO changePoint(Integer usedPoint, org.springframework.security.core.userdetails.UserDetails userDetails, int orderNo) {
-
-        if (usedPoint == null || usedPoint == 0) {
-            return null;
-        }
-
-        String uid = userDetails.getUsername();
-
-        User user = User.builder()
-                    .uid(uid)
-                    .build();
-
-        Optional<UserDetails> optUserDetails = userDetailsRepository.findByUser(user);
-
-        Point point = Point.builder()
-                .point(usedPoint * (-1))
-                .user(user)
-                .pointDesc("상품 주문(주문 번호: " + orderNo + ") 차감")
-                .expiryDate(null)
-                .build();
-
-        pointRepository.save(point);
-
-        if (optUserDetails.isPresent()) {
-            UserDetails userDetail = optUserDetails.get();
-            userDetail.setUserPoint(userDetail.getUserPoint() - usedPoint);
-            userDetailsRepository.save(userDetail);
-            UserDetailsDTO userDetailsDTO = modelMapper.map(userDetail, UserDetailsDTO.class);
-            return userDetailsDTO;
-        }
-        return null;
-    }
 
 
 }

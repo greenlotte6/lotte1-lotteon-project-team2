@@ -7,514 +7,124 @@
     <link rel="stylesheet" href="/css/product/product_header.css">
     <link rel="stylesheet" href="/css/product/list.css">
     <script src="/js/headerMenu.js"></script>
-    <title>[[${appInfo.title}]] : [[${appInfo.subTitle}]]</title>
     <link id="favicon" rel="icon" th:href="@{/upload/{favicon}(favicon=${appInfo.favicon})}">
-    <title>상품목록 : 롯데On</title>
+    <title>[[${appInfo.title}]] : [[${appInfo.subTitle}]]</title>
 </head>
 <body>
-<script>
-
-    // 슬라이드 인덱스 저장
-    let index = 0;
-
-    // 슬라이더 이동 함수
-    function moveSlide(direction) {
-        const slides = document.getElementById('slides');
-        const totalSlides = Math.ceil(slides.children.length / 2);
-        index += direction;
-        if (index < 0) index = totalSlides - 1;
-        if (index >= totalSlides) index = 0;
-        slides.style.transform = `translateX(-${index * 100}%)`;
-    }
-
-
-    // 쿠폰 발급 토스트 시작
-
-    let toastTimer = null; // 타이머 변수 저장
-
-    function showToast(message) {
-        const toast = document.getElementById('toast');
-
-        // 토스트가 이미 표시 중이면 초기화
-        if (toastTimer) {
-            clearTimeout(toastTimer);
-            toast.classList.remove('show', 'hide');
-        }
-
-        toast.textContent = message;
-        toast.style.display = 'block';
-        toast.classList.add('show');
-
-        // 사라지는 타이머 재설정
-        toastTimer = setTimeout(() => {
-            toast.classList.remove('show');
-            toast.classList.add('hide');
-
-            // 애니메이션 끝나면 완전히 숨김
-            setTimeout(() => {
-                toast.style.display = 'none';
-            }, 500);
-        }, 3000);
-    }
-
-    function coupon(index) {
-        // 서버에 전달할 데이터 객체
-        const data = { index: index };
-
-        // 비동기 POST 요청
-        fetch('/coupon/issue', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json' // JSON 형식임을 명시
-            },
-            body: JSON.stringify(data)
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('서버 응답 오류');
-                }
-                return response.text(); // 먼저 .text()로 응답 내용을 꺼냄
-            })
-            .then(result => {
-                // 서버 응답 처리
-                console.log('서버 응답:', result);
-
-                const view = document.getElementById("toast");
-
-                if (result === "1") {
-                    view.style.backgroundColor = "red";
-                } else if (result === "2") {
-                    view.style.backgroundColor = "green";
-                }else if (result === "3") {
-                    view.style.backgroundColor = "orange";
-                }else if (result === "4") {
-                    view.style.backgroundColor = "blue";
-                }
-
-                showToast('쿠폰이 발급되었습니다');
-            })
-            .catch(error => {
-                console.error('에러 발생:', error);
-            });
-    }
-
-    // 쿠폰 발급 토스트 끝
-
-    function toggleView(view) {
-        const wrapper = document.getElementById('productWrapper');
-        const toGridBtn = document.getElementById('toGrid');
-        const toListBtn = document.getElementById('toList');
-
-        wrapper.classList.remove('list', 'grid');
-        wrapper.classList.add(view);
-
-        if (view === 'grid') {
-            toGridBtn.style.display = 'none';
-            toListBtn.style.display = 'inline-block';
-        } else {
-            toGridBtn.style.display = 'inline-block';
-            toListBtn.style.display = 'none';
-        }
-
-        // 현재 URL에 'view' 파라미터 추가/수정
-        const currentUrl = new URL(window.location.href);
-        currentUrl.searchParams.set('view', view);
-        history.replaceState(null, null, currentUrl); // 페이지 리로드 없이 URL 업데이트
-    }
-
-    // DOM 로드 후 실행
-    document.addEventListener("DOMContentLoaded", function () {
-
-        // 카테고리 아코디언 기능
-        const parents = document.querySelectorAll(".category .parent");
-        parents.forEach(parent => {
-            parent.style.cursor = "pointer";
-            parent.addEventListener("click", () => {
-                const currentChildren = parent.nextElementSibling;
-                document.querySelectorAll(".category .children").forEach(children => {
-                    if (children !== currentChildren) {
-                        children.style.display = "none";
-                    }
-                });
-                if (currentChildren && currentChildren.classList.contains("children")) {
-                    const isVisible = currentChildren.style.display === "block";
-                    currentChildren.style.display = isVisible ? "none" : "block";
-                }
-            });
-        });
-
-        function attachProductClickHandler(containerSelector, cardSelector) {
-            const container = document.querySelector(containerSelector);
-            if (!container) {
-                console.error('attachProductClickHandler: 컨테이너 엘리먼트를 찾을 수 없습니다.');
-                return;
-            }
-
-            container.addEventListener('click', function (e) {
-                e.preventDefault();
-                let target = e.target.closest(cardSelector);
-                if (!target) {
-                    console.error('attachProductClickHandler: 카드 엘리먼트를 찾을 수 없습니다.', e.target);
-                    return;
-                }
-                const prodNo = target.dataset.prodno;
-                if (prodNo) {
-                    location.href = `/product/view?prodNo=${prodNo}`;
-                } else {
-                    console.error('attachProductClickHandler: 상품 ID를 찾을 수 없습니다.', target);
-                }
-            });
-        }
-
-        attachProductClickHandler('.best-grid', '.best-card');
-        attachProductClickHandler('#productWrapper', '.product-item');
-
-        const salesPeriodSelect = document.getElementById('salesPeriodSelect');
-        const reviewPeriodSelect = document.getElementById('reviewPeriodSelect');
-        const sortLinks = document.querySelectorAll('.nav a[data-sort]');
-
-
-        function getView() {
-            const wrapper = document.getElementById('productWrapper');
-            return wrapper.classList.contains('grid') ? 'grid' : 'list';
-        }
-
-        // 판매 기간 선택 이벤트
-        salesPeriodSelect.addEventListener('change', function() {
-            const period = this.value;
-            const currentUrl = new URL(window.location.href);
-            currentUrl.searchParams.set('sortType', 'mostSales');
-            currentUrl.searchParams.set('period', period);
-            currentUrl.searchParams.set('pg', '1');
-            history.pushState(null, null, currentUrl);
-            loadProducts('');
-            resetOtherSortOptions('mostSales');
-        });
-
-        // 후기 기간 선택 이벤트
-        reviewPeriodSelect.addEventListener('change', function() {
-            const period = this.value;
-            const currentUrl = new URL(window.location.href);
-            currentUrl.searchParams.set('sortType', 'manyReviews');
-            currentUrl.searchParams.set('period', period);
-            currentUrl.searchParams.set('pg', '1');
-            history.pushState(null, null, currentUrl);
-            loadProducts('');
-            resetOtherSortOptions('manyReviews');
-        });
-
-        // 정렬 링크 클릭 이벤트
-        sortLinks.forEach(link => {
-            link.addEventListener('click', function(event) {
-                event.preventDefault();
-                const sortType = this.getAttribute('data-sort');
-                let period = '';
-                if (sortType === 'lowPrice' || sortType === 'highPrice') {
-                    period = salesPeriodSelect.value;
-                    // 후기 기간 셀렉트 박스 초기화
-                    reviewPeriodSelect.selectedIndex = 0;
-                } else if (sortType === 'highRating') {
-                    period = reviewPeriodSelect.value;
-                    // 판매 기간 셀렉트 박스 초기화
-                    salesPeriodSelect.selectedIndex = 0;
-                } else if (sortType === 'latest') {
-                    period = '';
-                    // 판매 기간, 후기 기간 셀렉트 박스 초기화
-                    salesPeriodSelect.selectedIndex = 0;
-                    reviewPeriodSelect.selectedIndex = 0;
-                }
-
-                // 현재 URL 가져오기
-                const currentUrl = new URL(window.location.href);
-                // sortType 파라미터 설정
-                currentUrl.searchParams.set('sortType', sortType);
-                // period 파라미터 설정
-                currentUrl.searchParams.set('period', period);
-                // 페이지 번호는 1로 초기화 (새로운 정렬이므로 첫 페이지부터 보여주는 것이 일반적)
-                currentUrl.searchParams.set('pg', '1');
-
-                // history.pushState를 사용하여 URL 업데이트 (페이지 리로드 없이)
-                history.pushState(null, null, currentUrl);
-
-                // 변경된 URL의 파라미터를 기반으로 상품 목록 로드
-                loadProducts('');
-            });
-        });
-
-        function resetOtherSortOptions(currentSortType) {
-            if (currentSortType === 'mostSales') {
-                salesPeriodSelect.selectedIndex = 0; // 판매 많은 순 초기화
-                reviewPeriodSelect.selectedIndex = 0; // 후기 기간 초기화
-            } else if (currentSortType === 'manyReviews') {
-                salesPeriodSelect.selectedIndex = 0; // 판매 많은 순 초기화
-                reviewPeriodSelect.selectedIndex = 0; // 후기 기간 초기화
-            } else if (currentSortType === 'lowPrice' || currentSortType === 'highPrice') {
-                salesPeriodSelect.selectedIndex = 0; // 판매 많은 순 초기화
-                reviewPeriodSelect.selectedIndex = 0; // 후기 기간 초기화
-            } else if (currentSortType === 'highRating') {
-                salesPeriodSelect.selectedIndex = 0; // 판매 많은 순 초기화
-                reviewPeriodSelect.selectedIndex = 0; // 후기 기간 초기화
-            } else if (currentSortType === 'latest') {
-                salesPeriodSelect.selectedIndex = 0; // 판매 많은 순 초기화
-                reviewPeriodSelect.selectedIndex = 0; // 후기 기간 초기화
-            }
-        }
-
-        function updatePagination(data) {
-            const pageContainer = document.querySelector('.page');
-            pageContainer.innerHTML = ''; // 기존 페이지네이션 초기화
-
-            // 이전 페이지 링크
-            if (data.prev) {
-                const prevLink = document.createElement('a');
-                prevLink.href = `#`;
-                prevLink.classList.add('prev');
-                prevLink.textContent = '<';
-                prevLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    loadProducts(`&pg=${data.start - 1}&sortType=${data.sortType}&period=${data.period}`);
-                });
-                pageContainer.appendChild(prevLink);
-            }
-
-            // 페이지 번호 링크
-            for (let i = data.start; i <= data.end; i++) {
-                const pageLink = document.createElement('a');
-                pageLink.href = `#`;
-                pageLink.textContent = i;
-                if (i === data.pg) {
-                    pageLink.classList.add('current');
-                } else {
-                    pageLink.classList.add('num');
-                    pageLink.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        loadProducts(`&pg=${i}&sortType=${data.sortType}&period=${data.period}`);
-                    });
-                }
-                pageContainer.appendChild(pageLink);
-            }
-
-            // 다음 페이지 링크
-            if (data.next) {
-                const nextLink = document.createElement('a');
-                nextLink.href = `#`;
-                nextLink.classList.add('next');
-                nextLink.textContent = '>';
-                nextLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    loadProducts(`&pg=${data.end + 1}&sortType=${data.sortType}&period=${data.period}`);
-                });
-                pageContainer.appendChild(nextLink);
-            }
-        }
-
-        function formatNumber(number) {
-            return number.toLocaleString();
-        }
-
-        // 상품 목록 로드
-        loadProducts(`&sortType=salesCount&period=`);
-
-        function loadProducts(params) {
-            const currentUrl = new URL(window.location.href);
-            const subCateNo = currentUrl.searchParams.get('subCateNo') ;
-            const sortTypeParam = currentUrl.searchParams.get('sortType');
-            const periodParam = currentUrl.searchParams.get('period') || '';
-            const pgParam = new URLSearchParams(params).get('pg') || '1';
-
-            const url = `/product/ajaxList?subCateNo=${encodeURIComponent(subCateNo)}&view=${encodeURIComponent(getView())}&pg=${encodeURIComponent(pgParam)}&sortType=${encodeURIComponent(sortTypeParam)}&period=${encodeURIComponent(periodParam)}`;
-
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    const productListContainer = document.querySelector('#productWrapper .product-list');
-                    productListContainer.innerHTML = ''; // 기존 목록 초기화
-                    data.dtoList.forEach(product => {
-                        const productItem = document.createElement('div');
-                        productItem.classList.add('product-item');
-                        productItem.setAttribute('data-prodno', product.prodNo);
-                        productItem.innerHTML = `
-                    <img class="product-img" src="${product.snameList}" alt="${product.prodName}" />
-                    <div class="product-info">
-                        <span class="vendor-name">${product.company}</span> <span class="vendor-rank">${product.rank}</span><br>
-                        <span class="brand">${product.prodBrand}</span><br>
-                        <span class="pname">${product.prodName}</span>
-                        <div class="meta">
-                            <span>★ ${product.ratingAvg !== null ? product.ratingAvg.toFixed(1) : 0}</span>&nbsp;|&nbsp;리뷰 <span>${product.reviewCount}</span>
-                        </div>
-                        ${product.prodDeliveryFee === 0 ? '<span class="badge-free">무료배송</span>' : `<span class="badge-fee">${formatNumber(product.prodDeliveryFee)}원</span>`}
-                    </div>
-                    <div class="product-price">
-                        <del>${formatNumber(product.prodPrice)}원</del><br>
-                        <span class="discount">${product.prodDiscount}%</span>
-                        <span>${formatNumber(product.prodPrice * (100 - product.prodDiscount) / 100)}원</span>
-                        <div class="icons">
-                            <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
-                            <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
-                        </div>
-                    </div>
-                `;
-                        productListContainer.appendChild(productItem);
-                    });
-                    updatePagination(data);
-                    attachProductClickHandler('#productWrapper', '.product-item');
-                })
-                .catch(error => {
-                    console.error('Ajax 요청 실패:', error);
-                });
-        }
-
-    });
-</script>
-<div id="wrapper">
-    <!-- 헤더 시작 -->
-    <th:block th:include="/common/header.html"/>
-    <!-- 헤더 끝 -->
-    <main>
-        <section class="content">
-            <div class="bar">
-                <div>
-                    <a href="/">HOME</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;
-                    <a th:text="${productDTOList[0].mainCategoryName}" href="#">1차 카테고리</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;
-                    <a th:text="${productDTOList[0].subCategory.subCategoryName}" href="#">2차 카테고리</a>
-                </div>
-            </div>
-            <p class="page_name" th:text="${productDTOList[0].subCategory.subCategoryName}">2차 카테고리</p>
-            <!-- 사이드바-->
-            <th:block th:include="/product/side.html"/>
-            <!-- 사이드 바 끝 -->
-            <div class="container">
-                <div class="slider">
-                    <div class="slides" id="slides">
-                        <img src="/images/product/banner1.jpg" alt="배너 1" onclick="coupon(1)">
-                        <img src="/images/product/banner2.jpg" alt="배너 2" onclick="coupon(2)">
-                        <img src="/images/product/banner1.jpg" alt="배너 3" onclick="coupon(3)">
-                        <img src="/images/product/banner2.jpg" alt="배너 4" onclick="coupon(4)">
-                    </div>
-                    <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
-                    <button class="next" onclick="moveSlide(1)">&#10095;</button>
-                </div>
-                <h2>카테고리 베스트 상품</h2>
-                <div class="best-grid">
-                    <div class="best-card"
-                         th:each="product, stat : ${productDTOList}"
-                         th:attr="data-prodno=${product.prodNo}">
-                        <p class="rank" th:text="${stat.count}"></p>
-                        <img class="product-img" th:src="${product.sNameList}" alt="상품 이미지" />
-                        <div class="vendor-row">
-                            <span class="vendor-name" th:text="${product.company}"></span>
-                            <div class="icons">
-                                <button><img th:src="@{/images/product/icon_favorite.png}" alt="찜"></button>
-                                <button><img th:src="@{/images/product/icon_cart.png}" alt="장바구니"></button>
-                            </div>
-                        </div>
-                        <p class="name">
-                            <span class="brand" th:text="${product.prodBrand}"></span><br>
-                            <span class="product-name" th:text="${product.prodName}"></span>
-                        </p>
-                        <p class="price">
-                            <span class="discount" th:text="${product.prodDiscount + '%'}"></span>
-                            <span th:text="${#numbers.formatInteger(product.prodPrice, 3, 'COMMA')} + '원'"></span>
-                        </p>
-                        <p class="review">
-                            <span class="star" th:text="'★ ' + ${product.ratingAvg}"></span>
-                            &nbsp;&nbsp;|&nbsp;&nbsp;리뷰 <span th:text="${product.reviewCount}"></span>
-                        </p>
+    <script src="/js/product/list.js"></script>
+    <div id="wrapper">
+        <th:block th:include="/common/header.html"/>
+        <main>
+            <section class="content">
+                <div class="bar">
+                    <div>
+                        <a href="/">HOME</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;
+                        <a th:text="${productDTOList[0].mainCategoryName}" href="#">1차 카테고리</a>&nbsp;&nbsp;&gt;&nbsp;&nbsp;
+                        <a th:text="${productDTOList[0].subCategory.subCategoryName}" href="#">2차 카테고리</a>
                     </div>
                 </div>
-                <div class="nab_bar">
-                    <div class="nav">
-                        <div>
-                            <select id="salesPeriodSelect">
-                                <option value="">판매많은순</option>
-                                <option value="1year">1년</option>
-                                <option value="6month">6개월</option>
-                                <option value="1month">1개월</option>
-                            </select>
-                            <a href="#" data-sort="lowPrice">&nbsp;&nbsp;|&nbsp;&nbsp;낮은가격순&nbsp;&nbsp;|&nbsp;&nbsp;</a>
-                            <a href="#" data-sort="highPrice">높은가격순&nbsp;&nbsp;|&nbsp;&nbsp;</a>
-                            <a href="#" data-sort="highRating">평점높은순&nbsp;&nbsp;|&nbsp;&nbsp;</a>
-                            <select id="reviewPeriodSelect">
-                                <option value="">후기많은순</option>
-                                <option value="1year">1년</option>
-                                <option value="6month">6개월</option>
-                                <option value="1month">1개월</option>
-                            </select>
-                            <a href="#" data-sort="latest">&nbsp;&nbsp;|&nbsp;&nbsp;최근등록순</a>
+                <p class="page_name" th:text="${productDTOList[0].subCategory.subCategoryName}">2차 카테고리</p>
+                <th:block th:include="/product/side.html"/>
+                <div class="container">
+                    <div class="slider">
+                        <div class="slides" id="slides">
+                            <img src="/images/product/banner1.jpg" alt="배너 1">
+                            <img src="/images/product/banner2.jpg" alt="배너 2">
+                            <img src="/images/product/banner1.jpg" alt="배너 3">
+                            <img src="/images/product/banner2.jpg" alt="배너 4">
                         </div>
+                        <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+                        <button class="next" onclick="moveSlide(1)">&#10095;</button>
                     </div>
-                    <div class="view-toggle">
-                        <button id="toGrid" onclick="toggleView('grid')">
-                            <img src="/images/product/grid.png" alt="그리드 보기">
-                        </button>
-                        <button id="toList" onclick="toggleView('list')" style="display: none;">
-                            <img src="/images/product/list.png" alt="리스트 보기">
-                        </button>
-                    </div>
-                </div>
-
-                <div id="productWrapper" class="product-wrapper list">
-                    <div class="product-list">
-                        <div class="product-item">
-                            <img class="product-img">
-                            <div class="product-info">
-                                <span class="vendor-name">판매자명</span><span class="vendor-rank">판매자등급</span><br>
-                                <span class="brand">브랜드</span><br>
-                                <span class="pname">상품명</span>
-                                <div class="meta">
-                                    <span>★ 4.8</span>&nbsp;|&nbsp;리뷰 <span>0</span>
-                                </div>
-                                <span class="badge-free">무료배송</span>
-                                <span>배송비</span>
-                            </div>
-                            <div class="product-price">
-                                <del>정가</del><br>
-                                <span>할인율</span>
-                                <span>판매가</span> 원
+                    <h2>카테고리 베스트 상품</h2>
+                    <div class="best-grid">
+                        <div class="best-card"
+                             th:each="product, stat : ${productDTOList}"
+                             th:attr="data-prodno=${product.prodNo}">
+                            <p class="rank" th:text="${stat.count}"></p>
+                            <img class="product-img" th:src="${product.sNameList}" alt="상품 이미지" />
+                            <div class="vendor-row">
+                                <span class="vendor-name" th:text="${product.company}"></span>
                                 <div class="icons">
-                                    <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
-                                    <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
+                                    <button><img th:src="@{/images/product/icon_favorite.png}" alt="찜"></button>
+                                    <button><img th:src="@{/images/product/icon_cart.png}" alt="장바구니"></button>
+                                </div>
+                            </div>
+                            <p class="name">
+                                <span class="brand" th:text="${product.prodBrand}"></span><br>
+                                <span class="product-name" th:text="${product.prodName}"></span>
+                            </p>
+                            <p class="price">
+                                <span class="discount" th:text="${product.prodDiscount + '%'}"></span>
+                                <span th:text="${#numbers.formatInteger(product.prodPrice, 3, 'COMMA')} + '원'"></span>
+                            </p>
+                            <p class="review">
+                                <span class="star" th:text="'★ ' + ${product.ratingAvg}"></span>
+                                &nbsp;&nbsp;|&nbsp;&nbsp;리뷰 <span th:text="${product.reviewCount}"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="nab_bar">
+                        <div class="nav">
+                            <div>
+                                <select id="salesPeriodSelect">
+                                    <option value="">판매많은순</option>
+                                    <option value="1year">1년</option>
+                                    <option value="6month">6개월</option>
+                                    <option value="1month">1개월</option>
+                                </select>
+                                <a href="#" data-sort="lowPrice">&nbsp;&nbsp;|&nbsp;&nbsp;낮은가격순&nbsp;&nbsp;|&nbsp;&nbsp;</a>
+                                <a href="#" data-sort="highPrice">높은가격순&nbsp;&nbsp;|&nbsp;&nbsp;</a>
+                                <a href="#" data-sort="highRating">평점높은순&nbsp;&nbsp;|&nbsp;&nbsp;</a>
+                                <select id="reviewPeriodSelect">
+                                    <option value="">후기많은순</option>
+                                    <option value="1year">1년</option>
+                                    <option value="6month">6개월</option>
+                                    <option value="1month">1개월</option>
+                                </select>
+                                <a href="#" data-sort="latest">&nbsp;&nbsp;|&nbsp;&nbsp;최근등록순</a>
+                            </div>
+                        </div>
+                        <div class="view-toggle">
+                            <button id="toGrid" onclick="toggleView('grid')">
+                                <img src="/images/product/grid.png" alt="그리드 보기">
+                            </button>
+                            <button id="toList" onclick="toggleView('list')" style="display: none;">
+                                <img src="/images/product/list.png" alt="리스트 보기">
+                            </button>
+                        </div>
+                    </div>
+                    <div id="productWrapper" class="product-wrapper list">
+                        <div class="product-list">
+                            <div class="product-item">
+                                <img class="product-img">
+                                <div class="product-info">
+                                    <span class="vendor-name">판매자명</span><span class="vendor-rank">판매자등급</span><br>
+                                    <span class="brand">브랜드</span><br>
+                                    <span class="pname">상품명</span>
+                                    <div class="meta">
+                                        <span>★ 4.8</span>&nbsp;|&nbsp;리뷰 <span>0</span>
+                                    </div>
+                                    <span class="badge-free">무료배송</span>
+                                    <span>배송비</span>
+                                </div>
+                                <div class="product-price">
+                                    <del>정가</del><br>
+                                    <span>할인율</span>
+                                    <span>판매가</span> 원
+                                    <div class="icons">
+                                        <button><img src="/images/product/icon_favorite.png" alt="찜"></button>
+                                        <button><img src="/images/product/icon_cart.png" alt="장바구니"></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="page"></div>
                 </div>
-
-                <div class="page"></div>
-            </div>
-        </section>
-    </main>
-    <!-- 푸터 시작 -->
-    <th:block th:include="/common/footer.html"/>
-    <!-- 푸터 끝 -->
-
-    <div id="toast"></div>
-    <style>
-        #toast {
-            display: none;
-            position: fixed;
-            top: 30px;
-            right: -350px; /* 시작 위치: 화면 밖 */
-            background-color: #e53935; /* 빨간색 배경 */
-            color: white;
-            padding: 14px 28px;
-            border-radius: 8px;
-            z-index: 9999;
-            font-size: 15px;
-            font-weight: bold;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            transition: right 0.5s ease-in-out;
-        }
-
-        #toast.show {
-            display: block;
-            right: 30px; /* 화면 안으로 슬라이드 인 */
-        }
-
-        #toast.hide {
-            right: -350px; /* 다시 오른쪽으로 나감 */
-        }
-    </style>
-</div>
+            </section>
+        </main>
+        <th:block th:include="/common/footer.html"/>
+    </div>
 </body>
 </html>

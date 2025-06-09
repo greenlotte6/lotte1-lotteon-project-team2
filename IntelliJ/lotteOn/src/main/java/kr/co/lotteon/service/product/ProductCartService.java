@@ -1,23 +1,18 @@
-package kr.co.lotteon.service.cart;
+package kr.co.lotteon.service.product;
 
 import kr.co.lotteon.dto.cart.CartDTO;
 import kr.co.lotteon.dto.page.ItemRequestDTO;
-import kr.co.lotteon.dto.product.ProductDTO;
 import kr.co.lotteon.entity.cart.Cart;
 import kr.co.lotteon.entity.product.Product;
 import kr.co.lotteon.entity.user.User;
 import kr.co.lotteon.repository.product.CartRepository;
-import kr.co.lotteon.repository.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -26,13 +21,13 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class CartService {
+public class ProductCartService {
 
     private final CartRepository cartRepository;
-    private final  ModelMapper modelMapper;
-    //private final RedisTemplate<String, CartDTO> redisTemplate;
+    private final ModelMapper modelMapper;
 
-    // 장바구니에 상품 추가
+
+    // 장바구니 상품 담기
     public int addToCart(ItemRequestDTO itemRequestDTO, UserDetails userDetails) {
         Product product = Product.builder()
                 .prodNo(itemRequestDTO.getProdNo())
@@ -44,7 +39,6 @@ public class CartService {
 
         Map<String, String> options = itemRequestDTO.getOptions();
 
-        // 옵션 개수 확인 및 동적 비교
         String[] optParams = new String[6];
         String[] optContParams = new String[6];
 
@@ -68,7 +62,6 @@ public class CartService {
 
         try {
             if (optCart.isPresent()) {
-                // 이미 있는 상품: 수량만 증가
                 Cart cart = optCart.get();
                 cart.setCartProdCount(cart.getCartProdCount() + itemRequestDTO.getQuantity());
                 cartRepository.save(cart);
@@ -80,7 +73,6 @@ public class CartService {
         } catch (Exception e) {
             return 0;
         }
-
     }
 
 
@@ -107,6 +99,7 @@ public class CartService {
                 .build();
     }
 
+
     // 장바구니 View
     public List<CartDTO> findAllByUid(UserDetails userDetails) {
 
@@ -128,6 +121,7 @@ public class CartService {
         return cartDTOList;
     }
 
+
     // 장바구니 상품 삭제
     @Transactional
     public int deleteByCartNo(int cartNo) {
@@ -140,13 +134,8 @@ public class CartService {
         }
     }
 
-    @Transactional
-    public void deleteAllByCartNo(List<Integer> cartNos) {
-        for(Integer cartNo : cartNos) {
-            cartRepository.deleteByCartNo(cartNo);
-        }
-    }
 
+    // 장바구니 수량 업데이트
     public void updateCartProdCount(Integer cartNo, int newQuantity) {
         Optional<Cart> cartOptional = cartRepository.findById(cartNo);
         if (cartOptional.isPresent()) {
@@ -157,7 +146,6 @@ public class CartService {
             throw new RuntimeException("장바구니 항목을 찾을 수 없습니다.");
         }
     }
-
 
 
 }

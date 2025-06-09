@@ -2,33 +2,33 @@
 <table class="product_info">
     <tr>
         <td>영수증 유형</td>
-        <td th:text="${productDetailDTO.receiptType}"></td>
+        <td th:text="${productDTO.productDetail.receiptType}"></td>
     </tr>
     <tr>
         <td>상품 상태</td>
-        <td th:text="${productDetailDTO.prodState}"></td>
+        <td th:text="${productDTO.productDetail.prodState}"></td>
     </tr>
     <tr>
         <td>면세 여부</td>
-        <td th:text="${productDetailDTO.taxFree}"></td>
+        <td th:text="${productDTO.productDetail.taxFree}"></td>
     </tr>
     <tr>
         <td>사업자 유형</td>
-        <td th:text="${productDetailDTO.bizType}"></td>
+        <td th:text="${productDTO.productDetail.bizType}"></td>
     </tr>
     <tr>
         <td>원산지</td>
-        <td th:text="${productDetailDTO.origin}"></td>
+        <td th:text="${productDTO.productDetail.origin}"></td>
     </tr>
 </table>
 <img src="/images/product/lotteimage.png">
 <p>MD 공지사항</p>
-<img th:src="${productImage.sNameDetail}" alt="박스"
+<img th:src="${productDTO.productImage.sNameDetail}" alt="박스"
      onerror="this.src='/images/productBox.jpg';">
 <!-- <img src="/images/product/beautyfesta.jpeg"> -->
 <p>상품필수정보</p>
 <table class="product_assential">
-    <tr><th>원산지</th>  <td th:text="${productDetailDTO.origin}"></td></tr>
+    <tr><th>원산지</th>  <td th:text="${productDTO.productDetail.origin}"></td></tr>
     <tr><th>모델명</th>  <td th:text="${productDTO.prodName}"></td></tr>
     <tr><th>상품번호</th>  <td th:text="${productDTO.prodNo}"></td></tr>
     <tr><th>상품상태</th><td>새상품</td></tr>

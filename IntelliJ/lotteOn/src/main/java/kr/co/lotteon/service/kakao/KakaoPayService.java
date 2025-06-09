@@ -61,22 +61,10 @@ public class KakaoPayService {
 
         System.out.println(url);
 
-
         // 로컬용
-        //parameters.add("approval_url", "http://localhost:8080/payment/success");
-        //parameters.add("cancel_url", "http://localhost:8080/payment/cancel");
-        //parameters.add("fail_url", "http://localhost:8080/payment/fail");
-
-        // 베포용
-        //parameters.add("approval_url", "http://43.201.101.104:8080/payment/success");
-        //parameters.add("cancel_url", "http://43.201.101.104:8080/payment/cancel");
-        //parameters.add("fail_url", "http://43.201.101.104:8080/payment/fail");
-
-        // 도메인 베포용
-        parameters.add("approval_url", "https://www.lotteon.store/payment/success");
-        parameters.add("cancel_url", "https://www.lotteon.store/payment/cancel");
-        parameters.add("fail_url", "https://www.lotteon.store/payment/fail");
-
+        parameters.add("approval_url", "http://localhost:8080/payment/success");
+        parameters.add("cancel_url", "http://localhost:8080/payment/cancel");
+        parameters.add("fail_url", "http://localhost:8080/payment/fail");
 
         // 파라미터, 헤더
         HttpEntity<MultiValueMap<String, String>> requestEntity =
@@ -94,7 +82,6 @@ public class KakaoPayService {
 
         kakaoReady.setPartner_order_id(amount.getPartner_order_id());
         kakaoReady.setPartner_user_id(amount.getPartner_user_id());
-
 
         return ResponseEntity.ok(kakaoReady);
     }

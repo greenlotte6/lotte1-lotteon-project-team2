@@ -16,9 +16,6 @@ import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> , OrderRepositoryCustom {
-    Page<Order> findAllByUser(User user, Pageable pageable);
-    List<Order> findByUser(User user);
-
 
     @Query("""
     SELECT oi.orderStatus AS status, COUNT(o) AS cnt 
@@ -72,8 +69,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> , OrderRe
     @Query("SELECT COUNT(o) FROM Order o WHERE o.orderDate BETWEEN :start AND :end")
     Long countByOrderDateBetween(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 
-    @Query("SELECT SUM(o.orderTotalPrice) FROM Order o")
-    Long findTotalOrderPrice();
 
     @Query("SELECT SUM(o.orderTotalPrice) FROM Order o WHERE o.orderDate BETWEEN :start AND :end")
     Long findTotalOrderPriceBetween(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
