@@ -142,3 +142,21 @@
   <img alt="Let's Encrypt"  src="https://img.shields.io/badge/Let's%20Encrypt-005A9C?style=for-the-badge&logo=letsencrypt&logoColor=white" height="28"/>
   <img alt="Certbot"        src="https://img.shields.io/badge/Certbot-046941?style=for-the-badge&logo=certbot&logoColor=white"       height="28"/>
 </p>
+
+### 📺 Demo Video
+<p align="left">
+  <a href="https://www.youtube.com/watch?v=zflUa58VzH8" target="_blank">
+    <img alt="Watch Demo Video" src="https://img.shields.io/badge/YouTube-Demo%20Video-red?style=for-the-badge&logo=youtube&logoColor=white" height="28"/>
+  </a>
+</p>
+
+### 📺 Demo Video
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=zflUa58VzH8" target="_blank">
+    <!-- 유튜브 썸네일을 불러옵니다 (vi/<VIDEO_ID>/hqdefault.jpg) -->
+    <img src="https://img.youtube.com/vi/zflUa58VzH8/hqdefault.jpg" 
+         alt="LOTTE ON Demo Video" 
+         width="600" />
+  </a>
+</p>
