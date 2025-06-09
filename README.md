@@ -25,10 +25,10 @@
 
 | 이름  | 담당 업무 |
 |------|-----------|
-| 우상호  | - 데이터베이스 설계<br>- CI/CD<br>- 관리자 파트 |
-| 김소현 | - 상품 파트 구현<br>- 검색 파트 구현<br>- 카카오 결제 구현 |
-| 오재영 | - 마이페이지 파트 구현<br>- 고객센터 파트 구현 |
-| 최명기 | - 회원가입/비밀번호, 아이디 찾기 구현<br>- 방문자 통계 구현(Redis) <br> - 도메인(Lotteon.store) 연결 <br> - HTTPS 연결 |
+| 우상호  | - CI/CD<br>- 데이터베이스 설계<br>- 관리자 파트<br> - 회사소개 기능 구현<br> - 메인페이지 기능 구현<br> |
+| 김소현 | - 상품 구매 및 장바구니 구현<br>- 검색 파트 구현<br>- 카카오 결제 구현 |
+| 오재영 | - 마이페이지 파트 구현<br>- 고객센터 파트 구현<br>- 회사소개 화면 구현 |
+| 최명기 | - 회원가입/비밀번호, 아이디 찾기 구현<br>-  핸드폰(firebase)인증 구현 <br>- 방문자 통계 구현(Redis) <br> - 도메인(Lotteon.store) 연결 <br> - HTTPS 연결 |
 
 
 ---
@@ -80,32 +80,50 @@
   - 공지사항,자주묻는질문, 문의하기, 채용하기 기능 
 
 ---
+## 🛠️ Technology Stack
 
-## 5. 🛠️ Technology Stack
+### Version Control & Collaboration
+<p align="left">
+  <img alt="Git"     src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white"          height="28"/>
+  <img alt="GitHub"  src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white"    height="28"/>
+  <img alt="Slack"   src="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white"      height="28"/>
+</p>
 
 ### 🖥️ Language
+<p align="left">
+  <img alt="Java"       src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white"         height="28"/>
+  <img alt="HTML5"      src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"     height="28"/>
+  <img alt="CSS3"       src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"       height="28"/>
+  <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" height="28"/>
+</p>
 
-| HTML5 | CSS3 | JavaScript |
-|-------|------|------------|
-| ![](https://github.com/user-attachments/assets/2e122e74-a28b-4ce7-aff6-382959216d31) | ![](https://github.com/user-attachments/assets/c531b03d-55a3-40bf-9195-9ff8c4688f13) | ![](https://github.com/user-attachments/assets/4a7d7074-8c71-48b4-8652-7431477669d1) |
+### 🚀 Backend Frameworks
+<p align="left">
+  <img alt="Spring Boot" src="https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white" height="28"/>
+  <img alt="Spring Security" src="https://img.shields.io/badge/Spring%20Security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white" height="28"/>
+  <img alt="Spring Data JPA" src="https://img.shields.io/badge/Spring%20Data%20JPA-6DB33F?style=for-the-badge&logo=spring&logoColor=white" height="28"/> <br>
+  <img alt="MyBatis"          src="https://img.shields.io/badge/MyBatis-000000?style=for-the-badge&logo=mybatis&logoColor=white"        height="28"/>
+  <img alt="QueryDSL"         src="https://img.shields.io/badge/QueryDSL-000000?style=for-the-badge&logo=querydsl&logoColor=white"   height="28"/>
+</p>
 
-### 💻 Frontend
+### 🌐 Frontend
+<p align="left">
+  <img alt="Thymeleaf"        src="https://img.shields.io/badge/Thymeleaf-005F0F?style=for-the-badge&logo=thymeleaf&logoColor=white" height="28"/>
+  <img alt="JavaScript"       src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" height="28"/>
+  <img alt="HTML5"            src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"     height="28"/>
+  <img alt="CSS3"             src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"       height="28"/>
+</p>
 
-| React | Styled Components | Material UI | Day.js |
-|-------|--------------------|--------------|--------|
-| ![](https://github.com/user-attachments/assets/e3b49dbb-981b-4804-acf9-012c854a2fd2) `v18.3.1` | ![](https://github.com/user-attachments/assets/c9b26078-5d79-40cc-b120-69d9b3882786) `v6.1.12` | ![](https://github.com/user-attachments/assets/75a46fa7-ebc0-4a9d-b648-c589f87c4b55) `v5.0.0` | ![](https://github.com/user-attachments/assets/3632d7d6-8d43-4dd5-ba7a-501a2bc3a3e4) `v1.11.12` |
+### 🗄️ Database & Cache
+<p align="left">
+  <img alt="MySQL"  src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" height="28"/>
+  <img alt="Redis"  src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white"   height="28"/>
+</p>
 
-### 🔧 Backend
-
-| Firebase |
-|----------|
-| ![](https://github.com/user-attachments/assets/1694e458-9bb0-4a0b-8fe6-8efc6e675fa1) `v10.12.5` |
-
-### 🤝 Collaboration
-
-| Git | GitKraken | Notion |
-|-----|-----------|--------|
-| ![](https://github.com/user-attachments/assets/483abc38-ed4d-487c-b43a-3963b33430e6) | ![](https://github.com/user-attachments/assets/32c615cb-7bc0-45cd-91ea-0d1450bfc8a9) | ![](https://github.com/user-attachments/assets/34141eb9-deca-416a-a83f-ff9543cc2f9a) |
-
----
-
+### ☁️ Infrastructure
+<p align="left">
+  <img alt="AWS EC2"        src="https://img.shields.io/badge/AWS%20EC2-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white" height="28"/>
+  <img alt="Nginx"          src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white"     height="28"/>
+  <img alt="Let's Encrypt"  src="https://img.shields.io/badge/Let's%20Encrypt-005A9C?style=for-the-badge&logo=letsencrypt&logoColor=white" height="28"/>
+  <img alt="Certbot"        src="https://img.shields.io/badge/Certbot-046941?style=for-the-badge&logo=certbot&logoColor=white"       height="28"/>
+</p>
